@@ -21,6 +21,6 @@ ms.locfileid: "42993560"
 Entity Framework Core 提供了一组异步扩展方法，可用作执行查询并返回结果的 LINQ 方法的替代方法。示例包括 `ToListAsync()`、`ToArrayAsync()`、`SingleAsync()` 等。对于部分 LINQ 运算符（如 `Where(...)`、`OrderBy(...)` 等），没有对应的异步版本，因为这些方法仅用于构建 LINQ 表达式树，而未将查询发送到数据库中执行。
 
 > [!IMPORTANT]  
-> 在 `Microsoft.EntityFrameworkCore` 命名空间中定义了 EF Core 异步扩展方法。 必须引入此命名空间才能使用这些方法。
+> 在 `Microsoft.EntityFrameworkCore` 命名空间中定义 EF Core 异步扩展方法。 必须导入此命名空间才能使这些方法可用。
 
 [!code-csharp[Main](../../../samples/core/Querying/Querying/Async/Sample.cs#Sample)]
