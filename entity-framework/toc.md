@@ -72,7 +72,7 @@
 ##### [使用单独项目](core/managing-schemas/migrations/projects.md)
 ##### [多个提供程序](core/managing-schemas/migrations/providers.md)
 ##### [自定义历史记录表](core/managing-schemas/migrations/history-table.md)
-#### [🔧创建和删除 API](core/managing-schemas/ensure-created.md)
+#### [创建和删除 API](core/managing-schemas/ensure-created.md)
 #### [🔧反向工程](core/managing-schemas/scaffolding.md)
 
 ### [查询数据](core/querying/index.md)
