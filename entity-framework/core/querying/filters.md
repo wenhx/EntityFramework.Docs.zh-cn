@@ -28,7 +28,7 @@ ms.locfileid: "42996660"
 
 [!code-csharp[Main](../../../efcore-repo/samples/QueryFilters/Program.cs#Entities)]
 
-请记住_博客_实体上 __tenantId_ 字段的声明。 这会用于将每个博客实例与特定租户相关联。 还会定义_文章_实体类型上的 _IsDeleted_ 属性。 这会用于跟踪文章实例是否已“软删除”。 也就是说，实例标记为已删除，而实际上不会删除基础数据。
+请注意 _Blog_ 实体上 __tenantId_ 字段的声明。 这会用于将每个 _Blog_ 实例与特定租户相关联。 同时在 _Post_ 实体类型上定义了 _IsDeleted_ 属性。 这会用于跟踪一个 _Post_ 实例是否已“软删除”。 也就是说，实例只是被标记为已删除，而非真正删除了基础数据。
 
 接下来，使用 ```HasQueryFilter``` API 在 _OnModelCreating_ 中配置查询筛选器。
 

@@ -14,9 +14,9 @@ ms.locfileid: "42994783"
 # <a name="loading-related-data"></a>加载相关数据
 
 Entity Framework Core 允许在模型中使用导航属性来加载关联实体。 有三种常见的 O/RM 模式可用于加载关联数据。
-* “预先加载”表示从数据库中加载相关数据，作为初始查询的一部分。
-* “显式加载”表示稍后从数据库中显式加载相关数据。
-* “延迟加载”表示在访问导航属性时，从数据库中以透明方式加载相关数据。
+* **预先加载**表示从数据库中加载关联数据，作为初始查询的一部分。
+* **显式加载**表示稍后从数据库中显式加载关联数据。
+* **延迟加载**表示在访问导航属性时，从数据库中以透明方式加载关联数据。
 
 > [!TIP]  
 > 可在 GitHub 上查看此文章的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying)。
