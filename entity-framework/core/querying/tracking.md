@@ -13,14 +13,14 @@ ms.locfileid: "42993350"
 ---
 # <a name="tracking-vs-no-tracking-queries"></a>跟踪与非跟踪查询
 
-跟踪行为可控制 Entity Framework Core 是否将有关实体实例的信息保留在其更改跟踪器中。 如果已跟踪某个实体，则该实体中检测到的任何更改都会在 `SaveChanges()` 期间永久保存到数据库。 Entity Framework Core 还会修复从跟踪查询中获取的实体与先前已加载到 DbContext 实例中的实体之间的导航属性。
+跟踪行为决定了 Entity Framework Core 是否将有关实体实例的信息保留在其更改跟踪器中。 如果已跟踪某个实体，则该实体中检测到的任何更改都会在 `SaveChanges()` 期间永久保存到数据库。 Entity Framework Core 还会修正从跟踪查询中获取的实体与先前已加载到 DbContext 实例中的实体两者之间的导航属性。
 
 > [!TIP]  
 > 可在 GitHub 上查看此文章的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying)。
 
 ## <a name="tracking-queries"></a>跟踪查询
 
-默认情况下，跟踪返回实体类型的查询。 这表示可以对这些实体实例进行更改，并且通过 `SaveChanges()` 永久保存这些更改。
+返回实体类型的查询是默认会被跟踪的。 这表示可以更改这些实体实例，然后通过 `SaveChanges()` 持久化这些更改。
 
 在以下示例中，将检测到对博客评分所做的更改，并在 `SaveChanges()` 期间将这些更改持久化到数据库中。
 
