@@ -13,10 +13,10 @@ ms.locfileid: "42994783"
 ---
 # <a name="loading-related-data"></a>加载相关数据
 
-Entity Framework Core 允许在模型中使用导航属性来加载关联实体。有三种常见的 O/RM 模式可用于加载关联数据。
-* “预先加载”表示从数据库中加载关联数据，作为初始查询的一部分。
-* “显式加载”表示稍后从数据库中显式加载关联数据。
-* “延迟加载”表示在访问导航属性时，从数据库中以透明方式加载关联数据。
+Entity Framework Core 允许在模型中使用导航属性来加载关联实体。 有三种常见的 O/RM 模式可用于加载关联数据。
+* **预先加载**表示从数据库中加载关联数据，作为初始查询的一部分。
+* **显式加载**表示稍后从数据库中显式加载关联数据。
+* **延迟加载**表示在访问导航属性时，从数据库中以透明方式加载关联数据。
 
 > [!TIP]  
 > 可在 GitHub 上查看此文章的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying)。
@@ -28,7 +28,7 @@ Entity Framework Core 允许在模型中使用导航属性来加载关联实体�
 [!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#SingleInclude)]
 
 > [!TIP]  
-> Entity Framework Core 会根据之前已加载到上下文实例中的实体自动填充导航属性。因此，即使不显式包含导航属性的数据，如果先前加载了部分或所有关联实体，则仍可能填充该属性。
+> Entity Framework Core 会根据之前已加载到上下文实例中的实体自动填充导航属性。 因此，即使不显式包含导航属性的数据，如果先前加载了部分或所有关联实体，则仍可能填充该属性。
 
 
 可以在单个查询中包含多个关系的关联数据。
@@ -37,12 +37,12 @@ Entity Framework Core 允许在模型中使用导航属性来加载关联实体�
 
 ### <a name="including-multiple-levels"></a>包含多个层级
 
-使用 `ThenInclude` 方法可以依循关系包含多个层级的关联数据。以下示例加载了所有博客、其关联文章及每篇文章的作者。
+使用 `ThenInclude` 方法可以依循关系包含多个层级的关联数据。 以下示例加载了所有博客、其关联文章及每篇文章的作者。
 
 [!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#SingleThenInclude)]
 
 > [!NOTE]  
-> 当前版本的 Visual Studio 提供的代码完成选项不正确，因此在集合导航属性之后使用 `ThenInclude` 方法时，可能会对正确的表达式提示语法错误。这是 https://github.com/dotnet/roslyn/issues/8237 中跟踪的 IntelliSense bug 的一个特征。只要代码正确无误且能够成功编译，就可以放心地忽略这些语法错误。
+> 当前版本的 Visual Studio 提供的代码完成选项不正确，因此在集合导航属性之后使用 `ThenInclude` 方法时，可能会对正确的表达式提示语法错误。 这是 https://github.com/dotnet/roslyn/issues/8237 中跟踪的 IntelliSense bug 的一个特征。 只要代码正确无误且能够成功编译，就可以放心地忽略这些语法错误。 
 
 可通过链式调用 `ThenInclude`，进一步包含更深级别的关联数据。
 
@@ -52,13 +52,13 @@ Entity Framework Core 允许在模型中使用导航属性来加载关联实体�
 
 [!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#IncludeTree)]
 
-你可能希望将已包含的某个实体的多个关联实体都包含进来。例如，当查询 `Blog` 时，会包含 `Posts` ，然后希望同时包含 `Posts` 的 `Author` 和 `Tags`。为此，需要从根级别开始指定每个包含路径。例如，`Blog -> Posts -> Author` 和 `Blog -> Posts -> Tags`。 这并不意味着会获得冗余联接查询，在大多数情况下，EF 会在生成 SQL 时合并相应的联接查询。
+你可能希望将已包含的某个实体的多个关联实体都包含进来。 例如，当查询 `Blog` 时，会包含 `Posts` ，然后希望同时包含 `Posts` 的 `Author` 和 `Tags`。 为此，需要从根级别开始指定每个包含路径。 例如，`Blog -> Posts -> Author` 和 `Blog -> Posts -> Tags`。 这并不意味着会获得冗余联接查询，在大多数情况下，EF 会在生成 SQL 时合并相应的联接查询。
 
 [!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#MultipleLeafIncludes)]
 
 ### <a name="include-on-derived-types"></a>派生类型上的包含
 
-可以使用 `Include` 和 `ThenInclude` 包含仅在派生类型上定义的导航的关联数据。
+可以使用 `Include` 和 `ThenInclude` 包含仅在派生类型上定义的导航的关联数据。 
 
 给定以下模型：
 
@@ -115,11 +115,11 @@ public class School
 
 如果更改查询，使其不再返回查询最开始的实体类型的实例，则会忽略 include 方法。
 
-以下示例中，include 运算符基于 `Blog`，但 `Select` 运算符将查询改变为返回匿名类型。在这种情况下，include 运算符不起作用。
+以下示例中，include 运算符基于 `Blog`，但 `Select` 运算符将查询改变为返回匿名类型。 在这种情况下，include 运算符不起作用。
 
 [!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#IgnoredInclude)]
 
-默认情况下，当忽略 include 运算符时，EF Core 将记录警告。有关查看日志记录输出的详细信息，请参阅[日志记录](../miscellaneous/logging.md)。可更改 include 运算符被忽略时的行为，比如引发异常或不执行任何操作。将在设置上下文选项时完成此操作（如果使用的是 ASP.NET Core，则通常在 `DbContext.OnConfiguring` 或 `Startup.cs` 中设置）。
+默认情况下，当忽略 include 运算符时，EF Core 将记录警告。 有关查看日志记录输出的详细信息，请参阅[日志记录](../miscellaneous/logging.md)。 可更改 include 运算符被忽略时的行为，比如引发异常或不执行任何操作。 将在设置上下文选项时完成此操作（如果使用的是 ASP.NET Core，则通常在 `DbContext.OnConfiguring` 或 `Startup.cs` 中设置）。
 
 [!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/ThrowOnIgnoredInclude/BloggingContext.cs#OnConfiguring)]
 
@@ -151,7 +151,7 @@ public class School
 > [!NOTE]  
 > EF Core 2.1 中已引入此功能。
 
-使用延迟加载的最简单方式是通过安装 [Microsoft.EntityFrameworkCore.Proxies](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Proxies/) 包，并通过调用 `UseLazyLoadingProxies` 来启用该包。 例如:
+使用延迟加载的最简单方式是通过安装 [Microsoft.EntityFrameworkCore.Proxies](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Proxies/) 包，并通过调用 `UseLazyLoadingProxies` 来启用该包。 例如：
 ```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder
@@ -164,7 +164,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     b => b.UseLazyLoadingProxies()
           .UseSqlServer(myConnectionString));
 ```
-EF Core 接着会为可重写的任何导航属性（即，必须是 `virtual` 且在可被继承的类上）启用延迟加载。例如，在以下实体中，`Post.Blog` 和 `Blog.Posts` 导航属性将被延迟加载。
+EF Core 接着会为可重写的任何导航属性（即，必须是 `virtual` 且在可被继承的类上）启用延迟加载。 例如，在以下实体中，`Post.Blog` 和 `Blog.Posts` 导航属性将被延迟加载。
 ```csharp
 public class Blog
 {
@@ -238,7 +238,7 @@ public class Post
     }
 }
 ```
-这不要求实体类型为可继承的类型，也不要求导航属性必须是虚拟的，且允许通过 `new` 创建的实体实例在附加到上下文后可进行延迟加载。但它需要对 [Microsoft.EntityFrameworkCore.Abstractions](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Abstractions/) 包中定义的 `ILazyLoader` 服务的引用。此包包含所允许的最少的一组类型，以便将依赖此包时所产生的影响降至最低。不过，可以将 `ILazyLoader.Load` 方法以委托的形式注入，这样就可以完全避免依赖于实体类型的任何 EF Core 包。例如:
+这不要求实体类型为可继承的类型，也不要求导航属性必须是虚拟的，且允许通过 `new` 创建的实体实例在附加到上下文后可进行延迟加载。 但它需要对 [Microsoft.EntityFrameworkCore.Abstractions](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Abstractions/) 包中定义的 `ILazyLoader` 服务的引用。 此包包含所允许的最少的一组类型，以便将依赖此包时所产生的影响降至最低。 不过，可以将 `ILazyLoader.Load` 方法以委托的形式注入，这样就可以完全避免依赖于实体类型的任何 EF Core 包。 例如：
 ```csharp
 public class Blog
 {
@@ -309,17 +309,17 @@ public static class PocoLoadingExtensions
 }
 ```
 > [!NOTE]  
-> 延迟加载委托的构造函数参数必须名为“lazyLoader”。未来的一个版本中的配置将计划采用另一个名称。
+> 延迟加载委托的构造函数参数必须名为“lazyLoader”。 未来的一个版本中的配置将计划采用另一个名称。
 
 ## <a name="related-data-and-serialization"></a>关联数据和序列化
 
-由于 EF Core 会自动修正导航属性，因此在对象图中可能会产生循环引用。例如，加载博客及其关联文章会生成引用文章集合的博客对象。而其中每篇文章又会引用该博客。
+由于 EF Core 会自动修正导航属性，因此在对象图中可能会产生循环引用。 例如，加载博客及其关联文章会生成引用文章集合的博客对象。 而其中每篇文章又会引用该博客。
 
-某些序列化框架不允许使用循环引用。例如，Json.NET 在产生循环引用的情况下，会引发以下异常。
+某些序列化框架不允许使用循环引用。 例如，Json.NET 在产生循环引用的情况下，会引发以下异常。
 
 > Newtonsoft.Json.JsonSerializationException：为“MyApplication.Models.Blog”类型的“Blog”属性检测到自引用循环。
 
-如果正在使用 ASP.NET Core，则可以将 Json.NET 配置为忽略在对象图中找到的循环引用。这是在 `Startup.cs` 中通过 `ConfigureServices(...)` 方法实现的。
+如果正在使用 ASP.NET Core，则可以将 Json.NET 配置为忽略在对象图中找到的循环引用。 这是在 `Startup.cs` 中通过 `ConfigureServices(...)` 方法实现的。
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
