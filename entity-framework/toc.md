@@ -95,7 +95,7 @@
 #### [加载关联数据](core/querying/related-data.md)
 #### [客户端求值与服务器求值](core/querying/client-eval.md)
 #### [跟踪与非跟踪](core/querying/tracking.md)
-#### [原始 SQL 查询](core/querying/raw-sql.md)
+#### [原生 SQL 查询](core/querying/raw-sql.md)
 #### [异步查询](core/querying/async.md)
 #### [查询的工作原理](core/querying/overview.md)
 #### [全局查询筛选器](core/querying/filters.md)
