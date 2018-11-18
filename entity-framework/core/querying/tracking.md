@@ -67,7 +67,7 @@ using (var context = new BloggingContext())
 
 ## <a name="tracking-and-projections"></a>跟踪和投影
 
-即使查询的结果类型不是实体类型，但如果结果包含实体类型，则默认情况下也会跟踪这些实体类型。 在以下返回匿名类型的查询中，会跟踪结果集中 `Blog` 的实例。
+即使查询的结果类型不是实体类型，但如果结果中包含实体类型，则默认情况下也会跟踪这些实体类型。 在以下返回匿名类型的查询中，结果集中的 `Blog` 实例会被跟踪。
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/Tracking/Sample.cs?highlight=7)] -->
 ``` csharp

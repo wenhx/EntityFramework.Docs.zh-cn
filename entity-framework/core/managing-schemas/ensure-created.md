@@ -2,13 +2,13 @@
 title: 创建和删除 Api-EF Core
 author: bricelam
 ms.author: bricelam
-ms.date: 11/10/2017
-ms.openlocfilehash: 336f6fd655603a2474a58dfef377e121d9b04c3a
-ms.sourcegitcommit: a088421ecac4f5dc5213208170490181ae2f5f0f
+ms.date: 11/7/2018
+ms.openlocfilehash: 40d9e3aa0aba1bf2bc341f01dd815ed7cb7b48fa
+ms.sourcegitcommit: b3c2b34d5f006ee3b41d6668f16fe7dcad1b4317
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/08/2018
-ms.locfileid: "51285634"
+ms.lasthandoff: 11/15/2018
+ms.locfileid: "51688624"
 ---
 # <a name="create-and-drop-apis"></a>创建和删除 Api
 
@@ -32,7 +32,7 @@ dbContext.Database.EnsureDeleted();
 
 ## <a name="ensurecreated"></a>EnsureCreated
 
-如果数据库不存在，EnsureCreated 将创建该数据库，并初始化该数据库的架构。 如果存在任何表 （包括另一个 DbContext 类的表），则不会进行架构初始化。
+如果数据库不存在，EnsureCreated 将创建该数据库，并初始化该数据库的架构。 如果存在任何表 （包括另一个 DbContext 类的表），则不会初始化架构。
 
 ``` csharp
 // Create the database if it doesn't exist
@@ -52,7 +52,7 @@ var sql = dbContext.Database.GenerateCreateScript();
 
 ## <a name="multiple-dbcontext-classes"></a>多个 DbContext 类
 
-在数据库中没有表时，才能使用 EnsureCreated。 如果有必要，也可以编写自己的检查以查看架构是否需要进行初始化，并可通过 IRelationalDatabaseCreator 服务来初始化架构。
+仅当数据库中不存在表格时，EnsureCreated 才会起作用。 如果有必要，也可以编写自己的检查，来查看架构是否需要进行初始化，并可通过基础 IRelationalDatabaseCreator 服务来初始化架构。
 
 ``` csharp
 // TODO: Check whether the schema needs to be initialized

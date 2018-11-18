@@ -22,7 +22,11 @@ ms.locfileid: "42994739"
 
 如果创建多个互相关联的新实体，则将其中一个添加到上下文时也会添加其他实体。
 
+<<<<<<< HEAD
 在下面的示例中，博客及其三个关联文章会全部插入到数据库中。 这些文章可以被发现并添加，是因为它们可以通过 `Blog.Posts` 导航属性访问。
+=======
+在下面的示例中，博客和三篇相关文章将全部被插入数据库中。 由于可通过 `Blog.Posts` 导航属性访问这些文章，因此可发现并添加它们。
+>>>>>>> aspnet/live
 
 [!code-csharp[Main](../../../samples/core/Saving/Saving/RelatedData/Sample.cs#AddingGraphOfEntities)]
 
@@ -57,6 +61,10 @@ ms.locfileid: "42994739"
 
 有关级联删除行为的工作原理、如何显式配置这些行为以及如何按照约定选择这些行为的详细信息，请参阅[级联删除](cascade-delete.md)。
 
+<<<<<<< HEAD
 在下面的示例中， `Blog` 和 `Post` 之间的关系上配置了级联删除，所以 `post` 实体会被从数据库中删除。
+=======
+在下面的示例中，对 `Blog` 和 `Post` 之间的关系配置了级联删除，因此将从数据库中删除 `post` 实体。
+>>>>>>> aspnet/live
 
 [!code-csharp[Main](../../../samples/core/Saving/Saving/RelatedData/Sample.cs#RemovingRelationships)]

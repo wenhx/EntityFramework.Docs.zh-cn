@@ -36,9 +36,9 @@ ms.locfileid: "42997136"
 
 * SQL 查询不能包含关联数据。 但是，在许多情况下你可以在查询后面紧跟着使用 `Include` 方法以返回关联数据（请参阅[包含关联数据](#including-related-data)）。
 
-* 传递到此方法的 `SELECT` 语句通常应该可以进行编写：如果 EF Core 需要计算服务器上的其他查询运算符（例如，转换 `FromSql` 后应用的 LINQ 运算符），则提供的 SQL 将被视为子查询。 这意味着传递的 SQL 不应包含子查询上无效的任何字符或选项，如：
-  * 尾随分号
-  * 在 SQL Server 上，尾随的查询级提示（例如，`OPTION (HASH JOIN)`）
+* 传递到此方法的 `SELECT` 语句通常应可进行编辑：如果 EF Core 需要在服务器端计算更多查询运算符（例如，转换 `FromSql` 后跟的 LINQ 运算符），则提供的 SQL 将被视为子查询。 这意味着传递的 SQL 不应包含子查询上无效的任何字符或选项，如：
+  * 结尾分号
+  * 在 SQL Server 上，结尾处的查询级提示（例如，`OPTION (HASH JOIN)`）
   * 在 SQL Server 上， `SELECT` 子句中不带 `TOP 100 PERCENT` 的 `ORDER BY` 子句
 
 * 除 `SELECT` 以外的其他 SQL 语句自动识别为不可组合。 因此，存储过程的完整结果将始终返回到客户端，且在内存中计算 `FromSql` 后应用的任何 LINQ 运算符。
