@@ -39,7 +39,7 @@ EF 将自动检测对由上下文跟踪的现有实体所做的更改。 这包�
 
 使用 DbSet.Remove 方法删除实体类的实例。
 
-如果实体已存在于数据库中，则将在“SaveChanges”期间删除该实体。 如果实体尚未保存到数据库（即跟踪为“已添加”），则在调用“SaveChanges”时，该实体会从上下文中删除且不再插入。
+如果实体已存在于数据库中，则将在“SaveChanges”期间删除该实体。 如果实体尚未保存到数据库（即跟踪为“已添加”），则在调用*SaveChanges*时，该实体会从上下文中移除且不再插入。
 
 [!code-csharp[Main](../../../samples/core/Saving/Saving/Basics/Sample.cs#Remove)]
 
