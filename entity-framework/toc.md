@@ -84,7 +84,7 @@
 #### [迁移](core/managing-schemas/migrations/index.md)
 ##### [团队环境](core/managing-schemas/migrations/teams.md)
 ##### [自定义操作](core/managing-schemas/migrations/operations.md)
-##### [使用单独项目](core/managing-schemas/migrations/projects.md)
+##### [使用独立项目](core/managing-schemas/migrations/projects.md)
 ##### [多个提供程序](core/managing-schemas/migrations/providers.md)
 ##### [自定义历史记录表](core/managing-schemas/migrations/history-table.md)
 #### [创建和删除 API](core/managing-schemas/ensure-created.md)
@@ -92,7 +92,7 @@
 
 ### [查询数据](core/querying/index.md)
 #### [基本查询](core/querying/basic.md)
-#### [加载相关数据](core/querying/related-data.md)
+#### [加载关联数据](core/querying/related-data.md)
 #### [客户端与服务器评估](core/querying/client-eval.md)
 #### [跟踪与非跟踪](core/querying/tracking.md)
 #### [原始 SQL 查询](core/querying/raw-sql.md)
@@ -103,13 +103,13 @@
 
 ### [保存数据](core/saving/index.md)
 #### [基本保存](core/saving/basic.md)
-#### [相关数据](core/saving/related-data.md)
+#### [关联数据](core/saving/related-data.md)
 #### [级联删除](core/saving/cascade-delete.md)
 #### [并发冲突](core/saving/concurrency.md)
 #### [事务](core/saving/transactions.md)
 #### [异步保存](core/saving/async.md)
-#### [断开连接的实体](core/saving/disconnected-entities.md)
-#### [已生成属性的显式值](core/saving/explicit-values-generated-properties.md)
+#### [处于连接断开状态的实体](core/saving/disconnected-entities.md)
+#### [生成的属性的显式值](core/saving/explicit-values-generated-properties.md)
 
 ### [支持的 .NET 实现](core/platforms/index.md)
 
