@@ -103,13 +103,13 @@
 
 ### [保存数据](core/saving/index.md)
 #### [基本保存](core/saving/basic.md)
-#### [相关数据](core/saving/related-data.md)
+#### [关联数据](core/saving/related-data.md)
 #### [级联删除](core/saving/cascade-delete.md)
 #### [并发冲突](core/saving/concurrency.md)
 #### [事务](core/saving/transactions.md)
 #### [异步保存](core/saving/async.md)
-#### [断开连接的实体](core/saving/disconnected-entities.md)
-#### [已生成属性的显式值](core/saving/explicit-values-generated-properties.md)
+#### [处于连接断开状态的实体](core/saving/disconnected-entities.md)
+#### [生成的属性的显式值](core/saving/explicit-values-generated-properties.md)
 
 ### [支持的 .NET 实现](core/platforms/index.md)
 
