@@ -55,7 +55,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 一般情况下，连接失败时当前事务会回滚。 但是，如果在连接断开时在事务正在将提交所生成的事务状态为未知。 请参阅此[博客文章](https://blogs.msdn.com/b/adonet/archive/2013/03/11/sql-database-connectivity-and-the-idempotency-issue.aspx)的更多详细信息。
 
-默认情况下，执行策略将重试该操作像该事务已回滚，但如果它不是这种情况将如果这导致异常的新的数据库状态不兼容，或者可能会导致**数据损坏**如果操作不依赖于特定状态，例如在插入新行自动生成键值。
+默认情况下，执行策略将重试该操作，就像该事务已回滚一样。但如果未这样做，当新数据库状态不兼容时，则可能导致异常；或者当操作不依赖于特定状态时（例如使用自动生成的键值插入新行时），则可能导致数据损坏。
 
 有几种方法来解决此问题。
 
