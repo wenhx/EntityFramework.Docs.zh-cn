@@ -20,7 +20,7 @@ ms.locfileid: "42996186"
 
 ## <a name="conventions"></a>约定
 
-按照约定，它是应由数据库提供程序选择适当的数据类型的属性。 对于具有长度的属性，数据库提供程序通常将选择允许的最长长度的数据的数据类型。 例如，将使用 Microsoft SQL Server`nvarchar(max)`有关`string`属性 (或`nvarchar(450)`如果列用作键)。
+按照约定，应由数据库提供程序为属性选择适当的数据类型。 对于具有长度的属性，数据库提供程序通常将选择允许最长数据长度的数据类型。 例如，Microsoft SQL Server 将对字符`string`属性使用 `nvarchar(max)`（如果该列用作键，则会使用 `nvarchar(450)`）。
 
 ## <a name="data-annotations"></a>数据注释
 
