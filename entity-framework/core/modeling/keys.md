@@ -1,5 +1,5 @@
 ---
-title: EF Core 中的主键 
+title: EF Core 中的主键
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 912ffef7-86a0-4cdc-a776-55f907459d20
@@ -13,7 +13,7 @@ ms.locfileid: "42994016"
 ---
 # <a name="keys-primary"></a>主键
 
-键用作每个实体实例的主要唯一标识符。使用关系数据库时，这会映射到主键的概念。您还可以配置不是主键的唯一标识符（有关详细信息，请参阅[备用键](alternate-keys.md)）
+键可作为每个实体实例的主唯一标识符。 使用关系数据库时，此值映射到*主键*的概念。 还可以配置一个不是主键的唯一标识符（有关详细信息，请参阅[备用键](alternate-keys.md)）
 
 ## <a name="conventions"></a>约定
 
