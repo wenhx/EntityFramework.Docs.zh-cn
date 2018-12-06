@@ -11,7 +11,6 @@ ms.contentlocale: zh-CN
 ms.lasthandoff: 11/26/2018
 ms.locfileid: "42994016"
 ---
-
 # <a name="keys-primary"></a>键（主键）
 
 键的作用是作为每个实体实例的主唯一标识符。 使用关系数据库时，键映射到（数据库的）*主键*的概念。还可以配置一个不是主键的唯一标识符（有关详细信息，请参阅[备用键](alternate-keys.md)）
