@@ -13,13 +13,13 @@ ms.locfileid: "42994981"
 ---
 # <a name="alternating-between-multiple-models-with-the-same-dbcontext-type"></a>具有相同 DbContext 类型的多个模型之间切换
 
-生成的模型`OnModelCreating`无法使用属性的上下文更改如何构建的模型。 例如它可用来排除某些属性：
+`OnModelCreating`中构建的模型可以使用上下文中的属性来更改模型的构建方式。例如，它可以用于排除某个属性：
 
 [!code-csharp[Main](../../../samples/core/DynamicModel/DynamicContext.cs?name=Class)]
 
 ## <a name="imodelcachekeyfactory"></a>IModelCacheKeyFactory
-但是如果您尝试执行上述无需进行其他更改则会得到相同的模型每次新的上下文创建的任何值的`IgnoreIntProperty`。 这由于缓存的机制 EF 使用通过仅调用来提高性能的模型`OnModelCreating`一次，并且缓存模型。
+但是，如果您尝试执行上述操作而不进行其他更改，则可以在每次创建新上下文时指定`IgnoreIntProperty`，都会获得相同的模型。 这由于EF的缓存的机制导致的： EF 通过仅调用模型`OnModelCreating`一次并且缓存模型来提高性能。
 
-默认情况下 EF 假定任何给定的上下文类型的模型都将是相同。 若要实现此目的的默认实现`IModelCacheKeyFactory`返回只包含上下文类型的密钥。 若要更改此你需要更换`IModelCacheKeyFactory`服务。 新的实现需要对使用其他模型项返回一个对象进行比较，`Equals`会考虑会影响模型的所有变量的方法：
+默认情况下 EF 假定任何给定的上下文类型的模型都将是相同。为此，`IModelCacheKeyFactory`的默认实现返回一个仅包含上下文类型的键。若要更改这个行为，你需要更换`IModelCacheKeyFactory`服务。 新的实现需要对使用其他模型项返回一个对象进行比较，`Equals`方法会考虑会影响模型的所有变量：
 
 [!code-csharp[Main](../../../samples/core/DynamicModel/DynamicModelCacheKeyFactory.cs?name=Class)]
