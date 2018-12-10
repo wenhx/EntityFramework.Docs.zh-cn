@@ -4,16 +4,16 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
 uid: core/querying/raw-sql
-ms.openlocfilehash: 21cb688d6775039def3b0be12768da71b5d96531
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 0ad9731840c5f72064f2f66932b9867a0144f437
+ms.sourcegitcommit: 2da6f9b05e1ce3a46491e5cc68f17758bdeb6b02
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42997136"
+ms.lasthandoff: 12/06/2018
+ms.locfileid: "53006864"
 ---
 # <a name="raw-sql-queries"></a>原生 SQL 查询
 
-通过 Entity Framework Core 可以在使用关系数据库时下降到原始 SQL 查询。 这在无法使用 LINQ 表达要执行的查询，或因使用 LINQ 查询导致低效的 SQL 被发送到数据库时非常有用。 原始 SQL 查询可返回实体类型，或者，从 EF Core 2.1 开始，可返回模型中的[查询类型](xref:core/modeling/query-types)。
+通过 Entity Framework Core 可以在使用关系数据库时下降到原始 SQL 查询。 这在无法使用 LINQ 表达要执行的查询，或因使用 LINQ 查询而导致低效的 SQL 查询时非常有用。 原始 SQL 查询可返回实体类型，或者，从 EF Core 2.1 开始，可返回模型中的[查询类型](xref:core/modeling/query-types)。
 
 > [!TIP]  
 > 可在 GitHub 上查看此文章的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying)。
@@ -24,7 +24,7 @@ ms.locfileid: "42997136"
 
 * SQL 查询必须返回实体或查询类型的所有属性的数据。
 
-* 结果集中的列名必须与属性映射到的列名匹配。 请注意，这与 EF6 不同，EF6 中忽略了原始 SQL 查询时的属性/列映射关系，只需结果集列名与属性名相匹配即可。
+* 结果集中的列名必须与属性映射到的列名称匹配。 请注意，这与 EF6 不同，EF6 中忽略了原始 SQL 查询时的属性/列映射关系，只需结果集列名与属性名相匹配即可。
 
 * SQL 查询不能包含关联数据。 但是，在许多情况下你可以在查询后面紧跟着使用 `Include` 方法以返回关联数据（请参阅[包含关联数据](#including-related-data)）。
 
@@ -33,7 +33,7 @@ ms.locfileid: "42997136"
   * 在 SQL Server 上，结尾处的查询级提示（例如，`OPTION (HASH JOIN)`）
   * 在 SQL Server 上， `SELECT` 子句中不带 `TOP 100 PERCENT` 的 `ORDER BY` 子句
 
-* 除 `SELECT` 以外的其他 SQL 语句自动识别为不可组合。 因此，存储过程的完整结果将始终返回到客户端，且在内存中计算 `FromSql` 后应用的任何 LINQ 运算符。
+* 除 `SELECT` 以外的其他 SQL 语句自动识别为不可编写。 因此，存储过程的完整结果将始终返回到客户端，且在内存中计算 `FromSql` 后应用的任何 LINQ 运算符。
 
 ## <a name="basic-raw-sql-queries"></a>基本原生 SQL 查询
 
@@ -88,7 +88,7 @@ var blogs = context.Blogs
 var user = new SqlParameter("user", "johndoe");
 
 var blogs = context.Blogs
-    .FromSql("EXECUTE dbo.GetMostPopularBlogsForUser @user", user)
+    .FromSql("EXECUTE dbo.GetMostPopularBlogsForUser @user", user)
     .ToList();
 ```
 
@@ -118,8 +118,8 @@ var blogs = context.Blogs
 var searchTerm = ".NET";
 
 var blogs = context.Blogs
-    .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
-    .Include(b => b.Posts)
+    .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
+    .Include(b => b.Posts)
     .ToList();
 ```
 
