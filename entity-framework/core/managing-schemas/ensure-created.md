@@ -12,18 +12,18 @@ ms.locfileid: "51688624"
 ---
 # <a name="create-and-drop-apis"></a>创建和删除 Api
 
-EnsureCreated 和 EnsureDeleted 方法提供[迁移](migrations/index.md)的轻量化替代方法，用于管理数据库架构。 暂时性和时在架构更改，可以删除数据时，这些方法是在方案中有用。 例如在原型制作、测试期间或用于本地缓存。
+EnsureCreated 和 EnsureDeleted 方法提供[迁移](migrations/index.md)的轻量级替代以管理数据库架构。 当数据是临时的或者数据库架构变化后可以丢弃数据时，这是非常有用的。 例如在原型制作时，测试，或本地缓存的情况下。
 
-某些提供程序（尤其是非关系的）不支持迁移。 对于这些提供程序，EnsureCreated 通常是初始化数据库架构的最简单方法。
+某些提供程序 （尤其是非关系的） 不支持迁移。 此时，EnsureCreated 通常是初始化数据库架构的最简单方法。
 
 > [!WARNING]
-> EnsureCreated 和迁移不能很好地协同工作。 如果使用了“迁移”，则不要使用 EnsureCreated 来初始化架构。
+> EnsureCreated 和迁移不能很好地协同工作。 如果您使用的迁移，则不要使用 EnsureCreated 来初始化架构。
 
-从 EnsureCreated 到“迁移”的过渡不是无缝体验。 若要执行此操作的最简单方法是删除数据库，然后重新创建该使用迁移。 如果你希望在将来使用迁移，最好只是开始而不是使用 EnsureCreated 的迁移。
+从 EnsureCreated 到迁移的过渡不是无缝体验。 达成此目的的最简单方法是删除数据库，然后重新使用迁移创建该数据库。 如果你希望在将来使用迁移，最好一开始就使用迁移，而不是 EnsureCreated 。
 
 ## <a name="ensuredeleted"></a>EnsureDeleted
 
-如果数据库存在，EnsureDeleted 方法会将其删除。 如果您没有适当的权限，将引发异常。
+如果数据库存在，EnsureDeleted 方法将确保其被删除。 如果你没有相应权限，则将引发异常。
 
 ``` csharp
 // Drop the database if it exists

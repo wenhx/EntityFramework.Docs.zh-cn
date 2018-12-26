@@ -1,5 +1,5 @@
 ---
-title: 客户端与服务器评估 - EF Core
+title: 客户端与服务器求值 - EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 8b6697cc-7067-4dc2-8007-85d80503d123
@@ -11,7 +11,7 @@ ms.contentlocale: zh-CN
 ms.lasthandoff: 09/09/2018
 ms.locfileid: "44250798"
 ---
-# <a name="client-vs-server-evaluation"></a>客户端与服务器评估
+# <a name="client-vs-server-evaluation"></a>客户端求值与服务器求值
 
 Entity Framework Core 支持部分查询在客户端上求值，而将其他部分推送到数据库执行。 由数据库提供程序确定查询的哪些部分会在数据库中求值。
 

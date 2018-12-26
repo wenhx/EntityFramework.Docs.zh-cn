@@ -41,7 +41,7 @@ ms.locfileid: "53028162"
 
 ## <a name="disabling-filters"></a>禁用筛选器
 
-可使用 ```IgnoreQueryFilters()``` 运算符对各个 LINQ 查询禁用筛选器。
+可使用 ```IgnoreQueryFilters()``` 方法对各个 LINQ 查询禁用筛选器。
 
 [!code-csharp[Main](../../../samples/core/QueryFilters/Program.cs#IgnoreFilters)]
 
