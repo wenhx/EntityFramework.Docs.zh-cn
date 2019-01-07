@@ -5,12 +5,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 6bb12583-c39a-454c-8d83-d2a2793ca9ef
 uid: index
-ms.openlocfilehash: 2846545bdd7f29ba620592dacd288e3feb9ce6c4
-ms.sourcegitcommit: 064b09431f05848830e145a6cd65cad58881557c
+ms.openlocfilehash: f49db30ccc3a2017a8deba0dea1861071322d623
+ms.sourcegitcommit: e66745c9f91258b2cacf5ff263141be3cba4b09e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/28/2018
-ms.locfileid: "52552563"
+ms.lasthandoff: 01/06/2019
+ms.locfileid: "54058704"
 ---
 <div id="main" class="v2">
     <div class="container">
