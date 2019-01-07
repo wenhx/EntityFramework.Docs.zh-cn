@@ -3,12 +3,12 @@ title: 异步查询和保存的 EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: d56e6f1d-4bd1-4b50-9558-9a30e04a8ec3
-ms.openlocfilehash: 4ed4f5c13341f33ccff8325a5ddacd8f7b195a76
-ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
+ms.openlocfilehash: de702365251fd05c423c8590ccaefa7d8542ad02
+ms.sourcegitcommit: e66745c9f91258b2cacf5ff263141be3cba4b09e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/18/2018
-ms.locfileid: "46283818"
+ms.lasthandoff: 01/06/2019
+ms.locfileid: "54058755"
 ---
 # <a name="async-query-and-save"></a>异步查询和保存
 > [!NOTE]
@@ -76,7 +76,7 @@ EF6 引入了异步查询和保存使用的支持[async 和 await 关键字](htt
     }
 ```
 
- 
+ 
 
 ## <a name="create-a-synchronous-program"></a>创建一个同步程序，
 
@@ -96,7 +96,6 @@ EF6 引入了异步查询和保存使用的支持[async 和 await 关键字](htt
             {
                 PerformDatabaseOperations();
 
-                Console.WriteLine();
                 Console.WriteLine("Quote of the day");
                 Console.WriteLine(" Don't worry about the world coming to an end today... ");
                 Console.WriteLine(" It's already tomorrow in Australia.");
@@ -115,16 +114,18 @@ EF6 引入了异步查询和保存使用的支持[async 和 await 关键字](htt
                     {
                         Name = "Test Blog #" + (db.Blogs.Count() + 1)
                     });
+                    Console.WriteLine("Calling SaveChanges.");
                     db.SaveChanges();
+                    Console.WriteLine("SaveChanges completed.");
 
                     // Query for all blogs ordered by name
+                    Console.WriteLine("Executing query.");
                     var blogs = (from b in db.Blogs
                                 orderby b.Name
                                 select b).ToList();
 
                     // Write all blogs out to Console
-                    Console.WriteLine();
-                    Console.WriteLine("All blogs:");
+                    Console.WriteLine("Query completed with following results:");
                     foreach (var blog in blogs)
                     {
                         Console.WriteLine(" " + blog.Name);
@@ -145,20 +146,20 @@ EF6 引入了异步查询和保存使用的支持[async 和 await 关键字](htt
 4.  查询返回，而结果将写入到**控制台**
 5.  一天中的引号写入到**控制台**
 
-![同步输出](~/ef6/media/syncoutput.png) 
+![同步输出](~/ef6/media/syncoutput.png) 
 
- 
+ 
 
 ## <a name="making-it-asynchronous"></a>使其异步
 
 现在，我们将我们的程序启动并运行，我们可以开始使用新的 async 和 await 关键字。 我们已对 Program.cs 所做以下更改
 
-1.  第 2 行： using 语句**System.Data.Entity**命名空间提供了我们访问到 EF 异步扩展方法。
-2.  第 4 行： using 语句**System.Threading.Tasks**命名空间，我们便使用**任务**类型。
-3.  第 12 和 18 行： 我们捕获作为任务，用于监视的进度**PerformSomeDatabaseOperations** （第 12 行），然后阻止此程序执行任务为完成一次的所有工作程序完成 （第 18 行）。
-4.  第 25 行： 我们已更新**PerformSomeDatabaseOperations**要标记为已**异步**并返回**任务**。
-5.  行 35： 我们现在调用 SaveChanges 的异步版本和等待其完成。
-6.  行 42： 我们现在调用 ToList 的异步版本和正等待的结果。
+1.  第 2 行：使用语句**System.Data.Entity**命名空间提供了我们访问到 EF 异步扩展方法。
+2.  第 4 行：使用语句**System.Threading.Tasks**命名空间，我们便使用**任务**类型。
+3.  12 和 18 行：我们正在捕获作为任务，用于监视的进度**PerformSomeDatabaseOperations** （第 12 行），然后阻止此程序执行任务为完成一次的所有工作程序完成 （第 18 行）。
+4.  第 25 行：我们已更新**PerformSomeDatabaseOperations**要标记为已**异步**并返回**任务**。
+5.  第 35 行：我们现在正在调用 SaveChanges 的异步版本，并等待其完成。
+6.  行 42:现在，我们正在呼叫 ToList 和正在等待结果的异步版本。
 
 有关 system.data.entity 的引用命名空间中可用的扩展方法的完整列表，请参阅 QueryableExtensions 类。 *您还需要添加"using System.Data.Entity"到语句。*
 
@@ -227,9 +228,9 @@ EF6 引入了异步查询和保存使用的支持[async 和 await 关键字](htt
 4.  所有查询**博客**发送到数据库*同样，托管的线程是免费的数据库中处理查询时执行其他工作。由于所有其他执行完成后，该线程将只需暂停等待调用不过。*
 5.  查询返回，而结果将写入到**控制台**
 
-![异步输出](~/ef6/media/asyncoutput.png) 
+![异步输出](~/ef6/media/asyncoutput.png) 
 
- 
+ 
 
 ## <a name="the-takeaway"></a>要点
 

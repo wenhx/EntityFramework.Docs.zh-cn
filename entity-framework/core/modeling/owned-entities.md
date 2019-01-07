@@ -5,12 +5,12 @@ ms.author: ansvyryd
 ms.date: 02/26/2018
 ms.assetid: 2B0BADCE-E23E-4B28-B8EE-537883E16DF3
 uid: core/modeling/owned-entities
-ms.openlocfilehash: 58da3b6b951b3fa4aa04ec75f5759555c1f0cde5
-ms.sourcegitcommit: 39080d38e1adea90db741257e60dc0e7ed08aa82
+ms.openlocfilehash: fe7e07b8bd483fb3f9b672ee78ef7541f06a21a4
+ms.sourcegitcommit: e66745c9f91258b2cacf5ff263141be3cba4b09e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/03/2018
-ms.locfileid: "50980023"
+ms.lasthandoff: 01/06/2019
+ms.locfileid: "54058768"
 ---
 # <a name="owned-entity-types"></a>固有的实体类型
 
@@ -50,7 +50,7 @@ EF Core 让你可以只显示对其他实体类型的导航属性的模型实体
 ## <a name="collections-of-owned-types"></a>固有类型的集合
 
 >[!NOTE]
-> 此功能是 EF Core 2.2 中的新增功能。
+> 此为 EF Core 2.2 中的新增功能。
 
 若要配置的固有类型的集合`OwnsMany`应在`OnModelCreating`。 但是主要密钥将不会配置按照约定，因此它需要显式指定。 它是通常会为这些类型的合并的所有者和其他唯一属性，也可以在卷影状态中的外键的实体使用复杂的密钥：
 
@@ -126,4 +126,4 @@ EF Core 让你可以只显示对其他实体类型的导航属性的模型实体
 
 ### <a name="shortcomings-in-previous-versions"></a>在早期版本中的不足之处
 - 在 EF Core 2.0 中，导航到拥有不能在派生的实体类型中声明实体类型，除非自有的实体被显式映射到一个单独的表所有者层次结构中。 EF Core 2.1 中已删除此限制
-- En EF Core 2.0 和 2.1 仅引用导航，固有类型到受支持。 在 EF Core 2.2 中消除这一限制
+- 在 EF Core 2.0 和 2.1 仅引用中支持导航到固有类型。 在 EF Core 2.2 中消除这一限制

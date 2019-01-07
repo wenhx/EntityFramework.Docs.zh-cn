@@ -3,12 +3,12 @@ title: 自定义迁移历史记录表的 EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: ed5518f0-a9a6-454e-9e98-a4fa7748c8d0
-ms.openlocfilehash: e3faefc4b812ec4bc440ed2bb48747053d8cb1b3
-ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
+ms.openlocfilehash: eb19f367611a86f685557a6741a5f2f0bad6b718
+ms.sourcegitcommit: e66745c9f91258b2cacf5ff263141be3cba4b09e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/18/2018
-ms.locfileid: "46283688"
+ms.lasthandoff: 01/06/2019
+ms.locfileid: "54058742"
 ---
 # <a name="customizing-the-migrations-history-table"></a>自定义迁移历史记录表
 > [!NOTE]
@@ -19,7 +19,7 @@ ms.locfileid: "46283688"
 
 ## <a name="what-is-migrations-history-table"></a>迁移历史记录表是什么？
 
-迁移历史记录表是用于存储有关迁移应用到数据库的详细信息的 Code First 迁移的表。 默认情况下在数据库中的表的名称是\_\_应用第一个迁移执行操作数据库时，将创建 MigrationHistory 和它。 在 Entity Framework 5 此表是系统表，如果应用程序使用 Microsoft Sql Server 数据库。 但是这已在 Entity Framework 6 和迁移历史记录表不再标记系统表。
+迁移历史记录表是用于存储有关迁移应用到数据库的详细信息的 Code First 迁移的表。 默认情况下在数据库中的表的名称是\_ \_MigrationHistory 和它将第一次迁移应用到数据库时创建。 在 Entity Framework 5 此表是系统表，如果应用程序使用 Microsoft Sql Server 数据库。 但是这已在 Entity Framework 6 和迁移历史记录表不再标记系统表。
 
 ## <a name="why-customize-migrations-history-table"></a>为什么要自定义迁移历史记录表？
 
@@ -43,7 +43,7 @@ ms.locfileid: "46283688"
 >[!NOTE]
 > 配置 EF 模型时通常不需要调用基。重写 OnModelCreating 方法由于 DbContext.OnModelCreating() 具有空白正文从 onmodelcreating （)。 配置迁移历史记录表时，这不是这种情况。 在此情况下第一个需要在 onmodelcreating （） 重写中执行操作是实际调用基。Onmodelcreating （)。 这会将迁移历史记录表配置的默认方式，其中，然后调整中重写方法中。
 
-让我们假设你想要重命名的迁移历史记录表，并将其放到名为"admin"的自定义架构。 除了数据库管理员希望您 MigrationId 列重命名为迁移\_id。  可以通过创建从 HistoryContext 派生的以下类实现此目的：
+让我们假设你想要重命名的迁移历史记录表，并将其放到名为"admin"的自定义架构。 除了数据库管理员希望您 MigrationId 列重命名为迁移\_id。  可以通过创建从 HistoryContext 派生的以下类实现此目的：
 
 ``` csharp
     using System.Data.Common;
