@@ -5,12 +5,12 @@ ms.author: riande
 ms.date: 08/03/2018
 ms.assetid: e153627f-f132-4c11-b13c-6c9a607addce
 uid: core/get-started/aspnetcore/new-db
-ms.openlocfilehash: 2248c60045a914c902f1c958a86c69b283abd722
-ms.sourcegitcommit: 5e11125c9b838ce356d673ef5504aec477321724
+ms.openlocfilehash: 4734586adc89e9c1d866a1b4accd8b5e51fe2bb0
+ms.sourcegitcommit: ebf661025d2ad2b62466fa7bf0e0772a7811cbe7
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/25/2018
-ms.locfileid: "50022231"
+ms.lasthandoff: 01/11/2019
+ms.locfileid: "54211161"
 ---
 # <a name="getting-started-with-ef-core-on-aspnet-core-with-a-new-database"></a>使用新数据库在 ASP.NET Core 上开始使用 EF Core
 
@@ -54,7 +54,7 @@ ms.locfileid: "50022231"
   * 确保将“身份验证”设置为“无身份验证”
   * 单击“确定” 
 
-警告：如果你使用“个人用户帐户”而不是“无身份验证”，则会将 Entity Framework Core 模型添加到 `Models\IdentityModel.cs` 中的项目。 使用在本教程中学习的技巧，可以选择添加第二个模型，或者扩展此现有模型以包含实体类。
+警告:如果你使用“单独用户帐户”（而不是“无”）进行身份验证，Entity Framework Core 模型会添加到 `Models\IdentityModel.cs` 中的项目。 使用在本教程中学习的技巧，可以选择添加第二个模型，或者扩展此现有模型以包含实体类。
 
 # <a name="net-core-clitabnetcore-cli"></a>[.NET Core CLI](#tab/netcore-cli)
 
@@ -201,7 +201,7 @@ ms.locfileid: "50022231"
 基架引擎创建以下文件：
 
 * 控制器 (Controllers/BlogsController.cs)
-* “创建”、“删除”、“详细信息”、“编辑”和“索引”页面的 Razor 视图 (Views/Movies/*.cshtml)
+* “创建”、“删除”、“详细信息”、“编辑”和“索引”页面的 Razor 视图 (Views/Blogs/*.cshtml)
 
 ## <a name="run-the-application"></a>运行此应用程序
 
@@ -230,4 +230,4 @@ dotnet run
 
 * [教程：使用 SQLite 通过新数据库在 .NET Core 上开始使用 EF Core](xref:core/get-started/netcore/new-db-sqlite)
 * [教程：在 ASP.NET Core 中开始使用 Razor Pages](https://docs.microsoft.com/aspnet/core/tutorials/razor-pages/razor-pages-start)
-* [教程：ASP.NET Core 中的 Razor Pages 和 Entity Framework Core](https://docs.microsoft.com/aspnet/core/data/ef-rp/intro)
+* [教程：在 ASP.NET Core 中结合使用 Razor Pages 和 Entity Framework Core](https://docs.microsoft.com/aspnet/core/data/ef-rp/intro)

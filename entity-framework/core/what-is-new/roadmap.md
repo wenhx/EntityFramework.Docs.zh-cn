@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/20/2018
 ms.assetid: 834C9729-7F6E-4355-917D-DE3EE9FE149E
 uid: core/what-is-new/roadmap
-ms.openlocfilehash: f18de8e8cb4fbe81bb2f983a00c9dd2f46be6073
-ms.sourcegitcommit: a6082a2caee62029f101eb1000656966195cd6ee
+ms.openlocfilehash: 7eba9e1a8e145ef407f844ff3a3ab3069495b7ae
+ms.sourcegitcommit: e66745c9f91258b2cacf5ff263141be3cba4b09e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 12/10/2018
-ms.locfileid: "53182015"
+ms.lasthandoff: 01/06/2019
+ms.locfileid: "54058729"
 ---
 # <a name="entity-framework-core-roadmap"></a>Entity Framework Core 路线图
 
@@ -37,7 +37,7 @@ ms.locfileid: "53182015"
   此提供程序将针对 Cosmos DB 中的 SQL API 启用大部分 EF Core 功能，如自动更改跟踪、LINQ 和值转换。 我们在 EF Core 2.2 之前开始这一开发，并且[我们已发布了一些提供程序的预览版](https://blogs.msdn.microsoft.com/dotnet/2018/10/17/announcing-entity-framework-core-2-2-preview-3/)。
   新的计划是与 EF Core 3.0 一起继续开发提供程序。   
 
-- **C# 8.0 支持 ([#12047](https://github.com/aspnet/EntityFrameworkCore/issues/12047))**：我们希望我们的客户利用 [C# 8.0 中推出的某些新功能](https://blogs.msdn.microsoft.com/dotnet/2018/11/12/building-c-8-0/)，如使用 EF Core 时的异步流（包括每个 Await）和可以为 null 的引用类型。
+- **C# 8.0 支持 ([#12047](https://github.com/aspnet/EntityFrameworkCore/issues/12047))**：我们希望客户利用 [C# 8.0 中推出的一些新功能](https://blogs.msdn.microsoft.com/dotnet/2018/11/12/building-c-8-0/)，如在使用 EF Core 的同时使用异步流（对每个都有 await）和可以为 null 的引用类型。
 
 - **将工程数据库视图反向为查询类型 ([#1679](https://github.com/aspnet/EntityFrameworkCore/issues/1679))**：在 EF Core 2.1 中，我们添加了对查询类型的支持，该功能可以表示可从数据库中读取的数据，但无法对其进行更新。
   查询类型非常适合于映射数据库视图，因此，在 EF Core 3.0 中，我们想要自动创建数据库视图的查询类型。

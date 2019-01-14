@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 08/02/2018
 ms.assetid: 2bc68bea-ff77-4860-bf0b-cf00db6712a0
 uid: core/get-started/aspnetcore/existing-db
-ms.openlocfilehash: 23cd53b0e162afc5db0243b7032bb9c5f18bfb35
-ms.sourcegitcommit: b3c2b34d5f006ee3b41d6668f16fe7dcad1b4317
+ms.openlocfilehash: c8acb95395968f710e6b896de6c3598cb7b23676
+ms.sourcegitcommit: e66745c9f91258b2cacf5ff263141be3cba4b09e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/15/2018
-ms.locfileid: "51688688"
+ms.lasthandoff: 01/06/2019
+ms.locfileid: "54058781"
 ---
 # <a name="getting-started-with-ef-core-on-aspnet-core-with-an-existing-database"></a>通过现有数据库在 ASP.NET Core 上开始使用 EF Core
 
@@ -48,7 +48,7 @@ ms.locfileid: "51688688"
 * “文件”>“新建”>“项目...”
 * 从左菜单中选择“已安装”>“Visual C#”>“Web”。
 * 选择“ASP.NET Core Web 应用程序”项目模板
-* 输入 **EFGetStarted.AspNetCore.ExistingDb**作为名称，然后单击“确定”
+* 输入 EFGetStarted.AspNetCore.ExistingDb 作为名称（它必须完全匹配稍后在代码中使用的命名空间），再单击“确定” 
 * 等待“新建 ASP.NET Core Web 应用程序”对话框显示出来
 * 确保目标框架下拉列表设置为 .NET Core，版本下拉列表设置为 ASP.NET Core 2.1
 * 选择“Web 应用程序(模型视图控制器)”模板
