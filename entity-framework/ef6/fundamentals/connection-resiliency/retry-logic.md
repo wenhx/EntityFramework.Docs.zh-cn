@@ -3,12 +3,12 @@ title: 连接复原和重试逻辑-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 47d68ac1-927e-4842-ab8c-ed8c8698dff2
-ms.openlocfilehash: 09ebed18b43f864af36b6931f45638f3a3056229
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 7d6aa870cc32a2b344457fbb04525a7c2c8d1c61
+ms.sourcegitcommit: 159c2e9afed7745e7512730ffffaf154bcf2ff4a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490800"
+ms.lasthandoff: 02/03/2019
+ms.locfileid: "55668760"
 ---
 # <a name="connection-resiliency-and-retry-logic"></a>连接复原和重试逻辑
 > [!NOTE]
@@ -124,7 +124,7 @@ using (var db = new BloggingContext())
 
 仅使用重试执行策略，因为 EF 不知道的任何先前的操作以及如何重试时，不支持此操作。 例如，如果第二个 SaveChanges 未通过，则 EF 无法再具有所需的信息以第一次的 SaveChanges 调用重试。  
 
-### <a name="workaround-suspend-execution-strategy"></a>解决方法： 挂起执行策略  
+### <a name="workaround-suspend-execution-strategy"></a>解决方法：挂起执行策略  
 
 一种解决方法是代码的挂起的需要使用用户段的重试执行策略启动的事务。 若要执行此操作的最简单方法是添加到你的代码的 SuspendExecutionStrategy 标志基于配置类和更改执行策略 lambda 时要返回的默认 (非 retying) 执行策略设置的标志。  
 
@@ -149,7 +149,7 @@ namespace Demo
         {
             get
             {
-                return (bool?)CallContext.LogicalGetData("SuspendExecutionStrategy")  false;
+                return (bool?)CallContext.LogicalGetData("SuspendExecutionStrategy") ?? false;
             }
             set
             {
@@ -185,7 +185,7 @@ using (var db = new BloggingContext())
 }
 ```  
 
-### <a name="workaround-manually-call-execution-strategy"></a>解决方法： 手动调用执行策略  
+### <a name="workaround-manually-call-execution-strategy"></a>解决方法：手动调用执行策略  
 
 另一个选项是手动使用执行策略并为其提供逻辑来运行，整个集，以便它可以重试的所有内容如果其中一个操作失败。 我们仍需要挂起执行策略的使用方法，以便在可重试代码块内使用任何上下文不尝试重试-上面所示。  
 

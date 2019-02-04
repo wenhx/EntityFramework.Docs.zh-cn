@@ -3,12 +3,12 @@ title: Entity Framework 6 提供程序模型的 EF6
 author: divega
 ms.date: 06/27/2018
 ms.assetid: 066832F0-D51B-4655-8BE7-C983C557E0E4
-ms.openlocfilehash: d07a8689fe968bb1512095a59a61abc7ac346a31
-ms.sourcegitcommit: 5e11125c9b838ce356d673ef5504aec477321724
+ms.openlocfilehash: 8cbf6f87e0936f374c3d8a0c15a0e1d9c828f764
+ms.sourcegitcommit: 159c2e9afed7745e7512730ffffaf154bcf2ff4a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/25/2018
-ms.locfileid: "50022319"
+ms.lasthandoff: 02/03/2019
+ms.locfileid: "55668747"
 ---
 # <a name="the-entity-framework-6-provider-model"></a>Entity Framework 6 提供程序模型
 
@@ -28,7 +28,7 @@ EF 提供程序实际上是特定于提供程序的服务定义的这些服务�
 
 ### <a name="dbproviderfactory"></a>DbProviderFactory
 
-EF 依赖于具有某一类型派生自[System.Data.Common.DbProviderFactory](https://msdn.microsoft.com/library/system.data.common.dbproviderfactory.aspx)执行的所有低级数据库访问。 DbProviderFactory 不是实际的 EF 的一部分，但却为 ADO.NET 提供程序提供的入口点的.NET Framework 中的类可用于通过 EF，其他 O/Rm 或直接由应用程序获取实例的连接、 命令、 参数和提供程序中的其他 ADO.NET 抽象无关的方式。 有关 DbProviderFactory 的详细信息中找到[ADO.NET 的 MSDN 文档](https://msdn.microsoft.com/library/a6cd7c08.aspx)。
+EF 依赖于具有某一类型派生自[System.Data.Common.DbProviderFactory](https://msdn.microsoft.com/library/system.data.common.dbproviderfactory.aspx)执行的所有低级数据库访问。 DbProviderFactory 不是实际的 EF 的一部分，但却为 ADO.NET 提供程序提供的入口点的.NET Framework 中的类可用于通过 EF，其他 O/Rm 或直接由应用程序获取实例的连接、 命令、 参数和提供程序中的其他 ADO.NET 抽象无关的方式。 中可以找到有关 DbProviderFactory 详细信息[ADO.NET 的 MSDN 文档](https://msdn.microsoft.com/library/a6cd7c08.aspx)。
 
 ### <a name="dbproviderservices"></a>DbProviderServices
 

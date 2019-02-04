@@ -3,12 +3,12 @@ title: 异步查询和保存的 EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: d56e6f1d-4bd1-4b50-9558-9a30e04a8ec3
-ms.openlocfilehash: de702365251fd05c423c8590ccaefa7d8542ad02
-ms.sourcegitcommit: e66745c9f91258b2cacf5ff263141be3cba4b09e
+ms.openlocfilehash: 89c7b9d533d37b4c9e123f37d8ab27c67ba26cc8
+ms.sourcegitcommit: 159c2e9afed7745e7512730ffffaf154bcf2ff4a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/06/2019
-ms.locfileid: "54058755"
+ms.lasthandoff: 02/03/2019
+ms.locfileid: "55668708"
 ---
 # <a name="async-query-and-save"></a>异步查询和保存
 > [!NOTE]
@@ -223,7 +223,7 @@ EF6 引入了异步查询和保存使用的支持[async 和 await 关键字](htt
 
 1.  **SaveChanges**开始推送新**博客**到数据库*后将命令发送到该数据库没有更多计算当前托管线程上所需时间。**PerformDatabaseOperations**方法将返回 （即使它尚未完成执行），在 Main 方法中的程序流将继续。*
 2.  **一天中的引号写入到控制台**
-    *由于没有更多工作要做 Main 方法中，托管的线程被阻止在等待上调用，直到数据库操作完成。完成后，其余我们**PerformDatabaseOperations** *将执行。
+    *由于没有更多工作要做 Main 方法中，托管的线程被阻止在等待上调用，直到数据库操作完成。完成后，其余我们**PerformDatabaseOperations**将执行。*
 3.  **SaveChanges**完成
 4.  所有查询**博客**发送到数据库*同样，托管的线程是免费的数据库中处理查询时执行其他工作。由于所有其他执行完成后，该线程将只需暂停等待调用不过。*
 5.  查询返回，而结果将写入到**控制台**
