@@ -3,12 +3,12 @@ title: 实体框架提供程序 - EF6
 author: divega
 ms.date: 06/27/2018
 ms.assetid: 7BFB7763-CD6C-4520-93A2-7B265F5FA586
-ms.openlocfilehash: 0cfe6c30d6533b0207f78a031d342847a7f68632
-ms.sourcegitcommit: 5e11125c9b838ce356d673ef5504aec477321724
+ms.openlocfilehash: f6e34d1273bd1004ce9d1610ce3613068088eb5e
+ms.sourcegitcommit: 159c2e9afed7745e7512730ffffaf154bcf2ff4a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/25/2018
-ms.locfileid: "50022218"
+ms.lasthandoff: 02/03/2019
+ms.locfileid: "55668734"
 ---
 # <a name="entity-framework-6-providers"></a>实体框架 6 提供程序
 > [!NOTE]
@@ -31,13 +31,13 @@ ms.locfileid: "50022218"
 *   [**CData Software 提供程序**](http://www.cdata.com/ado/)
     *   来自 [CData Software](http://www.cdata.com/ado/) 的提供各种数据存储的第三方提供程序，包括 Salesforce、Azure 表存储、MySql 等等
 *   **Firebird 提供程序**
-    *   作为 [NuGet 包](http://www.nuget.org/packages/FirebirdSql.Data.FirebirdClient/)提供
+    *   作为 [NuGet 包](https://www.nuget.org/packages/EntityFramework.Firebird/)提供
 *   **Visual Fox Pro 提供程序**
     *   作为 [NuGet 包](https://www.nuget.org/packages/VFPEntityFrameworkProvider2/) 提供
 *   **MySQL**
-    *   [MySQL Connector/Net](http://dev.mysql.com/downloads/connector/net/)
+    *   [MySQL Connector/NET for Entity Framework](https://dev.mysql.com/doc/connector-net/en/connector-net-entityframework60.html)
 *   **PostgreSQL**
-    *   Npgsql 作为 [NuGet 包](http://www.nuget.org/packages/Npgsql.EF6/)提供
+    *   Npgsql 作为 [NuGet 包](https://www.nuget.org/packages/EntityFramework6.Npgsql/)提供
 *   **Oracle**
     *   ODP.NET 作为 [NuGet 包](https://www.nuget.org/packages/Oracle.ManagedDataAccess.EntityFramework/)提供
 

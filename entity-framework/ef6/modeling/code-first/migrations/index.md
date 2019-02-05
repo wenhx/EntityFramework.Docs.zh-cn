@@ -3,12 +3,12 @@ title: Code First 迁移 - EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 36591d8f-36e1-4835-8a51-90f34f633d1e
-ms.openlocfilehash: f408ef861a2992783142fa1483d1433ca710399a
-ms.sourcegitcommit: 15022dd06d919c29b1189c82611ea32f9fdc6617
+ms.openlocfilehash: e5a91af73bab9d45b0f1f4242ce503c6b6f407f6
+ms.sourcegitcommit: 159c2e9afed7745e7512730ffffaf154bcf2ff4a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/27/2018
-ms.locfileid: "47415791"
+ms.lasthandoff: 02/03/2019
+ms.locfileid: "55668695"
 ---
 # <a name="code-first-migrations"></a>Code First 迁移
 如果使用的是 Code First 工作流，推荐使用 Code First 迁移改进应用程序的数据库架构。 迁移提供一组允许以下操作的工具：
@@ -288,7 +288,7 @@ Code First 迁移出色的构建了这些更改，但我们可能还需要做出
 
 假设想在运行 AddBlogUrl 迁移后将数据库迁移到其之前的状态。 此时可使用 –TargetMigration 切换为降级到此迁移。
 
--   在包管理器控制台中运行 Update-Database –TargetMigration: AddBlogUrl 命令。
+-   在包管理器控制台中运行 Update-Database –TargetMigration:AddBlogUrl 命令。
 
 此命令将为 AddBlogAbstract 和 AddPostClass 迁移运行 Down 脚本。
 
@@ -300,7 +300,7 @@ Code First 迁移出色的构建了这些更改，但我们可能还需要做出
 
 -   运行 Update-Database 命令，但是这次需指定 –Script 标志，以便将更改写入脚本，而不是应用更改。 我们还将指定要为其生成脚本的源和目标迁移。 我们希望脚本从空数据库 ($InitialDatabase) 转为最新版本（迁移 AddPostAbstract）。
     如果未指定目标迁移，迁移将使用最新的迁移作为目标。如果未指定源迁移，迁移将使用数据库的当前状态。
--   在包管理器控制台中运行 Update-Database -Script -SourceMigration: $InitialDatabase -TargetMigration: AddPostAbstract 命令
+-   在包管理器控制台中运行 Update-Database -Script -SourceMigration: $InitialDatabase -TargetMigration:AddPostAbstract 命令
 
 Code First 迁移将运行迁移管道，但并非是应用更改，而是将更改写入到 .sql 文件。 生成脚本后，将在 Visual Studio 中打开，以供查看或保存。
 
@@ -330,7 +330,7 @@ Code First 迁移将运行迁移管道，但并非是应用更改，而是将更
         {
             static void Main(string[] args)
             {
-                Database.SetInitializer(new MigrateDatabaseToLatestVersion\<BlogContext, Configuration>());
+                Database.SetInitializer(new MigrateDatabaseToLatestVersion<BlogContext, Configuration>());
 
                 using (var db = new BlogContext())
                 {
