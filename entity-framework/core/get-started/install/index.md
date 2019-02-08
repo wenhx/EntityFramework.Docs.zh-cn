@@ -4,12 +4,12 @@ author: divega
 ms.date: 08/06/2017
 ms.assetid: 608cc774-c570-4809-8a3e-cd2c8446b8b2
 uid: core/get-started/install/index
-ms.openlocfilehash: 58c79d477d590eea355a922b3e1233bbecb305cc
-ms.sourcegitcommit: a6082a2caee62029f101eb1000656966195cd6ee
+ms.openlocfilehash: 5ebc4edba07063ad5e77154adcde5f2664c0d748
+ms.sourcegitcommit: 85d17524d8e022f933cde7fc848313f57dfd3eb8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 12/10/2018
-ms.locfileid: "53181976"
+ms.lasthandoff: 02/06/2019
+ms.locfileid: "55760517"
 ---
 # <a name="installing-entity-framework-core"></a>安装 Entity Framework Core
 
@@ -31,7 +31,7 @@ ms.locfileid: "53181976"
 
 如果要生成 ASP.NET Core 应用程序，不需要安装内存中和 SQL Server 提供程序。 这些提供程序随 EF Core 运行时一起包含在当前版本的 ASP.NET Core 中。  
 
-要安装或更新 NuGet 包，可以使用 [.NET Core 命令行界面 (CLI)、Visual Studio 包管理器对话框或 Visual Studio 包管理器控制台。
+要安装或更新 NuGet 包，可以使用 .NET Core 命令行界面 (CLI)、Visual Studio 包管理器对话框或 Visual Studio 包管理器控制台。
 
 ### <a name="net-core-cli"></a>.NET Core CLI
 
