@@ -3,12 +3,12 @@ title: 基于代码的配置-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 13886d24-2c74-4a00-89eb-aa0dee328d83
-ms.openlocfilehash: 7c7da8992fd1b29f998e08c13d445c1d2d8cc2ce
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: c317f112f713612f7b9aef3764a0bd004fef5424
+ms.sourcegitcommit: 735715f10cc8a231c213e4f055d79f0effd86570
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490813"
+ms.lasthandoff: 02/16/2019
+ms.locfileid: "56325348"
 ---
 # <a name="code-based-configuration"></a>基于代码的配置
 > [!NOTE]
@@ -45,7 +45,7 @@ namespace MyNamespace
         public MyConfiguration()
         {
             SetExecutionStrategy("System.Data.SqlClient", () => new SqlAzureExecutionStrategy());
-            SetDefaultConnectionFactory(new LocalDBConnectionFactory("mssqllocaldb"));
+            SetDefaultConnectionFactory(new LocalDbConnectionFactory("mssqllocaldb"));
         }
     }
 }
