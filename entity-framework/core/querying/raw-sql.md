@@ -4,40 +4,23 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
 uid: core/querying/raw-sql
-ms.openlocfilehash: 5bddddfbc2fe8d0ba99914f03b28bde4076fae42
-ms.sourcegitcommit: e66745c9f91258b2cacf5ff263141be3cba4b09e
+ms.openlocfilehash: 343162596780e6146b57f73a38221701009cd855
+ms.sourcegitcommit: 85d17524d8e022f933cde7fc848313f57dfd3eb8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/06/2019
-ms.locfileid: "54058705"
+ms.lasthandoff: 02/06/2019
+ms.locfileid: "55760504"
 ---
-# <a name="raw-sql-queries"></a><span data-ttu-id="8e1f4-102">原生 SQL 查询</span><span class="sxs-lookup"><span data-stu-id="8e1f4-102">Raw SQL Queries</span></span>
+# <a name="raw-sql-queries"></a><span data-ttu-id="48c41-102">原生 SQL 查询</span><span class="sxs-lookup"><span data-stu-id="48c41-102">Raw SQL Queries</span></span>
 
-<span data-ttu-id="8e1f4-103">通过 Entity Framework Core 可以在使用关系数据库时下降到原始 SQL 查询。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-103">Entity Framework Core allows you to drop down to raw SQL queries when working with a relational database.</span></span> <span data-ttu-id="8e1f4-104">这在无法使用 LINQ 表达要执行的查询，或因使用 LINQ 查询而导致低效的 SQL 查询时非常有用。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-104">This can be useful if the query you want to perform can't be expressed using LINQ, or if using a LINQ query is resulting in inefficient SQL queries.</span></span> <span data-ttu-id="8e1f4-105">原始 SQL 查询可返回实体类型，或者，从 EF Core 2.1 开始，可返回模型中的[查询类型](xref:core/modeling/query-types)。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-105">Raw SQL queries can return entity types or, starting with EF Core 2.1, [query types](xref:core/modeling/query-types) that are part of your model.</span></span>
+<span data-ttu-id="48c41-103">通过 Entity Framework Core 可以在使用关系数据库时下降到原始 SQL 查询。</span><span class="sxs-lookup"><span data-stu-id="48c41-103">Entity Framework Core allows you to drop down to raw SQL queries when working with a relational database.</span></span> <span data-ttu-id="48c41-104">这在无法使用 LINQ 表达要执行的查询，或因使用 LINQ 查询而导致低效的 SQL 查询时非常有用。</span><span class="sxs-lookup"><span data-stu-id="48c41-104">This can be useful if the query you want to perform can't be expressed using LINQ, or if using a LINQ query is resulting in inefficient SQL queries.</span></span> <span data-ttu-id="48c41-105">原始 SQL 查询可返回实体类型，或者，从 EF Core 2.1 开始，可返回模型中的[查询类型](xref:core/modeling/query-types)。</span><span class="sxs-lookup"><span data-stu-id="48c41-105">Raw SQL queries can return entity types or, starting with EF Core 2.1, [query types](xref:core/modeling/query-types) that are part of your model.</span></span>
 
 > [!TIP]  
-> <span data-ttu-id="8e1f4-106">可在 GitHub 上查看此文章的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying)。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-106">You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) on GitHub.</span></span>
+> <span data-ttu-id="48c41-106">可在 GitHub 上查看此文章的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying)。</span><span class="sxs-lookup"><span data-stu-id="48c41-106">You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) on GitHub.</span></span>
 
-## <a name="limitations"></a><span data-ttu-id="8e1f4-107">限制</span><span class="sxs-lookup"><span data-stu-id="8e1f4-107">Limitations</span></span>
+## <a name="basic-raw-sql-queries"></a><span data-ttu-id="48c41-107">基本原生 SQL 查询</span><span class="sxs-lookup"><span data-stu-id="48c41-107">Basic raw SQL queries</span></span>
 
-<span data-ttu-id="8e1f4-108">使用原生 SQL 查询时需注意以下几个限制：</span><span class="sxs-lookup"><span data-stu-id="8e1f4-108">There are a few limitations to be aware of when using raw SQL queries:</span></span>
-
-* <span data-ttu-id="8e1f4-109">SQL 查询必须返回实体或查询类型的所有属性的数据。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-109">The SQL query must return data for all properties of the entity or query type.</span></span>
-
-* <span data-ttu-id="8e1f4-110">结果集中的列名必须与属性映射到的列名称匹配。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-110">The column names in the result set must match the column names that properties are mapped to.</span></span> <span data-ttu-id="8e1f4-111">请注意，这与 EF6 不同，EF6 中忽略了原始 SQL 查询时的属性/列映射关系，只需结果集列名与属性名相匹配即可。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-111">Note this is different from EF6 where property/column mapping was ignored for raw SQL queries and result set column names had to match the property names.</span></span>
-
-* <span data-ttu-id="8e1f4-112">SQL 查询不能包含关联数据。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-112">The SQL query cannot contain related data.</span></span> <span data-ttu-id="8e1f4-113">但是，在许多情况下你可以在查询后面紧跟着使用 `Include` 方法以返回关联数据（请参阅[包含关联数据](#including-related-data)）。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-113">However, in many cases you can compose on top of the query using the `Include` operator to return related data (see [Including related data](#including-related-data)).</span></span>
-
-* <span data-ttu-id="8e1f4-114">传递到此方法的 `SELECT` 语句通常应该是可组合的：如果 EF Core 需要在服务器端计算更多查询运算符（例如，转换 `FromSql` 后跟的 LINQ 运算符），所提供的 SQL 会被视为子查询。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-114">`SELECT` statements passed to this method should generally be composable: If EF Core needs to evaluate additional query operators on the server (for example, to translate LINQ operators applied after `FromSql`), the supplied SQL will be treated as a subquery.</span></span> <span data-ttu-id="8e1f4-115">这意味着传递的 SQL 不应包含子查询上无效的任何字符或选项，如：</span><span class="sxs-lookup"><span data-stu-id="8e1f4-115">This means that the SQL passed should not contain any characters or options that are not valid on a subquery, such as:</span></span>
-  * <span data-ttu-id="8e1f4-116">结尾分号</span><span class="sxs-lookup"><span data-stu-id="8e1f4-116">a trailing semicolon</span></span>
-  * <span data-ttu-id="8e1f4-117">在 SQL Server 上，结尾处的查询级提示（例如，`OPTION (HASH JOIN)`）</span><span class="sxs-lookup"><span data-stu-id="8e1f4-117">On SQL Server, a trailing query-level hint (for example, `OPTION (HASH JOIN)`)</span></span>
-  * <span data-ttu-id="8e1f4-118">在 SQL Server 上， `SELECT` 子句中不带 `TOP 100 PERCENT` 的 `ORDER BY` 子句</span><span class="sxs-lookup"><span data-stu-id="8e1f4-118">On SQL Server, an `ORDER BY` clause that is not accompanied of `TOP 100 PERCENT` in the `SELECT` clause</span></span>
-
-* <span data-ttu-id="8e1f4-119">除 `SELECT` 以外的其他 SQL 语句自动识别为不可编写。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-119">SQL statements other than `SELECT` are recognized automatically as non-composable.</span></span> <span data-ttu-id="8e1f4-120">因此，存储过程的完整结果将始终返回到客户端，且在内存中计算 `FromSql` 后应用的任何 LINQ 运算符。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-120">As a consequence, the full results of stored procedures are always returned to the client and any LINQ operators applied after `FromSql` are evaluated in-memory.</span></span>
-
-## <a name="basic-raw-sql-queries"></a><span data-ttu-id="8e1f4-121">基本原生 SQL 查询</span><span class="sxs-lookup"><span data-stu-id="8e1f4-121">Basic raw SQL queries</span></span>
-
-<span data-ttu-id="8e1f4-122">可以使用 *FromSql* 扩展方法基于原生 SQL 查询开始 LINQ 查询。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-122">You can use the *FromSql* extension method to begin a LINQ query based on a raw SQL query.</span></span>
+<span data-ttu-id="48c41-108">可以使用 *FromSql* 扩展方法基于原生 SQL 查询开始 LINQ 查询。</span><span class="sxs-lookup"><span data-stu-id="48c41-108">You can use the *FromSql* extension method to begin a LINQ query based on a raw SQL query.</span></span>
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
@@ -46,7 +29,7 @@ var blogs = context.Blogs
     .ToList();
 ```
 
-<span data-ttu-id="8e1f4-123">原生 SQL 查询可用于执行存储过程。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-123">Raw SQL queries can be used to execute a stored procedure.</span></span>
+<span data-ttu-id="48c41-109">原生 SQL 查询可用于执行存储过程。</span><span class="sxs-lookup"><span data-stu-id="48c41-109">Raw SQL queries can be used to execute a stored procedure.</span></span>
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
@@ -55,11 +38,11 @@ var blogs = context.Blogs
     .ToList();
 ```
 
-## <a name="passing-parameters"></a><span data-ttu-id="8e1f4-124">传递参数</span><span class="sxs-lookup"><span data-stu-id="8e1f4-124">Passing parameters</span></span>
+## <a name="passing-parameters"></a><span data-ttu-id="48c41-110">传递参数</span><span class="sxs-lookup"><span data-stu-id="48c41-110">Passing parameters</span></span>
 
-<span data-ttu-id="8e1f4-125">正如接受 SQL 的任何 API 一样，务必参数化任何用户输入以抵御 SQL 注入攻击。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-125">As with any API that accepts SQL, it is important to parameterize any user input to protect against a SQL injection attack.</span></span> <span data-ttu-id="8e1f4-126">可以将参数占位符包含在 SQL 查询字符串中，然后提供参数值作为其他参数。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-126">You can include parameter placeholders in the SQL query string and then supply parameter values as additional arguments.</span></span> <span data-ttu-id="8e1f4-127">提供的任何参数值将自动转换为 `DbParameter`。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-127">Any parameter values you supply will automatically be converted to a `DbParameter`.</span></span>
+<span data-ttu-id="48c41-111">正如接受 SQL 的任何 API 一样，务必参数化任何用户输入以抵御 SQL 注入攻击。</span><span class="sxs-lookup"><span data-stu-id="48c41-111">As with any API that accepts SQL, it is important to parameterize any user input to protect against a SQL injection attack.</span></span> <span data-ttu-id="48c41-112">可以将参数占位符包含在 SQL 查询字符串中，然后提供参数值作为其他参数。</span><span class="sxs-lookup"><span data-stu-id="48c41-112">You can include parameter placeholders in the SQL query string and then supply parameter values as additional arguments.</span></span> <span data-ttu-id="48c41-113">提供的任何参数值将自动转换为 `DbParameter`。</span><span class="sxs-lookup"><span data-stu-id="48c41-113">Any parameter values you supply will automatically be converted to a `DbParameter`.</span></span>
 
-<span data-ttu-id="8e1f4-128">下面的示例将一个参数传递到存储过程。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-128">The following example passes a single parameter to a stored procedure.</span></span> <span data-ttu-id="8e1f4-129">尽管这看上去可能像 `String.Format` 语法，但提供的值包装在参数中，且生成的参数名称插入在指定 `{0}` 占位符的位置。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-129">While this may look like `String.Format` syntax, the supplied value is wrapped in a parameter and the generated parameter name inserted where the `{0}` placeholder was specified.</span></span>
+<span data-ttu-id="48c41-114">下面的示例将一个参数传递到存储过程。</span><span class="sxs-lookup"><span data-stu-id="48c41-114">The following example passes a single parameter to a stored procedure.</span></span> <span data-ttu-id="48c41-115">尽管这看上去可能像 `String.Format` 语法，但提供的值包装在参数中，且生成的参数名称插入在指定 `{0}` 占位符的位置。</span><span class="sxs-lookup"><span data-stu-id="48c41-115">While this may look like `String.Format` syntax, the supplied value is wrapped in a parameter and the generated parameter name inserted where the `{0}` placeholder was specified.</span></span>
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
@@ -70,7 +53,7 @@ var blogs = context.Blogs
     .ToList();
 ```
 
-<span data-ttu-id="8e1f4-130">这是相同的查询，但使用 EF Core 2.0 及更高版本支持的字符串内插语法：</span><span class="sxs-lookup"><span data-stu-id="8e1f4-130">This is the same query but using string interpolation syntax, which is supported in EF Core 2.0 and above:</span></span>
+<span data-ttu-id="48c41-116">这是相同的查询，但使用 EF Core 2.0 及更高版本支持的字符串内插语法：</span><span class="sxs-lookup"><span data-stu-id="48c41-116">This is the same query but using string interpolation syntax, which is supported in EF Core 2.0 and above:</span></span>
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
@@ -81,7 +64,7 @@ var blogs = context.Blogs
     .ToList();
 ```
 
-<span data-ttu-id="8e1f4-131">还可以构造 DbParameter 并将其作为参数值提供。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-131">You can also construct a DbParameter and supply it as a parameter value.</span></span> <span data-ttu-id="8e1f4-132">这样可以在 SQL 查询字符串中使用命名参数。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-132">This allows you to use named parameters in the SQL query string.</span></span>
+<span data-ttu-id="48c41-117">还可以构造 DbParameter 并将其作为参数值提供。</span><span class="sxs-lookup"><span data-stu-id="48c41-117">You can also construct a DbParameter and supply it as a parameter value.</span></span> <span data-ttu-id="48c41-118">这样可以在 SQL 查询字符串中使用命名参数。</span><span class="sxs-lookup"><span data-stu-id="48c41-118">This allows you to use named parameters in the SQL query string.</span></span>
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
@@ -92,11 +75,11 @@ var blogs = context.Blogs
     .ToList();
 ```
 
-## <a name="composing-with-linq"></a><span data-ttu-id="8e1f4-133">使用 LINQ 编写</span><span class="sxs-lookup"><span data-stu-id="8e1f4-133">Composing with LINQ</span></span>
+## <a name="composing-with-linq"></a><span data-ttu-id="48c41-119">使用 LINQ 编写</span><span class="sxs-lookup"><span data-stu-id="48c41-119">Composing with LINQ</span></span>
 
-<span data-ttu-id="8e1f4-134">如果发送到数据库中的 SQL 查询是可组合的，则可以在原始 SQL 查询后面紧跟着使用 LINQ 运算符。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-134">If the SQL query can be composed on in the database, then you can compose on top of the initial raw SQL query using LINQ operators.</span></span> <span data-ttu-id="8e1f4-135">以 `SELECT` 关键字开始的 SQL 查询一般是可组合的。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-135">SQL queries that can be composed on begin with the `SELECT` keyword.</span></span>
+<span data-ttu-id="48c41-120">如果发送到数据库中的 SQL 查询是可组合的，则可以在原始 SQL 查询后面紧跟着使用 LINQ 运算符。</span><span class="sxs-lookup"><span data-stu-id="48c41-120">If the SQL query can be composed on in the database, then you can compose on top of the initial raw SQL query using LINQ operators.</span></span> <span data-ttu-id="48c41-121">以 `SELECT` 关键字开始的 SQL 查询一般是可组合的。</span><span class="sxs-lookup"><span data-stu-id="48c41-121">SQL queries that can be composed on begin with the `SELECT` keyword.</span></span>
 
-<span data-ttu-id="8e1f4-136">下面的示例使用原始 SQL 从一个表值函数 (Table-Valued Function，TVF) 中进行查询，然后结合使用 LINQ 在其上进行筛选和排序。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-136">The following example uses a raw SQL query that selects from a Table-Valued Function (TVF) and then composes on it using LINQ to perform filtering and sorting.</span></span>
+<span data-ttu-id="48c41-122">下面的示例使用原始 SQL 从一个表值函数 (Table-Valued Function，TVF) 中进行查询，然后结合使用 LINQ 在其上进行筛选和排序。</span><span class="sxs-lookup"><span data-stu-id="48c41-122">The following example uses a raw SQL query that selects from a Table-Valued Function (TVF) and then composes on it using LINQ to perform filtering and sorting.</span></span>
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
@@ -109,9 +92,25 @@ var blogs = context.Blogs
     .ToList();
 ```
 
-### <a name="including-related-data"></a><span data-ttu-id="8e1f4-137">包含关联数据</span><span class="sxs-lookup"><span data-stu-id="8e1f4-137">Including related data</span></span>
+## <a name="change-tracking"></a><span data-ttu-id="48c41-123">更改跟踪</span><span class="sxs-lookup"><span data-stu-id="48c41-123">Change Tracking</span></span>
 
-<span data-ttu-id="8e1f4-138">结合 LINQ 运算符可将关联数据包含在查询中。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-138">Composing with LINQ operators can be used to include related data in the query.</span></span>
+<span data-ttu-id="48c41-124">使用 `FromSql()` 的查询遵循与 EF Core 中所有其他 LINQ 查询完全相同的更改跟踪规则。</span><span class="sxs-lookup"><span data-stu-id="48c41-124">Queries that use the `FromSql()` follow the exact same change tracking rules as any other LINQ query in EF Core.</span></span> <span data-ttu-id="48c41-125">例如，如果该查询投影实体类型，默认情况下会跟踪结果。</span><span class="sxs-lookup"><span data-stu-id="48c41-125">For example, if the query projects entity types, the results will be tracked by default.</span></span>  
+
+<span data-ttu-id="48c41-126">下面的示例使用原始 SQL 查询，该查询从表值函数中进行选择，然后使用对 .AsNoTracking() 的 teh 调用禁用更改跟踪：</span><span class="sxs-lookup"><span data-stu-id="48c41-126">The following example uses a raw SQL query that selects from a Table-Valued Function (TVF), then disables change tracking with teh call to .AsNoTracking():</span></span>
+
+<!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
+``` csharp
+var searchTerm = ".NET";
+
+var blogs = context.Query<SearchBlogsDto>()
+    .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
+    .AsNoTracking()
+    .ToList();
+```
+
+## <a name="including-related-data"></a><span data-ttu-id="48c41-127">包含关联数据</span><span class="sxs-lookup"><span data-stu-id="48c41-127">Including related data</span></span>
+
+<span data-ttu-id="48c41-128">`Include()` 方法可用于添加相关数据，就像对其他 LINQ 查询那样：</span><span class="sxs-lookup"><span data-stu-id="48c41-128">The `Include()` method can be used to include related data, just like with any other LINQ query:</span></span>
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
@@ -123,5 +122,22 @@ var blogs = context.Blogs
     .ToList();
 ```
 
+## <a name="limitations"></a><span data-ttu-id="48c41-129">限制</span><span class="sxs-lookup"><span data-stu-id="48c41-129">Limitations</span></span>
+
+<span data-ttu-id="48c41-130">使用原生 SQL 查询时需注意以下几个限制：</span><span class="sxs-lookup"><span data-stu-id="48c41-130">There are a few limitations to be aware of when using raw SQL queries:</span></span>
+
+* <span data-ttu-id="48c41-131">SQL 查询必须返回实体或查询类型的所有属性的数据。</span><span class="sxs-lookup"><span data-stu-id="48c41-131">The SQL query must return data for all properties of the entity or query type.</span></span>
+
+* <span data-ttu-id="48c41-132">结果集中的列名必须与属性映射到的列名称匹配。</span><span class="sxs-lookup"><span data-stu-id="48c41-132">The column names in the result set must match the column names that properties are mapped to.</span></span> <span data-ttu-id="48c41-133">请注意，这与 EF6 不同，EF6 中忽略了原始 SQL 查询时的属性/列映射关系，只需结果集列名与属性名相匹配即可。</span><span class="sxs-lookup"><span data-stu-id="48c41-133">Note this is different from EF6 where property/column mapping was ignored for raw SQL queries and result set column names had to match the property names.</span></span>
+
+* <span data-ttu-id="48c41-134">SQL 查询不能包含关联数据。</span><span class="sxs-lookup"><span data-stu-id="48c41-134">The SQL query cannot contain related data.</span></span> <span data-ttu-id="48c41-135">但是，在许多情况下你可以在查询后面紧跟着使用 `Include` 方法以返回关联数据（请参阅[包含关联数据](#including-related-data)）。</span><span class="sxs-lookup"><span data-stu-id="48c41-135">However, in many cases you can compose on top of the query using the `Include` operator to return related data (see [Including related data](#including-related-data)).</span></span>
+
+* <span data-ttu-id="48c41-136">传递到此方法的 `SELECT` 语句通常应该是可组合的：如果 EF Core 需要在服务器端计算更多查询运算符（例如，转换 `FromSql` 后跟的 LINQ 运算符），所提供的 SQL 会被视为子查询。</span><span class="sxs-lookup"><span data-stu-id="48c41-136">`SELECT` statements passed to this method should generally be composable: If EF Core needs to evaluate additional query operators on the server (for example, to translate LINQ operators applied after `FromSql`), the supplied SQL will be treated as a subquery.</span></span> <span data-ttu-id="48c41-137">这意味着传递的 SQL 不应包含子查询上无效的任何字符或选项，如：</span><span class="sxs-lookup"><span data-stu-id="48c41-137">This means that the SQL passed should not contain any characters or options that are not valid on a subquery, such as:</span></span>
+  * <span data-ttu-id="48c41-138">结尾分号</span><span class="sxs-lookup"><span data-stu-id="48c41-138">a trailing semicolon</span></span>
+  * <span data-ttu-id="48c41-139">在 SQL Server 上，结尾处的查询级提示（例如，`OPTION (HASH JOIN)`）</span><span class="sxs-lookup"><span data-stu-id="48c41-139">On SQL Server, a trailing query-level hint (for example, `OPTION (HASH JOIN)`)</span></span>
+  * <span data-ttu-id="48c41-140">在 SQL Server 上， `SELECT` 子句中不带 `TOP 100 PERCENT` 的 `ORDER BY` 子句</span><span class="sxs-lookup"><span data-stu-id="48c41-140">On SQL Server, an `ORDER BY` clause that is not accompanied of `TOP 100 PERCENT` in the `SELECT` clause</span></span>
+
+* <span data-ttu-id="48c41-141">除 `SELECT` 以外的其他 SQL 语句自动识别为不可编写。</span><span class="sxs-lookup"><span data-stu-id="48c41-141">SQL statements other than `SELECT` are recognized automatically as non-composable.</span></span> <span data-ttu-id="48c41-142">因此，存储过程的完整结果将始终返回到客户端，且在内存中计算 `FromSql` 后应用的任何 LINQ 运算符。</span><span class="sxs-lookup"><span data-stu-id="48c41-142">As a consequence, the full results of stored procedures are always returned to the client and any LINQ operators applied after `FromSql` are evaluated in-memory.</span></span>
+
 > [!WARNING]  
-> <span data-ttu-id="8e1f4-139">**始终对原始 SQL 查询使用参数化：** 使用接受原始 SQL 字符串（如 `FromSql` 和 `ExecuteSqlCommand`）的 API，可以轻松地将值作为参数传递。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-139">**Always use parameterization for raw SQL queries:** APIs that accept a raw SQL string such as `FromSql` and `ExecuteSqlCommand` allow values to be easily passed as parameters.</span></span> <span data-ttu-id="8e1f4-140">除了验证用户输入，还应始终为原始 SQL 查询或命令中使用的任何值启用参数化传值机制。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-140">In addition to validating user input, always use parameterization for any values used in a raw SQL query/command.</span></span> <span data-ttu-id="8e1f4-141">如果使用字符串拼接来动态生成查询字符串中的任何部分，则你应负责验证所有输入以抵御 SQL 注入攻击。</span><span class="sxs-lookup"><span data-stu-id="8e1f4-141">If you are using string concatenation to dynamically build any part of the query string then you are responsible for validating any input to protect against SQL injection attacks.</span></span>
+> <span data-ttu-id="48c41-143">**始终对原始 SQL 查询使用参数化：** 使用接受原始 SQL 字符串（如 `FromSql` 和 `ExecuteSqlCommand`）的 API，可以轻松地将值作为参数传递。</span><span class="sxs-lookup"><span data-stu-id="48c41-143">**Always use parameterization for raw SQL queries:** APIs that accept a raw SQL string such as `FromSql` and `ExecuteSqlCommand` allow values to be easily passed as parameters.</span></span> <span data-ttu-id="48c41-144">除了验证用户输入，还应始终为原始 SQL 查询或命令中使用的任何值启用参数化传值机制。</span><span class="sxs-lookup"><span data-stu-id="48c41-144">In addition to validating user input, always use parameterization for any values used in a raw SQL query/command.</span></span> <span data-ttu-id="48c41-145">如果使用字符串拼接来动态生成查询字符串中的任何部分，则你应负责验证所有输入以抵御 SQL 注入攻击。</span><span class="sxs-lookup"><span data-stu-id="48c41-145">If you are using string concatenation to dynamically build any part of the query string then you are responsible for validating any input to protect against SQL injection attacks.</span></span>
