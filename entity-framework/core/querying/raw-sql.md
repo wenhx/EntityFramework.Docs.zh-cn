@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
 uid: core/querying/raw-sql
-ms.openlocfilehash: 5bddddfbc2fe8d0ba99914f03b28bde4076fae42
-ms.sourcegitcommit: e66745c9f91258b2cacf5ff263141be3cba4b09e
+ms.openlocfilehash: 343162596780e6146b57f73a38221701009cd855
+ms.sourcegitcommit: 85d17524d8e022f933cde7fc848313f57dfd3eb8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/06/2019
-ms.locfileid: "54058705"
+ms.lasthandoff: 02/06/2019
+ms.locfileid: "55760504"
 ---
 # <a name="raw-sql-queries"></a>原生 SQL 查询
 
@@ -17,23 +17,6 @@ ms.locfileid: "54058705"
 
 > [!TIP]  
 > 可在 GitHub 上查看此文章的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying)。
-
-## <a name="limitations"></a>限制
-
-使用原生 SQL 查询时需注意以下几个限制：
-
-* SQL 查询必须返回实体或查询类型的所有属性的数据。
-
-* 结果集中的列名必须与属性映射到的列名称匹配。 请注意，这与 EF6 不同，EF6 中忽略了原始 SQL 查询时的属性/列映射关系，只需结果集列名与属性名相匹配即可。
-
-* SQL 查询不能包含关联数据。 但是，在许多情况下你可以在查询后面紧跟着使用 `Include` 方法以返回关联数据（请参阅[包含关联数据](#including-related-data)）。
-
-* 传递到此方法的 `SELECT` 语句通常应该是可组合的：如果 EF Core 需要在服务器端计算更多查询运算符（例如，转换 `FromSql` 后跟的 LINQ 运算符），所提供的 SQL 会被视为子查询。 这意味着传递的 SQL 不应包含子查询上无效的任何字符或选项，如：
-  * 结尾分号
-  * 在 SQL Server 上，结尾处的查询级提示（例如，`OPTION (HASH JOIN)`）
-  * 在 SQL Server 上， `SELECT` 子句中不带 `TOP 100 PERCENT` 的 `ORDER BY` 子句
-
-* 除 `SELECT` 以外的其他 SQL 语句自动识别为不可编写。 因此，存储过程的完整结果将始终返回到客户端，且在内存中计算 `FromSql` 后应用的任何 LINQ 运算符。
 
 ## <a name="basic-raw-sql-queries"></a>基本原生 SQL 查询
 
@@ -109,9 +92,25 @@ var blogs = context.Blogs
     .ToList();
 ```
 
-### <a name="including-related-data"></a>包含关联数据
+## <a name="change-tracking"></a>更改跟踪
 
-结合 LINQ 运算符可将关联数据包含在查询中。
+使用 `FromSql()` 的查询遵循与 EF Core 中所有其他 LINQ 查询完全相同的更改跟踪规则。 例如，如果该查询投影实体类型，默认情况下会跟踪结果。  
+
+下面的示例使用原始 SQL 查询，该查询从表值函数中进行选择，然后使用对 .AsNoTracking() 的 teh 调用禁用更改跟踪：
+
+<!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
+``` csharp
+var searchTerm = ".NET";
+
+var blogs = context.Query<SearchBlogsDto>()
+    .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
+    .AsNoTracking()
+    .ToList();
+```
+
+## <a name="including-related-data"></a>包含关联数据
+
+`Include()` 方法可用于添加相关数据，就像对其他 LINQ 查询那样：
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
@@ -122,6 +121,23 @@ var blogs = context.Blogs
     .Include(b => b.Posts)
     .ToList();
 ```
+
+## <a name="limitations"></a>限制
+
+使用原生 SQL 查询时需注意以下几个限制：
+
+* SQL 查询必须返回实体或查询类型的所有属性的数据。
+
+* 结果集中的列名必须与属性映射到的列名称匹配。 请注意，这与 EF6 不同，EF6 中忽略了原始 SQL 查询时的属性/列映射关系，只需结果集列名与属性名相匹配即可。
+
+* SQL 查询不能包含关联数据。 但是，在许多情况下你可以在查询后面紧跟着使用 `Include` 方法以返回关联数据（请参阅[包含关联数据](#including-related-data)）。
+
+* 传递到此方法的 `SELECT` 语句通常应该是可组合的：如果 EF Core 需要在服务器端计算更多查询运算符（例如，转换 `FromSql` 后跟的 LINQ 运算符），所提供的 SQL 会被视为子查询。 这意味着传递的 SQL 不应包含子查询上无效的任何字符或选项，如：
+  * 结尾分号
+  * 在 SQL Server 上，结尾处的查询级提示（例如，`OPTION (HASH JOIN)`）
+  * 在 SQL Server 上， `SELECT` 子句中不带 `TOP 100 PERCENT` 的 `ORDER BY` 子句
+
+* 除 `SELECT` 以外的其他 SQL 语句自动识别为不可编写。 因此，存储过程的完整结果将始终返回到客户端，且在内存中计算 `FromSql` 后应用的任何 LINQ 运算符。
 
 > [!WARNING]  
 > **始终对原始 SQL 查询使用参数化：** 使用接受原始 SQL 字符串（如 `FromSql` 和 `ExecuteSqlCommand`）的 API，可以轻松地将值作为参数传递。 除了验证用户输入，还应始终为原始 SQL 查询或命令中使用的任何值启用参数化传值机制。 如果使用字符串拼接来动态生成查询字符串中的任何部分，则你应负责验证所有输入以抵御 SQL 注入攻击。

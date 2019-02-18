@@ -4,23 +4,23 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: e17e060c-929f-4180-8883-40c438fbcc01
 uid: core/querying/tracking
-ms.openlocfilehash: 985adc795f379199a3bacc985843f32f3168cf64
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 6c5d516fcb3950ae168860029660e1b1061546b8
+ms.sourcegitcommit: 159c2e9afed7745e7512730ffffaf154bcf2ff4a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42993350"
+ms.lasthandoff: 02/03/2019
+ms.locfileid: "55668773"
 ---
 # <a name="tracking-vs-no-tracking-queries"></a>跟踪与非跟踪查询
 
-跟踪行为决定了 Entity Framework Core 是否将有关实体实例的信息保留在其更改跟踪器中。 如果已跟踪某个实体，则该实体中检测到的任何更改都会在 `SaveChanges()` 期间永久保存到数据库。 Entity Framework Core 还会修正从跟踪查询中获取的实体与先前已加载到 DbContext 实例中的实体两者之间的导航属性。
+跟踪行为可控制 Entity Framework Core 是否将有关实体实例的信息保留在其更改跟踪器中。 如果已跟踪某个实体，则该实体中检测到的任何更改都会在 `SaveChanges()` 期间永久保存到数据库。 Entity Framework Core 还会修正从跟踪查询中获取的实体与先前已加载到 DbContext 实例中的实体两者之间的导航属性。
 
 > [!TIP]  
 > 可在 GitHub 上查看此文章的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying)。
 
 ## <a name="tracking-queries"></a>跟踪查询
 
-返回实体类型的查询是默认会被跟踪的。 这表示可以更改这些实体实例，然后通过 `SaveChanges()` 持久化这些更改。
+默认情况下，跟踪返回实体类型的查询。 这表示可以更改这些实体实例，然后通过 `SaveChanges()` 持久化这些更改。
 
 在以下示例中，将检测到对博客评分所做的更改，并在 `SaveChanges()` 期间将这些更改持久化到数据库中。
 
@@ -38,7 +38,7 @@ using (var context = new BloggingContext())
 
 在只读方案中使用结果时，非跟踪查询十分有用。 可以更快速地执行非跟踪查询，因为无需设置更改跟踪信息。
 
-可以将单个查询替换为非跟踪查询：
+可以交换单个非跟踪查询：
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/Tracking/Sample.cs?highlight=4)] -->
 ``` csharp
@@ -63,11 +63,11 @@ using (var context = new BloggingContext())
 ```
 
 > [!NOTE]  
-> 非跟踪查询仍在查询过程中执行标识解析。 如果结果集多次包含相同的实体，则每次会在结果集中返回实体类的相同实例。 但是，非跟踪查询使用弱引用跟踪已返回的实体。 如果具有相同标识的上一个结果超出范围，并遇到垃圾回收，则可能会获得新的实体实例。 有关详细信息，请参阅[查询的工作原理](overview.md)。
+> 非跟踪查询仍在查询过程中执行标识解析。 如果结果集多次包含相同的实体，则每次会在结果集中返回实体类的相同实例。 但是，弱引用用于跟踪已返回的实体。 如果具有相同标识的上一个结果超出范围，并运行垃圾回收，则可能会获得新的实体实例。 有关详细信息，请参阅[查询的工作原理](overview.md)。
 
 ## <a name="tracking-and-projections"></a>跟踪和投影
 
-即使查询的结果类型不是实体类型，但如果结果中包含实体类型，则默认情况下也会跟踪这些实体类型。 在以下返回匿名类型的查询中，结果集中的 `Blog` 实例会被跟踪。
+即使查询的结果类型不是实体类型，但如果结果包含实体类型，则默认情况下也会跟踪这些实体类型。 在以下返回匿名类型的查询中，会跟踪结果集中 `Blog` 的实例。
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/Tracking/Sample.cs?highlight=7)] -->
 ``` csharp
