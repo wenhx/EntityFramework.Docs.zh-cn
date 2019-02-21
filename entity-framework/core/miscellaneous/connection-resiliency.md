@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 11/15/2016
 ms.assetid: e079d4af-c455-4a14-8e15-a8471516d748
 uid: core/miscellaneous/connection-resiliency
-ms.openlocfilehash: 729cf9b8c038ea2adba8c79c68d9f6fb1676fefa
-ms.sourcegitcommit: 5e11125c9b838ce356d673ef5504aec477321724
+ms.openlocfilehash: 6d8cf117dfd94524a53e10bb4a23c2a44c4c8e7b
+ms.sourcegitcommit: 33b2e84dae96040f60a613186a24ff3c7b00b6db
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/25/2018
-ms.locfileid: "50022179"
+ms.lasthandoff: 02/21/2019
+ms.locfileid: "56459167"
 ---
 # <a name="connection-resiliency"></a>连接复原
 
@@ -17,9 +17,21 @@ ms.locfileid: "50022179"
 
 例如，SQL Server 提供程序包括专门针对 SQL Server （包括 SQL Azure） 的执行策略。 它知道可以重试的异常类型，并且具有合理的默认值的最大重试，重试次数等之间的延迟。
 
-为上下文配置选项时将指定执行策略。 这通常位于派生上下文的 `OnConfiguring` 方法中，或位于 ASP.NET Core 应用程序的 `Startup.cs` 中。
+为上下文配置选项时将指定执行策略。 这是通常在`OnConfiguring`派生上下文的方法：
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/ConnectionResiliency/Program.cs#OnConfiguring)]
+
+或在`Startup.cs`ASP.NET Core 应用程序：
+
+``` csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddDbContext<PicnicContext>(
+        options => options.UseSqlServer(
+            "<connection string>",
+            providerOptions => providerOptions.EnableRetryOnFailure()));
+}
+```
 
 ## <a name="custom-execution-strategy"></a>自定义执行策略
 
@@ -41,7 +53,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 但是，如果你的代码使用 `BeginTransaction()` 启动事务，则你将定义自己的操作组（这些操作需要被视为一个单元），并且如果发生故障，将需要回滚事务内的所有内容。 如果尝试在使用执行策略时执行此操作，将收到如下所示的异常：
 
-> InvalidOperationException： 配置的执行策略 SqlServerRetryingExecutionStrategy 不支持用户启动的事务。 使用由“DbContext.Database.CreateExecutionStrategy()”返回的执行策略执行事务（作为一个可回溯单元）中的所有操作。
+> InvalidOperationException:已配置的执行策略“SqlServerRetryingExecutionStrategy”不支持用户启动的事务。 使用由“DbContext.Database.CreateExecutionStrategy()”返回的执行策略执行事务（作为一个可回溯单元）中的所有操作。
 
 解决方法是使用代表需要执行的所有内容的委托来手动调用执行策略。 如果发生暂时性故障，执行策略将再次调用委托。
 
