@@ -6,12 +6,12 @@ description: 通过 Entity Framework Core 开始使用 .NET Core
 ms.date: 08/03/2018
 ms.assetid: 099d179e-dd7b-4755-8f3c-fcde914bf50b
 uid: core/get-started/netcore/new-db-sqlite
-ms.openlocfilehash: 6cebe14e179cb6998592f5d3823c114b3bda0138
-ms.sourcegitcommit: 5e11125c9b838ce356d673ef5504aec477321724
+ms.openlocfilehash: a0df80a8fe96be4f8cc3177919e2b087e14cb49c
+ms.sourcegitcommit: 735715f10cc8a231c213e4f055d79f0effd86570
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/25/2018
-ms.locfileid: "50022306"
+ms.lasthandoff: 02/16/2019
+ms.locfileid: "56325322"
 ---
 # <a name="getting-started-with-ef-core-on-net-core-console-app-with-a-new-database"></a>使用新数据库在 NET Core 控制台应用程序上开始使用 EF Core
 
@@ -60,7 +60,7 @@ ms.locfileid: "50022306"
 
   [!code-csharp[Main](../../../../samples/core/GetStarted/NetCore/ConsoleApp.SQLite/Model.cs)]
 
-提示：在实际应用程序中，将每个类放在单独的文件中，并将连接字符串放在配置文件或环境变量中。 为简化本教程，所有内容均放在一个文件中。
+提示:在实际应用程序中，将每个类放在单独的文件中，并将连接字符串放在配置文件或环境变量中。 为简化本教程，所有内容均放在一个文件中。
 
 ## <a name="create-the-database"></a>创建数据库
 
@@ -69,7 +69,7 @@ ms.locfileid: "50022306"
 * 运行 `dotnet ef migrations add InitialCreate` 以为迁移搭建基架，并为模型创建一组初始表。
 * 运行 `dotnet ef database update` 以将新迁移应用到数据库。 在应用迁移之前，此命令可创建数据库。
 
-blogging.db* SQLite DB 位于项目目录中。
+blogging.db SQLite DB 位于项目目录中。
 
 ## <a name="use-the-model"></a>使用模型
 
@@ -113,4 +113,4 @@ blogging.db* SQLite DB 位于项目目录中。
 
 * [教程：使用 SQLite 通过新数据库在 ASP.NET Core 上开始使用 EF Core](xref:core/get-started/aspnetcore/new-db)
 * [教程：在 ASP.NET Core 中开始使用 Razor Pages](https://docs.microsoft.com/aspnet/core/tutorials/razor-pages/razor-pages-start)
-* [教程：ASP.NET Core 中的 Razor Pages 和 Entity Framework Core](https://docs.microsoft.com/aspnet/core/data/ef-rp/intro)
+* [教程：在 ASP.NET Core 中结合使用 Razor Pages 和 Entity Framework Core](https://docs.microsoft.com/aspnet/core/data/ef-rp/intro)
