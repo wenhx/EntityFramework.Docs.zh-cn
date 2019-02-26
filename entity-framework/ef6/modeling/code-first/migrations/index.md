@@ -3,12 +3,6 @@ title: Code First 迁移 - EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 36591d8f-36e1-4835-8a51-90f34f633d1e
-ms.openlocfilehash: e5a91af73bab9d45b0f1f4242ce503c6b6f407f6
-ms.sourcegitcommit: 159c2e9afed7745e7512730ffffaf154bcf2ff4a
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 02/03/2019
-ms.locfileid: "55668695"
 ---
 # <a name="code-first-migrations"></a>Code First 迁移
 如果使用的是 Code First 工作流，推荐使用 Code First 迁移改进应用程序的数据库架构。 迁移提供一组允许以下操作的工具：
@@ -314,7 +308,7 @@ Code First 迁移将运行迁移管道，但并非是应用更改，而是将更
 
 如下所示，可以更新 Program.cs 文件，以在使用上下文（第 14 行）之前，为 BlogContext 设置 MigrateDatabaseToLatestVersion 初始化值设定项。 请注意，还需要为 System.Data.Entity 命名空间（第 5 行）添加 using 语句。
 
-创建此初始值设定项的实例时，需要指定上下文类型 (BlogContext) 和迁移配置（配置）- 迁移配置是启用迁移时添加到“迁移”文件夹的类**。
+*创建此初始值设定项的实例时，需要指定上下文类型 (**BlogContext**) 和迁移配置（**配置**）- 迁移配置是启用迁移时添加到“**迁移**”文件夹的类*。
 
 ``` csharp
     using System;
