@@ -11,7 +11,10 @@
 ## [Entity Framework Core](core/index.md)
 
 ### [新增功能](core/what-is-new/index.md)
-#### [EF Core 路线图](core/what-is-new/roadmap.md)
+#### [路线图](core/what-is-new/roadmap.md)
+#### [EF Core 3.0（预览版）](core/what-is-new/ef-core-3.0/index.md)
+##### [新增功能](core/what-is-new/ef-core-3.0/features.md)
+##### [中断性变更](core/what-is-new/ef-core-3.0/breaking-changes.md)
 #### [EF Core 2.2（最新稳定版）](core/what-is-new/ef-core-2.2.md)
 #### [EF Core 2.1](core/what-is-new/ef-core-2.1.md)
 #### [EF Core 2.0](core/what-is-new/ef-core-2.0.md)
@@ -93,9 +96,9 @@
 ### [查询数据](core/querying/index.md)
 #### [基本查询](core/querying/basic.md)
 #### [加载关联数据](core/querying/related-data.md)
-#### [客户端求值与服务器求值](core/querying/client-eval.md)
+#### [客户端与服务器评估](core/querying/client-eval.md)
 #### [跟踪与非跟踪](core/querying/tracking.md)
-#### [原生 SQL 查询](core/querying/raw-sql.md)
+#### [原始 SQL 查询](core/querying/raw-sql.md)
 #### [异步查询](core/querying/async.md)
 #### [查询的工作原理](core/querying/overview.md)
 #### [全局查询筛选器](core/querying/filters.md)
@@ -147,7 +150,7 @@
 #### [使用 DbContext](ef6/fundamentals/working-with-dbcontext.md)
 #### [了解关系](ef6/fundamentals/relationships.md)
 #### [异步查询和保存](ef6/fundamentals/async.md)
-#### 配置
+#### Configuration
 ##### [基于代码](ef6/fundamentals/configuring/code-based.md)
 ##### [配置文件](ef6/fundamentals/configuring/config-file.md)
 ##### [连接字符串](ef6/fundamentals/configuring/connection-strings.md)

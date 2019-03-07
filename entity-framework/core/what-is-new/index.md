@@ -4,20 +4,15 @@ author: divega
 ms.date: 02/20/2018
 ms.assetid: C21F89EE-FB08-4ED9-A2A0-76CB7656E6E4
 uid: core/what-is-new/index
-ms.openlocfilehash: 26589f75684be2428101739805336d9a673b9329
-ms.sourcegitcommit: fa863883f1193d2118c2f9cee90808baa5e3e73e
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 12/04/2018
-ms.locfileid: "52857450"
 ---
-# <a name="what-is-new-in-ef-core"></a>EF Core 中的新增功能
 
-可使用以下链接了解每个版本中的新功能：
+# <a name="what-is-new-in-ef-core"></a>EF Core 中的新增功能
 
 ## <a name="future-releases"></a>未来将要发布的版本
 
-- [EF Core 路线图](xref:core/what-is-new/roadmap)
+EF Core 3.0 目前提供预览版。 EF Core 3.0 引入了一组[新功能](xref:core/what-is-new/ef-core-3.0/features)，还提供了[重大更改](xref:core/what-is-new/ef-core-3.0/breaking-changes)，在升级时应注意这些变化。
+
+若要详细了解我们如何规划将来版本（如 3.0 和更高版本），请参阅 [EF Core 路线图](xref:core/what-is-new/roadmap)。
 
 ## <a name="recent-releases"></a>最新版本
 
