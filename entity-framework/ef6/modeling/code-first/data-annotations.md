@@ -3,12 +3,12 @@ title: 第一个数据注释-EF6 的代码
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 80abefbd-23c9-4fce-9cd3-520e5df9856e
-ms.openlocfilehash: 8d85ef85f56a23d9b3b526554417dc9dd360e139
-ms.sourcegitcommit: 39080d38e1adea90db741257e60dc0e7ed08aa82
+ms.openlocfilehash: e6b017306b4f66f5bac2a9964e11391da28ceb40
+ms.sourcegitcommit: a013e243a14f384999ceccaf9c779b8c1ae3b936
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/03/2018
-ms.locfileid: "50980036"
+ms.lasthandoff: 03/06/2019
+ms.locfileid: "57463277"
 ---
 # <a name="code-first-data-annotations"></a>Code First 数据注释
 > [!NOTE]
@@ -25,7 +25,7 @@ ms.locfileid: "50980036"
 
 ## <a name="the-model"></a>模型
 
-我将演示代码使用类的一个简单的对第一个 DataAnnotations： 博客和文章。
+我将演示代码使用类的一个简单的对第一个 DataAnnotations:博客和文章。
 
 ``` csharp
     public class Blog
@@ -176,7 +176,7 @@ MaxLength 批注会影响数据库的属性的长度设置为 10。
 
 ![Blogs 表 BloggerName 列上显示的最大长度](~/ef6/media/jj591583-figure04.png)
 
-客户端的批注 MVC 和 EF 4.1 服务器端批注将都遵循此验证，再次动态生成一条错误消息:"字段 BloggerName 具有最大长度为"10"的字符串或数组类型必须是"。该消息是有点长。 很多批注，可以使用 ErrorMessage 属性指定一条错误消息。
+客户端的批注 MVC 和 EF 4.1 服务器端批注都将遵循此验证，再次动态生成一条错误消息："字段 BloggerName 具有最大长度为"10"的字符串或数组类型必须是"。该消息是有点长。 很多批注，可以使用 ErrorMessage 属性指定一条错误消息。
 
 ``` csharp
     [MaxLength(10, ErrorMessage="BloggerName must be 10 characters or less"),MinLength(5)]
@@ -245,9 +245,6 @@ MaxLength 批注会影响数据库的属性的长度设置为 10。
 
 ![具有复杂类型的网络日志表](~/ef6/media/jj591583-figure06.png)
 
-另一个注意事项是，虽然 DateCreated 属性被定义为不可为 null 的日期时间在类中，相关数据库字段是可以为 null。 如果你想要影响的数据库架构，则必须使用所需的批注。
-
- 
 
 ## <a name="concurrencycheck"></a>ConcurrencyCheck
 
@@ -271,7 +268,7 @@ ConcurrencyCheck 批注可以标记一个或多个要在进行并发检查数据
 
  
 
-## <a name="timestamp"></a>时间戳
+## <a name="timestamp"></a>TimeStamp
 
 它是更常见的是进行并发检查中使用行版本或时间戳字段。 但是，而不是使用 ConcurrencyCheck 批注，您可以使用更具体的时间戳批注的属性类型为字节数组。 代码首先将相同的处理时间戳属性为 ConcurrencyCheck 属性，但它还将确保代码首先生成的数据库字段是不可为 null。 仅可以在给定类中有一个时间戳属性。
 
@@ -374,7 +371,7 @@ ConcurrencyCheck 批注可以标记一个或多个要在进行并发检查数据
 
 ### <a name="multiple-column-indexes"></a>多列索引
 
-跨多个列的索引指定为给定的表在多个索引批注中使用相同的名称。 创建多列索引时，需要在索引中指定列的顺序。 例如，以下代码将创建在多列索引**评级**并**BlogId**调用**IX\_BlogAndRating**。 **BlogId**是在索引中的第一列和**评级**是第二个。
+跨多个列的索引指定为给定的表在多个索引批注中使用相同的名称。 创建多列索引时，需要在索引中指定列的顺序。 例如，以下代码将创建在多列索引**评级**并**BlogId**调用**IX\_BlogIdAndRating**。 **BlogId**是在索引中的第一列和**评级**是第二个。
 
 ``` csharp
     public class Post
@@ -391,7 +388,7 @@ ConcurrencyCheck 批注可以标记一个或多个要在进行并发检查数据
 
  
 
-## <a name="relationship-attributes-inverseproperty-and-foreignkey"></a>关系属性： InverseProperty 和 ForeignKey
+## <a name="relationship-attributes-inverseproperty-and-foreignkey"></a>关系的属性：InverseProperty 和 ForeignKey
 
 > [!NOTE]
 > 此页提供了有关设置关系中使用数据注释在 Code First 模型的信息。 有关在 EF 和如何访问和处理数据使用关系的关系的常规信息，请参阅[关系和导航属性](~/ef6/fundamentals/relationships.md)。 *
@@ -441,7 +438,7 @@ ConcurrencyCheck 批注可以标记一个或多个要在进行并发检查数据
     }
 ```
 
-代码首先不能在其自己的两个类中的属性匹配。 文章的数据库表的 CreatedBy 人员应有一个外键和一个用于 UpdatedBy 人但代码首先将创建四个将外键属性： Person\_Id、 人\_Id1、 CreatedBy\_Id 和UpdatedBy\_id。
+代码首先不能在其自己的两个类中的属性匹配。 文章的数据库表应拥有的 CreatedBy 人员，另一个用于 UpdatedBy 人员的一个外键，但代码首先将创建四个外键属性：Person\_Id、 人\_Id1、 CreatedBy\_Id 和 UpdatedBy\_id。
 
 ![Posts 表包含的额外外键](~/ef6/media/jj591583-figure10.png)
 
