@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
 uid: core/querying/raw-sql
-ms.openlocfilehash: 343162596780e6146b57f73a38221701009cd855
-ms.sourcegitcommit: 85d17524d8e022f933cde7fc848313f57dfd3eb8
+ms.openlocfilehash: ad7ac3099cfd4c49b88acfbbff61f2af9294b6ec
+ms.sourcegitcommit: a013e243a14f384999ceccaf9c779b8c1ae3b936
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 02/06/2019
-ms.locfileid: "55760504"
+ms.lasthandoff: 03/06/2019
+ms.locfileid: "57463238"
 ---
 # <a name="raw-sql-queries"></a>原生 SQL 查询
 
@@ -140,4 +140,6 @@ var blogs = context.Blogs
 * 除 `SELECT` 以外的其他 SQL 语句自动识别为不可编写。 因此，存储过程的完整结果将始终返回到客户端，且在内存中计算 `FromSql` 后应用的任何 LINQ 运算符。
 
 > [!WARNING]  
-> **始终对原始 SQL 查询使用参数化：** 使用接受原始 SQL 字符串（如 `FromSql` 和 `ExecuteSqlCommand`）的 API，可以轻松地将值作为参数传递。 除了验证用户输入，还应始终为原始 SQL 查询或命令中使用的任何值启用参数化传值机制。 如果使用字符串拼接来动态生成查询字符串中的任何部分，则你应负责验证所有输入以抵御 SQL 注入攻击。
+> **始终对原始 SQL 查询使用参数化：** 除了验证用户输入，还应始终为原始 SQL 查询或命令中使用的任何值启用参数化传值机制。 使用接受原始 SQL 字符串（如 `FromSql` 和 `ExecuteSqlCommand`）的 API，可以轻松地将值作为参数传递。 接受 FormattableString 的 `FromSql` 和 `ExecuteSqlCommand` 的重载还允许使用字符串插值语法，以帮助防止 SQL 注入攻击。 
+> 
+> 如果你正在使用字符串连接或内插来动态构建查询字符串的任何部分，或者将用户输入传递给可以将这些输入作为动态 SQL 执行的语句或存储过程，那么你将负责验证任何输入，以防止 SQL 注入攻击。
