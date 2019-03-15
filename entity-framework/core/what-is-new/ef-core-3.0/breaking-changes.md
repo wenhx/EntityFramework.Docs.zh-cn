@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: a7e1a03bf1131cd53123f5cc39b07bed94619b44
-ms.sourcegitcommit: a013e243a14f384999ceccaf9c779b8c1ae3b936
+ms.openlocfilehash: 748db8a71a04a2d696ef21a03319906b9fc776be
+ms.sourcegitcommit: a709054b2bc7a8365201d71f59325891aacd315f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2019
-ms.locfileid: "57463359"
+ms.lasthandoff: 03/14/2019
+ms.locfileid: "57829221"
 ---
 # <a name="breaking-changes-included-in-ef-core-30-currently-in-preview"></a>EF Core 3.0 中包含的中断性变更（目前处于预览状态）
 
@@ -22,11 +22,10 @@ ms.locfileid: "57463359"
 
 ## <a name="linq-queries-are-no-longer-evaluated-on-the-client"></a>不再在客户端上计算 LINQ 查询
 
-[跟踪问题 #12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795)
+[跟踪问题 #14935](https://github.com/aspnet/EntityFrameworkCore/issues/14935)
+[另请参阅问题 #12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795)
 
-> [!IMPORTANT]
-> 我们会预先宣布此中断。
-它尚未在任何 3.0 预览版中发布。
+此更改将在 EF Core 3.0-preview 4 中引入。
 
 **旧行为**
 
@@ -98,8 +97,14 @@ EF Core 3.0 之前，是在 `Info` 级别记录查询和其他命令的执行。
 **缓解措施**
 
 此日志记录事件由 `RelationalEventId.CommandExecuting` 定义，事件 ID 为 20100。
-若要再次在 `Info` 级别记录 SQL，请启用 `Debug` 级别的日志记录并筛选到仅此一个事件。
-
+若要再次在 `Info` 级别记录 SQL，请在 `OnConfiguring` 或 `AddDbContext` 中显式配置级别。
+例如:
+```C#
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder
+        .UseSqlServer(connectionString)
+        .ConfigureWarnings(c => c.Log((RelationalEventId.CommandExecuting, LogLevel.Info)));
+```
 
 ## <a name="temporary-key-values-are-no-longer-set-onto-entity-instances"></a>不再在实体实例上设置临时键值
 
@@ -439,6 +444,28 @@ modelBuilder
     .HasField("_id");
 ```
 
+## <a name="adddbcontextadddbcontextpool-no-longer-call-addlogging-and-addmemorycache"></a>AddDbContext/AddDbContextPool 不再调用 AddLogging 和 AddMemoryCache
+
+[跟踪问题 #14756](https://github.com/aspnet/EntityFrameworkCore/issues/14756)
+
+此更改将在 EF Core 3.0-preview 4 中引入。
+
+**旧行为**
+
+在 EF Core 3.0 之前，调用 `AddDbContext` 或 `AddDbContextPool` 的操作也可以通过调用 [AddLogging](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.loggingservicecollectionextensions.addlogging) 和 [AddMemoryCache](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache) 在 DI 中注册日志记录和内存缓存服务。
+
+**新行为**
+
+从 EF Core 3.0 开始，`AddDbContext` 和 `AddDbContextPool` 将无法再在依赖注入 (DI) 中注册这些服务。
+
+**为什么**
+
+EF Core 3.0 不要求这些服务位于应用程序的 DI 容器中。 但是，如果 `ILoggerFactory` 在应用程序的 DI 容器中注册，它仍然会由 EF Core 使用。
+
+**缓解措施**
+
+如果应用程序需要这些服务，则使用 [AddLogging](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.loggingservicecollectionextensions.addlogging) 或 [AddMemoryCache](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache) 将它们显式注册到 DI 容器中。
+
 ## <a name="dbcontextentry-now-performs-a-local-detectchanges"></a>DbContext.Entry 现在执行本地 DetectChanges
 
 [跟踪问题 #13552](https://github.com/aspnet/EntityFrameworkCore/issues/13552)
@@ -610,6 +637,43 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     optionsBuilder
         .ConfigureWarnings(w => w.Log(CoreEventId.ManyServiceProvidersCreatedWarning));
 }
+```
+
+## <a name="new-behavior-for-hasonehasmany-called-with-a-single-string"></a>使用单个字符串调用 HasOne/HasMany 的新行为
+
+[跟踪问题 #9171](https://github.com/aspnet/EntityFrameworkCore/issues/9171)
+
+此更改将在 EF Core 3.0-preview 4 中引入。
+
+**旧行为**
+
+在 EF Core 3.0 之前，对通过单个字符串调用 `HasOne` 或 `HasMany` 的代码的解释令人困惑。
+例如:
+```C#
+modelBuilder.Entity<Samurai>().HasOne("Entrance").WithOne();
+```
+
+该代码看起来是使用 `Entrance` 导航属性（可能是私有属性）将 `Samuri` 与某些其他实体类型关联起来的。
+
+实际上，此代码试图创建与某个名为 `Entrance` 的实体类型的关系，该实体类型没有导航属性。
+
+**新行为**
+
+从 EF Core 3.0 开始，上面的代码现执行它以前应执行的操作。
+
+**为什么**
+
+这一旧行为令人非常困惑，尤其是在读取配置代码和查找错误时。
+
+**缓解措施**
+
+这只会中断使用类型名称字符串显式配置关系而无需显式指定导航属性的应用程序。
+这并不常见。
+以前的行为可以通过显式传递导航属性名称的 `null` 获得。
+例如:
+
+```C#
+modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 ```
 
 ## <a name="the-relationaltypemapping-annotation-is-now-just-typemapping"></a>关系式：TypeMapping 注释现在只是 TypeMapping

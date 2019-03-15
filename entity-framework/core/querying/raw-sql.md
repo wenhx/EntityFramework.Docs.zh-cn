@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
 uid: core/querying/raw-sql
-ms.openlocfilehash: ad7ac3099cfd4c49b88acfbbff61f2af9294b6ec
-ms.sourcegitcommit: a013e243a14f384999ceccaf9c779b8c1ae3b936
+ms.openlocfilehash: 0ad43db794902cf1f46bfe8f117fbd36e06f3c44
+ms.sourcegitcommit: a709054b2bc7a8365201d71f59325891aacd315f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2019
-ms.locfileid: "57463238"
+ms.lasthandoff: 03/14/2019
+ms.locfileid: "57829169"
 ---
 # <a name="raw-sql-queries"></a>原生 SQL 查询
 
@@ -96,7 +96,7 @@ var blogs = context.Blogs
 
 使用 `FromSql()` 的查询遵循与 EF Core 中所有其他 LINQ 查询完全相同的更改跟踪规则。 例如，如果该查询投影实体类型，默认情况下会跟踪结果。  
 
-下面的示例使用原始 SQL 查询，该查询从表值函数中进行选择，然后使用对 .AsNoTracking() 的 teh 调用禁用更改跟踪：
+下面的示例使用原始 SQL 查询，该查询从表值函数 (TVF) 中进行选择，然后禁用通过对 .AsNoTracking() 的调用来更改跟踪：
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
 ``` csharp

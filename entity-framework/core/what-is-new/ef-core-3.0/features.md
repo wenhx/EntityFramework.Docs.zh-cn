@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: 2EBE2CCC-E52D-483F-834C-8877F5EB0C0C
 uid: core/what-is-new/ef-core-3.0/features
-ms.openlocfilehash: cf0d2cf032b9aa319fe706aece5b1ea66a5d6251
-ms.sourcegitcommit: a013e243a14f384999ceccaf9c779b8c1ae3b936
+ms.openlocfilehash: b6774f615b04bf9579aac5dea217e7321631da0c
+ms.sourcegitcommit: a709054b2bc7a8365201d71f59325891aacd315f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2019
-ms.locfileid: "57463350"
+ms.lasthandoff: 03/14/2019
+ms.locfileid: "57829182"
 ---
 # <a name="new-features-included-in-ef-core-30-currently-in-preview"></a>EF Core 3.0 中包含的新功能（目前处于预览状态）
 
@@ -75,7 +75,7 @@ LINQ 可便于编写数据库查询，而无需离开所选的语言，同时还
 此功能的相关工作已经开始，但当前预览中不包含此功能。 
 
 此功能可以启用在索引的属性（而非常规属性）中存储数据的实体，并能够使用同一 .NET 类的实例（可能像 `Dictionary<string, object>` 一样简单）来表示同一 EF Core 模型中的不同的实体类型。
-此功能是支持多对多关系而无需联接实体的基石，是针对 EF Core 提出改进要求最多的一项功能。
+此功能是支持多对多关系而无需联接实体的基石（[问题 #1368](https://github.com/aspnet/EntityFrameworkCore/issues/1368)），是针对 EF Core 提出改进要求最多的一项功能。
 
 ## <a name="ef-63-on-net-core"></a>.NET Core 上的 EF 6.3 
 
