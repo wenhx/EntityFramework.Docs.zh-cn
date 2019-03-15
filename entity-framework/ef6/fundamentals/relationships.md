@@ -3,12 +3,12 @@ title: 关系、 导航属性和外键的 EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 8a21ae73-6d9b-4b50-838a-ec1fddffcf37
-ms.openlocfilehash: 46c2d11b5704ec7ae82a423ae042b87f5efe436f
-ms.sourcegitcommit: 8b42045cd21f80f425a92f5e4e9dd4972a31720b
+ms.openlocfilehash: 416eb1fb590330ba292a858347e26b83dddc74df
+ms.sourcegitcommit: a709054b2bc7a8365201d71f59325891aacd315f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2018
-ms.locfileid: "49315654"
+ms.lasthandoff: 03/14/2019
+ms.locfileid: "57829195"
 ---
 # <a name="relationships-navigation-properties-and-foreign-keys"></a>关系、 导航属性和外键
 本主题概述了的实体框架如何管理实体之间的关系。 它还提供有关如何将映射和操作关系的一些指导。
@@ -29,7 +29,7 @@ ms.locfileid: "49315654"
 
 在外键列未包括在模型中，作为独立对象进行管理的关联信息。 通过而不是外键属性的对象引用跟踪的关系。 此类型的关联称为*独立关联*。 若要修改的最常见方式*独立关联*是修改为参与到关联中每个实体生成导航属性。
 
-可以在您的模型中选择使用一种或两种类型的关联。 但是，如果必须仅包含外键的联接表已连接的纯多对多关系，EF 将使用独立关联管理这种多对多关系。   
+可以在您的模型中选择使用一种或两种类型的关联。 但是，如果必须仅包含外键的联接表已连接的纯多对多关系，EF 将使用独立关联管理这种多对多关系。   
 
 下图显示了使用实体框架设计器创建的概念模型。 该模型包含两个参与对多关系的实体。 这两个实体都具有导航属性。 **课程**，且是 depend 实体**DepartmentID**定义的外键属性。
 
@@ -51,7 +51,7 @@ public class Department
 {
    public Department()
    {
-     this.Course = new HashSet<Course>();
+     this.Courses = new HashSet<Course>();
    }  
    public int DepartmentID { get; set; }
    public string Name { get; set; }
