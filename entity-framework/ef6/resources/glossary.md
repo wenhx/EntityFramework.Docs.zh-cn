@@ -3,16 +3,16 @@ title: 实体框架术语表-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 3f05ffdd-49bc-499c-9732-4a368bf5d2d7
-ms.openlocfilehash: 9ed7a2d841c625de35de57edb4e57e69b89a3db9
-ms.sourcegitcommit: 5d74ac575f813110db6d870720f50dd7606446bc
+ms.openlocfilehash: 4e42e5870879524b814cecdc361e688d36f0180f
+ms.sourcegitcommit: 6c4e06bc62d98442530e93a44725e38e59483d42
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2018
-ms.locfileid: "48881262"
+ms.lasthandoff: 03/18/2019
+ms.locfileid: "58131391"
 ---
 # <a name="entity-framework-glossary"></a>实体框架术语表
 ## <a name="code-first"></a>Code First
-创建使用代码的实体框架模型。 该模型可以指定的目标和现有数据库或新数据库。
+创建使用代码的实体框架模型。 该模型可以将现有数据库或新的数据库为目标。
 
 ## <a name="context"></a>上下文
 一个类，表示与数据库中，您可以查询和保存数据的会话。 上下文派生自 DbContext 或 ObjectContext 类。
