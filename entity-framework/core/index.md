@@ -4,13 +4,8 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: bc2a2676-bc46-493f-bf49-e3cc97994d57
 uid: core/index
-ms.openlocfilehash: 982f69077a68495c48b7a9cce833dd7d4119e252
-ms.sourcegitcommit: 735715f10cc8a231c213e4f055d79f0effd86570
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 02/16/2019
-ms.locfileid: "56325309"
 ---
+
 # <a name="entity-framework-core"></a>Entity Framework Core
 
 Entity Framework (EF) Core 是轻量化、可扩展、[开源](https://github.com/aspnet/EntityFrameworkCore)和跨平台版的常用 Entity Framework 数据访问技术。
@@ -21,9 +16,9 @@ EF Core 支持多个数据库引擎，请参阅[数据库提供程序](providers
 
 ## <a name="the-model"></a>模型
 
-对于 EF Core，使用模型执行数据访问。 模型由实体类和表示数据库会话的派生上下文构成，用于查询和保存数据。 有关详细信息，请参阅[创建模型](modeling/index.md)。
+对于 EF Core，使用模型执行数据访问。 模型由实体类和表示数据库会话的上下文对象构成，可便于用户查询和保存数据。 有关详细信息，请参阅[创建模型](modeling/index.md)。
 
-可从现有数据库生成模型，手动编码模型使之与数据库相匹配，或使用 EF 迁移基于模型创建数据库（并在模型随时间推移发生更改后进行相应改进）。
+可以根据现有数据库生成模型，手动将模型编码为与数据库匹配，也可以使用 EF 迁移根据模型创建数据库，然后在模型随时间推移发生更改时改进它。
 
 ``` csharp
 using Microsoft.EntityFrameworkCore;
@@ -38,7 +33,8 @@ namespace Intro
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=MyDatabase;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(
+                @"Server=(localdb)\mssqllocaldb;Database=Blogging;Integrated Security=True");
         }
     }
 
