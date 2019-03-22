@@ -3,12 +3,12 @@ title: 使用模拟框架的 EF6 进行测试
 author: divega
 ms.date: 10/23/2016
 ms.assetid: bd66a638-d245-44d4-8e71-b9c6cb335cc7
-ms.openlocfilehash: 80fd97073744be40d66c09706d3513dba18e724d
-ms.sourcegitcommit: 7a7da65404c9338e1e3df42576a13be536a6f95f
+ms.openlocfilehash: 3d39b41018beb70b72105dfb2fe4d61afc0b0525
+ms.sourcegitcommit: eb8359b7ab3b0a1a08522faf67b703a00ecdcefd
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/06/2018
-ms.locfileid: "48834716"
+ms.lasthandoff: 03/21/2019
+ms.locfileid: "58319200"
 ---
 # <a name="testing-with-a-mocking-framework"></a>使用模拟框架进行测试
 > [!NOTE]
@@ -21,7 +21,7 @@ ms.locfileid: "48834716"
 有两种可用于创建您的上下文的内存中版本的不同方法。  
 
 - **创建你自己的 test double** – 这种方法涉及编写您自己的上下文和 Dbset 的内存中实现。 这使你可以控制如何类的行为，但可以写入和拥有合理的代码涉及很多。  
-- **使用模拟框架来创建 test double** – 使用模拟框架 （如 Moq)，可以有您的内存中实现上下文和动态创建在运行时为你的设置。  
+- **使用模拟框架来创建 test double** – 使用模拟框架 （如 Moq) 可以具有的内存中实现的上下文和动态创建在运行时为你的设置。  
 
 使用模拟框架将处理这篇文章。 有关创建自己的 test double 请参阅[测试与你自己的 Test Double](writing-test-doubles.md)。  
 

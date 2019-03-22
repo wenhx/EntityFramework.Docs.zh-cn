@@ -6,12 +6,12 @@ ms.date: 08/08/2018
 ms.assetid: 7CEF496E-A5B0-4F5F-B68E-529609B23EF9
 ms.technology: entity-framework-core
 uid: core/providers/provider-log
-ms.openlocfilehash: 70fe2d934901f5366c96904b08f49a35f6590b47
-ms.sourcegitcommit: 6c4e06bc62d98442530e93a44725e38e59483d42
+ms.openlocfilehash: 0f8389decbc1995cc629d24c5baa197255cd328a
+ms.sourcegitcommit: eb8359b7ab3b0a1a08522faf67b703a00ecdcefd
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/18/2019
-ms.locfileid: "58131394"
+ms.lasthandoff: 03/21/2019
+ms.locfileid: "58319135"
 ---
 # <a name="provider-impacting-changes"></a>提供程序影响的更改
 
@@ -28,6 +28,8 @@ ms.locfileid: "58131394"
   * 删除过时的 Api
 * https://github.com/aspnet/EntityFrameworkCore/pull/15044
   * CharTypeMapping 子类可能已损坏修复在基实现中的几个 bug 所需的行为更改所导致。
+* https://github.com/aspnet/EntityFrameworkCore/pull/15090
+  * 为 IDatabaseModelFactory 添加基类和其进行更新以使用参数对象来缓解未来的分页符。
 
 ## <a name="21-----22"></a>2.1 ---> 2.2
 

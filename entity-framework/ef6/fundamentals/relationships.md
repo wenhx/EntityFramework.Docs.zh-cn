@@ -3,12 +3,12 @@ title: 关系、 导航属性和外键的 EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 8a21ae73-6d9b-4b50-838a-ec1fddffcf37
-ms.openlocfilehash: 416eb1fb590330ba292a858347e26b83dddc74df
-ms.sourcegitcommit: a709054b2bc7a8365201d71f59325891aacd315f
+ms.openlocfilehash: 8292ae7af8d760240715854611d92ab340bf1ca7
+ms.sourcegitcommit: eb8359b7ab3b0a1a08522faf67b703a00ecdcefd
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/14/2019
-ms.locfileid: "57829195"
+ms.lasthandoff: 03/21/2019
+ms.locfileid: "58319187"
 ---
 # <a name="relationships-navigation-properties-and-foreign-keys"></a>关系、 导航属性和外键
 本主题概述了的实体框架如何管理实体之间的关系。 它还提供有关如何将映射和操作关系的一些指导。
@@ -147,7 +147,7 @@ public class Department
 
 ## <a name="loading-related-objects"></a>加载相关对象
 
-最常使用的实体框架中使用的导航属性加载通过定义的关联返回的实体相关的实体。 有关详细信息，请参阅[加载相关对象](~/ef6/querying/related-data.md)。
+实体框架中您通常使用导航属性加载通过定义的关联返回的实体相关的实体。 有关详细信息，请参阅[加载相关对象](~/ef6/querying/related-data.md)。
 
 > [!NOTE]
 > 在外键关联中，加载依赖对象的相关端时，将会基于当前位于内存中的依赖对象的外键值加载相关对象：

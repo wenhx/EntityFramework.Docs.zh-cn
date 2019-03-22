@@ -1,19 +1,21 @@
 ---
-title: EF Core 中的主键
+title: 键（主键） - EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 912ffef7-86a0-4cdc-a776-55f907459d20
 uid: core/modeling/keys
-ms.openlocfilehash: 9e6946100ebabc6ba57cb792b3672219098b1e21
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 6272e323b83ccab2ed060a2ebbde1d1e8e353d66
+ms.sourcegitcommit: eb8359b7ab3b0a1a08522faf67b703a00ecdcefd
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42994016"
+ms.lasthandoff: 03/21/2019
+ms.locfileid: "58319161"
 ---
 # <a name="keys-primary"></a>主键
 
-键用作每个实体实例的主要唯一标识符。 使用关系数据库时，这会映射到主键的概念。 您还可以配置不是主键的唯一标识符（有关详细信息，请参阅[备用键](alternate-keys.md)
+键用作每个实体实例的主要唯一标识符。 使用关系数据库时，这会映射到主键的概念。 您还可以配置不是主键的唯一标识符（有关详细信息，请参阅[备用键](alternate-keys.md) 
+
+可以使用以下方法之一来设置/创建主键。
 
 ## <a name="conventions"></a>约定
 
