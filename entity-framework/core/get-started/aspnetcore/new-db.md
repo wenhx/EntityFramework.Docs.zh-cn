@@ -5,12 +5,12 @@ ms.author: riande
 ms.date: 08/03/2018
 ms.assetid: e153627f-f132-4c11-b13c-6c9a607addce
 uid: core/get-started/aspnetcore/new-db
-ms.openlocfilehash: 4734586adc89e9c1d866a1b4accd8b5e51fe2bb0
-ms.sourcegitcommit: ebf661025d2ad2b62466fa7bf0e0772a7811cbe7
+ms.openlocfilehash: 25e5a683acf4bbed0b978cc6a80f1b50a0b64ca1
+ms.sourcegitcommit: eb8359b7ab3b0a1a08522faf67b703a00ecdcefd
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/11/2019
-ms.locfileid: "54211161"
+ms.lasthandoff: 03/21/2019
+ms.locfileid: "58319174"
 ---
 # <a name="getting-started-with-ef-core-on-aspnet-core-with-a-new-database"></a>使用新数据库在 ASP.NET Core 上开始使用 EF Core
 
@@ -54,7 +54,7 @@ ms.locfileid: "54211161"
   * 确保将“身份验证”设置为“无身份验证”
   * 单击“确定” 
 
-警告:如果你使用“单独用户帐户”（而不是“无”）进行身份验证，Entity Framework Core 模型会添加到 `Models\IdentityModel.cs` 中的项目。 使用在本教程中学习的技巧，可以选择添加第二个模型，或者扩展此现有模型以包含实体类。
+警告：如果你使用“单独用户帐户”（而不是“无”）进行身份验证，Entity Framework Core 模型会添加到 `Models\IdentityModel.cs` 中的项目。 使用在本教程中学习的技巧，可以选择添加第二个模型，或者扩展此现有模型以包含实体类。
 
 # <a name="net-core-clitabnetcore-cli"></a>[.NET Core CLI](#tab/netcore-cli)
 
@@ -114,9 +114,9 @@ ms.locfileid: "54211161"
 
 ## <a name="register-the-context-with-dependency-injection"></a>使用依赖注入注册上下文
 
-服务（例如 `BloggingContext`）在应用程序启动期间通过[依赖关系注入](http://docs.asp.net/en/latest/fundamentals/dependency-injection.html)进行注册。 需要这些服务的组件（如 MVC 控制器）可以通过向构造函数或属性添加相关参数来获得对应服务。
+若要使 `BloggingContext` 可用于 MVC 控制器，请在 `Startup.cs` 中将其注册为服务。
 
-若要使 `BloggingContext` 对 MVC 控制器可用，请将其注册为服务。
+在应用程序启动过程中，通过[依赖关系注入](http://docs.asp.net/en/latest/fundamentals/dependency-injection.html) 注册服务（如 `BloggingContext`），以便能够通过构造函数的参数和属性向使用服务的组件（如 MVC 控制器）自动提供该服务。
 
 # <a name="visual-studiotabvisual-studio"></a>[Visual Studio](#tab/visual-studio)
 

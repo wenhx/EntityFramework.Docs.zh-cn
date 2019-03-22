@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: 748db8a71a04a2d696ef21a03319906b9fc776be
-ms.sourcegitcommit: a709054b2bc7a8365201d71f59325891aacd315f
+ms.openlocfilehash: 534ac95cccc03e9797ba766e601e2fe86eaf8061
+ms.sourcegitcommit: eb8359b7ab3b0a1a08522faf67b703a00ecdcefd
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/14/2019
-ms.locfileid: "57829221"
+ms.lasthandoff: 03/21/2019
+ms.locfileid: "58319213"
 ---
 # <a name="breaking-changes-included-in-ef-core-30-currently-in-preview"></a>EF Core 3.0 中包含的中断性变更（目前处于预览状态）
 
@@ -653,7 +653,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 modelBuilder.Entity<Samurai>().HasOne("Entrance").WithOne();
 ```
 
-该代码看起来是使用 `Entrance` 导航属性（可能是私有属性）将 `Samuri` 与某些其他实体类型关联起来的。
+该代码看起来是使用 `Entrance` 导航属性（可能是私有属性）将 `Samurai` 与某些其他实体类型关联起来的。
 
 实际上，此代码试图创建与某个名为 `Entrance` 的实体类型的关系，该实体类型没有导航属性。
 
@@ -785,3 +785,83 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 **缓解措施**
 
 若要在 iOS 上使用本机 SQLite 版本，请配置 `Microsoft.Data.Sqlite` 以使用其他 `SQLitePCLRaw` 捆绑包。
+
+## <a name="char-values-are-now-stored-as-text-on-sqlite"></a>Char 值现在以文本形式存储在 SQLite 上
+
+[跟踪问题 #15020](https://github.com/aspnet/EntityFrameworkCore/issues/15020)
+
+此更改是在 EF Core 3.0-preview 4 中引入的。
+
+**旧行为**
+
+Char 值之前以整数值形式存储在 SQLite 上。 例如，A 的 char 值存储为整数值 65。
+
+**新行为**
+
+Char 值现在以文本形式存储。
+
+**为什么**
+
+以文本形式存储值显得更加自然，并且使数据库与其他技术更兼容。
+
+**缓解措施**
+
+现在通过执行如下的 SQL，可以将现有数据库转成新的格式。
+
+``` sql
+UPDATE MyTable
+SET CharColumn = char(CharColumn)
+WHERE typeof(CharColumn) = 'integer';
+```
+
+在 EF Core 中，通过对这些属性配置值转换器，还可以使用以前的行为模式继续操作。
+
+``` csharp
+modelBuilder
+    .Entity<MyEntity>()
+    .Property(e => e.CharProperty)
+    .HasConversion(
+        c => (long)c,
+        i => (char)i);
+```
+
+Microsoft.Data.Sqlite 也仍然能够读取整数列和文本列的字符值，因此某些情况可能不需要任何操作。
+
+## <a name="migration-ids-are-now-generated-using-the-invariant-cultures-calendar"></a>现在使用固定区域性的日历生成迁移 ID
+
+[跟踪问题 #12978](https://github.com/aspnet/EntityFrameworkCore/issues/12978)
+
+此更改是在 EF Core 3.0-preview 4 中引入的。
+
+**旧行为**
+
+以前使用当前区域性的日历无意生成迁移 ID。
+
+**新行为**
+
+现在始终使用固定区域性的日历（公历）生成迁移 ID。
+
+**为什么**
+
+更新数据库或解决合并冲突时，迁移的顺序非常重要。 使用固定日历可以避免因团队成员采用不同系统日历而产生的顺序问题。
+
+**缓解措施**
+
+如果有人使用年份时间大于公历日历的非公历日历（如泰国佛历），则会受到影响。 现有迁移 ID 需要进行更新，以便新迁移排在现有迁移之后。
+
+在迁移的设计者文件的 Migration 属性中可以找到迁移 ID。
+
+``` diff
+ [DbContext(typeof(MyDbContext))]
+-[Migration("25620318122820_MyMigration")]
++[Migration("20190318122820_MyMigration")]
+ partial class MyMigration
+ {
+```
+
+迁移历史记录表还需要更新。
+
+``` sql
+UPDATE __EFMigrationsHistory
+SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 150))
+```
