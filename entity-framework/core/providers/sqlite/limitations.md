@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 04/09/2017
 ms.assetid: 94ab4800-c460-4caa-a5e8-acdfee6e6ce2
 uid: core/providers/sqlite/limitations
-ms.openlocfilehash: 53262bc926d79f42c4418a62717a462564dc80bf
-ms.sourcegitcommit: 6c4e06bc62d98442530e93a44725e38e59483d42
+ms.openlocfilehash: ce834d60b9ceb4c414f097f2d86254cc5edd958f
+ms.sourcegitcommit: 645785187ae23ddf7d7b0642c7a4da5ffb0c7f30
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/18/2019
-ms.locfileid: "58131417"
+ms.lasthandoff: 03/25/2019
+ms.locfileid: "58419700"
 ---
 # <a name="sqlite-ef-core-database-provider-limitations"></a>SQLite EF Core 数据库提供程序限制
 
@@ -21,6 +21,7 @@ SQLite 提供程序具有许多迁移限制。 其中大多数限制是基础的
 
 * 架构
 * 序列
+* 计算的列
 
 ## <a name="migrations-limitations"></a>迁移限制
 

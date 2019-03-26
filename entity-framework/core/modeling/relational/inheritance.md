@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 9a7c5488-aaf4-4b40-b1ff-f435ff30f6ec
 uid: core/modeling/relational/inheritance
-ms.openlocfilehash: 019893ec8268ef9e59d581799a13d63610c80616
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 2aaceb05bbc1b0eb5c116b3dc1fb33c90c115a70
+ms.sourcegitcommit: 645785187ae23ddf7d7b0642c7a4da5ffb0c7f30
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42996317"
+ms.lasthandoff: 03/25/2019
+ms.locfileid: "58419674"
 ---
 # <a name="inheritance-relational-database"></a>继承 （关系数据库）
 
@@ -50,6 +50,9 @@ public class RssBlog : Blog
 ```
 
 ![图像](_static/inheritance-tph-data.png)
+
+>[!NOTE]
+> 使用 TPH 映射时数据库 colmmns 自动进行根据需要可以为 null。
 
 ## <a name="data-annotations"></a>数据注释
 

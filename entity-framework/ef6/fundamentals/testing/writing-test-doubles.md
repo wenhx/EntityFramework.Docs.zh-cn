@@ -3,12 +3,12 @@ title: 使用你自己的 test double 的 EF6 进行测试
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 16a8b7c0-2d23-47f4-9cc0-e2eb2e738ca3
-ms.openlocfilehash: 2158dc73585c2720e7293096b0478c73edf522d9
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 9db56e28cd89084fece36c3e5a2c1b4495991d01
+ms.sourcegitcommit: 645785187ae23ddf7d7b0642c7a4da5ffb0c7f30
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490904"
+ms.lasthandoff: 03/25/2019
+ms.locfileid: "58419726"
 ---
 # <a name="testing-with-your-own-test-doubles"></a>使用你自己的 test double 进行测试
 > [!NOTE]
@@ -43,7 +43,7 @@ ms.locfileid: "45490904"
 
 ## <a name="creating-a-context-interface"></a>创建上下文接口  
 
-我们要看一下测试利用了 EF 的服务模型。 为了能够使用内存中版本进行测试替换我们的 EF 上下文，我们将定义一个接口，我们的 EF 上下文 （和内存中双） 将 imeplement。  
+我们要看一下测试利用了 EF 的服务模型。 为了能够使用内存中版本进行测试替换我们的 EF 上下文，我们将定义我们的 EF 上下文 （和内存中双） 将实现的接口。
 
 我们要测试该服务将查询和修改使用我们的上下文的 DbSet 属性的数据，调用 SaveChanges 以将更改推送到数据库。 因此我们要包括在接口上的这些成员。  
 

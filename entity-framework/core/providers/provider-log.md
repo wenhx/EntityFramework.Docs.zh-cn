@@ -6,12 +6,12 @@ ms.date: 08/08/2018
 ms.assetid: 7CEF496E-A5B0-4F5F-B68E-529609B23EF9
 ms.technology: entity-framework-core
 uid: core/providers/provider-log
-ms.openlocfilehash: 0f8389decbc1995cc629d24c5baa197255cd328a
-ms.sourcegitcommit: eb8359b7ab3b0a1a08522faf67b703a00ecdcefd
+ms.openlocfilehash: 1133976d8d25e4099b64a1a30a8d2066ff3f6cd7
+ms.sourcegitcommit: 645785187ae23ddf7d7b0642c7a4da5ffb0c7f30
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/21/2019
-ms.locfileid: "58319135"
+ms.lasthandoff: 03/25/2019
+ms.locfileid: "58419661"
 ---
 # <a name="provider-impacting-changes"></a>提供程序影响的更改
 
@@ -20,6 +20,8 @@ ms.locfileid: "58319135"
 我们此日志着手从 2.1 到 2.2 的更改。 在 2.1 之前，我们使用[ `providers-beware` ](https://github.com/aspnet/EntityFrameworkCore/labels/providers-beware)并[ `providers-fyi` ](https://github.com/aspnet/EntityFrameworkCore/labels/providers-fyi)上我们的问题和拉取请求标签。
 
 ## <a name="22-----30"></a>2.2 ---> 3.0
+
+请注意其中的很多[应用程序级别的重大更改](../what-is-new/ef-core-3.0/breaking-changes.md)还将影响提供程序。
 
 * https://github.com/aspnet/EntityFrameworkCore/pull/14022
   * 删除过时的 Api 和折叠的可选参数重载
@@ -30,6 +32,35 @@ ms.locfileid: "58319135"
   * CharTypeMapping 子类可能已损坏修复在基实现中的几个 bug 所需的行为更改所导致。
 * https://github.com/aspnet/EntityFrameworkCore/pull/15090
   * 为 IDatabaseModelFactory 添加基类和其进行更新以使用参数对象来缓解未来的分页符。
+* https://github.com/aspnet/EntityFrameworkCore/pull/15123
+  * 参数对象中用于 MigrationsSqlGenerator 缓解未来的分页符。
+* https://github.com/aspnet/EntityFrameworkCore/pull/14972
+  * 日志级别的显式配置所需的提供程序可能正在使用 api，一些更改。 具体而言，如果提供程序直接使用日志记录基础结构，此更改可能会破坏使用。 此外，使用的基础结构，它是公共） 的提供程序以后将需要派生自`LoggingDefinitions`或`RelationalLoggingDefinitions`。 请参阅 SQL Server 和内存中的提供程序示例。
+* https://github.com/aspnet/EntityFrameworkCore/pull/15091
+  * 核心、 关系型和抽象资源字符串现在是公共的。
+  * `CoreLoggerExtensions` 和`RelationalLoggerExtensions`现在是公共的。 记录在核心或关系级别上定义的事件时，提供程序应使用这些 Api。 不直接调用访问日志记录资源它们仍内部。
+  * `IRawSqlCommandBuilder` 已从单一实例服务更改为作用域服务
+  * `IMigrationsSqlGenerator` 已从单一实例服务更改为作用域服务
+* https://github.com/aspnet/EntityFrameworkCore/pull/14706
+  * 用于构建的关系命令基础结构进行了公共使它能够安全地使用的提供程序并稍有重构。
+  * `IRelationalCommandBuilderFactory`已从单一实例服务更改为作用域服务
+  * `IShaperCommandContextFactory` 已从单一实例服务更改为作用域服务
+  * `ISelectExpressionFactory` 已从单一实例服务更改为作用域服务
+* https://github.com/aspnet/EntityFrameworkCore/pull/14733
+  * `ILazyLoader` 已从作用域内的服务更改为暂时性服务
+* https://github.com/aspnet/EntityFrameworkCore/pull/14610
+  * `IUpdateSqlGenerator` 已从作用域内的服务更改为单一实例服务
+  * 此外，`ISingletonUpdateSqlGenerator`已删除
+* https://github.com/aspnet/EntityFrameworkCore/pull/15067
+  * 大量的提供程序使用的内部代码现在已变得公共
+  * 它不应该再受必要引用`IndentedStringBuilder`由于它具有已无需编写显示它的位置
+  * 用法`NonCapturingLazyInitializer`应替换为`LazyInitializer`BCL 从
+* https://github.com/aspnet/EntityFrameworkCore/pull/14608
+  * 在应用程序中的重大更改文档并未完全包括此更改。 对于提供程序，这可能是更大的影响可能通常导致测试 EF core 以便测试基础结构已更改，以使其成为更少可能会遇到此问题，因为。
+* https://github.com/aspnet/EntityFrameworkCore/issues/13961
+  * `EntityMaterializerSource` 已经进行了简化
+* https://github.com/aspnet/EntityFrameworkCore/pull/14895
+  * StartsWith 翻译已更改的方式提供程序可能希望/需要作出反应
 
 ## <a name="21-----22"></a>2.1 ---> 2.2
 
