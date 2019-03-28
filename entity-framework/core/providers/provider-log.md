@@ -99,7 +99,7 @@ ms.locfileid: "58419661"
   * 此拉取请求将添加这一概念`CanConnect`将由 ASP.NET Core 运行状况检查来确定数据库是否可用。 默认情况下，关系的实现只需调用`Exist`，但如有必要提供程序可以实现一些不同。 非关系提供程序将需要使运行状况检查能够实现新的 API。
 * [https://github.com/aspnet/EntityFrameworkCore/pull/13306](https://github.com/aspnet/EntityFrameworkCore/pull/13306) -更新基 RelationalTypeMapping 不设置 DbParameter 大小
   * 停止默认情况下设置大小，因为它可能会导致截断。 提供程序可能需要添加其自己的逻辑，如果需要设置大小。
-* https://github.com/aspnet/EntityFrameworkCore/pull/13372 -RevEng:始终指定列的 decimal 列类型
+* (https://github.com/aspnet/EntityFrameworkCore/pull/13372) -RevEng:始终指定列的 decimal 列类型
   * 始终在基架的代码，而不是通过约定配置中配置 decimal 列的列的类型。
   * 提供程序不应要求其端上的任何更改。
 * [https://github.com/aspnet/EntityFrameworkCore/pull/13469](https://github.com/aspnet/EntityFrameworkCore/pull/13469) -用于生成 SQL 用例表达式添加 CaseExpression
