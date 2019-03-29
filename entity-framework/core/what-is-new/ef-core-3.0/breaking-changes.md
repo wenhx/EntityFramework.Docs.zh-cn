@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: 534ac95cccc03e9797ba766e601e2fe86eaf8061
-ms.sourcegitcommit: eb8359b7ab3b0a1a08522faf67b703a00ecdcefd
+ms.openlocfilehash: 7ed55d4cae36f6b25059a5b218db4b0d5e2fb266
+ms.sourcegitcommit: 645785187ae23ddf7d7b0642c7a4da5ffb0c7f30
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/21/2019
-ms.locfileid: "58319213"
+ms.lasthandoff: 03/25/2019
+ms.locfileid: "58419739"
 ---
 # <a name="breaking-changes-included-in-ef-core-30-currently-in-preview"></a>EF Core 3.0 中包含的中断性变更（目前处于预览状态）
 
@@ -786,6 +786,56 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 
 若要在 iOS 上使用本机 SQLite 版本，请配置 `Microsoft.Data.Sqlite` 以使用其他 `SQLitePCLRaw` 捆绑包。
 
+## <a name="guid-values-are-now-stored-as-text-on-sqlite"></a>GUID 值现在以文本形式存储在 SQLite 上
+
+[跟踪问题 #15078](https://github.com/aspnet/EntityFrameworkCore/issues/15078)
+
+此更改是在 EF Core 3.0-preview 4 中引入的。
+
+**旧行为**
+
+GUID 值之前以 BLOB 值形式存储在 SQLite 上。
+
+**新行为**
+
+GUID 值现在以文本形式存储。
+
+**为什么**
+
+GUID 的二进制格式不会进行标准化。 以文本形式存储值使数据库与其他技术更兼容。
+
+**缓解措施**
+
+现在通过执行如下的 SQL，可以将现有数据库转成新的格式。
+
+``` sql
+UPDATE MyTable
+SET GuidColumn = hex(substr(GuidColumn, 4, 1)) ||
+                 hex(substr(GuidColumn, 3, 1)) ||
+                 hex(substr(GuidColumn, 2, 1)) ||
+                 hex(substr(GuidColumn, 1, 1)) || '-' ||
+                 hex(substr(GuidColumn, 6, 1)) ||
+                 hex(substr(GuidColumn, 5, 1)) || '-' ||
+                 hex(substr(GuidColumn, 8, 1)) ||
+                 hex(substr(GuidColumn, 7, 1)) || '-' ||
+                 hex(substr(GuidColumn, 9, 2)) || '-' ||
+                 hex(substr(GuidColumn, 11, 6))
+WHERE typeof(GuidColumn) == 'blob';
+```
+
+在 EF Core 中，通过对这些属性配置值转换器，还可以使用以前的行为模式继续操作。
+
+``` csharp
+modelBuilder
+    .Entity<MyEntity>()
+    .Property(e => e.GuidProperty)
+    .HasConversion(
+        g => g.ToByteArray(),
+        b => new Guid(b));
+```
+
+Microsoft.Data.Sqlite 仍然能够从“BLOB”和“文本”列读取 GUID 值；但是，由于参数和常量的默认格式已更改，可能需要针对涉及 GUID 的大多数情况采取措施。
+
 ## <a name="char-values-are-now-stored-as-text-on-sqlite"></a>Char 值现在以文本形式存储在 SQLite 上
 
 [跟踪问题 #15020](https://github.com/aspnet/EntityFrameworkCore/issues/15020)
@@ -865,3 +915,51 @@ Microsoft.Data.Sqlite 也仍然能够读取整数列和文本列的字符值，�
 UPDATE __EFMigrationsHistory
 SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 150))
 ```
+
+## <a name="logquerypossibleexceptionwithaggregateoperator-has-been-renamed"></a>已重命名 LogQueryPossibleExceptionWithAggregateOperator
+
+[跟踪问题 #10985](https://github.com/aspnet/EntityFrameworkCore/issues/10985)
+
+此更改是在 EF Core 3.0-preview 4 中引入的。
+
+**更改**
+
+`RelationalEventId.LogQueryPossibleExceptionWithAggregateOperator` 已重命名为 `RelationalEventId.LogQueryPossibleExceptionWithAggregateOperatorWarning`。
+
+**为什么**
+
+将此警告事件的命名方式与所有其他警告事件保持一致。
+
+**缓解措施**
+
+使用新名称。 （注意：事件 ID 号码未更改。）
+
+## <a name="clarify-api-for-foreign-key-constraint-names"></a>阐明 API 的外键约束名称
+
+[跟踪问题 #10730](https://github.com/aspnet/EntityFrameworkCore/issues/10730)
+
+此更改是在 EF Core 3.0-preview 4 中引入的。
+
+**旧行为**
+
+在 EF Core 3.0 之前，外键约束名称被简单地称为“名称”。 例如:
+
+```C#
+var constraintName = myForeignKey.Name;
+```
+
+**新行为**
+
+从 EF Core 3.0 开始，外键约束名称现在被称为“约束名称”。 例如:
+
+```C#
+var constraintName = myForeignKey.ConstraintName;
+```
+
+**为什么**
+
+这样不仅可以让此领域的命名方式保持一致，还阐明了这是外键约束的名称，不是定义外键所依据的列或属性名称。
+
+**缓解措施**
+
+使用新名称。
