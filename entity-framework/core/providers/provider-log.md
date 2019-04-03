@@ -6,12 +6,12 @@ ms.date: 08/08/2018
 ms.assetid: 7CEF496E-A5B0-4F5F-B68E-529609B23EF9
 ms.technology: entity-framework-core
 uid: core/providers/provider-log
-ms.openlocfilehash: 229c15ec0402e1706318593a099236f723d80595
-ms.sourcegitcommit: ab847dd881d51122e695b7cd8c025fcf3a5a9033
+ms.openlocfilehash: 9ef87a737111053df0359f3b2d7a4f82d25c578a
+ms.sourcegitcommit: a8b04050033c5dc46c076b7e21b017749e0967a8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/30/2019
-ms.locfileid: "58678381"
+ms.lasthandoff: 04/02/2019
+ms.locfileid: "58867939"
 ---
 # <a name="provider-impacting-changes"></a>提供程序影响的更改
 
@@ -43,9 +43,6 @@ ms.locfileid: "58678381"
   * `IMigrationsSqlGenerator` 已从单一实例服务更改为作用域服务
 * https://github.com/aspnet/EntityFrameworkCore/pull/14706
   * 用于构建的关系命令基础结构进行了公共使它能够安全地使用的提供程序并稍有重构。
-  * `IRelationalCommandBuilderFactory`已从单一实例服务更改为作用域服务
-  * `IShaperCommandContextFactory` 已从单一实例服务更改为作用域服务
-  * `ISelectExpressionFactory` 已从单一实例服务更改为作用域服务
 * https://github.com/aspnet/EntityFrameworkCore/pull/14733
   * `ILazyLoader` 已从作用域内的服务更改为暂时性服务
 * https://github.com/aspnet/EntityFrameworkCore/pull/14610
