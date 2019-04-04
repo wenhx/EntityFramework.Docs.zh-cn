@@ -4,8 +4,13 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: 8C90C074-0A5B-4567-AF79-799B7BC78062
 uid: core/what-is-new/ef-core-3.0/index
+ms.openlocfilehash: 9490b0377a383e3ea7c7e70da33799b25e04395a
+ms.sourcegitcommit: a013e243a14f384999ceccaf9c779b8c1ae3b936
+ms.translationtype: HT
+ms.contentlocale: zh-CN
+ms.lasthandoff: 03/06/2019
+ms.locfileid: "57463330"
 ---
-
 # <a name="what-is-new-in-ef-core-30-currently-in-preview"></a><span data-ttu-id="f5db4-102">EF Core 3.0 中的新增功能（目前为预览版）</span><span class="sxs-lookup"><span data-stu-id="f5db4-102">What is new in EF Core 3.0 (currently in preview)</span></span>
 
 > [!IMPORTANT]
