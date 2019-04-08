@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: 2EBE2CCC-E52D-483F-834C-8877F5EB0C0C
 uid: core/what-is-new/ef-core-3.0/features
-ms.openlocfilehash: b6774f615b04bf9579aac5dea217e7321631da0c
-ms.sourcegitcommit: a709054b2bc7a8365201d71f59325891aacd315f
+ms.openlocfilehash: 7501a806271c9734e85e31845f260f2d512da077
+ms.sourcegitcommit: a8b04050033c5dc46c076b7e21b017749e0967a8
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/14/2019
-ms.locfileid: "57829182"
+ms.lasthandoff: 04/02/2019
+ms.locfileid: "58867952"
 ---
 # <a name="new-features-included-in-ef-core-30-currently-in-preview"></a>EF Core 3.0 中包含的新功能（目前处于预览状态）
 
@@ -50,6 +50,31 @@ LINQ 可便于编写数据库查询，而无需离开所选的语言，同时还
 我们在 EF Core 2.2 之前开始这一开发，并且[我们已发布了一些提供程序的预览版](https://blogs.msdn.microsoft.com/dotnet/2018/10/17/announcing-entity-framework-core-2-2-preview-3/)。
 新的计划是与 EF Core 3.0 一起继续开发提供程序。 
 
+## <a name="dependent-entities-sharing-the-table-with-the-principal-are-now-optional"></a>与主体共享表的依赖实体现为可选项
+
+[跟踪问题 #9005](https://github.com/aspnet/EntityFrameworkCore/issues/9005)
+
+将在 EF Core 3.0 预览版 4 中引入此功能。
+
+考虑下列模型：
+```C#
+public class Order
+{
+    public int Id { get; set; }
+    public int CustomerId { get; set; }
+    public OrderDetails Details { get; set; }
+}
+
+public class OrderDetails
+{
+    public int Id { get; set; }
+    public string ShippingAddress { get; set; }
+}
+```
+
+自 EF Core 3.0 起，如果 `OrderDetails` 由 `Order` 拥有且显式映射到同一张表中，则它将可能添加 `Order` 而不添加 `OrderDetails`，并且除主键外的所有 `OrderDetails` 属性都将映射到不为 null 的列中。
+查询时，如果其任意所需属性均没有值，或者它在主键之外没有任何必需属性且所有属性均为 `null`，则 EF Core 会将 `OrderDetails` 设置为 `null`。
+
 ## <a name="c-80-support"></a>C#8.0 支持
 
 [跟踪问题 #12047](https://github.com/aspnet/EntityFrameworkCore/issues/12047)
@@ -68,7 +93,7 @@ LINQ 可便于编写数据库查询，而无需离开所选的语言，同时还
 在 EF Core 2.1 中引入并在 EF Core 3.0 中视为没有键的实体类型的[查询类型](xref:core/modeling/query-types)代表可以从数据库读取但无法更新的数据。
 在大多数情况下，这一特性使它们非常适合数据库视图，因此我们计划在执行数据库视图的反向工程时自动创建没有键的实体类型。
 
-## <a name="property-bag-entities"></a>属性包实体 
+## <a name="property-bag-entities"></a>属性包实体
 
 [跟踪问题 #13610](https://github.com/aspnet/EntityFrameworkCore/issues/13610) 和 [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914)
 
@@ -77,7 +102,7 @@ LINQ 可便于编写数据库查询，而无需离开所选的语言，同时还
 此功能可以启用在索引的属性（而非常规属性）中存储数据的实体，并能够使用同一 .NET 类的实例（可能像 `Dictionary<string, object>` 一样简单）来表示同一 EF Core 模型中的不同的实体类型。
 此功能是支持多对多关系而无需联接实体的基石（[问题 #1368](https://github.com/aspnet/EntityFrameworkCore/issues/1368)），是针对 EF Core 提出改进要求最多的一项功能。
 
-## <a name="ef-63-on-net-core"></a>.NET Core 上的 EF 6.3 
+## <a name="ef-63-on-net-core"></a>.NET Core 上的 EF 6.3
 
 [跟踪问题 EF6#271](https://github.com/aspnet/EntityFramework6/issues/271)
 

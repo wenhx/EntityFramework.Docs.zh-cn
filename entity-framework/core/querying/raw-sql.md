@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
 uid: core/querying/raw-sql
-ms.openlocfilehash: 0ad43db794902cf1f46bfe8f117fbd36e06f3c44
-ms.sourcegitcommit: a709054b2bc7a8365201d71f59325891aacd315f
+ms.openlocfilehash: 3024c0101c9d886ef844d1b7dc85aaf1be27e86b
+ms.sourcegitcommit: ce44f85a5bce32ef2d3d09b7682108d3473511b3
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/14/2019
-ms.locfileid: "57829169"
+ms.lasthandoff: 04/04/2019
+ms.locfileid: "58914073"
 ---
 # <a name="raw-sql-queries"></a>原生 SQL 查询
 
@@ -64,7 +64,7 @@ var blogs = context.Blogs
     .ToList();
 ```
 
-还可以构造 DbParameter 并将其作为参数值提供。 这样可以在 SQL 查询字符串中使用命名参数。
+你还可构造 DbParameter 并将其作为参数值提供：
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
@@ -72,6 +72,17 @@ var user = new SqlParameter("user", "johndoe");
 
 var blogs = context.Blogs
     .FromSql("EXECUTE dbo.GetMostPopularBlogsForUser @user", user)
+    .ToList();
+```
+
+这样，你就能在 SQL 查询字符串中使用已命名的参数，这在存储的流程具有可选参数时非常有用：
+
+<!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
+``` csharp
+var user = new SqlParameter("user", "johndoe");
+
+var blogs = context.Blogs
+    .FromSql("EXECUTE dbo.GetMostPopularBlogs @filterByUser=@user", user)
     .ToList();
 ```
 
@@ -132,7 +143,7 @@ var blogs = context.Blogs
 
 * SQL 查询不能包含关联数据。 但是，在许多情况下你可以在查询后面紧跟着使用 `Include` 方法以返回关联数据（请参阅[包含关联数据](#including-related-data)）。
 
-* 传递到此方法的 `SELECT` 语句通常应该是可组合的：如果 EF Core 需要在服务器端计算更多查询运算符（例如，转换 `FromSql` 后跟的 LINQ 运算符），所提供的 SQL 会被视为子查询。 这意味着传递的 SQL 不应包含子查询上无效的任何字符或选项，如：
+* `SELECT` 通常情况下，传递到此方法的语句应可组合：如果 EF Core 需要在服务器端计算更多查询运算符（例如，转换 `FromSql` 后跟的 LINQ 运算符），所提供的 SQL 会被视为子查询。 这意味着传递的 SQL 不应包含子查询上无效的任何字符或选项，如：
   * 结尾分号
   * 在 SQL Server 上，结尾处的查询级提示（例如，`OPTION (HASH JOIN)`）
   * 在 SQL Server 上， `SELECT` 子句中不带 `TOP 100 PERCENT` 的 `ORDER BY` 子句
