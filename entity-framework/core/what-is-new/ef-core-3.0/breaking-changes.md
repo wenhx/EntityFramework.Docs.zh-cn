@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: 7ed55d4cae36f6b25059a5b218db4b0d5e2fb266
-ms.sourcegitcommit: 645785187ae23ddf7d7b0642c7a4da5ffb0c7f30
+ms.openlocfilehash: fd593b2832a5a6ffe27cd4493127b5d405f684ba
+ms.sourcegitcommit: ce44f85a5bce32ef2d3d09b7682108d3473511b3
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/25/2019
-ms.locfileid: "58419739"
+ms.lasthandoff: 04/04/2019
+ms.locfileid: "58914122"
 ---
 # <a name="breaking-changes-included-in-ef-core-30-currently-in-preview"></a>EF Core 3.0 中包含的中断性变更（目前处于预览状态）
 
@@ -37,7 +37,7 @@ ms.locfileid: "58419739"
 从 3.0 开始，EF Core 仅允许在客户端上计算顶级投影中的表达式（查询中的最后一个 `Select()` 调用）。
 当查询的任何其他部分中的表达式无法转换为 SQL 或参数时，将引发异常。
 
-**为什么**
+**原因**
 
 自动的客户端查询计算允许执行许多查询，即使它们的重要组成部分无法转换。
 此行为可能导致意外且具有潜在破坏性的行为，这些行为可能仅在生产中变得明显。
@@ -53,7 +53,7 @@ ms.locfileid: "58419739"
 
 ## <a name="entity-framework-core-is-no-longer-part-of-the-aspnet-core-shared-framework"></a>Entity Framework Core 不再是 ASP.NET Core 共享框架的一部分
 
-[跟踪问题公告 #325](https://github.com/aspnet/Announcements/issues/325)
+[跟踪问题公告#325](https://github.com/aspnet/Announcements/issues/325)
 
 此更改是在 ASP.NET Core 3.0-preview 1 中引入的。 
 
@@ -65,7 +65,7 @@ ms.locfileid: "58419739"
 
 从 3.0 开始，ASP.NET Core 共享框架不包括 EF Core 或任何 EF Core 数据提供程序。
 
-**为什么**
+**原因**
 
 在此更改之前，获取 EF Core 需要不同的步骤，具体取决于应用程序是否是面向 ASP.NET Core 和 SQL Server。 此外，升级 ASP.NET Core 会强制升级 EF Core 和 SQL Server 提供程序，这并不总是可取的。
 
@@ -75,6 +75,46 @@ ms.locfileid: "58419739"
 **缓解措施**
 
 若要在 ASP.NET Core 3.0 应用程序或任何其他受支持的应用程序中使用 EF Core，请显式添加对应用程序将使用的 EF Core 数据库提供程序的包引用。
+
+## <a name="fromsql-executesql-and-executesqlasync-have-been-renamed"></a>FromSql、ExecuteSql 和 ExecuteSqlAsync 已重命名
+
+[跟踪问题 #10996](https://github.com/aspnet/EntityFrameworkCore/issues/10996)
+
+此更改是在 EF Core 3.0-preview 4 中引入的。
+
+**旧行为**
+
+在 EF Core 3.0 之前，这些方法名称是重载的，它们使用普通字符串或应内插到 SQL 和参数中的字符串。
+
+**新行为**
+
+自 EF Core 3.0 起，可使用 `FromSqlRaw`、`ExecuteSqlRaw` 和 `ExecuteSqlRawAsync` 创建一个参数化的查询，其中参数是从查询字符串中单独传递的。
+例如:
+
+```C#
+context.Products.FromSqlRaw(
+    "SELECT * FROM Products WHERE Name = {0}",
+    product.Name);
+```
+
+使用 `FromSqlInterpolated`、`ExecuteSqlInterpolated` 和 `ExecuteSqlInterpolatedAsync` 创建一个参数化的查询，其中参数作为内插查询字符串的一部分进行传递。
+例如:
+
+```C#
+context.Products.FromSqlInterpolated(
+    $"SELECT * FROM Products WHERE Name = {product.Name}");
+```
+
+请注意，上述两个查询都将生成 SQL 参数相同的同一参数化的 SQL。
+
+**原因**
+
+此类方法重载使得在意图调用内插字符串方法时很容易意外调用原始字符串方法，反之亦然。
+这会导致查询中的本该参数化的结果没有参数化。
+
+**缓解措施**
+
+切换到使用新的方法名称。
 
 ## <a name="query-execution-is-logged-at-debug-level"></a>在调试级别记录查询执行
 
@@ -90,7 +130,7 @@ EF Core 3.0 之前，是在 `Info` 级别记录查询和其他命令的执行。
 
 从 EF Core 3.0 开始，将在 `Debug` 级别记录命令/SQL 的执行。
 
-**为什么**
+**原因**
 
 此更改是为了降低 `Info` 日志级别的噪音。
 
@@ -121,7 +161,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 从 3.0 开始，EF Core 将临时键值存储为实体跟踪信息的一部分，并保持键属性本身不变。
 
-**为什么**
+**原因**
 
 此更改是为了防止当之前由某个 `DbContext` 实例跟踪的实体移动到另一个 `DbContext` 实例时，临时键值错误地变成永久值。 
 
@@ -150,7 +190,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 这意味着假定存在实体的行，并且在调用 `SaveChanges` 时将更新该行。
 如果未设置键值，或者实体类型未使用生成的键，则新实体仍将像先前版本一样被作为 `Added` 跟踪。
 
-**为什么**
+**原因**
 
 进行此更改是为了在使用存储生成的键时更轻松、更一致地使用断开连接的实体图。
 
@@ -189,7 +229,7 @@ public string Id { get; set; }
 从 3.0 开始，一旦检测到触发条件，EF Core 就会应用级联操作。
 例如，调用 `context.Remove()` 来删除主体实体将导致所有跟踪的相关必需依赖项也立即设置为 `Deleted`。
 
-**为什么**
+**原因**
 
 此更改是为了改善数据绑定和审核方案的体验，在相关体验中，需要了解在调用 `SaveChanges` _之前_会删除哪些实体。
 
@@ -219,7 +259,7 @@ context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 现在，查询类型只是一个没有主键的实体类型。
 无键实体类型与先前版本中的查询类型具有相同的功能。
 
-**为什么**
+**原因**
 
 这样做是为了减少对查询类型用途的混淆。
 具体来说，它们是无键实体类型，因此本质上是只读的，但是不应该仅仅因为实体类型需要是只读的就使用它们。
@@ -282,7 +322,7 @@ modelBuilder.Entity<Order>.OwnsOne(e => e.Details, eb =>
 
 此外，使用固有类型目标调用 `Entity()``HasOne()` 或 `Set()` 现将引发异常。
 
-**为什么**
+**原因**
 
 此更改是为了更清晰的区分从属类型本身的配置和与从属类型的_关系_的配置。
 这反过来消除了诸如 `HasForeignKey` 之类的方法的模糊性和混淆。
@@ -290,6 +330,156 @@ modelBuilder.Entity<Order>.OwnsOne(e => e.Details, eb =>
 **缓解措施**
 
 更改从属类型关系的配置以使用新的 API 曲面，如上例所示。
+
+## <a name="dependent-entities-sharing-the-table-with-the-principal-are-now-optional"></a>与主体共享表的依赖实体现为可选项
+
+[跟踪问题 #9005](https://github.com/aspnet/EntityFrameworkCore/issues/9005)
+
+此更改将在 EF Core 3.0-preview 4 中引入。
+
+**旧行为**
+
+考虑下列模型：
+```C#
+public class Order
+{
+    public int Id { get; set; }
+    public int CustomerId { get; set; }
+    public OrderDetails Details { get; set; }
+}
+
+public class OrderDetails
+{
+    public int Id { get; set; }
+    public string ShippingAddress { get; set; }
+}
+```
+在 EF Core 3.0 之前，如果 `OrderDetails` 由 `Order` 拥有且显式映射到同一张表，则在添加新的 `Order` 时，始终需要 `OrderDetails` 实例。
+
+
+**新行为**
+
+自 3.0 起，EF Core 允许添加 `Order` 而不添加 `OrderDetails`，并将主键之外的所有 `OrderDetails` 属性映射到不为 null 的列中。
+查询时，如果其任意所需属性均没有值，或者它在主键之外没有任何必需属性且所有属性均为 `null`，则 EF Core 会将 `OrderDetails` 设置为 `null`。
+
+**缓解措施**
+
+如果你的模型具有依赖于所有可选列的表共享，但指向该共享的导航不应为 `null`，则应修改应用程序，使其处理导航为 `null` 的情况。 如果此方法不可行，则应向实体类型添加一个必需属性，或者至少要有一个属性分配有非 `null` 值。
+
+## <a name="all-entities-sharing-a-table-with-a-concurrency-token-column-have-to-map-it-to-a-property"></a>与并发标记列共享表的所有实体均必须将其映射到属性
+
+[跟踪问题 #14154](https://github.com/aspnet/EntityFrameworkCore/issues/14154)
+
+此更改将在 EF Core 3.0-preview 4 中引入。
+
+**旧行为**
+
+考虑下列模型：
+```C#
+public class Order
+{
+    public int Id { get; set; }
+    public int CustomerId { get; set; }
+    public byte[] Version { get; set; }
+    public OrderDetails Details { get; set; }
+}
+
+public class OrderDetails
+{
+    public int Id { get; set; }
+    public string ShippingAddress { get; set; }
+}
+
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Order>()
+        .Property(o => o.Version).IsRowVersion().HasColumnName("Version");
+}
+```
+在 EF Core 3.0 之前，如果 `OrderDetails` 由 `Order` 拥有且显式映射到同一张表，则只更新 `OrderDetails` 时，将不更新客户端上的 `Version` 值且下次更新将失败。
+
+
+**新行为**
+
+自 3.0 起，如果 新的 `Version` 值拥有 `OrderDetails`则 EF Core 会将该值传播给 `Order`。 否则，会在模型验证期间引发异常。
+
+**原因**
+
+进行此更改的目的是避免在仅更新映射到同一张表的其中一个实体时使用过时的并发标记值。
+
+**缓解措施**
+
+共享表的所有实体都必须包含一个映射到并发标记列的属性。 可在影子状态中创建一个：
+```C#
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<OrderDetails>()
+        .Property<byte[]>("Version").IsRowVersion().HasColumnName("Version");
+}
+```
+
+## <a name="inherited-properties-from-unmapped-types-are-now-mapped-to-a-single-column-for-all-derived-types"></a>对于所有派生的类型而言，从未映射的类型继承的属性现在会映射到一个列中
+
+[跟踪问题 #13998](https://github.com/aspnet/EntityFrameworkCore/issues/13998)
+
+此更改将在 EF Core 3.0-preview 4 中引入。
+
+**旧行为**
+
+考虑下列模型：
+```C#
+public abstract class EntityBase
+{
+    public int Id { get; set; }
+}
+
+public abstract class OrderBase : EntityBase
+{
+    public int ShippingAddress { get; set; }
+}
+
+public class BulkOrder : OrderBase
+{
+}
+
+public class Order : OrderBase
+{
+}
+
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Ignore<OrderBase>();
+    modelBuilder.Entity<EntityBase>();
+    modelBuilder.Entity<BulkOrder>();
+    modelBuilder.Entity<Order>();
+}
+```
+
+在 EF Core 3.0 之前，`ShippingAddress` 属性会为 `BulkOrder` 和 `Order` 默认映射到单独的列中。
+
+**新行为**
+
+自 3.0 起，EF Core只会为 `ShippingAddress` 创建一个列。
+
+**原因**
+
+旧行为不是预期行为。
+
+**缓解措施**
+
+属性仍可显式映射到所派生的类型上的单独的列中：
+
+```C#
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Ignore<OrderBase>();
+    modelBuilder.Entity<EntityBase>();
+    modelBuilder.Entity<BulkOrder>()
+        .Property(o => o.ShippingAddress).HasColumnName("BulkShippingAddress");
+    modelBuilder.Entity<Order>()
+        .Property(o => o.ShippingAddress).HasColumnName("ShippingAddress");
+}
+```
 
 ## <a name="the-foreign-key-property-convention-no-longer-matches-same-name-as-the-principal-property"></a>外键属性约定不再匹配与主体属性相同的名称
 
@@ -312,14 +502,13 @@ public class Order
     public int Id { get; set; }
     public int CustomerId { get; set; }
 }
-
 ```
 在 EF Core 3.0 之前，`CustomerId` 属性将按约定用于外键。
 但是，如果 `Order` 是从属类型，那么这也会使 `CustomerId` 成为主键，这通常不是预期结果。
 
 **新行为**
 
-从 3.0 开始，如果外键具有与主体属性相同的名称，则 EF Core 不会尝试按约定使用外键属性。
+自 3.0 起，如果外键的主体属性名称相同，EF Core 不会尝试通过转换来为外键使用属性。
 与主体属性名称关联的主体类型名称和与主体属性名称模式关联的导航名称仍然相匹配。
 例如:
 
@@ -352,13 +541,65 @@ public class Order
 }
 ```
 
-**为什么**
+**原因**
 
 此更改是为了避免错误地在从属类型上定义主键属性。
 
 **缓解措施**
 
 如果该属性将成为外键，即为主键的一部分，则显式配置它。
+
+## <a name="database-connection-is-now-closed-if-not-used-anymore-before-the-transactionscope-has-been-completed"></a>现在，如果在 TransactionScope 完成前不再使用数据库连接，则该连接会关闭
+
+[跟踪问题 #14218](https://github.com/aspnet/EntityFrameworkCore/issues/14218)
+
+此更改将在 EF Core 3.0-preview 4 中引入。
+
+**旧行为**
+
+在 EF Core 3.0 之前，如果上下文打开了 `TransactionScope` 中的连接，则该连接在 `TransactionScope` 处于活动期间仍保持打开状态。
+
+```C#
+using (new TransactionScope())
+{
+    using (AdventureWorks context = new AdventureWorks())
+    {
+        context.ProductCategories.Add(new ProductCategory());
+        context.SaveChanges();
+
+        // Old behavior: Connection is still open at this point
+        
+        var categories = context.ProductCategories().ToList();
+    }
+}
+```
+
+**新行为**
+
+自 3.0 起，一旦不再使用连接，EF Core 就会将其关闭。
+
+**原因**
+
+此更改让你能够在同一 `TransactionScope` 中使用多个上下文。 新行为也与 EF6 相匹配。
+
+**缓解措施**
+
+如果连接需要保持打开状态，则显式调用 `OpenConnection()` 将确保 EF Core 不永久关闭此连接：
+
+```C#
+using (new TransactionScope())
+{
+    using (AdventureWorks context = new AdventureWorks())
+    {
+        context.Database.OpenConnection();
+        context.ProductCategories.Add(new ProductCategory());
+        context.SaveChanges();
+        
+        var categories = context.ProductCategories().ToList();
+        context.Database.CloseConnection();
+    }
+}
+```
 
 ## <a name="each-property-uses-independent-in-memory-integer-key-generation"></a>每个属性使用独立的内存中整数键生成
 
@@ -375,7 +616,7 @@ public class Order
 从 EF Core 3.0 开始，每个整数键属性在使用内存数据库时都会获取其自己的值生成器。
 此外，如果删除了数据库，则会为所有表重置键生成。
 
-**为什么**
+**原因**
 
 此更改的目的是使内存中的键生成更接近于实际的数据库键生成，并改进在使用内存中的数据库时隔离测试的功能。
 
@@ -400,7 +641,7 @@ public class Order
 从 EF Core 3.0 开始，如果已知属性的支持字段，则始终使用支持字段读取和写入该属性。
 如果应用程序依赖于编码到 getter 或 setter 方法中的其他行为，则可能导致应用程序中断。
 
-**为什么**
+**原因**
 
 此更改是为了防止 EF Core 在执行涉及实体的数据库操作时默认错误地触发业务逻辑。
 
@@ -428,7 +669,7 @@ modelBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferFieldDuringConstruct
 
 从 EF Core 3.0 开始，如果多个字段与同一属性匹配，则引发异常。
 
-**为什么**
+**原因**
 
 此更改是为了避免在只有一个字段是正确的情况下无提示地使用另一个字段。
 
@@ -458,7 +699,7 @@ modelBuilder
 
 从 EF Core 3.0 开始，`AddDbContext` 和 `AddDbContextPool` 将无法再在依赖注入 (DI) 中注册这些服务。
 
-**为什么**
+**原因**
 
 EF Core 3.0 不要求这些服务位于应用程序的 DI 容器中。 但是，如果 `ILoggerFactory` 在应用程序的 DI 容器中注册，它仍然会由 EF Core 使用。
 
@@ -486,7 +727,7 @@ EF Core 3.0 不要求这些服务位于应用程序的 DI 容器中。 但是，
 
 导致更改检测的其他方法（例如 `ChangeTracker.Entries` 和 `SaveChanges`）仍然会导致所有被跟踪实体的完整 `DetectChanges`。
 
-**为什么**
+**原因**
 
 此更改是为了提高使用 `context.Entry` 的默认性能。
 
@@ -509,7 +750,7 @@ EF Core 3.0 不要求这些服务位于应用程序的 DI 容器中。 但是，
 
 从 EF Core 3.0 开始，将引发异常，指示未设置任何键值。
 
-**为什么**
+**原因**
 
 之所以进行此更改是因为客户端生成的 `string`/`byte[]` 值通常没有用，并且默认行为使得很难以通用方式推断生成的键值。
 
@@ -546,7 +787,7 @@ public string Id { get; set; }
 
 从 EF Core 3.0 开始，`ILoggerFactory` 现已注册为作用域。
 
-**为什么**
+**原因**
 
 此更改是为了允许记录器与 `DbContext` 实例关联，从而启用其他功能并删除一些反常行为，例如内部服务提供商爆炸式增长的情况。
 
@@ -566,13 +807,13 @@ public string Id { get; set; }
 
 **旧行为**
 
-`IDbContextOptionsExtensionWithDebugInfo` 是从 `IDbContextOptionsExtension` 扩展的附加可选接口，以避免在 2.x 发布周期期间对接口进行重大更改。
+`IDbContextOptionsExtensionWithDebugInfo` 是从 `IDbContextOptionsExtension` 扩展得到的额外可选界面，用于避免在 2.x 版本周期中对界面进行中断性更改。
 
 **新行为**
 
 接口现在合并到 `IDbContextOptionsExtension` 中。
 
-**为什么**
+**原因**
 
 之所以进行此更改，是因为所有接口在概念上是一个接口。
 
@@ -599,7 +840,7 @@ public string Id { get; set; }
 相反，即使导航属性是非空集合，尝试访问未加载的导航属性也会引发异常。
 如果出现这种情况，则表示应用程序代码在无效时间尝试使用延迟加载，应将应用程序更改为不执行此操作。
 
-**为什么**
+**原因**
 
 此更改是为了在尝试对已释放的 `DbContext` 实例进行延迟加载时使行为保持一致和正确。
 
@@ -621,7 +862,7 @@ public string Id { get; set; }
 
 从 EF Core 3.0 开始，现在会考虑此警告，并引发错误和异常。 
 
-**为什么**
+**原因**
 
 此更改是为了通过更明显地暴露这个病态案例来驱动生成更好的应用程序代码。
 
@@ -661,7 +902,7 @@ modelBuilder.Entity<Samurai>().HasOne("Entrance").WithOne();
 
 从 EF Core 3.0 开始，上面的代码现执行它以前应执行的操作。
 
-**为什么**
+**原因**
 
 这一旧行为令人非常困惑，尤其是在读取配置代码和查找错误时。
 
@@ -675,6 +916,36 @@ modelBuilder.Entity<Samurai>().HasOne("Entrance").WithOne();
 ```C#
 modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 ```
+
+## <a name="the-return-type-for-several-async-methods-has-been-changed-from-task-to-valuetask"></a>多个异步方法的返回类型已从 Task 更改为 ValueTask
+
+[跟踪问题 #15184](https://github.com/aspnet/EntityFrameworkCore/issues/15184)
+
+此更改将在 EF Core 3.0-preview 4 中引入。
+
+**旧行为**
+
+以下异步方法之前返回的是 `Task<T>`：
+
+* `DbContext.FindAsync()`
+* `DbSet.FindAsync()`
+* `DbContext.AddAsync()`
+* `DbSet.AddAsync()`
+* `ValueGenerator.NextValueAsync()` （及派生类）
+
+**新行为**
+
+上述方法现返回一个 `ValueTask<T>`，其中 `T` 与前述相同。
+
+**原因**
+
+此更改会减少在调用这些方法时发生的堆分配数量，从而提高整体性能。
+
+**缓解措施**
+
+仅需重新编译只等待上述 API 的应用程序 -无需更改源。
+更复杂的用法（例如，将返回的 `Task` 传递到 `Task.WhenAny()`）通常需要通过对返回的 `ValueTask<T>` 调用 `AsTask()` 来将其转换为 `Task<T>`。
+请注意，这会抵消此更改所带来的分配数减少优势。
 
 ## <a name="the-relationaltypemapping-annotation-is-now-just-typemapping"></a>关系式：TypeMapping 注释现在只是 TypeMapping
 
@@ -690,7 +961,7 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 
 类型映射注释的注释名称现在是“TypeMapping”。
 
-**为什么**
+**原因**
 
 类型映射现在不仅用于关系数据库提供程序。
 
@@ -713,7 +984,7 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 
 从 EF Core 3.0 开始，同时为在以后的版本中添加 TPT 和 TPC 支持做准备，调用派生类型的 `ToTable()` 现在将引发异常，以避免将来发生意外的映射更改。
 
-**为什么**
+**原因**
 
 目前，将派生类型映射到不同的表是无效的。
 这种改变避免了在将来当它变为有效时被中断。
@@ -737,7 +1008,7 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 从 EF Core 3.0 开始，现在支持在关系级别上对索引使用 `Include`。
 请使用 `HasIndex().ForSqlServerInclude()`。
 
-**为什么**
+**原因**
 
 此更改是为了将用于索引的 API 与 `Includes` 合并到一个位置，以供所有数据库提供程序使用。
 
@@ -759,7 +1030,7 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 
 从 EF Core 3.0 开始，当打开到 SQLite 的连接时，EF Core 不再发送 `PRAGMA foreign_keys = 1`。
 
-**为什么**
+**原因**
 
 之所以进行此更改，是因为 EF Core 默认使用 `SQLitePCLRaw.bundle_e_sqlite3`，这意味着 FK 强制执行操作在默认情况下是打开的，并且不需要在每次打开连接时显式启用。
 
@@ -778,7 +1049,7 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 
 从 EF Core 3.0 开始，EF Core 使用 `SQLitePCLRaw.bundle_e_sqlite3`。
 
-**为什么**
+**原因**
 
 此更改是为了使 iOS 上使用的 SQLite 版本与其他平台一致。
 
@@ -800,7 +1071,7 @@ GUID 值之前以 BLOB 值形式存储在 SQLite 上。
 
 GUID 值现在以文本形式存储。
 
-**为什么**
+**原因**
 
 GUID 的二进制格式不会进行标准化。 以文本形式存储值使数据库与其他技术更兼容。
 
@@ -850,7 +1121,7 @@ Char 值之前以整数值形式存储在 SQLite 上。 例如，A 的 char 值�
 
 Char 值现在以文本形式存储。
 
-**为什么**
+**原因**
 
 以文本形式存储值显得更加自然，并且使数据库与其他技术更兼容。
 
@@ -891,7 +1162,7 @@ Microsoft.Data.Sqlite 也仍然能够读取整数列和文本列的字符值，�
 
 现在始终使用固定区域性的日历（公历）生成迁移 ID。
 
-**为什么**
+**原因**
 
 更新数据库或解决合并冲突时，迁移的顺序非常重要。 使用固定日历可以避免因团队成员采用不同系统日历而产生的顺序问题。
 
@@ -926,7 +1197,7 @@ SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 
 
 `RelationalEventId.LogQueryPossibleExceptionWithAggregateOperator` 已重命名为 `RelationalEventId.LogQueryPossibleExceptionWithAggregateOperatorWarning`。
 
-**为什么**
+**原因**
 
 将此警告事件的命名方式与所有其他警告事件保持一致。
 
@@ -956,7 +1227,7 @@ var constraintName = myForeignKey.Name;
 var constraintName = myForeignKey.ConstraintName;
 ```
 
-**为什么**
+**原因**
 
 这样不仅可以让此领域的命名方式保持一致，还阐明了这是外键约束的名称，不是定义外键所依据的列或属性名称。
 
