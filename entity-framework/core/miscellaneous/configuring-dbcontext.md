@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: d7a22b5a-4c5b-4e3b-9897-4d7320fcd13f
 uid: core/miscellaneous/configuring-dbcontext
-ms.openlocfilehash: 9400fe8ea817b6aca0fb63c1de05ffe1dc997b2f
-ms.sourcegitcommit: a8b04050033c5dc46c076b7e21b017749e0967a8
-ms.translationtype: HT
+ms.openlocfilehash: 0350b25d0d0efe05df7cb9e93a3f4ae2d864fd63
+ms.sourcegitcommit: 47e0a66a136e743a815d099d2bee5f0da1a068c6
+ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/02/2019
-ms.locfileid: "58868004"
+ms.lasthandoff: 04/09/2019
+ms.locfileid: "59363932"
 ---
 # <a name="configuring-a-dbcontext"></a>配置 DbContext
 
@@ -175,7 +175,7 @@ Entity Framework Core 不支持在同一个正在运行的多个并行操作`DbC
 
 ### <a name="implicitly-sharing-dbcontext-instances-across-multiple-threads-via-dependency-injection"></a>隐式在通过依赖关系注入的多个线程间共享 DbContext 实例
 
-[ `AddDbContext` ](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.entityframeworkservicecollectionextensions.adddbcontext)扩展方法注册`DbContext`类型与[作用域的生存期](https://docs .microsoft.com/aspnet/core/fundamentals/dependency-injection#service-lifetimes)默认情况下。 
+[ `AddDbContext` ](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.entityframeworkservicecollectionextensions.adddbcontext)扩展方法注册`DbContext`类型与[作用域的生存期](https://docs.microsoft.com/aspnet/core/fundamentals/dependency-injection#service-lifetimes)默认情况下。 
 
 这是安全的 ASP.NET Core 应用程序中的并发访问问题，因为只有一个线程在给定时间执行每个客户端请求并且每个请求获取单独的依赖关系注入作用域 (并因此单独`DbContext`实例）。
 
