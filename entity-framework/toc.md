@@ -65,6 +65,7 @@
 #### [值转换](core/modeling/value-conversions.md)
 #### [数据种子设定](core/modeling/data-seeding.md)
 #### [实体类型构造函数](core/modeling/constructors.md)
+#### [表拆分](core/modeling/table-splitting.md)
 #### [固有实体类型](core/modeling/owned-entities.md)
 #### [查询类型](core/modeling/query-types.md)
 #### [具有相同 DbContext 的交替模型](core/modeling/dynamic-model.md)
