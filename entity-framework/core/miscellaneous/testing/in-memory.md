@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 0d0590f1-1ea3-4d5c-8f44-db17395cd3f3
 uid: core/miscellaneous/testing/in-memory
-ms.openlocfilehash: 2754d1deba98fcee0eb88669293b2197545c8874
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 8aaea52f22954ef6a2b7d9b9c5627597c61ac644
+ms.sourcegitcommit: 8f801993c9b8cd8a8fbfa7134818a8edca79e31a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42997887"
+ms.lasthandoff: 04/14/2019
+ms.locfileid: "59562541"
 ---
 # <a name="testing-with-inmemory"></a>使用 InMemory 进行测试
 
@@ -33,7 +33,7 @@ EF Core 数据库提供程序不需要是关系数据库。 InMemory 设计为�
 
 ## <a name="example-testing-scenario"></a>示例测试方案
 
-请考虑以下服务，允许应用程序代码来执行某些与博客相关的操作。 在内部使用`DbContext`连接到 SQL Server 数据库。 可以用来交换此上下文，以便我们可以编写此服务的有效测试，而无需修改代码，或执行大量工作来创建测试连接到 InMemory 数据库上下文的双精度。
+请考虑以下允许应用程序代码执行一些与博客相关的操作的服务。 该服务在内部使用连接到 SQL Server 数据库的 `DbContext`。 可以用来交换此上下文，以便我们可以编写此服务的有效测试，而无需修改代码，或执行大量工作来创建测试连接到 InMemory 数据库上下文的双精度。
 
 [!code-csharp[Main](../../../../samples/core/Miscellaneous/Testing/BusinessLogic/BlogService.cs)]
 
@@ -41,7 +41,7 @@ EF Core 数据库提供程序不需要是关系数据库。 InMemory 设计为�
 
 ### <a name="avoid-configuring-two-database-providers"></a>避免配置两个数据库提供程序
 
-在测试中要从外部配置要使用 InMemory 提供程序的上下文。 如果要配置数据库提供程序通过重写`OnConfiguring`在上下文中，则需要添加一些条件的代码，以确保，仅当其中一个已尚未配置配置的数据库提供程序。
+在测试中，从外部配置上下文以使用 InMemory 提供程序。 如果要通过在上下文中替代 `OnConfiguring` 来配置数据库提供程序，则需要添加一些条件代码，从而确保只有在尚未配置数据库提供程序的情况下才进行配置。
 
 [!code-csharp[Main](../../../../samples/core/Miscellaneous/Testing/BusinessLogic/BloggingContext.cs#OnConfiguring)]
 
@@ -55,15 +55,15 @@ EF Core 数据库提供程序不需要是关系数据库。 InMemory 设计为�
 [!code-csharp[Main](../../../../samples/core/Miscellaneous/Testing/BusinessLogic/BloggingContext.cs#Constructors)]
 
 > [!TIP]  
-> `DbContextOptions<TContext>` 告诉所有其设置，例如要连接到的数据库上下文。 这是通过在您的上下文中运行 OnConfiguring 方法生成的相同对象。
+> `DbContextOptions<TContext>` 告知上下文其所有的设置，例如要连接的数据库。 这与在上下文中运行 OnConfiguring 方法所生成的对象相同。
 
 ## <a name="writing-tests"></a>编写测试
 
-使用此提供程序进行测试的关键是可以让使用 InMemory 提供程序，并控制内存中数据库的作用域的上下文。 通常情况下想干净的数据库的每个测试方法。
+使用此提供程序进行测试的关键是可以让使用 InMemory 提供程序，并控制内存中数据库的作用域的上下文。 通常，每个测试方法都需要一个干净的数据库。
 
 下面是使用 InMemory 数据库的测试类的示例。 每个测试方法指定一个唯一的数据库名称，表示每个方法都有其自己的 InMemory 数据库。
 
 >[!TIP]
-> 若要使用`.UseInMemoryDatabase()`扩展方法，引用的 NuGet 包`Microsoft.EntityFrameworkCore.InMemory`。
+> 若要使用`.UseInMemoryDatabase()`扩展方法，引用的 NuGet 包[Microsoft.EntityFrameworkCore.InMemory](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.InMemory/)。
 
 [!code-csharp[Main](../../../../samples/core/Miscellaneous/Testing/TestProject/InMemory/BlogServiceTests.cs)]

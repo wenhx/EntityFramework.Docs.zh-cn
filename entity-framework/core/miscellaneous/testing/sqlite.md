@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 7a2b75e2-1875-4487-9877-feff0651b5a6
 uid: core/miscellaneous/testing/sqlite
-ms.openlocfilehash: bc9d6768a90ce17160c4126d2a68fddaa30d63de
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: e8ff204a09d50064b4f0d4376f02b05c8681ac25
+ms.sourcegitcommit: 8f801993c9b8cd8a8fbfa7134818a8edca79e31a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42996863"
+ms.lasthandoff: 04/14/2019
+ms.locfileid: "59562528"
 ---
 # <a name="testing-with-sqlite"></a>使用 SQLite 进行测试
 
@@ -47,5 +47,8 @@ SQLite 具有内存中模式，借此可使用 SQLite 针对关系数据库编�
 ## <a name="writing-tests"></a>编写测试
 
 使用此提供程序进行测试的关键是，可告知上下文使用 SQLite 并控制内存中数据库的范围。 通过打开和关闭连接来控制数据库的范围。 数据库的范围限定为连接打开的持续时间。 通常，每个测试方法都需要一个干净的数据库。
+
+>[!TIP]
+> 若要使用`SqliteConnection()`并`.UseSqlite()`扩展方法，引用的 NuGet 包[Microsoft.EntityFrameworkCore.Sqlite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite/)。
 
 [!code-csharp[Main](../../../../samples/core/Miscellaneous/Testing/TestProject/SQLite/BlogServiceTests.cs)]
