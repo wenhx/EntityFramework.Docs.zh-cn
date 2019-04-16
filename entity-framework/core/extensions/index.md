@@ -4,12 +4,12 @@ author: ErikEJ
 ms.date: 01/07/2019
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 uid: core/extensions/index
-ms.openlocfilehash: 414773284df7c208b9a2acf0536fda459bdf775b
-ms.sourcegitcommit: 7bde8e6ad3c4565a4638646ce04bcf5e66f7b5fd
+ms.openlocfilehash: d432ca36c166f7baf71253709bf58b1f5428a11a
+ms.sourcegitcommit: 8f801993c9b8cd8a8fbfa7134818a8edca79e31a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/07/2019
-ms.locfileid: "54069225"
+ms.lasthandoff: 04/14/2019
+ms.locfileid: "59562502"
 ---
 # <a name="ef-core-tools--extensions"></a>EF Core 工具和扩展
 
@@ -40,7 +40,7 @@ EF Core Power Tools 是一种 Visual Studio 2017 扩展，它在简单用户界�
 
 ### <a name="entity-framework-visual-editor"></a>实体框架可视化编辑器
 
-Entity Framework Visual Editor 是一种 Visual Studio 2017 扩展，其中增添了 ORM 设计器用于 EF 6 和 EF Core 类的可视化设计。 代码是通过 T4 模板生成的，因此可自定义来满足任意需求。 它支持继承、单向和双向关联，支持枚举，还能用颜色标识类并添加文本块来解释潜在不可预测的设计部分。
+Entity Framework Visual Editor 是一种 Visual Studio 扩展，其中增添了 ORM 设计器用于 EF 6 和 EF Core 类的可视化设计。 代码是通过 T4 模板生成的，因此可自定义来满足任意需求。 它支持继承、单向和双向关联，支持枚举，还能用颜色标识类并添加文本块来解释潜在不可预测的设计部分。
 
 [市场](https://marketplace.visualstudio.com/items?itemName=michaelsawczyn.EFDesigner)
 
