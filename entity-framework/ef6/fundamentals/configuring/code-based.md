@@ -3,12 +3,12 @@ title: 基于代码的配置-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 13886d24-2c74-4a00-89eb-aa0dee328d83
-ms.openlocfilehash: c317f112f713612f7b9aef3764a0bd004fef5424
-ms.sourcegitcommit: 735715f10cc8a231c213e4f055d79f0effd86570
+ms.openlocfilehash: 079a4ab30af74eac8b1f51ece5801ff40a867a29
+ms.sourcegitcommit: 5280dcac4423acad8b440143433459b18886115b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 02/16/2019
-ms.locfileid: "56325348"
+ms.lasthandoff: 04/16/2019
+ms.locfileid: "59619280"
 ---
 # <a name="code-based-configuration"></a>基于代码的配置
 > [!NOTE]
@@ -106,7 +106,7 @@ public class MyContextContext : DbContext
 - 在应用启动时 （之前使用 EF） 的插件或提供程序应注册此事件的事件处理程序方法。 （请注意这必须发生之前应用程序使用 EF）。  
 - 事件处理程序调用到 ReplaceService 需要替换每个服务。  
 
-例如下 IDbConnectionFactory, 和 DbProviderService 会注册一个处理程序如下所示：  
+例如，替换 IDbConnectionFactory 和 DbProviderService 会注册一个处理程序如下所示：  
 
 ``` csharp
 DbConfiguration.Loaded += (_, a) =>
