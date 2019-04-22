@@ -5,10 +5,10 @@ ms.date: 10/27/2016
 ms.assetid: d7a22b5a-4c5b-4e3b-9897-4d7320fcd13f
 uid: core/miscellaneous/configuring-dbcontext
 ms.openlocfilehash: 0350b25d0d0efe05df7cb9e93a3f4ae2d864fd63
-ms.sourcegitcommit: 47e0a66a136e743a815d099d2bee5f0da1a068c6
+ms.sourcegitcommit: 5280dcac4423acad8b440143433459b18886115b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/09/2019
+ms.lasthandoff: 04/18/2019
 ms.locfileid: "59363932"
 ---
 # <a name="configuring-a-dbcontext"></a>配置 DbContext
@@ -23,7 +23,7 @@ EF Core 设计时工具（如[迁移](xref:core/managing-schemas/migrations/inde
 
 ## <a name="configuring-dbcontextoptions"></a>配置 DbContextOptions
 
-`DbContext` 必须具有的实例`DbContextOptions`才能执行任何工作。 `DbContextOptions` 实例包含如下配置信息：
+`DbContext` 必须具有 `DbContextOptions` 的实例才能执行工作。 `DbContextOptions` 实例包含如下配置信息：
 
 - 数据库提供程序，若要使用，通常选择通过调用的方法，如`UseSqlServer`或`UseSqlite`。 这些扩展方法需要相应的提供程序包，如`Microsoft.EntityFrameworkCore.SqlServer`或`Microsoft.EntityFrameworkCore.Sqlite`。 中定义的方法`Microsoft.EntityFrameworkCore`命名空间。
 - 任何必要的连接字符串或标识符的数据库实例中，通常作为参数传递到上述提供程序选择方法

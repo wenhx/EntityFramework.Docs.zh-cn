@@ -4,19 +4,19 @@ author: divega
 ms.date: 02/20/2018
 ms.assetid: 834C9729-7F6E-4355-917D-DE3EE9FE149E
 uid: core/what-is-new/roadmap
-ms.openlocfilehash: f466d112e5ed8661ad1e2d91079c1c01d34b9002
-ms.sourcegitcommit: a013e243a14f384999ceccaf9c779b8c1ae3b936
+ms.openlocfilehash: e9d1a707c643036fa15b1e0e46730eadefd65518
+ms.sourcegitcommit: 8f801993c9b8cd8a8fbfa7134818a8edca79e31a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2019
-ms.locfileid: "57463225"
+ms.lasthandoff: 04/14/2019
+ms.locfileid: "59562463"
 ---
 # <a name="entity-framework-core-roadmap"></a>Entity Framework Core 路线图
 
 > [!IMPORTANT]
 > 请注意，将来版本的功能集和计划会发生更改，尽管我们会尽力使此页面保持最新状态，但它可能不会始终反映我们的最新计划。
 
-### <a name="ef-core-30"></a>EF Core 3.0
+## <a name="ef-core-30"></a>EF Core 3.0
 
 EF Core 2.2 发布后，我们现在将重点放在 EF Core 3.0 上。
 参见 [EF Core 3.0 中的新增功能](xref:core/what-is-new/ef-core-3.0/index)，了解发布内容中计划的[新功能](xref:core/what-is-new/ef-core-3.0/features)和[中断性变更](xref:core/what-is-new/ef-core-3.0/breaking-changes)。
