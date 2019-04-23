@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: fd593b2832a5a6ffe27cd4493127b5d405f684ba
-ms.sourcegitcommit: ce44f85a5bce32ef2d3d09b7682108d3473511b3
+ms.openlocfilehash: 4b251638de43af6525f3e6faa0bd4113ab1714b9
+ms.sourcegitcommit: 5280dcac4423acad8b440143433459b18886115b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/04/2019
-ms.locfileid: "58914122"
+ms.lasthandoff: 04/16/2019
+ms.locfileid: "59619254"
 ---
 # <a name="breaking-changes-included-in-ef-core-30-currently-in-preview"></a>EF Core 3.0 中包含的中断性变更（目前处于预览状态）
 
@@ -37,7 +37,7 @@ ms.locfileid: "58914122"
 从 3.0 开始，EF Core 仅允许在客户端上计算顶级投影中的表达式（查询中的最后一个 `Select()` 调用）。
 当查询的任何其他部分中的表达式无法转换为 SQL 或参数时，将引发异常。
 
-**原因**
+**为什么**
 
 自动的客户端查询计算允许执行许多查询，即使它们的重要组成部分无法转换。
 此行为可能导致意外且具有潜在破坏性的行为，这些行为可能仅在生产中变得明显。
@@ -53,7 +53,7 @@ ms.locfileid: "58914122"
 
 ## <a name="entity-framework-core-is-no-longer-part-of-the-aspnet-core-shared-framework"></a>Entity Framework Core 不再是 ASP.NET Core 共享框架的一部分
 
-[跟踪问题公告#325](https://github.com/aspnet/Announcements/issues/325)
+[跟踪问题公告 #325](https://github.com/aspnet/Announcements/issues/325)
 
 此更改是在 ASP.NET Core 3.0-preview 1 中引入的。 
 
@@ -65,7 +65,7 @@ ms.locfileid: "58914122"
 
 从 3.0 开始，ASP.NET Core 共享框架不包括 EF Core 或任何 EF Core 数据提供程序。
 
-**原因**
+**为什么**
 
 在此更改之前，获取 EF Core 需要不同的步骤，具体取决于应用程序是否是面向 ASP.NET Core 和 SQL Server。 此外，升级 ASP.NET Core 会强制升级 EF Core 和 SQL Server 提供程序，这并不总是可取的。
 
@@ -107,7 +107,7 @@ context.Products.FromSqlInterpolated(
 
 请注意，上述两个查询都将生成 SQL 参数相同的同一参数化的 SQL。
 
-**原因**
+**为什么**
 
 此类方法重载使得在意图调用内插字符串方法时很容易意外调用原始字符串方法，反之亦然。
 这会导致查询中的本该参数化的结果没有参数化。
@@ -130,7 +130,7 @@ EF Core 3.0 之前，是在 `Info` 级别记录查询和其他命令的执行。
 
 从 EF Core 3.0 开始，将在 `Debug` 级别记录命令/SQL 的执行。
 
-**原因**
+**为什么**
 
 此更改是为了降低 `Info` 日志级别的噪音。
 
@@ -161,7 +161,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 从 3.0 开始，EF Core 将临时键值存储为实体跟踪信息的一部分，并保持键属性本身不变。
 
-**原因**
+**为什么**
 
 此更改是为了防止当之前由某个 `DbContext` 实例跟踪的实体移动到另一个 `DbContext` 实例时，临时键值错误地变成永久值。 
 
@@ -190,7 +190,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 这意味着假定存在实体的行，并且在调用 `SaveChanges` 时将更新该行。
 如果未设置键值，或者实体类型未使用生成的键，则新实体仍将像先前版本一样被作为 `Added` 跟踪。
 
-**原因**
+**为什么**
 
 进行此更改是为了在使用存储生成的键时更轻松、更一致地使用断开连接的实体图。
 
@@ -229,7 +229,7 @@ public string Id { get; set; }
 从 3.0 开始，一旦检测到触发条件，EF Core 就会应用级联操作。
 例如，调用 `context.Remove()` 来删除主体实体将导致所有跟踪的相关必需依赖项也立即设置为 `Deleted`。
 
-**原因**
+**为什么**
 
 此更改是为了改善数据绑定和审核方案的体验，在相关体验中，需要了解在调用 `SaveChanges` _之前_会删除哪些实体。
 
@@ -242,6 +242,28 @@ public string Id { get; set; }
 context.ChangeTracker.CascadeDeleteTiming = CascadeTiming.OnSaveChanges;
 context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 ```
+
+## <a name="deletebehaviorrestrict-has-cleaner-semantics"></a>DeleteBehavior.Restrict 具有更简洁的语义
+
+[跟踪问题 #12661](https://github.com/aspnet/EntityFrameworkCore/issues/12661)
+
+此更改将在 EF Core 3.0-preview 5 中引入。
+
+**旧行为**
+
+3.0 之前，`DeleteBehavior.Restrict` 使用 `Restrict` 语义在数据库中创建外键，但也以不明显的方式更改了内部修复。
+
+**新行为**
+
+从 3.0 开始，`DeleteBehavior.Restrict` 确保使用 `Restrict` 语义创建外键--即无级联；在发生约束冲突时触发 - 但不会同时影响 EF 内部修复。
+
+**为什么**
+
+进行此更改是为了改进以直观方式使用 `DeleteBehavior` 的体验，且不产生意外副作用。
+
+**缓解措施**
+
+可使用 `DeleteBehavior.ClientNoAction` 还原以前的行为。
 
 ## <a name="query-types-are-consolidated-with-entity-types"></a>查询类型与实体类型合并
 
@@ -259,7 +281,7 @@ context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 现在，查询类型只是一个没有主键的实体类型。
 无键实体类型与先前版本中的查询类型具有相同的功能。
 
-**原因**
+**为什么**
 
 这样做是为了减少对查询类型用途的混淆。
 具体来说，它们是无键实体类型，因此本质上是只读的，但是不应该仅仅因为实体类型需要是只读的就使用它们。
@@ -322,7 +344,7 @@ modelBuilder.Entity<Order>.OwnsOne(e => e.Details, eb =>
 
 此外，使用固有类型目标调用 `Entity()``HasOne()` 或 `Set()` 现将引发异常。
 
-**原因**
+**为什么**
 
 此更改是为了更清晰的区分从属类型本身的配置和与从属类型的_关系_的配置。
 这反过来消除了诸如 `HasForeignKey` 之类的方法的模糊性和混淆。
@@ -403,7 +425,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 自 3.0 起，如果 新的 `Version` 值拥有 `OrderDetails`则 EF Core 会将该值传播给 `Order`。 否则，会在模型验证期间引发异常。
 
-**原因**
+**为什么**
 
 进行此更改的目的是避免在仅更新映射到同一张表的其中一个实体时使用过时的并发标记值。
 
@@ -461,7 +483,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 自 3.0 起，EF Core只会为 `ShippingAddress` 创建一个列。
 
-**原因**
+**为什么**
 
 旧行为不是预期行为。
 
@@ -541,7 +563,7 @@ public class Order
 }
 ```
 
-**原因**
+**为什么**
 
 此更改是为了避免错误地在从属类型上定义主键属性。
 
@@ -578,7 +600,7 @@ using (new TransactionScope())
 
 自 3.0 起，一旦不再使用连接，EF Core 就会将其关闭。
 
-**原因**
+**为什么**
 
 此更改让你能够在同一 `TransactionScope` 中使用多个上下文。 新行为也与 EF6 相匹配。
 
@@ -616,7 +638,7 @@ using (new TransactionScope())
 从 EF Core 3.0 开始，每个整数键属性在使用内存数据库时都会获取其自己的值生成器。
 此外，如果删除了数据库，则会为所有表重置键生成。
 
-**原因**
+**为什么**
 
 此更改的目的是使内存中的键生成更接近于实际的数据库键生成，并改进在使用内存中的数据库时隔离测试的功能。
 
@@ -641,7 +663,7 @@ using (new TransactionScope())
 从 EF Core 3.0 开始，如果已知属性的支持字段，则始终使用支持字段读取和写入该属性。
 如果应用程序依赖于编码到 getter 或 setter 方法中的其他行为，则可能导致应用程序中断。
 
-**原因**
+**为什么**
 
 此更改是为了防止 EF Core 在执行涉及实体的数据库操作时默认错误地触发业务逻辑。
 
@@ -669,7 +691,7 @@ modelBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferFieldDuringConstruct
 
 从 EF Core 3.0 开始，如果多个字段与同一属性匹配，则引发异常。
 
-**原因**
+**为什么**
 
 此更改是为了避免在只有一个字段是正确的情况下无提示地使用另一个字段。
 
@@ -682,6 +704,52 @@ modelBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferFieldDuringConstruct
 modelBuilder
     .Entity<Blog>()
     .Property(e => e.Id)
+    .HasField("_id");
+```
+
+## <a name="field-only-property-names-should-match-the-field-name"></a>“仅字段”属性名应与字段名匹配
+
+此更改将在 EF Core 3.0-preview 4 中引入。
+
+**旧行为**
+
+在 EF Core 3.0 之前，可以通过字符串值指定属性，如果在 CLR 类型上找不到具有该名称的属性，则 EF Core 将尝试使用约定规则将其与字段匹配。
+```C#
+private class Blog
+{
+    private int _id;
+    public string Name { get; set; }
+}
+```
+```C#
+modelBuilder
+    .Entity<Blog>()
+    .Property("Id");
+```
+
+**新行为**
+
+从 EF Core 3.0 开始，“仅字段”属性必须与字段名完全匹配。
+
+```C#
+modelBuilder
+    .Entity<Blog>()
+    .Property("_id");
+```
+
+**为什么**
+
+进行此更改是为了避免对两个名称相似的属性使用相同的字段，这也使得仅字段属性的匹配规则与映射到 CLR 属性的属性相同。
+
+**缓解措施**
+
+仅字段属性名必须与它们映射到的字段名相同。
+在以后的一个 EF Core 3.0 预览版中，我们计划启用功能：显式配置与属性名不同的字段名：
+
+```C#
+modelBuilder
+    .Entity<Blog>()
+    .Property("Id")
     .HasField("_id");
 ```
 
@@ -699,7 +767,7 @@ modelBuilder
 
 从 EF Core 3.0 开始，`AddDbContext` 和 `AddDbContextPool` 将无法再在依赖注入 (DI) 中注册这些服务。
 
-**原因**
+**为什么**
 
 EF Core 3.0 不要求这些服务位于应用程序的 DI 容器中。 但是，如果 `ILoggerFactory` 在应用程序的 DI 容器中注册，它仍然会由 EF Core 使用。
 
@@ -727,7 +795,7 @@ EF Core 3.0 不要求这些服务位于应用程序的 DI 容器中。 但是，
 
 导致更改检测的其他方法（例如 `ChangeTracker.Entries` 和 `SaveChanges`）仍然会导致所有被跟踪实体的完整 `DetectChanges`。
 
-**原因**
+**为什么**
 
 此更改是为了提高使用 `context.Entry` 的默认性能。
 
@@ -750,7 +818,7 @@ EF Core 3.0 不要求这些服务位于应用程序的 DI 容器中。 但是，
 
 从 EF Core 3.0 开始，将引发异常，指示未设置任何键值。
 
-**原因**
+**为什么**
 
 之所以进行此更改是因为客户端生成的 `string`/`byte[]` 值通常没有用，并且默认行为使得很难以通用方式推断生成的键值。
 
@@ -787,7 +855,7 @@ public string Id { get; set; }
 
 从 EF Core 3.0 开始，`ILoggerFactory` 现已注册为作用域。
 
-**原因**
+**为什么**
 
 此更改是为了允许记录器与 `DbContext` 实例关联，从而启用其他功能并删除一些反常行为，例如内部服务提供商爆炸式增长的情况。
 
@@ -807,13 +875,13 @@ public string Id { get; set; }
 
 **旧行为**
 
-`IDbContextOptionsExtensionWithDebugInfo` 是从 `IDbContextOptionsExtension` 扩展得到的额外可选界面，用于避免在 2.x 版本周期中对界面进行中断性更改。
+`IDbContextOptionsExtensionWithDebugInfo` 是从 `IDbContextOptionsExtension` 扩展的附加可选接口，以避免在 2.x 发布周期期间对接口进行重大更改。
 
 **新行为**
 
 接口现在合并到 `IDbContextOptionsExtension` 中。
 
-**原因**
+**为什么**
 
 之所以进行此更改，是因为所有接口在概念上是一个接口。
 
@@ -840,7 +908,7 @@ public string Id { get; set; }
 相反，即使导航属性是非空集合，尝试访问未加载的导航属性也会引发异常。
 如果出现这种情况，则表示应用程序代码在无效时间尝试使用延迟加载，应将应用程序更改为不执行此操作。
 
-**原因**
+**为什么**
 
 此更改是为了在尝试对已释放的 `DbContext` 实例进行延迟加载时使行为保持一致和正确。
 
@@ -862,7 +930,7 @@ public string Id { get; set; }
 
 从 EF Core 3.0 开始，现在会考虑此警告，并引发错误和异常。 
 
-**原因**
+**为什么**
 
 此更改是为了通过更明显地暴露这个病态案例来驱动生成更好的应用程序代码。
 
@@ -902,7 +970,7 @@ modelBuilder.Entity<Samurai>().HasOne("Entrance").WithOne();
 
 从 EF Core 3.0 开始，上面的代码现执行它以前应执行的操作。
 
-**原因**
+**为什么**
 
 这一旧行为令人非常困惑，尤其是在读取配置代码和查找错误时。
 
@@ -931,13 +999,13 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 * `DbSet.FindAsync()`
 * `DbContext.AddAsync()`
 * `DbSet.AddAsync()`
-* `ValueGenerator.NextValueAsync()` （及派生类）
+* `ValueGenerator.NextValueAsync()`（及派生类）
 
 **新行为**
 
 上述方法现返回一个 `ValueTask<T>`，其中 `T` 与前述相同。
 
-**原因**
+**为什么**
 
 此更改会减少在调用这些方法时发生的堆分配数量，从而提高整体性能。
 
@@ -961,7 +1029,7 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 
 类型映射注释的注释名称现在是“TypeMapping”。
 
-**原因**
+**为什么**
 
 类型映射现在不仅用于关系数据库提供程序。
 
@@ -984,7 +1052,7 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 
 从 EF Core 3.0 开始，同时为在以后的版本中添加 TPT 和 TPC 支持做准备，调用派生类型的 `ToTable()` 现在将引发异常，以避免将来发生意外的映射更改。
 
-**原因**
+**为什么**
 
 目前，将派生类型映射到不同的表是无效的。
 这种改变避免了在将来当它变为有效时被中断。
@@ -1008,13 +1076,37 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 从 EF Core 3.0 开始，现在支持在关系级别上对索引使用 `Include`。
 请使用 `HasIndex().ForSqlServerInclude()`。
 
-**原因**
+**为什么**
 
-此更改是为了将用于索引的 API 与 `Includes` 合并到一个位置，以供所有数据库提供程序使用。
+此更改是为了将用于索引的 API 与 `Include` 合并到一个位置，以供所有数据库提供程序使用。
 
 **缓解措施**
 
 使用新的 API，如上所示。
+
+## <a name="metadata-api-changes"></a>元数据 API 更改
+
+[跟踪问题 #214](https://github.com/aspnet/EntityFrameworkCore/issues/214)
+
+此更改将在 EF Core 3.0-preview 4 中引入。
+
+**新行为**
+
+以下属性已转换为扩展方法：
+
+* `IEntityType.QueryFilter` -> `GetQueryFilter()`
+* `IEntityType.DefiningQuery` -> `GetDefiningQuery()`
+* `IProperty.IsShadowProperty` -> `IsShadowProperty()`
+* `IProperty.BeforeSaveBehavior` -> `GetBeforeSaveBehavior()`
+* `IProperty.AfterSaveBehavior` -> `GetAfterSaveBehavior()`
+
+**为什么**
+
+此更改简化了上述接口的实现。
+
+**缓解措施**
+
+使用新的扩展方法。
 
 ## <a name="ef-core-no-longer-sends-pragma-for-sqlite-fk-enforcement"></a>EF Core 不再发送 pragma 来执行 SQLite FK
 
@@ -1030,7 +1122,7 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 
 从 EF Core 3.0 开始，当打开到 SQLite 的连接时，EF Core 不再发送 `PRAGMA foreign_keys = 1`。
 
-**原因**
+**为什么**
 
 之所以进行此更改，是因为 EF Core 默认使用 `SQLitePCLRaw.bundle_e_sqlite3`，这意味着 FK 强制执行操作在默认情况下是打开的，并且不需要在每次打开连接时显式启用。
 
@@ -1049,7 +1141,7 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 
 从 EF Core 3.0 开始，EF Core 使用 `SQLitePCLRaw.bundle_e_sqlite3`。
 
-**原因**
+**为什么**
 
 此更改是为了使 iOS 上使用的 SQLite 版本与其他平台一致。
 
@@ -1071,7 +1163,7 @@ GUID 值之前以 BLOB 值形式存储在 SQLite 上。
 
 GUID 值现在以文本形式存储。
 
-**原因**
+**为什么**
 
 GUID 的二进制格式不会进行标准化。 以文本形式存储值使数据库与其他技术更兼容。
 
@@ -1121,7 +1213,7 @@ Char 值之前以整数值形式存储在 SQLite 上。 例如，A 的 char 值�
 
 Char 值现在以文本形式存储。
 
-**原因**
+**为什么**
 
 以文本形式存储值显得更加自然，并且使数据库与其他技术更兼容。
 
@@ -1162,7 +1254,7 @@ Microsoft.Data.Sqlite 也仍然能够读取整数列和文本列的字符值，�
 
 现在始终使用固定区域性的日历（公历）生成迁移 ID。
 
-**原因**
+**为什么**
 
 更新数据库或解决合并冲突时，迁移的顺序非常重要。 使用固定日历可以避免因团队成员采用不同系统日历而产生的顺序问题。
 
@@ -1197,7 +1289,7 @@ SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 
 
 `RelationalEventId.LogQueryPossibleExceptionWithAggregateOperator` 已重命名为 `RelationalEventId.LogQueryPossibleExceptionWithAggregateOperatorWarning`。
 
-**原因**
+**为什么**
 
 将此警告事件的命名方式与所有其他警告事件保持一致。
 
@@ -1227,7 +1319,7 @@ var constraintName = myForeignKey.Name;
 var constraintName = myForeignKey.ConstraintName;
 ```
 
-**原因**
+**为什么**
 
 这样不仅可以让此领域的命名方式保持一致，还阐明了这是外键约束的名称，不是定义外键所依据的列或属性名称。
 

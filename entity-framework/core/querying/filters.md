@@ -3,14 +3,17 @@ title: 全局查询筛选器 - EF Core
 author: anpete
 ms.date: 11/03/2017
 uid: core/querying/filters
-ms.openlocfilehash: 201292a440d37d240f31452eaebb23dcd4aee1a6
-ms.sourcegitcommit: 8dd71a57a01c439431164c163a0722877d0e5cd8
+ms.openlocfilehash: 4afc9fb0338d34845639d57013ac710445321940
+ms.sourcegitcommit: 8f801993c9b8cd8a8fbfa7134818a8edca79e31a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 12/07/2018
-ms.locfileid: "53028162"
+ms.lasthandoff: 04/14/2019
+ms.locfileid: "59562437"
 ---
 # <a name="global-query-filters"></a>全局查询筛选器
+
+> [!NOTE]
+> EF Core 2.0 中已引入此功能。
 
 全局查询筛选器是应用于元数据模型（通常为 *OnModelCreating*）中的实体类型的 LINQ 查询谓词（通常传递给 LINQ *Where* 查询运算符的布尔表达式）。 此类筛选器自动应用于涉及这些实体类型（包括通过使用 Include 或直接导航属性引用等方式间接引用的实体类型）的所有 LINQ 查询。 此功能的一些常见应用如下：
 
@@ -41,7 +44,7 @@ ms.locfileid: "53028162"
 
 ## <a name="disabling-filters"></a>禁用筛选器
 
-可使用 ```IgnoreQueryFilters()``` 方法对各个 LINQ 查询禁用筛选器。
+可使用 ```IgnoreQueryFilters()``` 运算符对各个 LINQ 查询禁用筛选器。
 
 [!code-csharp[Main](../../../samples/core/QueryFilters/Program.cs#IgnoreFilters)]
 
