@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 05a47de9-1078-488e-a823-b516a4208f33
 uid: core/modeling/relational/columns
-ms.openlocfilehash: bca9ca22d211aa58a3bba00f6e4d54b8fe4a0df8
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 22fcafbfcf9daf765c94e6ca9c42d7770d3e7d07
+ms.sourcegitcommit: 87fcaba46535aa351db4bdb1231bd14b40e459b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42996199"
+ms.lasthandoff: 04/22/2019
+ms.locfileid: "59929857"
 ---
 # <a name="column-mapping"></a>列映射
 
@@ -26,37 +26,10 @@ ms.locfileid: "42996199"
 
 可以使用数据注释来配置属性映射到其中的列。
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/DataAnnotations/Samples/Relational/Column.cs?highlight=3)] -->
-``` csharp
-public class Blog
-{
-    [Column("blog_id")]
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-}
-```
+[!code-csharp[Main](../../../../samples/core/Modeling/DataAnnotations/Samples/Relational/Column.cs?highlight=13)]
 
 ## <a name="fluent-api"></a>Fluent API
 
 可以使用 Fluent API 配置属性映射到其中的列。
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/Column.cs?highlight=7,8,9)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Blog>()
-            .Property(b => b.BlogId)
-            .HasColumnName("blog_id");
-    }
-}
-
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-}
-```
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Samples/Relational/Column.cs?highlight=11-13)]

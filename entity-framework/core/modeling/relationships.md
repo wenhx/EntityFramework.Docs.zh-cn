@@ -1,15 +1,15 @@
-﻿---
+---
 title: 关系的 EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 0ff736a3-f1b0-4b58-a49c-4a7094bd6935
 uid: core/modeling/relationships
-ms.openlocfilehash: a53a862cc2443a1c4461aa287def100284635f26
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 9ef1a9269fc99f5b27a81c11a161ed5f9d74180d
+ms.sourcegitcommit: 87fcaba46535aa351db4bdb1231bd14b40e459b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42994937"
+ms.lasthandoff: 04/22/2019
+ms.locfileid: "59929932"
 ---
 # <a name="relationships"></a>关系
 
@@ -22,13 +22,13 @@ ms.locfileid: "42994937"
 
 提供多种用于描述关系的术语
 
-* **依赖实体：** 这是包含外键属性的实体。 有时称为 child 的关系。
+* **依赖的实体：** 这是包含外键属性的实体。 有时称为 child 的关系。
 
 * **主体实体：** 这是包含主/备用键属性的实体。 有时称为 parent 的关系。
 
-* **外键：** 中用于存储主体与相关实体的键属性的值的相关实体的属性。
+* **外键：** 中用于存储主体与相关实体的键属性的值的相关实体属性。
 
-* **主体键：** 唯一标识的主体实体的属性。 这可能是 primary key 或备用键。
+* **主体密钥：** 唯一标识的主体实体的属性。 这可能是 primary key 或备用键。
 
 * **导航属性：** 包含对相关实体引用的主体和/或相关实体上定义的属性。
 
@@ -36,7 +36,7 @@ ms.locfileid: "42994937"
 
   * **引用导航属性：** 一个导航属性，保存对单个相关实体的引用。
 
-  * **反转导航属性：** 在讨论特定导航属性时，此术语是指关系另一端的导航属性。
+  * **反转导航属性：** 在讨论特定导航属性时，此术语指关系另一端的导航属性。
 
 以下代码列表显示之间的一个对多关系`Blog`和 `Post`
 
@@ -98,13 +98,13 @@ ms.locfileid: "42994937"
 
 ## <a name="data-annotations"></a>数据注释
 
-有两个可用于配置关系的数据注释`[ForeignKey]`和`[InverseProperty]`。
+有两个可用于配置关系的数据注释`[ForeignKey]`和`[InverseProperty]`。 这些是可用在`System.ComponentModel.DataAnnotations.Schema`命名空间。
 
 ### <a name="foreignkey"></a>[ForeignKey]
 
 可以使用数据注释来配置哪些属性应用作给定关系外键属性。 这通常是外键属性不由约定发现时。
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Samples/Relationships/ForeignKey.cs?name=Entities&highlight=17)]
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Samples/Relationships/ForeignKey.cs?highlight=30)]
 
 > [!TIP]  
 > `[ForeignKey]`可以在关系中这两个导航属性上放置批注。 它不需要继续依赖实体类中的导航属性。
@@ -113,29 +113,29 @@ ms.locfileid: "42994937"
 
 数据注释可用于配置如何对从属和主体实体的导航属性配对。 这通常是多个对两个实体类型之间的导航属性时。
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Samples/Relationships/InverseProperty.cs?name=Entities&highlight=20,23)]
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Samples/Relationships/InverseProperty.cs?highlight=33,36)]
 
 ## <a name="fluent-api"></a>Fluent API
 
 若要配置关系 Fluent API 中，您首先确定构成关系的导航属性。 `HasOne` 或`HasMany`标识您在开始配置的实体类型上的导航属性。 然后链接到调用`WithOne`或`WithMany`来标识反导航。 `HasOne`/`WithOne` 用于引用导航属性和`HasMany` / `WithMany`用于集合导航属性。
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/Relationships/NoForeignKey.cs?name=Model&highlight=8,9,10)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/Relationships/NoForeignKey.cs?highlight=14-16)]
 
 ### <a name="single-navigation-property"></a>单一导航属性
 
 如果只有一个导航属性，则无参数的重载`WithOne`和`WithMany`。 这表示没有从概念上讲一个引用或集合上的另一端的关系，但没有包含在实体类中没有导航属性。
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/Relationships/OneNavigation.cs?name=Model&highlight=10)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/Relationships/OneNavigation.cs?highlight=14-16)]
 
 ### <a name="foreign-key"></a>外键
 
 可以使用 Fluent API 配置哪些属性应用作给定关系外键属性。
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/Relationships/ForeignKey.cs?name=Model&highlight=11)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/Relationships/ForeignKey.cs?highlight=17)]
 
 以下代码列表演示如何配置复合外键。
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/Relationships/CompositeForeignKey.cs?name=Model&highlight=13)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/Relationships/CompositeForeignKey.cs?highlight=20)]
 
 可以使用的字符串重载`HasForeignKey(...)`若要配置卷影属性作为外键 (请参阅[隐藏属性](shadow-properties.md)有关详细信息)。 我们建议显式将卷影属性添加到模型，然后才能使用它作为外键 （作为如下所示）。
 

@@ -6,12 +6,12 @@ ms.date: 08/08/2018
 ms.assetid: 7CEF496E-A5B0-4F5F-B68E-529609B23EF9
 ms.technology: entity-framework-core
 uid: core/providers/provider-log
-ms.openlocfilehash: 9ef87a737111053df0359f3b2d7a4f82d25c578a
-ms.sourcegitcommit: 5280dcac4423acad8b440143433459b18886115b
+ms.openlocfilehash: 61a58bd6119763d90731fac62343b983af510cb6
+ms.sourcegitcommit: 87fcaba46535aa351db4bdb1231bd14b40e459b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/18/2019
-ms.locfileid: "58867939"
+ms.lasthandoff: 04/22/2019
+ms.locfileid: "59929870"
 ---
 # <a name="provider-impacting-changes"></a>提供程序影响的更改
 
@@ -62,6 +62,7 @@ ms.locfileid: "58867939"
   * 约定集服务已更改。 提供程序现在应从"ProviderConventionSet"或"RelationalConventionSet"继承。
   * 可以通过添加自定义项`IConventionSetCustomizer`服务，但这旨在由其他扩展，不提供程序。
   * 在运行时使用的约定应从解析`IConventionSetBuilder`。
+* https://github.com/aspnet/EntityFrameworkCore/pull/15288 数据种子设定已被重构到一个公共 API，以避免需要使用内部类型。 这应只影响非关系提供程序，因为种子设定由关系的所有提供程序的关系的基类。
 
 ## <a name="21-----22"></a>2.1 ---> 2.2
 
@@ -82,7 +83,6 @@ ms.locfileid: "58867939"
   * 提供程序使用这些测试可能需要做出响应
 * [https://github.com/aspnet/EntityFrameworkCore/pull/12141](https://github.com/aspnet/EntityFrameworkCore/pull/12141) -返回到池而不是功能测试中释放上下文
   * 此更改包括这可能需要提供程序以响应某些测试重构
-
 
 ### <a name="test-and-product-code-changes"></a>测试和产品代码更改
 

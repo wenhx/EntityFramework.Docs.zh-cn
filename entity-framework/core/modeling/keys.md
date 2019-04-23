@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 912ffef7-86a0-4cdc-a776-55f907459d20
 uid: core/modeling/keys
-ms.openlocfilehash: 6272e323b83ccab2ed060a2ebbde1d1e8e353d66
-ms.sourcegitcommit: eb8359b7ab3b0a1a08522faf67b703a00ecdcefd
+ms.openlocfilehash: 51d163b867085f42f415dbd7afa9e311ab1781a0
+ms.sourcegitcommit: 87fcaba46535aa351db4bdb1231bd14b40e459b9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/21/2019
-ms.locfileid: "58319161"
+ms.lasthandoff: 04/22/2019
+ms.locfileid: "59929828"
 ---
 # <a name="keys-primary"></a>主键
 
@@ -47,65 +47,14 @@ class Car
 
 可以使用数据注释将单个属性配置为实体的键。
 
-<!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/KeySingle.cs?highlight=3,4)] -->
-``` csharp
-class Car
-{
-    [Key]
-    public string LicensePlate { get; set; }
-
-    public string Make { get; set; }
-    public string Model { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Samples/KeySingle.cs?highlight=13)]
 
 ## <a name="fluent-api"></a>Fluent API
 
 可以使用 Fluent API 将单个属性配置为实体的键。
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/KeySingle.cs?highlight=7,8)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Car> Cars { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Car>()
-            .HasKey(c => c.LicensePlate);
-    }
-}
-
-class Car
-{
-    public string LicensePlate { get; set; }
-
-    public string Make { get; set; }
-    public string Model { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/KeySingle.cs?highlight=11,12)]
 
 还可以使用 Fluent API 将多个属性配置为实体的键（称为复合键）。 只能使用 Fluent API 配置复合键 - 不能使用约定来设置复合键，也不能使用数据注释来配置复合键。
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/KeyComposite.cs?highlight=7,8)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Car> Cars { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Car>()
-            .HasKey(c => new { c.State, c.LicensePlate });
-    }
-}
-
-class Car
-{
-    public string State { get; set; }
-    public string LicensePlate { get; set; }
-
-    public string Make { get; set; }
-    public string Model { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/KeyComposite.cs?highlight=11,12)]
