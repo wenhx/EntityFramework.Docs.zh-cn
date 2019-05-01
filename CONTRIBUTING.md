@@ -1,10 +1,10 @@
 ---
 ms.openlocfilehash: 79a2a10cae9f8a5541bca132e407d4abbe95e093
-ms.sourcegitcommit: ce44f85a5bce32ef2d3d09b7682108d3473511b3
+ms.sourcegitcommit: 87fcaba46535aa351db4bdb1231bd14b40e459b9
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/04/2019
-ms.locfileid: "58914099"
+ms.lasthandoff: 04/22/2019
+ms.locfileid: "59929883"
 ---
 # <a name="contributing-to-the-entity-framework-documentation"></a>参与实体框架文档
 
