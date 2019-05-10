@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: d7a22b5a-4c5b-4e3b-9897-4d7320fcd13f
 uid: core/miscellaneous/configuring-dbcontext
-ms.openlocfilehash: 0350b25d0d0efe05df7cb9e93a3f4ae2d864fd63
-ms.sourcegitcommit: 5280dcac4423acad8b440143433459b18886115b
+ms.openlocfilehash: 316d363d4a1b8a909efc1c32b492280c0d16cb4e
+ms.sourcegitcommit: 960e42a01b3a2f76da82e074f64f52252a8afecc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/18/2019
-ms.locfileid: "59363932"
+ms.lasthandoff: 05/08/2019
+ms.locfileid: "65405210"
 ---
 # <a name="configuring-a-dbcontext"></a>配置 DbContext
 
@@ -163,7 +163,13 @@ var options = serviceProvider.GetService<DbContextOptions<BloggingContext>>();
 ```
 ## <a name="avoiding-dbcontext-threading-issues"></a>避免 DbContext 线程处理问题
 
-Entity Framework Core 不支持在同一个正在运行的多个并行操作`DbContext`实例。 并发访问可能会导致未定义的行为，应用程序崩溃和数据损坏。 由于这是必须始终使用单独的`DbContext`并行执行的操作的实例。 
+Entity Framework Core 不支持在同一个正在运行的多个并行操作`DbContext`实例。 这包括并行执行异步查询和任何显式的并发使用，从多个线程。 因此，始终`await`异步调用立即，或使用不同`DbContext`并行执行的操作的实例。
+
+EF Core 时检测到尝试使用`DbContext`实例同时，您将看到`InvalidOperationException`与类似这样的消息： 
+
+> 在此上下文中的上一个操作完成之前启动的第二个操作。 这通常被由于由不同的线程使用 DbContext 的同一个实例，但是保证实例成员都不是线程安全。
+
+当未检测到出现的并发访问时，它可能导致未定义的行为，应用程序崩溃和数据损坏。
 
 可以在同一个 inadvernetly 原因并发访问的常见错误有`DbContext`实例：
 

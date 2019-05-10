@@ -4,12 +4,12 @@ author: ajcvickers
 ms.date: 02/23/2018
 ms.assetid: 420AFFE7-B709-4A68-9149-F06F8746FB33
 uid: core/modeling/constructors
-ms.openlocfilehash: 1b36197465fb9a6571a306d36eb1e9d885a5399e
-ms.sourcegitcommit: 0cef7d448e1e47bdb333002e2254ed42d57b45b6
+ms.openlocfilehash: 5bf49718f02c1860871b1f4c255ec4d98fce2fc7
+ms.sourcegitcommit: 960e42a01b3a2f76da82e074f64f52252a8afecc
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/29/2018
-ms.locfileid: "43152460"
+ms.lasthandoff: 05/08/2019
+ms.locfileid: "65405249"
 ---
 # <a name="entity-types-with-constructors"></a>使用构造函数的实体类型
 
@@ -90,7 +90,7 @@ public class Post
 * 需要具有构造函数参数不是所有属性。 例如，由任何构造函数参数，因此 EF Core 将以正常方式调用的构造函数后设置未设置 Post.Content 属性。
 * 参数类型和名称必须与匹配的属性类型和名称，只不过属性可以是 Pascal 大小写而参数 camel 大小写。
 * 无法设置 （如博客或更高版本的文章） 的导航属性，EF Core 使用构造函数。
-* 构造函数可以是公共、 私有的或具有任何其他可访问性。
+* 构造函数可以是公共、 私有的或具有任何其他可访问性。 但是，延迟加载代理要求的构造函数是可从继承的代理类进行访问。 通常这意味着使其公共或受保护。
 
 ### <a name="read-only-properties"></a>只读属性
 

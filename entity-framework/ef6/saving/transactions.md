@@ -3,12 +3,12 @@ title: 使用事务-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 0d0f1824-d781-4cb3-8fda-b7eaefced1cd
-ms.openlocfilehash: 7197733ab25c8475746e7863963384730919e3ff
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 96cfff4cca59ab27dd68f50d0260e90902e33a92
+ms.sourcegitcommit: eefcab31142f61a7aaeac03ea90dcd39f158b8b8
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45489773"
+ms.lasthandoff: 04/29/2019
+ms.locfileid: "64873233"
 ---
 # <a name="working-with-transactions"></a>使用事务
 > [!NOTE]
@@ -39,7 +39,7 @@ ms.locfileid: "45489773"
 
 从开始 EF6 framework 现在提供：  
 
-1. **Database.BeginTransaction()** ： 用户可以启动和完成事务本身内现有的 DbContext – 来组合在同一事务中的多个操作，从而更简单的方法，因此所有已提交或所有回滚作为其中一个。 它还允许用户更轻松地指定事务的隔离级别。  
+1. **Database.BeginTransaction()** :若要启动并完成事务本身内现有的 DbContext – 允许多个操作来组合在同一事务中的用户更简单的方法，因此所有已提交或回滚作为一个所有。 它还允许用户更轻松地指定事务的隔离级别。  
 2. **Database.UseTransaction()** ： 它允许使用 Entity Framework 外部启动的事务的 DbContext。  
 
 ### <a name="combining-several-operations-into-one-transaction-within-the-same-context"></a>将组合到一个事务在同一上下文中的多个操作  
@@ -126,7 +126,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
-sing System.Transactions;
+using System.Transactions;
 
 namespace TransactionsExamples
 {
@@ -196,7 +196,7 @@ namespace TransactionsExamples
 - 异步方法  
 - TransactionScope 事务  
 
-### <a name="connection-resiliency"></a>连接弹性  
+### <a name="connection-resiliency"></a>连接复原  
 
 新的连接复原功能并不适用于用户启动事务。 有关详细信息，请参阅[重试执行策略](~/ef6/fundamentals/connection-resiliency/retry-logic.md#user-initiated-transactions-are-not-supported)。  
 
