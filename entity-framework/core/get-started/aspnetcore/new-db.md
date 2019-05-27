@@ -5,12 +5,12 @@ ms.author: riande
 ms.date: 08/03/2018
 ms.assetid: e153627f-f132-4c11-b13c-6c9a607addce
 uid: core/get-started/aspnetcore/new-db
-ms.openlocfilehash: 25e5a683acf4bbed0b978cc6a80f1b50a0b64ca1
-ms.sourcegitcommit: eb8359b7ab3b0a1a08522faf67b703a00ecdcefd
+ms.openlocfilehash: fbc1a00d6d6d0624bcbbfa1e51f4e21a915baaaa
+ms.sourcegitcommit: f277883a5ed28eba57d14aaaf17405bc1ae9cf94
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/21/2019
-ms.locfileid: "58319174"
+ms.lasthandoff: 05/18/2019
+ms.locfileid: "65874565"
 ---
 # <a name="getting-started-with-ef-core-on-aspnet-core-with-a-new-database"></a>使用新数据库在 ASP.NET Core 上开始使用 EF Core
 
@@ -229,5 +229,5 @@ dotnet run
 ## <a name="additional-resources"></a>其他资源
 
 * [教程：使用 SQLite 通过新数据库在 .NET Core 上开始使用 EF Core](xref:core/get-started/netcore/new-db-sqlite)
-* [教程：在 ASP.NET Core 中开始使用 Razor Pages](https://docs.microsoft.com/aspnet/core/tutorials/razor-pages/razor-pages-start)
-* [教程：在 ASP.NET Core 中结合使用 Razor Pages 和 Entity Framework Core](https://docs.microsoft.com/aspnet/core/data/ef-rp/intro)
+* [在 ASP.NET Core 中开始使用 Razor Pages](/aspnet/core/tutorials/razor-pages/razor-pages-start) 或[开始使用 ASP.NET Core MVC](/aspnet/core/tutorials/first-mvc-app/start-mvc)
+* [教程：ASP.NET Core 中的 Razor Pages 和 Entity Framework Core](https://docs.microsoft.com/aspnet/core/data/ef-rp/intro) 或[在 ASP.NET MVC Web 应用中开始使用 EF Core](/aspnet/core/data/ef-mvc/intro)
