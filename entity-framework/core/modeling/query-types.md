@@ -71,7 +71,7 @@ ms.locfileid: "53028175"
 [!code-csharp[Main](../../../samples/core/QueryTypes/Program.cs#QueryType)]
 
 接下来，我们配置中的查询类型 _OnModelCreating_ 使用`modelBuilder.Query<T>`API。
-我们使用标准的 fluent 配置 Api 来配置查询类型的映射：
+我们使用标准的 fluent Api 来配置查询类型的映射：
 
 [!code-csharp[Main](../../../samples/core/QueryTypes/Program.cs#Configuration)]
 

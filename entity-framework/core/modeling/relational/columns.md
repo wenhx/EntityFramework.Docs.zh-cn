@@ -16,15 +16,15 @@ ms.locfileid: "59929857"
 > [!NOTE]  
 > 一般而言，本部分中的配置适用于关系数据库。 安装关系数据库提供程序时，此处显示的扩展方法将变为可用（原因在于共享的 Microsoft.EntityFrameworkCore.Relational 包）。
 
-列映射标识应从查询的列数据，并将其保存到数据库中。
+列映射标识在数据库中哪列数据应该被查询和保存。
 
 ## <a name="conventions"></a>约定
 
-按照约定，每个属性将会设置映射到具有相同名称的属性列。
+按照约定，每个属性将会设置映射到具有相同名称的列。
 
 ## <a name="data-annotations"></a>数据注释
 
-可以使用数据注释来配置属性映射到其中的列。
+可以使用数据注释来配置属性映射到那一列。
 
 [!code-csharp[Main](../../../../samples/core/Modeling/DataAnnotations/Samples/Relational/Column.cs?highlight=13)]
 
