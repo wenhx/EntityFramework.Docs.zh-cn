@@ -4,17 +4,17 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 9a7c5488-aaf4-4b40-b1ff-f435ff30f6ec
 uid: core/modeling/relational/inheritance
-ms.openlocfilehash: 2aaceb05bbc1b0eb5c116b3dc1fb33c90c115a70
-ms.sourcegitcommit: 645785187ae23ddf7d7b0642c7a4da5ffb0c7f30
+ms.openlocfilehash: 2d0a2abc554f5f115479f886ca3f9f4f01b80b5b
+ms.sourcegitcommit: ea1cdec0b982b922a59b9d9301d3ed2b94baca0f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/25/2019
-ms.locfileid: "58419674"
+ms.lasthandoff: 05/31/2019
+ms.locfileid: "66452279"
 ---
 # <a name="inheritance-relational-database"></a>继承 （关系数据库）
 
 > [!NOTE]  
-> 一般而言，本部分中的配置适用于关系数据库。 安装关系数据库提供程序时，此处显示的扩展方法将变为可用（原因在于共享的 Microsoft.EntityFrameworkCore.Relational 包）。
+> 一般而言，本部分中的配置适用于关系数据库。 安装关系数据库提供程序时，此处显示的扩展方法将变为可用（原因在于共享的 Microsoft.EntityFrameworkCore.Relational 包  ）。
 
 EF 模型中的继承用于控制如何在数据库中表示实体类中的继承。
 
@@ -52,7 +52,7 @@ public class RssBlog : Blog
 ![图像](_static/inheritance-tph-data.png)
 
 >[!NOTE]
-> 使用 TPH 映射时数据库 colmmns 自动进行根据需要可以为 null。
+> 使用 TPH 映射时数据库列自动进行根据需要可以为 null。
 
 ## <a name="data-annotations"></a>数据注释
 
