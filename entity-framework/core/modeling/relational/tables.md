@@ -14,9 +14,9 @@ ms.locfileid: "42994132"
 # <a name="table-mapping"></a>表映射
 
 > [!NOTE]  
-> 一般而言，本部分中的配置适用于关系数据库。 当你安装关系数据库提供程序后，此处显示的扩展方法将变为可用（原因在于共享的 Microsoft.EntityFrameworkCore.Relational 包）。
+> 一般而言，本部分中的配置适用于关系数据库。安装关系数据库提供程序后，此处显示的扩展方法将变为可用（原因在于 Microsoft.EntityFrameworkCore.Relational 包是共享的）。
 
-表映射标识在数据库中哪张表应该被查询和保存。
+表映射标识在数据库中哪张表应该进行内容查询和保存操作。
 
 ## <a name="conventions"></a>约定
 
@@ -24,7 +24,7 @@ ms.locfileid: "42994132"
 
 ## <a name="data-annotations"></a>数据注释
 
-可以使用数据注释来配置类型映射表
+可以使用数据注释来配置类型映射表。
 
 ``` csharp
 using System.ComponentModel.DataAnnotations.Schema;
