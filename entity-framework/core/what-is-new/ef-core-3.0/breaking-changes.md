@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: b1b5e286e08a8b6b4efe225a176e76023f9fdd20
-ms.sourcegitcommit: 960e42a01b3a2f76da82e074f64f52252a8afecc
+ms.openlocfilehash: faae0153e0f2bdd42d3b316582dfcab88d9ceb5b
+ms.sourcegitcommit: ea1cdec0b982b922a59b9d9301d3ed2b94baca0f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/08/2019
-ms.locfileid: "65405234"
+ms.lasthandoff: 05/31/2019
+ms.locfileid: "66452296"
 ---
 # <a name="breaking-changes-included-in-ef-core-30-currently-in-preview"></a>EF Core 3.0 中包含的中断性变更（目前处于预览状态）
 
@@ -1215,7 +1215,7 @@ SET GuidColumn = hex(substr(GuidColumn, 4, 1)) ||
 WHERE typeof(GuidColumn) == 'blob';
 ```
 
-在 EF Core 中，通过对这些属性配置值转换器，还可以使用以前的行为模式继续操作。
+在 EF Core 中，还可以通过为这些属性配置值转换器，继续使用以前的行为模式。
 
 ``` csharp
 modelBuilder
@@ -1236,7 +1236,7 @@ Microsoft.Data.Sqlite 仍然能够从“BLOB”和“文本”列读取 GUID 值
 
 **旧行为**
 
-Char 值之前以整数值形式存储在 SQLite 上。 例如，A 的 char 值存储为整数值 65。
+Char 值之前以整数值形式存储在 SQLite 上。 例如，A 的 char 值存储为整数值 65  。
 
 **新行为**
 
@@ -1256,7 +1256,7 @@ SET CharColumn = char(CharColumn)
 WHERE typeof(CharColumn) = 'integer';
 ```
 
-在 EF Core 中，通过对这些属性配置值转换器，还可以使用以前的行为模式继续操作。
+在 EF Core 中，还可以通过为这些属性配置值转换器，继续使用以前的行为模式。
 
 ``` csharp
 modelBuilder

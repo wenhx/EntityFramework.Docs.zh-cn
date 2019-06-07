@@ -19,30 +19,30 @@ EF Core 模型可以包含实体类型，除了_查询类型_，这可以用于�
 
 ## <a name="compare-query-types-to-entity-types"></a>比较查询类型与实体类型
 
-查询类型它们与实体类型中的一样：
+查询类型中以下几点和实体类型是相似的：
 
 - 可以添加到模型或者在`OnModelCreating`或通过"设置"属性上派生_DbContext_。
-- 支持许多相同的映射功能，如继承映射和导航属性。 上关系存储，他们可以配置的目标数据库对象和列通过 fluent API 方法或数据注释。
+- 支持许多相同的映射功能，如继承映射和导航属性。 在关系型存储上，它们可以通过 Fluent API 方法或数据注释配置目标数据库对象和列。
 
-但是，它们是不同于实体中的类型：
+但是，查询类型和实体类型又有一些不同：
 
-- 不需要定义的键。
-- 永远不会跟踪的更改上_DbContext_并因此永远不会插入、 更新或删除数据库。
+- 不需要定义键。
+- 永远不会被 _DbContext_ 跟踪更改，因此在数据库中永远不会被插入、 更新或删除。
 - 永远不会由约定发现。
 - 仅支持一部分导航映射功能-具体而言：
   - 它们可能永远不会作为关系的主体端。
   - 它们仅可包含指向的实体的引用导航属性。
   - 实体不能包含查询类型的导航属性。
-- 得到解决_ModelBuilder_使用`Query`方法而不是`Entity`方法。
-- 在映射_DbContext_类型的属性通过`DbQuery<T>`而非 `DbSet<T>`
-- 映射到使用的数据库对象`ToView`方法，而非`ToTable`。
+- 在 _ModelBuilder_ 上通过 `Query` 方法而非 `Entity` 方法进行解决。
+- 通过类型 `DbQuery<T>` 而非 `DbSet<T>` 的属性在 _DbContext_ 上进行映射。
+- 通过 `ToView` 而非 `ToTable` 方法映射到数据库对象。
 - 可以映射到_定义查询_-定义查询是可查询类型的数据源在模型中声明的第二次查询。
 
 ## <a name="usage-scenarios"></a>使用方案
 
-下面是一些查询类型主要使用方案：
+下面是查询类型的一些主要使用场景：
 
-- 作为返回类型的即席`FromSql()`查询。
+- 充当即席 `FromSql()` 查询的返回类型。
 - 映射到数据库视图。
 - 映射到不具有定义的主键的表。
 - 映射到模型中定义的查询。
@@ -70,8 +70,8 @@ EF Core 模型可以包含实体类型，除了_查询类型_，这可以用于�
 
 [!code-csharp[Main](../../../samples/core/QueryTypes/Program.cs#QueryType)]
 
-接下来，我们配置中的查询类型_OnModelCreating_使用`modelBuilder.Query<T>`API。
-我们使用标准的 fluent 配置 Api 来配置查询类型的映射：
+接下来，我们使用 `modelBuilder.Query<T>` API 在 _OnModelCreating_ 中配置查询类型。
+我们使用标准的 Fluent API 来配置查询类型的映射：
 
 [!code-csharp[Main](../../../samples/core/QueryTypes/Program.cs#Configuration)]
 
