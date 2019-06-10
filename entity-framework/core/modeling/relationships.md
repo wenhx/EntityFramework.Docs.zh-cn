@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 0ff736a3-f1b0-4b58-a49c-4a7094bd6935
 uid: core/modeling/relationships
-ms.openlocfilehash: 9ef1a9269fc99f5b27a81c11a161ed5f9d74180d
-ms.sourcegitcommit: 87fcaba46535aa351db4bdb1231bd14b40e459b9
+ms.openlocfilehash: 793401362788e865c89ce01b6246b1ba14c36c8a
+ms.sourcegitcommit: 8b9568211d37a1c36da9533fa1ac2ef063b0bf8c
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/22/2019
-ms.locfileid: "59929932"
+ms.lasthandoff: 06/08/2019
+ms.locfileid: "66815011"
 ---
 # <a name="relationships"></a>关系
 
@@ -140,6 +140,12 @@ ms.locfileid: "59929932"
 可以使用的字符串重载`HasForeignKey(...)`若要配置卷影属性作为外键 (请参阅[隐藏属性](shadow-properties.md)有关详细信息)。 我们建议显式将卷影属性添加到模型，然后才能使用它作为外键 （作为如下所示）。
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/Relationships/ShadowForeignKey.cs#Sample)]
+
+### <a name="without-navigation-property"></a>没有导航属性
+
+您不一定需要提供一个导航属性。 一侧的关系，可以只需提供外键。
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/Relationships/NoNavigation.cs?highlight=14-17)]
 
 ### <a name="principal-key"></a>主体键
 
