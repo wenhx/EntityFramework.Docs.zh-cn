@@ -5,12 +5,12 @@ ms.author: riande
 ms.date: 08/03/2018
 ms.assetid: e153627f-f132-4c11-b13c-6c9a607addce
 uid: core/get-started/aspnetcore/new-db
-ms.openlocfilehash: 25e5a683acf4bbed0b978cc6a80f1b50a0b64ca1
-ms.sourcegitcommit: eb8359b7ab3b0a1a08522faf67b703a00ecdcefd
+ms.openlocfilehash: 2eb1668b8c077fabc9cb21088452fd1bead7ff22
+ms.sourcegitcommit: ea1cdec0b982b922a59b9d9301d3ed2b94baca0f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/21/2019
-ms.locfileid: "58319174"
+ms.lasthandoff: 05/31/2019
+ms.locfileid: "66452249"
 ---
 # <a name="getting-started-with-ef-core-on-aspnet-core-with-a-new-database"></a>使用新数据库在 ASP.NET Core 上开始使用 EF Core
 
@@ -29,8 +29,8 @@ ms.locfileid: "58319174"
 # <a name="visual-studiotabvisual-studio"></a>[Visual Studio](#tab/visual-studio)
 
 * 具有以下工作负载的 [Visual Studio 2017 15.7 版或更高版本](https://www.visualstudio.com/downloads/)：
-  * “ASP.NET 和 Web 开发”（位于“Web 和云”下）
-  * “.NET Core 跨平台开发”（位于“其他工具集”下）
+  * “ASP.NET 和 Web 开发”  （位于“Web 和云”  下）
+  * “.NET Core 跨平台开发”  （位于“其他工具集”  下）
 * [.NET Core 2.1 SDK](https://www.microsoft.com/net/download/core).
 
 # <a name="net-core-clitabnetcore-cli"></a>[.NET Core CLI](#tab/netcore-cli)
@@ -44,17 +44,17 @@ ms.locfileid: "58319174"
 # <a name="visual-studiotabvisual-studio"></a>[Visual Studio](#tab/visual-studio)
 
 * 打开 Visual Studio 2017
-* “文件”>“新建”>“项目”
-* 从左菜单中选择“已安装”>“Visual C#”>“.NET Core”。
-* 选择“ASP.NET Core Web 应用程序”。
-* 输入“EFGetStarted.AspNetCore.NewDb”作为名称，然后单击“确定”。
-* 在“新建 ASP.NET Core Web 应用程序”对话框中：
-  * 确保在下拉列表中选择“.NET Core”和“ASP.NET Core 2.1”
-  * 选择“Web 应用程序(模型视图控制器)”项目模板
-  * 确保将“身份验证”设置为“无身份验证”
+* “文件”>“新建”>“项目” 
+* 从左菜单中选择“已安装”>“Visual C#”>“.NET Core”  。
+* 选择“ASP.NET Core Web 应用程序”  。
+* 输入“EFGetStarted.AspNetCore.NewDb”  作为名称，然后单击“确定”  。
+* 在“新建 ASP.NET Core Web 应用程序”对话框中  ：
+  * 确保在下拉列表中选择“.NET Core”  和“ASP.NET Core 2.1” 
+  * 选择“Web 应用程序(模型视图控制器)”  项目模板
+  * 确保将“身份验证”  设置为“无身份验证” 
   * 单击“确定” 
 
-警告：如果你使用“单独用户帐户”（而不是“无”）进行身份验证，Entity Framework Core 模型会添加到 `Models\IdentityModel.cs` 中的项目。 使用在本教程中学习的技巧，可以选择添加第二个模型，或者扩展此现有模型以包含实体类。
+警告：如果你使用“单独用户帐户”  （而不是“无”  ）进行身份验证  ，Entity Framework Core 模型会添加到 `Models\IdentityModel.cs` 中的项目。 使用在本教程中学习的技巧，可以选择添加第二个模型，或者扩展此现有模型以包含实体类。
 
 # <a name="net-core-clitabnetcore-cli"></a>[.NET Core CLI](#tab/netcore-cli)
 
@@ -96,15 +96,15 @@ ms.locfileid: "58319174"
 
 # <a name="visual-studiotabvisual-studio"></a>[Visual Studio](#tab/visual-studio)
 
-* 右键单击“Models”文件夹，然后选择“添加”>“类”。
-* 输入“Model.cs”作为名称，然后单击“确定”。
+* 右键单击“Models”  文件夹，然后选择“添加”>“类”  。
+* 输入“Model.cs”  作为名称，然后单击“确定”  。
 * 将此文件的内容替换为以下代码：
 
   [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Models/Model.cs)]
 
 # <a name="net-core-clitabnetcore-cli"></a>[.NET Core CLI](#tab/netcore-cli)
 
-* 在 Models 文件夹中，使用以下代码创建 Model.cs：
+* 在 Models 文件夹中，使用以下代码创建 Model.cs   ：
 
   [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb.Sqlite/Models/Model.cs)]
 
@@ -120,7 +120,7 @@ ms.locfileid: "58319174"
 
 # <a name="visual-studiotabvisual-studio"></a>[Visual Studio](#tab/visual-studio)
 
-* 在 Startup.cs 中，添加以下 `using` 语句：
+* 在  Startup.cs 中，添加以下 `using` 语句：
 
   [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Startup.cs#AddedUsings)]
 
@@ -130,7 +130,7 @@ ms.locfileid: "58319174"
 
 # <a name="net-core-clitabnetcore-cli"></a>[.NET Core CLI](#tab/netcore-cli)
 
-* 在 Startup.cs 中，添加以下 `using` 语句：
+* 在  Startup.cs 中，添加以下 `using` 语句：
 
   [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb.Sqlite/Startup.cs#AddedUsings)]
 
@@ -148,7 +148,7 @@ ms.locfileid: "58319174"
 
 # <a name="visual-studiotabvisual-studio"></a>[Visual Studio](#tab/visual-studio)
 
-* “工具”>“NuGet 包管理器”>“包管理器控制台”
+*  “工具”>“NuGet 包管理器”>“包管理器控制台”
 * 运行以下命令：
 
   ```powershell
@@ -179,9 +179,9 @@ ms.locfileid: "58319174"
 
 # <a name="visual-studiotabvisual-studio"></a>[Visual Studio](#tab/visual-studio)
 
-* 在“解决方案资源管理器”中，右键单击“控制器”文件夹，然后选择“添加”>“控制器”。
-* 选择“视图使用 Entity Framework 的 MVC 控制器”，然后单击“添加”。
-* 将“模型类”设置为“Blog”，将“数据上下文类”设置为“BloggingContext”。
+* 在“解决方案资源管理器”中，右键单击“控制器”文件夹，然后选择“添加”>“控制器”    。
+* 选择“视图使用 Entity Framework 的 MVC 控制器”，然后单击“添加”   。
+* 将“模型类”  设置为“Blog”  ，将“数据上下文类”  设置为“BloggingContext”  。
 * 单击 **添加**。
 
 # <a name="net-core-clitabnetcore-cli"></a>[.NET Core CLI](#tab/netcore-cli)
@@ -200,14 +200,14 @@ ms.locfileid: "58319174"
 
 基架引擎创建以下文件：
 
-* 控制器 (Controllers/BlogsController.cs)
-* “创建”、“删除”、“详细信息”、“编辑”和“索引”页面的 Razor 视图 (Views/Blogs/*.cshtml)
+* 控制器 (Controllers/BlogsController.cs) 
+* “创建”、“删除”、“详细信息”、“编辑”和“索引”页面的 Razor 视图 (Views/Blogs/*.cshtml) 
 
 ## <a name="run-the-application"></a>运行此应用程序
 
 # <a name="visual-studiotabvisual-studio"></a>[Visual Studio](#tab/visual-studio)
 
-* 调试 > 开始执行(不调试)
+*  调试 >   开始执行(不调试)
 
 # <a name="net-core-clitabnetcore-cli"></a>[.NET Core CLI](#tab/netcore-cli)
 
@@ -218,16 +218,20 @@ dotnet run
 
 * 导航到 `/Blogs`
 
-* 使用“新建”链接创建一些博客条目。
+* 使用“新建”链接创建一些博客条目。 
 
   ![创建页面](_static/create.png)
 
-* 测试“详细信息”、“编辑”和“删除”链接。
+* 测试“详细信息”、“编辑”和“删除”链接。   
 
   ![索引页](_static/index-new-db.png)
 
-## <a name="additional-resources"></a>其他资源
+## <a name="additional-tutorials"></a>其他教程
 
-* [教程：使用 SQLite 通过新数据库在 .NET Core 上开始使用 EF Core](xref:core/get-started/netcore/new-db-sqlite)
-* [教程：在 ASP.NET Core 中开始使用 Razor Pages](https://docs.microsoft.com/aspnet/core/tutorials/razor-pages/razor-pages-start)
-* [教程：在 ASP.NET Core 中结合使用 Razor Pages 和 Entity Framework Core](https://docs.microsoft.com/aspnet/core/data/ef-rp/intro)
+* [使用 SQLite 通过新数据库在 .NET Core 上开始使用 EF Core](xref:core/get-started/netcore/new-db-sqlite)
+* ASP.NET Core MVC：
+  * [ASP.NET Core MVC 入门](/aspnet/core/tutorials/first-mvc-app/start-mvc)
+  * [在 ASP.NET MVC Web 应用中开始使用 EF Core](/aspnet/core/data/ef-mvc/intro)
+* [Razor Pages](/aspnet/core/razor-pages/index)：
+  * [在 ASP.NET Core 中开始使用 Razor Pages](/aspnet/core/tutorials/razor-pages/razor-pages-start)
+  * [在 ASP.NET Core 中结合使用 Razor Pages 和 Entity Framework Core](https://docs.microsoft.com/aspnet/core/data/ef-rp/intro)

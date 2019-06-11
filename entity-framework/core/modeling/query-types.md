@@ -21,8 +21,8 @@ ms.locfileid: "53028175"
 
 查询类型中以下几点和实体类型是相似的：
 
-- 可以在 `OnModelCreating` 中将其添加到模型，或者通过派生的 _DbContext_ 上的“set”属性来这样做。
-- 支持许多相同的映射功能，如继承映射和导航属性。在关系型存储上，它们可以通过 Fluent API 方法或数据注释配置目标数据库对象和列。
+- 可以添加到模型或者在`OnModelCreating`或通过"设置"属性上派生_DbContext_。
+- 支持许多相同的映射功能，如继承映射和导航属性。 在关系型存储上，它们可以通过 Fluent API 方法或数据注释配置目标数据库对象和列。
 
 但是，查询类型和实体类型又有一些不同：
 
@@ -36,7 +36,7 @@ ms.locfileid: "53028175"
 - 在 _ModelBuilder_ 上通过 `Query` 方法而非 `Entity` 方法进行解决。
 - 通过类型 `DbQuery<T>` 而非 `DbSet<T>` 的属性在 _DbContext_ 上进行映射。
 - 通过 `ToView` 而非 `ToTable` 方法映射到数据库对象。
-- 可以映射到定义查询__ - 定义查询是在模型（充当查询类型的数据源）中声明的辅助查询。
+- 可以映射到_定义查询_-定义查询是可查询类型的数据源在模型中声明的第二次查询。
 
 ## <a name="usage-scenarios"></a>使用方案
 
@@ -70,7 +70,7 @@ ms.locfileid: "53028175"
 
 [!code-csharp[Main](../../../samples/core/QueryTypes/Program.cs#QueryType)]
 
-接下来，我们使用 `modelBuilder.Query<T>` API 在 _OnModelCreating_ 中配置查询类型
+接下来，我们使用 `modelBuilder.Query<T>` API 在 _OnModelCreating_ 中配置查询类型。
 我们使用标准的 Fluent API 来配置查询类型的映射：
 
 [!code-csharp[Main](../../../samples/core/QueryTypes/Program.cs#Configuration)]

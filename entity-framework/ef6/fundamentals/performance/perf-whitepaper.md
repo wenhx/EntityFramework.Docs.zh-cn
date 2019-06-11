@@ -3,12 +3,12 @@ title: EF4、 EF5 和 EF6 的性能注意事项
 author: divega
 ms.date: 10/23/2016
 ms.assetid: d6d5a465-6434-45fa-855d-5eb48c61a2ea
-ms.openlocfilehash: 4c1f03533cf6df49555c3ef8d09d5949b9a3335c
-ms.sourcegitcommit: 33b2e84dae96040f60a613186a24ff3c7b00b6db
+ms.openlocfilehash: f8fa1001c85366e169cf50e89efdb65bd92b671e
+ms.sourcegitcommit: f277883a5ed28eba57d14aaaf17405bc1ae9cf94
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 02/21/2019
-ms.locfileid: "56459206"
+ms.lasthandoff: 05/18/2019
+ms.locfileid: "65874611"
 ---
 # <a name="performance-considerations-for-ef-4-5-and-6"></a>有关 EF 4、 5 和 6 的性能注意事项
 由 David Obando、 Eric Dettinger 等
@@ -119,9 +119,9 @@ ADO.NET 团队博客中发布了一文章，介绍如何为视图生成使用 T4
 
 我们已看到许多情况下，极大地切换到外键关联从独立关联模型中的关联改进了视图生成中所用的时间。
 
-为了演示这一改进，我们使用 EDMGen 生成 Navision 模型的两个版本。 *注意： seeappendix Cfor Navision 模型的说明。* 对于此练习，因其极大量的实体和它们之间的关系而有趣的是 Navision 模型。
+为了演示这一改进，我们使用 EDMGen 生成 Navision 模型的两个版本。 *注意： 请参阅附录 C Navision 模型的说明。* 对于此练习，因其极大量的实体和它们之间的关系而有趣的是 Navision 模型。
 
-与外键关联生成的此非常大的模型的一个版本，其他生成使用独立关联。 我们然后超时所用的时间来生成每个模型的视图。 实体 Framework5 测试用于从类 EntityViewGenerator GenerateViews() 方法生成视图，而 Entity Framework 6 测试使用了从类 StorageMappingItemCollection GenerateViews() 方法。 这由于代码重新构建 Entity Framework 6 基本代码中发生的。
+与外键关联生成的此非常大的模型的一个版本，其他生成使用独立关联。 我们然后超时所用的时间来生成每个模型的视图。 Entity Framework 5 测试用于从类 EntityViewGenerator GenerateViews() 方法生成视图，而 Entity Framework 6 测试使用了从类 StorageMappingItemCollection GenerateViews() 方法。 这由于代码重新构建 Entity Framework 6 基本代码中发生的。
 
 使用 Entity Framework 5，具有外键的模型的视图生成需要在实验室计算机 65 分钟。 未知的时间长度则可能需要花费生成使用独立关联的模型的视图。 我们保留超过一个月前我们的实验室安装每月更新中重新启动计算机正在运行的测试。
 
@@ -240,7 +240,7 @@ EDMX 模型是在编译时验证，即使模型保持不变。 如果已验证�
 
 #### <a name="323-test-metrics-demonstrating-query-plan-caching-performance"></a>3.2.3 测试演示查询计划缓存性能指标
 
-若要演示的查询计划缓存在应用程序的性能效果，我们执行测试，我们执行多个针对 Navision 模型的 Entity SQL 查询。 请参阅的附录 Navision 模型和执行的查询的类型的说明。 在此测试中，我们首先循环访问查询的列表并执行每个一次将其添加到缓存中，（如果缓存已启用）。 此步骤是 untimed。 接下来，我们睡眠状态超过 60 秒，以允许缓存扫描结合使用以执行; 的主线程最后，我们循环访问列表第 2 个时间来执行缓存的查询。 此外，他 SQL Server 计划高速缓存刷新之前每个集的查询执行，以便我们获得准确的时间反映由查询计划缓存的优势。
+若要演示的查询计划缓存在应用程序的性能效果，我们执行测试，我们执行多个针对 Navision 模型的 Entity SQL 查询。 请参阅的附录 Navision 模型和执行的查询的类型的说明。 在此测试中，我们首先循环访问查询的列表并执行每个一次将其添加到缓存中，（如果缓存已启用）。 此步骤是 untimed。 接下来，我们睡眠状态超过 60 秒，以允许缓存扫描结合使用以执行; 的主线程最后，我们循环访问列表第 2 个时间来执行缓存的查询。 此外，SQL Server 计划高速缓存刷新之前每个集的查询执行，以便我们获得准确的时间反映由查询计划缓存的优势。
 
 ##### <a name="3231-test-results"></a>3.2.3.1 测试结果
 
@@ -487,7 +487,7 @@ for (var i = 0; i < count; ++i)
 
 ``` csharp
 var customers = context.Customers.OrderBy(c => c.LastName);
-for (var i = 0; i \< count; ++i)
+for (var i = 0; i < count; ++i)
 {
     var currentCustomer = customers.Skip(() => i).FirstOrDefault();
     ProcessCustomer(currentCustomer);

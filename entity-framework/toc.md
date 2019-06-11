@@ -30,6 +30,7 @@
 #### [.NET Core](core/get-started/netcore/index.md)
 ##### [新建数据库](core/get-started/netcore/new-db-sqlite.md)
 #### [ASP.NET Core](core/get-started/aspnetcore/index.md)
+##### [⤤ 交互式教程](/learn/modules/persist-data-ef-core/)
 ##### [新建数据库](core/get-started/aspnetcore/new-db.md)
 ##### [现有数据库](core/get-started/aspnetcore/existing-db.md)
 ##### [⤤ EF Core 和 Razor Pages](/aspnet/core/data/ef-rp/intro)

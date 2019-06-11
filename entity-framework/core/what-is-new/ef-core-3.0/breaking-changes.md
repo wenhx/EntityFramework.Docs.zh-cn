@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: 4b251638de43af6525f3e6faa0bd4113ab1714b9
-ms.sourcegitcommit: 5280dcac4423acad8b440143433459b18886115b
+ms.openlocfilehash: faae0153e0f2bdd42d3b316582dfcab88d9ceb5b
+ms.sourcegitcommit: ea1cdec0b982b922a59b9d9301d3ed2b94baca0f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/16/2019
-ms.locfileid: "59619254"
+ms.lasthandoff: 05/31/2019
+ms.locfileid: "66452296"
 ---
 # <a name="breaking-changes-included-in-ef-core-30-currently-in-preview"></a>EF Core 3.0 中包含的中断性变更（目前处于预览状态）
 
@@ -75,6 +75,35 @@ ms.locfileid: "59619254"
 **缓解措施**
 
 若要在 ASP.NET Core 3.0 应用程序或任何其他受支持的应用程序中使用 EF Core，请显式添加对应用程序将使用的 EF Core 数据库提供程序的包引用。
+
+## <a name="the-ef-core-command-line-tool-dotnet-ef-is-no-longer-part-of-the-net-core-sdk"></a>EF Core 命令行工具 dotnet ef 不再是 .NET Core SDK 的一部分
+
+[跟踪问题 #14016](https://github.com/aspnet/EntityFrameworkCore/issues/14016)
+
+EF Core 3.0-preview 4 和 .NET Core SDK 的相应版本中引入了此更改。
+
+**旧行为**
+
+.NET Core SDK 3.0 以前的版本包含 `dotnet ef` 工具，可以随时从任何项目的命令行使用，无需额外的步骤。 
+
+**新行为**
+
+从 3.0 版开始，.NET SDK 不再包含 `dotnet ef` 工具，因此，在使用它之前，必须将其明确安装为本地或全局工具。 
+
+**为什么**
+
+此更改允许我们在 NuGet 上将 `dotnet ef` 作为常规 .NET CLI 工具分发和更新，这与 EF Core 3.0 也始终作为 NuGet 包分发的事实一致。
+
+**缓解措施**
+
+为了能够管理迁移或构架 `DbContext`，请使用 `dotnet tool install` 命令安装 `dotnet-ef`。
+例如，若要将它安装为全局工具，可以键入以下命令：
+
+  ``` console
+  $ dotnet tool install --global dotnet-ef --version <exact-version>
+  ```
+
+使用[工具清单文件](https://github.com/dotnet/cli/issues/10288)恢复声明为工具依赖项的项目依赖项时，还可以将其作为本地工具获取。
 
 ## <a name="fromsql-executesql-and-executesqlasync-have-been-renamed"></a>FromSql、ExecuteSql 和 ExecuteSqlAsync 已重命名
 
@@ -602,7 +631,7 @@ using (new TransactionScope())
 
 **为什么**
 
-此更改让你能够在同一 `TransactionScope` 中使用多个上下文。 新行为也与 EF6 相匹配。
+此更改让你能够在同一 `TransactionScope` 中使用多个上下文。 新行为也与 EF6 一致。
 
 **缓解措施**
 
@@ -660,7 +689,7 @@ using (new TransactionScope())
 
 **新行为**
 
-从 EF Core 3.0 开始，如果已知属性的支持字段，则始终使用支持字段读取和写入该属性。
+从 EF Core 3.0 开始，如果已知属性的支持字段，EF Core 将始终使用支持字段读取和写入该属性。
 如果应用程序依赖于编码到 getter 或 setter 方法中的其他行为，则可能导致应用程序中断。
 
 **为什么**
@@ -1186,7 +1215,7 @@ SET GuidColumn = hex(substr(GuidColumn, 4, 1)) ||
 WHERE typeof(GuidColumn) == 'blob';
 ```
 
-在 EF Core 中，通过对这些属性配置值转换器，还可以使用以前的行为模式继续操作。
+在 EF Core 中，还可以通过为这些属性配置值转换器，继续使用以前的行为模式。
 
 ``` csharp
 modelBuilder
@@ -1207,7 +1236,7 @@ Microsoft.Data.Sqlite 仍然能够从“BLOB”和“文本”列读取 GUID 值
 
 **旧行为**
 
-Char 值之前以整数值形式存储在 SQLite 上。 例如，A 的 char 值存储为整数值 65。
+Char 值之前以整数值形式存储在 SQLite 上。 例如，A 的 char 值存储为整数值 65  。
 
 **新行为**
 
@@ -1227,7 +1256,7 @@ SET CharColumn = char(CharColumn)
 WHERE typeof(CharColumn) = 'integer';
 ```
 
-在 EF Core 中，通过对这些属性配置值转换器，还可以使用以前的行为模式继续操作。
+在 EF Core 中，还可以通过为这些属性配置值转换器，继续使用以前的行为模式。
 
 ``` csharp
 modelBuilder

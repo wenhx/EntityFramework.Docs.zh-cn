@@ -62,7 +62,7 @@ ms.locfileid: "59929870"
   * 约定集服务已更改。 提供程序现在应从"ProviderConventionSet"或"RelationalConventionSet"继承。
   * 可以通过添加自定义项`IConventionSetCustomizer`服务，但这旨在由其他扩展，不提供程序。
   * 在运行时使用的约定应从解析`IConventionSetBuilder`。
-* https://github.com/aspnet/EntityFrameworkCore/pull/15288 数据种子设定已被重构到一个公共 API，以避免需要使用内部类型。 这应只影响非关系提供程序，因为种子设定由关系的所有提供程序的关系的基类。
+* [https://github.com/aspnet/EntityFrameworkCore/pull/15288](https://github.com/aspnet/EntityFrameworkCore/pull/15288) 数据种子设定已被重构到一个公共 API，以避免需要使用内部类型。 这应只影响非关系提供程序，因为种子设定由关系的所有提供程序的关系的基类。
 
 ## <a name="21-----22"></a>2.1 ---> 2.2
 
