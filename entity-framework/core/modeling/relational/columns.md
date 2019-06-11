@@ -14,7 +14,7 @@ ms.locfileid: "59929857"
 # <a name="column-mapping"></a>列映射
 
 > [!NOTE]  
-> 一般而言，本部分中的配置适用于关系数据库。 安装关系数据库提供程序时，此处显示的扩展方法将变为可用（原因在于共享的 Microsoft.EntityFrameworkCore.Relational 包）。
+> 一般而言，本部分中的配置适用于关系数据库。 安装关系数据库提供程序时，此处显示的扩展方法将变为可用（原因在于共享的 Microsoft.EntityFrameworkCore.Relational 包  ）。
 
 列映射标识在数据库中应从哪些列数据中进行查询和保存。
 
