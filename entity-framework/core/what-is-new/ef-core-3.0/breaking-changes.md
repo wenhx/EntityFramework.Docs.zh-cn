@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: faae0153e0f2bdd42d3b316582dfcab88d9ceb5b
-ms.sourcegitcommit: ea1cdec0b982b922a59b9d9301d3ed2b94baca0f
+ms.openlocfilehash: 9112d8d235237e68232aac54453d584af0edb524
+ms.sourcegitcommit: b188194a1901f4d086d05765cbc5c9b8c9dc5eed
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/31/2019
-ms.locfileid: "66452296"
+ms.lasthandoff: 06/11/2019
+ms.locfileid: "66829483"
 ---
 # <a name="breaking-changes-included-in-ef-core-30-currently-in-preview"></a>EF Core 3.0 中包含的中断性变更（目前处于预览状态）
 
@@ -25,7 +25,7 @@ ms.locfileid: "66452296"
 [跟踪问题 #14935](https://github.com/aspnet/EntityFrameworkCore/issues/14935)
 [另请参阅问题 #12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795)
 
-此更改将在 EF Core 3.0-preview 4 中引入。
+此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **旧行为**
 
@@ -80,7 +80,7 @@ ms.locfileid: "66452296"
 
 [跟踪问题 #14016](https://github.com/aspnet/EntityFrameworkCore/issues/14016)
 
-EF Core 3.0-preview 4 和 .NET Core SDK 的相应版本中引入了此更改。
+此更改是在 EF Core 3.0-preview 4 和 .NET Core SDK 的相应版本中引入的。
 
 **旧行为**
 
@@ -144,6 +144,28 @@ context.Products.FromSqlInterpolated(
 **缓解措施**
 
 切换到使用新的方法名称。
+
+## <a name="fromsql-methods-can-only-be-specified-on-query-roots"></a>只能在查询根上指定 FromSql 方法
+
+[跟踪问题 #15704](https://github.com/aspnet/EntityFrameworkCore/issues/15704)
+
+此更改是在 EF Core 3.0-preview 6 中引入的。
+
+**旧行为**
+
+在 EF Core 3.0 之前，可以在查询中的任意位置指定 `FromSql` 方法。
+
+**新行为**
+
+从 EF Core 3.0 开始，只能在查询根上（即，直接在 `DbSet<>` 上）指定新的 `FromSqlRaw` 和 `FromSqlInterpolated` 方法（替换 `FromSql`）。 尝试在其他任何位置指定这些方法将导致编译错误。
+
+**为什么**
+
+在除 `DbSet` 之外的任意位置指定 `FromSql` 没有附加含义或附加值，并且可能在某些情况下存在多义性。
+
+**缓解措施**
+
+应移动 `FromSql` 调用以使其直接位于它们所应用的 `DbSet` 上。
 
 ## <a name="query-execution-is-logged-at-debug-level"></a>在调试级别记录查询执行
 
@@ -276,11 +298,11 @@ context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 
 [跟踪问题 #12661](https://github.com/aspnet/EntityFrameworkCore/issues/12661)
 
-此更改将在 EF Core 3.0-preview 5 中引入。
+此更改是在 EF Core 3.0-preview 5 中引入的。
 
 **旧行为**
 
-3.0 之前，`DeleteBehavior.Restrict` 使用 `Restrict` 语义在数据库中创建外键，但也以不明显的方式更改了内部修复。
+3\.0 之前，`DeleteBehavior.Restrict` 使用 `Restrict` 语义在数据库中创建外键，但也以不明显的方式更改了内部修复。
 
 **新行为**
 
@@ -386,7 +408,7 @@ modelBuilder.Entity<Order>.OwnsOne(e => e.Details, eb =>
 
 [跟踪问题 #9005](https://github.com/aspnet/EntityFrameworkCore/issues/9005)
 
-此更改将在 EF Core 3.0-preview 4 中引入。
+此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **旧行为**
 
@@ -421,7 +443,7 @@ public class OrderDetails
 
 [跟踪问题 #14154](https://github.com/aspnet/EntityFrameworkCore/issues/14154)
 
-此更改将在 EF Core 3.0-preview 4 中引入。
+此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **旧行为**
 
@@ -473,7 +495,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 [跟踪问题 #13998](https://github.com/aspnet/EntityFrameworkCore/issues/13998)
 
-此更改将在 EF Core 3.0-preview 4 中引入。
+此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **旧行为**
 
@@ -604,7 +626,7 @@ public class Order
 
 [跟踪问题 #14218](https://github.com/aspnet/EntityFrameworkCore/issues/14218)
 
-此更改将在 EF Core 3.0-preview 4 中引入。
+此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **旧行为**
 
@@ -656,7 +678,7 @@ using (new TransactionScope())
 
 [跟踪问题 #6872](https://github.com/aspnet/EntityFrameworkCore/issues/6872)
 
-此更改将在 EF Core 3.0-preview 4 中引入。
+此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **旧行为**
 
@@ -698,7 +720,7 @@ using (new TransactionScope())
 
 **缓解措施**
 
-可以通过在 modelBuilder fluent API 中配置属性访问模式来恢复 3.0 之前的行为。
+可以通过在 `ModelBuilder` 上配置属性访问模式来恢复 3.0 之前的行为。
 例如:
 
 ```C#
@@ -709,7 +731,7 @@ modelBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferFieldDuringConstruct
 
 [跟踪问题 #12523](https://github.com/aspnet/EntityFrameworkCore/issues/12523)
 
-此更改将在 EF Core 3.0-preview 4 中引入。
+此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **旧行为**
 
@@ -738,7 +760,7 @@ modelBuilder
 
 ## <a name="field-only-property-names-should-match-the-field-name"></a>“仅字段”属性名应与字段名匹配
 
-此更改将在 EF Core 3.0-preview 4 中引入。
+此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **旧行为**
 
@@ -786,7 +808,7 @@ modelBuilder
 
 [跟踪问题 #14756](https://github.com/aspnet/EntityFrameworkCore/issues/14756)
 
-此更改将在 EF Core 3.0-preview 4 中引入。
+此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **旧行为**
 
@@ -836,7 +858,7 @@ EF Core 3.0 不要求这些服务位于应用程序的 DI 容器中。 但是，
 
 [跟踪问题 #14617](https://github.com/aspnet/EntityFrameworkCore/issues/14617)
 
-此更改将在 EF Core 3.0-preview 4 中引入。
+此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **旧行为**
 
@@ -922,7 +944,7 @@ public string Id { get; set; }
 
 [跟踪问题 #12780](https://github.com/aspnet/EntityFrameworkCore/issues/12780)
 
-此更改将在 EF Core 3.0-preview 4 中引入。
+此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **旧行为**
 
@@ -981,7 +1003,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 [跟踪问题 #9171](https://github.com/aspnet/EntityFrameworkCore/issues/9171)
 
-此更改将在 EF Core 3.0-preview 4 中引入。
+此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **旧行为**
 
@@ -1018,7 +1040,7 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 
 [跟踪问题 #15184](https://github.com/aspnet/EntityFrameworkCore/issues/15184)
 
-此更改将在 EF Core 3.0-preview 4 中引入。
+此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **旧行为**
 
@@ -1117,7 +1139,7 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 
 [跟踪问题 #214](https://github.com/aspnet/EntityFrameworkCore/issues/214)
 
-此更改将在 EF Core 3.0-preview 4 中引入。
+此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **新行为**
 
@@ -1132,6 +1154,28 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 **为什么**
 
 此更改简化了上述接口的实现。
+
+**缓解措施**
+
+使用新的扩展方法。
+
+## <a name="provider-specific-metadata-api-changes"></a>特定于提供程序的元数据 API 更改
+
+[跟踪问题 #214](https://github.com/aspnet/EntityFrameworkCore/issues/214)
+
+此更改是在 EF Core 3.0-preview 6 中引入的。
+
+**新行为**
+
+将展开特定于提供程序的扩展方法：
+
+* `IProperty.Relational().ColumnName` -> `IProperty.GetColumnName()`
+* `IEntityType.SqlServer().IsMemoryOptimized` -> `IEntityType.GetSqlServerIsMemoryOptimized()`
+* `PropertyBuilder.UseSqlServerIdentityColumn()` -> `PropertyBuilder.ForSqlServerUseIdentityColumn()`
+
+**为什么**
+
+此更改简化了上述扩展方法的实现。
 
 **缓解措施**
 
@@ -1190,7 +1234,7 @@ GUID 值之前以 BLOB 值形式存储在 SQLite 上。
 
 **新行为**
 
-GUID 值现在以文本形式存储。
+Guid 值现在以文本形式存储。
 
 **为什么**
 
