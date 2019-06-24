@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: aeb0f5f8-b212-4f89-ae83-c642a5190ba0
 uid: core/miscellaneous/connection-strings
-ms.openlocfilehash: 7bb39d260f700e5087673e92a50377dc68151710
-ms.sourcegitcommit: 85ccc9ed42d4aaf7525c6312058c5c9ebdaed3ae
+ms.openlocfilehash: 52a8527170845d3e73ebcec518713ade3f3844f0
+ms.sourcegitcommit: 06073f8efde97dd5f540dbfb69f574d8380566fe
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/27/2018
-ms.locfileid: "50191337"
+ms.lasthandoff: 06/24/2019
+ms.locfileid: "67333837"
 ---
 # <a name="connection-strings"></a>连接字符串
 
@@ -77,7 +77,7 @@ ASP.NET Core 中的配置系统非常灵活，并且连接字符串可以存储�
 }
 ```
 
-通常在中配置上下文`Startup.cs`正在从配置中读取的连接字符串。 请注意`GetConnectionString()`方法查找配置值，其键与`ConnectionStrings:<connection string name>`。 需要导入[Microsoft.Extensions.Configuration](https://docs.microsoft.com/dotnet/api/microsoft.extensions.configuration)命名空间来使用此扩展方法。
+通常在中配置上下文`Startup.cs`正在从配置中读取的连接字符串。 请注意`GetConnectionString()`方法查找配置值，其键与`ConnectionStrings:<connection string name>`。 需要导入[Microsoft.Extensions.Configuration](https://docs.microsoft.com/dotnet/api/microsoft.extensions.configuration)命名空间才能使用此扩展方法。
 
 ``` csharp
 public void ConfigureServices(IServiceCollection services)
