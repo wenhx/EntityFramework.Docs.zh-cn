@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 04/09/2017
 ms.assetid: 94ab4800-c460-4caa-a5e8-acdfee6e6ce2
 uid: core/providers/sqlite/limitations
-ms.openlocfilehash: ce834d60b9ceb4c414f097f2d86254cc5edd958f
-ms.sourcegitcommit: 645785187ae23ddf7d7b0642c7a4da5ffb0c7f30
+ms.openlocfilehash: eaa7d5b1496172e4f3821433a1cd098ee7e8b737
+ms.sourcegitcommit: 9bd64a1a71b7f7aeb044aeecc7c4785b57db1ec9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/25/2019
-ms.locfileid: "58419700"
+ms.lasthandoff: 06/26/2019
+ms.locfileid: "67394804"
 ---
 # <a name="sqlite-ef-core-database-provider-limitations"></a>SQLite EF Core 数据库提供程序限制
 
@@ -22,6 +22,25 @@ SQLite 提供程序具有许多迁移限制。 其中大多数限制是基础的
 * 架构
 * 序列
 * 计算的列
+
+## <a name="query-limitations"></a>查询限制
+
+SQLite 不以本机方式支持以下数据类型。 EF Core 可以读取和写入这些类型和查询是否相等的值 (`where e.Property == value`)，它还支持。 其他操作，但是，如比较和排序将需要在客户端上的评估。
+
+* DateTimeOffset
+* 十进制
+* TimeSpan
+* UInt64
+
+而不是`DateTimeOffset`，我们建议使用日期时间值。 在处理多个时区，我们建议将值转换为 UTC 之前保存并将转换回相应的时区。
+
+`Decimal`类型提供了高的精度。 如果不需要该级别的精度，但是，建议改为使用双精度。 可以使用[值转换器](../../modeling/value-conversions.md)若要继续使用您的类中的小数。
+
+``` csharp
+modelBuilder.Entity<MyEntity>()
+    .Property(e => e.DecimalProperty)
+    .HasConversion<double>();
+```
 
 ## <a name="migrations-limitations"></a>迁移限制
 
