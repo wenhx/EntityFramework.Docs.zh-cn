@@ -3,12 +3,12 @@ title: 使用属性值的 EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: e3278b4b-9378-4fdb-923d-f64d80aaae70
-ms.openlocfilehash: 97902021a671dea9854a365dc2f10eaecb9e5ab8
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: afde503bb4ed15fcf83a57053541cd5da8c89835
+ms.sourcegitcommit: 50521b4a2f71139e6a7210a69ac73da582ef46cf
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45488824"
+ms.lasthandoff: 06/27/2019
+ms.locfileid: "67416678"
 ---
 # <a name="working-with-property-values"></a>使用属性值
 大多数情况下 Entity Framework 将负责跟踪状态、 原始值和当前值的实体实例的属性。 但是，可能有某些情况下-例如断开连接的场景-你想要查看或操作的属性信息 EF 拥有。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  
@@ -35,7 +35,7 @@ using (var context = new BloggingContext())
     string currentName1 = context.Entry(blog).Property(u => u.Name).CurrentValue;
 
     // Set the Name property to a new value
-    context.Entry(name).Property(u => u.Name).CurrentValue = "My Fancy Blog";
+    context.Entry(blog).Property(u => u.Name).CurrentValue = "My Fancy Blog";
 
     // Read the current value of the Name property using a string for the property name
     object currentName2 = context.Entry(blog).Property("Name").CurrentValue;
