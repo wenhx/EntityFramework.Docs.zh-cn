@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: 9112d8d235237e68232aac54453d584af0edb524
-ms.sourcegitcommit: b188194a1901f4d086d05765cbc5c9b8c9dc5eed
+ms.openlocfilehash: 96586808862c4373168dcd34a5f00c9f2f7563c3
+ms.sourcegitcommit: 9bd64a1a71b7f7aeb044aeecc7c4785b57db1ec9
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/11/2019
-ms.locfileid: "66829483"
+ms.lasthandoff: 06/26/2019
+ms.locfileid: "67394833"
 ---
 # <a name="breaking-changes-included-in-ef-core-30-currently-in-preview"></a>EF Core 3.0 中包含的中断性变更（目前处于预览状态）
 
@@ -167,34 +167,18 @@ context.Products.FromSqlInterpolated(
 
 应移动 `FromSql` 调用以使其直接位于它们所应用的 `DbSet` 上。
 
-## <a name="query-execution-is-logged-at-debug-level"></a>在调试级别记录查询执行
+## <a name="query-execution-is-logged-at-debug-level-reverted"></a>~~在调试级别记录查询执行~~已还原
 
 [跟踪问题 #14523](https://github.com/aspnet/EntityFrameworkCore/issues/14523)
 
-此更改是在 EF Core 3.0-preview 3 中引入的。
+此更改是在 EF Core 3.0-预览版 7 中还原。
 
-**旧行为**
-
-EF Core 3.0 之前，是在 `Info` 级别记录查询和其他命令的执行。
-
-**新行为**
-
-从 EF Core 3.0 开始，将在 `Debug` 级别记录命令/SQL 的执行。
-
-**为什么**
-
-此更改是为了降低 `Info` 日志级别的噪音。
-
-**缓解措施**
-
-此日志记录事件由 `RelationalEventId.CommandExecuting` 定义，事件 ID 为 20100。
-若要再次在 `Info` 级别记录 SQL，请在 `OnConfiguring` 或 `AddDbContext` 中显式配置级别。
-例如:
+我们之所以还原此更改是因为，EF Core 3.0 中的新配置允许应用程序指定任何事件的日志级别。 例如，若要将 SQL 日志记录切换为 `Debug`，请在 `OnConfiguring` 或 `AddDbContext` 中显式配置级别：
 ```C#
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder
         .UseSqlServer(connectionString)
-        .ConfigureWarnings(c => c.Log((RelationalEventId.CommandExecuting, LogLevel.Info)));
+        .ConfigureWarnings(c => c.Log((RelationalEventId.CommandExecuting, LogLevel.Debug)));
 ```
 
 ## <a name="temporary-key-values-are-no-longer-set-onto-entity-instances"></a>不再在实体实例上设置临时键值
@@ -918,28 +902,6 @@ public string Id { get; set; }
 
 如果遇到此类情况，请在 [EF Core GitHub 问题跟踪程序](https://github.com/aspnet/EntityFrameworkCore/issues)上提交一个问题，让我们知道你是如何使用 `ILoggerFactory` 的，以便我们更好地理解今后如何避免这种情况再次发生。
 
-## <a name="idbcontextoptionsextensionwithdebuginfo-merged-into-idbcontextoptionsextension"></a>IDbContextOptionsExtensionWithDebugInfo 合并为 IDbContextOptionsExtension
-
-[跟踪问题 #13552](https://github.com/aspnet/EntityFrameworkCore/issues/13552)
-
-此更改是在 EF Core 3.0-preview 3 中引入的。
-
-**旧行为**
-
-`IDbContextOptionsExtensionWithDebugInfo` 是从 `IDbContextOptionsExtension` 扩展的附加可选接口，以避免在 2.x 发布周期期间对接口进行重大更改。
-
-**新行为**
-
-接口现在合并到 `IDbContextOptionsExtension` 中。
-
-**为什么**
-
-之所以进行此更改，是因为所有接口在概念上是一个接口。
-
-**缓解措施**
-
-任何 `IDbContextOptionsExtension` 实现都需要更新以支持新成员。
-
 ## <a name="lazy-loading-proxies-no-longer-assume-navigation-properties-are-fully-loaded"></a>延迟加载代理不再假定导航属性已完全加载
 
 [跟踪问题 #12780](https://github.com/aspnet/EntityFrameworkCore/issues/12780)
@@ -1352,6 +1314,30 @@ UPDATE __EFMigrationsHistory
 SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 150))
 ```
 
+## <a name="extension-infometadata-has-been-removed-from-idbcontextoptionsextension"></a>已从 IDbContextOptionsExtension 中删除扩展信息/元数据
+
+[跟踪问题 #16119](https://github.com/aspnet/EntityFrameworkCore/issues/16119)
+
+此更改是在 EF Core 3.0-预览版 7 中引入。
+
+**旧行为**
+
+`IDbContextOptionsExtension` 包含用于提供扩展元数据的方法。
+
+**新行为**
+
+这些方法已迁移到从新 `IDbContextOptionsExtension.Info` 属性返回的新 `DbContextOptionsExtensionInfo` 抽象基类。
+
+**为什么**
+
+在从版本 2.0 迁移到版本 3.0 的过程中，我们需要多次添加或更改这些方法。
+将它们拆分成新抽象基类可以更轻松地进行此类更改，而不会破坏现有扩展。
+
+**缓解措施**
+
+将扩展更新为采用新模式。
+例如，许多用于 EF Core 源代码中不同种类扩展的 `IDbContextOptionsExtension` 实现。
+
 ## <a name="logquerypossibleexceptionwithaggregateoperator-has-been-renamed"></a>已重命名 LogQueryPossibleExceptionWithAggregateOperator
 
 [跟踪问题 #10985](https://github.com/aspnet/EntityFrameworkCore/issues/10985)
@@ -1399,3 +1385,81 @@ var constraintName = myForeignKey.ConstraintName;
 **缓解措施**
 
 使用新名称。
+
+## <a name="irelationaldatabasecreatorhastableshastablesasync-have-been-made-public"></a>IRelationalDatabaseCreator.HasTables/HasTablesAsync 已公开
+
+[跟踪问题 #15997](https://github.com/aspnet/EntityFrameworkCore/issues/15997)
+
+此更改是在 EF Core 3.0-预览版 7 中引入。
+
+**旧行为**
+
+在 EF Core 3.0 推出前，这些方法受保护。
+
+```C#
+var constraintName = myForeignKey.Name;
+```
+
+**新行为**
+
+自 EF Core 3.0 起，这些方法是公共的。
+
+**为什么**
+
+EF 使用这些方法来确定数据库是否已创建但为空。 这也适用于在 EF 外部确定是否要应用迁移。
+
+**缓解措施**
+
+更改任何重写的可访问性。
+
+## <a name="microsoftentityframeworkcoredesign-is-now-a-developmentdependency-package"></a>Microsoft.EntityFrameworkCore.Design 现在是 DevelopmentDependency 包
+
+[跟踪问题 #11506](https://github.com/aspnet/EntityFrameworkCore/issues/11506)
+
+此更改是在 EF Core 3.0-preview 4 中引入的。
+
+**旧行为**
+
+在 EF Core 3.0 推出前，Microsoft.EntityFrameworkCore.Design 是常规 NuGet 包，它的程序集可以由依赖它的项目引用。
+
+**新行为**
+
+自 EF Core 3.0 起，它是 DevelopmentDependency 包。 这意味着，依赖项不会过渡流动到其他项目中，并且你也无法再默认引用它的程序集。
+
+**为什么**
+
+此包仅用于设计时。 已部署的应用程序不得引用它。 让它成为 DevelopmentDependency 包强化了此建议。
+
+**缓解措施**
+
+如果需要引用此包来重写 EF Core 的设计时行为，可以更新项目中的 PackageReference 项元数据。 如果正在通过 Microsoft.EntityFrameworkCore.Tools 过渡引用此包，必须向此包添加显式 PackageReference，以更改它的元数据。
+
+``` xml
+<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0-preview4.19216.3">
+  <PrivateAssets>all</PrivateAssets>
+  <!-- Remove IncludeAssets to allow compiling against the assembly -->
+  <!--<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>-->
+</PackageReference>
+```
+
+## <a name="sqlitepclraw-updated-to-version-200"></a>SQLitePCL.raw 已更新为版本 2.0.0
+
+[跟踪问题 #14824](https://github.com/aspnet/EntityFrameworkCore/issues/14824)
+
+此更改是在 EF Core 3.0-预览版 7 中引入。
+
+**旧行为**
+
+Microsoft.EntityFrameworkCore.Sqlite 以前依赖 SQLitePCL.raw 版本 1.1.12。
+
+**新行为**
+
+我们已将包更新为依赖版本 2.0.0。
+
+**为什么**
+
+SQLitePCL.raw 版本 2.0.0 定目标到 .NET Standard 2.0。 它以前定目标到 .NET Standard 1.1，这就要求必须将可传递的包用作大型收尾，才能正常运行。
+
+**缓解措施**
+
+SQLitePCL.raw 版本 2.0.0 包括一些重大变化。 有关详细信息，请参阅[发行说明](https://github.com/ericsink/SQLitePCL.raw/blob/v2/v2.md)。

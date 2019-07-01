@@ -6,16 +6,16 @@ description: 通过 Entity Framework Core 开始使用 .NET Core
 ms.date: 08/03/2018
 ms.assetid: 099d179e-dd7b-4755-8f3c-fcde914bf50b
 uid: core/get-started/netcore/new-db-sqlite
-ms.openlocfilehash: a0df80a8fe96be4f8cc3177919e2b087e14cb49c
-ms.sourcegitcommit: 735715f10cc8a231c213e4f055d79f0effd86570
+ms.openlocfilehash: e6996630e399659807d23304993c8e19c11ca6f5
+ms.sourcegitcommit: 83c1e2fc034e5eb1fec1ebabc8d629ffcc7c0632
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 02/16/2019
-ms.locfileid: "56325322"
+ms.lasthandoff: 06/25/2019
+ms.locfileid: "67351342"
 ---
 # <a name="getting-started-with-ef-core-on-net-core-console-app-with-a-new-database"></a>使用新数据库在 NET Core 控制台应用程序上开始使用 EF Core
 
-在本教程中，将创建一个 .NET Core 控制台应用，该应用使用 Entity Framework Core 对 SQLite 数据库执行数据访问。 你将通过迁移基于此模型创建数据库。 有关使用 ASP.NET Core MVC 的 Visual Studio 版本，请参阅 [ASP.NET Core - 新数据库](xref:core/get-started/aspnetcore/new-db)。
+在本教程中，将创建一个 .NET Core 控制台应用，该应用使用 Entity Framework Core 对 SQLite 数据库执行数据访问。 你使用[迁移](xref:core/managing-schemas/migrations/index)从模型创建数据库。 有关使用 ASP.NET Core MVC 的 Visual Studio 版本，请参阅 [ASP.NET Core - 新数据库](xref:core/get-started/aspnetcore/new-db)。
 
 [在 GitHub 上查看此文章的示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/NetCore/ConsoleApp.SQLite)。
 
@@ -56,7 +56,7 @@ ms.locfileid: "56325322"
 
 定义构成模型的上下文和实体类：
 
-* 使用以下内容创建一个新的 Model.cs 文件。
+* 使用以下内容创建一个新的 Model.cs  文件。
 
   [!code-csharp[Main](../../../../samples/core/GetStarted/NetCore/ConsoleApp.SQLite/Model.cs)]
 
@@ -69,11 +69,11 @@ ms.locfileid: "56325322"
 * 运行 `dotnet ef migrations add InitialCreate` 以为迁移搭建基架，并为模型创建一组初始表。
 * 运行 `dotnet ef database update` 以将新迁移应用到数据库。 在应用迁移之前，此命令可创建数据库。
 
-blogging.db SQLite DB 位于项目目录中。
+blogging.db SQLite DB 位于项目目录中  。
 
 ## <a name="use-the-model"></a>使用模型
 
-* 打开 Program.cs 并将内容替换为以下代码：
+* 打开 Program.cs  并将内容替换为以下代码：
 
   [!code-csharp[Main](../../../../samples/core/GetStarted/NetCore/ConsoleApp.SQLite/Program.cs)]
 
@@ -104,9 +104,9 @@ blogging.db SQLite DB 位于项目目录中。
 
 设置工作目录：
 
-* 在“解决方案资源管理器”中，右键单击该项目，然后选择“属性”。
-* 在左窗格中选择“调试”选项卡。
-* 将工作目录设置为项目目录。
+* 在“解决方案资源管理器”中，右键单击该项目，然后选择“属性”。  
+* 在左窗格中选择  “调试”选项卡。
+* 将工作目录设置为项目目录。 
 * 保存更改。
 
 ## <a name="additional-resources"></a>其他资源

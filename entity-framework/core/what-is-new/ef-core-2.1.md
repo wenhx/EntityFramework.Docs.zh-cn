@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/20/2018
 ms.assetid: 585F90A3-4D5A-4DD1-92D8-5243B14E0FEC
 uid: core/what-is-new/ef-core-2.1
-ms.openlocfilehash: f67f2e695d269e2dde11d396f9a67fd137600f56
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 16600ccbb1194d584fae15671118d9c046f1f637
+ms.sourcegitcommit: 06073f8efde97dd5f540dbfb69f574d8380566fe
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45489396"
+ms.lasthandoff: 06/24/2019
+ms.locfileid: "67333861"
 ---
 # <a name="new-features-in-ef-core-21"></a>EF Core 2.1 中的新增功能
 
@@ -49,7 +49,7 @@ var query = context.Orders
           Sum = g.Sum(o => o.Amount),
           Min = g.Min(o => o.Amount),
           Max = g.Max(o => o.Amount),
-          Avg = g.Average(o => Amount)
+          Avg = g.Average(o => o.Amount)
         });
 ```
 
@@ -119,7 +119,7 @@ var query = context.Customers.Select(
     c => c.Orders.Where(o => o.Amount  > 100).Select(o => o.Amount).ToList());
 ```
 
-请注意，此查询只会被转换为两个 SQL 查询：一个“客户”查询，一个“订单”查询。
+请注意，此查询将只转换为两个 SQL 查询：一个用于客户，另一个用于订单。
 
 ## <a name="owned-attribute"></a>[Owned] 属性
 
@@ -142,7 +142,7 @@ public class Order
 
 ## <a name="command-line-tool-dotnet-ef-included-in-net-core-sdk"></a>.NET Core SDK 中包含的命令行工具 dotnet-ef
 
-dotnet-ef 命令现在是 .NET Core SDK 的一部分，因此无须在项目中使用 DotNetCliToolReference 即可使用各项迁移，或通过现有数据库搭建 DbContext 基架。
+dotnet-ef 命令现在是 .NET Core SDK 的一部分，因此无须在项目中使用 DotNetCliToolReference 即可使用各项迁移，或通过现有数据库搭建 DbContext 基架  。
 
 有关如何为不同版本的 .NET Core SDK 和 EF Core 启用命令行工具的详细信息，请参阅[安装工具](xref:core/miscellaneous/cli/dotnet#installing-the-tools)的相关部分。
 
@@ -155,7 +155,7 @@ dotnet-ef 命令现在是 .NET Core SDK 的一部分，因此无须在项目中�
 
 ## <a name="raw-sql-parameter-analyzer"></a>原始 SQL 参数分析器
 
-EF Core 随附新增一个代码分析器，用于检测原始 SQL API（如 `FromSql` 或 `ExecuteSqlCommand`）的潜在不安全用法。 例如，对于下面的查询，将会看到一条警告，因为 minAge 未参数化：
+EF Core 随附新增一个代码分析器，用于检测原始 SQL API（如 `FromSql` 或 `ExecuteSqlCommand`）的潜在不安全用法。 例如，对于下面的查询，将会看到一条警告，因为 minAge 未参数化  ：
 
 ``` csharp
 var sql = $"SELECT * FROM People WHERE Age > {minAge}";
