@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: bc2a2676-bc46-493f-bf49-e3cc97994d57
 uid: core/index
-ms.openlocfilehash: fa0695be29668789a179f9a0d6330f3361dbac29
-ms.sourcegitcommit: 6c4e06bc62d98442530e93a44725e38e59483d42
+ms.openlocfilehash: 0e35a2b3f89c92b717b8e05c8fa3ae5af5ce8fd3
+ms.sourcegitcommit: 06073f8efde97dd5f540dbfb69f574d8380566fe
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/17/2019
-ms.locfileid: "58131421"
+ms.lasthandoff: 06/24/2019
+ms.locfileid: "67333776"
 ---
 # <a name="entity-framework-core"></a>Entity Framework Core
 
@@ -23,7 +23,7 @@ EF Core 支持多个数据库引擎，请参阅[数据库提供程序](providers
 
 对于 EF Core，使用模型执行数据访问。 模型由实体类和表示数据库会话的上下文对象构成，可便于用户查询和保存数据。 有关详细信息，请参阅[创建模型](modeling/index.md)。
 
-可以根据现有数据库生成模型，手动将模型编码为与数据库匹配，也可以使用 EF 迁移根据模型创建数据库，然后在模型随时间推移发生更改时改进它。
+可以根据现有数据库生成模型，手动将模型编码为与数据库匹配，也可以使用 [EF 迁移](managing-schemas/migrations/index.md)根据模型创建数据库，然后在模型随时间推移发生更改时改进它。
 
 ``` csharp
 using Microsoft.EntityFrameworkCore;
