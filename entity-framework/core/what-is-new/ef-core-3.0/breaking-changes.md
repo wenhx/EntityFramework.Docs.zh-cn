@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: 96586808862c4373168dcd34a5f00c9f2f7563c3
-ms.sourcegitcommit: 9bd64a1a71b7f7aeb044aeecc7c4785b57db1ec9
+ms.openlocfilehash: dcbea1a2aab5baea35f81500bb7bb5482695d778
+ms.sourcegitcommit: 812010a35afe902d8c4bb03a67d575f8e91b5ec0
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/26/2019
-ms.locfileid: "67394833"
+ms.lasthandoff: 07/02/2019
+ms.locfileid: "67506258"
 ---
 # <a name="breaking-changes-included-in-ef-core-30-currently-in-preview"></a>EF Core 3.0 中包含的中断性变更（目前处于预览状态）
 
@@ -1396,10 +1396,6 @@ var constraintName = myForeignKey.ConstraintName;
 
 在 EF Core 3.0 推出前，这些方法受保护。
 
-```C#
-var constraintName = myForeignKey.Name;
-```
-
 **新行为**
 
 自 EF Core 3.0 起，这些方法是公共的。
@@ -1463,3 +1459,26 @@ SQLitePCL.raw 版本 2.0.0 定目标到 .NET Standard 2.0。 它以前定目标�
 **缓解措施**
 
 SQLitePCL.raw 版本 2.0.0 包括一些重大变化。 有关详细信息，请参阅[发行说明](https://github.com/ericsink/SQLitePCL.raw/blob/v2/v2.md)。
+
+
+## <a name="nettopologysuite-updated-to-version-200"></a>NetTopologySuite 已更新为版本 2.0.0
+
+[跟踪问题 #14825](https://github.com/aspnet/EntityFrameworkCore/issues/14825)
+
+此更改是在 EF Core 3.0-预览版 7 中引入。
+
+**旧行为**
+
+空间包以前依赖于 NetTopologySuite 的 1.15.1 版。
+
+**新行为**
+
+我们已将包更新为依赖版本 2.0.0。
+
+**为什么**
+
+NetTopologySuite 2.0.0 版旨在解决 EF Core 用户遇到的几个可用性问题。
+
+**缓解措施**
+
+NetTopologySuite 2.0.0 版包括一些重大更改。 有关详细信息，请参阅[发行说明](https://www.nuget.org/packages/NetTopologySuite/2.0.0-pre001)。
