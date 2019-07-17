@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: aeb0f5f8-b212-4f89-ae83-c642a5190ba0
 uid: core/miscellaneous/connection-strings
-ms.openlocfilehash: 52a8527170845d3e73ebcec518713ade3f3844f0
-ms.sourcegitcommit: 06073f8efde97dd5f540dbfb69f574d8380566fe
+ms.openlocfilehash: c306f9ca7a51fc9e3db18e883fd44f56dd1a3cb4
+ms.sourcegitcommit: e90d6cfa3e96f10b8b5275430759a66a0c714ed1
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/24/2019
-ms.locfileid: "67333837"
+ms.lasthandoff: 07/17/2019
+ms.locfileid: "68286452"
 ---
 # <a name="connection-strings"></a>连接字符串
 
@@ -17,7 +17,7 @@ ms.locfileid: "67333837"
 
 ## <a name="net-framework-applications"></a>.NET framework 应用程序
 
-.NET framework 应用程序，如 WinForms、 WPF、 控制台和 ASP.NET 4 中，具有经过反复测试的连接字符串模式。 应将连接字符串添加到你的应用程序的 App.config 文件 (如果您使用的 ASP.NET Web.config)。 如果你的连接字符串包含敏感信息，如用户名和密码，你可以保护配置文件使用的内容[受保护的配置](https://docs.microsoft.com/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypting-configuration-file-sections-using-protected-configuration)。
+.NET framework 应用程序，如 WinForms、 WPF、 控制台和 ASP.NET 4 中，具有经过反复测试的连接字符串模式。 连接字符串应添加到应用程序的 App.config 文件 (如果您使用的 ASP.NET Web.config)。 如果你的连接字符串包含敏感信息，如用户名和密码，你可以保护配置文件使用的内容[受保护的配置](https://docs.microsoft.com/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypting-configuration-file-sections-using-protected-configuration)。
 
 ``` xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -31,7 +31,7 @@ ms.locfileid: "67333837"
 ```
 
 > [!TIP]  
-> `providerName`上 EF Core连接字符串存储在 App.config，因为通过代码配置了数据库提供程序不需要设置。
+>           `providerName`上 EF Core连接字符串存储在 App.config，因为通过代码配置了数据库提供程序不需要设置。
 
 然后可以读取连接字符串使用`ConfigurationManager`在您的上下文中的 API`OnConfiguring`方法。 可能需要添加对引用`System.Configuration`framework 程序集，以便能够使用此 API。
 

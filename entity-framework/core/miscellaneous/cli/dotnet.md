@@ -2,14 +2,14 @@
 title: EF Core 工具参考 (.NET CLI)-EF Core
 author: bricelam
 ms.author: bricelam
-ms.date: 09/20/2018
+ms.date: 07/11/2019
 uid: core/miscellaneous/cli/dotnet
-ms.openlocfilehash: 959785c7b10ca668f3691106f62076d538978c03
-ms.sourcegitcommit: b3c2b34d5f006ee3b41d6668f16fe7dcad1b4317
+ms.openlocfilehash: 05c5f89fc79556e72a7e629c147aa817fe7d1a6b
+ms.sourcegitcommit: e90d6cfa3e96f10b8b5275430759a66a0c714ed1
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/15/2018
-ms.locfileid: "51688662"
+ms.lasthandoff: 07/17/2019
+ms.locfileid: "68286467"
 ---
 # <a name="entity-framework-core-tools-reference---net-cli"></a>Entity Framework Core 工具引用的.NET CLI
 
@@ -23,9 +23,28 @@ Entity Framework Core 的命令行接口 (CLI) 工具执行设计时开发任务
 
 安装过程取决于项目类型和版本：
 
+* EF Core 3.x
 * ASP.NET Core 2.1 和更高版本
 * EF Core 2.x
 * EF Core 1.x
+
+### <a name="ef-core-3x"></a>EF Core 3.x
+
+* `dotnet ef` 必须作为全局或本地工具进行安装。 大多数开发人员将安装`dotnet ef`作为全局工具使用以下命令：
+
+  ``` console
+    $ dotnet tool install --global dotnet-ef --version 3.0.0-*
+  ```
+
+  此外可以使用`dotnet ef`作为本地工具。 若要将其用作本地工具，还原会将它声明为工具依赖项使用的项目的依赖关系[工具清单文件](https://github.com/dotnet/cli/issues/10288)。
+
+* 安装[.NET Core SDK 3.0](https://dotnet.microsoft.com/download/dotnet-core/3.0))。 SDK 必须安装即使有 Visual Studio 的最新版本。
+
+* 安装最新`Microsoft.EntityFrameworkCore.Design`包。
+
+  ``` Console
+  dotnet add package Microsoft.EntityFrameworkCore.Design
+  ```
 
 ### <a name="aspnet-core-21"></a>ASP.NET Core 2.1 +
 
@@ -37,7 +56,7 @@ Entity Framework Core 的命令行接口 (CLI) 工具执行设计时开发任务
 
 `dotnet ef`命令包含在.NET Core SDK，但若要启用这些命令必须安装`Microsoft.EntityFrameworkCore.Design`包。
 
-* 安装最新[.NET Core SDK](https://www.microsoft.com/net/download/core)。 即使有 Visual Studio 2017 的最新版本，也必须安装 SDK。
+* 安装最新[.NET Core SDK](https://www.microsoft.com/net/download/core)。 SDK 必须安装即使有 Visual Studio 的最新版本。
 
 * 安装最新稳定`Microsoft.EntityFrameworkCore.Design`包。
 
@@ -51,7 +70,7 @@ Entity Framework Core 的命令行接口 (CLI) 工具执行设计时开发任务
 
 * 通过修改配置为使用 2.1.200 SDK 版本的应用程序及其[global.json](/dotnet/core/tools/global-json)文件。 此文件通常包含在解决方案目录 （一个项目上方）。
 
-* 编辑项目文件并添加`Microsoft.EntityFrameworkCore.Tools.DotNet`作为`DotNetCliToolReference`项。 指定的最新的 1.x 版本，例如： 1.1.6。 请参阅本部分的结尾处的项目文件示例。
+* 编辑项目文件并添加`Microsoft.EntityFrameworkCore.Tools.DotNet`作为`DotNetCliToolReference`项。 指定的最新的 1.x 版本，例如：1.1.6。 请参阅本部分的结尾处的项目文件示例。
 
 * 安装的最新的 1.x 版本`Microsoft.EntityFrameworkCore.Design`包，例如：
 
@@ -140,7 +159,7 @@ CLI 工具适用于.NET Core 项目和.NET Framework 项目。 EF Core 模型具
 |                   | 选项                            | 描述                                                                                                                                                                                                                                                   |
 |:------------------|:----------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 |                   | `--json`                          | 显示 JSON 输出。                                                                                                                                                                                                                                             |
-| <nobr>`-c`</nobr> | `--context <DBCONTEXT>`           | `DbContext`类使用。 唯一或完全限定的命名空间的类名称。  如果省略此选项，则 EF Core 会发现上下文类。 如果有多个上下文类，则需要此选项。                                            |
+| <nobr>`-c`</nobr> | `--context <DBCONTEXT>`           | 要使用的 `DbContext` 类。 唯一或完全限定的命名空间的类名称。  如果省略此选项，则 EF Core 会发现上下文类。 如果有多个上下文类，则需要此选项。                                            |
 | `-p`              | `--project <PROJECT>`             | 目标项目的项目文件夹的相对路径。  默认值为当前文件夹。                                                                                                                                                              |
 | `-s`              | `--startup-project <PROJECT>`     | 为启动项目的项目文件夹的相对路径。 默认值为当前文件夹。                                                                                                                                                              |
 |                   | `--framework <FRAMEWORK>`         | [目标框架名字对象](/dotnet/standard/frameworks#supported-target-framework-versions)有关[目标框架](/dotnet/standard/frameworks)。  使用项目文件指定多个目标框架，并且想要选择其中之一时。 |
@@ -195,7 +214,7 @@ dotnet ef database update 20180904195021_InitialCreate
 
 | 参数       | 描述                                                                                                                                                                                                             |
 |:---------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `<CONNECTION>` | 数据库的连接字符串。 对于 ASP.NET Core 2.x 项目，值可以是*名称 =\<的连接字符串名称 >*。 在这种情况下名称来自于为项目设置的配置源。 |
+| `<CONNECTION>` | 数据库的连接字符串。 对于 ASP.NET Core 2.x 项目，值可以是*名称 =\<的连接字符串名称 >* 。 在这种情况下名称来自于为项目设置的配置源。 |
 | `<PROVIDER>`   | 要使用的提供程序。 通常这是 NuGet 包的名称为例： `Microsoft.EntityFrameworkCore.SqlServer`。                                                                                           |
 
 选项:

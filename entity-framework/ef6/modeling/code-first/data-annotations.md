@@ -3,18 +3,18 @@ title: 第一个数据注释-EF6 的代码
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 80abefbd-23c9-4fce-9cd3-520e5df9856e
-ms.openlocfilehash: e6b017306b4f66f5bac2a9964e11391da28ceb40
-ms.sourcegitcommit: a013e243a14f384999ceccaf9c779b8c1ae3b936
+ms.openlocfilehash: fcd01aef7303573001460b352f8099b2cc6e224a
+ms.sourcegitcommit: e90d6cfa3e96f10b8b5275430759a66a0c714ed1
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2019
-ms.locfileid: "57463277"
+ms.lasthandoff: 07/17/2019
+ms.locfileid: "68286483"
 ---
 # <a name="code-first-data-annotations"></a>Code First 数据注释
 > [!NOTE]
 > **EF4.1 及更高版本仅**的功能，Api，Entity Framework 4.1 中引入了此页所述的等。 如果您使用的是早期版本，则不适用的部分或所有这些信息。
 
-此页上的内容是从作者： Julie Lerman 最初编写一篇文章 (\<http://thedatafarm.com>)。
+此页上的内容是从作者： Julie Lerman 最初编写一篇文章 (\<http://thedatafarm.com>) 。
 
 实体框架 Code First 允许您使用您自己的域类来表示 EF 依赖于执行查询，该模型更改跟踪和更新功能。 代码首先将利用一种编程模式称为惯例优先于配置。 代码首先将假定您的类遵循的约定的实体框架，以及在这种情况下，将自动解决如何执行它的作业。 但是，如果您的类不遵循这些约定，必须将配置添加到您的类以提供必要的信息，EF 的功能。
 
@@ -51,7 +51,7 @@ ms.locfileid: "57463277"
 
  
 
-## <a name="key"></a>键
+## <a name="key"></a>Key
 
 Entity Framework 依赖于具有一个密钥值，用于跟踪的实体的每个实体。 一种约定的 Code First 是隐式键属性;第一次代码将查找名为"Id"或类名称和"Id"，如"BlogId"的组合的属性。 此属性将映射到数据库中的主键列。
 
@@ -135,7 +135,7 @@ Entity Framework 依赖于具有一个密钥值，用于跟踪的实体的每个
     }
 ```
 
-## <a name="required"></a>必需
+## <a name="required"></a>必填
 
 需要的批注告知 EF 特定的属性是必需。
 
@@ -146,7 +146,7 @@ Entity Framework 依赖于具有一个密钥值，用于跟踪的实体的每个
     public string Title { get; set; }
 ```
 
-任何其他不使用代码或标记在应用程序中的更改，MVC 应用程序将执行客户端验证，甚至动态生成使用的属性和批注名称的消息。
+无需额外的代码或标记在应用程序中的更改，与 MVC 应用程序将执行客户端验证，甚至动态生成使用的属性和批注名称的消息。
 
 ![创建具有标题页是所需的错误](~/ef6/media/jj591583-figure02.png)
 
