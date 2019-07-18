@@ -1,30 +1,30 @@
 ---
-title: 日志记录和拦截数据库操作的 EF6
+title: 记录和截取数据库操作-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: b5ee7eb1-88cc-456e-b53c-c67e24c3f8ca
-ms.openlocfilehash: 3f06e073f3ab6e46883663620219e302d5db1d60
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: be32ed114269543ac36b256a202e0494d466e4f7
+ms.sourcegitcommit: c9c3e00c2d445b784423469838adc071a946e7c9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490073"
+ms.lasthandoff: 07/18/2019
+ms.locfileid: "68306535"
 ---
-# <a name="logging-and-intercepting-database-operations"></a>日志记录和拦截数据库操作
+# <a name="logging-and-intercepting-database-operations"></a>记录和截取数据库操作
 > [!NOTE]
 > **仅限 EF6 及更高版本** - 此页面中讨论的功能、API 等已引入实体框架 6。 如果使用的是早期版本，则部分或全部信息不适用。  
 
-应用程序代码可以截获从 Entity Framework 6 开始，只要实体框架发出命令到数据库下面的命令。 这最常用于日志记录 SQL，但也可以使用来修改或中止该命令。  
+从实体框架6开始, 无论何时实体框架将命令发送到数据库, 都可以通过应用程序代码截获此命令。 这通常用于记录 SQL, 但也可用于修改或中止命令。  
 
-具体而言，EF 包括：  
+具体而言, EF 包括:  
 
-- 类似于 LINQ to SQL 中 DataContext.Log 上下文日志属性  
-- 一种机制，以自定义内容并将输出发送到日志的格式设置  
-- 用于侦听提供更大的控制/灵活性的低级构建基块  
+- 与 DataContext 类似的上下文的日志属性。登录 LINQ to SQL  
+- 用于自定义发送到日志的输出内容和格式的机制  
+- 用于侦听的低级别构建基块, 提供更好的控制/灵活性  
 
-## <a name="context-log-property"></a>上下文日志属性  
+## <a name="context-log-property"></a>Context 日志属性  
 
-DbContext.Database.Log 属性可以设置为采用字符串的任何方法的委托。 通常它是与使用任何 TextWriter 通过将其设置为该 TextWriter"Write"方法。 生成的当前上下文的所有 SQL 将都记录到该编写器。 例如，下面的代码会将 SQL 记录到控制台：  
+可以将 DbContext 属性设置为采用字符串的任何方法的委托。 最常见的情况是, 通过将其设置为该该设置的 "Write" 方法, 将其与任何未任何类型一起使用。 当前上下文生成的所有 SQL 都将记录到该编写器。 例如, 以下代码将 SQL 日志记录到控制台:  
 
 ``` csharp
 using (var context = new BlogContext())
@@ -35,9 +35,9 @@ using (var context = new BlogContext())
 }
 ```  
 
-请注意，该上下文。Database.Log 设置为 Console.Write。 这是所有所需 SQL 记录到控制台。  
+请注意, 上下文。数据库。日志设置为 Console。 这是将 SQL 日志记录到控制台所需的全部。  
 
-让我们添加一些简单的查询/插入/更新代码，以便我们可以看到一些输出：  
+让我们添加一些简单的查询/插入/更新代码, 以便我们可以看到一些输出:  
 
 ``` csharp
 using (var context = new BlogContext())
@@ -54,7 +54,7 @@ using (var context = new BlogContext())
 }
 ```  
 
-这将生成以下输出：  
+这将生成以下输出:  
 
 ``` SQL
 SELECT TOP (1)
@@ -94,39 +94,39 @@ WHERE @@ROWCOUNT > 0 AND [Id] = scope_identity()
 -- Completed in 2 ms with result: SqlDataReader
 ```  
 
-（请注意，这是输出假定已发生的任何数据库初始化。 如果数据库初始化不已发生了则不会有更多输出显示了所有工作迁移实际执行了检查或创建新的数据库。）  
+(请注意, 这是假设已发生任何数据库初始化的输出。 如果尚未发生数据库初始化, 则会有更多的输出, 显示所有工作迁移在这些情况下执行的操作, 以检查或创建新数据库。)  
 
-## <a name="what-gets-logged"></a>获取记录内容？  
+## <a name="what-gets-logged"></a>记录了哪些内容？  
 
-日志属性时设置以下所有条件，将会记录：  
+设置日志属性后, 将记录以下所有内容:  
 
-- SQL 的所有不同类型的命令。 例如：  
-    - 查询，包括普通的 LINQ 查询、 eSQL 查询和方法，例如 SqlQuery 从原始查询  
-    - 插入、 更新和删除的 SaveChanges 过程中生成的  
-    - 加载查询，例如那些由延迟加载生成的关系  
+- 适用于所有不同类型的命令的 SQL。 例如：  
+    - 查询, 包括常规 LINQ 查询、eSQL 查询和来自 SqlQuery 等方法的原始查询  
+    - 作为 SaveChanges 的一部分生成的插入、更新和删除操作  
+    - 关系加载查询, 如延迟加载生成的查询  
 - 参数  
-- 在该值指示是否以异步方式执行命令  
-- 时间戳，指示该命令时开始执行  
-- 指示已成功完成，此命令失败，通过引发异常，或者，对于异步，已取消  
-- 结果值的提示  
-- 执行命令所用的时间近似量。 请注意，这是将命令发送到取回结果对象的时间。 它不包括读取结果的时间。  
+- 命令是否正在以异步方式执行  
+- 指示命令开始执行的时间的时间戳  
+- 命令是否已成功完成, 引发异常, 或是否已取消 (对于异步)  
+- 结果值的一些指示  
+- 执行命令所花费的大致时间。 请注意, 这是发送命令以返回结果对象的时间。 它不包含读取结果的时间。  
 
-看一下上面的示例输出，每个记录的四个命令是：  
+查看上面的示例输出, 记录的四个命令中的每一个都是:  
 
-- 从上下文调用生成查询。Blogs.First  
-    - 请注意，不会因为此查询起作用的 ToString 方法获取 SQL 的"First"不提供可以在其调用 ToString IQueryable  
-- 导致博客延迟加载的查询。文章  
-    - 请注意发生的延迟加载的密钥值的参数详细信息  
-    - 记录仅设置为非默认值的参数的属性。 例如，大小属性仅显示是否为非零。  
-- 两个命令因 SaveChangesAsync;一个用于更新更改文章标题，另一个用于插入操作将添加新文章  
-    - 请注意的 FK 和 Title 属性的参数详细信息  
-    - 请注意，以异步方式执行这些命令  
+- 通过调用上下文产生的查询。博客。首先  
+    - 请注意, 获取 SQL 的 ToString 方法不能处理此查询, 因为 "First" 不提供可调用 ToString 的 IQueryable  
+- 由博客的延迟加载引起的查询。创纪录  
+    - 请注意延迟加载发生的键值的参数详细信息  
+    - 仅记录设置为非默认值的参数的属性。 例如, 仅当 Size 属性为非零时, 才会显示该属性。  
+- SaveChangesAsync 生成的两个命令;一项用于更改发布标题的更新, 另一种用于添加新的帖子  
+    - 请注意 FK 和 Title 属性的参数详细信息  
+    - 请注意, 这些命令是异步执行的  
 
-## <a name="logging-to-different-places"></a>日志记录到不同的位置  
+## <a name="logging-to-different-places"></a>记录到不同的位置  
 
-日志记录到如上所示控制台是非常容易。 它也很容易使用不同登录到内存、 文件等的[TextWriter](https://msdn.microsoft.com/library/system.io.textwriter.aspx)。  
+如上所示, 记录到控制台非常简单。 通过使用不同[类型的类型](https://msdn.microsoft.com/library/system.io.textwriter.aspx), 也可以很容易地记录到内存、文件等。  
 
-如果您熟悉 LINQ to SQL 可能注意在 LINQ to SQL 日志属性设置为实际 TextWriter 中的对象 (例如，Console.Out) 时的日志属性设置为一个方法接受字符串 （例如 EFConsole.Write 或 Console.Out.Write)。 这样做的原因是 EF 从 TextWriter 分离通过接受任何可以作为字符串的接收器的委托。 例如，假设已有一些日志记录框架，它定义了日志记录方法如下所示：  
+如果你熟悉 LINQ to SQL 你可能会注意到, 在 LINQ to SQL 日志属性设置为实际的 "设置" 对象 (例如, 在 "控制台" 中), 而在 EF 中, Log 属性被设置为接受字符串的方法 (例如, Console. Write 或 Console。 这种情况的原因是, 通过接受可充当字符串接收器的任何委托, 将 EF 从无效中分离。 例如, 假设已有一些日志记录框架, 并定义如下所示的日志记录方法:  
 
 ``` csharp
 public class MyLogger
@@ -138,7 +138,7 @@ public class MyLogger
 }
 ```  
 
-这可以挂接到 EF Log 属性如下：  
+此操作可能会挂接到 EF 日志属性, 如下所示:  
 
 ``` csharp
 var logger = new MyLogger();
@@ -147,19 +147,19 @@ context.Database.Log = s => logger.Log("EFApp", s);
 
 ## <a name="result-logging"></a>结果日志记录  
 
-默认记录器命令文本 (SQL)、 参数和"正在执行"行使用记录时间戳之前的命令发送到数据库。 包含已用时间的"已完成"行是记录的执行以下命令。  
+默认情况下, 在将命令发送到数据库之前, 将使用时间戳来记录命令文本 (SQL)、参数和 "执行" 行。 执行命令后, 将记录包含运行时间的 "已完成" 行。  
 
-请注意，对于异步命令的"已完成"的行不被记录直到异步任务实际完成、 失败，或被取消。  
+请注意, 对于异步命令, 在异步任务实际完成、失败或取消之前, 不会记录 "已完成" 行。  
 
-在"已完成"的行包含不同的信息，具体取决于命令和已成功执行的类型。  
+"已完成" 行包含不同的信息, 具体取决于命令的类型以及执行是否成功。  
 
 ### <a name="successful-execution"></a>成功执行  
 
-对于成功完成输出的命令是"已完成中的使用结果毫秒 x:"跟以及结果的提示。 指示返回的结果的数据读取器的命令是一种[DbDataReader](https://msdn.microsoft.com/library/system.data.common.dbdatareader.aspx)返回。 返回一个整数值，例如更新的命令对于上面所示的结果所示的命令是该整数。  
+对于成功完成的命令, 输出为 "在 x 毫秒内完成, 结果为:", 后跟一些对结果的指示。 对于返回数据读取器的命令, 结果指示是返回的[DbDataReader](https://msdn.microsoft.com/library/system.data.common.dbdatareader.aspx)的类型。 对于返回整数值的命令, 如显示的结果上方显示的 update 命令, 则为该整数。  
 
 ### <a name="failed-execution"></a>执行失败  
 
-对于失败的命令都通过引发异常，输出包含来自异常的消息。 例如，使用 SqlQuery 对存在的表的查询将导致日志输出如下：  
+对于通过引发异常而失败的命令, 输出包含来自异常的消息。 例如, 使用 SqlQuery 对存在的表进行查询时, 会生成如下所示的日志输出:  
 
 ``` SQL
 SELECT * from ThisTableIsMissing
@@ -167,9 +167,9 @@ SELECT * from ThisTableIsMissing
 -- Failed in 1 ms with error: Invalid object name 'ThisTableIsMissing'.
 ```  
 
-### <a name="canceled-execution"></a>已取消的执行  
+### <a name="canceled-execution"></a>已取消执行  
 
-对于已取消任务的异步命令结果可能会失败并引发异常，因为这是基础 ADO.NET 提供程序通常的用途时尝试取消。 如果不会出现此问题，则输出将如下所示完全取消任务：  
+对于取消任务的异步命令, 结果可能会失败, 并出现异常, 因为这是当尝试取消时, 基础 ADO.NET 提供程序经常执行的操作。 如果这种情况不会发生并且任务完全取消, 则输出将如下所示:  
 
 ```  
 update Blogs set Title = 'No' where Id = -1
@@ -177,24 +177,24 @@ update Blogs set Title = 'No' where Id = -1
 -- Canceled in 1 ms
 ```  
 
-## <a name="changing-log-content-and-formatting"></a>更改日志内容和格式设置  
+## <a name="changing-log-content-and-formatting"></a>更改日志内容和格式  
 
-在后台 Database.Log 属性，则可以使用的 DatabaseLogFormatter 对象。 此对象有效地将 IDbCommandInterceptor 实现 （见下文） 绑定到一个委托，它接受字符串和 DbContext。 这意味着 DatabaseLogFormatter 上的方法通过 EF 调用之前和之后执行命令。 这些 DatabaseLogFormatter 方法收集和设置日志输出的格式并将其发送给该委托。  
+在 "数据库概述" 下, 使用 DatabaseLogFormatter 对象。 此对象有效地将 IDbCommandInterceptor 实现 (见下文) 绑定到接受字符串和 DbContext 的委托。 这意味着, DatabaseLogFormatter 上的方法是在执行命令之前和之后调用的。 这些 DatabaseLogFormatter 方法收集并格式化日志输出, 并将其发送到委托。  
 
 ### <a name="customizing-databaselogformatter"></a>自定义 DatabaseLogFormatter  
 
-更改记录的内容和它的格式可以通过创建从 DatabaseLogFormatter 派生而来并重写相应的方法的新类来实现。 若要重写的最常见方法是：  
+可以通过创建从 DatabaseLogFormatter 派生的新类并根据需要重写方法, 从而更改所记录的内容和格式。 要重写的最常见方法是:  
 
-- LogCommand – 替代此设置以更改在执行前如何记录命令。 默认情况下 LogCommand LogParameter 调用为每个参数;您可以选择执行重写中相同的操作或改为以不同方式处理参数。  
-- LogResult – 替代此设置以更改如何记录从执行命令的结果。  
-- LogParameter – 替代此设置以更改格式设置和参数日志记录的内容。  
+- LogCommand –重写此方法以更改命令在执行之前的记录方式。 默认情况下, LogCommand 为每个参数调用 LogParameter;您可以选择在重写中执行相同的操作, 或以不同的方式处理参数。  
+- LogResult –重写此方法以更改如何记录执行命令的结果。  
+- LogParameter –重写此参数以更改参数日志记录的格式和内容。  
 
-例如，假设我们想要记录单个行，每个命令发送到数据库之前。 这可以通过两个替代：  
+例如, 假设我们想要在每个命令发送到数据库之前只记录一行。 可以通过两个替代来完成此操作:  
 
-- 重写 LogCommand 要格式化和写入单个 SQL 行  
+- 重写 LogCommand 以格式化和写入单一的 SQL 行  
 - 重写 LogResult 不执行任何操作。  
 
-该代码将如下所示：
+代码如下所示:
 
 ``` csharp
 public class OneLineFormatter : DatabaseLogFormatter
@@ -221,13 +221,13 @@ public class OneLineFormatter : DatabaseLogFormatter
 }
 ```  
 
-若要记录输出只需调用 Write 方法，这会将输出发送到已配置的写入委托。  
+若要日志输出, 只需调用写入方法, 该方法会将输出发送到配置的写入委托。  
 
-（请注意，此代码的作用只是为了举例简单删除换行符。 它可能不会适合查看复杂的 SQL。）  
+(请注意, 此代码只是为了举例地删除换行符。 它在查看复杂的 SQL 时可能无法正常工作。)  
 
 ### <a name="setting-the-databaselogformatter"></a>设置 DatabaseLogFormatter  
 
-新的 DatabaseLogFormatter 类具有创建它后需要使用 EF 进行注册。 这是使用基于代码的配置。 简而言之，这意味着创建从 DbConfiguration 派生 DbContext 类为在同一程序集中的新类并在此新类的构造函数中调用 SetDatabaseLogFormatter。 例如：  
+创建新的 DatabaseLogFormatter 类后, 需要将其注册到 EF。 这是使用基于代码的配置来完成的。 简而言之, 这意味着要在与 DbContext 类相同的程序集中创建一个从 DbConfiguration 派生的新类, 然后在此新类的构造函数中调用 SetDatabaseLogFormatter。 例如:  
 
 ``` csharp
 public class MyDbConfiguration : DbConfiguration
@@ -240,9 +240,9 @@ public class MyDbConfiguration : DbConfiguration
 }
 ```  
 
-### <a name="using-the-new-databaselogformatter"></a>使用新 DatabaseLogFormatter  
+### <a name="using-the-new-databaselogformatter"></a>使用新的 DatabaseLogFormatter  
 
-只要设置 Database.Log，现在将使用此新 DatabaseLogFormatter。 因此，第 1 部分中运行的代码现在将产生以下输出：  
+此新 DatabaseLogFormatter 将在每次设置数据库时使用。 因此, 运行第1部分中的代码将生成以下输出:  
 
 ```  
 Context 'BlogContext' is executing command 'SELECT TOP (1) [Extent1].[Id] AS [Id], [Extent1].[Title] AS [Title]FROM [dbo].[Blogs] AS [Extent1]WHERE (N'One Unicorn' = [Extent1].[Title]) AND ([Extent1].[Title] IS NOT NULL)'
@@ -253,58 +253,58 @@ Context 'BlogContext' is executing command 'insert [dbo].[Posts]([Title], [BlogI
 
 ## <a name="interception-building-blocks"></a>拦截构建基块  
 
-到目前为止，我们已经探讨如何使用 DbContext.Database.Log 记录生成的 EF 的 SQL。 但此代码通过用于更多常规侦听某些低级别构建基块是实际的相对较薄的外观。  
+到目前为止, 我们已经介绍了如何使用 DbContext 记录由 EF 生成的 SQL。 但在某些低级别构建基块上, 此代码实际上是相对较窄的外观, 用于更常见的侦听。  
 
-### <a name="interception-interfaces"></a>拦截接口  
+### <a name="interception-interfaces"></a>侦听接口  
 
-拦截代码设计思路的拦截接口。 这些接口从 IDbInterceptor 继承，并定义当 EF 执行某些操作时调用的方法。 目的是对象的每个所拦截的类型有一个接口。 例如，IDbCommandInterceptor 接口定义 EF 进行对 ExecuteNonQuery、 ExecuteScalar、 ExecuteReader 和相关的方法的调用之前调用的方法。 同样，该接口定义这些操作完成时调用的方法。 我们在上面的 DatabaseLogFormatter 类实现此接口以记录的命令。  
+拦截代码是围绕截取接口的概念构建的。 这些接口从 IDbInterceptor 继承, 并定义在 EF 执行某个操作时调用的方法。 目的是要截获每种类型的对象的一个接口。 例如, IDbCommandInterceptor 接口定义在 EF 调用 ExecuteNonQuery、ExecuteScalar、ExecuteReader 和相关方法之前调用的方法。 同样, 接口会定义在这些操作完成时调用的方法。 以上所示的 DatabaseLogFormatter 类实现此接口来记录命令。  
 
-### <a name="the-interception-context"></a>拦截上下文  
+### <a name="the-interception-context"></a>截获上下文  
 
-它查看任何拦截器接口上定义的方法是很明显，每次调用给定的对象类型 DbInterceptionContext 或某种类型派生自这如 DbCommandInterceptionContext\<\>。 此对象包含有关 EF 所用的操作的上下文信息。 例如，如果代表 DbContext 采取此操作后，然后在 DbContext 中包括 DbInterceptionContext。 同样，对于正在以异步方式执行的命令，则上 DbCommandInterceptionContext 设置 IsAsync 标志。  
+查看在任何侦听器接口上定义的方法很明显, 就是每个调用都给定一个类型为 DbInterceptionContext 的对象, 或是派生的某种类型的对象\<(如 DbCommandInterceptionContext\>)。 此对象包含有关 EF 正在采取的操作的上下文信息。 例如, 如果该操作是代表 DbContext 执行的, 则 DbContext 将包含在 DbInterceptionContext 中。 同样, 对于异步执行的命令, 将在 DbCommandInterceptionContext 上设置 IsAsync 标志。  
 
 ### <a name="result-handling"></a>结果处理  
 
-DbCommandInterceptionContext\< \>类包含名为结果、 OriginalResult、 异常和 OriginalException 属性。 这些属性设置为 null/零值对之前将执行此操作调用的拦截方法的调用 — 即，用于...正在执行的方法。 如果该操作执行，并且成功，则结果和 OriginalResult 将设置为运算的结果。 然后可以在执行该操作后调用的拦截方法中观察到这些值 — 也就是说，在...执行的方法。 同样，如果该操作将引发，然后异常和 OriginalException 属性将设置。  
+\< DbCommandInterceptionContext\>类包含一个名为 Result、OriginalResult、Exception 和 OriginalException 的属性。 对于对在执行操作之前调用的截取方法的调用, 这些属性将设置为 null/零 (即, 对于 。正在执行方法。 如果执行并成功执行该操作, 则结果和 OriginalResult 将设置为操作的结果。 然后, 可以在执行操作后调用的截取方法中观察这些值, 即 。已执行方法。 同样, 如果操作引发, 则会设置 Exception 和 OriginalException 属性。  
 
-#### <a name="suppressing-execution"></a>取消执行  
+#### <a name="suppressing-execution"></a>禁止执行  
 
-如果侦听器设置的 Result 属性之前执行了该命令 (在其中一个...然后 EF 执行方法） 不会尝试实际执行该命令，但将只需使用结果集。 换而言之，侦听器可以禁止显示命令的执行，但已有 EF 继续执行，如同已执行命令。  
+如果侦听器在执行命令之前设置 Result 属性 (在其中一个 。执行方法) 后, EF 不会尝试实际执行该命令, 而只是使用结果集。 换句话说, 侦听器可以取消命令的执行, 但会继续执行 EF, 就像执行命令一样。  
 
-这可能会如何使用的一个示例是使用包装提供程序完成传统上了批处理，该命令。 侦听器将存储为一批的更高版本执行的命令，但将"假设"到该命令必须作为正常执行的 EF。 请注意，它比这更多需要实现批处理，但这是可能会如何使用更改拦截结果的示例。  
+通常使用包装提供程序执行的命令批处理就是使用此方法的示例。 侦听器将以批处理的形式存储命令以供以后执行, 但会 "假设" 命令已正常执行。 请注意, 它需要超过此数目才能实现批处理, 但这是如何使用更改截取结果的示例。  
 
-此外可以通过将异常属性之一设置禁止显示执行...正在执行的方法。 这将导致 EF 来继续执行，如同通过引发给定的异常失败执行操作。 这可能，当然，会导致应用程序崩溃，但它也可能是暂时性异常或某种其他由 EF 处理的异常。 例如，这可以用于在测试环境中测试应用程序的行为，命令执行失败时。  
+还可以通过在其中一个 "..."正在执行方法。 这会导致 EF 通过引发给定异常来继续执行操作。 当然, 这可能会导致应用程序崩溃, 但也可能是由 EF 处理的暂时性异常或其他异常。 例如, 在命令执行失败时, 可以在测试环境中使用它来测试应用程序的行为。  
 
-#### <a name="changing-the-result-after-execution"></a>在执行之后更改结果  
+#### <a name="changing-the-result-after-execution"></a>在执行后更改结果  
 
-如果侦听器设置的 Result 属性执行该命令后 (在其中一个...执行方法） 则 EF 将使用已更改的结果，而不是从操作中实际返回的结果。 同样，如果执行该命令后，侦听器将设置异常属性，然后 EF 将引发集异常就像操作引发了异常的异常。  
+如果侦听器在执行命令后设置 Result 属性 (在其中一个 。执行方法) 后, EF 将使用更改后的结果, 而不是实际从操作返回的结果。 同样, 如果侦听器在执行命令后设置了 Exception 属性, 则 EF 将引发设置异常, 就好像操作引发了异常一样。  
 
-拦截器还可以将异常属性设置为 null 以指示应引发任何异常。 如果执行该操作失败，但拦截器希望 EF 来继续执行，如同该操作已经成功，这会很有用。 这通常还需要将结果设置，以便 EF 有一些结果值，因为它将继续使用。  
+侦听器还可以将 Exception 属性设置为 null, 以指示不应引发异常。 如果执行操作失败, 则此方法会很有用, 但侦听器希望 EF 继续操作, 就像操作已成功一样。 这通常还涉及到设置结果, 以便 EF 有一些结果值在继续时使用。  
 
 #### <a name="originalresult-and-originalexception"></a>OriginalResult 和 OriginalException  
 
-EF 执行某个操作后它会设置的结果和 OriginalResult 属性如果执行未失败或异常和 OriginalException 属性，如果执行失败，出现异常。  
+在 EF 执行了某一操作后, 如果执行未通过, 则将设置 Result 和 OriginalResult 属性, 如果执行失败但出现异常, 则将设置为 Exception 和 OriginalException 属性。  
 
-OriginalResult 和 OriginalException 属性是只读的并且实际执行某项操作后仅由 EF 设置。 这些属性不能通过侦听器设置。 这意味着任何侦听器可区分的异常或已由某些其他侦听器而不是实际异常设置的结果或执行操作时出现的结果。  
+OriginalResult 和 OriginalException 属性是只读的, 并且仅在实际执行操作后由 EF 设置。 侦听器不能设置这些属性。 这意味着, 任何侦听器都可以区分已由其他侦听器设置的异常或结果, 而不是执行操作时所发生的实际异常或结果。  
 
-### <a name="registering-interceptors"></a>注册侦听器  
+### <a name="registering-interceptors"></a>正在注册侦听器  
 
-创建实现一个或多个侦听接口的类后可使用 EF 使用 DbInterception 类注册它。 例如：  
+一旦创建了一个或多个截获接口的类, 就可以使用 DbInterception 类向 EF 注册它。 例如:  
 
 ``` csharp
 DbInterception.Add(new NLogCommandInterceptor());
 ```  
 
-此外可以在使用 DbConfiguration 基于代码的配置机制的应用程序域级别注册侦听器。  
+还可以使用基于 DbConfiguration 代码的配置机制在应用域级别注册拦截程序。  
 
-### <a name="example-logging-to-nlog"></a>示例： 将日志写入 NLog  
+### <a name="example-logging-to-nlog"></a>示例:日志记录到 NLog  
 
-让我们整理了所有这些示例到该使用 IDbCommandInterceptor 并[NLog](http://nlog-project.org/)到：  
+让我们将这一切结合起来, 使用 IDbCommandInterceptor 和[NLog](http://nlog-project.org/)来执行以下操作:  
 
-- 记录非异步执行任何命令一条警告  
-- 记录有关执行时，会引发任何命令的错误  
+- 为非异步执行的任何命令记录警告  
+- 为执行时引发的任何命令记录错误  
 
-下面是执行的日志记录，应注册，如上所示的类：  
+下面是执行日志记录的类, 应如下所示进行注册:  
 
 ``` csharp
 public class NLogCommandInterceptor : IDbCommandInterceptor
@@ -368,4 +368,4 @@ public class NLogCommandInterceptor : IDbCommandInterceptor
 }
 ```  
 
-请注意此代码以发现命令非异步执行并发现时出错执行命令时如何使用拦截上下文。  
+请注意, 此代码如何使用侦听上下文来发现何时以非异步方式执行命令, 并在执行命令时发现错误。  

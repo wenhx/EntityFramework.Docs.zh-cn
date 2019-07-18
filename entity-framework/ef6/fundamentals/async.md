@@ -1,48 +1,48 @@
 ---
-title: 异步查询和保存的 EF6
+title: Async query 和 EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: d56e6f1d-4bd1-4b50-9558-9a30e04a8ec3
-ms.openlocfilehash: 8c72012be4b77ff31faf909bf02035865521a640
-ms.sourcegitcommit: 7c5c5e09a4d2671d7461e027837966c4ff91e398
+ms.openlocfilehash: bf2039110962e8dd114242dcd0b9454963750774
+ms.sourcegitcommit: c9c3e00c2d445b784423469838adc071a946e7c9
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/15/2019
-ms.locfileid: "67148490"
+ms.lasthandoff: 07/18/2019
+ms.locfileid: "68306584"
 ---
-# <a name="async-query-and-save"></a>异步查询和保存
+# <a name="async-query-and-save"></a>异步查询并保存
 > [!NOTE]
 > **仅限 EF6 及更高版本** - 此页面中讨论的功能、API 等已引入实体框架 6。 如果使用的是早期版本，则部分或全部信息不适用。
 
-EF6 引入了异步查询和保存使用的支持[async 和 await 关键字](https://msdn.microsoft.com/library/vstudio/hh191443.aspx).NET 4.5 中引入的。 虽然并非所有应用程序可能会受益于异步功能，它可以用于处理长时间运行、 网络或 O 绑定任务时提高客户端响应能力和服务器可伸缩性。
+EF6 引入了对异步查询的支持, 并使用 .NET 4.5 中引入的[async 和 await 关键字](https://msdn.microsoft.com/library/vstudio/hh191443.aspx)进行保存。 虽然并非所有应用程序都可以受益于异步, 但它可用于在处理长时间运行的、网络或 i/o 限制的任务时提高客户端的响应能力和服务器的可伸缩性。
 
-## <a name="when-to-really-use-async"></a>何时真正使用异步
+## <a name="when-to-really-use-async"></a>何时真正使用 async
 
-本演练的目的是介绍了异步概念的方式，轻松地观察异步和同步计划执行之间的差异。 本演练不是为了说明的重要方案的任何异步编程优势。
+本演练的目的是以一种可以轻松地观察异步和同步程序执行之间的差异的方式引入异步概念。 本演练并不旨在说明异步编程提供了好处的关键方案。
 
-异步编程是主要侧重于释放当前托管线程 （线程正在运行的.NET 代码） 来执行其他工作，等待不需要任何计算时间的操作时从托管线程。 例如，尽管数据库引擎处理查询时没有要通过.NET 代码。
+异步编程主要侧重于释放当前托管线程 (运行 .NET 代码的线程) 来执行其他工作, 同时等待不需要托管线程的任何计算时间的操作。 例如, 当数据库引擎正在处理查询时, .NET 代码不会执行任何操作。
 
-在客户端应用程序 （WinForms、 WPF 等） 中可以使用当前线程来执行异步操作时保持 UI 响应能力。 在服务器应用程序 （ASP.NET 等） 可以使用线程以处理其他传入的请求-这可以减少内存使用量和/或增加服务器的吞吐量。
+在客户端应用程序 (WinForms、WPF 等) 中, 当前线程可用于在执行异步操作时保持 UI 的响应能力。 在服务器应用程序 (ASP.NET 等) 中, 线程可用于处理其他传入请求-这可以减少内存使用量和/或提高服务器的吞吐量。
 
-在大多数应用程序使用 async 会有任何明显的好处，甚至可能是造成不利影响。 使用测试、 分析和常识来提交前测量在特定方案的 async 的影响。
+在大多数使用 async 的应用程序中, 没有明显的好处, 甚至可能会造成不利影响。 在提交到特定方案之前, 请使用测试、分析和常见意义来度量异步的影响。
 
-下面是一些更多资源，以了解异步：
+下面是一些用于了解 async 的更多资源:
 
--   [Brandon Bray 的 async/await.NET 4.5 中的概述](https://blogs.msdn.com/b/dotnet/archive/2012/04/03/async-in-4-5-worth-the-await.aspx)
--   [异步编程](https://msdn.microsoft.com/library/hh191443.aspx)MSDN Library 中的页
--   [如何生成 ASP.NET Web 应用程序使用 Async](http://channel9.msdn.com/events/teched/northamerica/2013/dev-b337) （包括提高的服务器的吞吐量的演示）
+-   [.NET 4.5 中的 Brandon Bray 概述](https://blogs.msdn.com/b/dotnet/archive/2012/04/03/async-in-4-5-worth-the-await.aspx)
+-   MSDN Library 中的[异步编程](https://msdn.microsoft.com/library/hh191443.aspx)页
+-   [如何使用 Async 构建 ASP.NET Web 应用程序](http://channel9.msdn.com/events/teched/northamerica/2013/dev-b337)(包括提高服务器吞吐量的演示)
 
 ## <a name="create-the-model"></a>创建模型
 
-我们将使用[Code First 工作流](~/ef6/modeling/code-first/workflows/new-database.md)来创建我们的模型，但异步功能将使用包括那些使用 EF 设计器创建的所有 EF 模型生成数据库。
+我们将使用[Code First 工作流](~/ef6/modeling/code-first/workflows/new-database.md)来创建模型并生成数据库, 但异步功能适用于所有 ef 模型, 包括使用 EF 设计器创建的那些模型。
 
--   创建一个控制台应用程序并对其**AsyncDemo**
+-   创建控制台应用程序并将其调用**AsyncDemo**
 -   添加 EntityFramework NuGet 包
-    -   在解决方案资源管理器，右键单击**AsyncDemo**项目
-    -   选择**管理 NuGet 包...**
-    -   在管理 NuGet 包对话框中，选择**联机**选项卡，选择**EntityFramework**包
-    -   单击**安装**
--   添加**Model.cs**类具有以下实现
+    -   在解决方案资源管理器中, 右键单击**AsyncDemo**项目
+    -   选择 "**管理 NuGet 包 ...** "
+    -   在 "管理 NuGet 包" 对话框中, 选择 "**联机**" 选项卡, 然后选择 " **EntityFramework** " 包
+    -   单击 "**安装**"
+-   添加具有以下实现的**Model.cs**类
 
 ``` csharp
     using System.Collections.Generic;
@@ -78,11 +78,11 @@ EF6 引入了异步查询和保存使用的支持[async 和 await 关键字](htt
 
  
 
-## <a name="create-a-synchronous-program"></a>创建一个同步程序，
+## <a name="create-a-synchronous-program"></a>创建同步程序
 
-现在，我们已有 EF 模型，让我们编写一些代码来使用它来执行某些数据访问。
+现在我们有了 EF 模型, 接下来我们编写一些代码, 用它来执行某些数据访问。
 
--   内容替换为**Program.cs**用下面的代码
+-   将**Program.cs**的内容替换为以下代码
 
 ``` csharp
     using System;
@@ -136,15 +136,15 @@ EF6 引入了异步查询和保存使用的支持[async 和 await 关键字](htt
     }
 ```
 
-此代码将调用**PerformDatabaseOperations**方法，从而节省了一个新**博客**到数据库，然后检索所有**博客**从数据库，并输出到**控制台**。 在此之后，程序写入到一天中的引号**控制台**。
+此代码调用**PerformDatabaseOperations**方法, 该方法将新的**博客**保存到数据库, 然后从数据库中检索所有**博客**并将其打印到**控制台**。 完成此操作后, 程序将一天的报价写入**控制台**。
 
-因为代码是同步的我们可以观察到以下的执行流，当我们运行程序：
+由于代码是同步的, 因此, 当我们运行程序时, 可以观察到以下执行流:
 
-1.  **SaveChanges**开始推送新**博客**到数据库
+1.  **SaveChanges**开始将新**博客**推送到数据库
 2.  **SaveChanges**完成
-3.  所有查询**博客**发送到数据库
-4.  查询返回，而结果将写入到**控制台**
-5.  一天中的引号写入到**控制台**
+3.  所有**博客**的查询都发送到数据库
+4.  查询返回并将结果写入**控制台**
+5.  将日报价写入**控制台**
 
 ![同步输出](~/ef6/media/syncoutput.png) 
 
@@ -152,16 +152,16 @@ EF6 引入了异步查询和保存使用的支持[async 和 await 关键字](htt
 
 ## <a name="making-it-asynchronous"></a>使其异步
 
-现在，我们将我们的程序启动并运行，我们可以开始使用新的 async 和 await 关键字。 我们已对 Program.cs 所做以下更改
+现在, 我们已启动并运行程序, 接下来可以开始使用新的 async 和 await 关键字。 我们已对 Program.cs 进行了以下更改
 
-1.  第 2 行：使用语句**System.Data.Entity**命名空间提供了我们访问到 EF 异步扩展方法。
-2.  第 4 行：使用语句**System.Threading.Tasks**命名空间，我们便使用**任务**类型。
-3.  12 和 18 行：我们正在捕获作为任务，用于监视的进度**PerformSomeDatabaseOperations** （第 12 行），然后阻止此程序执行任务为完成一次的所有工作程序完成 （第 18 行）。
-4.  第 25 行：我们已更新**PerformSomeDatabaseOperations**要标记为已**异步**并返回**任务**。
-5.  第 35 行：我们现在正在调用 SaveChanges 的异步版本，并等待其完成。
-6.  行 42:现在，我们正在呼叫 ToList 和正在等待结果的异步版本。
+1.  第2行:**System.web**命名空间的 using 语句使我们能够访问 EF async extension 方法。
+2.  第4行:用于 " **system.object**命名空间" 命名空间的 using 语句允许我们使用**任务**类型。
+3.  第12行 & 18:我们正在捕获作为任务, 用于监视**PerformSomeDatabaseOperations** (第12行) 的进度, 并在程序的所有工作完成后阻止程序执行完成 (第18行)。
+4.  第25行:我们更新了**PerformSomeDatabaseOperations** , 将其标记为**async**并返回一个**任务**。
+5.  第35行:我们现在正在调用方法的异步版本, 并等待其完成。
+6.  第42行:我们现在正在调用 System.linq.enumerable.tolist 的异步版本, 并等待结果。
 
-有关 system.data.entity 的引用命名空间中可用的扩展方法的完整列表，请参阅 QueryableExtensions 类。 *您还需要添加"using System.Data.Entity"到语句。*
+有关 System.web 命名空间中可用扩展方法的完整列表, 请参阅 QueryableExtensions 类。 *还需要向 using 语句添加 "使用 System.web"。*
 
 ``` csharp
     using System;
@@ -219,19 +219,19 @@ EF6 引入了异步查询和保存使用的支持[async 和 await 关键字](htt
     }
 ```
 
-现在，代码为异步，我们可以观察到不同的执行流，当我们运行程序：
+由于代码是异步的, 因此, 我们可以在运行程序时观察到不同的执行流程:
 
-1.  **SaveChanges**开始推送新**博客**到数据库*后将命令发送到该数据库没有更多计算当前托管线程上所需时间。**PerformDatabaseOperations**方法将返回 （即使它尚未完成执行），在 Main 方法中的程序流将继续。*
-2.  **一天中的引号写入到控制台**
-    *由于没有更多工作要做 Main 方法中，托管的线程被阻止在等待上调用，直到数据库操作完成。完成后，其余我们**PerformDatabaseOperations**将执行。*
+1.  将命令发送到数据库后, **SaveChanges**开始将*新的**博客**推送到数据库。当前托管线程上不再需要计算时间。**PerformDatabaseOperations**方法返回 (即使尚未执行完毕) 和 Main 方法中的程序流将继续。*
+2.  **将日期的 Quote 写入控制台**
+     *, 因为在 Main 方法中没有更多的工作要做, 因此, 在数据库操作完成前, 会阻止在等待调用上托管线程。完成后, 我们将执行**PerformDatabaseOperations**的剩余部分。*
 3.  **SaveChanges**完成
-4.  所有查询**博客**发送到数据库*同样，托管的线程是免费的数据库中处理查询时执行其他工作。由于所有其他执行完成后，该线程将只需暂停等待调用不过。*
-5.  查询返回，而结果将写入到**控制台**
+4.  将对所有**博客**的查询再次发送到*数据库, 在数据库中处理查询时, 托管线程可以随意执行其他工作。由于所有其他执行都已完成, 线程只会在等待调用时停止。*
+5.  查询返回并将结果写入**控制台**
 
 ![异步输出](~/ef6/media/asyncoutput.png) 
 
  
 
-## <a name="the-takeaway"></a>要点
+## <a name="the-takeaway"></a>要点在于
 
-我们现在已了解以使是多么的 EF 的异步方法使用。 尽管异步的优点可能不能使用简单的控制台应用程序非常明显，但可以在其中长时间运行或网络密集型活动可能会否则为阻止应用程序，或者导致大量的线程的情况下应用这些相同的策略增加内存占用量。
+现在, 我们看到了使用 EF 的异步方法是多么简单。 尽管 async 的优点在简单的控制台应用程序中可能并不是很明显, 但在运行长时间运行或网络绑定的活动可能会阻止应用程序或导致大量线程增加内存占用量。
