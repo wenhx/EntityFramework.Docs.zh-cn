@@ -4,12 +4,12 @@ author: divega
 ms.date: 08/06/2017
 ms.assetid: 608cc774-c570-4809-8a3e-cd2c8446b8b2
 uid: core/get-started/install/index
-ms.openlocfilehash: 5ebc4edba07063ad5e77154adcde5f2664c0d748
-ms.sourcegitcommit: 85d17524d8e022f933cde7fc848313f57dfd3eb8
+ms.openlocfilehash: db1b83a9222e00a5e226a134085b18247b31f29a
+ms.sourcegitcommit: c9c3e00c2d445b784423469838adc071a946e7c9
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 02/06/2019
-ms.locfileid: "55760517"
+ms.lasthandoff: 07/18/2019
+ms.locfileid: "68306484"
 ---
 # <a name="installing-entity-framework-core"></a>安装 Entity Framework Core
 
@@ -47,9 +47,9 @@ ms.locfileid: "55760517"
 
 ### <a name="visual-studio-nuget-package-manager-dialog"></a>Visual Studio NuGet 包管理器对话框
 
-* 从 Visual Studio 菜单中选择“项目”>“管理 NuGet 包”
+* 从 Visual Studio 菜单中选择“项目”>“管理 NuGet 包” 
 
-* 单击“浏览”或“更新”选项卡
+* 单击“浏览”或“更新”选项卡  
 
 * 若要安装或更新 SQL Server 提供程序，请选择 `Microsoft.EntityFrameworkCore.SqlServer` 包并确认。
 
@@ -57,7 +57,7 @@ ms.locfileid: "55760517"
 
 ### <a name="visual-studio-nuget-package-manager-console"></a>Visual Studio NuGet 包管理器控制台
 
-* 从 Visual Studio 菜单中选择“工具”>“NuGet 包管理器”>“包管理器控制台”
+* 从 Visual Studio 菜单中选择“工具”>“NuGet 包管理器”>“包管理器控制台” 
 
 * 若要安装 SQL Server 提供程序，请在包管理器控制台中运行以下命令：
 
@@ -94,7 +94,7 @@ ms.locfileid: "55760517"
 
 `dotnet ef` 命令包含在当前版本的 .NET Core SDK 中，但若要对特定命令启用该命令，必须安装 `Microsoft.EntityFrameworkCore.Design` 包：
 
- ``` Console    
+``` Console 
 dotnet add package Microsoft.EntityFrameworkCore.Design 
 ``` 
 
