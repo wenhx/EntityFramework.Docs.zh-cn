@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: dcbea1a2aab5baea35f81500bb7bb5482695d778
-ms.sourcegitcommit: 812010a35afe902d8c4bb03a67d575f8e91b5ec0
+ms.openlocfilehash: 7cc0bd3946be2e63d9fb46a023bf6abe750ae0e3
+ms.sourcegitcommit: e90d6cfa3e96f10b8b5275430759a66a0c714ed1
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/02/2019
-ms.locfileid: "67506258"
+ms.lasthandoff: 07/17/2019
+ms.locfileid: "68286485"
 ---
 # <a name="breaking-changes-included-in-ef-core-30-currently-in-preview"></a>EF Core 3.0 中包含的中断性变更（目前处于预览状态）
 
@@ -96,11 +96,10 @@ ms.locfileid: "67506258"
 
 **缓解措施**
 
-为了能够管理迁移或构架 `DbContext`，请使用 `dotnet tool install` 命令安装 `dotnet-ef`。
-例如，若要将它安装为全局工具，可以键入以下命令：
+为了能够管理迁移或构架 `DbContext`，请安装 `dotnet-ef` 作为全局工具：
 
   ``` console
-  $ dotnet tool install --global dotnet-ef --version <exact-version>
+    $ dotnet tool install --global dotnet-ef --version 3.0.0-*
   ```
 
 使用[工具清单文件](https://github.com/dotnet/cli/issues/10288)恢复声明为工具依赖项的项目依赖项时，还可以将其作为本地工具获取。
@@ -1313,6 +1312,28 @@ Microsoft.Data.Sqlite 也仍然能够读取整数列和文本列的字符值，�
 UPDATE __EFMigrationsHistory
 SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 150))
 ```
+
+## <a name="userownumberforpaging-has-been-removed"></a>UseRowNumberForPaging 已删除
+
+[跟踪问题 #16400](https://github.com/aspnet/EntityFrameworkCore/issues/16400)
+
+此更改是在 EF Core 3.0-preview 6 中引入的。
+
+**旧行为**
+
+在 EF Core 3.0 之前，`UseRowNumberForPaging` 可用于生成与 SQL Server 2008 兼容的分页 SQL。
+
+**新行为**
+
+从 EF Core 3.0 开始，EF 将仅生成仅与更高的 SQL Server 版本兼容的分页 SQL。 
+
+**为什么**
+
+我们正在进行此更改，因为 [SQL Server 2008 不再是受支持的产品](https://blogs.msdn.microsoft.com/sqlreleaseservices/end-of-mainstream-support-for-sql-server-2008-and-sql-server-2008-r2/)，并且更新此功能以使用在 EF Core 3.0 中做出的查询更改是一项重要工作。
+
+**缓解措施**
+
+建议更新到更高的 SQL Server 版本，或者使用更高的兼容性级别，以便支持生成的 SQL。 这就是说，如果无法执行此操作，请[在跟踪问题中做出详细注释](https://github.com/aspnet/EntityFrameworkCore/issues/16400)。 我们可能会根据反馈重新考虑这个决定。
 
 ## <a name="extension-infometadata-has-been-removed-from-idbcontextoptionsextension"></a>已从 IDbContextOptionsExtension 中删除扩展信息/元数据
 

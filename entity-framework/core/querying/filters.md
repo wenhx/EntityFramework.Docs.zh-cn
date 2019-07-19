@@ -3,12 +3,12 @@ title: 全局查询筛选器 - EF Core
 author: anpete
 ms.date: 11/03/2017
 uid: core/querying/filters
-ms.openlocfilehash: 4afc9fb0338d34845639d57013ac710445321940
-ms.sourcegitcommit: 8f801993c9b8cd8a8fbfa7134818a8edca79e31a
+ms.openlocfilehash: e1cb9f5afc54aaa12e5880ace606277b00911c06
+ms.sourcegitcommit: c9c3e00c2d445b784423469838adc071a946e7c9
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/14/2019
-ms.locfileid: "59562437"
+ms.lasthandoff: 07/18/2019
+ms.locfileid: "68306475"
 ---
 # <a name="global-query-filters"></a>全局查询筛选器
 
@@ -17,8 +17,8 @@ ms.locfileid: "59562437"
 
 全局查询筛选器是应用于元数据模型（通常为 *OnModelCreating*）中的实体类型的 LINQ 查询谓词（通常传递给 LINQ *Where* 查询运算符的布尔表达式）。 此类筛选器自动应用于涉及这些实体类型（包括通过使用 Include 或直接导航属性引用等方式间接引用的实体类型）的所有 LINQ 查询。 此功能的一些常见应用如下：
 
-* **软删除** - 实体类型定义“IsDeleted”属性。
-* **多租户** - 实体类型定义“TenantId”属性。
+* **软删除** - 实体类型定义“IsDeleted”  属性。
+* **多租户** - 实体类型定义“TenantId”  属性。
 
 ## <a name="example"></a>示例
 
@@ -31,20 +31,20 @@ ms.locfileid: "59562437"
 
 [!code-csharp[Main](../../../samples/core/QueryFilters/Program.cs#Entities)]
 
-请注意 _Blog_ 实体上 __tenantId_ 字段的声明。 这会用于将每个 _Blog_ 实例与特定租户相关联。 同时在 _Post_ 实体类型上定义了 _IsDeleted_ 属性。 这会用于跟踪一个 _Post_ 实例是否已“软删除”。 也就是说，实例只是被标记为已删除，而非真正删除了基础数据。
+请注意 _Blog_ 实体上的 _tenantId_ 字段的声明。 这会用于将每个 _Blog_ 实例与特定租户相关联。 同时在 _Post_ 实体类型上定义了 _IsDeleted_ 属性。 这会用于跟踪一个 _Post_ 实例是否已“软删除”。 也就是说，实例只是被标记为已删除，而非真正删除了基础数据。
 
-接下来，使用 ```HasQueryFilter``` API 在 _OnModelCreating_ 中配置查询筛选器。
+接下来，使用 `HasQueryFilter` API 在 _OnModelCreating_ 中配置查询筛选器。
 
 [!code-csharp[Main](../../../samples/core/QueryFilters/Program.cs#Configuration)]
 
 传递给 _HasQueryFilter_ 调用的谓词表达式将立即自动应用于这些类型的任何 LINQ 查询。
 
 > [!TIP]
-> 请注意 DbContext 实例级别字段的使用：```_tenantId``` 用于设置当前租户。 模型级筛选器将使用正确上下文实例（即执行查询的实例）中的值。
+> 请注意 DbContext 实例级别字段的使用：`_tenantId` 用于设置当前租户。 模型级筛选器将使用正确上下文实例（即执行查询的实例）中的值。
 
 ## <a name="disabling-filters"></a>禁用筛选器
 
-可使用 ```IgnoreQueryFilters()``` 运算符对各个 LINQ 查询禁用筛选器。
+可使用 `IgnoreQueryFilters()` 运算符对各个 LINQ 查询禁用筛选器。
 
 [!code-csharp[Main](../../../samples/core/QueryFilters/Program.cs#IgnoreFilters)]
 

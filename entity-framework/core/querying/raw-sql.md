@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
 uid: core/querying/raw-sql
-ms.openlocfilehash: 3024c0101c9d886ef844d1b7dc85aaf1be27e86b
-ms.sourcegitcommit: 5280dcac4423acad8b440143433459b18886115b
+ms.openlocfilehash: 91592ea9f7c73f10446993282c1874c852000871
+ms.sourcegitcommit: c9c3e00c2d445b784423469838adc071a946e7c9
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/18/2019
-ms.locfileid: "58914073"
+ms.lasthandoff: 07/18/2019
+ms.locfileid: "68306549"
 ---
 # <a name="raw-sql-queries"></a>原生 SQL 查询
 
@@ -146,11 +146,11 @@ var blogs = context.Blogs
 * 传递到此方法的 `SELECT` 语句通常应该是可组合的：如果 EF Core 需要在服务器端计算更多查询运算符（例如，转换 `FromSql` 后跟的 LINQ 运算符），所提供的 SQL 会被视为子查询。 这意味着传递的 SQL 不应包含子查询上无效的任何字符或选项，如：
   * 结尾分号
   * 在 SQL Server 上，结尾处的查询级提示（例如，`OPTION (HASH JOIN)`）
-  * 在 SQL Server 上， `SELECT` 子句中不带 `TOP 100 PERCENT` 的 `ORDER BY` 子句
+  * 在 SQL Server 上，`SELECT` 子句中不带 `OFFSET 0` 或 `TOP 100 PERCENT` 的 `ORDER BY` 子句
 
 * 除 `SELECT` 以外的其他 SQL 语句自动识别为不可编写。 因此，存储过程的完整结果将始终返回到客户端，且在内存中计算 `FromSql` 后应用的任何 LINQ 运算符。
 
 > [!WARNING]  
-> **始终对原始 SQL 查询使用参数化：** 除了验证用户输入，还应始终为原始 SQL 查询或命令中使用的任何值启用参数化传值机制。 使用接受原始 SQL 字符串（如 `FromSql` 和 `ExecuteSqlCommand`）的 API，可以轻松地将值作为参数传递。 接受 FormattableString 的 `FromSql` 和 `ExecuteSqlCommand` 的重载还允许使用字符串插值语法，以帮助防止 SQL 注入攻击。 
+> **始终对原始 SQL 查询使用参数化：** 除了验证用户输入，还应始终为原始 SQL 查询或命令中使用的任何值启用参数化传值机制。 使用接受原始 SQL 字符串（如 `FromSql` 和 `ExecuteSqlCommand`）的 API，可以轻松地将值作为参数传递。 接受 FormattableString 的 `FromSql` 和 `ExecuteSqlCommand` 的重载还允许使用字符串内插语法，以帮助防止 SQL 注入攻击。 
 > 
 > 如果你正在使用字符串连接或内插来动态构建查询字符串的任何部分，或者将用户输入传递给可以将这些输入作为动态 SQL 执行的语句或存储过程，那么你将负责验证任何输入，以防止 SQL 注入攻击。
