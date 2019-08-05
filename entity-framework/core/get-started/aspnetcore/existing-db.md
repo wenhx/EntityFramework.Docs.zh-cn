@@ -1,17 +1,18 @@
 ---
 title: ASP.NET Core 入门 - 现有数据库 - EF Core
 author: rowanmiller
+description: 通过现有数据库在 ASP.NET Core 上开始使用 EF Core
 ms.date: 08/02/2018
 ms.assetid: 2bc68bea-ff77-4860-bf0b-cf00db6712a0
 uid: core/get-started/aspnetcore/existing-db
-ms.openlocfilehash: c8acb95395968f710e6b896de6c3598cb7b23676
-ms.sourcegitcommit: e66745c9f91258b2cacf5ff263141be3cba4b09e
+ms.openlocfilehash: 6b0ed0a9222644bee31d23234aa27b2084137f4a
+ms.sourcegitcommit: 755a15a789631cc4ea581e2262a2dcc49c219eef
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/06/2019
-ms.locfileid: "54058781"
+ms.lasthandoff: 07/25/2019
+ms.locfileid: "68497515"
 ---
-# <a name="getting-started-with-ef-core-on-aspnet-core-with-an-existing-database"></a>通过现有数据库在 ASP.NET Core 上开始使用 EF Core
+# <a name="get-started-with-ef-core-on-aspnet-core-with-an-existing-database"></a>通过现有数据库在 ASP.NET Core 上开始使用 EF Core
 
 在本教程中，你将使用 Entity Framework Core 构建执行基本数据访问的 ASP.NET Core MVC 应用程序。 要对现有数据库进行反向工程，以创建 Entity Framework 模型。
 
@@ -22,37 +23,37 @@ ms.locfileid: "54058781"
 安装以下软件：
 
 * 具有以下工作负载的 [Visual Studio 2017 15.7](https://www.visualstudio.com/downloads/)：
-  * “ASP.NET 和 Web 开发”（位于“Web 和云”下）
-  * “.NET Core 跨平台开发”（位于“其他工具集”下）
+  * “ASP.NET 和 Web 开发”  （位于“Web 和云”  下）
+  * “.NET Core 跨平台开发”  （位于“其他工具集”  下）
 * [.NET Core 2.1 SDK](https://www.microsoft.com/net/download/core).
 
 ## <a name="create-blogging-database"></a>创建博客数据库
 
-本教程使用 LocalDb 实例上的博客数据库作为现有数据库。 如果已在其他教程中创建了博客数据库，请跳过这些步骤。
+本教程使用 LocalDb 实例上的博客  数据库作为现有数据库。 如果已在其他教程中创建了博客  数据库，请跳过这些步骤。
 
 * 打开 Visual Studio
-* “工具”->“连接到数据库...”
-* 选择“Microsoft SQL Server”，然后单击“继续”
-* 输入“(localdb)\mssqllocaldb”作为服务器名称
-* 输入“master”作为数据库名称，然后单击“确定”
-* Master 数据库现在显示在“服务器资源管理器”的“数据连接”中
-* 右键单击“服务器资源管理器”中的数据库，然后选择“新建查询”
+* “工具”->“连接到数据库...” 
+* 选择“Microsoft SQL Server”  ，然后单击“继续” 
+* 输入“(localdb)\mssqllocaldb”  作为服务器名称 
+* 输入“master”  作为数据库名称  ，然后单击“确定” 
+* Master 数据库现在显示在“服务器资源管理器”的“数据连接”  中 
+* 右键单击“服务器资源管理器”中的  数据库，然后选择“新建查询” 
 * 将下列脚本复制到查询编辑器中
-* 右键单击查询编辑器，然后选择“执行”
+* 右键单击查询编辑器，然后选择“执行” 
 
 [!code-sql[Main](../_shared/create-blogging-database-script.sql)]
 
 ## <a name="create-a-new-project"></a>创建新项目
 
 * 打开 Visual Studio 2017
-* “文件”>“新建”>“项目...”
-* 从左菜单中选择“已安装”>“Visual C#”>“Web”。
-* 选择“ASP.NET Core Web 应用程序”项目模板
-* 输入 EFGetStarted.AspNetCore.ExistingDb 作为名称（它必须完全匹配稍后在代码中使用的命名空间），再单击“确定” 
-* 等待“新建 ASP.NET Core Web 应用程序”对话框显示出来
-* 确保目标框架下拉列表设置为 .NET Core，版本下拉列表设置为 ASP.NET Core 2.1
-* 选择“Web 应用程序(模型视图控制器)”模板
-* 确保将“身份验证”设置为“无身份验证”
+* “文件”>“新建”>“项目...” 
+* 从左菜单中选择“已安装”>“Visual C#”>“Web”  。
+* 选择“ASP.NET Core Web 应用程序”项目模板 
+* 输入 EFGetStarted.AspNetCore.ExistingDb  作为名称（它必须完全匹配稍后在代码中使用的命名空间），再单击“确定”  
+* 等待“新建 ASP.NET Core Web 应用程序”对话框显示出来 
+* 确保目标框架下拉列表设置为 .NET Core，版本下拉列表设置为 ASP.NET Core 2.1  
+* 选择“Web 应用程序(模型视图控制器)”  模板
+* 确保将“身份验证”  设置为“无身份验证” 
 * 单击“确定” 
 
 ## <a name="install-entity-framework-core"></a>安装 Entity Framework Core
@@ -65,7 +66,7 @@ ms.locfileid: "54058781"
 
 现在是时候基于现有数据库创建 EF 模型了。
 
-* “工具”–>“NuGet 包管理器”–>“包管理器控制台”
+*  “工具”–>“NuGet 包管理器”–>“包管理器控制台”
 * 运行以下命令以从现有数据库创建模型：
 
 ``` powershell
@@ -140,7 +141,7 @@ public partial class BloggingContext : DbContext
 
 若要使 `BloggingContext` 对 MVC 控制器可用，请将其注册为服务。
 
-* 打开 Startup.cs
+* 打开 Startup.cs 
 * 在文件开头添加以下 `using` 语句
 
 [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.ExistingDb/Startup.cs#AddedUsings)]
@@ -156,20 +157,20 @@ public partial class BloggingContext : DbContext
 
 ## <a name="create-a-controller-and-views"></a>创建控制器和视图
 
-* 在“解决方案资源管理器”中，右键单击“控制器”文件夹，然后选择“添加”->“控制器...”
-* 选择“视图使用 Entity Framework 的 MVC 控制器”，然后单击“确定”
-* 将“模型类”设置为“Blog”，将“数据上下文类”设置为“BloggingContext”
-* 单击“添加”
+* 在“解决方案资源管理器”中，右键单击“控制器”文件夹，然后选择“添加”->“控制器...”   
+* 选择“视图使用 Entity Framework 的 MVC 控制器”，然后单击“确定”  
+* 将“模型类”  设置为“Blog”  ，将“数据上下文类”  设置为“BloggingContext” 
+* 单击“添加” 
 
 ## <a name="run-the-application"></a>运行此应用程序
 
 现在可以运行应用程序来查看其实际运行情况。
 
-* “调试”->“开始执行(不调试)”
+* “调试”->“开始执行(不调试)” 
 * 应用程序将生成并在 Web 浏览器中打开
 * 导航到 `/Blogs`
-* 单击“新建”
-* 输入新博客的 Url，然后单击“创建”
+* 单击“新建” 
+* 输入新博客的 Url  ，然后单击“创建” 
 
   ![创建页面](_static/create.png)
 
