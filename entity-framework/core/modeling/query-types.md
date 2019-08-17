@@ -75,7 +75,9 @@ ms.locfileid: "68330794"
 
 [!code-csharp[Main](../../../samples/core/QueryTypes/Program.cs#Configuration)]
 
-接下来, 将配置`DbContext`为`DbQuery<T>`包括:[!code-csharp[Main](../../../samples/core/QueryTypes/Program.cs#DbQuery)]
+接下来, 将配置`DbContext`为`DbQuery<T>`包括:
+
+[!code-csharp[Main](../../../samples/core/QueryTypes/Program.cs#DbQuery)]
 
 最后，我们可以采用标准方式来查询数据库视图：
 
