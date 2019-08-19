@@ -45,7 +45,7 @@ DbContext 实例将自动跟踪从数据库返回的实体。 调用 SaveChanges
 [!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#IsItNewGeneral)]
 
 > [!TIP]  
-> 即使实体处于“Added”状态，只要实体由上下文跟踪，就会设置键。 这有助于遍历实体图并决定如何处理每个实体（例如在使用 TrackGraph API 时）。 键值只能以此处显示的方式使用，然后才能执行任何调用以跟踪实体。
+> 即使实体处于“Added”状态，只要实体由上下文跟踪，就会设置键。 这有助于遍历实体图并决定如何处理每个实体（例如在使用 TrackGraph API 时）。 键值只能以此处显示的方式使用，然后才能执行任何调用以跟踪实体。 
 
 ### <a name="with-other-keys"></a>使用其他键
 
