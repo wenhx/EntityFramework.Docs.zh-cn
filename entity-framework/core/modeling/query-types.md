@@ -4,18 +4,18 @@ author: anpete
 ms.date: 02/26/2018
 ms.assetid: 9F4450C5-1A3F-4BB6-AC19-9FAC64292AAD
 uid: core/modeling/query-types
-ms.openlocfilehash: 6f0f860c6a4e619e13d55e6207234a8b5261ee09
-ms.sourcegitcommit: d1230e34673b8323a227ab37958dfa77f3684728
+ms.openlocfilehash: c023d442b0fa2728bd20694a55ebb3a7b5c0efd1
+ms.sourcegitcommit: 87e72899d17602f7526d6ccd22f3c8ee844145df
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/19/2019
-ms.locfileid: "68330794"
+ms.lasthandoff: 08/20/2019
+ms.locfileid: "69628410"
 ---
 # <a name="query-types"></a>查询类型
 > [!NOTE]
 > 此功能是 EF Core 2.1 中的新增功能
 
-除了实体类型，EF Core 模型也可以包含查询类型  ，这些查询类型可以用于执行针对未映射到实体类型的数据的数据库查询。
+除了实体类型，EF Core 模型也可以包含查询类型，这些查询类型可以用于执行针对未映射到实体类型的数据的数据库查询。
 
 ## <a name="compare-query-types-to-entity-types"></a>比较查询类型与实体类型
 
@@ -36,7 +36,7 @@ ms.locfileid: "68330794"
 - 在 _ModelBuilder_ 上通过 `Query` 方法而非 `Entity` 方法进行解决。
 - 通过类型 `DbQuery<T>` 而非 `DbSet<T>` 的属性在 _DbContext_ 上进行映射。
 - 通过 `ToView` 而非 `ToTable` 方法映射到数据库对象。
-- 可以映射到定义查询  - 定义查询是在模型（充当查询类型的数据源）中声明的辅助查询。
+- 可以映射到定义查询 - 定义查询是在模型（充当查询类型的数据源）中声明的辅助查询。
 
 ## <a name="usage-scenarios"></a>使用方案
 
@@ -49,7 +49,7 @@ ms.locfileid: "68330794"
 
 ## <a name="mapping-to-database-objects"></a>映射到数据库对象
 
-可以使用 `ToView` Fluent API 将一个查询类型映射到数据库对象。 从 EF Core 角度来看，此方法中指定的数据库对象是视图  ，这意味着它将被系统视为只读查询源，不能作为更新、插入或删除操作的目标。 但是，这并不意味着该数据库对象实际上必须是一个数据库视图 - 它也可以是一个被视为只读对象的数据库表。 与之相反，对于实体类型，EF Core 假定在 `ToTable` 方法中指定的数据库对象可以被视为表  ，这意味着可以将它用作查询源，同时也可以对其进行更新、删除和插入操作。 事实上，你可以在 `ToTable` 中指定数据库视图的名称，所有内容应该都能够正常运行，只要在数据库上将视图配置为可更新即可。
+可以使用 `ToView` Fluent API 将一个查询类型映射到数据库对象。 从 EF Core 角度来看，此方法中指定的数据库对象是视图，这意味着它将被系统视为只读查询源，不能作为更新、插入或删除操作的目标。 但是，这并不意味着该数据库对象实际上必须是一个数据库视图 - 它也可以是一个被视为只读对象的数据库表。 与之相反，对于实体类型，EF Core 假定在 `ToTable` 方法中指定的数据库对象可以被视为表，这意味着可以将它用作查询源，同时也可以对其进行更新、删除和插入操作。 事实上，你可以在 `ToTable` 中指定数据库视图的名称，所有内容应该都能够正常运行，只要在数据库上将视图配置为可更新即可。
 
 ## <a name="example"></a>示例
 
