@@ -3,12 +3,12 @@ title: 通过 WinForms 进行数据绑定-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 80fc5062-2f1c-4dbd-ab6e-b99496784b36
-ms.openlocfilehash: ad55ef4d496bbfe30eafcab9811c92989066519f
-ms.sourcegitcommit: c9c3e00c2d445b784423469838adc071a946e7c9
+ms.openlocfilehash: 3c7c58f5ded29c136bbdca1d81c64b07c53ce583
+ms.sourcegitcommit: 7391cc31193c1216ec9ed485709042ad0c2106cf
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/18/2019
-ms.locfileid: "68306567"
+ms.lasthandoff: 08/23/2019
+ms.locfileid: "69985477"
 ---
 # <a name="databinding-with-winforms"></a>通过 WinForms 进行数据绑定
 此分步演练演示如何将 POCO 类型绑定到 "主/详细信息" 窗体中的窗口窗体 (WinForms) 控件。 应用程序使用实体框架使用数据库中的数据填充对象、跟踪更改并将数据保存到数据库。
@@ -29,7 +29,7 @@ ms.locfileid: "68306567"
 -   **文件-&gt;新建-&gt;项目 ...。**
 -   在左侧窗格中选择 " **windows** ", 在右窗格中选择 " **windows FormsApplication** "
 -   输入**WinFormswithEFSample**作为名称
--   选择“确定” 
+-   选择“确定”
 
 ## <a name="install-the-entity-framework-nuget-package"></a>安装实体框架 NuGet 包
 
@@ -280,8 +280,8 @@ EF 使用 T4 模板从模型生成代码。 Visual Studio 附带的模板或从 
 
     ![“数据源”](~/ef6/media/datasource.png)
 
--   单击 "**完成"。** 如果 "*数据源" 窗口未显示, 请选择 "查看"-&gt;其他窗口-&gt;数据源* 
-    *
+-   单击 "**完成"。**
+    如果 "数据源" 窗口未显示, 请选择 "**查看&gt; "-其他&gt;窗口-数据源**
 -   按固定图标, 使 "数据源" 窗口不会自动隐藏。 如果窗口已显示, 可能需要按 "刷新" 按钮。
 
     ![数据源2](~/ef6/media/datasource2.png)
@@ -297,7 +297,7 @@ EF 使用 T4 模板从模型生成代码。 Visual Studio 附带的模板或从 
     -   右键单击 DataGridView 控件, 然后选择 "**编辑列 ...** "。
     -   选择 " **ProductId** " 列并将 " **ReadOnly** " 设置为**True**。
     -   选择 "**类别 id** " 列并按 "**删除**" 按钮。 对**Category**列执行相同的操作。
-    -   按“确定”  。
+    -   按“确定”。
 
     到目前为止, 我们在设计器中将 DataGridView 控件与 BindingSource 组件相关联。 在下一部分中, 我们将向隐藏代码中添加代码, 以便将 categoryBindingSource 设置为 DbContext 当前跟踪的实体集合。 当我们从类别中拖放产品时, WinForms 会将 productsBindingSource 属性设置为 "categoryBindingSource" 和 "productsBindingSource" 属性设置为 "产品"。 由于此绑定, 只会在 productDataGridView 中显示属于当前选定类别的产品。
 -   通过单击鼠标右键并选择 "**启用**", 启用导航工具栏上的 "**保存**" 按钮。

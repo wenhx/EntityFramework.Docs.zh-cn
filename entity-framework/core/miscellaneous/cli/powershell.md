@@ -217,7 +217,7 @@ Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Conn
 | *-From* \<String>        | 开始迁移。 可能会被标识迁移，按名称或 id。 数字 0 是一种特殊情况，意味着*第一次迁移之前*。 默认值为 0。                                                              |
 | *-To* \<String>          | 结束的迁移。 默认的最后一个迁移。                                                                                                                                                                      |
 | <nobr>-Idempotent</nobr> | 生成脚本，可以在任何迁移的数据库上使用。                                                                                                                                                         |
-| -输出\<字符串 >        | 要将结果写入的文件。 如果省略此参数，创建应用程序的运行时文件时，例如使用相同的文件夹中生成的名称创建该文件： */obj/Debug/netcoreapp2.1/ghbkztfz.sql/* 。 |
+| -Output \<String>        | 要将结果写入的文件。 如果省略此参数，创建应用程序的运行时文件时，例如使用相同的文件夹中生成的名称创建该文件： */obj/Debug/netcoreapp2.1/ghbkztfz.sql/* 。 |
 
 > [!TIP]
 > To、From 和 Output 参数支持tab补全。
