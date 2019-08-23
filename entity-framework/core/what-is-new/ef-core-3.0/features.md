@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: 2EBE2CCC-E52D-483F-834C-8877F5EB0C0C
 uid: core/what-is-new/ef-core-3.0/features
-ms.openlocfilehash: 7501a806271c9734e85e31845f260f2d512da077
-ms.sourcegitcommit: 5280dcac4423acad8b440143433459b18886115b
+ms.openlocfilehash: a71aa01e81d9830d7b9e6cb01c200851100a15df
+ms.sourcegitcommit: 87e72899d17602f7526d6ccd22f3c8ee844145df
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/18/2019
-ms.locfileid: "58867952"
+ms.lasthandoff: 08/20/2019
+ms.locfileid: "69628427"
 ---
 # <a name="new-features-included-in-ef-core-30-currently-in-preview"></a>EF Core 3.0 中包含的新功能（目前处于预览状态）
 
@@ -65,6 +65,7 @@ public class Order
     public OrderDetails Details { get; set; }
 }
 
+[Owned]
 public class OrderDetails
 {
     public int Id { get; set; }
@@ -73,6 +74,7 @@ public class OrderDetails
 ```
 
 自 EF Core 3.0 起，如果 `OrderDetails` 由 `Order` 拥有且显式映射到同一张表中，则它将可能添加 `Order` 而不添加 `OrderDetails`，并且除主键外的所有 `OrderDetails` 属性都将映射到不为 null 的列中。
+
 查询时，如果其任意所需属性均没有值，或者它在主键之外没有任何必需属性且所有属性均为 `null`，则 EF Core 会将 `OrderDetails` 设置为 `null`。
 
 ## <a name="c-80-support"></a>C#8.0 支持

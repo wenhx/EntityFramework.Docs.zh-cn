@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/20/2018
 ms.assetid: 2CB5809E-0EFB-44F6-AF14-9D5BFFFBFF9D
 uid: core/what-is-new/ef-core-2.0
-ms.openlocfilehash: b5ac31722f49589f1494a3d8d1c8a7011a4cf9ce
-ms.sourcegitcommit: a013e243a14f384999ceccaf9c779b8c1ae3b936
+ms.openlocfilehash: 2712845512d9eb349ef3a7e14f4365327db0fcd6
+ms.sourcegitcommit: 7b7f774a5966b20d2aed5435a672a1edbe73b6fb
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2019
-ms.locfileid: "57463264"
+ms.lasthandoff: 08/17/2019
+ms.locfileid: "69565336"
 ---
 # <a name="new-features-in-ef-core-20"></a>EF Core 2.0 中的新增功能
 
@@ -32,6 +32,7 @@ modelBuilder.Entity<Product>()
 modelBuilder.Entity<Product>().ToTable("Products");
 modelBuilder.Entity<ProductDetails>().ToTable("Products");
 ```
+阅读[有关表拆分的部分](xref:core/modeling/table-splitting)，详细了解此功能。
 
 ### <a name="owned-types"></a>固有类型
 
@@ -91,7 +92,7 @@ public class BloggingContext : DbContext
     }
 }
 ```
-我们为 ```Post``` 实体类型的实例定义一个实现多租户和软删除的模型级别筛选器。 请留意 DbContext 实例级别属性的使用：```TenantId```。 模型级筛选器将使用正确上下文实例（即执行查询的上下文实例）中的值。
+我们为 `Post` 实体类型的实例定义一个实现多租户和软删除的模型级别筛选器。 请留意 DbContext 实例级别属性的使用：`TenantId`。 模型级筛选器将使用正确上下文实例（即执行查询的上下文实例）中的值。
 
 可使用 IgnoreQueryFilters() 运算符对各个 LINQ 查询禁用筛选器。
 
@@ -136,7 +137,7 @@ var query =
 
 ### <a name="self-contained-type-configuration-for-code-first"></a>Code First 的自包含类型配置
 
-在 EF6 中可以通过从 EntityTypeConfiguration 派生来封装特定实体类型的 Code First 配置。 我们在 EF Core 2.0 中重新添加了此模式：
+在 EF6 中可以通过从 EntityTypeConfiguration 派生来封装特定实体类型的 Code First 配置  。 我们在 EF Core 2.0 中重新添加了此模式：
 
 ``` csharp
 class CustomerConfiguration : IEntityTypeConfiguration<Customer>
@@ -159,7 +160,7 @@ builder.ApplyConfiguration(new CustomerConfiguration());
 
 在 ASP.NET Core 应用程序中使用 EF Core 的基本模式通常是先将自定义 DbContext 类型注册到依赖关系注入系统，然后通过控制器中的构造函数参数获取该类型的实例。 这会为各个请求创建一个 DbContext 新实例。
 
-在版本 2.0 中，我们引入了一种在依赖关系注入中注册自定义 DbContext 类型的新方法，即以透明形式引入可重用 DbContext 实例的池。 要使用 DbContext 池，请在服务注册期间使用 ```AddDbContextPool``` 而不是 ```AddDbContext```：
+在版本 2.0 中，我们引入了一种在依赖关系注入中注册自定义 DbContext 类型的新方法，即以透明形式引入可重用 DbContext 实例的池。 要使用 DbContext 池，请在服务注册期间使用 `AddDbContextPool` 而不是 `AddDbContext`：
 
 ``` csharp
 services.AddDbContextPool<BloggingContext>(
@@ -172,7 +173,7 @@ services.AddDbContextPool<BloggingContext>(
 
 ### <a name="limitations"></a>限制
 
-此新方法对使用 DbContext 的 ```OnConfiguring()``` 方法可执行的操作带来了一些限制。
+此新方法对使用 DbContext 的 `OnConfiguring()` 方法可执行的操作带来了一些限制。
 
 > [!WARNING]  
 > 如果要在不能在请求间共享的派生的 DbContext 类中保留自己的状态（例如私有字段），请避免使用 DbContext 池。 EF Core 仅会重置将 DbContext 实例添加到池之前所识别的状态。
@@ -218,7 +219,7 @@ EF Core 支持通过多种机制自动生成键值。 使用此功能时，如�
 
 ### <a name="string-interpolation-in-fromsql-and-executesqlcommand"></a>FromSql 和 ExecuteSqlCommand 中的字符串内插
 
-C# 6 引入了字符串内插功能，此功能允许将 C# 表达式直接嵌入字符串文本，从而提供了一种很适合在运行时生成字符串的方法。 在 EF Core 2.0 中，我们为两个主要 API 添加了对内插字符串的特殊支持，这两个 API 用于接收原始 SQL 字符串：```FromSql``` 和 ```ExecuteSqlCommand```。 这项新支持允许以“安全”方式使用 C# 字符串内插。 即，采用此方式可防止在运行时动态构造 SQL 时可能发生的常见 SQL 注入错误。
+C# 6 引入了字符串内插功能，此功能允许将 C# 表达式直接嵌入字符串文本，从而提供了一种很适合在运行时生成字符串的方法。 在 EF Core 2.0 中，我们为两个主要 API 添加了对内插字符串的特殊支持，这两个 API 用于接收原始 SQL 字符串：`FromSql` 和 `ExecuteSqlCommand`。 这项新支持允许以“安全”方式使用 C# 字符串内插。 即，采用此方式可防止在运行时动态构造 SQL 时可能发生的常见 SQL 注入错误。
 
 下面是一个示例：
 
@@ -267,7 +268,7 @@ var aCustomers =
 
 ### <a name="pluralization-hook-for-dbcontext-scaffolding"></a>DbContext 基架的复数化挂钩
 
-EF Core 2.0 引入了一种新的 IPluralizer 服务，用于单数化实体类型名称和复数化 DbSet 名称。 默认实现为 no-op，因此这仅仅是开发人员可轻松插入自己的复数化程序的挂钩。
+EF Core 2.0 引入了一种新的 IPluralizer 服务，用于单数化实体类型名称和复数化 DbSet 名称  。 默认实现为 no-op，因此这仅仅是开发人员可轻松插入自己的复数化程序的挂钩。
 
 下面是开发人员挂入自己的复数化程序的示例：
 
@@ -302,7 +303,7 @@ public class MyPluralizer : IPluralizer
 ### <a name="only-one-provider-per-model"></a>每个模型仅有一个提供程序
 显著增强了提供程序与模型的交互方式，并简化了约定、注释和 Fluent API 用于不同提供程序的方法。
 
-EF Core 2.0 现将对所用的每个不同提供程序生成不同的 [IModel](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/IModel.cs)。 这对应用程序而言通常是透明的。 这有助于简化较低级别的元数据 API，从而始终通过调用 `.Relational`（而不是 `.SqlServer`、`.Sqlite` 等）来访问常见关系元数据概念。
+EF Core 2.0 现将对所用的每个不同提供程序生成不同的 [IModel](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/IModel.cs)。 这对应用程序而言通常是透明的。 这有助于简化较低级别的元数据 API，从而始终通过调用 `.Relational`（而不是 `.SqlServer`、`.Sqlite` 等）来访问常见关系元数据概念  。
 
 ### <a name="consolidated-logging-and-diagnostics"></a>增强的日志记录和诊断
 
