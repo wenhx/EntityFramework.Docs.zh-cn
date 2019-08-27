@@ -66,20 +66,20 @@ Install-Package EntityFramework
 
 命名空间的更改的一般规则是 System.Data.* 中的任何类型被移动到 System.Data.Entity.Core.*。 换而言之，只需插入**Entity.Core。** 之后 System.Data。 例如：
 
-- System.Data.EntityException = > System.Data。**Entity.Core**。EntityException  
-- System.Data.Objects.ObjectContext = > System.Data。**Entity.Core**。Objects.ObjectContext  
-- System.Data.Objects.DataClasses.RelationshipManager = > System.Data。**Entity.Core**。Objects.DataClasses.RelationshipManager  
+- System.Data.EntityException = > System.Data.**Entity.Core**.EntityException  
+- System.Data.Objects.ObjectContext = > System.Data.**Entity.Core**.Objects.ObjectContext  
+- System.Data.Objects.DataClasses.RelationshipManager = > System.Data.**Entity.Core**.Objects.DataClasses.RelationshipManager  
 
 这些类型是在*Core*命名空间因为它们不能直接提供大多数基于 DbContext 的应用程序。 属于 System.Data.Entity.dll 某些类型仍然可用于通常和直接基于 DbContext 的应用程序，因此不已移动到*Core*命名空间。 这些是：
 
-- System.Data.EntityState = > System.Data。**实体**。EntityState  
-- System.Data.Objects.DataClasses.EdmFunctionAttribute = > System.Data。**Entity.DbFunctionAttribute**  
+- System.Data.EntityState = > System.Data.**实体**.EntityState  
+- System.Data.Objects.DataClasses.EdmFunctionAttribute = > System.Data.**Entity.DbFunctionAttribute**  
   > [!NOTE]
   > 此类已重命名;具有旧名称的类仍存在，且工作原理，但它现在标记为已过时。  
-- System.Data.Objects.EntityFunctions = > System.Data。**Entity.DbFunctions**  
+- System.Data.Objects.EntityFunctions = > System.Data.**Entity.DbFunctions**  
   > [!NOTE]
   > 此类已重命名;具有旧名称的类仍存在，并且工作原理，但它现已标记为已过时。）  
-- 空间类 （例如，DbGeography，DbGeometry） 已从 System.Data.Spatial = > System.Data。**实体**。空间
+- 空间类 （例如，DbGeography，DbGeometry） 已从 System.Data.Spatial = > System.Data.**实体**.空间
 
 > [!NOTE]
 > System.Data 命名空间中的某些类型是在 System.Data.dll 中这不是 EF 程序集。 未将这些类型，因此它们的命名空间保持不变。
