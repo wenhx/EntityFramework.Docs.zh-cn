@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/20/2018
 ms.assetid: 2CB5809E-0EFB-44F6-AF14-9D5BFFFBFF9D
 uid: core/what-is-new/ef-core-2.0
-ms.openlocfilehash: 2712845512d9eb349ef3a7e14f4365327db0fcd6
-ms.sourcegitcommit: 7b7f774a5966b20d2aed5435a672a1edbe73b6fb
+ms.openlocfilehash: 28b2180e898b91d233b590b1639674a464f8c679
+ms.sourcegitcommit: 0cc9578fd49802789a00c0044b4e57325476ca2e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/17/2019
-ms.locfileid: "69565336"
+ms.lasthandoff: 09/04/2019
+ms.locfileid: "70271431"
 ---
 # <a name="new-features-in-ef-core-20"></a>EF Core 2.0 中的新增功能
 
@@ -303,7 +303,7 @@ public class MyPluralizer : IPluralizer
 ### <a name="only-one-provider-per-model"></a>每个模型仅有一个提供程序
 显著增强了提供程序与模型的交互方式，并简化了约定、注释和 Fluent API 用于不同提供程序的方法。
 
-EF Core 2.0 现将对所用的每个不同提供程序生成不同的 [IModel](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/IModel.cs)。 这对应用程序而言通常是透明的。 这有助于简化较低级别的元数据 API，从而始终通过调用 `.Relational`（而不是 `.SqlServer`、`.Sqlite` 等）来访问常见关系元数据概念  。
+EF Core 2.0 现将对所用的每个不同提供程序生成不同的 [IModel](https://github.com/aspnet/EntityFramework/blob/master/src/EFCore/Metadata/IModel.cs)。 这对应用程序而言通常是透明的。 这有助于简化较低级别的元数据 API，从而始终通过调用 `.Relational`（而不是 `.SqlServer`、`.Sqlite` 等）来访问常见关系元数据概念  。
 
 ### <a name="consolidated-logging-and-diagnostics"></a>增强的日志记录和诊断
 
@@ -311,6 +311,6 @@ EF Core 2.0 现将对所用的每个不同提供程序生成不同的 [IModel](h
 
 发送给 ILogger 的消息的事件 ID 在 2.0 中已更改。 现在，事件 ID 在 EF Core 代码内具有唯一性。 这些消息现在还遵循 MVC 等所用的结构化日志记录的标准模式。
 
-记录器类别也已更改。 现提供通过 [DbLoggerCategory](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/DbLoggerCategory.cs) 访问的熟知类别集。
+记录器类别也已更改。 现提供通过 [DbLoggerCategory](https://github.com/aspnet/EntityFramework/blob/master/src/EFCore/DbLoggerCategory.cs) 访问的熟知类别集。
 
 DiagnosticSource 事件现使用与相应 `ILogger` 消息相同的事件 ID 名称。
