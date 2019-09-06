@@ -3,12 +3,12 @@ title: 全局查询筛选器 - EF Core
 author: anpete
 ms.date: 11/03/2017
 uid: core/querying/filters
-ms.openlocfilehash: e1cb9f5afc54aaa12e5880ace606277b00911c06
-ms.sourcegitcommit: c9c3e00c2d445b784423469838adc071a946e7c9
+ms.openlocfilehash: c9bbb8a5889834ea078ddb7e432863b3d0cf2ffe
+ms.sourcegitcommit: 0cc9578fd49802789a00c0044b4e57325476ca2e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/18/2019
-ms.locfileid: "68306475"
+ms.lasthandoff: 09/04/2019
+ms.locfileid: "70271460"
 ---
 # <a name="global-query-filters"></a>全局查询筛选器
 
@@ -41,6 +41,9 @@ ms.locfileid: "68306475"
 
 > [!TIP]
 > 请注意 DbContext 实例级别字段的使用：`_tenantId` 用于设置当前租户。 模型级筛选器将使用正确上下文实例（即执行查询的实例）中的值。
+
+> [!NOTE]
+> 目前不能在同一个实体中定义多个查询筛选器，只会应用最后一个筛选器。 但是，可以使用逻辑 _AND_ 运算符（[C# 中为 `&&`](https://docs.microsoft.com/dotnet/csharp/language-reference/operators/boolean-logical-operators#conditional-logical-and-operator-)）定义含有多种条件的单个筛选器。
 
 ## <a name="disabling-filters"></a>禁用筛选器
 
