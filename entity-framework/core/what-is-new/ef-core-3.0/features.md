@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: 2EBE2CCC-E52D-483F-834C-8877F5EB0C0C
 uid: core/what-is-new/ef-core-3.0/features
-ms.openlocfilehash: a71aa01e81d9830d7b9e6cb01c200851100a15df
-ms.sourcegitcommit: 87e72899d17602f7526d6ccd22f3c8ee844145df
+ms.openlocfilehash: d61fa884f4669daa220ffc96ae59dd63518e6d5a
+ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/20/2019
-ms.locfileid: "69628427"
+ms.lasthandoff: 09/12/2019
+ms.locfileid: "70921677"
 ---
 # <a name="new-features-included-in-ef-core-30-currently-in-preview"></a>EF Core 3.0 中包含的新功能（目前处于预览状态）
 
@@ -94,15 +94,6 @@ public class OrderDetails
 
 在 EF Core 2.1 中引入并在 EF Core 3.0 中视为没有键的实体类型的[查询类型](xref:core/modeling/query-types)代表可以从数据库读取但无法更新的数据。
 在大多数情况下，这一特性使它们非常适合数据库视图，因此我们计划在执行数据库视图的反向工程时自动创建没有键的实体类型。
-
-## <a name="property-bag-entities"></a>属性包实体
-
-[跟踪问题 #13610](https://github.com/aspnet/EntityFrameworkCore/issues/13610) 和 [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914)
-
-此功能的相关工作已经开始，但当前预览中不包含此功能。 
-
-此功能可以启用在索引的属性（而非常规属性）中存储数据的实体，并能够使用同一 .NET 类的实例（可能像 `Dictionary<string, object>` 一样简单）来表示同一 EF Core 模型中的不同的实体类型。
-此功能是支持多对多关系而无需联接实体的基石（[问题 #1368](https://github.com/aspnet/EntityFrameworkCore/issues/1368)），是针对 EF Core 提出改进要求最多的一项功能。
 
 ## <a name="ef-63-on-net-core"></a>.NET Core 上的 EF 6.3
 

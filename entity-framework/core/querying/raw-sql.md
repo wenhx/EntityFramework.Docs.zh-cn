@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
 uid: core/querying/raw-sql
-ms.openlocfilehash: 91592ea9f7c73f10446993282c1874c852000871
-ms.sourcegitcommit: c9c3e00c2d445b784423469838adc071a946e7c9
+ms.openlocfilehash: 7a0df6fb656be58103971f45b9e12e9f1383311f
+ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/18/2019
-ms.locfileid: "68306549"
+ms.lasthandoff: 09/12/2019
+ms.locfileid: "70921721"
 ---
 # <a name="raw-sql-queries"></a>原生 SQL 查询
 
@@ -22,7 +22,7 @@ ms.locfileid: "68306549"
 
 可以使用 *FromSql* 扩展方法基于原生 SQL 查询开始 LINQ 查询。
 
-<!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
 var blogs = context.Blogs
     .FromSql("SELECT * FROM dbo.Blogs")
@@ -31,7 +31,7 @@ var blogs = context.Blogs
 
 原生 SQL 查询可用于执行存储过程。
 
-<!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
 var blogs = context.Blogs
     .FromSql("EXECUTE dbo.GetMostPopularBlogs")
@@ -44,7 +44,7 @@ var blogs = context.Blogs
 
 下面的示例将一个参数传递到存储过程。 尽管这看上去可能像 `String.Format` 语法，但提供的值包装在参数中，且生成的参数名称插入在指定 `{0}` 占位符的位置。
 
-<!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
 var user = "johndoe";
 
@@ -55,7 +55,7 @@ var blogs = context.Blogs
 
 这是相同的查询，但使用 EF Core 2.0 及更高版本支持的字符串内插语法：
 
-<!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
 var user = "johndoe";
 
@@ -66,7 +66,7 @@ var blogs = context.Blogs
 
 你还可构造 DbParameter 并将其作为参数值提供：
 
-<!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
 var user = new SqlParameter("user", "johndoe");
 
@@ -77,7 +77,7 @@ var blogs = context.Blogs
 
 这样，你就能在 SQL 查询字符串中使用已命名的参数，这在存储的流程具有可选参数时非常有用：
 
-<!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
 var user = new SqlParameter("user", "johndoe");
 
@@ -92,7 +92,7 @@ var blogs = context.Blogs
 
 下面的示例使用原始 SQL 从一个表值函数 (Table-Valued Function，TVF) 中进行查询，然后结合使用 LINQ 在其上进行筛选和排序。
 
-<!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
 var searchTerm = ".NET";
 
@@ -109,7 +109,7 @@ var blogs = context.Blogs
 
 下面的示例使用原始 SQL 查询，该查询从表值函数 (TVF) 中进行选择，然后禁用通过对 .AsNoTracking() 的调用来更改跟踪：
 
-<!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
 var searchTerm = ".NET";
 
@@ -123,7 +123,7 @@ var blogs = context.Query<SearchBlogsDto>()
 
 `Include()` 方法可用于添加相关数据，就像对其他 LINQ 查询那样：
 
-<!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
 var searchTerm = ".NET";
 
