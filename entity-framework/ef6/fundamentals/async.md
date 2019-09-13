@@ -3,12 +3,12 @@ title: Async query 和 EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: d56e6f1d-4bd1-4b50-9558-9a30e04a8ec3
-ms.openlocfilehash: bf2039110962e8dd114242dcd0b9454963750774
-ms.sourcegitcommit: c9c3e00c2d445b784423469838adc071a946e7c9
+ms.openlocfilehash: ae578976ffc88b407ef0aaa0017935005bedd093
+ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/18/2019
-ms.locfileid: "68306584"
+ms.lasthandoff: 09/12/2019
+ms.locfileid: "70921625"
 ---
 # <a name="async-query-and-save"></a>异步查询并保存
 > [!NOTE]
@@ -221,12 +221,14 @@ EF6 引入了对异步查询的支持, 并使用 .NET 4.5 中引入的[async 和
 
 由于代码是异步的, 因此, 我们可以在运行程序时观察到不同的执行流程:
 
-1.  将命令发送到数据库后, **SaveChanges**开始将*新的**博客**推送到数据库。当前托管线程上不再需要计算时间。**PerformDatabaseOperations**方法返回 (即使尚未执行完毕) 和 Main 方法中的程序流将继续。*
-2.  **将日期的 Quote 写入控制台**
-     *, 因为在 Main 方法中没有更多的工作要做, 因此, 在数据库操作完成前, 会阻止在等待调用上托管线程。完成后, 我们将执行**PerformDatabaseOperations**的剩余部分。*
-3.  **SaveChanges**完成
-4.  将对所有**博客**的查询再次发送到*数据库, 在数据库中处理查询时, 托管线程可以随意执行其他工作。由于所有其他执行都已完成, 线程只会在等待调用时停止。*
-5.  查询返回并将结果写入**控制台**
+1. **SaveChanges**开始将新**博客**推送到数据库  
+    *将命令发送到数据库后，当前托管线程不需要更多计算时间。**PerformDatabaseOperations**方法返回（即使尚未执行完毕）和 Main 方法中的程序流将继续。*
+2. **将日报价写入控制台**  
+    *由于在 Main 方法中没有更多的工作要做，因此，在数据库操作完成前，会阻止在等待调用上托管线程。完成后，我们将执行**PerformDatabaseOperations**的剩余部分。*
+3.  **SaveChanges**完成  
+4.  所有**博客**的查询都发送到数据库  
+    *同样，在数据库中处理查询时，托管线程可以自由地执行其他工作。由于所有其他执行都已完成，线程只会在等待调用时停止。*
+5.  查询返回并将结果写入**控制台**  
 
 ![异步输出](~/ef6/media/asyncoutput.png) 
 

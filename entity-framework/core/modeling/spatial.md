@@ -5,40 +5,40 @@ ms.author: bricelam
 ms.date: 11/01/2018
 ms.assetid: 2BDE29FC-4161-41A0-841E-69F51CCD9341
 uid: core/modeling/spatial
-ms.openlocfilehash: cf488c6b7d94ca19018efe1c23ff410fe7eb594b
-ms.sourcegitcommit: 81c53ac43d8f15b900f117294ec71dc49fe028fa
+ms.openlocfilehash: 026df735473e31f1c1463c1fbc6f46c4fd6dfd4f
+ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/16/2018
-ms.locfileid: "51817905"
+ms.lasthandoff: 09/12/2019
+ms.locfileid: "70921724"
 ---
 # <a name="spatial-data"></a>空间数据
 
 > [!NOTE]
-> 此功能是 EF Core 2.2 中的新增功能。
+> 此功能是在 EF Core 2.2 中添加的。
 
-空间数据表示的物理位置和形状的对象。 多个数据库对于此类型的数据提供支持，因此可编制索引和查询以及其他数据。 常见方案包括从一个位置，给定距离内的对象的查询或选择其边框包含给定的位置的对象。 EF Core 支持使用空间数据类型映射[NetTopologySuite](https://github.com/NetTopologySuite/NetTopologySuite)空间库。
+空间数据表示对象的物理位置和形状。 许多数据库提供对此类数据的支持，以便能够与其他数据一起进行索引和查询。 常见方案包括从位置在给定距离内查询对象，或选择其边框包含给定位置的对象。 EF Core 支持使用[NetTopologySuite](https://github.com/NetTopologySuite/NetTopologySuite)空间库映射到空间数据类型。
 
 ## <a name="installing"></a>安装
 
-若要使用 EF Core 使用空间数据，您需要安装相应的支持 NuGet 包。 需要安装哪些程序包依赖于正在使用的提供程序。
+若要在 EF Core 中使用空间数据，需要安装相应的支持 NuGet 包。 需要安装哪个包取决于所使用的提供程序。
 
 EF Core 提供程序                        | 空间 NuGet 包
 --------------------------------------- | ---------------------
-Microsoft.EntityFrameworkCore.SqlServer | [Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite)
-Microsoft.EntityFrameworkCore.Sqlite    | [Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite)
+Microsoft.EntityFrameworkCore.SqlServer | [Microsoft.entityframeworkcore. NetTopologySuite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite)
+Microsoft.EntityFrameworkCore.Sqlite    | [Microsoft.entityframeworkcore. NetTopologySuite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite)
 Microsoft.EntityFrameworkCore.InMemory  | [NetTopologySuite](https://www.nuget.org/packages/NetTopologySuite)
-Npgsql.EntityFrameworkCore.PostgreSQL   | [Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite)
+Npgsql.EntityFrameworkCore.PostgreSQL   | [Npgsql. Microsoft.entityframeworkcore. PostgreSQL. NetTopologySuite](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite)
 
 ## <a name="reverse-engineering"></a>反向工程
 
-空间 NuGet 包还启用[反向工程](../managing-schemas/scaffolding.md)模型空间属性，但你需要安装包***之前***运行`Scaffold-DbContext`或`dotnet ef dbcontext scaffold`。 如果不这样做，你将收到有关未找到类型映射的列的警告，并将跳过列。
+空间 NuGet 包还启用具有空间属性的[反向工程](../managing-schemas/scaffolding.md)模型，但需要在运行`Scaffold-DbContext`或`dotnet ef dbcontext scaffold`***之前***安装包。 否则，你将收到有关找不到列的类型映射的警告，将跳过这些列。
 
-## <a name="nettopologysuite-nts"></a>NetTopologySuite (NTS)
+## <a name="nettopologysuite-nts"></a>NetTopologySuite （NTS）
 
-NetTopologySuite 是用于.NET 的空间库。 EF Core，映射到空间数据的数据库中的类型在模型中使用 NTS 类型。
+NetTopologySuite 是用于 .NET 的空间库。 EF Core 使用模型中的 NTS 类型启用映射到数据库中的空间数据类型。
 
-若要启用通过 NTS 空间类型的映射，请对提供程序的 DbContext 选项生成器调用 UseNetTopologySuite 方法。 例如，与 SQL Server 您会这样调用它。
+若要通过 NTS 启用到空间类型的映射，请在提供程序的 DbContext 选项生成器上调用 UseNetTopologySuite 方法。 例如，对于 SQL Server，你应将其称为。
 
 ``` csharp
 optionsBuilder.UseSqlServer(
@@ -46,23 +46,23 @@ optionsBuilder.UseSqlServer(
     x => x.UseNetTopologySuite());
 ```
 
-有几种空间数据类型。 使用哪种类型取决于你想要允许的形状的类型。 下面是可用于在模型中的属性的 NTS 类型的层次结构。 它们位于`NetTopologySuite.Geometries`命名空间。 GeoAPI 包中的相应接口 (`GeoAPI.Geometries`命名空间) 也可用。
+有几种空间数据类型。 使用哪种类型取决于您想要允许的形状的类型。 下面是可用于模型中的属性的 NTS 类型的层次结构。 它们位于`NetTopologySuite.Geometries`命名空间内。
 
 * geometry
   * 点
   * LineString
   * 多边形
   * GeometryCollection
-    * MultiPoint
+    * 单
     * MultiLineString
     * MultiPolygon
 
 > [!WARNING]
-> 不支持 NTS CircularString、 CompoundCurve、 和 CurePolygon。
+> NTS 不支持 CircularString、CompoundCurve 和 CurePolygon。
 
-使用基本的 Geometry 类型允许任何类型的形状中，以指定的属性。
+使用基本几何图形类型允许属性指定任意类型的形状。
 
-可以使用以下实体类将映射到表中[Wide World Importers 示例数据库](http://go.microsoft.com/fwlink/?LinkID=800630)。
+以下实体类可用于映射到[广角导入示例数据库](http://go.microsoft.com/fwlink/?LinkID=800630)中的表。
 
 ``` csharp
 [Table("Cities", Schema = "Application"))]
@@ -72,7 +72,7 @@ class City
 
     public string CityName { get; set; }
 
-    public IPoint Location { get; set; }
+    public Point Location { get; set; }
 }
 
 [Table("Countries", Schema = "Application"))]
@@ -83,13 +83,13 @@ class Country
     public string CountryName { get; set; }
 
     // Database includes both Polygon and MultiPolygon values
-    public IGeometry Border { get; set; }
+    public Geometry Border { get; set; }
 }
 ```
 
 ### <a name="creating-values"></a>创建值
 
-您可以使用构造函数创建 geometry 对象;但是，NTS 建议改为使用 geometry 工厂。 由此你可以指定默认 SRID （所使用的坐标空间引用系统），并为您提供了控制精度模型 （在计算过程中使用） 和坐标序列 （确定哪些坐标-维度等更高级的功能和度量值-是可用）。
+您可以使用构造函数来创建 geometry 对象;但是，NTS 建议改为使用几何工厂。 这允许您指定默认 SRID （坐标使用的空间引用系统），并使您能够控制更高级的任务（例如，在计算过程中使用）和坐标序列（确定哪些坐标维度和度量值--可用）。
 
 ``` csharp
 var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
@@ -97,25 +97,24 @@ var currentLocation = geometryFactory.CreatePoint(-122.121512, 47.6739882);
 ```
 
 > [!NOTE]
-> 4326 指 WGS 84，GPS 和其他地理系统中使用的标准。
+> 4326指的是 WGS 84，是 GPS 和其他地理系统中使用的标准。
 
 ### <a name="longitude-and-latitude"></a>经度和纬度
 
-在 NTS 坐标都的 X 和 Y 值。 若要表示经度和纬度，经度和 Y 的纬度使用 X。 请注意，这是**向后**从`latitude, longitude`通常看到这些值的格式。
+NTS 中的坐标采用 X 和 Y 值。 若要表示经度和纬度，请将 X 用于经度，将 Y 用于纬度。 请注意，这是从通常`latitude, longitude`会看到这些值的格式反向进行的。
 
-### <a name="srid-ignored-during-client-operations"></a>在客户端操作期间忽略的 SRID
+### <a name="srid-ignored-during-client-operations"></a>在客户端操作过程中忽略 SRID
 
-NTS 在操作期间忽略 SRID 值。 它假定平面坐标系统。 这意味着，如果指定经度和纬度，距离、 长度和区域将以度为单位计量不像某些客户端评估值方面的坐标。 对于更有意义的值，首先需要项目到另一个使用等库的坐标系统的坐标[ProjNet4GeoAPI](https://github.com/NetTopologySuite/ProjNet4GeoAPI)之前计算这些值。
+NTS 在操作过程中忽略 SRID 值。 它假定为平面坐标系统。 这意味着，如果在经度和纬度方面指定了坐标，则某些客户端计算的值（例如，距离、长度和区域）将为度数，而不是计量。 若要获得更有意义的值，首先需要使用库（如[ProjNet4GeoAPI](https://github.com/NetTopologySuite/ProjNet4GeoAPI) ）在计算这些值之前投影到另一个坐标系统的坐标。
 
-如果某个操作是由 EF Core 通过 SQL server 评估，将由数据库决定结果的单位。
+如果通过 EF Core 通过 SQL 对操作进行服务器计算，则该结果的单元将由数据库确定。
 
-下面是使用 ProjNet4GeoAPI 计算两个城市之间的距离的示例。
+下面是一个示例，说明如何使用 ProjNet4GeoAPI 来计算两个城市之间的距离。
 
 ``` csharp
 static class GeometryExtensions
 {
-    static readonly IGeometryServices _geometryServices = NtsGeometryServices.Instance;
-    static readonly ICoordinateSystemServices _coordinateSystemServices
+    static readonly CoordinateSystemServices _coordinateSystemServices
         = new CoordinateSystemServices(
             new CoordinateSystemFactory(),
             new CoordinateTransformationFactory(),
@@ -123,7 +122,7 @@ static class GeometryExtensions
             {
                 // Coordinate systems:
 
-                // (3857 and 4326 included automatically)
+                [4326] = GeographicCoordinateSystem.WGS84.WKT,
 
                 // This coordinate system covers the area of our data.
                 // Different data requires a different coordinate system.
@@ -153,15 +152,37 @@ static class GeometryExtensions
                 "
             });
 
-    public static IGeometry ProjectTo(this IGeometry geometry, int srid)
+    public static Geometry ProjectTo(this Geometry geometry, int srid)
     {
-        var geometryFactory = _geometryServices.CreateGeometryFactory(srid);
         var transformation = _coordinateSystemServices.CreateTransformation(geometry.SRID, srid);
 
-        return GeometryTransform.TransformGeometry(
-            geometryFactory,
-            geometry,
-            transformation.MathTransform);
+        var result = geometry.Copy();
+        result.Apply(new MathTransformFilter(transformation.MathTransform));
+
+        return result;
+    }
+
+    class MathTransformFilter : ICoordinateSequenceFilter
+    {
+        readonly MathTransform _transform;
+
+        public MathTransformFilter(MathTransform transform)
+            => _transform = transform;
+
+        public bool Done => false;
+        public bool GeometryChanged => true;
+
+        public void Filter(CoordinateSequence seq, int i)
+        {
+            var result = _transform.Transform(
+                new[]
+                {
+                    seq.GetOrdinate(i, Ordinate.X),
+                    seq.GetOrdinate(i, Ordinate.Y)
+                });
+            seq.SetOrdinate(i, Ordinate.X, result[0]);
+            seq.SetOrdinate(i, Ordinate.Y, result[1]);
+        }
     }
 }
 ```
@@ -175,7 +196,7 @@ var distance = seattle.ProjectTo(2855).Distance(redmond.ProjectTo(2855));
 
 ## <a name="querying-data"></a>查询数据
 
-在 LINQ 中，NTS 方法和属性可用作数据库函数都将转换为 SQL。 例如，下列查询中转换的距离和 Contains 方法。 本文结束时表显示了所支持的各种 EF Core 提供程序的成员。
+在 LINQ 中，可用作数据库函数的 NTS 方法和属性将转换为 SQL。 例如，在以下查询中转换距离和包含方法。 本文末尾的表格显示了不同 EF Core 提供商支持哪些成员。
 
 ``` csharp
 var nearestCity = db.Cities
@@ -188,30 +209,30 @@ var currentCountry = db.Countries
 
 ## <a name="sql-server"></a>SQL Server
 
-如果您使用 SQL Server，有一些其他操作，您应注意。
+如果你正在使用 SQL Server，你还应该注意一些其他问题。
 
-### <a name="geography-or-geometry"></a>Geography 或 geometry
+### <a name="geography-or-geometry"></a>地理或几何图形
 
-默认情况下，空间属性映射到`geography`SQL Server 中的列。 若要使用`geometry`，[配置的列类型](xref:core/modeling/relational/data-types)在模型中。
+默认情况下，空间属性映射到`geography` SQL Server 中的列。 若要`geometry`使用，请在模型中[配置列类型](xref:core/modeling/relational/data-types)。
 
 ### <a name="geography-polygon-rings"></a>地理多边形环
 
-当使用`geography`列类型，SQL Server 将对施加其他要求的外部环 （或命令行程序） 和内部环 （或漏洞）。 外部环必须为方向逆时针和内环顺时针旋转。 NTS 将值发送到数据库之前会验证此。
+当使用`geography`列类型时，SQL Server 会对外部环（或外壳）和内部环（或孔）施加附加要求。 外部环必须逆时针旋转，并顺时针旋转内部环。 NTS 在将值发送到数据库之前对其进行验证。
 
 ### <a name="fullglobe"></a>FullGlobe
 
-SQL Server 具有非标准的几何图形类型来表示整个地球时使用`geography`列类型。 它还具有一种方法来表示多边形根据 （而无需外部环） 完整的球形。 NTS 支持这两个命令。
+在使用`geography`列类型时，SQL Server 具有非标准几何类型来表示全地球。 它还提供了一种方法，用于根据全地球（无外部环）来表示多边形。 NTS 不支持这两种方法。
 
 > [!WARNING]
-> 不支持 NTS FullGlobe 和基于它的多边形。
+> NTS 不支持基于 FullGlobe 和多边形。
 
 ## <a name="sqlite"></a>SQLite
 
-下面是一些其他信息，这对于使用 SQLite。
+下面是使用 SQLite 的一些其他信息。
 
 ### <a name="installing-spatialite"></a>安装 SpatiaLite
 
-在 Windows 中，本机 mod_spatialite 库作为 NuGet 包依赖项分发。 其他平台需要单独安装。 这通常是使用软件程序包管理器。 例如，您可以在 Ubuntu 和 Homebrew 在 MacOS 上使用 APT。
+在 Windows 上，本机 mod_spatialite 库以 NuGet 包依赖关系的形式分发。 其他平台需要单独安装它。 通常使用软件程序包管理器完成此操作。 例如，可以在 Ubuntu 上使用 APT 和 MacOS 上的 Homebrew。
 
 ``` sh
 # Ubuntu
@@ -223,7 +244,7 @@ brew install libspatialite
 
 ### <a name="configuring-srid"></a>配置 SRID
 
-在 SpatiaLite，需要指定每个列 SRID 列。 默认 SRID 为`0`。 指定不同的 SRID 使用 ForSqliteHasSrid 方法。
+在 SpatiaLite 中，列需要为每个列指定一个 SRID。 默认的 SRID 为`0`。 使用 ForSqliteHasSrid 方法指定其他 SRID。
 
 ``` csharp
 modelBuilder.Entity<City>().Property(c => c.Location)
@@ -232,79 +253,79 @@ modelBuilder.Entity<City>().Property(c => c.Location)
 
 ### <a name="dimension"></a>维度
 
-类似于 SRID，列的维度 （或坐标） 还指定为列的一部分。 默认坐标为 X 和 Y。 启用其他坐标 （Z 和 M） 使用 ForSqliteHasDimension 方法。
+类似于 SRID，列的维度（或坐标）也被指定为列的一部分。 默认坐标为 X 和 Y。使用 ForSqliteHasDimension 方法启用其他坐标（Z 和 M）。
 
 ``` csharp
 modelBuilder.Entity<City>().Property(c => c.Location)
     .ForSqliteHasDimension(Ordinates.XYZ);
 ```
 
-## <a name="translated-operations"></a>翻译后的操作
+## <a name="translated-operations"></a>转换的操作
 
-此表显示了哪些 NTS 成员的每个 EF Core 提供程序转换为 SQL。
+此表显示每个 EF Core 提供程序将哪些 NTS 成员转换为 SQL。
 
-NetTopologySuite | SQL Server (geometry) | SQL Server (geography) | SQLite | Npgsql
+NetTopologySuite | SQL Server （geometry） | SQL Server （geography） | SQLite | Npgsql
 --- |:---:|:---:|:---:|:---:
-Geometry.Area | ✔ | ✔ | ✔ | ✔
-Geometry.AsBinary() | ✔ | ✔ | ✔ | ✔
-Geometry.AsText() | ✔ | ✔ | ✔ | ✔
-Geometry.Boundary | ✔ | | ✔ | ✔
-Geometry.Buffer(double) | ✔ | ✔ | ✔ | ✔
-Geometry.Buffer (double，int) | | | ✔
-Geometry.Centroid | ✔ | | ✔ | ✔
-Geometry.Contains(Geometry) | ✔ | ✔ | ✔ | ✔
-Geometry.ConvexHull() | ✔ | ✔ | ✔ | ✔
-Geometry.CoveredBy(Geometry) | | | ✔ | ✔
-Geometry.Covers(Geometry) | | | ✔ | ✔
-Geometry.Crosses(Geometry) | ✔ | | ✔ | ✔
-Geometry.Difference(Geometry) | ✔ | ✔ | ✔ | ✔
-Geometry.Dimension | ✔ | ✔ | ✔ | ✔
-Geometry.Disjoint(Geometry) | ✔ | ✔ | ✔ | ✔
-Geometry.Distance(Geometry) | ✔ | ✔ | ✔ | ✔
-Geometry.Envelope | ✔ | | ✔ | ✔
-Geometry.EqualsExact(Geometry) | | | | ✔
-Geometry.EqualsTopologically(Geometry) | ✔ | ✔ | ✔ | ✔
-Geometry.GeometryType | ✔ | ✔ | ✔ | ✔
-Geometry.GetGeometryN(int) | ✔ | | ✔ | ✔
-Geometry.InteriorPoint | ✔ | | ✔
-Geometry.Intersection(Geometry) | ✔ | ✔ | ✔ | ✔
-Geometry.Intersects(Geometry) | ✔ | ✔ | ✔ | ✔
-Geometry.IsEmpty | ✔ | ✔ | ✔ | ✔
-Geometry.IsSimple | ✔ | | ✔ | ✔
-Geometry.IsValid | ✔ | ✔ | ✔ | ✔
-Geometry.IsWithinDistance (Geometry，double) | ✔ | | ✔
-Geometry.Length | ✔ | ✔ | ✔ | ✔
-Geometry.NumGeometries | ✔ | ✔ | ✔ | ✔
-Geometry.NumPoints | ✔ | ✔ | ✔ | ✔
-Geometry.OgcGeometryType | ✔ | ✔ | ✔
-Geometry.Overlaps(Geometry) | ✔ | ✔ | ✔ | ✔
-Geometry.PointOnSurface | ✔ | | ✔ | ✔
-Geometry.Relate (Geometry，字符串) | ✔ | | ✔ | ✔
-Geometry.Reverse() | | | ✔ | ✔
-Geometry.SRID | ✔ | ✔ | ✔ | ✔
-Geometry.SymmetricDifference(Geometry) | ✔ | ✔ | ✔ | ✔
-Geometry.ToBinary() | ✔ | ✔ | ✔ | ✔
-Geometry.ToText() | ✔ | ✔ | ✔ | ✔
-Geometry.Touches(Geometry) | ✔ | | ✔ | ✔
-Geometry.Union() | | | ✔
-Geometry.Union(Geometry) | ✔ | ✔ | ✔ | ✔
-Geometry.Within(Geometry) | ✔ | ✔ | ✔ | ✔
-GeometryCollection.Count | ✔ | ✔ | ✔ | ✔
+Geometry | ✔ | ✔ | ✔ | ✔
+AsBinary （） | ✔ | ✔ | ✔ | ✔
+AsText （） | ✔ | ✔ | ✔ | ✔
+Geometry | ✔ | | ✔ | ✔
+Geometry （双精度型） | ✔ | ✔ | ✔ | ✔
+Geometry （double，int） | | | ✔
+质心 | ✔ | | ✔ | ✔
+Geometry。 Contains （Geometry） | ✔ | ✔ | ✔ | ✔
+ConvexHull （） | ✔ | ✔ | ✔ | ✔
+CoveredBy （Geometry） | | | ✔ | ✔
+Geometry （Geometry） | | | ✔ | ✔
+几何。交叉（几何） | ✔ | | ✔ | ✔
+几何差（几何） | ✔ | ✔ | ✔ | ✔
+Geometry。维度 | ✔ | ✔ | ✔ | ✔
+不连续（Geometry） | ✔ | ✔ | ✔ | ✔
+Geometry （Geometry） | ✔ | ✔ | ✔ | ✔
+Geometry 信封 | ✔ | | ✔ | ✔
+EqualsExact （Geometry） | | | | ✔
+EqualsTopologically （Geometry） | ✔ | ✔ | ✔ | ✔
+GeometryType | ✔ | ✔ | ✔ | ✔
+GetGeometryN （int） | ✔ | | ✔ | ✔
+InteriorPoint | ✔ | | ✔
+几何交集（Geometry） | ✔ | ✔ | ✔ | ✔
+几何和交集（Geometry） | ✔ | ✔ | ✔ | ✔
+IsEmpty | ✔ | ✔ | ✔ | ✔
+IsSimple | ✔ | | ✔ | ✔
+Geometry | ✔ | ✔ | ✔ | ✔
+IsWithinDistance （Geometry，double） | ✔ | | ✔
+Geometry。长度 | ✔ | ✔ | ✔ | ✔
+NumGeometries | ✔ | ✔ | ✔ | ✔
+X.numpoints | ✔ | ✔ | ✔ | ✔
+OgcGeometryType | ✔ | ✔ | ✔
+Geometry 重叠（Geometry） | ✔ | ✔ | ✔ | ✔
+PointOnSurface | ✔ | | ✔ | ✔
+Geometry （Geometry，string） | ✔ | | ✔ | ✔
+Geometry 反向（） | | | ✔ | ✔
+SRID | ✔ | ✔ | ✔ | ✔
+SymmetricDifference （Geometry） | ✔ | ✔ | ✔ | ✔
+ToBinary （） | ✔ | ✔ | ✔ | ✔
+ToText （） | ✔ | ✔ | ✔ | ✔
+几何图形（几何） | ✔ | | ✔ | ✔
+Geometry （） | | | ✔
+Geometry （Geometry） | ✔ | ✔ | ✔ | ✔
+几何图形。内（Geometry） | ✔ | ✔ | ✔ | ✔
+GeometryCollection | ✔ | ✔ | ✔ | ✔
 GeometryCollection [int] | ✔ | ✔ | ✔ | ✔
-LineString.Count | ✔ | ✔ | ✔ | ✔
-LineString.EndPoint | ✔ | ✔ | ✔ | ✔
-LineString.GetPointN(int) | ✔ | ✔ | ✔ | ✔
-LineString.IsClosed | ✔ | ✔ | ✔ | ✔
-LineString.IsRing | ✔ | | ✔ | ✔
-LineString.StartPoint | ✔ | ✔ | ✔ | ✔
-MultiLineString.IsClosed | ✔ | ✔ | ✔ | ✔
-Point.M | ✔ | ✔ | ✔ | ✔
-Point.X | ✔ | ✔ | ✔ | ✔
-Point.Y | ✔ | ✔ | ✔ | ✔
-Point.Z | ✔ | ✔ | ✔ | ✔
-Polygon.ExteriorRing | ✔ | ✔ | ✔ | ✔
-Polygon.GetInteriorRingN(int) | ✔ | ✔ | ✔ | ✔
-Polygon.NumInteriorRings | ✔ | ✔ | ✔ | ✔
+LineString | ✔ | ✔ | ✔ | ✔
+LineString 终结点 | ✔ | ✔ | ✔ | ✔
+LineString. GetPointN （int） | ✔ | ✔ | ✔ | ✔
+LineString. IsClosed | ✔ | ✔ | ✔ | ✔
+LineString. IsRing | ✔ | | ✔ | ✔
+LineString. StartPoint | ✔ | ✔ | ✔ | ✔
+MultiLineString. IsClosed | ✔ | ✔ | ✔ | ✔
+点 M | ✔ | ✔ | ✔ | ✔
+点 X | ✔ | ✔ | ✔ | ✔
+Point。 Y | ✔ | ✔ | ✔ | ✔
+点 Z | ✔ | ✔ | ✔ | ✔
+多边形。 ExteriorRing | ✔ | ✔ | ✔ | ✔
+GetInteriorRingN （int） | ✔ | ✔ | ✔ | ✔
+多边形。 NumInteriorRings | ✔ | ✔ | ✔ | ✔
 
 ## <a name="additional-resources"></a>其他资源
 
