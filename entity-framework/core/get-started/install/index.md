@@ -4,12 +4,12 @@ author: divega
 ms.date: 08/06/2017
 ms.assetid: 608cc774-c570-4809-8a3e-cd2c8446b8b2
 uid: core/get-started/install/index
-ms.openlocfilehash: db1b83a9222e00a5e226a134085b18247b31f29a
-ms.sourcegitcommit: c9c3e00c2d445b784423469838adc071a946e7c9
+ms.openlocfilehash: 62194d1db4efcdaed53ca0e14f160315f8e3cf03
+ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/18/2019
-ms.locfileid: "68306484"
+ms.lasthandoff: 09/12/2019
+ms.locfileid: "70921760"
 ---
 # <a name="installing-entity-framework-core"></a>安装 Entity Framework Core
 
@@ -19,9 +19,9 @@ ms.locfileid: "68306484"
 
 * 例如，可使用 EF Core 开发面向 .NET Core 的应用。 生成 .NET Core 应用需要 [.NET Core SDK](https://dotnet.microsoft.com/download)。 还可选择使用 Visual Studio、Visual Studio for Mac 或 Visual Studio Code 等开发环境。 有关详细信息，请参阅 [.NET Core 入门](/dotnet/core/get-started)。
 
-* 可在 Windows 上的 Visual Studio 中使用 EF Core 来开发面向 .NET Framework 4.6.1 或更高版本的应用程序。 建议使用最新版本的 Visual Studio。 如果想要使用较旧版本（例如 Visual Studio 2015），请确保[将 NuGet 客户端升级到版本 3.6.0](https://www.nuget.org/downloads)，以便使用 .NET Standard 2.0 库。
+* 可在 Windows 上的 Visual Studio 中使用 EF Core 来开发面向 .NET Framework 4.6.1 或更高版本的应用程序。 建议使用最新版本的 [Visual Studio](https://visualstudio.microsoft.com/vs)。 如果想要使用较旧版本（例如 Visual Studio 2015），请确保[将 NuGet 客户端升级到版本 3.6.0](https://www.nuget.org/downloads)，以便使用 .NET Standard 2.0 库。
 
-* EF Core 可以在 Xamarin 和 .NET Native 等其他 .NET 实现上运行。 但在实践中，这些实现具有运行时限制，可能会影响 EF Core 处理应用的效率。 有关详细信息，请参阅 [EF Core 支持的 .NET 实现](xref:core/platforms/index)。
+* EF Core 可以在 [Xamarin](https://dotnet.microsoft.com/apps/xamarin) 和 .NET Native 等其他 .NET 实现上运行。 但在实践中，这些实现具有运行时限制，可能会影响 EF Core 处理应用的效率。 有关详细信息，请参阅 [EF Core 支持的 .NET 实现](xref:core/platforms/index)。
 
 * 最后，不同的数据库提供程序可能需要特定的数据库引擎版本、.NET 实现或操作系统。 请确保可用的 [EF Core 数据库提供程序](xref:core/providers/index)支持适用于应用程序的环境。
 

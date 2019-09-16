@@ -4,12 +4,12 @@ author: ErikEJ
 ms.date: 01/07/2019
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 uid: core/extensions/index
-ms.openlocfilehash: 08231cd93002a6d1b3cebe20f4f7cf57ea085af2
-ms.sourcegitcommit: c9c3e00c2d445b784423469838adc071a946e7c9
+ms.openlocfilehash: 43b98c1f09a89f7e5451e28cbf2f78a2cb1040e5
+ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/18/2019
-ms.locfileid: "68306409"
+ms.lasthandoff: 09/12/2019
+ms.locfileid: "70921766"
 ---
 # <a name="ef-core-tools--extensions"></a>EF Core 工具和扩展
 
@@ -168,3 +168,9 @@ EF Core 的高性能二级查询缓存。
 通过高性能批量操作扩展 DbContext：BulkSaveChanges、BulkInsert、BulkUpdate、BulkDelete、BulkMerge 等。
 
 [网站](https://entityframework-extensions.net/)
+
+### <a name="reconciler"></a>协调器
+
+通过插入、更新和删除个别实体，将存储中的实体图更新为给定的实体图。
+
+[GitHub 存储库](https://github.com/jtheisen/reconciler)
