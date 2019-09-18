@@ -4,12 +4,12 @@ author: bricelam
 ms.author: bricelam
 ms.date: 10/05/2018
 uid: core/managing-schemas/migrations/index
-ms.openlocfilehash: 7d97551044ae4a8fc42d1676199da884f3e2994d
-ms.sourcegitcommit: 7b7f774a5966b20d2aed5435a672a1edbe73b6fb
+ms.openlocfilehash: ffa9a34f13ab29f0ba93f9fd1f469398630604ce
+ms.sourcegitcommit: d01fc19aa42ca34c3bebccbc96ee26d06fcecaa2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/17/2019
-ms.locfileid: "69565256"
+ms.lasthandoff: 09/16/2019
+ms.locfileid: "71005450"
 ---
 <a name="migrations"></a>迁移
 ==========
@@ -25,6 +25,9 @@ ms.locfileid: "69565256"
 * [还原迁移](#revert-a-migration)。 撤消数据库更改。
 * [生成 SQL 脚本](#generate-sql-scripts)。 可能需要一个脚本来更新生产数据库，或者对迁移代码进行故障排除。
 * [在运行时应用迁移](#apply-migrations-at-runtime)。 当设计时更新和正在运行脚本不是最佳选项时，调用 `Migrate()` 方法。
+
+> [!TIP]
+> 如果 `DbContext` 与启动项目位于不同程序集中，可以在[包管理器控制台工具](xref:core/miscellaneous/cli/powershell#target-and-startup-project)或 [.NET Core CLI 工具](xref:core/miscellaneous/cli/dotnet#target-project-and-startup-project)中显式指定目标和启动项目。
 
 <a name="install-the-tools"></a>安装工具
 -----------------

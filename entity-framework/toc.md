@@ -12,10 +12,10 @@
 
 ### [新增功能](core/what-is-new/index.md)
 #### [路线图](core/what-is-new/roadmap.md)
-#### [EF Core 3.0（预览版）](core/what-is-new/ef-core-3.0/index.md)
+#### [EF Core 3.0（最新版）](core/what-is-new/ef-core-3.0/index.md)
 ##### [新增功能](core/what-is-new/ef-core-3.0/features.md)
 ##### [中断性变更](core/what-is-new/ef-core-3.0/breaking-changes.md)
-#### [EF Core 2.2（最新版）](core/what-is-new/ef-core-2.2.md)
+#### [EF Core 2.2](core/what-is-new/ef-core-2.2.md)
 #### [EF Core 2.1](core/what-is-new/ef-core-2.1.md)
 #### [EF Core 2.0](core/what-is-new/ef-core-2.0.md)
 #### [EF Core 1.1](core/what-is-new/ef-core-1.1.md)
@@ -152,7 +152,7 @@
 #### [使用 DbContext](ef6/fundamentals/working-with-dbcontext.md)
 #### [了解关系](ef6/fundamentals/relationships.md)
 #### [异步查询和保存](ef6/fundamentals/async.md)
-#### Configuration
+#### 配置
 ##### [基于代码](ef6/fundamentals/configuring/code-based.md)
 ##### [配置文件](ef6/fundamentals/configuring/config-file.md)
 ##### [连接字符串](ef6/fundamentals/configuring/connection-strings.md)
@@ -256,7 +256,7 @@
 #### [数据验证](ef6/saving/validation.md)
 
 ### [其他资源](ef6/resources/index.md)
-#### [博客](ef6/resources/blogs.md)
+#### [Blogs](ef6/resources/blogs.md)
 #### [案例研究](ef6/resources/case-studies.md)
 #### [参与](ef6/resources/contribute.md)
 #### [获取帮助](ef6/resources/get-help.md)
