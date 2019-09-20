@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: d7a22b5a-4c5b-4e3b-9897-4d7320fcd13f
 uid: core/miscellaneous/configuring-dbcontext
-ms.openlocfilehash: ddabf825ef23c2ec07efcde390df7d0cf48db33c
-ms.sourcegitcommit: c9c3e00c2d445b784423469838adc071a946e7c9
+ms.openlocfilehash: 734acad86e364abbfd1522fe79d4a847b1acfb52
+ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/18/2019
-ms.locfileid: "68306512"
+ms.lasthandoff: 09/20/2019
+ms.locfileid: "71149032"
 ---
 # <a name="configuring-a-dbcontext"></a>配置 DbContext
 
@@ -19,11 +19,11 @@ ms.locfileid: "68306512"
 
 EF Core 设计时工具（如[迁移](xref:core/managing-schemas/migrations/index)）需要能够发现和创建 `DbContext` 类型的工作实例，以便收集有关应用程序实体类型及其如何映射到数据库架构的详细信息。 此过程可以自动执行，只要该工具可以轻松创建 `DbContext` 并使其与在运行时采用相似的配置方式。
 
-尽管为 `DbContext` 提供必要配置信息的任何模式都可以在运行时工作，但需要在设计时使用 `DbContext`的工具仅适用于有限数量的模式。“设计时上下文创建”部分包含对这些内容的详细介绍。           [“设计时上下文创建”](xref:core/miscellaneous/cli/dbcontext-creation)部分包含对这些内容的详细介绍。
+尽管提供所需的配置信息`DbContext`的任何模式可在运行时工作, 但在设计时需要使用的`DbContext`工具只能处理有限数量的模式。 [“设计时上下文创建”](xref:core/miscellaneous/cli/dbcontext-creation)部分包含对这些内容的详细介绍。
 
 ## <a name="configuring-dbcontextoptions"></a>配置 DbContextOptions
 
-`DbContext` 必须具有 `DbContextOptions` 的实例才能执行工作。           `DbContextOptions` 实例包含如下配置信息：
+`DbContext` 必须具有 `DbContextOptions` 的实例才能执行工作。 `DbContextOptions` 实例包含如下配置信息：
 
 - 要使用的数据库提供程序, 通常通过调用方法 (如`UseSqlServer`或`UseSqlite`) 进行选择。 这些扩展方法需要相应的提供程序包, 如`Microsoft.EntityFrameworkCore.SqlServer`或`Microsoft.EntityFrameworkCore.Sqlite`。 方法在`Microsoft.EntityFrameworkCore`命名空间中定义。
 - 任何必需的数据库实例的连接字符串或标识符, 通常作为参数传递给上面提到的提供者选择方法
@@ -191,6 +191,5 @@ Entity Framework Core 不支持在同一`DbContext`实例上运行多个并行�
 
 ## <a name="more-reading"></a>阅读更多
 
-* 阅读 [ASP.NET Core 入门](../get-started/aspnetcore/index.md)，了解有关配合使用 ASP.NET Core 和 EF 的详细信息。
 * 阅读[依赖关系注入](https://docs.microsoft.com/aspnet/core/fundamentals/dependency-injection)，了解有关使用 DI 的详细信息。
 * 阅读[测试](testing/index.md)了解详细信息。

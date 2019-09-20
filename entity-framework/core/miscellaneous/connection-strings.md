@@ -1,23 +1,23 @@
 ---
-title: 连接字符串的 EF Core
+title: 连接字符串-EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: aeb0f5f8-b212-4f89-ae83-c642a5190ba0
 uid: core/miscellaneous/connection-strings
-ms.openlocfilehash: c306f9ca7a51fc9e3db18e883fd44f56dd1a3cb4
-ms.sourcegitcommit: e90d6cfa3e96f10b8b5275430759a66a0c714ed1
+ms.openlocfilehash: ed89d6d09b15b0dea7fd8bc3ff3e3f631495ecb7
+ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/17/2019
-ms.locfileid: "68286452"
+ms.lasthandoff: 09/20/2019
+ms.locfileid: "71149113"
 ---
 # <a name="connection-strings"></a>连接字符串
 
-大多数数据库提供程序需要某种形式的连接字符串以连接到数据库。 有时此连接字符串包含必须受到保护的敏感信息。 在开发、测试和生产环境等环境之间移动应用程序时，可能还需要更改连接字符串。
+大多数数据库提供程序都需要某种形式的连接字符串才能连接到数据库。 有时，此连接字符串包含需要保护的敏感信息。 在开发、测试和生产环境等环境之间移动应用程序时，可能还需要更改连接字符串。
 
-## <a name="net-framework-applications"></a>.NET framework 应用程序
+## <a name="winforms--wpf-applications"></a>WinForms & WPF 应用程序
 
-.NET framework 应用程序，如 WinForms、 WPF、 控制台和 ASP.NET 4 中，具有经过反复测试的连接字符串模式。 连接字符串应添加到应用程序的 App.config 文件 (如果您使用的 ASP.NET Web.config)。 如果你的连接字符串包含敏感信息，如用户名和密码，你可以保护配置文件使用的内容[受保护的配置](https://docs.microsoft.com/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypting-configuration-file-sections-using-protected-configuration)。
+WinForms、WPF 和 ASP.NET 4 应用程序都有一个已尝试并经过测试的连接字符串模式。 如果你使用的是 ASP.NET，则应将连接字符串添加到应用程序的 app.config 文件（web.config）中。 如果您的连接字符串包含敏感信息（例如用户名和密码），则可以使用[机密管理器工具](https://docs.microsoft.com/aspnet/core/security/app-secrets#secret-manager)来保护配置文件的内容。
 
 ``` xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -31,9 +31,9 @@ ms.locfileid: "68286452"
 ```
 
 > [!TIP]  
->           `providerName`上 EF Core连接字符串存储在 App.config，因为通过代码配置了数据库提供程序不需要设置。
+> 由于`providerName`数据库提供程序是通过代码配置的，因此在 app.config 中存储的 EF Core 连接字符串上不需要此设置。
 
-然后可以读取连接字符串使用`ConfigurationManager`在您的上下文中的 API`OnConfiguring`方法。 可能需要添加对引用`System.Configuration`framework 程序集，以便能够使用此 API。
+然后，你可以在上下文的`ConfigurationManager` `OnConfiguring`方法中使用 API 来读取连接字符串。 可能需要添加对`System.Configuration`框架程序集的引用才能使用此 API。
 
 ``` csharp
 public class BloggingContext : DbContext
@@ -50,7 +50,7 @@ public class BloggingContext : DbContext
 
 ## <a name="universal-windows-platform-uwp"></a>通用 Windows 平台 (UWP)
 
-UWP 应用程序中的连接字符串通常是仅指定本地文件名的 SQLite 连接。 它们通常不包含敏感信息，并且无需更改，因为应用程序已部署。 因此，这些连接字符串通常可保留在代码中，如下所示。 如果要将它们移出代码并使 UWP 支持设置的概念，请参阅 [UWP 文档的应用设置部分](https://docs.microsoft.com/windows/uwp/app-settings/store-and-retrieve-app-data)了解详细信息。
+UWP 应用程序中的连接字符串通常是仅指定本地文件名的 SQLite 连接。 它们通常不包含敏感信息，并且在部署应用程序时无需更改。 因此，这些连接字符串通常可保留在代码中，如下所示。 如果要将它们移出代码并使 UWP 支持设置的概念，请参阅 [UWP 文档的应用设置部分](https://docs.microsoft.com/windows/uwp/app-settings/store-and-retrieve-app-data)了解详细信息。
 
 ``` csharp
 public class BloggingContext : DbContext
@@ -77,7 +77,7 @@ ASP.NET Core 中的配置系统非常灵活，并且连接字符串可以存储�
 }
 ```
 
-通常在中配置上下文`Startup.cs`正在从配置中读取的连接字符串。 请注意`GetConnectionString()`方法查找配置值，其键与`ConnectionStrings:<connection string name>`。 需要导入[Microsoft.Extensions.Configuration](https://docs.microsoft.com/dotnet/api/microsoft.extensions.configuration)命名空间才能使用此扩展方法。
+上下文通常在中配置为`Startup.cs` ，其中的连接字符串是从配置中读取的。 请注意`GetConnectionString()` ，方法查找其键为`ConnectionStrings:<connection string name>`的配置值。 需要导入 Microsoft extension [. 配置](https://docs.microsoft.com/dotnet/api/microsoft.extensions.configuration)命名空间才能使用此扩展方法。
 
 ``` csharp
 public void ConfigureServices(IServiceCollection services)
