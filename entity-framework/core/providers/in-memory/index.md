@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 9af0cba7-7605-4f8f-9cfa-dd616fcb880c
 uid: core/providers/in-memory/index
-ms.openlocfilehash: ca802f55d973b9f79073c2507c1e0c7a853a1fce
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 28f5f262b41cbc1f196e41d75c8b88ca60e678fe
+ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42993315"
+ms.lasthandoff: 09/20/2019
+ms.locfileid: "71149224"
 ---
 # <a name="ef-core-in-memory-database-provider"></a>EF Core In-Memory 数据库提供程序
 
@@ -33,13 +33,3 @@ Install-Package Microsoft.EntityFrameworkCore.InMemory
 ## <a name="supported-database-engines"></a>支持的数据库引擎
 
 * 内置的内存中数据库（仅用于测试目的）
-
-## <a name="supported-platforms"></a>支持的平台
-
-* .NET Framework（4.5.1 及以上版本）
-
-* .NET Core
-
-* Mono（4.2.0 及以上版本）
-
-* 通用 Windows 平台
