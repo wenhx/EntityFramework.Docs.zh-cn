@@ -3,35 +3,63 @@ title: 支持的 .NET 实现 - EF Core
 author: rowanmiller
 ms.date: 08/30/2017
 uid: core/platforms/index
-ms.openlocfilehash: 8fc25f4a35794162c92fd292990c24e977d1bf1b
-ms.sourcegitcommit: 5e11125c9b838ce356d673ef5504aec477321724
+ms.openlocfilehash: ac3cf3d0a84200bbf4ba7ec18b9115e06d1748f4
+ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/25/2018
-ms.locfileid: "50022250"
+ms.lasthandoff: 09/20/2019
+ms.locfileid: "71149214"
 ---
 # <a name="net-implementations-supported-by-ef-core"></a>EF Core 支持的 .NET 实现
 
-我们希望 EF Core 可用于任何可编写 .NET 代码 的平台，我们仍在为实现这一目标而努力。 尽管自动测试证明 EF Core 支持 .NET Core 和 .NET Framework ，同时许多应用程序已成功使用 EF Core，但 Mono、Xamarin 和 UWP 仍存在一些问题。
+我们希望 EF Core 可供开发人员在所有新式 .NET 实现上使用，并且我们仍在努力实现这一目标。 尽管自动测试证明 EF Core 支持 .NET Core，同时许多应用程序已成功使用 EF Core，但 Mono、Xamarin 和 UWP 仍存在一些问题。
 
 ## <a name="overview"></a>概述
 
 下表提供了每个 .NET 实现的指南：
 
-| .NET 实现                                                                                                  | 状态                                                             | EF Core 1.x 要求                                                                                | EF Core 2.x 要求 <sup>(1)</sup>                                                                 |
-|:---------------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------|
-| **.NET Core**（[ASP.NET Core](../get-started/aspnetcore/index.md)、[控制台](../get-started/netcore/index.md) 等） | 完全支持且推荐使用                                    | [.NET Core SDK 1.x](https://www.microsoft.com/net/core/)                                                | [.NET Core SDK 2.x](https://www.microsoft.com/net/core/)                                                |
-| .NET Framework（WinForms、WPF、ASP.NET、[控制台](../get-started/full-dotnet/index.md)等）                    | 完全支持且推荐使用。 EF6 也适用 <sup>(2)</sup> | .NET Framework 4.5.1                                                                                    | .NET Framework 4.6.1                                                                                    |
-| **Mono 和 Xamarin**                                                                                                   | 正在进行 <sup>(3)</sup>                                         | Mono 4.6 <br/> Xamarin.iOS 10 <br/> Xamarin.Mac 3 <br/> Xamarin.Android 7                               | Mono 5.4 <br/> Xamarin.iOS 10.14 <br/> Xamarin.Mac 3.8 <br/> Xamarin.Android 7.5                        |
-| [通用 Windows 平台](../get-started/uwp/index.md)                                                        | 推荐 EF Core 2.0.1 <sup>(4)</sup>                           | [.NET Core UWP 5.x 包](https://www.nuget.org/packages/Microsoft.NETCore.UniversalWindowsPlatform/) | [.NET Core UWP 6.x 包](https://www.nuget.org/packages/Microsoft.NETCore.UniversalWindowsPlatform/) |
+| EF Core                       | 1.x    | 2.x        | 3.x             |
+|:------------------------------|:-------|:-----------|:----------------|
+| .NET Standard                 | 1.3    | 2.0        | 2.1             |
+| .NET Core                     | 1.0    | 2.0        | 3.0             |
+| .NET Framework<sup>(1)</sup>  | 4.5.1  | 4.7.2      | （不支持） |
+| Mono                          | 4.6    | 5.4        | 6.4             |
+| Xamarin.iOS<sup>(2)</sup>     | 10.0   | 10.14      | 12.16           |
+| Xamarin.Android<sup>(2)</sup> | 7.0    | 8.0        | 10.0            |
+| UWP<sup>(3)</sup>             | 10.0   | 10.0.16299 | 待定             |
+| Unity<sup>(4)</sup>           | 2018 年 1 月 | 2018 年 1 月     | 待定             |
 
-<sup>(1)</sup> EF Core 2.0 面向 .NET 实现，因此需要支持 [.NET Standard 2.0](https://docs.microsoft.com/dotnet/standard/net-standard) 的 .NET 实现。
+<sup>(1)</sup> 请参阅下面的 [.NET Framework](#net-framework) 部分。
 
-<sup>(2)</sup> 请参阅[比较 EF Core 和 EF6](../../efcore-and-ef6/index.md) 以选择合适的技术。
+<sup>(2)</sup> Xamarin 存在一些问题和已知限制，这些问题和限制可能会阻止部分使用 EF Core 开发的应用程序正常运行。 查看[未解决问题](https://github.com/aspnet/entityframeworkCore/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-xamarin)列表，了解解决方法。
 
-<sup>(3)</sup> Xamarin 存在一些问题和已知限制，这些问题和限制可能会阻止部分使用 EF Core 2.0 开发的应用程序正常运行。 查看[未解决问题](https://github.com/aspnet/entityframeworkCore/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-xamarin)列表，了解解决方法。
+<sup>(3)</sup> 建议使用 EF Core 2.0.1 和更高版本。 安装 [.NET Core UWP 6.x 包](https://www.nuget.org/packages/Microsoft.NETCore.UniversalWindowsPlatform/)。 请参阅本文的[通用 Windows 平台](#universal-windows-platform)部分。
 
-<sup>(4)</sup> 请参阅本文的[通用 Windows 平台](#universal-windows-platform)部分。
+<sup>(4)</sup> Unity 存在问题和已知限制。 查看[未解决问题](https://github.com/aspnet/entityframeworkCore/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-unity)列表。
+
+## <a name="net-framework"></a>.NET Framework
+
+面向 .NET Framework 的应用程序可能需要更改为使用 .NET Standard 库：
+
+编辑项目文件，并确保以下条目出现在初始属性组中：
+
+``` xml
+<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+```
+
+对于测试项目，还要确保存在以下条目：
+
+``` xml
+<GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+```
+
+如果想要使用较旧版本的 Visual Studio，请确保[将 NuGet 客户端升级到版本 3.6.0](https://www.nuget.org/downloads)，以便使用 .NET Standard 2.0 库。
+
+如果可能，我们还建议从 NuGet packages.config 迁移到 PackageReference。 请将以下属性添加到项目文件：
+
+``` xml
+<RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+```
 
 ## <a name="universal-windows-platform"></a>通用 Windows 平台
 
