@@ -4,21 +4,17 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: 884cc6611b986fb213d99d3d2fc69d7bebe34aa2
-ms.sourcegitcommit: 7b7f774a5966b20d2aed5435a672a1edbe73b6fb
+ms.openlocfilehash: 04487291f24bb702dad4b497c34234afdd5e3c9a
+ms.sourcegitcommit: d01fc19aa42ca34c3bebccbc96ee26d06fcecaa2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/17/2019
-ms.locfileid: "69565307"
+ms.lasthandoff: 09/16/2019
+ms.locfileid: "71005587"
 ---
-# <a name="breaking-changes-included-in-ef-core-30-currently-in-preview"></a>EF Core 3.0 中包含的中断性变更（目前处于预览状态）
-
-> [!IMPORTANT]
-> 请注意，将来版本的功能集和计划会发生更改，尽管我们会尽力使此页面保持最新状态，但它可能不会始终反映我们的最新计划。
-
-以下 API 和行为更改有可能在将 EF Core 2.2.x 升级到 3.0.0 时中断为其开发的应用程序。
+# <a name="breaking-changes-included-in-ef-core-30"></a>EF Core 3.0 中包含的中断性变更
+以下 API 和行为更改有可能使现有应用程序在升级到 3.0.0 时中断。
 我们将仅影响数据库提供程序的更改记录在[提供程序更改](../../providers/provider-log.md)下。
-其中没有记录从一个 3.0 预览版引入到另一个 3.0 预览版的新功能的中断。
+此处未记录从一个 3.0 预览版到另一个 3.0 预览版的中断。
 
 ## <a name="summary"></a>总结
 
@@ -908,7 +904,7 @@ modelBuilder
 **缓解措施**
 
 仅字段属性名必须与它们映射到的字段名相同。
-在以后的一个 EF Core 3.0 预览版中，我们计划启用功能：显式配置与属性名不同的字段名：
+在 3.0 版之后的 EF Core 未来版本中，我们计划重新启用显式配置与属性名称不同的字段名称（请参阅问题 [15307](https://github.com/aspnet/EntityFrameworkCore/issues/15307)）：
 
 ```C#
 modelBuilder

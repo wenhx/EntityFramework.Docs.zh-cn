@@ -1,14 +1,14 @@
 ---
 title: 新增功能 - EF6
 author: divega
-ms.date: 10/23/2016
+ms.date: 09/12/2019
 ms.assetid: 41d1f86b-ce66-4bf2-8963-48514406fb4c
-ms.openlocfilehash: 01dc618954da5dbd12fbd37c2c47701ce251be92
-ms.sourcegitcommit: 0cc9578fd49802789a00c0044b4e57325476ca2e
+ms.openlocfilehash: 568790d9c9bb7dd2213907bef8fa090710cd3ba0
+ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/04/2019
-ms.locfileid: "70271444"
+ms.lasthandoff: 09/20/2019
+ms.locfileid: "71149127"
 ---
 # <a name="whats-new-in-ef6"></a>EF6 中的新增功能
 
@@ -16,40 +16,16 @@ ms.locfileid: "70271444"
 但我们也意识到用户可能需要使用以前的版本，或想要尝试最新预发行版中的新改进。
 若要安装特定版本的 EF，请参阅[获取实体框架](~/ef6/fundamentals/install.md)。
 
-本页记录每个新版本中包含的功能。
+## <a name="ef-630"></a>EF 6.3.0
 
-## <a name="recent-releases"></a>最新版本
+EF 6.3.0 运行时已于 2019 年 9 月发布到 NuGet。 此版本的主要目标是帮助将使用 EF 6 的现有应用程序迁移到 .NET Core 3.0。 社区还提供了多个 bug 修复和增强功能。 有关详细信息，请参阅每个 6.3.0 [里程碑](https://github.com/aspnet/EntityFramework6/milestones?state=closed)中关闭的问题。 下面是一些更值得注意的事项：
 
-### <a name="ef-tools-update-in-visual-studio-2017-157"></a>Visual Studio 2017 15.7 中的 EF 工具更新
-
-2018 年 5 月，我们在 Visual Studio 2017 15.7 中发布了更新后的 EF 工具。
-该版本包括对一些常见点的改进：
-
-- 修复了多个用户界面辅助功能 bug
-- 从现有数据库生成模型时 SQL Server 性能退化的解决方法 [#4](https://github.com/aspnet/entityframework6/issues/4)
-- 支持适用于 SQL Server 上较大模型的更新模型 [#185](https://github.com/aspnet/EntityFramework6/issues/185)
-
-此新版本的 EF 工具中的另一项改进是，在新项目中创建模型时会安装 EF 6.2 运行时。 借助较旧版本的 Visual Studio，可通过安装相应版本的 NuGet 包来使用 EF 6.2 运行时（以及以前任何版本的 EF）。
-
-### <a name="ef-62-runtime"></a>EF 6.2 运行时
-
-EF 6.2 运行时已于 2017 年 10 月发布到 NuGet。
-在我们开源社区参与者的努力下，EF 6.2 包括大量的 [bug 修复](https://github.com/aspnet/entityframework6/issues?utf8=%E2%9C%93&q=is%3Aissue%20milestone%3A6.2.0%20is%3Aclosed%20label%3Aclosed-fixed%20-label%3Aarea-tools%20label%3Atype-bug)和[产品增强功能](https://github.com/aspnet/entityframework6/issues?utf8=%E2%9C%93&q=is%3Aissue%20milestone%3A6.2.0%20is%3Aclosed%20label%3Aclosed-fixed%20-label%3Aarea-tools%20label%3Atype-enhancement%20)。
-
-下表简要列出了影响 EF 6.2 运行时的最重要的更改：
-
-- 通过加载持久性缓存中已完成的 Code First 模型来加快启动 [#275](https://github.com/aspnet/EntityFramework6/issues/275)
-- 采用 Fluent API 定义索引 [#274](https://github.com/aspnet/EntityFramework6/issues/274)
-- 通过 DbFunctions.Like() 编写在 SQL 中转换为 LIKE 的 LINQ 查询 [#241](https://github.com/aspnet/EntityFramework6/issues/241)
-- Migrate.exe 现支持脚本选项 [#240](https://github.com/aspnet/EntityFramework6/issues/240)
-- EF6 现在可使用 SQL Server 中的序列生成的键值 [#165](https://github.com/aspnet/EntityFramework6/issues/165)
-- 更新 SQL Azure 执行策略的暂时性错误列表 [#83](https://github.com/aspnet/EntityFramework6/issues/83)
-- Bug：重试查询或 SQL 命令失败，“另一 SqlParameterCollection 中已包含 SqlParameter”[#81](https://github.com/aspnet/EntityFramework6/issues/81)
-- Bug：DbQuery.ToString() 评估在调试程序中经常超时 [#73](https://github.com/aspnet/EntityFramework6/issues/73)
-
-## <a name="future-releases"></a>未来将要发布的版本
-
-有关未来将要发布的 EF6 版本的信息，请参阅[路线图](roadmap.md)。
+- 支持 .NET Core 3.0
+  - 除了 .NET Framework 4.x，EntityFramework 包现在还面向 .NET Standard 2.1
+  - 已重新编写迁移命令以在进程外执行，并使用 SDK 样式的项目
+- 支持 SQL Server HierarchyId
+- 提高了与 Roslyn 和 NuGet PackageReference 的兼容性
+- 添加了 ef6.exe，用于启用、添加、编写脚本和应用程序集中的迁移。 这会替换 migrate.exe
 
 ## <a name="past-releases"></a>过去的版本
 

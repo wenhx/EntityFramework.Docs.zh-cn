@@ -4,60 +4,83 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: 2EBE2CCC-E52D-483F-834C-8877F5EB0C0C
 uid: core/what-is-new/ef-core-3.0/features
-ms.openlocfilehash: d61fa884f4669daa220ffc96ae59dd63518e6d5a
-ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
+ms.openlocfilehash: 528733d6eec33de2c9538541a6ed5be704b9d433
+ms.sourcegitcommit: d01fc19aa42ca34c3bebccbc96ee26d06fcecaa2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/12/2019
-ms.locfileid: "70921677"
+ms.lasthandoff: 09/16/2019
+ms.locfileid: "71005560"
 ---
-# <a name="new-features-included-in-ef-core-30-currently-in-preview"></a>EF Core 3.0 中包含的新功能（目前处于预览状态）
-
-> [!IMPORTANT]
-> 请注意，将来版本的功能集和计划会发生更改，尽管我们会尽力使此页面保持最新状态，但它可能不会始终反映我们的最新计划。
+# <a name="new-features-included-in-ef-core-30"></a>EF Core 3.0 中包含的新功能
 
 以下列表包括为 EF Core 3.0 计划的主要新功能。
-大多数这些功能都不包含在当前预览中，但随着我们在 RTM 方面取得进展，这些功能将可用。
 
-原因是，在发布之初，我们专注于实现计划中的[中断性变更](xref:core/what-is-new/ef-core-3.0/breaking-changes)。
-其中许多中断性变更都是对 EF Core 的改进。
-还需要进行许多其他变更来实现进一步改进。 
-
-有关正在进行的 bug 修复和增强功能的完整列表，可查看[问题跟踪程序中的此查询](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3A3.0.0+sort%3Areactions-%2B1-desc)。
+EF Core 3.0 是一个主要版本，还包含许多[中断性变更](xref:core/what-is-new/ef-core-3.0/breaking-changes)，即可能对现有应用程序产生负面影响的 API 改进。  
 
 ## <a name="linq-improvements"></a>LINQ 的改进 
 
-[跟踪问题 #12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795)
+通过 LINQ，可继续使用所选语言编写数据库查询，利用丰富的类型信息来提供 IntelliSense 和编译时类型检查。
+而 LINQ 还允许编写包含任意表达式（方法调用或操作）的不限数量的复杂查询。
+处理所有这些组合一直是 LINQ 提供程序面临的重大挑战。
+在 EF Core 3.0 中，我们重写了 LINQ 实现，以便将更多的表达式转换为 SQL，在更多情况下生成高效查询，有效发现低效查询，并更容易地在不中断现有应用程序和数据提供程序的情况下逐步引入新的查询功能和性能改进。
 
-此功能的相关工作已经开始，但当前预览中不包含此功能。
+### <a name="client-evaluation"></a>客户端求值
 
-LINQ 可便于编写数据库查询，而无需离开所选的语言，同时还能利用丰富的类型信息来获取 IntelliSense 和编译时类型检查。
-不过，LINQ 也支持编写数量不限的复杂查询，而这对于 LINQ 提供程序来说，一直都是一项巨大挑战。
-在之前的几个 EF Core 版本中，我们找出了能够转换为 SQL 的查询的部分，并允许查询的其余部分在客户端的内存中执行，从而部分解决了这一问题。
-在某些情况下，此客户端执行是可取的，但在其他许多情况下，这可能会导致低效的查询，直到应用程序被部署到生产时才被发现。
-在 EF Core 3.0 中，我们计划对我们的 LINQ 实现的工作原理以及测试它的方式进行重大更改。
-目标是使其更为可靠（例如，避免修补程序版本中的查询中断）、使其能够将更多表达式正确地转换为 SQL、使其在更多场景中生成更有效的查询以及防止无法检测到效率低下的查询。
+EF Core 3.0 的主要设计更改与它如何处理无法转换为 SQL 或参数的 LINQ 表达式有关：
+
+在前几个版本中，EF Core 只仅明确查询的哪些部分可以转换为 SQL，并在客户端上执行查询的其余部分。
+在某些情况下，这种客户端执行是可取的，但在其他许多情况下，这可能会导致低效的查询。
+例如，如果 EF Core 2.2 无法转换 `Where()` 调用中的谓词，则会执行一个不带筛选器的 SQL 语句，从数据库中读取所有行，然后在内存中对其进行筛选。
+如果数据库包含少量行，那么这可能是可以接受的，但如果数据库包含大量行，则可能导致严重的性能问题甚至应用程序故障。
+在 EF Core 3.0 中，我们限制客户端评估仅发生在顶级投影（最后一次调用 `Select()`）上。
+当 EF Core 3.0 检测到无法在查询中的任何其他位置转换的表达式时，它会引发运行时异常。
 
 ## <a name="cosmos-db-support"></a>Cosmos DB 支持 
 
-[跟踪问题 #8443](https://github.com/aspnet/EntityFrameworkCore/issues/8443)
-
-当前预览中包含此功能，但尚不完善。 
-
-我们正在致力于开发适用于 EF Core 的 Cosmos DB 提供程序，以便开发人员能够熟悉 EF 编程模型，从而轻松地将 Azure Cosmos DB 定目标为应用程序数据库。
+通过 EF Core 的 Cosmos DB 提供程序，熟悉 EF 编程模型的开发人员可以轻松地将 Azure Cosmos DB 定为应用程序数据库目标。
 目标是利用 Cosmos DB 的一些优势，如全局分发、“始终开启”可用性、弹性可伸缩性和低延迟，甚至包括 .NET 开发人员可以更轻松地访问它。
 此提供程序将针对 Cosmos DB 中的 SQL API 启用大部分 EF Core 功能，如自动更改跟踪、LINQ 和值转换。
-我们在 EF Core 2.2 之前开始这一开发，并且[我们已发布了一些提供程序的预览版](https://blogs.msdn.microsoft.com/dotnet/2018/10/17/announcing-entity-framework-core-2-2-preview-3/)。
-新的计划是与 EF Core 3.0 一起继续开发提供程序。 
+
+## <a name="c-80-support"></a>C#8.0 支持
+
+EF Core 3.0 利用了 C#8.0 中的一些新功能：
+
+### <a name="asynchronous-streams"></a>异步流
+
+异步查询结果现在使用新的标准 `IAsyncEnumerable<T>` 接口公开，并且可以通过 `await foreach` 使用。
+
+``` csharp
+var orders = 
+  from o in context.Orders
+  where o.Status == OrderStatus.Pending
+  select o;
+
+await foreach(var o in orders)
+{
+  Proccess(o);
+} 
+```
+
+### <a name="nullable-reference-types"></a>可为空引用类型 
+
+当在代码中启用这个新功能时，EF Core 可以推断引用类型的属性（字符串等基本类型或导航属性）的为 Null 性，从而决定数据库中列和关系的为 Null 性。
+
+## <a name="interception"></a>Interception
+
+EF Core 3.0 中新的拦截 API 允许以编程方式观察和修改属于正常 EF Core 操作的低级数据库操作（例如打开连接、初始化事务和执行命令等）的结果。 
+
+## <a name="reverse-engineering-of-database-views"></a>数据库视图的反向工程
+
+没有键的实体类型（以前称为[查询类型](xref:core/modeling/query-types)）表示可以从数据库读取但不能更新的数据。
+在大多数情况下，这一特性使它们非常适合映射数据库视图，因此我们在执行数据库视图的反向工程时自动创建了没有键的实体类型。
 
 ## <a name="dependent-entities-sharing-the-table-with-the-principal-are-now-optional"></a>与主体共享表的依赖实体现为可选项
 
-[跟踪问题 #9005](https://github.com/aspnet/EntityFrameworkCore/issues/9005)
+自 EF Core 3.0 起，如果 `OrderDetails` 由 `Order` 拥有且显式映射到同一张表中，则它将可能添加 `Order` 而不添加 `OrderDetails`，并且除主键外的所有 `OrderDetails` 属性都将映射到不为 null 的列中。
 
-将在 EF Core 3.0 预览版 4 中引入此功能。
+查询时，如果其任意所需属性均没有值，或者它在主键之外没有任何必需属性且所有属性均为 `null`，则 EF Core 会将 `OrderDetails` 设置为 `null`。
 
-考虑下列模型：
-```C#
+``` csharp
 public class Order
 {
     public int Id { get; set; }
@@ -73,39 +96,17 @@ public class OrderDetails
 }
 ```
 
-自 EF Core 3.0 起，如果 `OrderDetails` 由 `Order` 拥有且显式映射到同一张表中，则它将可能添加 `Order` 而不添加 `OrderDetails`，并且除主键外的所有 `OrderDetails` 属性都将映射到不为 null 的列中。
-
-查询时，如果其任意所需属性均没有值，或者它在主键之外没有任何必需属性且所有属性均为 `null`，则 EF Core 会将 `OrderDetails` 设置为 `null`。
-
-## <a name="c-80-support"></a>C#8.0 支持
-
-[跟踪问题 #12047](https://github.com/aspnet/EntityFrameworkCore/issues/12047)
-[跟踪问题 #10347](https://github.com/aspnet/EntityFrameworkCore/issues/10347)
-
-此功能的相关工作已经开始，但当前预览中不包含此功能。
-
-我们希望客户利用 [C# 8.0 推出的新功能](https://blogs.msdn.microsoft.com/dotnet/2018/11/12/building-c-8-0/)，如在使用 EF Core 的同时使用异步流（包括 `await foreach`）和可以为 null 的引用类型。
-
-## <a name="reverse-engineering-of-database-views"></a>数据库视图的反向工程
-
-[跟踪问题 #1679](https://github.com/aspnet/EntityFrameworkCore/issues/1679)
-
-此功能包含在当前预览中。
-
-在 EF Core 2.1 中引入并在 EF Core 3.0 中视为没有键的实体类型的[查询类型](xref:core/modeling/query-types)代表可以从数据库读取但无法更新的数据。
-在大多数情况下，这一特性使它们非常适合数据库视图，因此我们计划在执行数据库视图的反向工程时自动创建没有键的实体类型。
-
 ## <a name="ef-63-on-net-core"></a>.NET Core 上的 EF 6.3
 
-[跟踪问题 EF6#271](https://github.com/aspnet/EntityFramework6/issues/271)
-
-此功能的相关工作已经开始，但当前预览中不包含此功能。 
-
 我们知道许多现有应用程序使用以前版本的 EF，而仅为了利用 .NET Core 将其移植到 EF Core 有时需要大量工作。
-为此，我们将对下一版本的 EF 6 进行调整，以在 .NET Core 3.0 上运行。
-我们这样做是为了在尽可能减少更改的情况下推动现有应用程序的移植。
-将存在一些限制。 例如:
-- 除了 .NET Core 上包含的 SQL Server 支持之外，它还需要新的提供程序才能与其他数据库一起使用
+为此，我们允许了最新版本的 EF 6 在 .NET Core 3.0 上运行。
+有一些限制，例如：
+- 新的提供程序需要在 .NET Core 上运行
 - 将不启用 SQL Server 的空间支持
 
-另请注意，此时没有为 EF 6 计划新功能。
+## <a name="postponed-features"></a>推迟的功能
+
+最初计划为 EF Core 3.0 提供的一些功能已推迟到将来的版本： 
+
+- 在迁移部分忽略模型的功能，跟踪编号为 [#2725](https://github.com/aspnet/EntityFrameworkCore/issues/2725)。
+- 属性包实体，由两个单独的问题跟踪：关于共享类型实体的 [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914) 和关于索引属性映射支持的 [#13610](https://github.com/aspnet/EntityFrameworkCore/issues/13610)。
