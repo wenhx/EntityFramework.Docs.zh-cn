@@ -5,12 +5,12 @@ ms.author: bricelam
 ms.date: 11/13/2018
 ms.assetid: 6263EF7D-4989-42E6-BDEE-45DA770342FB
 uid: core/managing-schemas/scaffolding
-ms.openlocfilehash: 775a929982b9f4fb10aad9cd43bbb555ce632ad1
-ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
+ms.openlocfilehash: afe2c865305ade93dd10c8838b80c8b4177e7e8e
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/20/2019
-ms.locfileid: "71149026"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71197194"
 ---
 # <a name="reverse-engineering"></a>反向工程
 
@@ -121,13 +121,12 @@ dotnet ef dbcontext scaffold ... --context-dir Data --output-dir Models
 
 最后，模型用于生成代码。 为了从应用程序重新创建相同的模型，相应的实体类型类、熟知 API 和数据批注都是基架的。
 
-## <a name="what-doesnt-work"></a>什么不起作用
+## <a name="limitations"></a>限制
 
-不是有关模型的所有内容都可以使用数据库架构来表示。 例如，有关[**继承层次结构**](../modeling/inheritance.md)、[**附属类型**](../modeling/owned-entities.md)和[**表拆分**](../modeling/table-splitting.md)的信息在数据库架构中不存在。 因此，这些构造永远不会经过反向工程。
-
-此外，EF Core 提供程序可能不支持**某些列类型**。 这些列不会包含在模型中。
-
-可以在 EF Core 模型中定义[**并发标记**](../modeling/concurrency.md)，以防止两个用户同时更新同一实体。 某些数据库有一种特殊类型的类型来表示此类型的列（例如 SQL Server 中的 rowversion），在这种情况下，我们可以对此信息进行反向工程。但是，其他并发令牌不会进行反向工程。
+* 不是有关模型的所有内容都可以使用数据库架构来表示。 例如，有关[**继承层次结构**](../modeling/inheritance.md)、[**附属类型**](../modeling/owned-entities.md)和[**表拆分**](../modeling/table-splitting.md)的信息在数据库架构中不存在。 因此，这些构造永远不会经过反向工程。
+* 此外，EF Core 提供程序可能不支持**某些列类型**。 这些列不会包含在模型中。
+* 可以在 EF Core 模型中定义[**并发标记**](../modeling/concurrency.md)，以防止两个用户同时更新同一实体。 某些数据库有一种特殊类型的类型来表示此类型的列（例如 SQL Server 中的 rowversion），在这种情况下，我们可以对此信息进行反向工程。但是，其他并发令牌不会进行反向工程。
+* 反向工程当前不支持[8 可为 Null 的C#引用类型功能](/dotnet/csharp/tutorials/nullable-reference-types)：EF Core 始终会C#生成假定禁用了该功能的代码。 例如，可以将可为 null 的文本列基架为类型`string`为的属性，而不`string?`是用于配置是否需要属性的熟知 API 或数据批注。 您可以编辑基架代码并将其替换为C#可为 null 的批注。 [#15520](https://github.com/aspnet/EntityFrameworkCore/issues/15520)的问题跟踪了可为 null 的引用类型的基架支持。
 
 ## <a name="customizing-the-model"></a>自定义模型
 

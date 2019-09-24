@@ -1,36 +1,36 @@
 ---
-title: 外键约束的 EF Core
+title: Foreign Key 约束-EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: dbaf4bac-1fd5-46c0-ac57-64d7153bc574
 uid: core/modeling/relational/fk-constraints
-ms.openlocfilehash: a83f72b5d832e349fb4a5fb3b2de0b82bd79ef2a
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: d7ed4466f4df9ec01267b048ba1bbcc6e8bbdad5
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42993983"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71197072"
 ---
 # <a name="foreign-key-constraints"></a>外键约束
 
 > [!NOTE]  
 > 一般而言，本部分中的配置适用于关系数据库。 安装关系数据库提供程序时，此处显示的扩展方法将变为可用（原因在于共享的 Microsoft.EntityFrameworkCore.Relational 包）。
 
-每个关系在模型中引入了外键约束。
+为模型中的每个关系引入了 foreign key 约束。
 
 ## <a name="conventions"></a>约定
 
-按照约定外, 键约束名为`FK_<dependent type name>_<principal type name>_<foreign key property name>`。 对于复合外键`<foreign key property name>`变得外键属性名称的下划线分隔列表。
+按照约定，外键约束命名为`FK_<dependent type name>_<principal type name>_<foreign key property name>`。 对于复合外键`<foreign key property name>` ，将成为外键属性名称的下划线分隔列表。
 
 ## <a name="data-annotations"></a>数据注释
 
-外键约束名称不能使用数据批注进行配置。
+不能使用数据批注配置 Foreign key 约束名称。
 
 ## <a name="fluent-api"></a>Fluent API
 
-可以使用 Fluent API 来配置关系的外键约束名称。
+您可以使用熟知的 API 来配置关系的外键约束名称。
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/RelationshipConstraintName.cs?highlight=12)] -->
+<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Relational/RelationshipConstraintName.cs?highlight=12)] -->
 ``` csharp
 class MyContext : DbContext
 {
@@ -62,6 +62,6 @@ public class Post
     public string Content { get; set; }
 
     public int BlogId { get; set; }
-    public Blog Blog { get; set; }
+    public Blog Blog { get; set; }
 }
 ```

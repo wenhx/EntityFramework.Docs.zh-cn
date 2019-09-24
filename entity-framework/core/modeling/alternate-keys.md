@@ -1,15 +1,15 @@
 ---
-title: 备用密钥-EF Core
+title: 备用键-EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 8a5931d4-b480-4298-af36-0e29d74a37c0
 uid: core/modeling/alternate-keys
-ms.openlocfilehash: b26d8bc1630af9e811d9c4e7da850a618bc8042e
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 87df5d174a1db12fb3ab763ac76c3b863a83087e
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42996966"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71197473"
 ---
 # <a name="alternate-keys"></a>备用键
 
@@ -24,7 +24,7 @@ ms.locfileid: "42996966"
 
 按照约定，系统将在识别属性（不是主键）时为你引入备用键，充当关系的目标。
 
-<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/Samples/AlternateKey.cs?highlight=12)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/AlternateKey.cs?highlight=12)] -->
 ``` csharp
 class MyContext : DbContext
 {
@@ -66,9 +66,9 @@ public class Post
 
 ## <a name="fluent-api"></a>Fluent API
 
-Fluent API 可用于配置要作为备用键的单个属性。
+您可以使用熟知的 API 将单个属性配置为备用密钥。
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/AlternateKeySingle.cs?highlight=7,8)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/AlternateKeySingle.cs?highlight=7,8)] -->
 ``` csharp
 class MyContext : DbContext
 {
@@ -90,9 +90,9 @@ class Car
 }
 ```
 
-Fluent API 还可用于配置要作为备用键 （称为复合的备用键） 的多个属性。
+你还可以使用熟知的 API 将多个属性配置为备用密钥（称为复合备用键）。
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/AlternateKeyComposite.cs?highlight=7,8)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/AlternateKeyComposite.cs?highlight=7,8)] -->
 ``` csharp
 class MyContext : DbContext
 {

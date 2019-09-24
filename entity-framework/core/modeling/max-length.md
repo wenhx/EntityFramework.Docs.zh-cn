@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: c39c5d43-018d-48b8-94f2-b8bc7c686c69
 uid: core/modeling/max-length
-ms.openlocfilehash: 3220518cb0a409b6e802d2f3a98acdb949ffbf56
-ms.sourcegitcommit: 87fcaba46535aa351db4bdb1231bd14b40e459b9
+ms.openlocfilehash: b6f0594fed0c491b4f79dcda5273cdebe9ecf35f
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/22/2019
-ms.locfileid: "59929844"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71197221"
 ---
 # <a name="maximum-length"></a>最大长度
 
@@ -24,12 +24,12 @@ ms.locfileid: "59929844"
 
 ## <a name="data-annotations"></a>数据注释
 
-可以使用数据注释来配置属性的最大长度。 此示例面向 SQL Server，因此使用数据类型 `nvarchar(500)`。
+您可以使用数据批注为属性配置最大长度。 此示例面向 SQL Server，因此使用数据类型 `nvarchar(500)`。
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Samples/MaxLength.cs?highlight=14)]
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/MaxLength.cs?highlight=14)]
 
 ## <a name="fluent-api"></a>Fluent API
 
-可以使用 Fluent API 配置属性的最大长度。 此示例面向 SQL Server，因此使用数据类型 `nvarchar(500)`。
+您可以使用熟知的 API 来配置属性的最大长度。 此示例面向 SQL Server，因此使用数据类型 `nvarchar(500)`。
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/MaxLength.cs?highlight=11-13)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/MaxLength.cs?highlight=11-13)]

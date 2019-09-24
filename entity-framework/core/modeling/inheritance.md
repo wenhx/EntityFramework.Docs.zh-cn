@@ -1,15 +1,15 @@
 ---
-title: 继承的 EF Core
+title: 继承-EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 754be334-dd21-450e-9d22-2591e80012a2
 uid: core/modeling/inheritance
-ms.openlocfilehash: f6b5c8f5a398ac1e28e29bc17f0674c5b76d7b20
-ms.sourcegitcommit: eb8359b7ab3b0a1a08522faf67b703a00ecdcefd
+ms.openlocfilehash: 1f20c455176b5922364584f8c7688c15a4c3f0f9
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/21/2019
-ms.locfileid: "58319122"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71197284"
 ---
 # <a name="inheritance"></a>继承
 
@@ -17,24 +17,24 @@ EF 模型中的继承用于控制如何在数据库中表示实体类中的继�
 
 ## <a name="conventions"></a>约定
 
-按照约定，负责数据库提供程序，以确定如何继承将表示在数据库中。 请参阅[继承 （关系数据库）](relational/inheritance.md)这与关系数据库提供程序的处理方式。
+按照约定，由数据库提供商确定如何在数据库中表示继承。 有关如何使用关系数据库提供程序来处理此情况的详细说明，请参阅[继承（关系数据库）](relational/inheritance.md) 。
 
-如果两个或多个继承的类型显式包含在模型中，EF 将仅设置继承。 EF 不会扫描的基类或派生类型，否则不包含在模型中。 可以在模型中包含类型，通过公开*DbSet<TEntity>* 继承层次结构中每个类型。
+如果模型中显式包括两个或更多个继承类型，则 EF 仅会设置继承。 EF 不会扫描模型中未包含的基类型或派生类型。 可以通过为继承层次结构中的每个类型公开*DbSet<TEntity>*  ，在模型中包含类型。
 
-[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Samples/InheritanceDbSets.cs?highlight=3-4&name=Model)]
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/InheritanceDbSets.cs?highlight=3-4&name=Model)]
 
-如果不想要公开*DbSet<TEntity>* 对于层次结构中的一个或多个实体，你可以使用 Fluent API 以确保它们都包含在模型中。
-如果您不依赖于约定，可以指定使用显式的基类型`HasBaseType`。
+如果不想公开层次结构中一个或多个实体的*DbSet<TEntity>*  ，可以使用熟知的 API 来确保它们包含在模型中。
+如果不依赖约定，则可以使用`HasBaseType`显式指定基类型。
 
-[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Samples/InheritanceModelBuilder.cs?highlight=7&name=Context)]
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/InheritanceModelBuilder.cs?highlight=7&name=Context)]
 
 > [!NOTE]
-> 可以使用`.HasBaseType((Type)null)`从层次结构中删除某个实体类型。
+> 您可以使用`.HasBaseType((Type)null)`从层次结构中删除实体类型。
 
 ## <a name="data-annotations"></a>数据注释
 
-不能使用数据注释来配置继承。
+不能使用数据批注来配置继承。
 
 ## <a name="fluent-api"></a>Fluent API
 
-用于继承的 Fluent API 取决于正在使用的数据库提供程序。 请参阅[继承 （关系数据库）](relational/inheritance.md)可以针对关系数据库提供程序执行的配置。
+用于继承的流畅 API 取决于所使用的数据库提供程序。 有关可为关系数据库提供程序执行的配置，请参阅[继承（关系数据库）](relational/inheritance.md) 。
