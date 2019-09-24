@@ -4,54 +4,54 @@ author: rowanmiller
 ms.date: 03/03/2018
 ms.assetid: bc8b1cb0-befe-4b67-8004-26e6c5f69385
 uid: core/modeling/concurrency
-ms.openlocfilehash: 0051d416544a11385f99d36e45843c5b20725af7
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: db768c1de99000be91d33764ccd3c3924237f8bb
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42994221"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71197452"
 ---
-# <a name="concurrency-tokens"></a><span data-ttu-id="1b531-102">并发标记</span><span class="sxs-lookup"><span data-stu-id="1b531-102">Concurrency Tokens</span></span>
+# <a name="concurrency-tokens"></a><span data-ttu-id="7c89b-102">并发标记</span><span class="sxs-lookup"><span data-stu-id="7c89b-102">Concurrency Tokens</span></span>
 
 > [!NOTE]
-> <span data-ttu-id="1b531-103">此页介绍了如何配置并发标记。</span><span class="sxs-lookup"><span data-stu-id="1b531-103">This page documents how to configure concurrency tokens.</span></span> <span data-ttu-id="1b531-104">请参阅[处理并发冲突](../saving/concurrency.md)并发控制 EF Core 以及如何处理应用程序中的并发冲突的示例中的工作原理的详细说明。</span><span class="sxs-lookup"><span data-stu-id="1b531-104">See [Handling Concurrency Conflicts](../saving/concurrency.md) for a detailed explanation of how concurrency control works on EF Core and examples of how to handle concurrency conflicts in your application.</span></span>
+> <span data-ttu-id="7c89b-103">此页介绍如何配置并发标记。</span><span class="sxs-lookup"><span data-stu-id="7c89b-103">This page documents how to configure concurrency tokens.</span></span> <span data-ttu-id="7c89b-104">请参阅[处理并发冲突](../saving/concurrency.md)并发控制 EF Core 以及如何处理应用程序中的并发冲突的示例中的工作原理的详细说明。</span><span class="sxs-lookup"><span data-stu-id="7c89b-104">See [Handling Concurrency Conflicts](../saving/concurrency.md) for a detailed explanation of how concurrency control works on EF Core and examples of how to handle concurrency conflicts in your application.</span></span>
 
-<span data-ttu-id="1b531-105">属性配置为并发标记用于实现乐观并发控制。</span><span class="sxs-lookup"><span data-stu-id="1b531-105">Properties configured as concurrency tokens are used to implement optimistic concurrency control.</span></span>
+<span data-ttu-id="7c89b-105">配置为并发标记的属性用于实现乐观并发控制。</span><span class="sxs-lookup"><span data-stu-id="7c89b-105">Properties configured as concurrency tokens are used to implement optimistic concurrency control.</span></span>
 
-## <a name="conventions"></a><span data-ttu-id="1b531-106">约定</span><span class="sxs-lookup"><span data-stu-id="1b531-106">Conventions</span></span>
+## <a name="conventions"></a><span data-ttu-id="7c89b-106">约定</span><span class="sxs-lookup"><span data-stu-id="7c89b-106">Conventions</span></span>
 
-<span data-ttu-id="1b531-107">按照约定，属性永远不会配置为并发标记。</span><span class="sxs-lookup"><span data-stu-id="1b531-107">By convention, properties are never configured as concurrency tokens.</span></span>
+<span data-ttu-id="7c89b-107">按照约定，属性永远不会配置为并发标记。</span><span class="sxs-lookup"><span data-stu-id="7c89b-107">By convention, properties are never configured as concurrency tokens.</span></span>
 
-## <a name="data-annotations"></a><span data-ttu-id="1b531-108">数据注释</span><span class="sxs-lookup"><span data-stu-id="1b531-108">Data Annotations</span></span>
+## <a name="data-annotations"></a><span data-ttu-id="7c89b-108">数据注释</span><span class="sxs-lookup"><span data-stu-id="7c89b-108">Data Annotations</span></span>
 
-<span data-ttu-id="1b531-109">可以使用数据注释属性配置为并发标记。</span><span class="sxs-lookup"><span data-stu-id="1b531-109">You can use the Data Annotations to configure a property as a concurrency token.</span></span>
+<span data-ttu-id="7c89b-109">您可以使用数据批注将属性配置为并发标记。</span><span class="sxs-lookup"><span data-stu-id="7c89b-109">You can use the Data Annotations to configure a property as a concurrency token.</span></span>
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Samples/Concurrency.cs#ConfigureConcurrencyAnnotations)]
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Concurrency.cs#ConfigureConcurrencyAnnotations)]
 
-## <a name="fluent-api"></a><span data-ttu-id="1b531-110">Fluent API</span><span class="sxs-lookup"><span data-stu-id="1b531-110">Fluent API</span></span>
+## <a name="fluent-api"></a><span data-ttu-id="7c89b-110">Fluent API</span><span class="sxs-lookup"><span data-stu-id="7c89b-110">Fluent API</span></span>
 
-<span data-ttu-id="1b531-111">Fluent API 可用于将属性配置为并发标记。</span><span class="sxs-lookup"><span data-stu-id="1b531-111">You can use the Fluent API to configure a property as a concurrency token.</span></span>
+<span data-ttu-id="7c89b-111">您可以使用熟知的 API 将属性配置为并发标记。</span><span class="sxs-lookup"><span data-stu-id="7c89b-111">You can use the Fluent API to configure a property as a concurrency token.</span></span>
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/Concurrency.cs#ConfigureConcurrencyFluent)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Concurrency.cs#ConfigureConcurrencyFluent)]
 
-## <a name="timestamprow-version"></a><span data-ttu-id="1b531-112">时间戳/行版本</span><span class="sxs-lookup"><span data-stu-id="1b531-112">Timestamp/row version</span></span>
+## <a name="timestamprow-version"></a><span data-ttu-id="7c89b-112">时间戳/行版本</span><span class="sxs-lookup"><span data-stu-id="7c89b-112">Timestamp/row version</span></span>
 
-<span data-ttu-id="1b531-113">时间戳是每次插入或更新行时，由数据库生成一个新的值是其中一个属性。</span><span class="sxs-lookup"><span data-stu-id="1b531-113">A timestamp is a property where a new value is generated by the database every time a row is inserted or updated.</span></span> <span data-ttu-id="1b531-114">该属性也被视为并发标记。</span><span class="sxs-lookup"><span data-stu-id="1b531-114">The property is also treated as a concurrency token.</span></span> <span data-ttu-id="1b531-115">这可确保您将收到异常，如果任何其他人已修改的行，你尝试更新，因为查询的数据。</span><span class="sxs-lookup"><span data-stu-id="1b531-115">This ensures you will get an exception if anyone else has modified a row that you are trying to update since you queried for the data.</span></span>
+<span data-ttu-id="7c89b-113">时间戳是一个属性，在每次插入或更新行时，数据库都会生成一个新值。</span><span class="sxs-lookup"><span data-stu-id="7c89b-113">A timestamp is a property where a new value is generated by the database every time a row is inserted or updated.</span></span> <span data-ttu-id="7c89b-114">此属性也被视为并发标记。</span><span class="sxs-lookup"><span data-stu-id="7c89b-114">The property is also treated as a concurrency token.</span></span> <span data-ttu-id="7c89b-115">这可以确保在其他人修改了您尝试在查询数据后尝试更新的行时，您将收到异常。</span><span class="sxs-lookup"><span data-stu-id="7c89b-115">This ensures you will get an exception if anyone else has modified a row that you are trying to update since you queried for the data.</span></span>
 
-<span data-ttu-id="1b531-116">这如何实现由正在使用的数据库提供程序。</span><span class="sxs-lookup"><span data-stu-id="1b531-116">How this is achieved is up to the database provider being used.</span></span> <span data-ttu-id="1b531-117">对于 SQL Server，时间戳通常用于在*byte []* 属性，它将设置为*ROWVERSION*数据库中的列。</span><span class="sxs-lookup"><span data-stu-id="1b531-117">For SQL Server, timestamp is usually used on a *byte[]* property, which will be setup as a *ROWVERSION* column in the database.</span></span>
+<span data-ttu-id="7c89b-116">实现此目的的方式取决于所使用的数据库提供程序。</span><span class="sxs-lookup"><span data-stu-id="7c89b-116">How this is achieved is up to the database provider being used.</span></span> <span data-ttu-id="7c89b-117">对于 SQL Server，时间戳通常用于*byte []* 属性，该属性将设置为数据库中的*ROWVERSION*列。</span><span class="sxs-lookup"><span data-stu-id="7c89b-117">For SQL Server, timestamp is usually used on a *byte[]* property, which will be setup as a *ROWVERSION* column in the database.</span></span>
 
-### <a name="conventions"></a><span data-ttu-id="1b531-118">约定</span><span class="sxs-lookup"><span data-stu-id="1b531-118">Conventions</span></span>
+### <a name="conventions"></a><span data-ttu-id="7c89b-118">约定</span><span class="sxs-lookup"><span data-stu-id="7c89b-118">Conventions</span></span>
 
-<span data-ttu-id="1b531-119">按照约定，永远不会作为时间戳配置属性。</span><span class="sxs-lookup"><span data-stu-id="1b531-119">By convention, properties are never configured as timestamps.</span></span>
+<span data-ttu-id="7c89b-119">按照约定，属性永远不会配置为时间戳。</span><span class="sxs-lookup"><span data-stu-id="7c89b-119">By convention, properties are never configured as timestamps.</span></span>
 
-### <a name="data-annotations"></a><span data-ttu-id="1b531-120">数据注释</span><span class="sxs-lookup"><span data-stu-id="1b531-120">Data Annotations</span></span>
+### <a name="data-annotations"></a><span data-ttu-id="7c89b-120">数据注释</span><span class="sxs-lookup"><span data-stu-id="7c89b-120">Data Annotations</span></span>
 
-<span data-ttu-id="1b531-121">可以使用数据注释属性配置为时间戳。</span><span class="sxs-lookup"><span data-stu-id="1b531-121">You can use Data Annotations to configure a property as a timestamp.</span></span>
+<span data-ttu-id="7c89b-121">您可以使用数据批注将属性配置为时间戳。</span><span class="sxs-lookup"><span data-stu-id="7c89b-121">You can use Data Annotations to configure a property as a timestamp.</span></span>
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Samples/Timestamp.cs#ConfigureTimestampAnnotations)]
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Timestamp.cs#ConfigureTimestampAnnotations)]
 
-### <a name="fluent-api"></a><span data-ttu-id="1b531-122">Fluent API</span><span class="sxs-lookup"><span data-stu-id="1b531-122">Fluent API</span></span>
+### <a name="fluent-api"></a><span data-ttu-id="7c89b-122">Fluent API</span><span class="sxs-lookup"><span data-stu-id="7c89b-122">Fluent API</span></span>
 
-<span data-ttu-id="1b531-123">Fluent API 可用于将属性配置为时间戳。</span><span class="sxs-lookup"><span data-stu-id="1b531-123">You can use the Fluent API to configure a property as a timestamp.</span></span>
+<span data-ttu-id="7c89b-123">你可以使用熟知的 API 将属性配置为时间戳。</span><span class="sxs-lookup"><span data-stu-id="7c89b-123">You can use the Fluent API to configure a property as a timestamp.</span></span>
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/Timestamp.cs#ConfigureTimestampFluent)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Timestamp.cs#ConfigureTimestampFluent)]
