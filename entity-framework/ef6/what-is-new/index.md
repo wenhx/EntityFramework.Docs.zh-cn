@@ -3,12 +3,13 @@ title: 新增功能 - EF6
 author: divega
 ms.date: 09/12/2019
 ms.assetid: 41d1f86b-ce66-4bf2-8963-48514406fb4c
-ms.openlocfilehash: 568790d9c9bb7dd2213907bef8fa090710cd3ba0
-ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
+uid: ef6/what-is-new/index
+ms.openlocfilehash: bb7038764644682c2149a8a500f342804d01f3d2
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/20/2019
-ms.locfileid: "71149127"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71198038"
 ---
 # <a name="whats-new-in-ef6"></a>EF6 中的新增功能
 
@@ -25,7 +26,26 @@ EF 6.3.0 运行时已于 2019 年 9 月发布到 NuGet。 此版本的主要目�
   - 已重新编写迁移命令以在进程外执行，并使用 SDK 样式的项目
 - 支持 SQL Server HierarchyId
 - 提高了与 Roslyn 和 NuGet PackageReference 的兼容性
-- 添加了 ef6.exe，用于启用、添加、编写脚本和应用程序集中的迁移。 这会替换 migrate.exe
+- 添加了 `ef6.exe` 实体工具，用于启用、添加、编写脚本和应用程序集中的迁移。 这会替换 `migrate.exe`
+
+### <a name="ef-designer-support"></a>EF 设计器支持
+
+目前不支持直接在 .NET Core 或 .NET Standard 项目上使用 EF 设计器。 
+
+可以通过在同一解决方案中将 EDMX 文件以及为实体和 DbContext 生成的类作为链接文件添加到 .NET Core 3.0 或 .NET Standard 2.1 项目中来解决此限制。
+
+在项目文件中，链接文件将如下所示：
+
+``` csproj 
+&lt;ItemGroup&gt;
+  &lt;EntityDeploy Include="..\EdmxDesignHost\Entities.edmx" Link="Model\Entities.edmx" /&gt;
+  &lt;Compile Include="..\EdmxDesignHost\Entities.Context.cs" Link="Model\Entities.Context.cs" /&gt;
+  &lt;Compile Include="..\EdmxDesignHost\Thing.cs" Link="Model\Thing.cs" /&gt;
+  &lt;Compile Include="..\EdmxDesignHost\Person.cs" Link="Model\Person.cs" /&gt;
+&lt;/ItemGroup&gt;
+```
+
+请注意，EDMX 文件与 EntityDeploy 生成操作关联。 这是一个特殊的 MSBuild 任务（现已包含在 EF 6.3 包中），它负责将 EF 模型作为嵌入式资源添加到目标程序集中（或将其复制为输出文件夹中的文件，具体取决于 EDMX 中的“元数据项目处理”设置）。 有关如何进行此设置的详细信息，请参阅 [EDMX .NET Core 示例](https://aka.ms/EdmxDotNetCoreSample)。
 
 ## <a name="past-releases"></a>过去的版本
 

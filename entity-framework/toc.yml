@@ -1,33 +1,32 @@
 - name: Entity Framework
   href: index.md
   items:
-    - name: 比较 EF Core 和 EF6
-      href: efcore-and-ef6/index.md
+    - name: EF Core 和 EF6
       items:
-        - name: 同一应用程序中的 EF6 和 EF Core
-          href: efcore-and-ef6/side-by-side.md
+        - name: 比较 EF Core 和 EF6
+          href: efcore-and-ef6/index.md
         - name: 从 EF6 移植到 EF Core
-          href: efcore-and-ef6/porting/index.md
           items:
-            - name: 验证要求
-              href: efcore-and-ef6/porting/ensure-requirements.md
+            - name: 概述
+              href: efcore-and-ef6/porting/index.md
             - name: 移植基于 EDMX 的模型
               href: efcore-and-ef6/porting/port-edmx.md
             - name: 移植基于 Code 的模型
               href: efcore-and-ef6/porting/port-code.md
+        - name: 同一应用程序中使用 EF6 和 EF Core
+          href: efcore-and-ef6/side-by-side.md
     - name: Entity Framework Core
-      href: core/index.md
       items:
+        - name: 概述
+          href: core/index.md
         - name: 新增功能
-          href: core/what-is-new/index.md
           items:
-            - name: 路线图
-              href: core/what-is-new/roadmap.md
-            - name: EF Core 3.0（最新版）
-              href: core/what-is-new/ef-core-3.0/index.md
+            - name: 概述
+              href: core/what-is-new/index.md
+            - name: EF Core 3.0
               items:
                 - name: 新增功能
-                  href: core/what-is-new/ef-core-3.0/features.md
+                  href: core/what-is-new/ef-core-3.0/index.md
                 - name: 重大更改
                   href: core/what-is-new/ef-core-3.0/breaking-changes.md
             - name: EF Core 2.2
@@ -49,8 +48,9 @@
                 - name: 从 1.x 升级到 2.0
                   href: core/miscellaneous/1x-2x-upgrade.md
         - name: 开始操作
-          href: core/get-started/index.md
           items:
+            - name: EF Core 教程
+              href: core/get-started/index.md
             - name: 安装 EF Core
               href: core/get-started/install/index.md
             - name: ⤤ ASP.NET Core 教程
@@ -64,17 +64,21 @@
             - name: 连接弹性
               href: core/miscellaneous/connection-resiliency.md
             - name: 正在测试
-              href: core/miscellaneous/testing/index.md
               items:
+                - name: 概述
+                  href: core/miscellaneous/testing/index.md
                 - name: 使用 SQLite 进行测试
                   href: core/miscellaneous/testing/sqlite.md
                 - name: 使用 InMemory 进行测试
                   href: core/miscellaneous/testing/in-memory.md
             - name: 配置 DbContext
               href: core/miscellaneous/configuring-dbcontext.md
+            - name: 可为空引用类型
+              href: core/miscellaneous/nullable-reference-types.md
         - name: 创建模型
-          href: core/modeling/index.md
           items:
+            - name: 概述
+              href: core/modeling/index.md
             - name: 包含类型和排除类型
               href: core/modeling/included-types.md
             - name: 包含属性和排除属性
@@ -83,7 +87,7 @@
               href: core/modeling/keys.md
             - name: 生成的值
               href: core/modeling/generated-properties.md
-            - name: 必需/可选属性
+            - name: 必需和可选属性
               href: core/modeling/required-optional.md
             - name: 最大长度
               href: core/modeling/max-length.md
@@ -118,8 +122,9 @@
             - name: 空间数据 (GIS)
               href: core/modeling/spatial.md
             - name: 关系数据库建模
-              href: core/modeling/relational/index.md
               items:
+                - name: 概述
+                  href: core/modeling/relational/index.md
                 - name: 表映射
                   href: core/modeling/relational/tables.md
                 - name: 列映射
@@ -145,11 +150,13 @@
                 - name: 继承（关系数据库）
                   href: core/modeling/relational/inheritance.md
         - name: 管理数据库架构
-          href: core/managing-schemas/index.md
           items:
+            - name: 概述
+              href: core/managing-schemas/index.md
             - name: 迁移
-              href: core/managing-schemas/migrations/index.md
               items:
+                - name: 概述
+                  href: core/managing-schemas/migrations/index.md
                 - name: 团队环境
                   href: core/managing-schemas/migrations/teams.md
                 - name: 自定义操作
@@ -165,8 +172,9 @@
             - name: 反向工程（基架）
               href: core/managing-schemas/scaffolding.md
         - name: 查询数据
-          href: core/querying/index.md
           items:
+            - name: 概述
+              href: core/querying/index.md
             - name: 基本查询
               href: core/querying/basic.md
             - name: 加载相关数据
@@ -186,8 +194,9 @@
             - name: 查询标记
               href: core/querying/tags.md
         - name: 保存数据
-          href: core/saving/index.md
           items:
+            - name: 概述
+              href: core/saving/index.md
             - name: 基本保存
               href: core/saving/basic.md
             - name: 关联数据
@@ -207,21 +216,25 @@
         - name: 支持的 .NET 实现
           href: core/platforms/index.md
         - name: 数据库提供程序
-          href: core/providers/index.md
           items:
+            - name: 概述
+              href: core/providers/index.md
             - name: Microsoft SQL Server
-              href: core/providers/sql-server/index.md
               items:
+                - name: 概述
+                  href: core/providers/sql-server/index.md
                 - name: 内存优化表
                   href: core/providers/sql-server/memory-optimized-tables.md
             - name: SQLite
-              href: core/providers/sqlite/index.md
               items:
+                - name: 概述
+                  href: core/providers/sqlite/index.md
                 - name: SQLite 限制
                   href: core/providers/sqlite/limitations.md
             - name: Cosmos
-              href: core/providers/cosmos/index.md
               items:
+                - name: 概述
+                  href: core/providers/cosmos/index.md
                 - name: 使用非结构化数据
                   href: core/providers/cosmos/unstructured-data.md
                 - name: Cosmos 限制
@@ -235,8 +248,9 @@
         - name: 工具和扩展
           href: core/extensions/index.md
         - name: 命令行参考
-          href: core/miscellaneous/cli/index.md
           items:
+            - name: 概述
+              href: core/miscellaneous/cli/index.md
             - name: 程序包管理器控制台 (Visual Studio)
               href: core/miscellaneous/cli/powershell.md
             - name: .NET Core CLI
@@ -248,11 +262,13 @@
         - name: ⤤ EF Core API 参考
           href: 'https://docs.microsoft.com/dotnet/api/?view=efcore-2.1'
     - name: Entity Framework 6
-      href: ef6/index.md
       items:
+        - name: 概述
+          href: ef6/index.md
         - name: 新增功能
-          href: ef6/what-is-new/index.md
           items:
+            - name: 概述
+              href: ef6/what-is-new/index.md
             - name: 过去的版本
               href: ef6/what-is-new/past-releases.md
             - name: 升级到 EF6
@@ -262,7 +278,6 @@
         - name: 开始操作
           href: ef6/get-started.md
         - name: 基础知识
-          href: ef6/fundamentals/index.md
           items:
             - name: 获取实体框架
               href: ef6/fundamentals/install.md
@@ -297,11 +312,13 @@
                 - name: WPF
                   href: ef6/fundamentals/databinding/wpf.md
             - name: 处于连接断开状态的实体
-              href: ef6/fundamentals/disconnected-entities/index.md
               items:
+                - name: 概述
+                  href: ef6/fundamentals/disconnected-entities/index.md
                 - name: 自跟踪实体
-                  href: ef6/fundamentals/disconnected-entities/self-tracking-entities/index.md
                   items:
+                    - name: 概述
+                      href: ef6/fundamentals/disconnected-entities/self-tracking-entities/index.md
                     - name: 演练
                       href: ef6/fundamentals/disconnected-entities/self-tracking-entities/walkthrough.md
             - name: 日志记录和拦截
@@ -315,8 +332,9 @@
                 - name: 使用预生成的视图
                   href: ef6/fundamentals/performance/pre-generated-views.md
             - name: 提供程序
-              href: ef6/fundamentals/providers/index.md
               items:
+                - name: 概述
+                  href: ef6/fundamentals/providers/index.md
                 - name: EF6 提供程序模型
                   href: ef6/fundamentals/providers/provider-model.md
                 - name: 提供程序中的空间支持
@@ -332,8 +350,9 @@
                 - name: 使用 EF4 的可测试性（文章）
                   href: ef6/fundamentals/testing/testability-article.md
         - name: 创建模型
-          href: ef6/modeling/index.md
           items:
+            - name: 概述
+              href: ef6/modeling/index.md
             - name: 使用 Code First
               items:
                 - name: 工作流
@@ -371,8 +390,9 @@
                     - name: 存储过程映射
                       href: ef6/modeling/code-first/fluent/cud-stored-procedures.md
                 - name: 迁移
-                  href: ef6/modeling/code-first/migrations/index.md
                   items:
+                    - name: 概述
+                      href: ef6/modeling/code-first/migrations/index.md
                     - name: 自动迁移
                       href: ef6/modeling/code-first/migrations/automatic.md
                     - name: 使用现有数据库
@@ -424,8 +444,9 @@
                 - name: 选择运行时版本
                   href: ef6/modeling/designer/select-runtime-version.md
                 - name: 代码生成
-                  href: ef6/modeling/designer/codegen/index.md
                   items:
+                    - name: 概述
+                      href: ef6/modeling/designer/codegen/index.md
                     - name: 旧的 ObjectContext
                       href: ef6/modeling/designer/codegen/legacy-objectcontext.md
                 - name: 高级
@@ -447,8 +468,9 @@
                 - name: 键盘快捷键
                   href: ef6/modeling/designer/keyboard-shortcuts.md
         - name: 查询数据
-          href: ef6/querying/index.md
           items:
+            - name: 概述
+              href: ef6/querying/index.md
             - name: Load 方法
               href: ef6/querying/load-method.md
             - name: 本地数据
@@ -460,8 +482,9 @@
             - name: 查询相关数据
               href: ef6/querying/related-data.md
         - name: 保存数据
-          href: ef6/saving/index.md
           items:
+            - name: 概述
+              href: ef6/saving/index.md
             - name: 更改跟踪
               items:
                 - name: 自动检测更改
@@ -477,7 +500,6 @@
             - name: 数据验证
               href: ef6/saving/validation.md
         - name: 其他资源
-          href: ef6/resources/index.md
           items:
             - name: 博客
               href: ef6/resources/blogs.md

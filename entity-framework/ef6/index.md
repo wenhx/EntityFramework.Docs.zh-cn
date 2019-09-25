@@ -1,15 +1,15 @@
 ---
-title: 概述 - EF6
+title: Entity Framework 6 概述
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 8ae74d63-6bad-4686-b325-bbf9d68f3743
 uid: ef6/index
-ms.openlocfilehash: 1efadf4484a13d5df2a2f11aad3d0e8f9ceff543
-ms.sourcegitcommit: 8b42045cd21f80f425a92f5e4e9dd4972a31720b
+ms.openlocfilehash: fcd514eebbf09e50403b95c88db04c33520011e9
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2018
-ms.locfileid: "49315628"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71198054"
 ---
 # <a name="entity-framework-6"></a>Entity Framework 6
 实体框架 6 (EF6) 是经试验和测试的关系映射器 (O/RM)，适用于 .NET 的对象，其功能和稳定性经过了多年的开发和调试。
