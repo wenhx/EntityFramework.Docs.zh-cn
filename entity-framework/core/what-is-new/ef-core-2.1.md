@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/20/2018
 ms.assetid: 585F90A3-4D5A-4DD1-92D8-5243B14E0FEC
 uid: core/what-is-new/ef-core-2.1
-ms.openlocfilehash: 16600ccbb1194d584fae15671118d9c046f1f637
-ms.sourcegitcommit: 06073f8efde97dd5f540dbfb69f574d8380566fe
+ms.openlocfilehash: 5f97015f0228387574e3a19fb20cae1bdb403410
+ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/24/2019
-ms.locfileid: "67333861"
+ms.lasthandoff: 09/20/2019
+ms.locfileid: "71149176"
 ---
 # <a name="new-features-in-ef-core-21"></a>EF Core 2.1 中的新增功能
 
@@ -81,7 +81,7 @@ EF Core 模型现可包含查询类型。 与实体类型不同，查询类型�
 - 映射到模型中定义的查询
 - 用作 `FromSql()` 查询的返回类型
 
-阅读[有关查询类型的部分](xref:core/modeling/query-types)详细了解本主题。
+阅读[有关查询类型的部分](xref:core/modeling/keyless-entity-types)详细了解本主题。
 
 ## <a name="include-for-derived-types"></a>针对派生类型的 Include
 现可在编写 `Include` 方法的表达式时指定仅在派生类型上定义的导航属性。 对于 `Include` 的强类型版本，我们支持使用显式强制转换或 `as` 运算符。 我们现在还支持在 `Include` 的字符串版本中引用在派生类型上定义的导航属性的名称：

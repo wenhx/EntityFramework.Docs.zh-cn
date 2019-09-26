@@ -5,16 +5,16 @@ ms.author: ansvyryd
 ms.date: 02/26/2018
 ms.assetid: 9F4450C5-1A3F-4BB6-AC19-9FAC64292AAD
 uid: core/modeling/keyless-entity-types
-ms.openlocfilehash: b968ac9602b9aa1f1c1e3181b6b76a64394d70f0
-ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
+ms.openlocfilehash: e78b9f91fd2505de300ced7b5e73291b5d1ad3b4
+ms.sourcegitcommit: 7bc43f21e7bdd64926314ea949aae689f1911956
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/20/2019
-ms.locfileid: "71150787"
+ms.lasthandoff: 09/25/2019
+ms.locfileid: "71266773"
 ---
 # <a name="keyless-entity-types"></a>无键实体类型
 > [!NOTE]
-> 此功能是 EF Core 2.1 中的新增功能。 在3.0 之前，它们被称为查询类型
+> 此功能已添加到 EF Core 2.1 的查询类型的名称下。 在 EF Core 3.0 中，概念已重命名为无键实体类型。
 
 除了常规实体类型外，EF Core 模型还可以包含_无键实体类型_，可用于对不包含键值的数据执行数据库查询。
 
@@ -56,7 +56,7 @@ ms.locfileid: "71150787"
 下面的示例演示如何使用无键实体类型来查询数据库视图。
 
 > [!TIP]
-> 可在 GitHub 上查看此文章的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/QueryTypes)。
+> 可在 GitHub 上查看此文章的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/KeylessEntityTypes)。
 
 首先，我们定义一个简单的博客和文章模型：
 
