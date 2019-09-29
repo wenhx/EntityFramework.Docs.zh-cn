@@ -4,16 +4,16 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: 04487291f24bb702dad4b497c34234afdd5e3c9a
-ms.sourcegitcommit: d01fc19aa42ca34c3bebccbc96ee26d06fcecaa2
+ms.openlocfilehash: f7c241159c689d4648b2778b53e50c22f580deb0
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/16/2019
-ms.locfileid: "71005587"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71197919"
 ---
 # <a name="breaking-changes-included-in-ef-core-30"></a>EF Core 3.0 中包含的中断性变更
 以下 API 和行为更改有可能使现有应用程序在升级到 3.0.0 时中断。
-我们将仅影响数据库提供程序的更改记录在[提供程序更改](../../providers/provider-log.md)下。
+我们将仅影响数据库提供程序的更改记录在[提供程序更改](xref:core/providers/provider-log)下。
 此处未记录从一个 3.0 预览版到另一个 3.0 预览版的中断。
 
 ## <a name="summary"></a>总结
@@ -23,6 +23,7 @@ ms.locfileid: "71005587"
 | [不再在客户端上计算 LINQ 查询](#linq-queries-are-no-longer-evaluated-on-the-client)         | 高       |
 | [EF Core 3.0 面向 .NET Standard 2.1，而不是 .NET Standard 2.0](#netstandard21) | 高      |
 | [EF Core 命令行工具 dotnet ef 不再是 .NET Core SDK 的一部分](#dotnet-ef) | 高      |
+| [DetectChanges 遵循存储生成的键值](#dc) | 高      |
 | [FromSql、ExecuteSql 和 ExecuteSqlAsync 已重命名](#fromsql) | 高      |
 | [查询类型与实体类型合并](#qt) | 高      |
 | [Entity Framework Core 不再是 ASP.NET Core 共享框架的一部分](#no-longer) | 中等      |
@@ -37,7 +38,6 @@ ms.locfileid: "71005587"
 | [只能在查询根上指定 FromSql 方法](#fromsql) | 低      |
 | [~~在调试级别记录查询执行~~已还原](#qe) | 低      |
 | [不再在实体实例上设置临时键值](#tkv) | 低      |
-| [DetectChanges 遵循存储生成的键值](#dc) | 低      |
 | [与主体共享表的依赖实体现为可选项](#de) | 低      |
 | [与并发标记列共享表的所有实体均必须将其映射到属性](#aes) | 低      |
 | [对于所有派生的类型而言，从未映射的类型继承的属性现在会映射到一个列中](#ip) | 低      |
@@ -69,6 +69,7 @@ ms.locfileid: "71005587"
 | [SQLitePCL.raw 已更新为版本 2.0.0](#SQLitePCL) | 低      |
 | [NetTopologySuite 已更新为版本 2.0.0](#NetTopologySuite) | 低      |
 | [必须配置多个不明确的自引用关系](#mersa) | 低      |
+| [DbFunction.Schema 为 null 或者空字符串将其配置为位于模型的默认架构中](#udf-empty-string) | 低      |
 
 ### <a name="linq-queries-are-no-longer-evaluated-on-the-client"></a>不再在客户端上计算 LINQ 查询
 
@@ -174,7 +175,7 @@ ms.locfileid: "71005587"
 为了能够管理迁移或构架 `DbContext`，请安装 `dotnet-ef` 作为全局工具：
 
   ``` console
-    $ dotnet tool install --global dotnet-ef --version 3.0.0-*
+    $ dotnet tool install --global dotnet-ef
   ```
 
 使用[工具清单文件](https://github.com/dotnet/cli/issues/10288)恢复声明为工具依赖项的项目依赖项时，还可以将其作为本地工具获取。
@@ -420,7 +421,7 @@ context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 
 **旧行为**
 
-在 EF Core 3.0 之前，[查询类型](xref:core/modeling/query-types)是一种查询未以结构化方式定义主键的数据的方法。
+在 EF Core 3.0 之前，[查询类型](xref:core/modeling/keyless-entity-types)是一种查询未以结构化方式定义主键的数据的方法。
 也就是说，查询类型用于映射没有键的实体类型（更可能来自视图，但也可能来自表），而当有可用的键时则使用常规实体类型（更可能来自表，但也可能来自视图）。
 
 **新行为**
@@ -873,7 +874,7 @@ modelBuilder
 
 **旧行为**
 
-在 EF Core 3.0 之前，可以通过字符串值指定属性，如果在 CLR 类型上找不到具有该名称的属性，则 EF Core 将尝试使用约定规则将其与字段匹配。
+在 EF Core 3.0 之前，可通过字符串值指定属性，如果在 .NET 类型上找不到具有该名称的属性，则 EF Core 将尝试使用约定规则将其与字段匹配。
 ```C#
 private class Blog
 {
@@ -1714,4 +1715,39 @@ modelBuilder
      .Entity<User>()
      .HasOne(e => e.UpdatedBy)
      .WithMany();
+```
+
+<a name="udf-empty-string"></a>
+### <a name="dbfunctionschema-being-null-or-empty-string-configures-it-to-be-in-models-default-schema"></a>DbFunction.Schema 为 null 或者空字符串将其配置为位于模型的默认架构中
+
+[跟踪问题 #12757](https://github.com/aspnet/EntityFrameworkCore/issues/12757)
+
+此更改是在 EF Core 3.0-预览版 7 中引入。
+
+**旧行为**
+
+配置了实为空字符串的架构的 DbFunction 被视为不带架构的内置函数。 例如，下述代码会将 `DatePart` CLR 函数映射到 SqlServer 上的 `DATEPART` 内置函数。
+
+```C#
+[DbFunction("DATEPART", Schema = "")]
+public static int? DatePart(string datePartArg, DateTime? date) => throw new Exception();
+
+```
+
+**新行为**
+
+所有 DbFunction 映射都被视为映射到用户定义的函数。 因此，空字符串值会将函数置于模型的默认架构中。 这可能是通过 Fluent API `modelBuilder.HasDefaultSchema()` 显式配置的架构，否则为 `dbo`。
+
+**为什么**
+
+如果之前的架构为空，可以此将函数视为内置项，但此逻辑仅适用于内置函数不属于任何架构的 SqlServer。
+
+**缓解措施**
+
+手动配置 DbFunction 的转换，以将其映射到内置函数中。
+
+```C#
+modelBuilder
+    .HasDbFunction(typeof(MyContext).GetMethod(nameof(MyContext.DatePart)))
+    .HasTranslation(args => SqlFunctionExpression.Create("DatePart", args, typeof(int?), null));
 ```

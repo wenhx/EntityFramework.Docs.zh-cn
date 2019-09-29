@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/20/2018
 ms.assetid: 2CB5809E-0EFB-44F6-AF14-9D5BFFFBFF9D
 uid: core/what-is-new/ef-core-2.0
-ms.openlocfilehash: 28b2180e898b91d233b590b1639674a464f8c679
-ms.sourcegitcommit: 0cc9578fd49802789a00c0044b4e57325476ca2e
+ms.openlocfilehash: 781578d9de05895cdbc777aa53c3f6d6f9777869
+ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/04/2019
-ms.locfileid: "70271431"
+ms.lasthandoff: 09/20/2019
+ms.locfileid: "71149049"
 ---
 # <a name="new-features-in-ef-core-20"></a>EF Core 2.0 中的新增功能
 
@@ -36,7 +36,7 @@ modelBuilder.Entity<ProductDetails>().ToTable("Products");
 
 ### <a name="owned-types"></a>固有类型
 
-固有实体类型可与另一个固有实体类型共享同一 CLR 类型，但是由于它不能仅由 CLR 类型标识，因此必须从另一个实体类型导航到该类型。 包含定义导航的实体是所有者。 查询所有者时，固有类型将默认包含在内。
+固有实体类型可与另一个固有实体类型共享同一 .NET 类型，但是由于它不能仅由 .NET 类型标识，因此必须从另一个实体类型导航到该类型。 包含定义导航的实体是所有者。 查询所有者时，固有类型将默认包含在内。
 
 依照约定，将为固有类型创建一个阴影主键，并通过表拆分将其映射到与所有者相同的表。 这样就可以通过类似于 EF6 中复杂类型的用法来使用固有类型：
 

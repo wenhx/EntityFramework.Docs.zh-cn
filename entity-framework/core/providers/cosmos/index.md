@@ -5,12 +5,12 @@ ms.author: ansvyryd
 ms.date: 09/12/2019
 ms.assetid: 28264681-4486-4891-888c-be5e4ade24f1
 uid: core/providers/cosmos/index
-ms.openlocfilehash: c753bb71089c91cbb26b970cddd118645fb18d56
-ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
+ms.openlocfilehash: 683436aa485d2fef9aa8bf6c6ff02b00dfeb28cf
+ms.sourcegitcommit: 2caec1e63f2ce1d9439ef6193df5a77da2fedd0f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/20/2019
-ms.locfileid: "71150724"
+ms.lasthandoff: 09/26/2019
+ms.locfileid: "71317565"
 ---
 # <a name="ef-core-azure-cosmos-db-provider"></a>EF Core Azure Cosmos DB Provider
 
@@ -34,7 +34,9 @@ Install-Package Microsoft.EntityFrameworkCore.Cosmos
 > [!TIP]  
 > 可在 [GitHub 示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Cosmos)中查看此文章的示例。
 
-与其他提供程序一样，第一步是调用 `UseCosmos`：[!code-csharp[Configuration](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=Configuration)]
+与其他提供程序一样，第一步是调用 `UseCosmos`：
+
+[!code-csharp[Configuration](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=Configuration)]
 
 > [!WARNING]
 > 为了简单起见，此处对终结点和密钥进行了硬编码，但在生产应用中，应[安全地存储](https://docs.microsoft.com/aspnet/core/security/app-secrets#secret-manager)这些终结点和密钥
@@ -45,7 +47,9 @@ Install-Package Microsoft.EntityFrameworkCore.Cosmos
 
 [!code-csharp[StreetAddress](../../../../samples/core/Cosmos/ModelBuilding/StreetAddress.cs?name=StreetAddress)]
 
-保存和查询数据遵循常规 EF 模式：[!code-csharp[HelloCosmos](../../../../samples/core/Cosmos/ModelBuilding/Sample.cs?name=HelloCosmos)]
+保存和查询数据遵循常规 EF 模式：
+
+[!code-csharp[HelloCosmos](../../../../samples/core/Cosmos/ModelBuilding/Sample.cs?name=HelloCosmos)]
 
 > [!IMPORTANT]
 > 要创建所需的集合并插入[种子数据](../../modeling/data-seeding.md)（如果存在于模型中），则需要调用 `EnsureCreated`。 但是只应在部署期间调用 `EnsureCreated`，而不应在正常操作中调用，否则可能会导致性能问题。
