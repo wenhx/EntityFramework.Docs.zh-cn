@@ -4,12 +4,12 @@ author: divega
 ms.date: 08/13/2017
 ms.assetid: 8BD43C8C-63D9-4F3A-B954-7BC518A1B7DB
 uid: core/miscellaneous/1x-2x-upgrade
-ms.openlocfilehash: 1222f10811914f65822a49e18522c287ece12174
-ms.sourcegitcommit: c9c3e00c2d445b784423469838adc071a946e7c9
+ms.openlocfilehash: 42e59b47f569ef6fcf72fc5bd5f94d3e9d807a24
+ms.sourcegitcommit: 6c28926a1e35e392b198a8729fc13c1c1968a27b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/18/2019
-ms.locfileid: "68306492"
+ms.lasthandoff: 10/02/2019
+ms.locfileid: "71813574"
 ---
 # <a name="upgrading-applications-from-previous-versions-to-ef-core-20"></a>从以前版本的应用程序升级到 EF Core 2.0
 
@@ -94,19 +94,19 @@ SQL Server 和 SQLite 提供程序由 EF 团队提供, 2.0 版本将作为2.0 �
 
 注意: 这些更改不应影响大部分应用程序代码。
 
-发送到[ILogger](https://github.com/aspnet/Logging/blob/dev/src/Microsoft.Extensions.Logging.Abstractions/ILogger.cs)的消息的事件 id 在2.0 中发生了更改。 现在，事件 ID 在 EF Core 代码内具有唯一性。 这些消息现在还遵循 MVC 等所用的结构化日志记录的标准模式。
+发送到[ILogger](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger)的消息的事件 id 在2.0 中发生了更改。 现在，事件 ID 在 EF Core 代码内具有唯一性。 这些消息现在还遵循 MVC 等所用的结构化日志记录的标准模式。
 
-记录器类别也已更改。 现提供通过 [DbLoggerCategory](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/DbLoggerCategory.cs) 访问的熟知类别集。
+记录器类别也已更改。 现提供通过 [DbLoggerCategory](https://github.com/aspnet/EntityFrameworkCore/blob/rel/2.0.0/src/EFCore/DbLoggerCategory.cs) 访问的熟知类别集。
 
-[DiagnosticSource](https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.DiagnosticSource/src/DiagnosticSourceUsersGuide.md)事件现在使用与相应`ILogger`消息相同的事件 ID 名称。 事件负载是派生自[EventData](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Diagnostics/EventData.cs)的所有名义类型。
+[DiagnosticSource](https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.DiagnosticSource/src/DiagnosticSourceUsersGuide.md)事件现在使用与相应`ILogger`消息相同的事件 ID 名称。 事件负载是派生自[EventData](https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.diagnostics.eventdata)的所有名义类型。
 
-事件 Id、负载类型和类别记录在[CoreEventId](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Diagnostics/CoreEventId.cs)和[RelationalEventId](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore.Relational/Diagnostics/RelationalEventId.cs)类中。
+事件 Id、负载类型和类别记录在[CoreEventId](https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.diagnostics.coreeventid)和[RelationalEventId](https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.diagnostics.relationaleventid)类中。
 
 Id 还会从 Microsoft.entityframeworkcore 移动到新的 Microsoft.entityframeworkcore 命名空间。
 
 ## <a name="ef-core-relational-metadata-api-changes"></a>EF Core 关系元数据 API 更改
 
-EF Core 2.0 现将对所用的每个不同提供程序生成不同的 [IModel](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/IModel.cs)。 这对应用程序而言通常是透明的。 这有助于简化较低级别的元数据 API，从而始终通过调用 `.Relational`（而不是 `.SqlServer`、`.Sqlite` 等）来访问常见关系元数据概念  。例如, 1.1. x 代码如下:
+EF Core 2.0 现将对所用的每个不同提供程序生成不同的 [IModel](https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.imodel)。 这对应用程序而言通常是透明的。 这有助于简化较低级别的元数据 API，从而始终通过调用 `.Relational`（而不是 `.SqlServer`、`.Sqlite` 等）来访问常见关系元数据概念。例如, 1.1. x 代码如下:
 
 ``` csharp
 var tableName = context.Model.FindEntityType(typeof(User)).SqlServer().TableName;
@@ -118,7 +118,7 @@ var tableName = context.Model.FindEntityType(typeof(User)).SqlServer().TableName
 var tableName = context.Model.FindEntityType(typeof(User)).Relational().TableName;
 ```
 
-现在可以根据当前使用`ForSqlServerToTable`的提供程序来编写条件代码, 而不是使用类似的方法。 例如:
+现在可以根据当前使用`ForSqlServerToTable`的提供程序来编写条件代码, 而不是使用类似的方法。 例如：
 
 ```C#
 modelBuilder.Entity<User>().ToTable(
@@ -145,13 +145,13 @@ optionsBuilder.UseInMemoryDatabase("MyDatabase");
 
 ## <a name="read-only-api-changes"></a>只读 API 更改
 
-`IsReadOnlyBeforeSave`、 `IsReadOnlyAfterSave`和`IsStoreGeneratedAlways`已弃用并已替换为[BeforeSaveBehavior](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/IProperty.cs#L39)和[AfterSaveBehavior](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/IProperty.cs#L55)。 这些行为适用于任何属性 (不仅是存储生成的属性), 并确定在插入到数据库行 (`BeforeSaveBehavior`) 或更新现有数据库行 (`AfterSaveBehavior`) 时应如何使用属性的值。
+`IsReadOnlyBeforeSave`、 `IsReadOnlyAfterSave`和`IsStoreGeneratedAlways`已弃用并已替换为[BeforeSaveBehavior](https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.iproperty.beforesavebehavior)和[AfterSaveBehavior](https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.iproperty.aftersavebehavior)。 这些行为适用于任何属性 (不仅是存储生成的属性), 并确定在插入到数据库行 (`BeforeSaveBehavior`) 或更新现有数据库行 (`AfterSaveBehavior`) 时应如何使用属性的值。
 
-标记为[ValueGenerated. OnAddOrUpdate](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/ValueGenerated.cs) (例如, 对于计算列) 的属性将默认忽略当前在属性上设置的任何值。 这意味着, 无论是否已对所跟踪的实体设置或修改任何值, 都将始终获取存储生成的值。 可以通过设置其他`Before\AfterSaveBehavior`来更改此设置。
+标记为[ValueGenerated. OnAddOrUpdate](https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.valuegenerated) (例如, 对于计算列) 的属性将默认忽略当前在属性上设置的任何值。 这意味着, 无论是否已对所跟踪的实体设置或修改任何值, 都将始终获取存储生成的值。 可以通过设置其他`Before\AfterSaveBehavior`来更改此设置。
 
 ## <a name="new-clientsetnull-delete-behavior"></a>新 ClientSetNull 删除行为
 
-在以前的版本中, [DeleteBehavior](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/DeleteBehavior.cs)具有更多关闭的匹配`SetNull`语义跟踪的实体行为。 在 EF Core 2.0 中，新`ClientSetNull`作为的默认值为可选关系引入了行为。 此行为具有`SetNull`语义跟踪的实体和`Restrict`创建使用 EF Core 的数据库的行为。 在我们的经验中, 这是跟踪的实体和数据库的最预期/有用的行为。 `DeleteBehavior.Restrict`如果为可选关系设置, 则现在为跟踪的实体进行跟踪。
+在以前的版本中, [DeleteBehavior](https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.deletebehavior)具有更多关闭的匹配`SetNull`语义跟踪的实体行为。 在 EF Core 2.0 中，新`ClientSetNull`作为的默认值为可选关系引入了行为。 此行为具有`SetNull`语义跟踪的实体和`Restrict`创建使用 EF Core 的数据库的行为。 在我们的经验中, 这是跟踪的实体和数据库的最预期/有用的行为。 `DeleteBehavior.Restrict`如果为可选关系设置, 则现在为跟踪的实体进行跟踪。
 
 ## <a name="provider-design-time-packages-removed"></a>已删除提供程序设计时包
 
