@@ -4,19 +4,18 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: f7c241159c689d4648b2778b53e50c22f580deb0
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 0dd4c5c4aa1a5d241fb48abf1372a678d0f7a7a3
+ms.sourcegitcommit: 6c28926a1e35e392b198a8729fc13c1c1968a27b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197919"
+ms.lasthandoff: 10/02/2019
+ms.locfileid: "71813620"
 ---
 # <a name="breaking-changes-included-in-ef-core-30"></a>EF Core 3.0 中包含的中断性变更
 以下 API 和行为更改有可能使现有应用程序在升级到 3.0.0 时中断。
 我们将仅影响数据库提供程序的更改记录在[提供程序更改](xref:core/providers/provider-log)下。
-此处未记录从一个 3.0 预览版到另一个 3.0 预览版的中断。
 
-## <a name="summary"></a>总结
+## <a name="summary"></a>摘要
 
 | **重大更改**                                                                                               | **影响** |
 |:------------------------------------------------------------------------------------------------------------------|------------|
@@ -26,15 +25,15 @@ ms.locfileid: "71197919"
 | [DetectChanges 遵循存储生成的键值](#dc) | 高      |
 | [FromSql、ExecuteSql 和 ExecuteSqlAsync 已重命名](#fromsql) | 高      |
 | [查询类型与实体类型合并](#qt) | 高      |
-| [Entity Framework Core 不再是 ASP.NET Core 共享框架的一部分](#no-longer) | 中等      |
-| [默认情况下，现在会立即发生级联删除](#cascade) | 中等      |
-| [DeleteBehavior.Restrict 具有更简洁的语义](#deletebehavior) | 中等      |
-| [从属类型关系的配置 API 已更改](#config) | 中等      |
-| [每个属性使用独立的内存中整数键生成](#each) | 中等      |
-| [无跟踪查询不再执行标识解析](#notrackingresolution) | 中等      |
-| [元数据 API 更改](#metadata-api-changes) | 中等      |
-| [特定于提供程序的元数据 API 更改](#provider) | 中等      |
-| [UseRowNumberForPaging 已删除](#urn) | 中等      |
+| [Entity Framework Core 不再是 ASP.NET Core 共享框架的一部分](#no-longer) | 中型      |
+| [默认情况下，现在会立即发生级联删除](#cascade) | 中型      |
+| [DeleteBehavior.Restrict 具有更简洁的语义](#deletebehavior) | 中型      |
+| [从属类型关系的配置 API 已更改](#config) | 中型      |
+| [每个属性使用独立的内存中整数键生成](#each) | 中型      |
+| [无跟踪查询不再执行标识解析](#notrackingresolution) | 中型      |
+| [元数据 API 更改](#metadata-api-changes) | 中型      |
+| [特定于提供程序的元数据 API 更改](#provider) | 中型      |
+| [UseRowNumberForPaging 已删除](#urn) | 中型      |
 | [只能在查询根上指定 FromSql 方法](#fromsql) | 低      |
 | [~~在调试级别记录查询执行~~已还原](#qe) | 低      |
 | [不再在实体实例上设置临时键值](#tkv) | 低      |
@@ -76,8 +75,6 @@ ms.locfileid: "71197919"
 [跟踪问题 #14935](https://github.com/aspnet/EntityFrameworkCore/issues/14935)
 [另请参阅问题 #12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795)
 
-此更改是在 EF Core 3.0-preview 4 中引入的。
-
 **旧行为**
 
 在 3.0 之前，当 EF Core 无法将查询中的表达式转换为 SQL 或参数时，它会在客户端上自动计算表达式的值。
@@ -107,8 +104,6 @@ ms.locfileid: "71197919"
 
 [跟踪问题 #15498](https://github.com/aspnet/EntityFrameworkCore/issues/15498)
 
-此更改是在 EF Core 3.0-预览版 7 中引入。
-
 **旧行为**
 
 在 3.0 之前，EF Core 面向 .NET Standard 2.0，并在支持 .NET Standard 2.0 的所有平台上运行，包括 .NET Framework。
@@ -129,8 +124,6 @@ ms.locfileid: "71197919"
 ### <a name="entity-framework-core-is-no-longer-part-of-the-aspnet-core-shared-framework"></a>Entity Framework Core 不再是 ASP.NET Core 共享框架的一部分
 
 [跟踪问题公告 #325](https://github.com/aspnet/Announcements/issues/325)
-
-此更改是在 ASP.NET Core 3.0-preview 1 中引入的。 
 
 **旧行为**
 
@@ -155,8 +148,6 @@ ms.locfileid: "71197919"
 ### <a name="the-ef-core-command-line-tool-dotnet-ef-is-no-longer-part-of-the-net-core-sdk"></a>EF Core 命令行工具 dotnet ef 不再是 .NET Core SDK 的一部分
 
 [跟踪问题 #14016](https://github.com/aspnet/EntityFrameworkCore/issues/14016)
-
-此更改是在 EF Core 3.0-preview 4 和 .NET Core SDK 的相应版本中引入的。
 
 **旧行为**
 
@@ -184,8 +175,6 @@ ms.locfileid: "71197919"
 ### <a name="fromsql-executesql-and-executesqlasync-have-been-renamed"></a>FromSql、ExecuteSql 和 ExecuteSqlAsync 已重命名
 
 [跟踪问题 #10996](https://github.com/aspnet/EntityFrameworkCore/issues/10996)
-
-此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **旧行为**
 
@@ -227,8 +216,6 @@ context.Products.FromSqlInterpolated(
 
 [跟踪问题 #15704](https://github.com/aspnet/EntityFrameworkCore/issues/15704)
 
-此更改是在 EF Core 3.0-preview 6 中引入的。
-
 **旧行为**
 
 在 EF Core 3.0 之前，可以在查询中的任意位置指定 `FromSql` 方法。
@@ -249,8 +236,6 @@ context.Products.FromSqlInterpolated(
 ### <a name="no-tracking-queries-no-longer-perform-identity-resolution"></a>无跟踪查询不再执行标识解析
 
 [跟踪问题 #13518](https://github.com/aspnet/EntityFrameworkCore/issues/13518)
-
-此更改是在 EF Core 3.0-preview 6 中引入的。
 
 **旧行为**
 
@@ -279,8 +264,6 @@ var results = context.Products.Include(e => e.Category).AsNoTracking().ToList();
 
 [跟踪问题 #14523](https://github.com/aspnet/EntityFrameworkCore/issues/14523)
 
-此更改是在 EF Core 3.0-预览版 7 中还原。
-
 我们之所以还原此更改是因为，EF Core 3.0 中的新配置允许应用程序指定任何事件的日志级别。 例如，若要将 SQL 日志记录切换为 `Debug`，请在 `OnConfiguring` 或 `AddDbContext` 中显式配置级别：
 ```C#
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -294,8 +277,6 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 ### <a name="temporary-key-values-are-no-longer-set-onto-entity-instances"></a>不再在实体实例上设置临时键值
 
 [跟踪问题 #12378](https://github.com/aspnet/EntityFrameworkCore/issues/12378)
-
-此更改是在 EF Core 3.0-preview 2 中引入的。
 
 **旧行为**
 
@@ -324,8 +305,6 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 ### <a name="detectchanges-honors-store-generated-key-values"></a>DetectChanges 遵循存储生成的键值
 
 [跟踪问题 #14616](https://github.com/aspnet/EntityFrameworkCore/issues/14616)
-
-此更改是在 EF Core 3.0-preview 3 中引入的。
 
 **旧行为**
 
@@ -365,8 +344,6 @@ public string Id { get; set; }
 
 [跟踪问题 #10114](https://github.com/aspnet/EntityFrameworkCore/issues/10114)
 
-此更改是在 EF Core 3.0-preview 3 中引入的。
-
 **旧行为**
 
 在 3.0 之前，直到调用 SaveChanges 时，EF Core 才会应用级联操作（删除所需主体时或者在切断与所需主体的关系时删除依赖实体）。
@@ -394,8 +371,6 @@ context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 
 [跟踪问题 #12661](https://github.com/aspnet/EntityFrameworkCore/issues/12661)
 
-此更改是在 EF Core 3.0-preview 5 中引入的。
-
 **旧行为**
 
 3\.0 之前，`DeleteBehavior.Restrict` 使用 `Restrict` 语义在数据库中创建外键，但也以不明显的方式更改了内部修复。
@@ -416,8 +391,6 @@ context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 ### <a name="query-types-are-consolidated-with-entity-types"></a>查询类型与实体类型合并
 
 [跟踪问题 #14194](https://github.com/aspnet/EntityFrameworkCore/issues/14194)
-
-此更改是在 EF Core 3.0-preview 3 中引入的。
 
 **旧行为**
 
@@ -449,8 +422,6 @@ API 的以下部分现已过时：
 [跟踪问题 #12444](https://github.com/aspnet/EntityFrameworkCore/issues/12444)
 [跟踪问题 #9148](https://github.com/aspnet/EntityFrameworkCore/issues/9148)
 [跟踪问题 #14153](https://github.com/aspnet/EntityFrameworkCore/issues/14153)
-
-此更改是在 EF Core 3.0-preview 3 中引入的。
 
 **旧行为**
 
@@ -508,8 +479,6 @@ modelBuilder.Entity<Order>.OwnsOne(e => e.Details, eb =>
 
 [跟踪问题 #9005](https://github.com/aspnet/EntityFrameworkCore/issues/9005)
 
-此更改是在 EF Core 3.0-preview 4 中引入的。
-
 **旧行为**
 
 考虑下列模型：
@@ -544,8 +513,6 @@ public class OrderDetails
 ### <a name="all-entities-sharing-a-table-with-a-concurrency-token-column-have-to-map-it-to-a-property"></a>与并发标记列共享表的所有实体均必须将其映射到属性
 
 [跟踪问题 #14154](https://github.com/aspnet/EntityFrameworkCore/issues/14154)
-
-此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **旧行为**
 
@@ -598,8 +565,6 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 ### <a name="inherited-properties-from-unmapped-types-are-now-mapped-to-a-single-column-for-all-derived-types"></a>对于所有派生的类型而言，从未映射的类型继承的属性现在会映射到一个列中
 
 [跟踪问题 #13998](https://github.com/aspnet/EntityFrameworkCore/issues/13998)
-
-此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **旧行为**
 
@@ -663,8 +628,6 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 ### <a name="the-foreign-key-property-convention-no-longer-matches-same-name-as-the-principal-property"></a>外键属性约定不再匹配与主体属性相同的名称
 
 [跟踪问题 #13274](https://github.com/aspnet/EntityFrameworkCore/issues/13274)
-
-此更改是在 EF Core 3.0-preview 3 中引入的。
 
 **旧行为**
 
@@ -734,8 +697,6 @@ public class Order
 
 [跟踪问题 #14218](https://github.com/aspnet/EntityFrameworkCore/issues/14218)
 
-此更改是在 EF Core 3.0-preview 4 中引入的。
-
 **旧行为**
 
 在 EF Core 3.0 之前，如果上下文打开了 `TransactionScope` 中的连接，则该连接在 `TransactionScope` 处于活动期间仍保持打开状态。
@@ -788,8 +749,6 @@ using (new TransactionScope())
 
 [跟踪问题 #6872](https://github.com/aspnet/EntityFrameworkCore/issues/6872)
 
-此更改是在 EF Core 3.0-preview 4 中引入的。
-
 **旧行为**
 
 在 EF Core 3.0 之前，一个共享值生成器用于所有内存中的整数键属性。
@@ -811,8 +770,6 @@ using (new TransactionScope())
 ### <a name="backing-fields-are-used-by-default"></a>默认情况下使用支持字段
 
 [跟踪问题 #12430](https://github.com/aspnet/EntityFrameworkCore/issues/12430)
-
-此更改是在 EF Core 3.0-preview 2 中引入的。
 
 **旧行为**
 
@@ -841,8 +798,6 @@ modelBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferFieldDuringConstruct
 
 [跟踪问题 #12523](https://github.com/aspnet/EntityFrameworkCore/issues/12523)
 
-此更改是在 EF Core 3.0-preview 4 中引入的。
-
 **旧行为**
 
 在 EF Core 3.0 之前，如果多个字段与查找属性的后备字段的规则匹配，则将基于某种优先顺序选择一个字段。
@@ -869,8 +824,6 @@ modelBuilder
 ```
 
 ### <a name="field-only-property-names-should-match-the-field-name"></a>“仅字段”属性名应与字段名匹配
-
-此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **旧行为**
 
@@ -920,8 +873,6 @@ modelBuilder
 
 [跟踪问题 #14756](https://github.com/aspnet/EntityFrameworkCore/issues/14756)
 
-此更改是在 EF Core 3.0-preview 4 中引入的。
-
 **旧行为**
 
 在 EF Core 3.0 之前，调用 `AddDbContext` 或 `AddDbContextPool` 的操作也可以通过调用 [AddLogging](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.loggingservicecollectionextensions.addlogging) 和 [AddMemoryCache](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache) 在 DI 中注册日志记录和内存缓存服务。
@@ -943,8 +894,6 @@ EF Core 3.0 不要求这些服务位于应用程序的 DI 容器中。 但是，
 ### <a name="dbcontextentry-now-performs-a-local-detectchanges"></a>DbContext.Entry 现在执行本地 DetectChanges
 
 [跟踪问题 #13552](https://github.com/aspnet/EntityFrameworkCore/issues/13552)
-
-此更改是在 EF Core 3.0-preview 3 中引入的。
 
 **旧行为**
 
@@ -971,8 +920,6 @@ EF Core 3.0 不要求这些服务位于应用程序的 DI 容器中。 但是，
 ### <a name="string-and-byte-array-keys-are-not-client-generated-by-default"></a>默认情况下，字符串和字节数组键不是客户端生成的
 
 [跟踪问题 #14617](https://github.com/aspnet/EntityFrameworkCore/issues/14617)
-
-此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **旧行为**
 
@@ -1012,8 +959,6 @@ public string Id { get; set; }
 
 [跟踪问题 #14698](https://github.com/aspnet/EntityFrameworkCore/issues/14698)
 
-此更改是在 EF Core 3.0-preview 3 中引入的。
-
 **旧行为**
 
 在 EF Core 3.0 之前，`ILoggerFactory` 被注册为单一实例服务。
@@ -1037,8 +982,6 @@ public string Id { get; set; }
 ### <a name="lazy-loading-proxies-no-longer-assume-navigation-properties-are-fully-loaded"></a>延迟加载代理不再假定导航属性已完全加载
 
 [跟踪问题 #12780](https://github.com/aspnet/EntityFrameworkCore/issues/12780)
-
-此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **旧行为**
 
@@ -1064,8 +1007,6 @@ public string Id { get; set; }
 ### <a name="excessive-creation-of-internal-service-providers-is-now-an-error-by-default"></a>默认情况下，现在过度创建内部服务提供程序是一个错误
 
 [跟踪问题 #10236](https://github.com/aspnet/EntityFrameworkCore/issues/10236)
-
-此更改是在 EF Core 3.0-preview 3 中引入的。
 
 **旧行为**
 
@@ -1098,8 +1039,6 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 ### <a name="new-behavior-for-hasonehasmany-called-with-a-single-string"></a>使用单个字符串调用 HasOne/HasMany 的新行为
 
 [跟踪问题 #9171](https://github.com/aspnet/EntityFrameworkCore/issues/9171)
-
-此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **旧行为**
 
@@ -1138,8 +1077,6 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 
 [跟踪问题 #15184](https://github.com/aspnet/EntityFrameworkCore/issues/15184)
 
-此更改是在 EF Core 3.0-preview 4 中引入的。
-
 **旧行为**
 
 以下异步方法之前返回的是 `Task<T>`：
@@ -1170,8 +1107,6 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 
 [跟踪问题 #9913](https://github.com/aspnet/EntityFrameworkCore/issues/9913)
 
-此更改是在 EF Core 3.0-preview 2 中引入的。
-
 **旧行为**
 
 类型映射注释的注释名称是“Relational：TypeMapping”。
@@ -1192,8 +1127,6 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 ### <a name="totable-on-a-derived-type-throws-an-exception"></a>派生类型上的 ToTable 会引发异常 
 
 [跟踪问题 #11811](https://github.com/aspnet/EntityFrameworkCore/issues/11811)
-
-此更改是在 EF Core 3.0-preview 3 中引入的。
 
 **旧行为**
 
@@ -1216,8 +1149,6 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 
 [跟踪问题 #12366](https://github.com/aspnet/EntityFrameworkCore/issues/12366)
 
-此更改是在 EF Core 3.0-preview 3 中引入的。
-
 **旧行为**
 
 在 EF Core 3.0 之前，`ForSqlServerHasIndex().ForSqlServerInclude()` 提供了一种配置与 `INCLUDE` 一起使用的列的方法。
@@ -1225,7 +1156,7 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 **新行为**
 
 从 EF Core 3.0 开始，现在支持在关系级别上对索引使用 `Include`。
-请使用 `HasIndex().ForSqlServerInclude()`。
+使用 `HasIndex().ForSqlServerInclude()`。
 
 **为什么**
 
@@ -1238,8 +1169,6 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 ### <a name="metadata-api-changes"></a>元数据 API 更改
 
 [跟踪问题 #214](https://github.com/aspnet/EntityFrameworkCore/issues/214)
-
-此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **新行为**
 
@@ -1265,8 +1194,6 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 
 [跟踪问题 #214](https://github.com/aspnet/EntityFrameworkCore/issues/214)
 
-此更改是在 EF Core 3.0-preview 6 中引入的。
-
 **新行为**
 
 将展开特定于提供程序的扩展方法：
@@ -1288,8 +1215,6 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 ### <a name="ef-core-no-longer-sends-pragma-for-sqlite-fk-enforcement"></a>EF Core 不再发送 pragma 来执行 SQLite FK
 
 [跟踪问题 #12151](https://github.com/aspnet/EntityFrameworkCore/issues/12151)
-
-此更改是在 EF Core 3.0-preview 3 中引入的。
 
 **旧行为**
 
@@ -1333,8 +1258,6 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 ### <a name="guid-values-are-now-stored-as-text-on-sqlite"></a>GUID 值现在以文本形式存储在 SQLite 上
 
 [跟踪问题 #15078](https://github.com/aspnet/EntityFrameworkCore/issues/15078)
-
-此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **旧行为**
 
@@ -1386,8 +1309,6 @@ Microsoft.Data.Sqlite 仍然能够从“BLOB”和“文本”列读取 GUID 值
 
 [跟踪问题 #15020](https://github.com/aspnet/EntityFrameworkCore/issues/15020)
 
-此更改是在 EF Core 3.0-preview 4 中引入的。
-
 **旧行为**
 
 Char 值之前以整数值形式存储在 SQLite 上。 例如，A 的 char 值存储为整数值 65  。
@@ -1429,8 +1350,6 @@ Microsoft.Data.Sqlite 也仍然能够读取整数列和文本列的字符值，�
 
 [跟踪问题 #12978](https://github.com/aspnet/EntityFrameworkCore/issues/12978)
 
-此更改是在 EF Core 3.0-preview 4 中引入的。
-
 **旧行为**
 
 以前使用当前区域性的日历无意生成迁移 ID。
@@ -1470,8 +1389,6 @@ SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 
 
 [跟踪问题 #16400](https://github.com/aspnet/EntityFrameworkCore/issues/16400)
 
-此更改是在 EF Core 3.0-preview 6 中引入的。
-
 **旧行为**
 
 在 EF Core 3.0 之前，`UseRowNumberForPaging` 可用于生成与 SQL Server 2008 兼容的分页 SQL。
@@ -1493,8 +1410,6 @@ SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 
 ### <a name="extension-infometadata-has-been-removed-from-idbcontextoptionsextension"></a>已从 IDbContextOptionsExtension 中删除扩展信息/元数据
 
 [跟踪问题 #16119](https://github.com/aspnet/EntityFrameworkCore/issues/16119)
-
-此更改是在 EF Core 3.0-预览版 7 中引入。
 
 **旧行为**
 
@@ -1520,8 +1435,6 @@ SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 
 
 [跟踪问题 #10985](https://github.com/aspnet/EntityFrameworkCore/issues/10985)
 
-此更改是在 EF Core 3.0-preview 4 中引入的。
-
 **更改**
 
 `RelationalEventId.LogQueryPossibleExceptionWithAggregateOperator` 已重命名为 `RelationalEventId.LogQueryPossibleExceptionWithAggregateOperatorWarning`。
@@ -1539,8 +1452,6 @@ SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 
 ### <a name="clarify-api-for-foreign-key-constraint-names"></a>阐明 API 的外键约束名称
 
 [跟踪问题 #10730](https://github.com/aspnet/EntityFrameworkCore/issues/10730)
-
-此更改是在 EF Core 3.0-preview 4 中引入的。
 
 **旧行为**
 
@@ -1572,8 +1483,6 @@ var constraintName = myForeignKey.ConstraintName;
 
 [跟踪问题 #15997](https://github.com/aspnet/EntityFrameworkCore/issues/15997)
 
-此更改是在 EF Core 3.0-预览版 7 中引入。
-
 **旧行为**
 
 在 EF Core 3.0 推出前，这些方法受保护。
@@ -1596,8 +1505,6 @@ EF 使用这些方法来确定数据库是否已创建但为空。 这也适用�
 
 [跟踪问题 #11506](https://github.com/aspnet/EntityFrameworkCore/issues/11506)
 
-此更改是在 EF Core 3.0-preview 4 中引入的。
-
 **旧行为**
 
 在 EF Core 3.0 推出前，Microsoft.EntityFrameworkCore.Design 是常规 NuGet 包，它的程序集可以由依赖它的项目引用。
@@ -1615,7 +1522,7 @@ EF 使用这些方法来确定数据库是否已创建但为空。 这也适用�
 如果需要引用此包来重写 EF Core 的设计时行为，可以更新项目中的 PackageReference 项元数据。 如果正在通过 Microsoft.EntityFrameworkCore.Tools 过渡引用此包，必须向此包添加显式 PackageReference，以更改它的元数据。
 
 ``` xml
-<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0-preview4.19216.3">
+<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0">
   <PrivateAssets>all</PrivateAssets>
   <!-- Remove IncludeAssets to allow compiling against the assembly -->
   <!--<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>-->
@@ -1627,8 +1534,6 @@ EF 使用这些方法来确定数据库是否已创建但为空。 这也适用�
 ### <a name="sqlitepclraw-updated-to-version-200"></a>SQLitePCL.raw 已更新为版本 2.0.0
 
 [跟踪问题 #14824](https://github.com/aspnet/EntityFrameworkCore/issues/14824)
-
-此更改是在 EF Core 3.0-预览版 7 中引入。
 
 **旧行为**
 
@@ -1652,8 +1557,6 @@ SQLitePCL.raw 版本 2.0.0 包括一些重大变化。 有关详细信息，请�
 
 [跟踪问题 #14825](https://github.com/aspnet/EntityFrameworkCore/issues/14825)
 
-此更改是在 EF Core 3.0-预览版 7 中引入。
-
 **旧行为**
 
 空间包以前依赖于 NetTopologySuite 的 1.15.1 版。
@@ -1675,8 +1578,6 @@ NetTopologySuite 2.0.0 版包括一些重大更改。 有关详细信息，请�
 ### <a name="multiple-ambiguous-self-referencing-relationships-must-be-configured"></a>必须配置多个不明确的自引用关系 
 
 [跟踪问题 #13573](https://github.com/aspnet/EntityFrameworkCore/issues/13573)
-
-此更改是在 EF Core 3.0-preview 6 中引入的。
 
 **旧行为**
 
@@ -1721,8 +1622,6 @@ modelBuilder
 ### <a name="dbfunctionschema-being-null-or-empty-string-configures-it-to-be-in-models-default-schema"></a>DbFunction.Schema 为 null 或者空字符串将其配置为位于模型的默认架构中
 
 [跟踪问题 #12757](https://github.com/aspnet/EntityFrameworkCore/issues/12757)
-
-此更改是在 EF Core 3.0-预览版 7 中引入。
 
 **旧行为**
 

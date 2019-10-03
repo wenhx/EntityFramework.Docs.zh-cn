@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
 uid: core/querying/raw-sql
-ms.openlocfilehash: ebec5775770c0f1e297eaaf35bf644c605a69afc
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: d8f52edfdf4bd7776ab8d81185c867cbfd7bcf44
+ms.sourcegitcommit: 6c28926a1e35e392b198a8729fc13c1c1968a27b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197768"
+ms.lasthandoff: 10/02/2019
+ms.locfileid: "71813594"
 ---
 # <a name="raw-sql-queries"></a>原生 SQL 查询
 
@@ -38,7 +38,7 @@ var blogs = context.Blogs
     .ToList();
 ```
 
-## <a name="passing-parameters"></a>快速参考
+## <a name="passing-parameters"></a>传递参数
 
 > [!WARNING]
 > **始终对原始 SQL 查询使用参数化**
@@ -62,7 +62,6 @@ var blogs = context.Blogs
 
 > [!NOTE]
 > 在版本 3.0 之前，`FromSqlRaw` 和 `FromSqlInterpolated` 是名为 `FromSql` 的两个重载。 有关详细信息，请参阅[历史版本部分](#previous-versions)。
-
 
 <!-- [!code-csharp[Main](samples/core/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
@@ -172,6 +171,6 @@ var blogs = context.Blogs
 
 * 请注意，SQL Server 不允许对存储过程调用，因此任何尝试向此类调用应用其他查询运算符的操作都将导致无效的 SQL。 可在 `AsEnumerable()` 后引入查询运算符供客户端评估。
 
-# <a name="previous-versions"></a>早期版本
+## <a name="previous-versions"></a>以前的版本
 
 EF Core 版本 2.2 及更低版本具有两个名为 `FromSql` 的重载，它们的行为方式与较新的 `FromSqlRaw` 和 `FromSqlInterpolated` 的相同。 这使得在意图调用内插字符串方法时很容易意外调用原始字符串方法，反之亦然。 这会导致查询中的本该参数化的结果没有参数化。
