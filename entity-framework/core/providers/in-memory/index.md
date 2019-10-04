@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 9af0cba7-7605-4f8f-9cfa-dd616fcb880c
 uid: core/providers/in-memory/index
-ms.openlocfilehash: 28f5f262b41cbc1f196e41d75c8b88ca60e678fe
-ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
+ms.openlocfilehash: b668e286993b9687be21aa815df4e8b8dd308c60
+ms.sourcegitcommit: 6c28926a1e35e392b198a8729fc13c1c1968a27b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/20/2019
-ms.locfileid: "71149224"
+ms.lasthandoff: 10/02/2019
+ms.locfileid: "71813537"
 ---
 # <a name="ef-core-in-memory-database-provider"></a>EF Core In-Memory 数据库提供程序
 
@@ -19,17 +19,27 @@ ms.locfileid: "71149224"
 
 安装 [Microsoft.EntityFrameworkCore.InMemory NuGet 包](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.InMemory/)。
 
+# <a name="net-core-clitabdotnet-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
+
+``` console
+dotnet add package Microsoft.EntityFrameworkCore.InMemory
+```
+
+# <a name="visual-studiotabvs"></a>[Visual Studio](#tab/vs)
+
 ``` powershell
 Install-Package Microsoft.EntityFrameworkCore.InMemory
 ```
 
+***
+
 ## <a name="get-started"></a>开始操作
 
 下列资源可帮助你开始使用此提供程序。
-* [使用 InMemory 进行测试](../../miscellaneous/testing/in-memory.md)
 
+* [使用 InMemory 进行测试](../../miscellaneous/testing/in-memory.md)
 * [UnicornStore 示例应用程序测试](https://github.com/rowanmiller/UnicornStore/blob/master/UnicornStore/src/UnicornStore.Tests/Controllers/ShippingControllerTests.cs)
 
 ## <a name="supported-database-engines"></a>支持的数据库引擎
 
-* 内置的内存中数据库（仅用于测试目的）
+进程内内存数据库（仅用于测试目的）

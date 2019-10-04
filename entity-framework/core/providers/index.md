@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 02/23/2018
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 uid: core/providers/index
-ms.openlocfilehash: 096d68f814e279bd224dfc50111d6576ab5eb223
-ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
+ms.openlocfilehash: db06906e6af518a27a21f30b12d722ce06e9bd52
+ms.sourcegitcommit: 6c28926a1e35e392b198a8729fc13c1c1968a27b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/20/2019
-ms.locfileid: "71149233"
+ms.lasthandoff: 10/02/2019
+ms.locfileid: "71813514"
 ---
 # <a name="database-providers"></a>数据库提供程序
 
@@ -44,27 +44,23 @@ Entity Framework Core 可通过名为数据库提供程序的插件库访问许�
 | [Devart.Data.SQLite.EFCore](https://www.nuget.org/packages/Devart.Data.SQLite.EFCore/)                               | SQLite 3 及以上版本           | [DevArt](https://www.devart.com/)                                             | 已付                 | [docs](https://www.devart.com/dotconnect/sqlite/docs/)                                                                                                                                             |
 | [Devart.Data.MySql.EFCore](https://www.nuget.org/packages/Devart.Data.MySql.EFCore/)                                 | MySQL 5 及以上版本            | [DevArt](https://www.devart.com/)                                             | 已付                 | [docs](https://www.devart.com/dotconnect/mysql/docs/)                                                                                                                                              |
 
-## <a name="future-providers"></a>未来的提供程序
-
-### <a name="cosmos-db"></a>Cosmos DB
-
-我们一直在为 Cosmos DB 中的 SQL API 开发 EF Core 提供程序。
-这将是我们首次推出完整的面向文档的数据库提供程序，通过此次尝试积累的经验将用于改进今后发布的 EF Core 以及其他非关系提供程序的设计。
-可以从 [NuGet 库](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Cosmos)获取预览版。
-
 ## <a name="adding-a-database-provider-to-your-application"></a>向应用程序添加数据库提供程序
 
-EF Core 的大多数数据库提供程序都是作为 NuGet 包分发的。 这意味着可使用命令行中的 `dotnet` 工具来安装它们：
+EF Core 的大多数数据库提供程序都是作为 NuGet 包分发的，可按如下所示安装：
+
+# <a name="net-core-clitabdotnet-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
 
 ``` console
 dotnet add package provider_package_name
 ```
 
-或者在 Visual Studio 中，使用 NuGet 包管理器控制台：
+# <a name="visual-studiotabvs"></a>[Visual Studio](#tab/vs)
 
 ``` powershell
 install-package provider_package_name
 ```
+
+***
 
 安装后，需采用 `OnConfiguring` 方法或 `AddDbContext` 方法（如果使用的是依赖关系注入容器）在 `DbContext` 中配置提供程序。
 例如，以下行使用传递的连接字符串配置 SQL Server 提供程序：
