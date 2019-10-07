@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: f9fb64e2-6699-4d70-a773-592918c04c19
 uid: core/querying/related-data
-ms.openlocfilehash: 4bf9598f9b7e74c2835d3926215de9a7ef4e6f96
-ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
+ms.openlocfilehash: 4e4ba21cd099daab4db8a8f358800fde26980c14
+ms.sourcegitcommit: 6c28926a1e35e392b198a8729fc13c1c1968a27b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/12/2019
-ms.locfileid: "70921796"
+ms.lasthandoff: 10/02/2019
+ms.locfileid: "71813580"
 ---
 # <a name="loading-related-data"></a>加载相关数据
 
@@ -30,7 +30,6 @@ Entity Framework Core 允许你在模型中使用导航属性来加载相关实�
 > [!TIP]  
 > Entity Framework Core 会根据之前已加载到上下文实例中的实体自动填充导航属性。 因此，即使不显式包含导航属性的数据，如果先前加载了部分或所有关联实体，则仍可能填充该属性。
 
-
 可以在单个查询中包含多个关系的关联数据。
 
 [!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#MultipleIncludes)]
@@ -40,9 +39,6 @@ Entity Framework Core 允许你在模型中使用导航属性来加载相关实�
 使用 `ThenInclude` 方法可以依循关系包含多个层级的关联数据。 以下示例加载了所有博客、其关联文章及每篇文章的作者。
 
 [!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#SingleThenInclude)]
-
-> [!NOTE]  
-> 当前版本的 Visual Studio 提供的代码完成选项不正确，因此在集合导航属性之后使用 `ThenInclude` 方法时，可能会对正确的表达式提示语法错误。 这是 https://github.com/dotnet/roslyn/issues/8237 中跟踪的 IntelliSense bug 的一个特征。 只要代码正确无误且能够成功编译，就可以放心地忽略这些语法错误。 
 
 可通过链式调用 `ThenInclude`，进一步包含更深级别的关联数据。
 
@@ -55,6 +51,9 @@ Entity Framework Core 允许你在模型中使用导航属性来加载相关实�
 你可能希望将已包含的某个实体的多个关联实体都包含进来。 例如，当查询 `Blogs` 时，你会包含 `Posts`，然后希望同时包含 `Posts` 的 `Author` 和 `Tags`。 为此，需要从根级别开始指定每个包含路径。 例如，`Blog -> Posts -> Author` 和 `Blog -> Posts -> Tags`。 这并不意味着会获得冗余联接查询，在大多数情况下，EF 会在生成 SQL 时合并相应的联接查询。
 
 [!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#MultipleLeafIncludes)]
+
+> [!CAUTION]
+> 从版本 3.0.0 开始，每个 `Include` 都将导致向关系提供程序生成的 SQL 查询添加额外的 JOIN，而以前的版本则生成其他 SQL 查询。 这可以显著地改变（提升或降低）查询性能。 具体而言，具有大量 `Include` 运算符的 LINQ 查询可能需要将分解为多个单独的 LINQ 查询，以避免笛卡尔爆炸问题。
 
 ### <a name="include-on-derived-types"></a>派生类型上的包含
 
@@ -106,27 +105,12 @@ public class School
   context.People.Include(person => (person as Student).School).ToList()
   ```
 
-- 使用采用类型 `string` 的参数的 `Include` 的重载
+- 使用 `Include` 的重载，该方法采用 `string` 类型的参数
   ```csharp
   context.People.Include("School").ToList()
   ```
 
-### <a name="ignored-includes"></a>忽略包含
-
-如果更改查询，从而使其不再返回查询以之为开头的实体类型的实例，则会忽略 include 运算符。
-
-以下示例中，include 运算符基于 `Blog`，但 `Select` 运算符将查询改变为返回匿名类型。 在这种情况下，include 运算符没有任何效果。
-
-[!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#IgnoredInclude)]
-
-默认情况下，当忽略 include 运算符时，EF Core 将记录警告。 有关查看日志记录输出的详细信息，请参阅[日志记录](../miscellaneous/logging.md)。 当忽略 include 运算符以引发异常或不执行任何操作时，可以更改行为。 这是在为上下文设置选项时完成的（通常在 `DbContext.OnConfiguring` 中完成，如果使用的是 ASP.NET Core，则在 `Startup.cs` 中完成）。
-
-[!code-csharp[Main](../../../samples/core/Querying/RelatedData/ThrowOnIgnoredInclude/BloggingContext.cs#OnConfiguring)]
-
 ## <a name="explicit-loading"></a>显式加载
-
-> [!NOTE]  
-> EF Core 1.1 中已引入此功能。
 
 可以通过 `DbContext.Entry(...)` API 显式加载导航属性。
 
@@ -148,10 +132,8 @@ public class School
 
 ## <a name="lazy-loading"></a>延迟加载
 
-> [!NOTE]  
-> EF Core 2.1 中已引入此功能。
-
 使用延迟加载的最简单方式是通过安装 [Microsoft.EntityFrameworkCore.Proxies](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Proxies/) 包，并通过调用 `UseLazyLoadingProxies` 来启用该包。 例如:
+
 ```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder
@@ -159,12 +141,15 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         .UseSqlServer(myConnectionString);
 ```
 或在使用 AddDbContext 时：
+
 ```csharp
 .AddDbContext<BloggingContext>(
     b => b.UseLazyLoadingProxies()
           .UseSqlServer(myConnectionString));
 ```
+
 EF Core 接着会为可重写的任何导航属性（即，必须是 `virtual` 且在可被继承的类上）启用延迟加载。 例如，在以下实体中，`Post.Blog` 和 `Blog.Posts` 导航属性将被延迟加载。
+
 ```csharp
 public class Blog
 {
@@ -183,9 +168,11 @@ public class Post
     public virtual Blog Blog { get; set; }
 }
 ```
+
 ### <a name="lazy-loading-without-proxies"></a>不使用代理的延迟加载
 
 使用代理进行延迟加载的工作方式是将 `ILazyLoader` 注入到实体中，如[实体类型构造函数](../modeling/constructors.md)中所述。 例如:
+
 ```csharp
 public class Blog
 {
@@ -238,7 +225,9 @@ public class Post
     }
 }
 ```
+
 这不要求实体类型为可继承的类型，也不要求导航属性必须是虚拟的，且允许通过 `new` 创建的实体实例在附加到上下文后可进行延迟加载。 但它需要对 [Microsoft.EntityFrameworkCore.Abstractions](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Abstractions/) 包中定义的 `ILazyLoader` 服务的引用。 此包包含所允许的最少的一组类型，以便将依赖此包时所产生的影响降至最低。 不过，可以将 `ILazyLoader.Load` 方法以委托的形式注入，这样就可以完全避免依赖于实体类型的任何 EF Core 包。 例如:
+
 ```csharp
 public class Blog
 {
@@ -291,7 +280,9 @@ public class Post
     }
 }
 ```
+
 上述代码使用 `Load` 扩展方法，以便更干净地使用委托：
+
 ```csharp
 public static class PocoLoadingExtensions
 {
@@ -308,6 +299,7 @@ public static class PocoLoadingExtensions
     }
 }
 ```
+
 > [!NOTE]  
 > 延迟加载委托的构造函数参数必须名为“lazyLoader”。 未来的一个版本中的配置将计划采用另一个名称。
 
