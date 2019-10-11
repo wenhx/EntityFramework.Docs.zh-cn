@@ -175,8 +175,6 @@
           items:
             - name: 概述
               href: core/querying/index.md
-            - name: 基本查询
-              href: core/querying/basic.md
             - name: 加载相关数据
               href: core/querying/related-data.md
             - name: 客户端与服务器评估
@@ -188,7 +186,7 @@
             - name: 异步查询
               href: core/querying/async.md
             - name: 查询的工作原理
-              href: core/querying/overview.md
+              href: core/querying/how-query-works.md
             - name: 全局查询筛选器
               href: core/querying/filters.md
             - name: 查询标记

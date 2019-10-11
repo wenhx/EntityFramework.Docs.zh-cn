@@ -1,63 +1,63 @@
 ---
-title: 获取实体框架的 EF6
+title: 获取实体框架-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 122c38a2-f9e8-4ecc-9c72-a83bc9af7814
-ms.openlocfilehash: 7f840a4f9e437ec12f699184339e386976e1528b
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 2bdec6a9be228fbe934d0f46aa1bfafdfb2c971c
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490623"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72181741"
 ---
-# <a name="get-entity-framework"></a><span data-ttu-id="51744-102">获取实体框架</span><span class="sxs-lookup"><span data-stu-id="51744-102">Get Entity Framework</span></span>
-<span data-ttu-id="51744-103">实体框架的 Visual Studio 和 EF 运行时由组成的 EF 工具。</span><span class="sxs-lookup"><span data-stu-id="51744-103">Entity Framework is made up of the EF Tools for Visual Studio and the EF Runtime.</span></span>
+# <a name="get-entity-framework"></a><span data-ttu-id="b96f7-102">获取实体框架</span><span class="sxs-lookup"><span data-stu-id="b96f7-102">Get Entity Framework</span></span>
+<span data-ttu-id="b96f7-103">实体框架由适用于 Visual Studio 的 EF 工具和 EF 运行时组成。</span><span class="sxs-lookup"><span data-stu-id="b96f7-103">Entity Framework is made up of the EF Tools for Visual Studio and the EF Runtime.</span></span>
 
-## <a name="ef-tools-for-visual-studio"></a><span data-ttu-id="51744-104">用于 Visual Studio 的 EF 工具</span><span class="sxs-lookup"><span data-stu-id="51744-104">EF Tools for Visual Studio</span></span>
+## <a name="ef-tools-for-visual-studio"></a><span data-ttu-id="b96f7-104">适用于 Visual Studio 的 EF 工具</span><span class="sxs-lookup"><span data-stu-id="b96f7-104">EF Tools for Visual Studio</span></span>
 
-<span data-ttu-id="51744-105">适用于 Visual Studio 的实体框架工具包括在 EF 设计器和 EF 模型向导和所需的数据库首次和第一个工作流的模型。</span><span class="sxs-lookup"><span data-stu-id="51744-105">The Entity Framework Tools for Visual Studio include the EF Designer and the EF Model Wizard and are required for the database first and model first workflows.</span></span> <span data-ttu-id="51744-106">在所有最新版本的 Visual Studio 包含 EF 工具。</span><span class="sxs-lookup"><span data-stu-id="51744-106">EF Tools are included in all recent versions of Visual Studio.</span></span> <span data-ttu-id="51744-107">如果执行自定义安装的 Visual Studio 将需要确保该项目通过选择包含它的工作负荷或通过选择作为单个组件，则选择"Entity Framework 6 工具"。</span><span class="sxs-lookup"><span data-stu-id="51744-107">If you perform a custom install of Visual Studio you will need to ensure that the item "Entity Framework 6 Tools" is selected by either choosing a workload that includes it or by selecting it as an individual component.</span></span>
+<span data-ttu-id="b96f7-105">Visual Studio 的 Entity Framework Tools 包括 EF 设计器和 EF 模型向导，并是数据库优先和模型优先工作流所必需的。</span><span class="sxs-lookup"><span data-stu-id="b96f7-105">The Entity Framework Tools for Visual Studio include the EF Designer and the EF Model Wizard and are required for the database first and model first workflows.</span></span> <span data-ttu-id="b96f7-106">所有最新版本的 Visual Studio 中都包含 EF 工具。</span><span class="sxs-lookup"><span data-stu-id="b96f7-106">EF Tools are included in all recent versions of Visual Studio.</span></span> <span data-ttu-id="b96f7-107">如果执行 Visual Studio 的自定义安装，则需要确保选择项 "实体框架6工具"，方法是选择包含它的工作负荷，或将其选择为单个组件。</span><span class="sxs-lookup"><span data-stu-id="b96f7-107">If you perform a custom install of Visual Studio you will need to ensure that the item "Entity Framework 6 Tools" is selected by either choosing a workload that includes it or by selecting it as an individual component.</span></span>
 
-<span data-ttu-id="51744-108">对于某些以前的 Visual Studio 版本，已更新的 EF 工具是可通过下载获得。</span><span class="sxs-lookup"><span data-stu-id="51744-108">For some past versions of Visual Studio, updated EF Tools are available as a download.</span></span> <span data-ttu-id="51744-109">请参阅[Visual Studio 版本](~/ef6/what-is-new/visual-studio.md)有关如何获取你的 Visual Studio 版本的 EF 工具可用的最新版本的指南。</span><span class="sxs-lookup"><span data-stu-id="51744-109">See [Visual Studio Versions](~/ef6/what-is-new/visual-studio.md) for guidance on how to get the latest version of EF Tools available for your version of Visual Studio.</span></span>
+<span data-ttu-id="b96f7-108">对于某些早期版本的 Visual Studio，更新的 EF 工具可作为下载。</span><span class="sxs-lookup"><span data-stu-id="b96f7-108">For some past versions of Visual Studio, updated EF Tools are available as a download.</span></span> <span data-ttu-id="b96f7-109">请参阅[Visual Studio 版本](~/ef6/what-is-new/visual-studio.md)，了解有关如何获取适用于你的 Visual studio 版本的最新版本 EF 工具的指南。</span><span class="sxs-lookup"><span data-stu-id="b96f7-109">See [Visual Studio Versions](~/ef6/what-is-new/visual-studio.md) for guidance on how to get the latest version of EF Tools available for your version of Visual Studio.</span></span>
 
-## <a name="ef-runtime"></a><span data-ttu-id="51744-110">EF 运行时</span><span class="sxs-lookup"><span data-stu-id="51744-110">EF Runtime</span></span>
+## <a name="ef-runtime"></a><span data-ttu-id="b96f7-110">EF 运行时</span><span class="sxs-lookup"><span data-stu-id="b96f7-110">EF Runtime</span></span>
 
-<span data-ttu-id="51744-111">实体框架的最新版本是可用作[EntityFramework NuGet 包](http://nuget.org/packages/EntityFramework/)。</span><span class="sxs-lookup"><span data-stu-id="51744-111">The latest version of Entity Framework is available as the [EntityFramework NuGet package](http://nuget.org/packages/EntityFramework/).</span></span> <span data-ttu-id="51744-112">如果您不熟悉使用 NuGet 程序包管理器中，我们建议您阅读[NuGet 概述](https://docs.microsoft.com/nuget/consume-packages/overview-and-workflow)。</span><span class="sxs-lookup"><span data-stu-id="51744-112">If you are not familiar with the NuGet Package Manager, we encourage you to read the [NuGet Overview](https://docs.microsoft.com/nuget/consume-packages/overview-and-workflow).</span></span>
+<span data-ttu-id="b96f7-111">实体框架的最新版本可作为[EntityFramework NuGet 包](https://nuget.org/packages/EntityFramework/)提供。</span><span class="sxs-lookup"><span data-stu-id="b96f7-111">The latest version of Entity Framework is available as the [EntityFramework NuGet package](https://nuget.org/packages/EntityFramework/).</span></span> <span data-ttu-id="b96f7-112">如果你不熟悉 NuGet 包管理器，我们建议你阅读[Nuget 概述](https://docs.microsoft.com/nuget/consume-packages/overview-and-workflow)。</span><span class="sxs-lookup"><span data-stu-id="b96f7-112">If you are not familiar with the NuGet Package Manager, we encourage you to read the [NuGet Overview](https://docs.microsoft.com/nuget/consume-packages/overview-and-workflow).</span></span>
 
-### <a name="installing-the-ef-nuget-package"></a><span data-ttu-id="51744-113">安装 EF NuGet 包</span><span class="sxs-lookup"><span data-stu-id="51744-113">Installing the EF NuGet Package</span></span>
+### <a name="installing-the-ef-nuget-package"></a><span data-ttu-id="b96f7-113">安装 EF NuGet 包</span><span class="sxs-lookup"><span data-stu-id="b96f7-113">Installing the EF NuGet Package</span></span>
 
-<span data-ttu-id="51744-114">可以通过右键单击安装 EntityFramework 包**引用**项目文件夹并选择**管理 NuGet 包...**</span><span class="sxs-lookup"><span data-stu-id="51744-114">You can install the EntityFramework package by right-clicking on the **References** folder of your project and selecting **Manage NuGet Packages…**</span></span>
+<span data-ttu-id="b96f7-114">可以通过右键单击项目的 "**引用**" 文件夹并选择 "**管理 NuGet 包 ...** " 来安装 EntityFramework 包。</span><span class="sxs-lookup"><span data-stu-id="b96f7-114">You can install the EntityFramework package by right-clicking on the **References** folder of your project and selecting **Manage NuGet Packages…**</span></span>
 
 ![管理 NuGet 包](~/ef6/media/managenugetpackages.png)
 
-### <a name="installing-from-package-manager-console"></a><span data-ttu-id="51744-116">从包管理器控制台安装</span><span class="sxs-lookup"><span data-stu-id="51744-116">Installing from Package Manager Console</span></span>
+### <a name="installing-from-package-manager-console"></a><span data-ttu-id="b96f7-116">从包管理器控制台安装</span><span class="sxs-lookup"><span data-stu-id="b96f7-116">Installing from Package Manager Console</span></span>
 
-<span data-ttu-id="51744-117">或者，可以通过在运行以下命令安装 EntityFramework[程序包管理器控制台](http://docs.nuget.org/docs/start-here/using-the-package-manager-console)。</span><span class="sxs-lookup"><span data-stu-id="51744-117">Alternatively, you can install EntityFramework by running the following command in the [Package Manager Console](http://docs.nuget.org/docs/start-here/using-the-package-manager-console).</span></span>
+<span data-ttu-id="b96f7-117">或者，你可以通过在[包管理器控制台](https://docs.nuget.org/docs/start-here/using-the-package-manager-console)中运行以下命令来安装 EntityFramework。</span><span class="sxs-lookup"><span data-stu-id="b96f7-117">Alternatively, you can install EntityFramework by running the following command in the [Package Manager Console](https://docs.nuget.org/docs/start-here/using-the-package-manager-console).</span></span>
 
 ``` powershell
 Install-Package EntityFramework
 ```
 
-## <a name="installing-a-specific-version-of-ef"></a><span data-ttu-id="51744-118">安装特定版本的 EF</span><span class="sxs-lookup"><span data-stu-id="51744-118">Installing a specific version of EF</span></span>
+## <a name="installing-a-specific-version-of-ef"></a><span data-ttu-id="b96f7-118">安装特定版本的 EF</span><span class="sxs-lookup"><span data-stu-id="b96f7-118">Installing a specific version of EF</span></span>
 
-<span data-ttu-id="51744-119">从 EF 4.1 及更高版本，已作为发布新版本的 EF 运行时[EntityFramework NuGet 包](https://www.nuget.org/packages/EntityFramework/)。</span><span class="sxs-lookup"><span data-stu-id="51744-119">From EF 4.1 onwards, new versions of the EF runtime have been released as the [EntityFramework NuGet Package](https://www.nuget.org/packages/EntityFramework/).</span></span> <span data-ttu-id="51744-120">任何这些版本可以向基于.NET Framework 的项目添加，通过在 Visual Studio 中运行以下命令[程序包管理器控制台](http://docs.nuget.org/docs/start-here/using-the-package-manager-console):</span><span class="sxs-lookup"><span data-stu-id="51744-120">Any of those versions can be added to a .NET Framework-based project by running the following command in Visual Studio's [Package Manager Console](http://docs.nuget.org/docs/start-here/using-the-package-manager-console):</span></span>
+<span data-ttu-id="b96f7-119">从 EF 4.1 开始，已发布了 EF 运行时的新版本作为[EntityFramework NuGet 包](https://www.nuget.org/packages/EntityFramework/)。</span><span class="sxs-lookup"><span data-stu-id="b96f7-119">From EF 4.1 onwards, new versions of the EF runtime have been released as the [EntityFramework NuGet Package](https://www.nuget.org/packages/EntityFramework/).</span></span> <span data-ttu-id="b96f7-120">可以通过在 Visual Studio 的[包管理器控制台](https://docs.nuget.org/docs/start-here/using-the-package-manager-console)中运行以下命令，将这些版本中的任何一种添加到基于 .NET Framework 的项目中：</span><span class="sxs-lookup"><span data-stu-id="b96f7-120">Any of those versions can be added to a .NET Framework-based project by running the following command in Visual Studio's [Package Manager Console](https://docs.nuget.org/docs/start-here/using-the-package-manager-console):</span></span>
 
 ``` powershell
 Install-Package EntityFramework -Version <number>
 ```
 
-<span data-ttu-id="51744-121">请注意，`<number>`表示的特定版本的 EF 安装。</span><span class="sxs-lookup"><span data-stu-id="51744-121">Note that `<number>` represents the specific version of EF to install.</span></span> <span data-ttu-id="51744-122">例如，6.2.0 是 EF 6.2 的版本号。</span><span class="sxs-lookup"><span data-stu-id="51744-122">For example, 6.2.0 is the version of number for EF 6.2.</span></span>   
+<span data-ttu-id="b96f7-121">请注意，@no__t 表示要安装的 EF 的特定版本。</span><span class="sxs-lookup"><span data-stu-id="b96f7-121">Note that `<number>` represents the specific version of EF to install.</span></span> <span data-ttu-id="b96f7-122">例如，6.2.0 是 EF 6.2 的编号版本。</span><span class="sxs-lookup"><span data-stu-id="b96f7-122">For example, 6.2.0 is the version of number for EF 6.2.</span></span>   
 
-<span data-ttu-id="51744-123">EF 4.1 之前的运行时是.NET Framework 的一部分，并且不能单独安装。</span><span class="sxs-lookup"><span data-stu-id="51744-123">EF runtimes before 4.1 were part of .NET Framework and cannot be installed separately.</span></span>
+<span data-ttu-id="b96f7-123">4\.1 之前的 EF 运行时是 .NET Framework 的一部分，不能单独安装。</span><span class="sxs-lookup"><span data-stu-id="b96f7-123">EF runtimes before 4.1 were part of .NET Framework and cannot be installed separately.</span></span>
 
-### <a name="installing-the-latest-preview"></a><span data-ttu-id="51744-124">安装最新预览版</span><span class="sxs-lookup"><span data-stu-id="51744-124">Installing the Latest Preview</span></span>
+### <a name="installing-the-latest-preview"></a><span data-ttu-id="b96f7-124">安装最新预览版</span><span class="sxs-lookup"><span data-stu-id="b96f7-124">Installing the Latest Preview</span></span>
 
-<span data-ttu-id="51744-125">上述方法将为您提供最新版本完全支持 Entity Framework 的版本。</span><span class="sxs-lookup"><span data-stu-id="51744-125">The above methods will give you the latest fully supported release of Entity Framework.</span></span> <span data-ttu-id="51744-126">通常是实体框架可用，我们很高兴您尝试并向我们提供有关反馈的预发布版本。</span><span class="sxs-lookup"><span data-stu-id="51744-126">There are often prerelease versions of Entity Framework available that we would love you to try out and give us feedback on.</span></span>
+<span data-ttu-id="b96f7-125">上述方法将为你介绍实体框架的最新完全受支持的版本。</span><span class="sxs-lookup"><span data-stu-id="b96f7-125">The above methods will give you the latest fully supported release of Entity Framework.</span></span> <span data-ttu-id="b96f7-126">实体框架提供了预发布版本的预发布版本，我们希望你尝试并向我们提供反馈。</span><span class="sxs-lookup"><span data-stu-id="b96f7-126">There are often prerelease versions of Entity Framework available that we would love you to try out and give us feedback on.</span></span>
 
-<span data-ttu-id="51744-127">若要安装的 EntityFramework 可以选择最新预览版**包括预发行版**管理 NuGet 包窗口中。</span><span class="sxs-lookup"><span data-stu-id="51744-127">To install the latest preview of EntityFramework you can select **Include Prerelease** in the Manage NuGet Packages window.</span></span> <span data-ttu-id="51744-128">如果不有任何预发布版本将自动获取最新的实体框架的完全受支持的版本。</span><span class="sxs-lookup"><span data-stu-id="51744-128">If no prerelease versions are available you will automatically get the latest fully supported version of Entity Framework.</span></span>
+<span data-ttu-id="b96f7-127">若要安装最新的 EntityFramework 预览版，可以在 "管理 NuGet 包" 窗口中选择 "**包括预发行**版"。</span><span class="sxs-lookup"><span data-stu-id="b96f7-127">To install the latest preview of EntityFramework you can select **Include Prerelease** in the Manage NuGet Packages window.</span></span> <span data-ttu-id="b96f7-128">如果没有可用的预发布版本，则会自动获取实体框架的最新完全受支持版本。</span><span class="sxs-lookup"><span data-stu-id="b96f7-128">If no prerelease versions are available you will automatically get the latest fully supported version of Entity Framework.</span></span>
 
 ![包括预发行版](~/ef6/media/includeprerelease.png)
 
-<span data-ttu-id="51744-130">或者，可以运行以下命令[程序包管理器控制台](http://docs.nuget.org/docs/start-here/using-the-package-manager-console)。</span><span class="sxs-lookup"><span data-stu-id="51744-130">Alternatively, you can run the following command in the [Package Manager Console](http://docs.nuget.org/docs/start-here/using-the-package-manager-console).</span></span>
+<span data-ttu-id="b96f7-130">或者，你可以在[包管理器控制台](https://docs.nuget.org/docs/start-here/using-the-package-manager-console)中运行以下命令。</span><span class="sxs-lookup"><span data-stu-id="b96f7-130">Alternatively, you can run the following command in the [Package Manager Console](https://docs.nuget.org/docs/start-here/using-the-package-manager-console).</span></span>
 
 ``` powershell
 Install-Package EntityFramework -Pre

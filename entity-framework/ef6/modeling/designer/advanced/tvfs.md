@@ -1,55 +1,55 @@
 ---
-title: 表值函数 (Tvf)-EF6
+title: 表值函数（Tvf）-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: f019c97b-87b0-4e93-98f4-2c539f77b2dc
-ms.openlocfilehash: 34aebd8f5f2c3b43c80e21c1a17a386597596c05
-ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
+ms.openlocfilehash: 35684196dcd7b708a8feeb1eca3096e8d4e555ec
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/18/2018
-ms.locfileid: "46283948"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72182525"
 ---
-# <a name="table-valued-functions-tvfs"></a><span data-ttu-id="15eac-102">表值函数 (Tvf)</span><span class="sxs-lookup"><span data-stu-id="15eac-102">Table-Valued Functions (TVFs)</span></span>
+# <a name="table-valued-functions-tvfs"></a><span data-ttu-id="a64b6-102">表值函数（Tvf）</span><span class="sxs-lookup"><span data-stu-id="a64b6-102">Table-Valued Functions (TVFs)</span></span>
 > [!NOTE]
-> <span data-ttu-id="15eac-103">**EF5 及更高版本仅**的功能，Api，Entity Framework 5 中引入了此页所述的等。</span><span class="sxs-lookup"><span data-stu-id="15eac-103">**EF5 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 5.</span></span> <span data-ttu-id="15eac-104">如果使用的是早期版本，则部分或全部信息不适用。</span><span class="sxs-lookup"><span data-stu-id="15eac-104">If you are using an earlier version, some or all of the information does not apply.</span></span>
+> <span data-ttu-id="a64b6-103">**EF5 仅向前**-实体框架5中引入了本页中所述的功能、api 等。</span><span class="sxs-lookup"><span data-stu-id="a64b6-103">**EF5 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 5.</span></span> <span data-ttu-id="a64b6-104">如果使用的是早期版本，则部分或全部信息不适用。</span><span class="sxs-lookup"><span data-stu-id="a64b6-104">If you are using an earlier version, some or all of the information does not apply.</span></span>
 
-<span data-ttu-id="15eac-105">视频和分步演练演示如何将映射表值函数 (Tvf 使用实体框架设计器)。</span><span class="sxs-lookup"><span data-stu-id="15eac-105">The video and step-by-step walkthrough shows how to map table-valued functions (TVFs) using the Entity Framework Designer.</span></span> <span data-ttu-id="15eac-106">它还演示了如何从 LINQ 查询中调用 TVF。</span><span class="sxs-lookup"><span data-stu-id="15eac-106">It also demonstrates how to call a TVF from a LINQ query.</span></span>
+<span data-ttu-id="a64b6-105">视频和分步演练演示了如何使用 Entity Framework Designer 映射表值函数（Tvf）。</span><span class="sxs-lookup"><span data-stu-id="a64b6-105">The video and step-by-step walkthrough shows how to map table-valued functions (TVFs) using the Entity Framework Designer.</span></span> <span data-ttu-id="a64b6-106">它还演示了如何从 LINQ 查询调用 TVF。</span><span class="sxs-lookup"><span data-stu-id="a64b6-106">It also demonstrates how to call a TVF from a LINQ query.</span></span>
 
-<span data-ttu-id="15eac-107">Tvf 目前仅支持数据库优先工作流中。</span><span class="sxs-lookup"><span data-stu-id="15eac-107">TVFs are currently only supported in the Database First workflow.</span></span>
+<span data-ttu-id="a64b6-107">Tvf 当前仅在 Database First 工作流中受支持。</span><span class="sxs-lookup"><span data-stu-id="a64b6-107">TVFs are currently only supported in the Database First workflow.</span></span>
 
-<span data-ttu-id="15eac-108">实体框架版本 5 中引入了 TVF 的支持。</span><span class="sxs-lookup"><span data-stu-id="15eac-108">TVF support was introduced in Entity Framework version 5.</span></span> <span data-ttu-id="15eac-109">请注意，若要使用新功能，如表值函数、 枚举和空间类型必须面向.NET Framework 4.5。</span><span class="sxs-lookup"><span data-stu-id="15eac-109">Note that to use the new features like table-valued functions, enums, and spatial types you must target .NET Framework 4.5.</span></span> <span data-ttu-id="15eac-110">默认情况下，visual Studio 2012 面向.NET 4.5。</span><span class="sxs-lookup"><span data-stu-id="15eac-110">Visual Studio 2012 targets .NET 4.5 by default.</span></span>
+<span data-ttu-id="a64b6-108">实体框架版本5中引入了 TVF 支持。</span><span class="sxs-lookup"><span data-stu-id="a64b6-108">TVF support was introduced in Entity Framework version 5.</span></span> <span data-ttu-id="a64b6-109">请注意，若要使用表值函数、枚举和空间类型等新功能，则必须以 .NET Framework 4.5 为目标。</span><span class="sxs-lookup"><span data-stu-id="a64b6-109">Note that to use the new features like table-valued functions, enums, and spatial types you must target .NET Framework 4.5.</span></span> <span data-ttu-id="a64b6-110">默认情况下，Visual Studio 2012 面向 .NET 4.5。</span><span class="sxs-lookup"><span data-stu-id="a64b6-110">Visual Studio 2012 targets .NET 4.5 by default.</span></span>
 
-<span data-ttu-id="15eac-111">Tvf 是非常类似于存储过程有一个重大差异： TVF 的结果是可组合。</span><span class="sxs-lookup"><span data-stu-id="15eac-111">TVFs are very similar to stored procedures with one key difference: the result of a TVF is composable.</span></span> <span data-ttu-id="15eac-112">这意味着可以在 LINQ 查询中使用 TVF 的结果，而不能存储过程的结果。</span><span class="sxs-lookup"><span data-stu-id="15eac-112">That means the results from a TVF can be used in a LINQ query while the results of a stored procedure cannot.</span></span>
+<span data-ttu-id="a64b6-111">Tvf 非常类似于具有一个关键区别的存储过程： TVF 的结果是可组合的。</span><span class="sxs-lookup"><span data-stu-id="a64b6-111">TVFs are very similar to stored procedures with one key difference: the result of a TVF is composable.</span></span> <span data-ttu-id="a64b6-112">这意味着，可以在 LINQ 查询中使用 TVF 的结果，而存储过程的结果不能。</span><span class="sxs-lookup"><span data-stu-id="a64b6-112">That means the results from a TVF can be used in a LINQ query while the results of a stored procedure cannot.</span></span>
 
-## <a name="watch-the-video"></a><span data-ttu-id="15eac-113">观看视频</span><span class="sxs-lookup"><span data-stu-id="15eac-113">Watch the video</span></span>
+## <a name="watch-the-video"></a><span data-ttu-id="a64b6-113">观看视频</span><span class="sxs-lookup"><span data-stu-id="a64b6-113">Watch the video</span></span>
 
-<span data-ttu-id="15eac-114">**主讲人**： 以下 Julia Kornich</span><span class="sxs-lookup"><span data-stu-id="15eac-114">**Presented By**: Julia Kornich</span></span>
+<span data-ttu-id="a64b6-114">**提供者**：Julia Kornich</span><span class="sxs-lookup"><span data-stu-id="a64b6-114">**Presented By**: Julia Kornich</span></span>
 
-<span data-ttu-id="15eac-115">[WMV](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-winvideo-tvf.wmv) | [MP4](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-mp4video-tvf.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-winvideo-tvf.zip)</span><span class="sxs-lookup"><span data-stu-id="15eac-115">[WMV](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-winvideo-tvf.wmv) | [MP4](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-mp4video-tvf.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-winvideo-tvf.zip)</span></span>
+<span data-ttu-id="a64b6-115">[WMV](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-winvideo-tvf.wmv)@NO__T[-1 .WMV](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-mp4video-tvf.m4v) | [WMV （ZIP）](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-winvideo-tvf.zip)</span><span class="sxs-lookup"><span data-stu-id="a64b6-115">[WMV](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-winvideo-tvf.wmv) | [MP4](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-mp4video-tvf.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-winvideo-tvf.zip)</span></span>
 
-## <a name="pre-requisites"></a><span data-ttu-id="15eac-116">系统必备组件</span><span class="sxs-lookup"><span data-stu-id="15eac-116">Pre-Requisites</span></span>
+## <a name="pre-requisites"></a><span data-ttu-id="a64b6-116">先决条件</span><span class="sxs-lookup"><span data-stu-id="a64b6-116">Pre-Requisites</span></span>
 
-<span data-ttu-id="15eac-117">若要完成本演练，需要：</span><span class="sxs-lookup"><span data-stu-id="15eac-117">To complete this walkthrough, you need to:</span></span>
+<span data-ttu-id="a64b6-117">若要完成本演练，你需要：</span><span class="sxs-lookup"><span data-stu-id="a64b6-117">To complete this walkthrough, you need to:</span></span>
 
-- <span data-ttu-id="15eac-118">安装[School 数据库](~/ef6/resources/school-database.md)。</span><span class="sxs-lookup"><span data-stu-id="15eac-118">Install the [School database](~/ef6/resources/school-database.md).</span></span>
+- <span data-ttu-id="a64b6-118">安装[School 数据库](~/ef6/resources/school-database.md)。</span><span class="sxs-lookup"><span data-stu-id="a64b6-118">Install the [School database](~/ef6/resources/school-database.md).</span></span>
 
-- <span data-ttu-id="15eac-119">具有最新版本的 Visual Studio</span><span class="sxs-lookup"><span data-stu-id="15eac-119">Have a recent version of Visual Studio</span></span>
+- <span data-ttu-id="a64b6-119">具有最新版本的 Visual Studio</span><span class="sxs-lookup"><span data-stu-id="a64b6-119">Have a recent version of Visual Studio</span></span>
 
-## <a name="set-up-the-project"></a><span data-ttu-id="15eac-120">设置项目</span><span class="sxs-lookup"><span data-stu-id="15eac-120">Set up the Project</span></span>
+## <a name="set-up-the-project"></a><span data-ttu-id="a64b6-120">设置项目</span><span class="sxs-lookup"><span data-stu-id="a64b6-120">Set up the Project</span></span>
 
-1.  <span data-ttu-id="15eac-121">打开 Visual Studio</span><span class="sxs-lookup"><span data-stu-id="15eac-121">Open Visual Studio</span></span>
-2.  <span data-ttu-id="15eac-122">上**文件**菜单，依次指向**新建**，然后单击**项目**</span><span class="sxs-lookup"><span data-stu-id="15eac-122">On the **File** menu, point to **New**, and then click **Project**</span></span>
-3.  <span data-ttu-id="15eac-123">在左窗格中，单击**Visual C\#**，然后选择**控制台**模板</span><span class="sxs-lookup"><span data-stu-id="15eac-123">In the left pane, click **Visual C\#**, and then select the **Console** template</span></span>
-4.  <span data-ttu-id="15eac-124">输入**TVF**作为名称的项目并单击**确定**</span><span class="sxs-lookup"><span data-stu-id="15eac-124">Enter **TVF** as the name of the project and click **OK**</span></span>
+1.  <span data-ttu-id="a64b6-121">打开 Visual Studio</span><span class="sxs-lookup"><span data-stu-id="a64b6-121">Open Visual Studio</span></span>
+2.  <span data-ttu-id="a64b6-122">在 "**文件**" 菜单上，指向 "**新建**"，然后单击 "**项目**"</span><span class="sxs-lookup"><span data-stu-id="a64b6-122">On the **File** menu, point to **New**, and then click **Project**</span></span>
+3.  <span data-ttu-id="a64b6-123">在左窗格中，单击 " **Visual C @ no__t**"，然后选择**控制台**模板</span><span class="sxs-lookup"><span data-stu-id="a64b6-123">In the left pane, click **Visual C\#**, and then select the **Console** template</span></span>
+4.  <span data-ttu-id="a64b6-124">输入**TVF**作为项目名称，然后单击 **"确定"**</span><span class="sxs-lookup"><span data-stu-id="a64b6-124">Enter **TVF** as the name of the project and click **OK**</span></span>
 
-## <a name="add-a-tvf-to-the-database"></a><span data-ttu-id="15eac-125">向数据库添加 TVF</span><span class="sxs-lookup"><span data-stu-id="15eac-125">Add a TVF to the Database</span></span>
+## <a name="add-a-tvf-to-the-database"></a><span data-ttu-id="a64b6-125">将 TVF 添加到数据库</span><span class="sxs-lookup"><span data-stu-id="a64b6-125">Add a TVF to the Database</span></span>
 
--   <span data-ttu-id="15eac-126">选择**视图-&gt; SQL Server 对象资源管理器**</span><span class="sxs-lookup"><span data-stu-id="15eac-126">Select **View -&gt; SQL Server Object Explorer**</span></span>
--   <span data-ttu-id="15eac-127">如果 LocalDB 中的服务器列表不是： 右键单击**SQL Server** ，然后选择**添加 SQL Server**使用默认**Windows 身份验证**连接到 LocalDB 服务器</span><span class="sxs-lookup"><span data-stu-id="15eac-127">If LocalDB is not in the list of servers: Right-click on **SQL Server** and select **Add SQL Server** Use the default **Windows Authentication** to connect to the LocalDB server</span></span>
--   <span data-ttu-id="15eac-128">展开 LocalDB 节点</span><span class="sxs-lookup"><span data-stu-id="15eac-128">Expand the LocalDB node</span></span>
--   <span data-ttu-id="15eac-129">在数据库节点下右键单击 School 数据库节点，然后选择**新建查询...**</span><span class="sxs-lookup"><span data-stu-id="15eac-129">Under the Databases node, right-click the School database node and select **New Query…**</span></span>
--   <span data-ttu-id="15eac-130">在 T-SQL 编辑器中，粘贴以下 TVF 定义</span><span class="sxs-lookup"><span data-stu-id="15eac-130">In T-SQL Editor, paste the following TVF definition</span></span>
+-   <span data-ttu-id="a64b6-126">选择 **&gt; SQL Server 对象资源管理器**</span><span class="sxs-lookup"><span data-stu-id="a64b6-126">Select **View -&gt; SQL Server Object Explorer**</span></span>
+-   <span data-ttu-id="a64b6-127">如果 LocalDB 不在服务器列表中：右键单击**SQL Server** ，然后选择 "**添加 SQL Server**使用默认**Windows 身份验证**连接到 LocalDB 服务器</span><span class="sxs-lookup"><span data-stu-id="a64b6-127">If LocalDB is not in the list of servers: Right-click on **SQL Server** and select **Add SQL Server** Use the default **Windows Authentication** to connect to the LocalDB server</span></span>
+-   <span data-ttu-id="a64b6-128">展开 LocalDB 节点</span><span class="sxs-lookup"><span data-stu-id="a64b6-128">Expand the LocalDB node</span></span>
+-   <span data-ttu-id="a64b6-129">在 "数据库" 节点下，右键单击 "School" 数据库节点，然后选择 " **新建查询 ...** "</span><span class="sxs-lookup"><span data-stu-id="a64b6-129">Under the Databases node, right-click the School database node and select **New Query…**</span></span>
+-   <span data-ttu-id="a64b6-130">在 T-sql 编辑器中粘贴以下 TVF 定义</span><span class="sxs-lookup"><span data-stu-id="a64b6-130">In T-SQL Editor, paste the following TVF definition</span></span>
 
 ``` SQL
 CREATE FUNCTION [dbo].[GetStudentGradesForCourse]
@@ -67,29 +67,29 @@ RETURN
     WHERE  CourseID = @CourseID
 ```
 
--   <span data-ttu-id="15eac-131">单击鼠标右键在 T-SQL 编辑器，然后选择**Execute**</span><span class="sxs-lookup"><span data-stu-id="15eac-131">Click the right mouse button on the T-SQL editor and select **Execute**</span></span>
--   <span data-ttu-id="15eac-132">GetStudentGradesForCourse 函数添加到 School 数据库</span><span class="sxs-lookup"><span data-stu-id="15eac-132">The GetStudentGradesForCourse function is added to the School database</span></span>
+-   <span data-ttu-id="a64b6-131">在 T-sql 编辑器上单击鼠标右键按钮，然后选择 " **执行**"</span><span class="sxs-lookup"><span data-stu-id="a64b6-131">Click the right mouse button on the T-SQL editor and select **Execute**</span></span>
+-   <span data-ttu-id="a64b6-132">GetStudentGradesForCourse 函数将添加到 School 数据库</span><span class="sxs-lookup"><span data-stu-id="a64b6-132">The GetStudentGradesForCourse function is added to the School database</span></span>
 
- 
+ 
 
-## <a name="create-a-model"></a><span data-ttu-id="15eac-133">创建模型</span><span class="sxs-lookup"><span data-stu-id="15eac-133">Create a Model</span></span>
+## <a name="create-a-model"></a><span data-ttu-id="a64b6-133">创建模型</span><span class="sxs-lookup"><span data-stu-id="a64b6-133">Create a Model</span></span>
 
-1.  <span data-ttu-id="15eac-134">右键单击解决方案资源管理器中的项目名称，指向**外**，然后单击**新项**</span><span class="sxs-lookup"><span data-stu-id="15eac-134">Right-click the project name in Solution Explorer, point to **Add**, and then click **New Item**</span></span>
-2.  <span data-ttu-id="15eac-135">选择**数据**从左侧的菜单，然后选择**ADO.NET 实体数据模型**中**模板**窗格</span><span class="sxs-lookup"><span data-stu-id="15eac-135">Select **Data** from the left menu and then select **ADO.NET Entity Data Model** in the **Templates** pane</span></span>
-3.  <span data-ttu-id="15eac-136">输入**TVFModel.edmx**以及该文件的名称，然后单击**添加**</span><span class="sxs-lookup"><span data-stu-id="15eac-136">Enter **TVFModel.edmx** for the file name, and then click **Add**</span></span>
-4.  <span data-ttu-id="15eac-137">在选择模型内容对话框中，选择**从数据库生成**，然后单击**下一步**</span><span class="sxs-lookup"><span data-stu-id="15eac-137">In the Choose Model Contents dialog box, select **Generate from database**, and then click **Next**</span></span>
-5.  <span data-ttu-id="15eac-138">单击**新的连接**Enter **(localdb)\\mssqllocaldb**在服务器名称文本框中输入**学校**数据库命名为单击**确定**</span><span class="sxs-lookup"><span data-stu-id="15eac-138">Click **New Connection** Enter **(localdb)\\mssqllocaldb** in the Server name text box Enter **School** for the database name Click **OK**</span></span>
-6.  <span data-ttu-id="15eac-139">在选择数据库对象对话框框中下,**表**节点中，选择**人员**， **StudentGrade**，以及**课程**表</span><span class="sxs-lookup"><span data-stu-id="15eac-139">In the Choose Your Database Objects dialog box, under the **Tables** node, select the **Person**, **StudentGrade**, and **Course** tables</span></span>
-7.  <span data-ttu-id="15eac-140">选择**GetStudentGradesForCourse**函数位于**存储过程和函数**节点请注意，开始 Visual Studio 2012 中，实体设计器允许你批量导入到存储的过程和函数</span><span class="sxs-lookup"><span data-stu-id="15eac-140">Select the **GetStudentGradesForCourse** function located under the **Stored Procedures and Functions** node Note, that starting with Visual Studio 2012, the Entity Designer allows you to batch import your Stored Procedures and Functions</span></span>
-8.  <span data-ttu-id="15eac-141">单击**完成**</span><span class="sxs-lookup"><span data-stu-id="15eac-141">Click **Finish**</span></span>
-9.  <span data-ttu-id="15eac-142">提供用于编辑模型的设计图面，实体设计器随即出现。</span><span class="sxs-lookup"><span data-stu-id="15eac-142">The Entity Designer, which provides a design surface for editing your model, is displayed.</span></span> <span data-ttu-id="15eac-143">在您选择的所有对象**选择数据库对象**对话框的添加到模型。</span><span class="sxs-lookup"><span data-stu-id="15eac-143">All the objects that you selected in the **Choose Your Database Objects** dialog box are added to the model.</span></span>
-10. <span data-ttu-id="15eac-144">默认情况下，每个导入存储的过程或函数的结果形状将自动变为实体模型中的新复杂类型。</span><span class="sxs-lookup"><span data-stu-id="15eac-144">By default, the result shape of each imported stored procedure or function will automatically become a new complex type in your entity model.</span></span> <span data-ttu-id="15eac-145">但我们想要将 GetStudentGradesForCourse 函数的结果映射到 StudentGrade 实体： 右键单击设计图面，然后选择**模型浏览器**在模型浏览器中，选择**函数导入**，然后双击**GetStudentGradesForCourse**函数中编辑函数导入对话框中，选择**实体**，然后选择**StudentGrade**</span><span class="sxs-lookup"><span data-stu-id="15eac-145">But we want to map the results of the GetStudentGradesForCourse function to the StudentGrade entity: Right-click the design surface and select **Model Browser** In Model Browser, select **Function Imports**, and then double-click the **GetStudentGradesForCourse** function In the Edit Function Import dialog box, select **Entities** and choose **StudentGrade**</span></span>
+1.  <span data-ttu-id="a64b6-134">右键单击 "解决方案资源管理器中的项目名称，指向"**添加**"，然后单击"**新建项**"</span><span class="sxs-lookup"><span data-stu-id="a64b6-134">Right-click the project name in Solution Explorer, point to **Add**, and then click **New Item**</span></span>
+2.  <span data-ttu-id="a64b6-135">从左侧菜单中选择 "**数据**"，然后在 "**模板**" 窗格中选择 " **ADO.NET 实体数据模型**</span><span class="sxs-lookup"><span data-stu-id="a64b6-135">Select **Data** from the left menu and then select **ADO.NET Entity Data Model** in the **Templates** pane</span></span>
+3.  <span data-ttu-id="a64b6-136">输入**TVFModel**作为文件名，然后单击 "**添加**"</span><span class="sxs-lookup"><span data-stu-id="a64b6-136">Enter **TVFModel.edmx** for the file name, and then click **Add**</span></span>
+4.  <span data-ttu-id="a64b6-137">在 "选择模型内容" 对话框中，选择 " **从数据库生成**"，然后单击 " **下一步**"</span><span class="sxs-lookup"><span data-stu-id="a64b6-137">In the Choose Model Contents dialog box, select **Generate from database**, and then click **Next**</span></span>
+5.  <span data-ttu-id="a64b6-138">单击 "服务器名称" 文本框中的 " **新建连接**输入 **（localdb） \\mssqllocaldb**输入**School** For 数据库名称单击 **" 确定 "**</span><span class="sxs-lookup"><span data-stu-id="a64b6-138">Click **New Connection** Enter **(localdb)\\mssqllocaldb** in the Server name text box Enter **School** for the database name Click **OK**</span></span>
+6.  <span data-ttu-id="a64b6-139">在 "选择数据库对象" 对话框中的 " **表**@no__t" 下，选择 " **人员**"、" **StudentGrade**" 和 " **课程**"  tables</span><span class="sxs-lookup"><span data-stu-id="a64b6-139">In the Choose Your Database Objects dialog box, under the **Tables** node, select the **Person**, **StudentGrade**, and **Course** tables</span></span>
+7.  <span data-ttu-id="a64b6-140">从 Visual Studio 2012 开始，选择 " **存储过程" 和 "函数**@no__t" 下的 **GetStudentGradesForCourse**函数，该函数从 Visual Studio 开始，Entity Designer 允许批处理导入存储过程和函数</span><span class="sxs-lookup"><span data-stu-id="a64b6-140">Select the **GetStudentGradesForCourse** function located under the **Stored Procedures and Functions** node Note, that starting with Visual Studio 2012, the Entity Designer allows you to batch import your Stored Procedures and Functions</span></span>
+8.  <span data-ttu-id="a64b6-141">单击 " **完成**"</span><span class="sxs-lookup"><span data-stu-id="a64b6-141">Click **Finish**</span></span>
+9.  <span data-ttu-id="a64b6-142">此时会显示 Entity Designer，它提供了用于编辑模型的设计图面。</span><span class="sxs-lookup"><span data-stu-id="a64b6-142">The Entity Designer, which provides a design surface for editing your model, is displayed.</span></span> <span data-ttu-id="a64b6-143">您在 " **选择数据库对象** dialog" 框中选择的所有对象都将添加到模型中。</span><span class="sxs-lookup"><span data-stu-id="a64b6-143">All the objects that you selected in the **Choose Your Database Objects** dialog box are added to the model.</span></span>
+10. <span data-ttu-id="a64b6-144">默认情况下，每个导入的存储过程或函数的结果形状将自动成为实体模型中的新复杂类型。</span><span class="sxs-lookup"><span data-stu-id="a64b6-144">By default, the result shape of each imported stored procedure or function will automatically become a new complex type in your entity model.</span></span> <span data-ttu-id="a64b6-145">但我们想要将 GetStudentGradesForCourse 函数的结果映射到 StudentGrade 实体：右键单击设计图面，然后在 "模型浏览器" 中选择 " **模型浏览器**"，选择 " **函数导**入"，然后在 "编辑函数导入" 对话框中双击 " **GetStudentGradesForCourse** " 函数，选择 " **实体**" and 选择 **StudentGrade**</span><span class="sxs-lookup"><span data-stu-id="a64b6-145">But we want to map the results of the GetStudentGradesForCourse function to the StudentGrade entity: Right-click the design surface and select **Model Browser** In Model Browser, select **Function Imports**, and then double-click the **GetStudentGradesForCourse** function In the Edit Function Import dialog box, select **Entities** and choose **StudentGrade**</span></span>
 
-## <a name="persist-and-retrieve-data"></a><span data-ttu-id="15eac-146">保留和检索数据</span><span class="sxs-lookup"><span data-stu-id="15eac-146">Persist and Retrieve Data</span></span>
+## <a name="persist-and-retrieve-data"></a><span data-ttu-id="a64b6-146">保留和检索数据</span><span class="sxs-lookup"><span data-stu-id="a64b6-146">Persist and Retrieve Data</span></span>
 
-<span data-ttu-id="15eac-147">打开其中定义 Main 方法的文件。</span><span class="sxs-lookup"><span data-stu-id="15eac-147">Open the file where the Main method is defined.</span></span> <span data-ttu-id="15eac-148">以下代码添加到 Main 函数。</span><span class="sxs-lookup"><span data-stu-id="15eac-148">Add the following code into the Main function.</span></span>
+<span data-ttu-id="a64b6-147">打开定义 Main 方法的文件。</span><span class="sxs-lookup"><span data-stu-id="a64b6-147">Open the file where the Main method is defined.</span></span> <span data-ttu-id="a64b6-148">将以下代码添加到 Main 函数中。</span><span class="sxs-lookup"><span data-stu-id="a64b6-148">Add the following code into the Main function.</span></span>
 
-<span data-ttu-id="15eac-149">下面的代码演示如何构建使用表值函数的查询。</span><span class="sxs-lookup"><span data-stu-id="15eac-149">The following code demonstrates how to build a query that uses a Table-valued Function.</span></span> <span data-ttu-id="15eac-150">该查询将结果投影到匿名类型包含的相关的课程标题和相关的学生的等级大于或等于 3.5。</span><span class="sxs-lookup"><span data-stu-id="15eac-150">The query projects the results into an anonymous type that contains the related Course title and related students with a grade greater or equal to 3.5.</span></span>
+<span data-ttu-id="a64b6-149">下面的代码演示如何生成使用表值函数的查询。</span><span class="sxs-lookup"><span data-stu-id="a64b6-149">The following code demonstrates how to build a query that uses a Table-valued Function.</span></span> <span data-ttu-id="a64b6-150">该查询将结果投影到一个匿名类型中，该类型包含相关课程标题和一个等级大于或等于3.5 的相关学生。</span><span class="sxs-lookup"><span data-stu-id="a64b6-150">The query projects the results into an anonymous type that contains the related Course title and related students with a grade greater or equal to 3.5.</span></span>
 
 ``` csharp
 using (var context = new SchoolEntities())
@@ -117,13 +117,13 @@ using (var context = new SchoolEntities())
 }
 ```
 
-<span data-ttu-id="15eac-151">编译并运行该应用程序。</span><span class="sxs-lookup"><span data-stu-id="15eac-151">Compile and run the application.</span></span> <span data-ttu-id="15eac-152">该程序生成以下输出：</span><span class="sxs-lookup"><span data-stu-id="15eac-152">The program produces the following output:</span></span>
+<span data-ttu-id="a64b6-151">编译并运行该应用程序。</span><span class="sxs-lookup"><span data-stu-id="a64b6-151">Compile and run the application.</span></span> <span data-ttu-id="a64b6-152">该程序生成以下输出：</span><span class="sxs-lookup"><span data-stu-id="a64b6-152">The program produces the following output:</span></span>
 
-```
+```console
 Couse: Microeconomics, Student: Arturo Anand
 Couse: Microeconomics, Student: Carson Bryant
 ```
 
-## <a name="summary"></a><span data-ttu-id="15eac-153">总结</span><span class="sxs-lookup"><span data-stu-id="15eac-153">Summary</span></span>
+## <a name="summary"></a><span data-ttu-id="a64b6-153">总结</span><span class="sxs-lookup"><span data-stu-id="a64b6-153">Summary</span></span>
 
-<span data-ttu-id="15eac-154">在本演练中介绍了如何将映射表值函数 (Tvf 使用实体框架设计器)。</span><span class="sxs-lookup"><span data-stu-id="15eac-154">In this walkthrough we looked at how to map Table-valued Functions (TVFs) using the Entity Framework Designer.</span></span> <span data-ttu-id="15eac-155">它还演示了如何从 LINQ 查询中调用 TVF。</span><span class="sxs-lookup"><span data-stu-id="15eac-155">It also demonstrated how to call a TVF from a LINQ query.</span></span>
+<span data-ttu-id="a64b6-154">在本演练中，我们介绍了如何使用 Entity Framework Designer 映射表值函数（Tvf）。</span><span class="sxs-lookup"><span data-stu-id="a64b6-154">In this walkthrough we looked at how to map Table-valued Functions (TVFs) using the Entity Framework Designer.</span></span> <span data-ttu-id="a64b6-155">它还演示了如何从 LINQ 查询调用 TVF。</span><span class="sxs-lookup"><span data-stu-id="a64b6-155">It also demonstrated how to call a TVF from a LINQ query.</span></span>
