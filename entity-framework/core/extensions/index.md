@@ -4,12 +4,12 @@ author: ErikEJ
 ms.date: 01/07/2019
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 uid: core/extensions/index
-ms.openlocfilehash: 43b98c1f09a89f7e5451e28cbf2f78a2cb1040e5
-ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
+ms.openlocfilehash: 0c9671eb77181d85cd493341cd1abf842d13fb0e
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/12/2019
-ms.locfileid: "70921766"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72181276"
 ---
 # <a name="ef-core-tools--extensions"></a>EF Core 工具和扩展
 
@@ -54,7 +54,7 @@ CatFactory 是一种面向 .NET Core 的基架引擎，它可自动基于 SQL Se
 
 Entity Framework Core Generator (efg) 是一种 .NET Core CLI 工具，可基于现有数据库生成 EF Core 模型，其功能与 `dotnet ef dbcontext scaffold` 很相似，但它还支持通过区域替换或分析映射文件来实现安全代码的[重新生成](https://efg.loresoft.com/en/latest/regeneration/)。 此工具支持生成视图模型、验证和对象映射器代码。 
 
-[教程](http://www.loresoft.com/Generate-ASP-NET-Web-API)
+[教程](https://www.loresoft.com/Generate-ASP-NET-Web-API)
 [文档](https://efg.loresoft.com/en/latest/)
 
 ## <a name="extensions"></a>扩展

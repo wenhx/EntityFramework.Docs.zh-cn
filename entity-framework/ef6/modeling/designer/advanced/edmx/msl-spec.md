@@ -1,54 +1,54 @@
 ---
-title: MSL 规范的 EF6
+title: MSL 规范-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 13ae7bc1-74b4-4ee4-8d73-c337be841467
-ms.openlocfilehash: 6bff1f5407bc0546e60b5bee1178be9aa4748bd8
-ms.sourcegitcommit: 29f928a6116771fe78f306846e6f2d45cbe8d1f4
+ms.openlocfilehash: 8990d1373ea2121ce11337a43dbcdf3b9e1532bd
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/01/2018
-ms.locfileid: "47460132"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72182551"
 ---
 # <a name="msl-specification"></a>MSL 规范
-映射规范语言 (MSL) 是一种基于 XML 的语言描述概念模型和实体框架应用程序的存储模型之间的映射。
+映射规范语言（MSL）是一种基于 XML 的语言，用于描述实体框架应用程序的概念模型和存储模型之间的映射。
 
-在实体框架应用程序，映射元数据从.msl 文件 （以 MSL 编写） 加载在生成时。 实体框架使用在运行时映射元数据将针对特定于应用商店的命令对概念模型的查询。
+在实体框架应用程序中，将在生成时从 msl 文件（用 MSL 编写）加载映射元数据。 实体框架在运行时使用映射元数据将针对概念模型的查询转换为特定于存储的命令。
 
-在设计时中，实体框架设计器 （EF 设计器） 将.edmx 文件中存储映射信息。 在生成时，实体设计器使用的信息在.edmx 文件创建在运行时所需的实体框架的.msl 文件
+Entity Framework Designer （EF 设计器）在设计时将映射信息存储在 .edmx 文件中。 在生成时，Entity Designer 使用 .edmx 文件中的信息创建实体框架在运行时所需的 msl 文件
 
 MSL 中引用的所有概念模型类型或存储模型类型的名称必须由其各自的命名空间名称限定。 有关概念模型命名空间名称的信息，请参阅[CSDL 规范](~/ef6/modeling/designer/advanced/edmx/csdl-spec.md)。 有关存储模型命名空间名称的信息，请参阅[SSDL 规范](~/ef6/modeling/designer/advanced/edmx/ssdl-spec.md)。
 
-MSL 的版本按 XML 命名空间进行区分。
+MSL 版本由 XML 命名空间进行区分。
 
-| MSL 版本 | XML Namespace                                        |
+| MSL 版本 | XML 命名空间                                        |
 |:------------|:-----------------------------------------------------|
-| MSL v1      | urn： 架构-microsoft-com:windows:storage:mapping:CS |
-| MSL v2      | http://schemas.microsoft.com/ado/2008/09/mapping/cs  |
-| MSL v3      | http://schemas.microsoft.com/ado/2009/11/mapping/cs  |
+| MSL v1      | urn：架构-microsoft-com： windows： storage：映射： CS |
+| MSL v2      | https://schemas.microsoft.com/ado/2008/09/mapping/cs |
+| MSL v3      | https://schemas.microsoft.com/ado/2009/11/mapping/cs  |
 
 ## <a name="alias-element-msl"></a>Alias 元素 (MSL)
 
-**别名**以映射规范语言 （msl） 表示的元素是用于定义概念模型和存储模型命名空间的别名映射元素的子元素。 MSL 中引用的所有概念模型类型或存储模型类型的名称必须由其各自的命名空间名称限定。 有关概念模型命名空间名称的信息，请参阅架构元素 (CSDL)。 有关存储模型命名空间名称的信息，请参阅架构元素 (SSDL)。
+映射规范语言（MSL）中的**Alias**元素是映射元素的子元素，用于定义概念模型和存储模型命名空间的别名。 MSL 中引用的所有概念模型类型或存储模型类型的名称必须由其各自的命名空间名称限定。 有关概念模型命名空间名称的信息，请参阅 Schema 元素（CSDL）。 有关存储模型命名空间名称的信息，请参阅 Schema 元素（SSDL）。
 
-**别名**元素不能具有子元素。
+**Alias**元素不能有子元素。
 
 ### <a name="applicable-attributes"></a>适用的特性
 
-下表描述了可应用于的特性**别名**元素。
+下表描述了可应用于**Alias**元素的特性。
 
-| 特性名 | 是否必需 | “值”                                                                     |
+| 特性名 | 是否必需 | ReplTest1                                                                     |
 |:---------------|:------------|:--------------------------------------------------------------------------|
-| **Key**        | 是         | 指定的命名空间的别名**值**属性。 |
-| **值**      | 是         | 为其命名空间的值**密钥**元素是一个别名。     |
+| **Key**        | 是         | **值**特性指定的命名空间的别名。 |
+| **ReplTest1**      | 是         | **键**元素的值为其别名的命名空间。     |
 
 ### <a name="example"></a>示例
 
-下面的示例演示**别名**元素，用于定义别名， `c`，概念模型中定义的类型。
+下面的示例演示了一个**alias**元素，该元素为在概念模型中定义的类型定义一个 `c` 的别名。
 
 ``` xml
  <Mapping Space="C-S"
-          xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+          xmlns="https://schemas.microsoft.com/ado/2009/11/mapping/cs">
    <Alias Key="c" Value="SchoolModel"/>
    <EntityContainerMapping StorageEntityContainer="SchoolModelStoreContainer"
                            CdmEntityContainer="SchoolModelEntities">
@@ -79,9 +79,9 @@ MSL 的版本按 XML 命名空间进行区分。
 
 ## <a name="associationend-element-msl"></a>AssociationEnd 元素 (MSL)
 
-**AssociationEnd**概念模型中的实体类型的修改函数映射到基础数据库中的存储过程时使用映射规范语言 (MSL) 中的元素。 如果存储的过程采用一个参数值保存在关联属性，修改**AssociationEnd**元素映射到的参数的属性值。 有关更多信息，请参见下面的示例。
+当概念模型中的实体类型的修改函数映射到基础数据库中的存储过程时，将使用映射规范语言（MSL）中的**AssociationEnd**元素。 如果修改存储过程所使用的参数的值保存在关联属性中，则**AssociationEnd**元素会将属性值映射到该参数。 有关更多信息，请参见下面的示例。
 
-有关实体类型的修改函数映射到存储过程的详细信息，请参阅 ModificationFunctionMapping 元素 (MSL) 和演练： 将一个实体映射到存储过程。
+有关将实体类型的修改函数映射到存储过程的详细信息，请参阅 ModificationFunctionMapping 元素（MSL）和演练：将实体映射到存储过程。
 
 **AssociationEnd**元素可以具有以下子元素：
 
@@ -89,13 +89,13 @@ MSL 的版本按 XML 命名空间进行区分。
 
 ### <a name="applicable-attributes"></a>适用的特性
 
-下表描述了适用于的特性**AssociationEnd**元素。
+下表描述了适用于**AssociationEnd**元素的特性。
 
-| 特性名     | 是否必需 | “值”                                                                                                                                                                             |
+| 特性名     | 是否必需 | ReplTest1                                                                                                                                                                             |
 |:-------------------|:------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **AssociationSet** | 是         | 要映射的关联的名称。                                                                                                                                 |
-| **From**           | 是         | 值**FromRole**对应于要映射的关联的导航属性的属性。 有关详细信息，请参阅 NavigationProperty 元素 (CSDL)。 |
-| **若要**             | 是         | 值**ToRole**对应于要映射的关联的导航属性的属性。 有关详细信息，请参阅 NavigationProperty 元素 (CSDL)。   |
+| **From**           | 是         | 导航属性的**FromRole**属性的值，该属性对应于要映射的关联。 有关详细信息，请参阅 NavigationProperty 元素（CSDL）。 |
+| **若要**             | 是         | 导航属性的**ToRole**属性的值，该属性对应于要映射的关联。 有关详细信息，请参阅 NavigationProperty 元素（CSDL）。   |
 
 ### <a name="example"></a>示例
 
@@ -131,7 +131,7 @@ MSL 的版本按 XML 命名空间进行区分。
                                 WHERE CourseID=@CourseID;
 ```
 
-若要映射的更新函数`Course`实体与此存储过程，必须提供的值**DepartmentID**参数。 `DepartmentID` 的值与实体类型中的某个属性不对应；该值包含在独立的关联中，此关联的映射如下所示：
+若要将 @no__t 的实体的更新函数映射到此存储过程，必须为**DepartmentID**参数提供一个值。 `DepartmentID` 的值与实体类型中的某个属性不对应；该值包含在独立的关联中，此关联的映射如下所示：
 
 ``` xml
  <AssociationSetMapping Name="FK_Course_Department"
@@ -146,7 +146,7 @@ MSL 的版本按 XML 命名空间进行区分。
  </AssociationSetMapping>
 ```
 
-下面的代码演示**AssociationEnd**元素用于映射**DepartmentID**属性**FK\_课程\_部门**关联要**UpdateCourse**存储过程 (所属的更新函数**课程**实体类型映射):
+下面的代码演示了**AssociationEnd**元素，该元素用于将**FK @ no__t-3Course @ No__t**关联的**DepartmentID**属性映射到**4Department**存储过程（**课程**实体类型已映射）：
 
 ``` xml
  <EntitySetMapping Name="Courses">
@@ -180,33 +180,33 @@ MSL 的版本按 XML 命名空间进行区分。
 
 ## <a name="associationsetmapping-element-msl"></a>AssociationSetMapping 元素 (MSL)
 
-**AssociationSetMapping**以映射规范语言 （msl） 表示的元素定义概念模型和表基础数据库中的列中的关联之间的映射。
+映射规范语言（MSL）中的**AssociationSetMapping**元素定义概念模型中的关联与基础数据库中的表列之间的映射。
 
-概念模型中的关联是一些属性表示基础数据库中的主键列和外键列的类型。 **AssociationSetMapping**元素使用两个 EndProperty 元素用于在数据库中定义关联类型属性与列之间的映射。 可以将条件放在条件元素具有这些映射。 将 insert、 update 和 delete 函数的关联映射到 ModificationFunctionMapping 元素与数据库中的存储过程。 QueryView 元素中使用实体 SQL 字符串来定义关联与表列之间的只读映射。
+概念模型中的关联是一些属性表示基础数据库中的主键列和外键列的类型。 **AssociationSetMapping**元素使用两个 EndProperty 元素来定义关联类型属性与数据库中的列之间的映射。 您可以对这些映射设置条件元素。 将关联的插入、更新和删除函数映射到数据库中包含 ModificationFunctionMapping 元素的存储过程。 通过在 QueryView 元素中使用实体 SQL 字符串，定义 association 和表列之间的只读映射。
 
 > [!NOTE]
-> 如果概念模型中的某个关联定义引用约束，则关联不需要通过映射**AssociationSetMapping**元素。 如果**AssociationSetMapping**元素具有引用约束的关联存在，则中定义的映射**AssociationSetMapping**元素将被忽略。 有关详细信息，请参阅 ReferentialConstraint 元素 (CSDL)。
+> 如果为概念模型中的关联定义了引用约束，则不需要将关联映射到**AssociationSetMapping**元素。 如果具有引用约束的关联存在**AssociationSetMapping**元素，则将忽略在**AssociationSetMapping**元素中定义的映射。 有关详细信息，请参阅 ReferentialConstraint 元素（CSDL）。
 
 **AssociationSetMapping**元素可以具有以下子元素
 
 -   QueryView （零个或一个）
 -   EndProperty （零个或两个）
--   条件 （零个或多个）
+-   条件（零个或多个）
 -   ModificationFunctionMapping （零个或一个）
 
 ### <a name="applicable-attributes"></a>适用的特性
 
-下表介绍可应用于的特性**AssociationSetMapping**元素。
+下表介绍可应用于**AssociationSetMapping**元素的特性。
 
-| 特性名     | 是否必需 | “值”                                                                                       |
+| 特性名     | 是否必需 | ReplTest1                                                                                       |
 |:-------------------|:------------|:--------------------------------------------------------------------------------------------|
 | **名称**           | 是         | 要映射的概念模型关联集的名称。                      |
-| **类型名称**       | 否          | 要映射的概念模型关联类型的命名空间限定的名称。 |
+| **TypeName**       | 否          | 要映射的概念模型关联类型的命名空间限定的名称。 |
 | **StoreEntitySet** | 否          | 要映射的表的名称。                                                 |
 
 ### <a name="example"></a>示例
 
-下面的示例演示**AssociationSetMapping**中的元素**FK\_课程\_部门**中概念模型关联集映射到**课程**数据库表中的。 关联类型属性与表列之间的映射指定子级**EndProperty**元素。
+下面的示例显示一个**AssociationSetMapping**元素，在该元素中，概念模型中的**FK @ no__t-2Course @ no__t-3Department** association 集映射到数据库中的**课程**表。 在子**EndProperty**元素中指定关联类型属性与表列之间的映射。
 
 ``` xml
  <AssociationSetMapping Name="FK_Course_Department"
@@ -223,23 +223,23 @@ MSL 的版本按 XML 命名空间进行区分。
 
 ## <a name="complexproperty-element-msl"></a>ComplexProperty 元素 (MSL)
 
-一个**ComplexProperty**以映射规范语言 （msl） 表示的元素定义概念模型实体类型的表列基础数据库中的复杂类型属性之间的映射。 在子 ScalarProperty 元素中指定属性-列映射。
+映射规范语言（MSL）中的**ComplexProperty**元素定义概念模型实体类型上的复杂类型属性与基础数据库中的表列之间的映射。 属性-列映射在子 ScalarProperty 元素中指定。
 
 **ComplexType**属性元素可以具有以下子元素：
 
 -   ScalarProperty （零个或多个）
 -   **ComplexProperty** （零个或多个）
 -   ComplextTypeMapping （零个或多个）
--   条件 （零个或多个）
+-   条件（零个或多个）
 
 ### <a name="applicable-attributes"></a>适用的特性
 
-下表描述了适用于的特性**ComplexProperty**元素：
+下表描述了适用于**ComplexProperty**元素的属性：
 
-| 特性名 | 是否必需 | “值”                                                                                            |
+| 特性名 | 是否必需 | ReplTest1                                                                                            |
 |:---------------|:------------|:-------------------------------------------------------------------------------------------------|
 | **名称**       | 是         | 概念模型中要映射的实体类型的复杂属性的名称。 |
-| **类型名称**   | 否          | 概念模型属性类型的命名空间限定名称。                              |
+| **TypeName**   | 否          | 概念模型属性类型的命名空间限定名称。                              |
 
 ### <a name="example"></a>示例
 
@@ -256,7 +256,7 @@ MSL 的版本按 XML 命名空间进行区分。
  </ComplexType>
 ```
 
-**LastName**并**FirstName**的属性**人员**实体类型已被替换为一个复杂属性**名称**:
+**Person**实体类型的**LastName**和**FirstName**属性已替换为一个复杂属性**名称**：
 
 ``` xml
  <EntityType Name="Person">
@@ -271,7 +271,7 @@ MSL 的版本按 XML 命名空间进行区分。
  </EntityType>
 ```
 
-下面的 MSL 演示**ComplexProperty**元素用于映射**名称**到基础数据库中的列的属性：
+以下 MSL 显示了用于将**Name**属性映射到基础数据库中的列的**ComplexProperty**元素：
 
 ``` xml
  <EntitySetMapping Name="People">
@@ -291,12 +291,12 @@ MSL 的版本按 XML 命名空间进行区分。
 
 ## <a name="complextypemapping-element-msl"></a>ComplexTypeMapping 元素 (MSL)
 
-**ComplexTypeMapping**以映射规范语言 （msl） 表示的元素是 ResultMapping 元素的子元素，定义中的基础概念模型中的函数导入和存储的过程之间的映射当满足以下条件的数据库：
+映射规范语言（MSL）中的**ComplexTypeMapping**元素是 ResultMapping 元素的子元素，用于定义概念模型中的函数导入与基础数据库中的存储过程之间的映射（如果以下为 true：
 
 -   函数导入返回一个概念复杂类型。
 -   存储过程返回的列的名称与复杂类型的属性名称不完全匹配。
 
-默认情况下，存储过程返回的列与复杂类型返回的列之间的映射基于列名称和属性名称。 如果列名称与属性名称不完全匹配，则必须使用**ComplexTypeMapping**元素定义的映射。 有关默认映射的示例，请参阅 FunctionImportMapping 元素 (MSL)。
+默认情况下，存储过程返回的列与复杂类型返回的列之间的映射基于列名称和属性名称。 如果列名称与属性名称不完全匹配，则必须使用**ComplexTypeMapping**元素来定义映射。 有关默认映射的示例，请参阅 FunctionImportMapping 元素（MSL）。
 
 **ComplexTypeMapping**元素可以具有以下子元素：
 
@@ -304,11 +304,11 @@ MSL 的版本按 XML 命名空间进行区分。
 
 ### <a name="applicable-attributes"></a>适用的特性
 
-下表描述了适用于的特性**ComplexTypeMapping**元素。
+下表描述了适用于**ComplexTypeMapping**元素的特性。
 
-| 特性名 | 是否必需 | “值”                                                                  |
+| 特性名 | 是否必需 | ReplTest1                                                                  |
 |:---------------|:------------|:-----------------------------------------------------------------------|
-| **类型名称**   | 是         | 要映射的复杂类型的命名空间限定的名称。 |
+| **TypeName**   | 是         | 要映射的复杂类型的命名空间限定的名称。 |
 
 ### <a name="example"></a>示例
 
@@ -338,7 +338,7 @@ MSL 的版本按 XML 命名空间进行区分。
  </ComplexType>
 ```
 
-若要创建返回前一个复杂类型的实例的函数导入，各列之间的映射存储过程返回的和必须中定义的实体类型**ComplexTypeMapping**元素：
+为了创建返回以前复杂类型的实例的函数导入，必须在**ComplexTypeMapping**元素中定义存储过程返回的列与实体类型返回的列之间的映射：
 
 ``` xml
  <FunctionImportMapping FunctionImportName="GetGrades"
@@ -356,14 +356,14 @@ MSL 的版本按 XML 命名空间进行区分。
 
 ## <a name="condition-element-msl"></a>Condition 元素 (MSL)
 
-**条件**以映射规范语言 （msl） 表示的元素的条件置于概念模型与基础数据库之间的映射。 XML 节点内定义的映射是有效，如果所有条件，即在指定的子**条件**满足元素。 否则，该映射无效。 例如，如果 MappingFragment 元素包含一个或多个**条件**子元素内定义的映射**MappingFragment**节点将仅在如果所有有效的子条件**条件**满足元素。
+映射规范语言（MSL）中的**Condition**元素对概念模型和基础数据库之间的映射施加条件。 如果满足子**条件**元素中指定的所有条件，则在 XML 节点内定义的映射将有效。 否则，该映射无效。 例如，如果 MappingFragment 元素包含一个或多个**Condition**子元素，则在满足子**条件**元素的所有条件时，在**MappingFragment**节点内定义的映射将有效。
 
-每个条件均可应用于**名称**(由指定的概念模型实体属性的名称**名称**属性)，或**ColumnName** （中的列的名称指定的数据库**ColumnName**属性)。 当**名称**设置属性，根据实体属性值检查条件。 当**ColumnName**属性设置，条件检查针对某列的值。 只有一个**名称**或**ColumnName**中，可以指定属性**条件**元素。
+每个条件可以应用于**名称**（概念模型实体属性的名称，由**Name**属性指定），也可以应用于**columnname** （数据库中列的名称，由**ColumnName**特性指定）。 设置**Name**属性时，将根据实体属性值检查条件。 设置**ColumnName**属性后，将根据列值检查条件。 只能在**Condition**元素中指定**Name**或**ColumnName**特性中的一个。
 
 > [!NOTE]
-> 当**条件**元素内 FunctionImportMapping 元素，仅使用**名称**特性不适用。
+> 如果在 FunctionImportMapping 元素中使用**Condition**元素，则仅**Name**属性不适用。
 
-**条件**元素可以是以下元素的子元素：
+**Condition**元素可以是以下元素的子元素：
 
 -   AssociationSetMapping
 -   ComplexProperty
@@ -371,22 +371,22 @@ MSL 的版本按 XML 命名空间进行区分。
 -   MappingFragment
 -   EntityTypeMapping
 
-**条件**元素可以具有任何子元素。
+**Condition**元素不能有子元素。
 
 ### <a name="applicable-attributes"></a>适用的特性
 
-下表描述了适用于的特性**条件**元素：
+下表描述了适用于**Condition**元素的属性：
 
-| 特性名 | 是否必需 | “值”                                                                                                                                                                                                                                                                                         |
+| 特性名 | 是否必需 | ReplTest1                                                                                                                                                                                                                                                                                         |
 |:---------------|:------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **列名称** | 否          | 表列的名称，其值用于计算条件。                                                                                                                                                                                                                   |
-| **IsNull**     | 否          | **True**或**False**。 如果值为 **，则返回 True**和列的值是**null**，或如果值为**False**和列的值不是**null**，条件为 true. 否则，条件为 False。 <br/> **IsNull**并**值**属性不能在同一时间使用。 |
-| **值**      | 否          | 要与列值进行比较的值。 如果值不同，则该条件为 True。 否则，条件为 False。 <br/> **IsNull**并**值**属性不能在同一时间使用。                                                                       |
-| **名称**       | 否          | 概念模型实体属性的名称，其值用于计算条件。 <br/> 此属性不适用如果**条件**FunctionImportMapping 元素中使用元素。                                                                           |
+| **ColumnName** | 否          | 表列的名称，其值用于计算条件。                                                                                                                                                                                                                   |
+| **IsNull**     | 否          | **True**或**False**。 如果值为**True** ，列值为**null**，或者如果值为**False**且列值不为**null**，则条件为 true。 否则，条件为 False。 <br/> 不能同时使用**IsNull**和**Value**属性。 |
+| **ReplTest1**      | 否          | 要与列值进行比较的值。 如果值不同，则该条件为 True。 否则，条件为 False。 <br/> 不能同时使用**IsNull**和**Value**属性。                                                                       |
+| **名称**       | 否          | 概念模型实体属性的名称，其值用于计算条件。 <br/> 如果在 FunctionImportMapping 元素中使用**Condition**元素，则此属性不适用。                                                                           |
 
 ### <a name="example"></a>示例
 
-下面的示例演示**条件**元素的子级作为**MappingFragment**元素。 当**HireDate**不为 null 和**EnrollmentDate**是为 null，将数据映射之间**SchoolModel.Instructor**类型和**PersonID**并**HireDate**的列**人员**表。 当**EnrollmentDate**不为 null 和**HireDate**是为 null，将数据映射之间**SchoolModel.Student**类型和**PersonID**并**注册**的列**人员**表。
+下面的示例将**条件**元素显示为**MappingFragment**元素的子元素。 当 **"雇佣**日期" 不为 Null 并且**EnrollmentDate**为 null 时，将**在 SchoolModel**类型与**Person**表的**PersonID**和**雇用**日期列之间映射数据。 如果**EnrollmentDate**不为 Null 且**雇佣**日期为 null，则会在**SchoolModel**类型与**Person**表的**PersonID**和**注册**列之间映射数据。
 
 ``` xml
  <EntitySetMapping Name="People">
@@ -419,16 +419,16 @@ MSL 的版本按 XML 命名空间进行区分。
 
 ## <a name="deletefunction-element-msl"></a>DeleteFunction 元素 (MSL)
 
-**DeleteFunction**以映射规范语言 （msl） 表示的元素将概念模型中的实体类型或关联的删除函数映射到基础数据库中的存储过程。 将修改函数映射到其中的存储过程必须在存储模型中声明。 有关详细信息，请参阅函数元素 (SSDL)。
+映射规范语言（MSL）中的**DeleteFunction**元素将概念模型中的实体类型或关联的删除函数映射到基础数据库中的存储过程。 将修改函数映射到其中的存储过程必须在存储模型中声明。 有关详细信息，请参阅 Function 元素（SSDL）。
 
 > [!NOTE]
-> 如果不将所有这三个插入、 更新或删除一个实体类型到存储过程的操作、 映射的操作将失败，则在运行时执行和 UpdateException 引发。
+> 如果没有将实体类型的所有三个插入、更新或删除操作映射到存储过程，则在运行时执行并引发 UpdateException 时，未映射的操作将失败。
 
 ### <a name="deletefunction-applied-to-entitytypemapping"></a>应用于 EntityTypeMapping 的 DeleteFunction
 
-当应用于 EntityTypeMapping 元素**DeleteFunction**元素将概念模型中的实体类型的删除函数映射到存储过程。
+当应用于 EntityTypeMapping 元素时， **DeleteFunction**元素会将概念模型中的实体类型的删除函数映射到存储过程。
 
-**DeleteFunction**元素可以具有以下子元素时应用于**EntityTypeMapping**元素：
+**DeleteFunction**元素在应用于**EntityTypeMapping**元素时可以具有以下子元素：
 
 -   AssociationEnd （零个或多个）
 -   ComplexProperty （零个或多个）
@@ -436,16 +436,16 @@ MSL 的版本按 XML 命名空间进行区分。
 
 #### <a name="applicable-attributes"></a>适用的特性
 
-下表介绍可应用于的特性**DeleteFunction**时应用于元素**EntityTypeMapping**元素。
+下表描述了可应用于**EntityTypeMapping**元素的**DeleteFunction**元素的特性。
 
-| 特性名            | 是否必需 | “值”                                                                                                                                                    |
+| 特性名            | 是否必需 | ReplTest1                                                                                                                                                    |
 |:--------------------------|:------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **FunctionName**          | 是         | 删除函数要映射到的存储过程的命名空间限定名称。 存储过程必须在存储模型中声明。 |
 | **RowsAffectedParameter** | 否          | 返回受影响行数的输出参数的名称。                                                                               |
 
 #### <a name="example"></a>示例
 
-以下示例基于 School 模型，并显示**DeleteFunction**元素的删除函数映射**人员**实体类型设置为**DeletePerson**存储的过程。 **DeletePerson**在存储模型中声明的存储的过程。
+下面的示例基于 School 模型，并显示将**Person**实体类型的 delete 函数映射到**DeletePerson**存储过程的**DeleteFunction**元素。 **DeletePerson**存储过程在存储模型中声明。
 
 ``` xml
  <EntitySetMapping Name="People">
@@ -492,24 +492,24 @@ MSL 的版本按 XML 命名空间进行区分。
 
 ### <a name="deletefunction-applied-to-associationsetmapping"></a>应用于 AssociationSetMapping 的 DeleteFunction
 
-当应用于 AssociationSetMapping 元素**DeleteFunction**元素将概念模型中的关联的删除函数映射到存储过程。
+当应用于 AssociationSetMapping 元素时， **DeleteFunction**元素会将概念模型中的关联的删除函数映射到存储过程。
 
-**DeleteFunction**元素可以具有以下子元素时应用于**AssociationSetMapping**元素：
+**DeleteFunction**元素在应用于**AssociationSetMapping**元素时可以具有以下子元素：
 
 -   EndProperty
 
 #### <a name="applicable-attributes"></a>适用的特性
 
-下表介绍可应用于的特性**DeleteFunction**时应用于元素**AssociationSetMapping**元素。
+下表描述了可应用于**AssociationSetMapping**元素的**DeleteFunction**元素的特性。
 
-| 特性名            | 是否必需 | “值”                                                                                                                                                    |
+| 特性名            | 是否必需 | ReplTest1                                                                                                                                                    |
 |:--------------------------|:------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **FunctionName**          | 是         | 删除函数要映射到的存储过程的命名空间限定名称。 存储过程必须在存储模型中声明。 |
 | **RowsAffectedParameter** | 否          | 返回受影响行数的输出参数的名称。                                                                               |
 
 #### <a name="example"></a>示例
 
-以下示例基于 School 模型，并显示**DeleteFunction**用于的删除函数映射元素**CourseInstructor**关联到**DeleteCourseInstructor**存储过程。 **DeleteCourseInstructor**在存储模型中声明的存储的过程。
+下面的示例基于 School 模型，并显示了用于将**courseinstructor.courseid**关联的删除函数映射到**DeleteCourseInstructor**存储过程的**DeleteFunction**元素。 **DeleteCourseInstructor**存储过程在存储模型中声明。
 
 ``` xml
  <AssociationSetMapping Name="CourseInstructor"
@@ -544,9 +544,9 @@ MSL 的版本按 XML 命名空间进行区分。
 
 ## <a name="endproperty-element-msl"></a>EndProperty 元素 (MSL)
 
-**EndProperty**以映射规范语言 （msl） 表示的元素定义结束或修改函数的概念模型关联和基础数据库之间的映射。 子 ScalarProperty 元素中指定的属性列映射。
+映射规范语言（MSL）中的**EndProperty**元素定义概念模型关联和基础数据库的结束或修改函数之间的映射。 在子 ScalarProperty 元素中指定了属性列映射。
 
-当**EndProperty**元素用于定义概念模型关联端的映射，它是 AssociationSetMapping 元素的子元素。 当**EndProperty**元素用于定义概念模型关联的修改函数映射，它是 InsertFunction 元素或 DeleteFunction 元素的子级。
+当使用**EndProperty**元素定义概念模型关联末尾的映射时，它是 AssociationSetMapping 元素的子元素。 当使用**EndProperty**元素定义概念模型关联的修改函数的映射时，它是 InsertFunction 元素或 DeleteFunction 元素的子元素。
 
 **EndProperty**元素可以具有以下子元素：
 
@@ -554,15 +554,15 @@ MSL 的版本按 XML 命名空间进行区分。
 
 ### <a name="applicable-attributes"></a>适用的特性
 
-下表描述了适用于的特性**EndProperty**元素：
+下表描述了适用于**EndProperty**元素的属性：
 
-| 特性名 | 是否必需 | “值”                                                 |
+| 特性名 | 是否必需 | ReplTest1                                                 |
 |:---------------|:------------|:------------------------------------------------------|
 | name           | 是         | 要映射的关联端的名称。 |
 
 ### <a name="example"></a>示例
 
-下面的示例演示**AssociationSetMapping**中的元素**FK\_课程\_部门**概念模型中的关联映射到**课程**数据库表中的。 关联类型属性与表列之间的映射指定子级**EndProperty**元素。
+下面的示例显示一个**AssociationSetMapping**元素，在该元素中，概念模型中的**FK @ no__t-2Course @ no__t-3Department**关联映射到数据库中的**课程**表。 在子**EndProperty**元素中指定关联类型属性与表列之间的映射。
 
 ``` xml
  <AssociationSetMapping Name="FK_Course_Department"
@@ -579,7 +579,7 @@ MSL 的版本按 XML 命名空间进行区分。
 
 ### <a name="example"></a>示例
 
-下面的示例演示**EndProperty**元素关联的插入和删除函数映射 (**CourseInstructor**) 到基础数据库中的存储过程。 映射到的函数在存储模型中声明。
+下面的示例显示了**EndProperty**元素，该元素将关联（**courseinstructor.courseid**）的插入和删除函数映射到基础数据库中的存储过程。 映射到的函数在存储模型中声明。
 
 ``` xml
  <AssociationSetMapping Name="CourseInstructor"
@@ -614,9 +614,9 @@ MSL 的版本按 XML 命名空间进行区分。
 
 ## <a name="entitycontainermapping-element-msl"></a>EntityContainerMapping 元素 (MSL)
 
-**EntityContainerMapping**以映射规范语言 （msl） 表示的元素将概念模型中的实体容器映射到存储模型中的实体容器。 **EntityContainerMapping**元素是映射元素的子元素。
+映射规范语言（MSL）中的**EntityContainerMapping**元素将概念模型中的实体容器映射到存储模型中的实体容器。 **EntityContainerMapping**元素是 Mapping 元素的子元素。
 
-**EntityContainerMapping**元素可以具有下列子元素 （按所列顺序）：
+**EntityContainerMapping**元素可以具有以下子元素（按所列顺序）：
 
 -   EntitySetMapping （零个或多个）
 -   AssociationSetMapping （零个或多个）
@@ -624,17 +624,17 @@ MSL 的版本按 XML 命名空间进行区分。
 
 ### <a name="applicable-attributes"></a>适用的特性
 
-下表介绍可应用于的特性**EntityContainerMapping**元素。
+下表介绍可应用于**EntityContainerMapping**元素的特性。
 
-| 特性名            | 是否必需 | “值”                                                                                                                                                                                                                                                    |
+| 特性名            | 是否必需 | ReplTest1                                                                                                                                                                                                                                                    |
 |:--------------------------|:------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **StorageModelContainer** | 是         | 要映射到的存储模型实体容器的名称。                                                                                                                                                                                     |
 | **CdmEntityContainer**    | 是         | 要映射的概念模型实体容器的名称。                                                                                                                                                                                  |
-| **GenerateUpdateViews**   | 否          | **True**或**False**。 如果**False**，会生成任何更新视图。 此属性应设置为**False**后将会无效，因为数据可能会往返不成功的只读映射。 <br/> 默认值是 **，则返回 True**。 |
+| **GenerateUpdateViews**   | 否          | **True**或**False**。 如果**为 False**，则不生成任何更新视图。 如果你具有只读映射，则此属性应设置为**False** ，因为数据可能无法成功往返。 <br/> 默认值为**True**。 |
 
 ### <a name="example"></a>示例
 
-下面的示例演示**EntityContainerMapping**映射元素**SchoolModelEntities**容器 （概念模型实体容器） 到**SchoolModelStoreContainer**容器 （存储模型实体容器）：
+下面的示例演示了一个**EntityContainerMapping**元素，该元素将**SchoolModelEntities**容器（概念模型实体容器）映射到**SchoolModelStoreContainer**容器（存储模型实体容器）：
 
 ``` xml
  <EntityContainerMapping StorageEntityContainer="SchoolModelStoreContainer"
@@ -665,7 +665,7 @@ MSL 的版本按 XML 命名空间进行区分。
 
 ## <a name="entitysetmapping-element-msl"></a>EntitySetMapping 元素 (MSL)
 
-**EntitySetMapping**的存储模型中的元素以映射规范语言 (MSL) 映射的概念模型实体中的所有类型都设置为实体集。 概念模型中的实体集是为的逻辑容器相同的类型 （和派生的类型） 的实体的实例。 存储模型中的实体集表示表或视图基础数据库中。 概念模型实体集指定的值**名称**的属性**EntitySetMapping**元素。 指定映射到的表或视图指定**StoreEntitySet**属性在每个子 MappingFragment 元素中或在**EntitySetMapping**元素本身。
+映射规范语言（MSL）中的**EntitySetMapping**元素将概念模型实体集中的所有类型都映射到存储模型中的实体集。 概念模型中的实体集是同一类型（和派生类型）的实体实例的逻辑容器。 存储模型中的实体集表示基础数据库中的表或视图。 概念模型实体集由**EntitySetMapping**元素的**Name**特性的值指定。 映射到的表或视图由每个子 MappingFragment 元素或**EntitySetMapping**元素本身中的**StoreEntitySet**属性指定。
 
 **EntitySetMapping**元素可以具有以下子元素：
 
@@ -675,22 +675,22 @@ MSL 的版本按 XML 命名空间进行区分。
 
 ### <a name="applicable-attributes"></a>适用的特性
 
-下表介绍可应用于的特性**EntitySetMapping**元素。
+下表介绍可应用于**EntitySetMapping**元素的特性。
 
-| 特性名           | 是否必需 | “值”                                                                                                                                                                                                                         |
+| 特性名           | 是否必需 | ReplTest1                                                                                                                                                                                                                         |
 |:-------------------------|:------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **名称**                 | 是         | 要映射的概念模型实体集的名称。                                                                                                                                                             |
 | **TypeName** **1**       | 否          | 要映射的概念模型实体类型的名称。                                                                                                                                                            |
 | **StoreEntitySet** **1** | 否          | 要映射到的存储模型实体集的名称。                                                                                                                                                             |
-| **MakeColumnsDistinct**  | 否          | **True**或**False**具体取决于是否返回仅非重复行。 <br/> 如果此属性设置为 **，则返回 True**，则**GenerateUpdateViews** EntityContainerMapping 元素的属性必须设置为**False**。 |
+| **MakeColumnsDistinct**  | 否          | **True**或**False** ，具体取决于是否只返回不同的行。 <br/> 如果此特性设置为**True**，则 EntityContainerMapping 元素的**GenerateUpdateViews**特性必须设置为**False**。 |
 
- 
+ 
 
-**1** **TypeName**并**StoreEntitySet**属性可用于代替 EntityTypeMapping 和 MappingFragment 子元素将单个实体类型映射到单个表。
+**1**可以使用**TypeName**和**StoreEntitySet**特性替代 EntityTypeMapping 和 MappingFragment 子元素，以便将单个实体类型映射到单个表。
 
 ### <a name="example"></a>示例
 
-下面的示例演示**EntitySetMapping**将三种类型 （基类型和两个派生的类型） 映射中的元素**课程**的三个不同表中对概念模型实体集基础数据库。 通过指定表**StoreEntitySet**中每个属性**MappingFragment**元素。
+下面的示例显示一个**EntitySetMapping**元素，该元素将概念模型的**课程**实体集中的三个类型（基类型和两个派生类型）映射到基础数据库中的三个不同表。 这些表由每个**MappingFragment**元素中的**StoreEntitySet**属性指定。
 
 ``` xml
  <EntitySetMapping Name="Courses">
@@ -721,9 +721,9 @@ MSL 的版本按 XML 命名空间进行区分。
 
 ## <a name="entitytypemapping-element-msl"></a>EntityTypeMapping 元素 (MSL)
 
-**EntityTypeMapping**元素以映射规范语言 （msl） 表示基础数据库中定义的概念模型和表中的实体类型或视图之间的映射。 有关概念模型实体类型和基础数据库表或视图的信息，请参阅 EntityType 元素 (CSDL) 和 EntitySet 元素 (SSDL)。 指定要映射的概念模型实体类型**TypeName**的属性**EntityTypeMapping**元素。 指定的表或视图要映射**StoreEntitySet**子 MappingFragment 元素的属性。
+映射规范语言（MSL）中的**EntityTypeMapping**元素定义概念模型中的实体类型与基础数据库中的表或视图之间的映射。 有关概念模型实体类型和基础数据库表或视图的信息，请参阅 EntityType 元素（CSDL）和 EntitySet 元素（SSDL）。 要映射的概念模型实体类型由**EntityTypeMapping**元素的**TypeName**特性指定。 要映射的表或视图由子 MappingFragment 元素的**StoreEntitySet**属性指定。
 
-ModificationFunctionMapping 子元素可用于映射插入、 更新或删除实体类型到数据库中的存储过程的函数。
+ModificationFunctionMapping 子元素可用于将实体类型的插入、更新或删除函数映射到数据库中的存储过程。
 
 **EntityTypeMapping**元素可以具有以下子元素：
 
@@ -733,23 +733,23 @@ ModificationFunctionMapping 子元素可用于映射插入、 更新或删除实
 -   条件
 
 > [!NOTE]
-> **MappingFragment**并**ModificationFunctionMapping**元素的子元素不能**EntityTypeMapping**在同一时间元素。
+> **MappingFragment**和**ModificationFunctionMapping**元素不能同时是**EntityTypeMapping**元素的子元素。
 
 
 > [!NOTE]
-> **ScalarProperty**并**条件**元素只能是子元素的**EntityTypeMapping** FunctionImportMapping 元素内使用时的元素。
+> 当**ScalarProperty**和**Condition**元素在 FunctionImportMapping 元素中使用时，它们只能是**EntityTypeMapping**元素的子元素。
 
 ### <a name="applicable-attributes"></a>适用的特性
 
-下表介绍可应用于的特性**EntityTypeMapping**元素。
+下表介绍可应用于**EntityTypeMapping**元素的特性。
 
-| 特性名 | 是否必需 | “值”                                                                                                                                                                                                |
+| 特性名 | 是否必需 | ReplTest1                                                                                                                                                                                                |
 |:---------------|:------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **类型名称**   | 是         | 要映射的概念模型实体类型的命名空间限定的名称。 <br/> 如果类型为抽象类型或派生类型，则值必须为 `IsOfType(Namespace-qualified_type_name)`。 |
+| **TypeName**   | 是         | 要映射的概念模型实体类型的命名空间限定的名称。 <br/> 如果类型为抽象类型或派生类型，则值必须为 `IsOfType(Namespace-qualified_type_name)`。 |
 
 ### <a name="example"></a>示例
 
-下面的示例演示具有两个子的 EntitySetMapping 元素**EntityTypeMapping**元素。 在第一个**EntityTypeMapping**元素， **SchoolModel.Person**实体类型映射到**人员**表。 在第二个**EntityTypeMapping**元素中的更新功能**SchoolModel.Person**类型映射到存储过程**UpdatePerson**，在数据库中.
+下面的示例演示一个具有两个子**EntityTypeMapping**元素的 EntitySetMapping 元素。 在第一个**EntityTypeMapping**元素中， **SchoolModel**实体类型映射到**person**表。 在第二个**EntityTypeMapping**元素中， **SchoolModel**类型的更新功能映射到数据库中的存储过程**UpdatePerson**。
 
 ``` xml
  <EntitySetMapping Name="People">
@@ -783,7 +783,7 @@ ModificationFunctionMapping 子元素可用于映射插入、 更新或删除实
 
 ### <a name="example"></a>示例
 
-下一示例演示其中根类型为抽象类型的类型层次结构的映射。 请注意，使用`IsOfType`语法**TypeName**属性。
+下一示例演示其中根类型为抽象类型的类型层次结构的映射。 请注意，将 `IsOfType` 语法用于**TypeName**特性。
 
 ``` xml
  <EntitySetMapping Name="People">
@@ -816,10 +816,10 @@ ModificationFunctionMapping 子元素可用于映射插入、 更新或删除实
 
 ## <a name="functionimportmapping-element-msl"></a>FunctionImportMapping 元素 (MSL)
 
-**FunctionImportMapping**元素以映射规范语言 （msl） 表示基础数据库中定义的函数导入在概念模型和存储的过程或函数之间的映射。 函数导入必须在概念模型中进行声明，存储的过程必须在存储模型中进行声明。 有关详细信息，请参阅 FunctionImport 元素 (CSDL) 和函数元素 (SSDL)。
+映射规范语言（MSL）中的**FunctionImportMapping**元素定义概念模型中的函数导入与基础数据库中的存储过程或函数之间的映射。 函数导入必须在概念模型中进行声明，存储的过程必须在存储模型中进行声明。 有关详细信息，请参阅 FunctionImport 元素（CSDL）和 Function 元素（SSDL）。
 
 > [!NOTE]
-> 默认情况下，如果函数导入返回概念模型实体类型或复杂类型，则基础存储过程返回的列名称必须与概念模型类型中的属性名称完全匹配。 如果列名称与属性名称不完全匹配，则必须 ResultMapping 元素中定义映射。
+> 默认情况下，如果函数导入返回概念模型实体类型或复杂类型，则基础存储过程返回的列名称必须与概念模型类型中的属性名称完全匹配。 如果列名称与属性名称不完全匹配，则必须在 ResultMapping 元素中定义映射。
 
 **FunctionImportMapping**元素可以具有以下子元素：
 
@@ -827,9 +827,9 @@ ModificationFunctionMapping 子元素可用于映射插入、 更新或删除实
 
 ### <a name="applicable-attributes"></a>适用的特性
 
-下表描述了适用于的特性**FunctionImportMapping**元素：
+下表描述了适用于**FunctionImportMapping**元素的属性：
 
-| 特性名         | 是否必需 | “值”                                                                                   |
+| 特性名         | 是否必需 | ReplTest1                                                                                   |
 |:-----------------------|:------------|:----------------------------------------------------------------------------------------|
 | **FunctionImportName** | 是         | 概念模型中要映射的函数导入的名称。           |
 | **FunctionName**       | 是         | 存储模型中要映射的函数的命名空间限定名称。 |
@@ -856,27 +856,27 @@ ModificationFunctionMapping 子元素可用于映射插入、 更新或删除实
  </FunctionImport>
 ```
 
-下面的示例演示**FunctionImportMapping**元素用于映射函数和函数导入上面彼此：
+下面的示例显示一个**FunctionImportMapping**元素，该元素用于将上述函数和函数导入映射到彼此：
 
 ``` xml
  <FunctionImportMapping FunctionImportName="GetStudentGrades"
                         FunctionName="SchoolModel.Store.GetStudentGrades" />
 ```
- 
+ 
 ## <a name="insertfunction-element-msl"></a>InsertFunction 元素 (MSL)
 
-**InsertFunction**以映射规范语言 （msl） 表示的元素将概念模型中的实体类型或关联的插入函数映射到基础数据库中的存储过程。 将修改函数映射到其中的存储过程必须在存储模型中声明。 有关详细信息，请参阅函数元素 (SSDL)。
+映射规范语言（MSL）中的**InsertFunction**元素将概念模型中的实体类型或关联的插入函数映射到基础数据库中的存储过程。 将修改函数映射到其中的存储过程必须在存储模型中声明。 有关详细信息，请参阅 Function 元素（SSDL）。
 
 > [!NOTE]
-> 如果不将所有这三个插入、 更新或删除一个实体类型到存储过程的操作、 映射的操作将失败，则在运行时执行和 UpdateException 引发。
+> 如果没有将实体类型的所有三个插入、更新或删除操作映射到存储过程，则在运行时执行并引发 UpdateException 时，未映射的操作将失败。
 
 **InsertFunction**元素可以是 ModificationFunctionMapping 元素的子元素，并应用于 EntityTypeMapping 元素或 AssociationSetMapping 元素。
 
 ### <a name="insertfunction-applied-to-entitytypemapping"></a>应用于 EntityTypeMapping 的 InsertFunction
 
-当应用于 EntityTypeMapping 元素**InsertFunction**元素将概念模型中的实体类型的插入函数映射到存储过程。
+当应用于 EntityTypeMapping 元素时， **InsertFunction**元素会将概念模型中的实体类型的插入函数映射到存储过程。
 
-**InsertFunction**元素可以具有以下子元素时应用于**EntityTypeMapping**元素：
+**InsertFunction**元素在应用于**EntityTypeMapping**元素时可以具有以下子元素：
 
 -   AssociationEnd （零个或多个）
 -   ComplexProperty （零个或多个）
@@ -885,16 +885,16 @@ ModificationFunctionMapping 子元素可用于映射插入、 更新或删除实
 
 #### <a name="applicable-attributes"></a>适用的特性
 
-下表介绍可应用于的特性**InsertFunction**元素时应用于**EntityTypeMapping**元素。
+下表描述了应用于**EntityTypeMapping**元素时可应用于**InsertFunction**元素的特性。
 
-| 特性名            | 是否必需 | “值”                                                                                                                                                    |
+| 特性名            | 是否必需 | ReplTest1                                                                                                                                                    |
 |:--------------------------|:------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **FunctionName**          | 是         | 插入函数要映射到的存储过程的命名空间限定名称。 存储过程必须在存储模型中声明。 |
 | **RowsAffectedParameter** | 否          | 返回受影响行数的输出参数的名称。                                                                               |
 
 #### <a name="example"></a>示例
 
-以下示例基于 School 模型，并显示**InsertFunction**元素用于将 Person 实体类型的插入函数映射**InsertPerson**存储过程。 **InsertPerson**在存储模型中声明的存储的过程。
+下面的示例基于 School 模型，并显示了用于将 Person 实体类型的插入函数映射到**InsertPerson**存储过程的**InsertFunction**元素。 **InsertPerson**存储过程在存储模型中声明。
 
 ``` xml
  <EntityTypeMapping TypeName="SchoolModel.Person">
@@ -928,24 +928,24 @@ ModificationFunctionMapping 子元素可用于映射插入、 更新或删除实
 ```
 ### <a name="insertfunction-applied-to-associationsetmapping"></a>应用于 AssociationSetMapping 的 InsertFunction
 
-当应用于 AssociationSetMapping 元素**InsertFunction**元素将概念模型中的关联的插入函数映射到存储过程。
+当应用于 AssociationSetMapping 元素时， **InsertFunction**元素会将概念模型中的关联的插入函数映射到存储过程。
 
-**InsertFunction**元素可以具有以下子元素时应用于**AssociationSetMapping**元素：
+**InsertFunction**元素在应用于**AssociationSetMapping**元素时可以具有以下子元素：
 
 -   EndProperty
 
 #### <a name="applicable-attributes"></a>适用的特性
 
-下表介绍可应用于的特性**InsertFunction**时应用于元素**AssociationSetMapping**元素。
+下表描述了可应用于**AssociationSetMapping**元素的**InsertFunction**元素的特性。
 
-| 特性名            | 是否必需 | “值”                                                                                                                                                    |
+| 特性名            | 是否必需 | ReplTest1                                                                                                                                                    |
 |:--------------------------|:------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **FunctionName**          | 是         | 插入函数要映射到的存储过程的命名空间限定名称。 存储过程必须在存储模型中声明。 |
 | **RowsAffectedParameter** | 否          | 返回受影响行数的输出参数的名称。                                                                               |
 
 #### <a name="example"></a>示例
 
-以下示例基于 School 模型，并显示**InsertFunction**元素使用的插入函数映射**CourseInstructor**关联到**InsertCourseInstructor**存储过程。 **InsertCourseInstructor**在存储模型中声明的存储的过程。
+下面的示例基于 School 模型，并显示了用于将**courseinstructor.courseid**关联的插入函数映射到**InsertCourseInstructor**存储过程的**InsertFunction**元素。 **InsertCourseInstructor**存储过程在存储模型中声明。
 
 ``` xml
  <AssociationSetMapping Name="CourseInstructor"
@@ -980,32 +980,32 @@ ModificationFunctionMapping 子元素可用于映射插入、 更新或删除实
 
 ## <a name="mapping-element-msl"></a>Mapping 元素 (MSL)
 
-**映射**以映射规范语言 （msl） 表示的元素包含对象 （如存储模型中所述） 到数据库的概念模型中定义的映射的信息。 有关详细信息，请参阅 CSDL 规范和 SSDL 规范。
+映射规范语言（MSL）中的**mapping**元素包含用于将概念模型中定义的对象映射到数据库的信息（如存储模型中所述）。 有关详细信息，请参阅 CSDL 规范和 SSDL 规范。
 
-**映射**元素是映射规范的根元素。 映射规范的 XML 命名空间是 http://schemas.microsoft.com/ado/2009/11/mapping/cs 。
+**Mapping**元素是映射规范的根元素。 映射规范的 XML 命名空间是 https://schemas.microsoft.com/ado/2009/11/mapping/cs 。
 
 映射元素可以具有以下子元素（按所列顺序）：
 
--   别名 （零个或多个）
+-   别名（0个或多个）
 -   EntityContainerMapping （恰好一个）
 
-MSL 中引用的概念模型类型和存储模型类型的名称必须由其相应的命名空间名称限定。 有关概念模型命名空间名称的信息，请参阅架构元素 (CSDL)。 有关存储模型命名空间名称的信息，请参阅架构元素 (SSDL)。 可以使用别名元素定义 MSL 中使用的命名空间的别名。
+MSL 中引用的概念模型类型和存储模型类型的名称必须由其相应的命名空间名称限定。 有关概念模型命名空间名称的信息，请参阅 Schema 元素（CSDL）。 有关存储模型命名空间名称的信息，请参阅 Schema 元素（SSDL）。 MSL 中使用的命名空间的别名可以使用 Alias 元素进行定义。
 
 ### <a name="applicable-attributes"></a>适用的特性
 
-下表描述了可应用于的特性**映射**元素。
+下表描述了可应用到**Mapping**元素的特性。
 
-| 特性名 | 是否必需 | “值”                                                 |
+| 特性名 | 是否必需 | ReplTest1                                                 |
 |:---------------|:------------|:------------------------------------------------------|
-| 空格键      | 是         | **C S**。 这是固定值，因此不能更改。 |
+| 空格键      | 是         | **C-S**。 这是固定值，因此不能更改。 |
 
 ### <a name="example"></a>示例
 
-下面的示例演示**映射**基于 School 模型的一部分的元素。 有关 School 模型的详细信息，请参阅快速入门 （实体框架）：
+下面的示例演示一个基于 School 模型的一部分的**映射**元素。 有关 School 模型的详细信息，请参阅快速入门（实体框架）：
 
 ``` xml
  <Mapping Space="C-S"
-          xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+          xmlns="https://schemas.microsoft.com/ado/2009/11/mapping/cs">
    <Alias Key="c" Value="SchoolModel"/>
    <EntityContainerMapping StorageEntityContainer="SchoolModelStoreContainer"
                            CdmEntityContainer="SchoolModelEntities">
@@ -1036,26 +1036,26 @@ MSL 中引用的概念模型类型和存储模型类型的名称必须由其相�
 
 ## <a name="mappingfragment-element-msl"></a>MappingFragment 元素 (MSL)
 
-**MappingFragment**以映射规范语言 （msl） 表示的元素定义概念模型实体类型的表或视图的数据库中的属性之间的映射。 有关概念模型实体类型和基础数据库表或视图的信息，请参阅 EntityType 元素 (CSDL) 和 EntitySet 元素 (SSDL)。 **MappingFragment**可以是 EntityTypeMapping 元素或 EntitySetMapping 元素的子元素。
+映射规范语言（MSL）中的**MappingFragment**元素定义概念模型实体类型的属性与数据库中的表或视图之间的映射。 有关概念模型实体类型和基础数据库表或视图的信息，请参阅 EntityType 元素（CSDL）和 EntitySet 元素（SSDL）。 **MappingFragment**可以是 EntityTypeMapping 元素或 EntitySetMapping 元素的子元素。
 
 **MappingFragment**元素可以具有以下子元素：
 
--   复杂类型 （零个或多个）
+-   ComplexType （零个或多个）
 -   ScalarProperty （零个或多个）
--   条件 （零个或多个）
+-   条件（零个或多个）
 
 ### <a name="applicable-attributes"></a>适用的特性
 
-下表介绍可应用于的特性**MappingFragment**元素。
+下表介绍可应用于**MappingFragment**元素的特性。
 
-| 特性名          | 是否必需 | “值”                                                                                                                                                                                                                         |
+| 特性名          | 是否必需 | ReplTest1                                                                                                                                                                                                                         |
 |:------------------------|:------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **StoreEntitySet**      | 是         | 要映射的表或视图的名称。                                                                                                                                                                           |
-| **MakeColumnsDistinct** | 否          | **True**或**False**具体取决于是否返回仅非重复行。 <br/> 如果此属性设置为 **，则返回 True**，则**GenerateUpdateViews** EntityContainerMapping 元素的属性必须设置为**False**。 |
+| **MakeColumnsDistinct** | 否          | **True**或**False** ，具体取决于是否只返回不同的行。 <br/> 如果此特性设置为**True**，则 EntityContainerMapping 元素的**GenerateUpdateViews**特性必须设置为**False**。 |
 
 ### <a name="example"></a>示例
 
-下面的示例演示**MappingFragment**元素的子级作为**EntityTypeMapping**元素。 在此示例中，属性**课程**概念模型中的类型映射到的列**课程**数据库表中的。
+下面的示例演示一个**MappingFragment**元素作为**EntityTypeMapping**元素的子元素。 在此示例中，概念模型中的**课程**类型的属性将映射到数据库中**课程**表的列。
 
 ``` xml
  <EntitySetMapping Name="Courses">
@@ -1072,7 +1072,7 @@ MSL 中引用的概念模型类型和存储模型类型的名称必须由其相�
 
 ### <a name="example"></a>示例
 
-下面的示例演示**MappingFragment**元素的子级作为**EntitySetMapping**元素。 如上面的属性的示例中所示**课程**概念模型中的类型映射到的列**课程**数据库表中的。
+下面的示例演示一个**MappingFragment**元素作为**EntitySetMapping**元素的子元素。 如上面的示例所示，概念模型中的**课程**类型的属性将映射到数据库中**课程**表的列。
 
 ``` xml
  <EntitySetMapping Name="Courses" TypeName="SchoolModel.Course">
@@ -1087,16 +1087,16 @@ MSL 中引用的概念模型类型和存储模型类型的名称必须由其相�
 
 ## <a name="modificationfunctionmapping-element-msl"></a>ModificationFunctionMapping 元素 (MSL)
 
-**ModificationFunctionMapping**以映射规范语言 （msl） 表示的元素映射插入、 更新和删除函数的概念模型实体类型到基础数据库中的存储过程。 **ModificationFunctionMapping**元素还可以将映射插入和删除到基础数据库中的存储过程概念模型中的多对多关联的函数。 将修改函数映射到其中的存储过程必须在存储模型中声明。 有关详细信息，请参阅函数元素 (SSDL)。
+映射规范语言（MSL）中的**ModificationFunctionMapping**元素将概念模型实体类型的插入、更新和删除函数映射到基础数据库中的存储过程。 **ModificationFunctionMapping**元素还可以将概念模型中的多对多关联的插入和删除函数映射到基础数据库中的存储过程。 将修改函数映射到其中的存储过程必须在存储模型中声明。 有关详细信息，请参阅 Function 元素（SSDL）。
 
 > [!NOTE]
-> 如果不将所有这三个插入、 更新或删除一个实体类型到存储过程的操作、 映射的操作将失败，则在运行时执行和 UpdateException 引发。
+> 如果没有将实体类型的所有三个插入、更新或删除操作映射到存储过程，则在运行时执行并引发 UpdateException 时，未映射的操作将失败。
 
 
 > [!NOTE]
 > 如果将继承层次结构中的一个实体的修改函数映射到存储过程，则必须将该层次结构中所有类型的修改函数都映射到存储过程。
 
-**ModificationFunctionMapping**元素可以是 EntityTypeMapping 元素或 AssociationSetMapping 元素的子级。
+**ModificationFunctionMapping**元素可以是 EntityTypeMapping 元素或 AssociationSetMapping 元素的子元素。
 
 **ModificationFunctionMapping**元素可以具有以下子元素：
 
@@ -1104,11 +1104,11 @@ MSL 中引用的概念模型类型和存储模型类型的名称必须由其相�
 -   InsertFunction （零个或一个）
 -   UpdateFunction （零个或一个）
 
-任何属性都适用于**ModificationFunctionMapping**元素。
+没有适用于**ModificationFunctionMapping**元素的特性。
 
 ### <a name="example"></a>示例
 
-下面的示例演示实体集映射**人**School 模型中实体集。 除了的列映射**Person**实体类型的映射的插入、 更新和删除函数**人员**显示类型。 映射到的函数在存储模型中声明。
+下面的示例演示了 School 模型中 "**人员**" 实体集的实体集映射。 除了**person**实体类型的列映射外，还会显示 "**人员**" 类型的插入、更新和删除函数的映射。 映射到的函数在存储模型中声明。
 
 ``` xml
  <EntitySetMapping Name="People">
@@ -1155,7 +1155,7 @@ MSL 中引用的概念模型类型和存储模型类型的名称必须由其相�
 
 ### <a name="example"></a>示例
 
-下面的示例演示关联集映射**CourseInstructor** School 模型中关联集。 除了的列映射**CourseInstructor**关联的插入和删除函数映射**CourseInstructor**关联显示。 映射到的函数在存储模型中声明。
+下面的示例演示了 School 模型中**courseinstructor.courseid**关联集的关联集映射。 除了**courseinstructor.courseid**关联的列映射外，还会显示**courseinstructor.courseid**关联的插入和删除函数的映射。 映射到的函数在存储模型中声明。
 
 ``` xml
  <AssociationSetMapping Name="CourseInstructor"
@@ -1187,37 +1187,37 @@ MSL 中引用的概念模型类型和存储模型类型的名称必须由其相�
    </ModificationFunctionMapping>
  </AssociationSetMapping>
 ```
- 
+ 
 
- 
+ 
 
 ## <a name="queryview-element-msl"></a>QueryView 元素 (MSL)
 
-**QueryView**以映射规范语言 （msl） 表示的元素定义概念模型和基础数据库中的表中之间对实体类型或关联的只读映射。 使用针对存储模型进行评估的 Entity SQL 查询定义映射，将结果集的实体或关联在概念模型中的表示。 因为查询视图是只读的，所以不能使用标准更新命令来更新查询视图所定义的类型。 可以使用修改函数来更新这些类型。 有关详细信息，请参阅如何： 将修改函数映射到存储过程。
+映射规范语言（MSL）中的**QueryView**元素定义概念模型中的实体类型或关联与基础数据库中的表之间的只读映射。 映射是使用针对存储模型计算的实体 SQL 查询定义的，你可以根据概念模型中的实体或关联来表示结果集。 因为查询视图是只读的，所以不能使用标准更新命令来更新查询视图所定义的类型。 可以使用修改函数来更新这些类型。 有关详细信息，请参阅“操作说明：将修改函数映射到存储过程。
 
 > [!NOTE]
-> 在中**QueryView**元素中包含的 Entity SQL 表达式**GroupBy**，不支持组聚合或导航属性。
+> 在**QueryView**元素中，不支持实体 SQL 包含**GroupBy**、组聚合或导航属性的表达式。
 
- 
+ 
 
-**QueryView**元素可以是 EntitySetMapping 元素或 AssociationSetMapping 元素的子级。 在前一种情况中，查询视图定义概念模型中实体的只读映射。 在后一种情况中，查询视图定义概念模型中关联的只读映射。
+**QueryView**元素可以是 EntitySetMapping 元素或 AssociationSetMapping 元素的子元素。 在前一种情况中，查询视图定义概念模型中实体的只读映射。 在后一种情况中，查询视图定义概念模型中关联的只读映射。
 
 > [!NOTE]
-> 如果**AssociationSetMapping**元素不用于与引用约束的关联**AssociationSetMapping**元素将被忽略。 有关详细信息，请参阅 ReferentialConstraint 元素 (CSDL)。
+> 如果**AssociationSetMapping**元素用于与引用约束的关联，则忽略**AssociationSetMapping**元素。 有关详细信息，请参阅 ReferentialConstraint 元素（CSDL）。
 
 **QueryView**元素不能具有任何子元素。
 
 ### <a name="applicable-attributes"></a>适用的特性
 
-下表介绍可应用于的特性**QueryView**元素。
+下表介绍可应用于**QueryView**元素的特性。
 
-| 特性名 | 是否必需 | “值”                                                                         |
+| 特性名 | 是否必需 | ReplTest1                                                                         |
 |:---------------|:------------|:------------------------------------------------------------------------------|
-| **类型名称**   | 否          | 要由查询视图映射的概念模型类型的名称。 |
+| **TypeName**   | 否          | 要由查询视图映射的概念模型类型的名称。 |
 
 ### <a name="example"></a>示例
 
-下面的示例演示**QueryView**的子元素**EntitySetMapping**元素，并定义查询视图映射**部门**中的实体类型School 模型。
+下面的示例将**QueryView**元素显示为**EntitySetMapping**元素的子元素，并为 School 模型中的**部门**实体类型定义查询视图映射。
 
 ``` xml
  <EntitySetMapping Name="Departments" >
@@ -1232,7 +1232,7 @@ MSL 中引用的概念模型类型和存储模型类型的名称必须由其相�
  </EntitySetMapping>
 ```
 
-因为该查询仅返回的成员的子集**部门**在存储模型中，类型**部门**School 模型中的类型已被修改，基于此映射，如下所示：
+由于该查询仅返回存储模型中 "**部门**" 类型的成员子集，因此，School 模型中的**部门**类型已根据以下映射进行了修改：
 
 ``` xml
  <EntityType Name="Department">
@@ -1253,7 +1253,7 @@ MSL 中引用的概念模型类型和存储模型类型的名称必须由其相�
 
 ### <a name="example"></a>示例
 
-下面的示例说明**QueryView**元素的子级作为**AssociationSetMapping**元素和定义的只读映射`FK_Course_Department`School 模型中的关联。
+下一个示例显示了**QueryView**元素作为**AssociationSetMapping**元素的子元素，并为 School 模型中的 `FK_Course_Department` 关联定义了只读映射。
 
 ``` xml
  <EntityContainerMapping StorageEntityContainer="SchoolModelStoreContainer"
@@ -1286,53 +1286,53 @@ MSL 中引用的概念模型类型和存储模型类型的名称必须由其相�
    </AssociationSetMapping>
  </EntityContainerMapping>
 ```
- 
+ 
 ### <a name="comments"></a>注释
 
 可以定义查询视图来实现以下方案：
 
--   在概念模型中定义一个实体，该实体不包含存储模型中的实体的所有属性。 这包括不具有默认值并且不支持的属性**null**值。
+-   在概念模型中定义一个实体，该实体不包含存储模型中的实体的所有属性。 这包括没有默认值并且不支持**null**值的属性。
 -   将存储模型中计算的列映射到概念模型中实体类型的属性。
--   定义一个映射，其中用于对概念模型中的实体进行分区的条件不基于相等性。 当指定条件映射使用**条件**元素，提供的条件必须等于指定的值。 有关详细信息，请参阅条件元素 (MSL)。
+-   定义一个映射，其中用于对概念模型中的实体进行分区的条件不基于相等性。 使用**Condition**元素指定条件映射时，所提供的条件必须等于指定的值。 有关详细信息，请参阅 Condition 元素（MSL）。
 -   将存储模型中的同一列映射到概念模型中的多个类型。
 -   将多个类型映射到同一个表。
 -   在概念模型中定义不基于关系架构中的外键的关联。
--   使用自定义业务逻辑设置概念模型中的属性值。 例如，你可以将字符串值"T"的值的数据源中的映射 **，则返回 true**，一个布尔值，在概念模型中的。
+-   使用自定义业务逻辑设置概念模型中的属性值。 例如，您可以将数据源中的字符串值 "T" 映射到概念模型中的**true**值（布尔值）。
 -   为查询结果定义条件筛选器。
--   强制对概念模型中的数据施加比存储模型中更少的限制。 例如，您可以制作属性在概念模型中可以为 null 即使映射到的列不支持**null**值。
+-   强制对概念模型中的数据施加比存储模型中更少的限制。 例如，您可以将概念模型中的属性设置为可以为 null，即使它映射到的列不支持**null**值。
 
 为实体定义查询视图时需要考虑以下注意事项：
 
 -   查询视图是只读的。 只能使用修改函数来更新实体。
 -   通过查询视图定义实体类型时，必须也通过查询视图来定义所有相关实体。
--   当您映射到表示关系架构中的链接表的存储模型中实体的多对多关联时，必须定义**QueryView**中的元素**AssociationSetMapping**此链接表的的元素。
+-   当您将多对多关联映射到存储模型中表示关系架构中的链接表的实体时，必须在此链接表的**AssociationSetMapping**元素中定义**QueryView**元素。
 -   必须为类型层次结构中的所有类型定义查询视图。 可以使用下列方式来实现：
--   -   使用单个**QueryView**元素，它指定返回层次结构中的所有实体类型的联合的单一实体 SQL 查询。
-    -   使用单个**QueryView**指定单个实体 SQL 查询使用 CASE 运算符可在层次结构中返回的特定实体类型的元素根据特定条件。
-    -   带有附加**QueryView**层次结构中的特定类型的元素。 在这种情况下，使用**TypeName**的属性**QueryView**元素来指定每个视图的实体类型。
--   当定义查询视图时，不能指定**StorageSetName**特性，可以在**EntitySetMapping**元素。
--   当定义查询视图时， **EntitySetMapping**元素不能同时包含**属性**映射。
+-   -   使用单个**QueryView**元素指定单个实体 SQL 查询，该查询返回层次结构中所有实体类型的联合。
+    -   使用单个**QueryView**元素，该元素指定单个实体 SQL 查询，该查询使用 CASE 运算符根据特定条件返回层次结构中的特定实体类型。
+    -   对于层次结构中的特定类型，使用额外的**QueryView**元素。 在这种情况下，请使用**QueryView**元素的**TypeName**特性来指定每个视图的实体类型。
+-   定义查询视图时，不能在**EntitySetMapping**元素上指定**StorageSetName**属性。
+-   定义查询视图时， **EntitySetMapping**元素不能同时包含**属性**映射。
 
 ## <a name="resultbinding-element-msl"></a>ResultBinding 元素 (MSL)
 
-**ResultBinding**以映射规范语言 （msl） 表示的元素映射列的值由存储过程到概念模型中的实体属性时返回实体类型修改函数映射到存储基础数据库中的过程。 例如，当标识列的值返回插入的存储过程中， **ResultBinding**元素映射到概念模型中实体类型属性返回的值。
+映射规范语言（MSL）中的**ResultBinding**元素将存储过程返回的列值映射到概念模型中的实体属性（当实体类型修改函数映射到底层数据库。 例如，当 insert 存储过程返回标识列的值时， **ResultBinding**元素会将返回的值映射到概念模型中的实体类型属性。
 
-**ResultBinding**元素可以是 InsertFunction 元素或 UpdateFunction 元素的子级。
+**ResultBinding**元素可以是 InsertFunction 元素或 UpdateFunction 元素的子元素。
 
 **ResultBinding**元素不能具有任何子元素。
 
 ### <a name="applicable-attributes"></a>适用的特性
 
-下表描述了适用于的特性**ResultBinding**元素：
+下表描述了适用于**ResultBinding**元素的属性：
 
-| 特性名 | 是否必需 | “值”                                                                         |
+| 特性名 | 是否必需 | ReplTest1                                                                         |
 |:---------------|:------------|:------------------------------------------------------------------------------|
 | **名称**       | 是         | 概念模型中要映射的实体属性的名称。 |
-| **列名称** | 是         | 要映射的列的名称。                                          |
+| **ColumnName** | 是         | 要映射的列的名称。                                          |
 
 ### <a name="example"></a>示例
 
-以下示例基于 School 模型，并显示**InsertFunction**元素用于映射的插入函数**人员**实体类型设置为**InsertPerson**存储的过程。 ( **InsertPerson**存储的过程如下所示，在存储模型中声明。)一个**ResultBinding**元素用于映射存储过程返回的列值 (**NewPersonID**) 到实体类型属性 (**PersonID**)。
+下面的示例基于 School 模型，并显示用于将**Person**实体类型的插入函数映射到**InsertPerson**存储过程的**InsertFunction**元素。 （ **InsertPerson**存储过程如下所示，在存储模型中声明。）**ResultBinding**元素用于将存储过程（**NewPersonID**）返回的列值映射到实体类型属性（**PersonID**）。
 
 ``` xml
  <EntityTypeMapping TypeName="SchoolModel.Person">
@@ -1365,7 +1365,7 @@ MSL 中引用的概念模型类型和存储模型类型的名称必须由其相�
  </EntityTypeMapping>
 ```
 
-以下 TRANSACT-SQL 描述**InsertPerson**存储过程：
+以下 Transact-sql 介绍了**InsertPerson**存储过程：
 
 ``` SQL
  CREATE PROCEDURE [dbo].[InsertPerson]
@@ -1387,12 +1387,12 @@ MSL 中引用的概念模型类型和存储模型类型的名称必须由其相�
 
 ## <a name="resultmapping-element-msl"></a>ResultMapping 元素 (MSL)
 
-**ResultMapping**元素以映射规范语言 （msl） 表示基础数据库中定义概念模型中的函数导入和存储的过程之间的映射，当满足以下条件：
+映射规范语言（MSL）中的**ResultMapping**元素定义概念模型中的函数导入与基础数据库中的存储过程之间的映射（如果满足以下条件）：
 
 -   函数导入返回一个概念模型实体类型或复杂类型。
 -   存储过程返回的列的名称与实体类型或复杂类型中的属性名称不完全匹配。
 
-默认情况下，存储过程返回的列与实体类型或复杂类型中的属性之间的映射基于列名称和属性名称。 如果列名称与属性名称不完全匹配，则必须使用**ResultMapping**元素定义的映射。 有关默认映射的示例，请参阅 FunctionImportMapping 元素 (MSL)。
+默认情况下，存储过程返回的列与实体类型或复杂类型中的属性之间的映射基于列名称和属性名称。 如果列名称与属性名称不完全匹配，则必须使用**ResultMapping**元素来定义映射。 有关默认映射的示例，请参阅 FunctionImportMapping 元素（MSL）。
 
 **ResultMapping**元素是 FunctionImportMapping 元素的子元素。
 
@@ -1401,7 +1401,7 @@ MSL 中引用的概念模型类型和存储模型类型的名称必须由其相�
 -   EntityTypeMapping （零个或多个）
 -   ComplexTypeMapping
 
-任何属性都适用于**ResultMapping**元素。
+没有适用于**ResultMapping**元素的特性。
 
 ### <a name="example"></a>示例
 
@@ -1434,7 +1434,7 @@ MSL 中引用的概念模型类型和存储模型类型的名称必须由其相�
  </EntityType>
 ```
 
-若要创建函数导入返回上一个实体类型的实例，列之间的映射存储过程返回的和必须中定义的实体类型**ResultMapping**元素：
+若要创建返回以前实体类型的实例的函数导入，必须在**ResultMapping**元素中定义存储过程返回的列与实体类型返回的列之间的映射：
 
 ``` xml
  <FunctionImportMapping FunctionImportName="GetGrades"
@@ -1452,10 +1452,10 @@ MSL 中引用的概念模型类型和存储模型类型的名称必须由其相�
 
 ## <a name="scalarproperty-element-msl"></a>ScalarProperty 元素 (MSL)
 
-**ScalarProperty**以映射规范语言 （msl） 表示的元素将概念模型实体类型、 复杂类型或关联的属性映射到表列或基础数据库中的存储的过程参数。
+映射规范语言（MSL）中的**ScalarProperty**元素将概念模型实体类型、复杂类型或关联的属性映射到基础数据库中的表列或存储过程参数。
 
 > [!NOTE]
-> 将修改函数映射到其中的存储过程必须在存储模型中声明。 有关详细信息，请参阅函数元素 (SSDL)。
+> 将修改函数映射到其中的存储过程必须在存储模型中声明。 有关详细信息，请参阅 Function 元素（SSDL）。
 
 **ScalarProperty**元素可以是以下元素的子元素：
 
@@ -1467,35 +1467,35 @@ MSL 中引用的概念模型类型和存储模型类型的名称必须由其相�
 -   ComplexProperty
 -   ResultMapping
 
-为的子**MappingFragment**， **ComplexProperty**，或**EndProperty**元素**ScalarProperty**元素的属性映射在数据库中的列对概念模型。 为的子**InsertFunction**， **UpdateFunction**，或**DeleteFunction**元素**ScalarProperty**元素的属性映射在存储的过程参数对概念模型。
+作为**MappingFragment**、 **ComplexProperty**或**EndProperty**元素的子元素， **ScalarProperty**元素会将概念模型中的属性映射到数据库中的某一列。 作为**InsertFunction**、 **UpdateFunction**或**DeleteFunction**元素的子元素， **ScalarProperty**元素会将概念模型中的属性映射到存储过程参数。
 
 **ScalarProperty**元素不能具有任何子元素。
 
 ### <a name="applicable-attributes"></a>适用的特性
 
-将应用于的特性**ScalarProperty**元素而异的元素的角色。
+应用于**ScalarProperty**元素的特性因元素的角色而异。
 
-下表描述了所适用的属性**ScalarProperty**元素用于将概念模型属性映射到数据库中的列：
+下表介绍了在**ScalarProperty**元素用于将概念模型属性映射到数据库中的列时适用的特性：
 
-| 特性名 | 是否必需 | “值”                                                           |
+| 特性名 | 是否必需 | ReplTest1                                                           |
 |:---------------|:------------|:----------------------------------------------------------------|
 | **名称**       | 是         | 要映射的概念模型属性的名称。 |
-| **列名称** | 是         | 要映射的表列的名称。              |
+| **ColumnName** | 是         | 要映射的表列的名称。              |
 
-下表描述了适用于的特性**ScalarProperty**元素用于将概念模型属性映射到存储的过程参数时：
+下表描述了当**ScalarProperty**元素用于将概念模型属性映射到存储过程参数时适用的特性：
 
-| 特性名    | 是否必需 | “值”                                                                                                                                           |
+| 特性名    | 是否必需 | ReplTest1                                                                                                                                           |
 |:------------------|:------------|:------------------------------------------------------------------------------------------------------------------------------------------------|
 | **名称**          | 是         | 要映射的概念模型属性的名称。                                                                                 |
-| **参数名** | 是         | 正在映射的参数的名称。                                                                                                 |
-| **Version**       | 否          | **当前**或**原始**具体取决于是否当前值或属性的原始值应使用为了进行并发检查。 |
+| **ParameterName** | 是         | 正在映射的参数的名称。                                                                                                 |
+| **Version**       | 否          | **当前**或**原始**值，具体取决于是否应将当前值或属性的原始值用于并发检查。 |
 
 ### <a name="example"></a>示例
 
-下面的示例演示**ScalarProperty**元素使用以下两种方式：
+下面的示例演示了两种方法中使用的**ScalarProperty**元素：
 
--   若要映射的属性**Person**实体类型的列**人员**表。
--   若要映射的属性**Person**实体类型的参数**UpdatePerson**存储过程。 存储过程在存储模型中声明。
+-   将**person**实体类型的属性映射到**person**表的列。
+-   将**Person**实体类型的属性映射到**UpdatePerson**存储过程的参数。 存储过程在存储模型中声明。
 
 ``` xml
  <EntitySetMapping Name="People">
@@ -1542,7 +1542,7 @@ MSL 中引用的概念模型类型和存储模型类型的名称必须由其相�
 
 ### <a name="example"></a>示例
 
-下面的示例说明**ScalarProperty**元素用于映射插入和删除函数的概念模型关联到数据库中的存储过程。 存储过程在存储模型中声明。
+下一个示例显示了**ScalarProperty**元素，该元素用于将概念模型关联的插入和删除函数映射到数据库中的存储过程。 存储过程在存储模型中声明。
 
 ``` xml
  <AssociationSetMapping Name="CourseInstructor"
@@ -1577,12 +1577,12 @@ MSL 中引用的概念模型类型和存储模型类型的名称必须由其相�
 
 ## <a name="updatefunction-element-msl"></a>UpdateFunction 元素 (MSL)
 
-**UpdateFunction**以映射规范语言 （msl） 表示的元素将概念模型中的实体类型的更新函数映射到基础数据库中的存储过程。 将修改函数映射到其中的存储过程必须在存储模型中声明。 有关详细信息，请参阅函数元素 (SSDL)。
+映射规范语言（MSL）中的**UpdateFunction**元素将概念模型中的实体类型的更新函数映射到基础数据库中的存储过程。 将修改函数映射到其中的存储过程必须在存储模型中声明。 有关详细信息，请参阅 Function 元素（SSDL）。
 
 > [!NOTE]
->  如果不将所有这三个插入、 更新或删除一个实体类型到存储过程的操作、 映射的操作将失败，则在运行时执行和 UpdateException 引发。
+>  如果没有将实体类型的所有三个插入、更新或删除操作映射到存储过程，则在运行时执行并引发 UpdateException 时，未映射的操作将失败。
 
-**UpdateFunction**元素可以是 ModificationFunctionMapping 元素的子元素，并应用于 EntityTypeMapping 元素。
+**UpdateFunction**元素可以是 ModificationFunctionMapping 元素的子元素并应用于 EntityTypeMapping 元素。
 
 **UpdateFunction**元素可以具有以下子元素：
 
@@ -1593,16 +1593,16 @@ MSL 中引用的概念模型类型和存储模型类型的名称必须由其相�
 
 ### <a name="applicable-attributes"></a>适用的特性
 
-下表介绍可应用于的特性**UpdateFunction**元素。
+下表介绍可应用于**UpdateFunction**元素的特性。
 
-| 特性名            | 是否必需 | “值”                                                                                                                                                    |
+| 特性名            | 是否必需 | ReplTest1                                                                                                                                                    |
 |:--------------------------|:------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **FunctionName**          | 是         | 更新函数要映射到的存储过程的命名空间限定名称。 存储过程必须在存储模型中声明。 |
 | **RowsAffectedParameter** | 否          | 返回受影响行数的输出参数的名称。                                                                               |
 
 ### <a name="example"></a>示例
 
-以下示例基于 School 模型，并显示**UpdateFunction**元素使用的更新函数映射**人员**实体类型设置为**UpdatePerson**存储的过程。 **UpdatePerson**在存储模型中声明的存储的过程。
+下面的示例基于 School 模型，并显示用于将**Person**实体类型的更新函数映射到**UpdatePerson**存储过程的**UpdateFunction**元素。 **UpdatePerson**存储过程在存储模型中声明。
 
 ``` xml
  <EntityTypeMapping TypeName="SchoolModel.Person">

@@ -1,30 +1,30 @@
 ---
-title: 使用属性值的 EF6
+title: 使用属性值-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: e3278b4b-9378-4fdb-923d-f64d80aaae70
-ms.openlocfilehash: afde503bb4ed15fcf83a57053541cd5da8c89835
-ms.sourcegitcommit: 50521b4a2f71139e6a7210a69ac73da582ef46cf
+ms.openlocfilehash: d8a18182754980d79b71df3f227b30c4ce40366f
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/27/2019
-ms.locfileid: "67416678"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72182144"
 ---
 # <a name="working-with-property-values"></a>使用属性值
-大多数情况下 Entity Framework 将负责跟踪状态、 原始值和当前值的实体实例的属性。 但是，可能有某些情况下-例如断开连接的场景-你想要查看或操作的属性信息 EF 拥有。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  
+大多数情况下实体框架将负责跟踪实体实例的属性的状态、原始值和当前值。 但是，在某些情况下（例如，已断开连接的情况下），你希望查看或操作有关属性的信息 EF。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  
 
-实体框架会跟踪的跟踪实体的每个属性的两个值。 当前值是，顾名思义，实体中属性的当前值。 如果实体已从数据库中查询或附加到上下文，该属性具有值的原始值。  
+实体框架跟踪所跟踪实体的每个属性的两个值。 当前值为，如名称所示，是实体中属性的当前值。 原始值是从数据库中查询实体或将实体附加到上下文时属性所具有的值。  
 
-有两种常规机制，用于处理属性值：  
+使用属性值的一般机制有两种：  
 
-- 可以使用属性方法以强类型化方式获取的单个属性的值。  
-- 实体的所有属性的值可以读入 DbPropertyValues 对象。 DbPropertyValues 然后充当类似于字典的对象，以允许读取和设置属性值。 可以从另一个 DbPropertyValues 对象中的值或其他某个对象，如实体或简单的数据传输对象 (DTO) 的另一个副本中的值设置 DbPropertyValues 对象中的值。  
+- 单个属性的值可以使用属性方法以强类型方式获取。  
+- 实体的所有属性的值都可以读取到 DbPropertyValues 对象中。 然后，DbPropertyValues 充当类似字典的对象，以允许读取和设置属性值。 DbPropertyValues 对象中的值可以从其他 DbPropertyValues 对象中的值或其他某个对象的值进行设置，如实体的另一个副本或简单的数据传输对象（DTO）。  
 
-以下部分说明了使用这两个以上的机制的示例。  
+以下部分显示了使用上述两种机制的示例。  
 
-## <a name="getting-and-setting-the-current-or-original-value-of-an-individual-property"></a>获取和设置的个别属性的当前或原始值  
+## <a name="getting-and-setting-the-current-or-original-value-of-an-individual-property"></a>获取和设置单个属性的当前值或原始值  
 
-下面的示例说明如何可以读取，然后将设置为新值的属性的当前值：  
+下面的示例演示如何读取属性的当前值，然后将其设置为新值：  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -45,17 +45,17 @@ using (var context = new BloggingContext())
 }
 ```  
 
-使用而不是 CurrentValue 属性的 OriginalValue 属性来读取或设置原始值。  
+使用 OriginalValue 属性而非 CurrentValue 属性来读取或设置原始值。  
 
-请注意，返回的值的类型为"对象"用于指定属性名称的字符串。 但是，强类型返回的值，如果使用了 lambda 表达式。  
+请注意，当使用字符串指定属性名时，返回的值将被类型化为 "object"。 另一方面，如果使用 lambda 表达式，则返回值为强类型。  
 
-设置此类的属性值将仅将该属性标记为已修改的新值是否不同于旧值。  
+如果新值不同于旧值，则将属性值设置为时，只会将属性标记为已修改。  
 
-以这种方式设置属性值可以自动检测到更改即使 AutoDetectChanges 处于关闭状态。  
+以这种方式设置属性值时，即使关闭了 AutoDetectChanges，也会自动检测更改。  
 
-## <a name="getting-and-setting-the-current-value-of-an-unmapped-property"></a>获取和设置未映射属性的当前值  
+## <a name="getting-and-setting-the-current-value-of-an-unmapped-property"></a>获取和设置未映射的属性的当前值  
 
-此外可以阅读不映射到数据库的属性的当前值。 未映射属性的一个示例可能是博客上的 RssLink 属性。 此值可能根据 BlogId，计算，因此不需要存储在数据库中。 例如：  
+还可以读取未映射到数据库的属性的当前值。 未映射的属性的一个示例可能是博客上的 .Rsslink 属性。 此值可以基于 BlogId 进行计算，因此无需存储在数据库中。 例如：  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -69,9 +69,9 @@ using (var context = new BloggingContext())
 }
 ```  
 
-如果该属性公开 setter，还可以设置的当前值。  
+如果属性公开了 setter，还可以设置当前值。  
 
-执行未映射属性的实体框架验证时，读取未映射的属性的值非常有用。 出于同一原因可以读取和设置的属性不当前正在由上下文跟踪的实体的当前值。 例如：  
+在对未映射的属性执行实体框架验证时，读取未映射的属性的值非常有用。 出于相同原因，可以读取当前值并将其设置为当前未由上下文跟踪的实体的属性。 例如：  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -87,11 +87,11 @@ using (var context = new BloggingContext())
 }
 ```  
 
-请注意，原始值不能用于未映射的属性或未正在由上下文跟踪的实体的属性。  
+请注意，原始值不可用于未映射的属性或上下文未跟踪的实体属性。  
 
-## <a name="checking-whether-a-property-is-marked-as-modified"></a>检查属性标记为已修改  
+## <a name="checking-whether-a-property-is-marked-as-modified"></a>检查属性是否被标记为已修改  
 
-下面的示例演示如何检查的个别属性标记为已修改：  
+下面的示例演示如何检查单个属性是否被标记为已修改：  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -105,11 +105,11 @@ using (var context = new BloggingContext())
 }
 ```  
 
-当调用 SaveChanges 时，已修改属性的值是作为更新发送到数据库中。  
+调用 SaveChanges 时，已修改属性的值将作为更新发送到数据库。  
 
-##  <a name="marking-a-property-as-modified"></a>将标记为已修改的属性  
+##  <a name="marking-a-property-as-modified"></a>将属性标记为已修改  
 
-下面的示例演示如何强制执行标记为已修改的个别属性：  
+下面的示例演示如何强制将单个属性标记为已修改：  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -123,13 +123,13 @@ using (var context = new BloggingContext())
 }
 ```  
 
-将属性标记为已修改强制更新为将发送到该属性的数据库，当调用 SaveChanges 时，即使该属性的当前值等同于其原始值。  
+将属性标记为已修改会强制在调用 SaveChanges 时将更新发送到该属性的数据库，即使该属性的当前值与原始值相同也是如此。  
 
-不是目前无法重置后标记为已修改未修改的单个属性。 这是我们计划在将来的版本中支持。  
+目前不能在标记为 "已修改" 后将单个属性重置为不修改。 这是我们计划在未来版本中提供支持的内容。  
 
-## <a name="reading-current-original-and-database-values-for-all-properties-of-an-entity"></a>读取当前、 原始值和所有属性的实体的数据库值  
+## <a name="reading-current-original-and-database-values-for-all-properties-of-an-entity"></a>读取实体的所有属性的当前值、原始值和数据库值  
 
-下面的示例演示如何读取的当前值、 原始值，以及数据库中的所有映射属性的实体的数据库的实际值。  
+下面的示例演示如何在数据库中读取实体的所有映射属性的当前值、原始值和值。  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -163,11 +163,11 @@ public static void PrintValues(DbPropertyValues values)
 }
 ```  
 
-当前值是实体的当前包含的属性的值。 原始值是该实体已查询时从数据库读取的值。 数据库值是当前数据库中存储的值。 在数据库中的值可能已更改，因为如时并发编辑，以另一个用户已发出对数据库进行了查询实体时，获取数据库值很有用。  
+当前值是实体的属性当前包含的值。 原始值是查询实体时从数据库中读取的值。 数据库值是当前存储在数据库中的值。 如果数据库中的值可能在查询实体后发生更改（例如，当另一个用户对数据库进行了并发编辑时），获取数据库值将很有用。  
 
-## <a name="setting-current-or-original-values-from-another-object"></a>从另一个对象设置当前或原始值  
+## <a name="setting-current-or-original-values-from-another-object"></a>设置其他对象的当前值或原始值  
 
-可以通过从另一个对象复制的值更新被跟踪实体的当前或原始值。 例如：  
+可以通过从另一个对象复制值来更新已跟踪实体的当前值或原始值。 例如：  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -196,9 +196,9 @@ public class BlogDto
 }
 ```  
 
-运行上面的代码将打印出：  
+运行上面的代码将输出：  
 
-```  
+```console
 Current values:
 Property Id has value 1
 Property Name has value My Cool Blog
@@ -208,13 +208,13 @@ Property Id has value 1
 Property Name has value My Boring Blog
 ```  
 
-使用从服务调用或 n 层应用程序中的客户端获取的值更新实体时，有时会使用此方法。 请注意，使用对象不必是实体类型相同的只要它具有名称匹配的实体的属性。 在上面的示例中，BlogDTO 实例用于更新原始值。  
+当使用从服务调用或 n 层应用程序中的客户端获取的值更新实体时，有时会使用此方法。 请注意，所使用的对象不必与实体具有相同的类型，但前提是它具有与实体的名称相匹配的属性。 在上面的示例中，BlogDTO 的实例用于更新原始值。  
 
-请注意为不同的值时从另一个对象复制设置的属性标记为已修改。  
+请注意，从其他对象复制时，仅将设置为不同值的属性标记为已修改。  
 
-## <a name="setting-current-or-original-values-from-a-dictionary"></a>从字典中设置当前或原始值  
+## <a name="setting-current-or-original-values-from-a-dictionary"></a>从字典设置当前值或原始值  
 
-可以通过将值从字典或某些其他数据结构中复制更新被跟踪实体的当前或原始值。 例如：  
+可以通过从字典或其他一些数据结构复制值来更新已跟踪实体的当前值或原始值。 例如：  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -238,11 +238,11 @@ using (var context = new BloggingContext())
 }
 ```  
 
-使用引入了属性而不是当前值属性来设置原始值。  
+使用 OriginalValues 属性而非 CurrentValues 属性来设置原始值。  
 
-## <a name="setting-current-or-original-values-from-a-dictionary-using-property"></a>使用属性字典中设置当前或原始值  
+## <a name="setting-current-or-original-values-from-a-dictionary-using-property"></a>使用属性设置字典中的当前值或原始值  
 
-使用当前值或引入了如上所示的替代方法是使用属性方法以设置每个属性的值。 当您需要设置复杂属性的值时，这可能是更可取。 例如：  
+如上所述，使用 CurrentValues 或 OriginalValues 的一种替代方法是使用属性方法来设置每个属性的值。 当你需要设置复杂属性的值时，这可能更好。 例如：  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -266,11 +266,11 @@ using (var context = new BloggingContext())
 }
 ```  
 
-在上面的复杂属性的示例使用访问包含点的名称。 有关访问复杂属性的其他方法请参阅后面本主题专门针对复杂属性的两个部分。  
+在上面的示例中，使用点分名称访问复杂属性。 有关访问复杂属性的其他方法，请参阅本主题后面有关复杂属性的两个部分。  
 
-## <a name="creating-a-cloned-object-containing-current-original-or-database-values"></a>创建一个克隆的对象包含当前、 原始路径或数据库值  
+## <a name="creating-a-cloned-object-containing-current-original-or-database-values"></a>创建包含当前、原始或数据库值的克隆对象  
 
-从当前值，引入了，返回的 DbPropertyValues 对象或 GetDatabaseValues 可用于创建实体的克隆。 此克隆将包含从 DbPropertyValues 对象用来创建它的属性值。 例如：  
+从 CurrentValues、OriginalValues 或 GetDatabaseValues 返回的 DbPropertyValues 对象可用于创建实体的克隆。 此克隆将包含 DbPropertyValues 对象中用于创建它的属性值。 例如：  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -281,13 +281,13 @@ using (var context = new BloggingContext())
 }
 ```  
 
-请注意，返回的对象不是实体，并且未被跟踪上下文。 返回的对象还没有设置为其他对象的任何关系。  
+请注意，返回的对象不是实体，也不是由上下文跟踪。 返回的对象也不会将任何关系设置为其他对象。  
 
-克隆的对象可用于解决与并发更新到数据库，尤其是涉及数据绑定到特定类型的对象的用户界面正在使用的位置相关的问题。  
+克隆的对象可用于解决与数据库并发更新相关的问题，尤其是在使用涉及到特定类型的对象的数据绑定的 UI 时。  
 
-## <a name="getting-and-setting-the-current-or-original-values-of-complex-properties"></a>获取和设置的复杂属性的当前或原始值  
+## <a name="getting-and-setting-the-current-or-original-values-of-complex-properties"></a>获取和设置复杂属性的当前值或原始值  
 
-读取和使用属性方法，就像它可以是基元属性集，可以是整个复杂对象的值。 此外，可以向下钻取到复杂的对象，该对象或甚至嵌套的对象的读取或设置属性。 下面是一些可能的恶意活动：  
+可以使用属性方法读取和设置整个复杂对象的值，就像它可用于基元属性一样。 此外，还可以向下钻取到复杂对象，并读取或设置该对象的属性，甚至是嵌套的对象。 下面是一些可能的恶意活动：  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -334,13 +334,13 @@ using (var context = new BloggingContext())
 }
 ```  
 
-使用而不是 CurrentValue 属性的 OriginalValue 属性获取或设置原始值。  
+使用 OriginalValue 属性而非 CurrentValue 属性来获取或设置原始值。  
 
-请注意该属性或 ComplexProperty 方法可用于访问复杂属性。 但是，如果你想要向下钻取到具有其他属性的复杂对象或调用的 ComplexProperty，则必须使用 ComplexProperty 方法。  
+请注意，可以使用属性或 ComplexProperty 方法来访问复杂属性。 但是，如果想要使用其他属性或 ComplexProperty 调用深化到复杂对象，则必须使用 ComplexProperty 方法。  
 
 ## <a name="using-dbpropertyvalues-to-access-complex-properties"></a>使用 DbPropertyValues 访问复杂属性  
 
-当您使用当前值，引入了或 GetDatabaseValues 来获取所有当前原始，或数据库实体值，为嵌套 DbPropertyValues 对象返回的任何复杂属性的值。 这些嵌套对象可以然后使用来获取复杂对象的值。 例如，以下方法将打印出的所有属性，包括任何复杂属性和嵌套的复杂属性的值的值。  
+使用 CurrentValues、OriginalValues 或 GetDatabaseValues 获取实体的所有当前值、原始值或数据库值时，任何复杂属性的值将作为嵌套 DbPropertyValues 对象返回。 然后，可以使用这些嵌套对象获取复杂对象的值。 例如，以下方法将打印出所有属性的值，包括任何复杂属性的值和嵌套的复杂属性。  
 
 ``` csharp
 public static void WritePropertyValues(string parentPropertyName, DbPropertyValues propertyValues)
@@ -362,7 +362,7 @@ public static void WritePropertyValues(string parentPropertyName, DbPropertyValu
 }
 ```  
 
-打印出所有当前属性值的方法将调用如下：  
+若要打印出所有当前属性值，将调用方法，如下所示：  
 
 ``` csharp
 using (var context = new BloggingContext())

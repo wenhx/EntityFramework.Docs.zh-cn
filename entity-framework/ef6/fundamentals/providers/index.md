@@ -3,12 +3,12 @@ title: 实体框架提供程序 - EF6
 author: divega
 ms.date: 06/27/2018
 ms.assetid: 7BFB7763-CD6C-4520-93A2-7B265F5FA586
-ms.openlocfilehash: f6e34d1273bd1004ce9d1610ce3613068088eb5e
-ms.sourcegitcommit: 159c2e9afed7745e7512730ffffaf154bcf2ff4a
+ms.openlocfilehash: bf07296503e4bb5d1e13f5f6f29e7118cbbde61d
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 02/03/2019
-ms.locfileid: "55668734"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72181689"
 ---
 # <a name="entity-framework-6-providers"></a>实体框架 6 提供程序
 > [!NOTE]
@@ -21,15 +21,15 @@ ms.locfileid: "55668734"
 已知的针对 EF6 重建的提供程序包括：
 
 *   **Microsoft SQL Server 提供程序**
-    *   构建于[实体框架开源代码库](http://github.com/aspnet/EntityFramework6)
-    *   作为 [EntityFramework NuGet 包](http://nuget.org/packages/EntityFramework)的一部分提供
+    *   构建于[实体框架开源代码库](https://github.com/aspnet/EntityFramework6)
+    *   作为 [EntityFramework NuGet 包](https://nuget.org/packages/EntityFramework)的一部分提供
 *   **Microsoft SQL Server Compact Edition 提供程序**
-    *   构建于[实体框架开源代码库](http://github.com/aspnet/EntityFramework6)
-    *   在 [EntityFramework.SqlServerCompact NuGet 包](http://nuget.org/packages/EntityFramework.SqlServerCompact)中提供
-*   [**Devart dotConnect 数据提供程序**](http://www.devart.com/dotconnect/)
-    *   来自 [Devart](http://www.devart.com/) 的提供各种数据库的第三方提供程序，包括 Oracle、MySQL、PostgreSQL、SQLite、Salesforce、DB2 和 SQL Server
-*   [**CData Software 提供程序**](http://www.cdata.com/ado/)
-    *   来自 [CData Software](http://www.cdata.com/ado/) 的提供各种数据存储的第三方提供程序，包括 Salesforce、Azure 表存储、MySql 等等
+    *   构建于[实体框架开源代码库](https://github.com/aspnet/EntityFramework6)
+    *   在 [EntityFramework.SqlServerCompact NuGet 包](https://nuget.org/packages/EntityFramework.SqlServerCompact)中提供
+*   [**Devart dotConnect 数据提供程序**](https://www.devart.com/dotconnect/)
+    *   来自 [Devart](https://www.devart.com/) 的提供各种数据库的第三方提供程序，包括 Oracle、MySQL、PostgreSQL、SQLite、Salesforce、DB2 和 SQL Server
+*   [**CData Software 提供程序**](https://www.cdata.com/ado/)
+    *   来自 [CData Software](https://www.cdata.com/ado/) 的提供各种数据存储的第三方提供程序，包括 Salesforce、Azure 表存储、MySql 等等
 *   **Firebird 提供程序**
     *   作为 [NuGet 包](https://www.nuget.org/packages/EntityFramework.Firebird/)提供
 *   **Visual Fox Pro 提供程序**
@@ -68,7 +68,7 @@ ms.locfileid: "55668734"
 
 ### <a name="code-based-registration"></a>基于代码的注册
 
-从实体框架 6 开始，可在代码中指定整个应用程序的 EF 配置。 有关完整的详细信息，请参阅[实体框架基于代码的配置](https://msdn.microsoft.com/data/jj680699)。 使用基于代码的配置注册 EF 提供程序的常规方法是，创建一个派生自 System.Data.Entity.DbConfiguration 的新类，并将其放置在与 DbContext 类相同的程序集中。 然后，DbConfiguration 类应在其构造函数中注册该提供程序。 例如，要注册 SQL Compact 提供程序，DbConfiguration 类如下所示：
+从实体框架 6 开始，可在代码中指定整个应用程序的 EF 配置。 有关完整的详细信息，请参阅[实体框架基于代码的配置](https://msdn.microsoft.com/data/jj680699)  。 使用基于代码的配置注册 EF 提供程序的常规方法是，创建一个派生自 System.Data.Entity.DbConfiguration 的新类，并将其放置在与 DbContext 类相同的程序集中。 然后，DbConfiguration 类应在其构造函数中注册该提供程序。 例如，要注册 SQL Compact 提供程序，DbConfiguration 类如下所示：
 
 ``` csharp
     public class MyConfiguration : DbConfiguration

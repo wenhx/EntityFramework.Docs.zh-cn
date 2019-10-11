@@ -5,12 +5,12 @@ ms.author: bricelam
 ms.date: 11/01/2018
 ms.assetid: 2BDE29FC-4161-41A0-841E-69F51CCD9341
 uid: core/modeling/spatial
-ms.openlocfilehash: 026df735473e31f1c1463c1fbc6f46c4fd6dfd4f
-ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
+ms.openlocfilehash: cced53edadb890e4e86753ec2628218ffc4d1d5b
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/12/2019
-ms.locfileid: "70921724"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72181382"
 ---
 # <a name="spatial-data"></a>空间数据
 
@@ -32,7 +32,7 @@ Npgsql.EntityFrameworkCore.PostgreSQL   | [Npgsql. Microsoft.entityframeworkcore
 
 ## <a name="reverse-engineering"></a>反向工程
 
-空间 NuGet 包还启用具有空间属性的[反向工程](../managing-schemas/scaffolding.md)模型，但需要在运行`Scaffold-DbContext`或`dotnet ef dbcontext scaffold`***之前***安装包。 否则，你将收到有关找不到列的类型映射的警告，将跳过这些列。
+空间 NuGet 包还启用具有空间属性的[反向工程](../managing-schemas/scaffolding.md)模型，但需要在运行 `Scaffold-DbContext` 或 `dotnet ef dbcontext scaffold`***之前***安装包。 否则，你将收到有关找不到列的类型映射的警告，将跳过这些列。
 
 ## <a name="nettopologysuite-nts"></a>NetTopologySuite （NTS）
 
@@ -46,9 +46,9 @@ optionsBuilder.UseSqlServer(
     x => x.UseNetTopologySuite());
 ```
 
-有几种空间数据类型。 使用哪种类型取决于您想要允许的形状的类型。 下面是可用于模型中的属性的 NTS 类型的层次结构。 它们位于`NetTopologySuite.Geometries`命名空间内。
+有几种空间数据类型。 使用哪种类型取决于您想要允许的形状的类型。 下面是可用于模型中的属性的 NTS 类型的层次结构。 它们位于 `NetTopologySuite.Geometries` 命名空间内。
 
-* geometry
+* Geometry
   * 点
   * LineString
   * 多边形
@@ -62,7 +62,7 @@ optionsBuilder.UseSqlServer(
 
 使用基本几何图形类型允许属性指定任意类型的形状。
 
-以下实体类可用于映射到[广角导入示例数据库](http://go.microsoft.com/fwlink/?LinkID=800630)中的表。
+以下实体类可用于映射到[广角导入示例数据库](https://go.microsoft.com/fwlink/?LinkID=800630)中的表。
 
 ``` csharp
 [Table("Cities", Schema = "Application"))]
@@ -101,7 +101,7 @@ var currentLocation = geometryFactory.CreatePoint(-122.121512, 47.6739882);
 
 ### <a name="longitude-and-latitude"></a>经度和纬度
 
-NTS 中的坐标采用 X 和 Y 值。 若要表示经度和纬度，请将 X 用于经度，将 Y 用于纬度。 请注意，这是从通常`latitude, longitude`会看到这些值的格式反向进行的。
+NTS 中的坐标采用 X 和 Y 值。 若要表示经度和纬度，请将 X 用于经度，将 Y 用于纬度。 请注意，这是从 `latitude, longitude` 格式**反向**的，你通常会看到这些值。
 
 ### <a name="srid-ignored-during-client-operations"></a>在客户端操作过程中忽略 SRID
 
@@ -213,15 +213,15 @@ var currentCountry = db.Countries
 
 ### <a name="geography-or-geometry"></a>地理或几何图形
 
-默认情况下，空间属性映射到`geography` SQL Server 中的列。 若要`geometry`使用，请在模型中[配置列类型](xref:core/modeling/relational/data-types)。
+默认情况下，空间属性映射到 SQL Server 中的 @no__t 列。 若要使用 `geometry`，请在模型中[配置列类型](xref:core/modeling/relational/data-types)。
 
 ### <a name="geography-polygon-rings"></a>地理多边形环
 
-当使用`geography`列类型时，SQL Server 会对外部环（或外壳）和内部环（或孔）施加附加要求。 外部环必须逆时针旋转，并顺时针旋转内部环。 NTS 在将值发送到数据库之前对其进行验证。
+当使用 @no__t 0 列类型时，SQL Server 会对外部环（或外壳）和内部环（或孔）施加附加要求。 外部环必须逆时针旋转，并顺时针旋转内部环。 NTS 在将值发送到数据库之前对其进行验证。
 
 ### <a name="fullglobe"></a>FullGlobe
 
-在使用`geography`列类型时，SQL Server 具有非标准几何类型来表示全地球。 它还提供了一种方法，用于根据全地球（无外部环）来表示多边形。 NTS 不支持这两种方法。
+使用 @no__t 列类型时，SQL Server 具有非标准几何类型来表示全地球。 它还提供了一种方法，用于根据全地球（无外部环）来表示多边形。 NTS 不支持这两种方法。
 
 > [!WARNING]
 > NTS 不支持基于 FullGlobe 和多边形。
@@ -244,7 +244,7 @@ brew install libspatialite
 
 ### <a name="configuring-srid"></a>配置 SRID
 
-在 SpatiaLite 中，列需要为每个列指定一个 SRID。 默认的 SRID 为`0`。 使用 ForSqliteHasSrid 方法指定其他 SRID。
+在 SpatiaLite 中，列需要为每个列指定一个 SRID。 默认的 SRID 为 `0`。 使用 ForSqliteHasSrid 方法指定其他 SRID。
 
 ``` csharp
 modelBuilder.Entity<City>().Property(c => c.Location)
@@ -331,5 +331,5 @@ GetInteriorRingN （int） | ✔ | ✔ | ✔ | ✔
 
 * [SQL Server 中的空间数据](https://docs.microsoft.com/sql/relational-databases/spatial/spatial-data-sql-server)
 * [SpatiaLite 主页](https://www.gaia-gis.it/fossil/libspatialite)
-* [Npgsql 空间文档](http://www.npgsql.org/efcore/mapping/nts.html)
-* [PostGIS 文档](http://postgis.net/documentation/)
+* [Npgsql 空间文档](https://www.npgsql.org/efcore/mapping/nts.html)
+* [PostGIS 文档](https://postgis.net/documentation/)

@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: e17e060c-929f-4180-8883-40c438fbcc01
 uid: core/querying/tracking
-ms.openlocfilehash: d93be5c2b727d8fbaddd103f8f367c699ae80a7c
-ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
+ms.openlocfilehash: 588dee012039ce5ecc83f0ecf263a4ea6ca38c29
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/12/2019
-ms.locfileid: "70921652"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72181991"
 ---
 # <a name="tracking-vs-no-tracking-queries"></a>跟踪与非跟踪查询
 
@@ -63,7 +63,7 @@ using (var context = new BloggingContext())
 ```
 
 > [!NOTE]  
-> 非跟踪查询仍在查询过程中执行标识解析。 如果结果集多次包含相同的实体，则每次会在结果集中返回实体类的相同实例。 但是，弱引用用于跟踪已返回的实体。 如果具有相同标识的上一个结果超出范围，并运行垃圾回收，则可能会获得新的实体实例。 有关详细信息，请参阅[查询的工作原理](overview.md)。
+> 非跟踪查询仍在查询过程中执行标识解析。 如果结果集多次包含相同的实体，则每次会在结果集中返回实体类的相同实例。 但是，弱引用用于跟踪已返回的实体。 如果具有相同标识的上一个结果超出范围，并运行垃圾回收，则可能会获得新的实体实例。 有关详细信息，请参阅[查询的工作原理](xref:core/querying/how-query-works)。
 
 ## <a name="tracking-and-projections"></a>跟踪和投影
 

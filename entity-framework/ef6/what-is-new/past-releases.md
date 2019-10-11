@@ -3,12 +3,12 @@ title: 实体框架的过去版本-EF6
 author: divega
 ms.date: 09/12/2019
 ms.assetid: 1060bb99-765f-4f32-aaeb-d6635d3dbd3e
-ms.openlocfilehash: 3ee433ac0932f89841b5cc42fb864eefb9419ef2
-ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
+ms.openlocfilehash: 478dec6b2401efd554e84a231fe78e71dcbf5771
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/20/2019
-ms.locfileid: "71149285"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72182110"
 ---
 # <a name="past-releases-of-entity-framework"></a>实体框架的过去版本
 
@@ -88,7 +88,7 @@ EF 6.1.0 运行时发布到了2014年3月的 NuGet。
 
 - **工具合并**为创建新的 EF 模型提供了一种一致的方法。 此功能[扩展了 ADO.NET 实体数据模型向导以支持创建 Code First 模型](~/ef6/modeling/code-first/workflows/existing-database.md)，包括从现有数据库进行反向工程。 这些功能之前已在 EF Power Tools 中提供 Beta 版质量。
 - **[处理事务提交失败](~/ef6/fundamentals/connection-resiliency/commit-failures.md)** 会提供 CommitFailureHandler，它利用新引入的截取事务操作的能力。 CommitFailureHandler 允许在提交事务的同时从连接故障中自动恢复。
-- **[IndexAttribute](~/ef6/modeling/code-first/data-annotations.md)** 允许通过将属性放置`[Index]`在 Code First 模型中的属性上来指定索引。 然后 Code First 将在数据库中创建相应的索引。
+- **[IndexAttribute](~/ef6/modeling/code-first/data-annotations.md)** 允许通过在 Code First 模型中的属性（或属性）上放置 `[Index]` 属性来指定索引。 然后 Code First 将在数据库中创建相应的索引。
 - **公共映射 API**提供对信息 EF 的访问，以了解如何将属性和类型映射到数据库中的列和表。 在以前的版本中，此 API 是内部的。
 - **[通过 App/web.config 文件配置侦听器的能力](~/ef6/fundamentals/configuring/config-file.md)** 允许添加侦听器，而无需重新编译应用程序。
 - **DatabaseLogger**是一个新的侦听器，可让你轻松地将所有数据库操作记录到文件中。 与上一项功能结合使用，可以轻松地针对已[部署的应用程序的数据库操作进行日志记录](~/ef6/fundamentals/configuring/config-file.md)，而无需重新编译。
@@ -125,7 +125,7 @@ EF 6.0.0 运行时发布到了2013年10月的 NuGet。
 - **.Net 4.0 上的枚举、空间和更好的性能**-通过将已在 .NET Framework 中的核心组件移到 EF NuGet 包中，我们现在可以提供枚举支持、空间数据类型和 .net 4.0 上 EF5 的性能改进。
 - 可**枚举的性能得到改进。包含在 LINQ 查询中**。
 - **缩短了预热时间（视图生成）** ，尤其是对于大型模型。
-- 可**插入&amp;复数形式 Singularization 服务**。
+- 可**插入复数形式 &amp; Singularization 服务**。
 - 现在支持实体类上**Equals 或 GetHashCode 的自定义实现**。
 - **DbSet. AddRange/RemoveRange**提供一种优化的方式来添加或删除集中的多个实体。
 - **DbChangeTracker HasChanges**提供一种简单有效的方法来查看是否有任何挂起的更改保存到数据库中。
@@ -138,9 +138,9 @@ EF 6.0.0 运行时发布到了2013年10月的 NuGet。
 - **[幂等迁移脚本](~/ef6/modeling/code-first/migrations/index.md)** 允许生成一个 SQL 脚本，该脚本可以将任何版本的数据库升级到最新版本。
 - 可 **[配置的迁移历史记录表](~/ef6/modeling/code-first/migrations/history-customization.md)** 允许自定义迁移历史记录表的定义。 这对于需要适当的数据类型等的数据库提供程序特别有用，因为需要为迁移历史记录表指定这些数据类型才能正常工作。
 - 当使用迁移时，或 Code First 自动为您创建数据库时，**每个数据库的多个上下文**将删除每个数据库的一个 Code First 模型的以前限制。
-- **[DbModelBuilder](~/ef6/modeling/code-first/fluent/types-and-properties.md)** 是一个新的 Code First API，它允许在一个位置配置 Code First 模型的默认数据库架构。 以前 Code First 的默认架构已硬编码为&quot;dbo&quot; ，而唯一的方法是通过 ToTable API 配置表所属的架构。
+- **[DbModelBuilder](~/ef6/modeling/code-first/fluent/types-and-properties.md)** 是一个新的 Code First API，它允许在一个位置配置 Code First 模型的默认数据库架构。 以前 Code First 的默认架构已硬编码为 &quot;dbo @ no__t，这是通过 ToTable API 配置表所属架构的唯一方法。
 - 在将配置类与 Code First 熟知 API 一起使用时， **AddFromAssembly 方法**可让你轻松地添加在程序集中定义的所有配置类。
-- **[自定义迁移操作](http://romiller.com/2013/02/27/ef6-writing-your-own-code-first-migration-operations/)** 使您能够添加要在基于代码的迁移中使用的其他操作。
+- **[自定义迁移操作](https://romiller.com/2013/02/27/ef6-writing-your-own-code-first-migration-operations/)** 使您能够添加要在基于代码的迁移中使用的其他操作。
 - 对于使用 Code First 创建的数据库，**默认事务隔离级别将更改为 READ_COMMITTED_SNAPSHOT** ，从而实现更高的可伸缩性和更少的死锁。
 - **实体和复杂类型现在可以是 nestedinside 类**。 |
 

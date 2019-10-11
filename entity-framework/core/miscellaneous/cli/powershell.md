@@ -1,37 +1,37 @@
 ---
-title: EF Core 工具参考 （程序包管理器控制台）-EF Core
+title: EF Core 工具参考（程序包管理器控制台）-EF Core
 author: bricelam
 ms.author: bricelam
 ms.date: 09/18/2018
 uid: core/miscellaneous/cli/powershell
-ms.openlocfilehash: cb05e3fb66adf96f8a6778711a76520d0be24c71
-ms.sourcegitcommit: 645785187ae23ddf7d7b0642c7a4da5ffb0c7f30
+ms.openlocfilehash: 45370a82131da9db8b724fe395d41b1e3641fcf8
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/25/2019
-ms.locfileid: "58419765"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72181330"
 ---
-# <a name="entity-framework-core-tools-reference---package-manager-console-in-visual-studio"></a>Entity Framework Core 工具引用-Visual Studio 中的包管理器控制台
+# <a name="entity-framework-core-tools-reference---package-manager-console-in-visual-studio"></a>Entity Framework Core 工具参考-Visual Studio 中的包管理器控制台
 
-Entity Framework Core 的包管理器控制台 (PMC) 工具执行设计时开发任务。 例如，创建方法[迁移](/aspnet/core/data/ef-mvc/migrations?view=aspnetcore-2.0#introduction-to-migrations)、 应用迁移，并为基于现有数据库的模型生成代码。 在 Visual Studio 中使用的内部运行命令[程序包管理器控制台](/nuget/tools/package-manager-console)。 这些工具同时适用于 .NET Framework 和 .NET Core 项目。
+适用于 Entity Framework Core 的包管理器控制台（PMC）工具执行设计时开发任务。 例如，他们基于现有数据库创建[迁移](/aspnet/core/data/ef-mvc/migrations?view=aspnetcore-2.0)、应用迁移和生成模型的代码。 命令使用[包管理器控制台](/nuget/tools/package-manager-console)在 Visual Studio 中运行。 这些工具同时适用于 .NET Framework 和 .NET Core 项目。
 
-如果不使用 Visual Studio，我们建议[EF Core 命令行工具](dotnet.md)相反。 CLI 工具是跨平台，且在命令提示符下运行。
+如果未使用 Visual Studio，则建议改为使用[EF Core 命令行工具](dotnet.md)。 CLI 工具是跨平台的，在命令提示符下运行。
 
 ## <a name="installing-the-tools"></a>安装工具
 
-ASP.NET Core 2.1 + 和早期版本或其他项目类型之间存在差异的安装和更新工具的过程。
+用于安装和更新这些工具的过程在 ASP.NET Core 2.1 及更早版本或其他项目类型之间有所不同。
 
-### <a name="aspnet-core-version-21-and-later"></a>ASP.NET Core 2.1 和更高版本
+### <a name="aspnet-core-version-21-and-later"></a>ASP.NET Core 版本2.1 及更高版本
 
-这些工具会自动包含在 ASP.NET Core 2.1 + 项目，因为`Microsoft.EntityFrameworkCore.Tools`包包含在[Microsoft.AspNetCore.App 元包](/aspnet/core/fundamentals/metapackage-app)。
+工具将自动包含在 ASP.NET Core 2.1 + 项目中，因为 @no__t AspNetCore 包包含在[元包](/aspnet/core/fundamentals/metapackage-app)中。
 
-因此，无需执行任何操作来安装工具，但可以为：
-* 在新项目中使用的工具之前还原包。
-* 安装包更新到较新版本的工具。
+因此，您无需执行任何操作来安装这些工具，但必须执行以下操作：
+* 在新项目中使用这些工具之前还原包。
+* 安装包以将工具更新到较新版本。
 
-若要确保获得最新版本的工具，我们建议您以下步骤：
+为了确保获得最新版本的工具，我们建议您也执行以下步骤：
 
-* 编辑你 *.csproj*文件，并添加一行以指定的最新版本[Microsoft.EntityFrameworkCore.Tools](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools/)包。 例如， *.csproj*文件可能包含`ItemGroup`如下所示：
+* 编辑 *.csproj*文件，并添加一行以指定最新版本的[microsoft.entityframeworkcore](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools/)包。 例如， *.csproj*文件可能包含如下所示的 `ItemGroup`：
 
   ```xml
   <ItemGroup>
@@ -41,24 +41,24 @@ ASP.NET Core 2.1 + 和早期版本或其他项目类型之间存在差异的安�
   </ItemGroup>
   ```
 
-更新的工具时你收到一条消息，如下例所示：
+在收到类似于以下示例的消息时更新工具：
 
-> EF Core 工具版本"2.1.1-rtm-30846"为早于的运行时"2.1.3-rtm-32065"。 更新适用于最新功能和 bug 修补程序的工具。
+> EF Core 工具版本 "2.1.1-30846" 早于运行时 "2.1.3-32065"。 更新工具以获取最新功能和 bug 修复。
 
-若要更新的工具：
-* 安装最新的.NET Core SDK。
-* Visual Studio 更新到最新版本。
-* 编辑 *.csproj*文件以使其包括到最新工具包，包引用，如前面所示。
+更新工具：
+* 安装最新 .NET Core SDK。
+* 将 Visual Studio 更新到最新版本。
+* 编辑 *.csproj*文件，使其包含对最新工具包的包引用，如前文所述。
 
 ### <a name="other-versions-and-project-types"></a>其他版本和项目类型
 
-通过在运行以下命令安装程序包管理器控制台工具**程序包管理器控制台**:
+在**Package Manager console**中运行以下命令，安装包管理器控制台工具：
 
 ``` powershell
 Install-Package Microsoft.EntityFrameworkCore.Tools
 ```
 
-通过在运行以下命令更新的工具**程序包管理器控制台**。
+在**Package Manager Console**中运行以下命令，更新这些工具。
 
 ``` powershell
 Update-Package Microsoft.EntityFrameworkCore.Tools
@@ -66,13 +66,13 @@ Update-Package Microsoft.EntityFrameworkCore.Tools
 
 ### <a name="verify-the-installation"></a>验证安装
 
-验证通过运行以下命令安装这些工具：
+通过运行以下命令验证是否已安装这些工具：
 
 ``` powershell
 Get-Help about_EntityFrameworkCore
 ```
 
-输出如下所示 （它不会让您正在使用的工具版本）：
+输出如下所示（不告诉您正在使用的工具的版本）：
 
 ```console
 
@@ -92,50 +92,50 @@ SHORT DESCRIPTION
 <A list of available commands follows, omitted here.>
 ```
 
-## <a name="using-the-tools"></a>使用的工具
+## <a name="using-the-tools"></a>使用工具
 
-之前使用的工具：
-* 了解目标和启动项目之间的差异。
-* 了解如何使用.NET Standard 类库的工具。
-* 对于 ASP.NET Core 项目设置的环境。
+使用这些工具之前：
+* 了解目标项目和启动项目之间的差异。
+* 了解如何将工具与 .NET Standard 类库一起使用。
+* 对于 ASP.NET Core 项目，请设置环境。
 
 ### <a name="target-and-startup-project"></a>目标和启动项目
 
-命令是指*项目*和一个*启动项目*。
+命令引用*项目*和*启动项目*。
 
-* *项目*也称为*目标项目*因为它是命令添加或删除文件的位置。 默认情况下**默认项目**中所选**程序包管理器控制台**是目标项目。 可以通过使用作为目标项目中指定一个不同的项目<nobr> `--project` </nobr>选项。
+* 该*项目*也称为*目标项目*，因为它是命令在其中添加或删除文件的位置。 默认情况下，在 "**程序包管理器控制台**" 中选择的**默认项目**是目标项目。 您可以通过使用<nobr>`--project`</nobr>选项指定其他项目作为目标项目。
 
-* *启动项目*是指的工具生成和运行。 这些工具必须在设计时，获取有关该项目，如数据库连接字符串和模型的配置信息执行应用程序代码。 默认情况下**启动项目**中**解决方案资源管理器**是启动项目。 您可以通过使用不同的项目指定为启动项目<nobr> `--startup-project` </nobr>选项。
+* *启动项目*是工具生成和运行的项目。 这些工具必须在设计时执行应用程序代码，以获取有关项目的信息，例如数据库连接字符串和模型的配置。 默认情况下，**解决方案资源管理器**中的**启动项目**是启动项目。 您可以通过使用<nobr>`--startup-project`</nobr>选项，将其他项目指定为启动项目。
 
-启动项目和目标项目通常是在同一个项目。 它们的单独的项目的典型情况是当：
+启动项目和目标项目通常是同一个项目。 它们是不同的项目的典型方案是：
 
-* EF Core 上下文和实体类是在.NET Core 类库中。
-* .NET Core 控制台应用程序或 web 应用程序引用的类库。
+* EF Core 的上下文和实体类位于 .NET Core 类库中。
+* .NET Core 控制台应用程序或 web 应用程序引用类库。
 
-此外，还可以向[迁移代码置于独立于 EF Core 上下文类库](xref:core/managing-schemas/migrations/projects)。
+还可以[将迁移代码放在与 EF Core 上下文分离](xref:core/managing-schemas/migrations/projects)的类库中。
 
 ### <a name="other-target-frameworks"></a>其他目标框架
 
-包管理器控制台工具适用于.NET Core 或.NET Framework 项目。 EF Core 模型具有.NET Standard 类库中的应用可能不具有.NET Core 或.NET Framework 项目。 例如，这是 Xamarin 和通用 Windows 平台应用，则返回 true。 在这种情况下，可以创建其唯一用途是作为启动项目的工具的.NET Core 或.NET Framework 控制台应用项目。 项目可以是虚拟项目不包含实际代码&mdash;只需为工具提供一个目标。
+包管理器控制台工具适用于 .NET Core 或 .NET Framework 项目。 .NET Standard 类库中具有 EF Core 模型的应用可能没有 .NET Core 或 .NET Framework 项目。 例如，这适用于 Xamarin 和通用 Windows 平台应用。 在这种情况下，你可以创建一个 .NET Core 或 .NET Framework 的控制台应用程序项目，该项目的唯一用途是充当工具的启动项目。 项目可以是不包含实际代码的虚拟项目 &mdash; 只需要为工具提供目标。
 
-为什么是虚拟的项目所需？ 如前文所述，这些工具必须在设计时执行应用程序代码。 若要做到这一点，他们需要使用.NET Core 或.NET Framework 运行时。 EF Core 模型在面向.NET Core 或.NET Framework 的项目时，EF Core 工具借用运行时从该项目。 如果在 EF Core 模型处于.NET Standard 类库，他们无法做到这一点。 .NET Standard 并不实际的.NET 实现;它是一种规范的一组.NET 实现必须支持的 Api。 因此.NET Standard 是不够的 EF Core 工具来执行应用程序代码。 创建要用作启动项目的虚拟项目提供了工具可以在其中加载.NET Standard 类库的具体目标平台。
+为什么需要虚拟项目？ 如前文所述，这些工具必须在设计时执行应用程序代码。 为此，需要使用 .NET Core 或 .NET Framework 运行时。 当 EF Core 模型位于面向 .NET Core 或 .NET Framework 的项目中时，EF Core 工具会借用项目中的运行时。 如果 EF Core 模型在 .NET Standard 类库中，则无法执行此操作。 .NET Standard 不是实际的 .NET 实现;它是 .NET 实现所必须支持的一组 Api 的规范。 因此 .NET Standard 不足以执行应用程序代码 EF Core 工具。 你创建的用于启动项目的虚拟项目提供了一个具体的目标平台，工具可在其中加载 .NET Standard 类库。
 
 ### <a name="aspnet-core-environment"></a>ASP.NET Core 环境
 
-若要指定用于 ASP.NET Core 项目的环境，请设置**env:ASPNETCORE_ENVIRONMENT**之前运行命令。
+若要为 ASP.NET Core 项目指定环境，请在运行命令之前设置**env： ASPNETCORE_ENVIRONMENT** 。
 
 ## <a name="common-parameters"></a>通用参数
 
-下表显示了所共有的所有 EF Core 命令参数：
+下表显示了所有 EF Core 命令共有的参数：
 
 | 参数                 | 描述                                                                                                                                                                                                          |
 |:--------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| -Context \<String>        | 要使用的 `DbContext` 类。 唯一或完全限定的命名空间的类名称。  如果省略此参数，EF Core 将查找上下文类。 如果有多个上下文类，此参数是必需的。 |
-| -Project \<String>        | 目标项目中。 如果省略此参数，则**默认项目**有关**程序包管理器控制台**用作目标项目。                                                                             |
-| -StartupProject \<String> | 启动项目。 如果省略此参数，则**启动项目**中**解决方案属性**用作目标项目。                                                                                 |
+| -Context \<String>        | 要使用的 `DbContext` 类。 仅命名空间或完全限定类名。  如果省略此参数，EF Core 将查找上下文类。 如果有多个上下文类，则此参数是必需的。 |
+| -Project \<String >        | 目标项目。 如果省略此参数，则**包管理器控制台**的**默认项目**将用作目标项目。                                                                             |
+| -StartupProject \<String> | 启动项目。 如果省略此参数，则使用**解决方案属性**中的**启动项目**作为目标项目。                                                                                 |
 | -Verbose                  | 显示详细输出。                                                                                                                                                                                                 |
 
-若要显示有关命令的帮助信息，请使用 PowerShell 的`Get-Help`命令。
+若要显示有关命令的帮助信息，请使用 PowerShell 的 `Get-Help` 命令。
 
 > [!TIP]
 > Context、Project 和 StartupProject 参数支持tab补全。
@@ -148,10 +148,10 @@ SHORT DESCRIPTION
 
 | 参数                         | 描述                                                                                                             |
 |:----------------------------------|:------------------------------------------------------------------------------------------------------------------------|
-| <nobr>-Name \<String><nobr>       | 迁移的名称。 这是位置参数，是必需的。                                              |
-| <nobr>-OutputDir \<String></nobr> | 目录 （及其子命名空间） 来使用。 路径是相对于目标项目目录。 默认值为"迁移"。 |
+| @no__t 旁 1/-0-Name \<String > <nobr>       | 迁移的名称。 这是一个位置参数，并且是必需的。                                              |
+| <nobr>-OutputDir \<String ></nobr> | 要使用的目录（和子命名空间）。 路径相对于目标项目目录。 默认值为 "迁移"。 |
 
-## <a name="drop-database"></a>Drop-Database
+## <a name="drop-database"></a>Drop 数据库
 
 删除数据库。
 
@@ -159,48 +159,48 @@ SHORT DESCRIPTION
 
 | 参数 | 描述                                              |
 |:----------|:---------------------------------------------------------|
-| -WhatIf   | 显示哪个数据库会被丢弃，但没有删除它。 |
+| -WhatIf   | 显示要删除的数据库，但不删除它。 |
 
 ## <a name="get-dbcontext"></a>Get-DbContext
 
-获取有关的信息`DbContext`类型。
+获取 @no__t 类型的相关信息。
 
 ## <a name="remove-migration"></a>Remove-Migration
 
-删除 （请回滚迁移已完成的代码更改） 的最后一个迁移。
+删除上一次迁移（回滚针对迁移进行的代码更改）。
 
 参数：
 
 | 参数 | 描述                                                                     |
 |:----------|:--------------------------------------------------------------------------------|
-| -Force    | 还原迁移 （请回滚已应用到数据库的更改）。 |
+| -Force    | 恢复迁移（回滚应用于数据库的更改）。 |
 
 ## <a name="scaffold-dbcontext"></a>Scaffold-DbContext
 
-为生成代码`DbContext`和数据库的实体类型。 为了使`Scaffold-DbContext`若要生成的实体类型，数据库表必须具有主键。
+为数据库的 @no__t 和实体类型生成代码。 为了 `Scaffold-DbContext` 生成实体类型，数据库表必须具有主键。
 
 参数：
 
 | 参数                          | 描述                                                                                                                                                                                                                                                             |
 |:-----------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <nobr>-Connection \<String></nobr> | 数据库的连接字符串。 对于 ASP.NET Core 2.x 项目，值可以是*名称 =\<的连接字符串名称 >* 。 在这种情况下名称来自于为项目设置的配置源。 这是位置参数，是必需的。 |
-| <nobr>-Provider \<String></nobr>   | 要使用的提供程序。 通常这是 NuGet 包的名称为例： `Microsoft.EntityFrameworkCore.SqlServer`。 这是位置参数，是必需的。                                                                                           |
-| -OutputDir \<String>               | 要将文件放入的目录。 路径是相对于项目目录。                                                                                                                                                                                             |
-| -ContextDir \<String>              | 要放置的目录`DbContext`文件中。 路径是相对于项目目录。                                                                                                                                                                              |
+| <nobr>-Connection \<String></nobr> | 数据库的连接字符串。 对于 ASP.NET Core 2.x 项目，值可以是 *> 连接字符串的名称 = @no__t 1name*。 在这种情况下，该名称来自为项目设置的配置源。 这是一个位置参数，并且是必需的。 |
+| <nobr>-Provider \<String></nobr>   | 要使用的提供程序。 通常，这是 NuGet 包的名称，例如： `Microsoft.EntityFrameworkCore.SqlServer`。 这是一个位置参数，并且是必需的。                                                                                           |
+| -OutputDir \<String >               | 要在其中放置文件的目录。 路径相对于项目目录。                                                                                                                                                                                             |
+| -ContextDir \<String >              | 要在其中放置 `DbContext` 文件的目录。 路径相对于项目目录。                                                                                                                                                                              |
 | -Context \<String>                 | 名称`DbContext`类生成。                                                                                                                                                                                                                          |
-| -Schemas \<String[]>               | 要生成的实体类型的表架构。 如果省略此参数，则包括所有架构。                                                                                                                                                             |
-| -Tables \<String[]>                | 要生成的实体类型的表。 如果省略此参数，则包括所有表。                                                                                                                                                                         |
-| -DataAnnotations                   | 特性用于将模型配置 （如果可能）。 如果省略此参数，则使用仅 fluent API。                                                                                                                                                      |
-| -UseDatabaseNames                  | 在数据库中显示的完全相同，请使用表和列的名称。 如果省略此参数，则会更改数据库名称，使其更紧密地符合 C# 名称样式约定。                                                                                       |
+| -架构 \<String [] >               | 要为其生成实体类型的表的架构。 如果省略此参数，则包括所有架构。                                                                                                                                                             |
+| -Tables \<String[]>                | 要为其生成实体类型的表。 如果省略此参数，则包括所有表。                                                                                                                                                                         |
+| -DataAnnotations                   | 使用属性配置模型（如果可能）。 如果省略此参数，则只使用 Fluent API。                                                                                                                                                      |
+| -UseDatabaseNames                  | 使用表和列的名称与数据库中显示的名称完全相同。 如果省略此参数，则更改数据库名称以更严格地C#符合名称样式约定。                                                                                       |
 | -Force                             | 覆盖现有文件。                                                                                                                                                                                                                                               |
 
-示例:
+例如：
 
 ```powershell
 Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
 ```
 
-搭建基架以选定的表，并具有指定名称的单独文件夹中创建上下文的示例：
+示例：仅基架选定的表，并在具有指定名称的单独文件夹中创建上下文：
 
 ```powershell
 Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Tables "Blog","Post" -ContextDir Context -Context BlogContext
@@ -208,50 +208,50 @@ Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Conn
 
 ## <a name="script-migration"></a>Script-Migration
 
-生成应用的所有更改从一个所选迁移到另一个所选的迁移的 SQL 脚本。
+生成一个 SQL 脚本，该脚本将所选迁移中的所有更改应用于另一个选定的迁移。
 
 参数：
 
 | 参数                | 描述                                                                                                                                                                                                                |
 |:-------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| *-From* \<String>        | 开始迁移。 可能会被标识迁移，按名称或 id。 数字 0 是一种特殊情况，意味着*第一次迁移之前*。 默认值为 0。                                                              |
-| *-To* \<String>          | 结束的迁移。 默认的最后一个迁移。                                                                                                                                                                      |
-| <nobr>-Idempotent</nobr> | 生成脚本，可以在任何迁移的数据库上使用。                                                                                                                                                         |
-| -Output \<String>        | 要将结果写入的文件。 如果省略此参数，创建应用程序的运行时文件时，例如使用相同的文件夹中生成的名称创建该文件： */obj/Debug/netcoreapp2.1/ghbkztfz.sql/* 。 |
+| *-从*\<String >        | 开始迁移。 可以按名称或 ID 识别迁移。 数字0是一个特殊情况，表示在*第一次迁移之前*。 默认值为0。                                                              |
+| *-到*\<String >          | 结束迁移。 默认为上次迁移。                                                                                                                                                                      |
+| <nobr>-Idempotent</nobr> | 生成可用于任何迁移的数据库的脚本。                                                                                                                                                         |
+| -Output \<String>        | 要向其写入结果的文件。 如果省略此参数，则会在创建应用的运行时文件所在的同一文件夹中创建具有生成名称的文件，例如： */obj/Debug/netcoreapp2.1/ghbkztfz.sql/* 。 |
 
 > [!TIP]
 > To、From 和 Output 参数支持tab补全。
 
-以下示例创建一个脚本，以便使用迁移名称 InitialCreate 迁移。
+以下示例使用迁移名称创建用于 InitialCreate 迁移的脚本。
 
 ```powershell
 Script-Migration -To InitialCreate
 ```
 
-下面的示例创建一个脚本，以便所有迁移 InitialCreate 迁移之后，使用迁移 id。
+以下示例使用迁移 ID，为 InitialCreate 迁移后的所有迁移创建一个脚本。
 
 ```powershell
 Script-Migration -From 20180904195021_InitialCreate
 ```
 
-## <a name="update-database"></a>Update-Database
+## <a name="update-database"></a>更新-数据库
 
-更新数据库，到最后一个迁移或指定的迁移。
+将数据库更新到上次迁移或指定迁移。
 
 | 参数                           | 描述                                                                                                                                                                                                                                                     |
 |:------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <nobr> *-Migration* \<String></nobr> | 目标迁移。 可能会被标识迁移，按名称或 id。 数字 0 是一种特殊情况，意味着*第一次迁移之前*并导致所有迁移操作，从而还原。 如果指定无需迁移，则此命令的最后一个默认迁移。 |
+| <nobr> *-迁移*\<String ></nobr> | 目标迁移。 可以按名称或 ID 识别迁移。 数字0是一种特殊情况，表示在*第一次迁移之前*，并导致还原所有迁移。 如果未指定迁移，则该命令默认为上一次迁移。 |
 
 > [!TIP]
 > Migration 参数支持tab补全。
 
-下面的示例将恢复所有迁移。
+下面的示例将还原所有迁移。
 
 ```powershell
 Update-Database -Migration 0
 ```
 
-下面的示例将数据库更新为指定的迁移。 第一个示例使用迁移名称和另一个使用迁移 ID:
+下面的示例将数据库更新为指定的迁移。 第一个使用迁移名称，第二个使用迁移 ID：
 
 ```powershell
 Update-Database -Migration InitialCreate

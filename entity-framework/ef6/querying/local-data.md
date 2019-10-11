@@ -3,19 +3,19 @@ title: 本地数据-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 2eda668b-1e5d-487d-9a8c-0e3beef03fcb
-ms.openlocfilehash: 400b9e1337edac1b9fa4f0ec9e1384ca58aa2fbc
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: efd646348d8a18bbeed2d0a0e708d4d36eb26eac
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490449"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72182429"
 ---
 # <a name="local-data"></a>本地数据
-直接对 DbSet 运行 LINQ 查询将始终将查询发送到数据库，但是您可以访问的数据的当前内存中使用的 DbSet.Local 属性。 有关你使用的 DbContext.Entry 和 DbContext.ChangeTracker.Entries 方法的实体，还可以访问 EF 跟踪的额外信息。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  
+直接对 DbSet 运行 LINQ 查询将始终向数据库发送查询，但你可以使用 DbSet 属性访问当前在内存中的数据。 使用 DbContext 和 DbContext 方法，还可以访问额外的信息 EF 正在跟踪实体。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  
 
 ## <a name="using-local-to-look-at-local-data"></a>使用本地查看本地数据  
 
-DbSet 的本地属性提供对实体集的当前由上下文跟踪和未标记为已删除的简单访问。 访问本地属性永远不会导致查询发送到数据库。 这意味着，它通常用于执行查询后。 可以使用 Load 扩展方法来执行查询，以便将上下文跟踪结果。 例如：  
+DbSet 的 Local 属性提供对当前正在由上下文跟踪并且未标记为已删除的集的实体的简单访问。 访问本地属性绝不会使查询发送到数据库。 这意味着它通常在查询已执行后使用。 负载扩展方法可用于执行查询，以便上下文可以跟踪结果。 例如：  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -53,9 +53,9 @@ using (var context = new BloggingContext())
 }
 ```  
 
-如果我们有两个博客数据库的 ADO.NET 博客与 1 BlogId-和 Visual Studio 博客与 2 BlogId 中我们可以看到以下输出：  
+如果数据库中有两个博客-"ADO.NET Blog" 的 BlogId 为1，"Visual Studio 博客" 的 BlogId 为2，则可能会收到以下输出：  
 
-```  
+```console
 In Local:
 Found 0: My New Blog with state Added
 Found 2: The Visual Studio Blog with state Unchanged
@@ -65,21 +65,21 @@ Found 1: ADO.NET Blog with state Deleted
 Found 2: The Visual Studio Blog with state Unchanged
 ```  
 
-这说明了三个点：  
+这说明了三个要点：  
 
-- 即使它具有尚未保存到数据库，将本地集合中包含新的博客我的新博客。 此博客具有零的主键，因为数据库不生成的实体的实际密钥。  
-- 尽管仍正在由上下文跟踪，ADO.NET 博客不包括在本地集合中。 这是因为我们从从而将其标记为删除 DbSet 中删除它。  
-- DbSet 用于执行查询时在结果中包含标记为删除 （ADO.NET 博客） 的博客和尚未保存到数据库的新博客 （我的新博客） 不包括在结果中。 这是因为 DbSet 正在执行对数据库进行查询，并且始终返回的结果反映什么是数据库中。  
+- 新博客的 "我的新博客" 包含在本地集合中，即使尚未将其保存到数据库中。 此博客的主键为零，因为数据库尚未生成实体的实际密钥。  
+- 即使上下文仍在跟踪 "ADO.NET Blog"，也不会将其包含在本地集合中。 这是因为我们从 DbSet 中删除了它，从而将其标记为已删除。  
+- 当使用 DbSet 来执行查询时，将在结果中包含标记为删除的博客（ADO.NET 博客），并且未保存到数据库中的新博客（我的新博客）不会包含在结果中。 这是因为，DbSet 正在对数据库执行查询，并且返回的结果始终反映了数据库中的内容。  
 
-## <a name="using-local-to-add-and-remove-entities-from-the-context"></a>使用本地添加和删除实体的上下文  
+## <a name="using-local-to-add-and-remove-entities-from-the-context"></a>使用本地来添加和删除上下文中的实体  
 
-DbSet 上的本地属性返回[ObservableCollection](https://msdn.microsoft.com/library/ms668604.aspx)与事件挂钩，以便它与保持同步的上下文的内容。 这意味着可以添加或从本地集合或 DbSet 中删除实体。 这还意味着到上下文中将新的实体的查询会提供这些实体来更新本地集合。 例如：  
+DbSet 上的本地属性返回一个[ObservableCollection](https://msdn.microsoft.com/library/ms668604.aspx) ，其中包含与该上下文的内容保持同步的事件。 这意味着可以在本地集合或 DbSet 中添加或移除实体。 这也意味着，将新实体引入上下文的查询将导致用这些实体更新本地集合。 例如：  
 
 ``` csharp
 using (var context = new BloggingContext())
 {
     // Load some posts from the database into the context
-    context.Posts.Where(p => p.Tags.Contains("entity-framework").Load();  
+    context.Posts.Where(p => p.Tags.Contains("entity-framework")).Load();  
 
     // Get the local collection and make some changes to it
     var localPosts = context.Posts.Local;
@@ -119,9 +119,9 @@ using (var context = new BloggingContext())
 }
 ```  
 
-假设我们有几个帖子标记为实体框架和 asp.net 输出可能如下所示：  
+假设我们有几个标记有 "entity-框架" 和 "asp.net" 的文章，输出可能如下所示：  
 
-```  
+```console
 In Local after entity-framework query:
 Found 3: EF Designer Basics with state Unchanged
 Found 5: EF Code First Basics with state Unchanged
@@ -135,27 +135,27 @@ Found 0: What's New in EF with state Added
 Found 4: ASP.NET Beginners Guide with state Unchanged
 ```  
 
-这说明了三个点：  
+这说明了三个要点：  
 
-- 新文章 What's New in EF 已添加到本地集合将成为由上下文跟踪处于已添加状态。 它将因此插入到数据库时调用 SaveChanges。  
-- 已从本地集合 （EF 初学者指南） 中删除的文章现在标记为已删除的上下文中。 它将因此从数据库中删除时调用 SaveChanges。  
-- 加载到上下文中与第二个查询的其他文章 （ASP.NET 初学者指南） 自动添加到本地集合。  
+- 添加到本地集合中的新 post "EF 新增功能" 将由上下文在已添加状态中进行跟踪。 因此，当调用 SaveChanges 时，它将被插入到数据库中。  
+- 从本地集合中删除的 post （EF 初学者指南）现在已在上下文中标记为 "已删除"。 因此，当调用 SaveChanges 时，将从数据库中删除该方法。  
+- 将第二个查询加载到上下文中的附加 post （ASP.NET 初学者指南）自动添加到本地集合中。  
 
-最后一件要注意有关本地的事情是，因为它是 ObservableCollection 性能不适合大量实体。 因此如果您的上下文中正在处理数千个实体可能不会建议使用本地。  
+关于本地需要注意的最后一点是，因为这是一个 ObservableCollection 的性能，不适用于大量实体。 因此，如果你在上下文中处理数千个实体，则可能不建议使用本地。  
 
-## <a name="using-local-for-wpf-data-binding"></a>使用 WPF 数据绑定的本地  
+## <a name="using-local-for-wpf-data-binding"></a>使用本地进行 WPF 数据绑定  
 
-DbSet 上的本地属性可直接用于 WPF 应用程序中的数据绑定，因为它是 ObservableCollection 实例。 这意味着它会自动将前面部分中所述的上下文的内容与保持同步和上下文的内容将自动保持与其同步。 请注意，您需要预填充的数据才会将绑定到，由于本地永远不会导致数据库查询的任何内容的本地集合。  
+DbSet 上的本地属性可以直接用于 WPF 应用程序中的数据绑定，因为它是 ObservableCollection 的实例。 如前面部分所述，这意味着它将与上下文内容自动保持同步，并且上下文的内容将自动与它保持同步。 请注意，您需要预先填充本地集合，其中包含的数据可以绑定到任何内容，因为本地从不会导致数据库查询。  
 
-这不是完整的 WPF 数据绑定示例的合适位置，但的关键要素是：  
+这不是完整的 WPF 数据绑定示例的合适位置，但关键元素是：  
 
 - 设置绑定源  
-- 将其绑定到你的集的本地属性  
-- 填充本地使用对数据库查询。  
+- 将其绑定到集的本地属性  
+- 使用数据库的查询填充本地。  
 
 ## <a name="wpf-binding-to-navigation-properties"></a>WPF 绑定到导航属性  
 
-如果你正在母版/详细信息数据绑定您可能想要绑定到一个实体的导航属性的详细信息视图。 实现此目的的简单方法是使用一个 ObservableCollection 的导航属性。 例如：  
+如果要执行主/详细数据绑定，则可能需要将详细信息视图绑定到某个实体的导航属性。 若要执行此操作，一种简单的方法是将 ObservableCollection 用于导航属性。 例如：  
 
 ``` csharp
 public class Blog
@@ -173,9 +173,9 @@ public class Blog
 }
 ```  
 
-## <a name="using-local-to-clean-up-entities-in-savechanges"></a>使用本地清理 SaveChanges 中的实体  
+## <a name="using-local-to-clean-up-entities-in-savechanges"></a>使用 Local 在 SaveChanges 中清理实体  
 
-在大多数情况下从导航属性中移除的实体将不会自动标记为已删除的上下文中。 例如，如果删除 Post 对象从 Blog.Posts 集合，文章将不会自动删除调用 SaveChanges 的时候。 如果您需要它来删除然后可能需要找到这些无关联的实体并标记为已删除，然后再调用 SaveChanges 或重写 SaveChanges 的一部分。 例如：  
+在大多数情况下，从导航属性中删除的实体在上下文中不会自动标记为 "已删除"。 例如，如果从博客发布了一个 Post 对象，则在调用 SaveChanges 后，将不会自动删除此 post。 如果需要删除此实体，则可能需要在调用 SaveChanges 之前，或将其标记为已删除，然后再将其标记为已删除。 例如：  
 
 ``` csharp
 public override int SaveChanges()
@@ -192,23 +192,23 @@ public override int SaveChanges()
 }
 ```  
 
-上面的代码使用本地集合来查找所有文章和标记为已删除不具有的博客引用任何的。 ToList 调用是必需的因为删除将否则修改该集合正在枚举时调用。 在大多数其他情况下可以查询直接针对本地属性而无需先使用 ToList。  
+上面的代码使用本地集合查找所有帖子，并将没有博客引用的任何文章标记为已删除。 System.linq.enumerable.tolist 调用是必需的，因为在枚举时，删除调用会对集合进行修改。 在大多数其他情况下，您可以直接对本地属性进行查询，而不先使用 System.linq.enumerable.tolist。  
 
-## <a name="using-local-and-tobindinglist-for-windows-forms-data-binding"></a>使用本地和 ToBindingList 为 Windows 窗体数据绑定  
+## <a name="using-local-and-tobindinglist-for-windows-forms-data-binding"></a>为 Windows 窗体数据绑定使用本地和对 tobindinglist 获得  
 
-Windows 窗体不支持直接使用 ObservableCollection 完全保真的数据绑定。 但是，仍可以使用数据绑定的 DbSet 本地属性以获取前面各节中所述的所有权益。 这通过 ToBindingList 扩展方法创建[IBindingList](https://msdn.microsoft.com/library/system.componentmodel.ibindinglist.aspx)实现支持的本地 ObservableCollection。  
+Windows 窗体不支持直接使用 ObservableCollection 的完全保真数据绑定。 不过，你仍然可以使用 DbSet 本地属性进行数据绑定，以获得前面几节中所述的全部权益。 这是通过对 tobindinglist 获得扩展方法实现的，该方法创建由本地 ObservableCollection 支持的[IBindingList](https://msdn.microsoft.com/library/system.componentmodel.ibindinglist.aspx)实现。  
 
-这不是完整的 Windows 窗体数据绑定示例的合适位置，但的关键要素是：  
+此位置不适合完全 Windows 窗体的数据绑定示例，但关键元素是：  
 
 - 设置对象绑定源  
-- 将其绑定到使用 Local.ToBindingList() 集的本地属性  
-- 填充本地使用对数据库查询  
+- 使用对 tobindinglist 获得（）将其绑定到集的本地属性  
+- 使用数据库的查询填充本地  
 
-## <a name="getting-detailed-information-about-tracked-entities"></a>获取有关跟踪的实体的详细的信息  
+## <a name="getting-detailed-information-about-tracked-entities"></a>获取有关被跟踪实体的详细信息  
 
-许多本系列中的示例使用入口方法以返回实体的 DbEntityEntry 实例。 此条目对象然后充当用于收集有关其当前状态，例如实体的信息以及在如显式加载相关的实体的实体上执行操作的起始点。  
+此系列中的许多示例使用 Entry 方法返回实体的 DbEntityEntry 实例。 然后，此 entry 对象充当用于收集有关实体的信息（如当前状态）的起始点，以及用于对实体执行操作（如显式加载相关实体）的起始点。  
 
-条目方法返回多个或所有实体正在由上下文跟踪的 DbEntityEntry 对象。 这允许你收集的信息或执行对多个实体而不是只需单个条目的操作。 例如：  
+条目方法为上下文跟踪的多个或所有实体返回 DbEntityEntry 对象。 这允许您收集信息或对多个实体执行操作，而不是只收集单个条目。 例如：  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -265,7 +265,7 @@ using (var context = new BloggingContext())
 }
 ```  
 
-您会注意到，我们引入的作者和读者类到示例-这两种类均实现 IPerson 接口。  
+你会注意到，我们在示例中引入了一个作者和读者类，这两个类都实现 IPerson 接口。  
 
 ``` csharp
 public class Author : IPerson
@@ -288,17 +288,17 @@ public interface IPerson
 }
 ```  
 
-让我们假设我们在数据库中具有以下数据：
+假设数据库中包含以下数据：
 
-使用 BlogId 博客 = 1 且名称 = ADO.NET 博客  
-使用 BlogId 博客 = 2，名称 = Visual Studio 博客  
-使用 BlogId 博客 = 3 且名称 =.NET Framework 博客  
-作者与作者 Id = 1 且名称 = ' Joe Bloggs  
-读取器与 ReaderId = 1 且名称 = John Doe  
+BlogId = 1 和 Name = ' ADO.NET Blog ' 的博客  
+BlogId = 2 的博客和名称 = ' Visual Studio 博客 '  
+BlogId = 3 且名称为 ".NET Framework 博客" 的博客  
+作者为 AuthorId = 1，名称 = "Joe Bloggs"  
+ReaderId = 1 且名称 = "John Doe" 的读取器  
 
-将运行代码的输出：  
+运行代码的输出为：  
 
-```  
+```console
 All tracked entities:
 Found entity of type Blog with state Modified
 Found entity of type Blog with state Deleted
@@ -322,10 +322,10 @@ Found Person Joe Bloggs
 Found Person Jane Doe
 ```  
 
-这些示例阐释了几个点：  
+这些示例阐释了几个要点：  
 
-- 条目方法返回的所有状态，包括已删除的实体的条目。 与此比较不包括本地删除的实体。  
-- 使用非泛型条目方法时，则返回所有实体类型的项。 使用泛型条目方法时则仅会返回的实体是泛型类型的实例的项。 这用于上面获取的所有博客条目。 它还用于获得实现 IPerson 的所有实体的条目。 此示例演示泛型类型不必是实际的实体类型。  
-- LINQ 到对象可用来筛选返回的结果。 这用于上面查找任何类型的实体，只要进行修改。  
+- 条目方法返回所有状态中实体的条目，包括 "已删除"。 将此与本地（不包括已删除的实体）进行比较。  
+- 当使用非泛型条目方法时，将返回所有实体类型的条目。 当使用泛型条目方法时，仅为作为泛型类型的实例的实体返回条目。 上述内容用于获取所有博客的条目。 它还用于获取实现 IPerson 的所有实体的条目。 这表明泛型类型不一定是实际的实体类型。  
+- LINQ to Objects 可用于筛选返回的结果。 在上述情况下，只要修改了任何类型的实体，就可以找到它。  
 
-请注意 DbEntityEntry 实例始终包含一个非 null 的实体。 这样就无需这些筛选器作为 DbEntityEntry 实例不表示关系条目与存根 （stub） 条目。
+请注意，DbEntityEntry 实例始终包含非 null 的实体。 关系项和存根项不表示为 DbEntityEntry 实例，因此无需对其进行筛选。

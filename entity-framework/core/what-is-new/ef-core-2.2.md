@@ -4,12 +4,12 @@ author: divega
 ms.date: 11/14/2018
 ms.assetid: 998C04F3-676A-4FCF-8450-CFB0457B4198
 uid: core/what-is-new/ef-core-2.2
-ms.openlocfilehash: 79b4efc3aee23e19a9ea1deb6373b9984b77f886
-ms.sourcegitcommit: b3c2b34d5f006ee3b41d6668f16fe7dcad1b4317
+ms.openlocfilehash: 5fcf7c6dfb4d8cb7928ef974af6deb52df7c63eb
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/15/2018
-ms.locfileid: "51688742"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72181374"
 ---
 # <a name="new-features-in-ef-core-22"></a>EF Core 2.2 中的新增功能
 
@@ -21,7 +21,7 @@ EF Core 2.2 现在支持使用 [NetTopologySuite](https://github.com/NetTopology
 
 空间数据支持是作为一系列提供程序专用扩展包进行实现。
 每个包都为 NTS 类型和方法以及数据库中相应的空间类型和函数提供映射。
-此类提供程序扩展现在可用于 [SQL Server](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite/)、[SQLite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite/) 和 [PostgreSQL](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite/)（来自 [Npgsql 项目](http://www.npgsql.org/)）。
+此类提供程序扩展现在可用于 [SQL Server](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite/)、[SQLite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite/) 和 [PostgreSQL](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite/)（来自 [Npgsql 项目](https://www.npgsql.org/)）。
 空间类型可以直接与 [EF Core 内存中提供程序](https://docs.microsoft.com/en-us/ef/core/providers/in-memory/)一起使用，无需使用额外扩展。
 
 安装提供程序扩展后，便能向实体添加受支持类型的属性。 例如:

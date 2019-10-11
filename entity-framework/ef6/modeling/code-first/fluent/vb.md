@@ -1,45 +1,45 @@
 ---
-title: 使用 VB.NET-EF6 的 Fluent API
+title: 具有 VB.NET 的流畅 API-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 763dc6a2-764a-4600-896c-f6f13abf56ec
-ms.openlocfilehash: 6aa74fa72296f66f0b069b9b5ee7e2e016570525
-ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
+ms.openlocfilehash: df3e61fa5e2d24873336511e90231a7d78d32535
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/18/2018
-ms.locfileid: "46283740"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72182661"
 ---
-# <a name="fluent-api-with-vbnet"></a>使用 VB.NET Fluent API
-代码首先允许你定义使用 C 模型\#或 VB.NET 类。 （可选） 可以使用特性在类和属性，或使用 fluent API 执行其他配置。 本演练演示如何执行使用 VB.NET 的 fluent API 配置。
+# <a name="fluent-api-with-vbnet"></a>通过 VB.NET 的流畅 API
+Code First 允许使用 C @ no__t 或 VB.NET 类定义模型。 还可以选择使用类和属性上的属性或使用 Fluent API 来执行其他配置。 本演练演示如何使用 VB.NET 执行 Fluent API 配置。
 
-此页面假定你基本了解代码优先。 请查看下面的演练的第一个代码的详细信息：
+本页假设您基本了解 Code First。 有关 Code First 的详细信息，请参阅以下演练：
 
--   [代码优先的新数据库](~/ef6/modeling/code-first/workflows/new-database.md)
--   [代码优先的现有数据库](~/ef6/modeling/code-first/workflows/existing-database.md)
+-   [Code First 到新数据库](~/ef6/modeling/code-first/workflows/new-database.md)
+-   [Code First 到现有数据库](~/ef6/modeling/code-first/workflows/existing-database.md)
 
-## <a name="pre-requisites"></a>系统必备组件
+## <a name="pre-requisites"></a>先决条件
 
-将需要安装最低版本为 Visual Studio 2010 或 Visual Studio 2012 安装来完成本演练。
+需要至少安装 Visual Studio 2010 或 Visual Studio 2012 才能完成此演练。
 
-如果使用 Visual Studio 2010，您还需要具有[NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c)安装
+如果你使用的是 Visual Studio 2010，你还需要安装[NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c)
 
 ## <a name="create-the-application"></a>创建应用程序
 
-为了简单起见，我们要构建使用 Code First 来执行数据访问的基本的控制台应用程序。
+为了简单起见，我们将构建一个使用 Code First 执行数据访问的基本控制台应用程序。
 
 -   打开 Visual Studio
--   **文件-&gt;新增-&gt;项目...**
--   选择**Windows**左侧的菜单和**控制台应用程序**
+-   **文件-&gt; &gt; 项目 。**
+-   从左侧菜单和**控制台应用程序**选择**Windows**
 -   输入**CodeFirstVBSample**作为名称
 -   选择“确定”
 
 ## <a name="define-the-model"></a>定义模型
 
-在此步骤中将定义 VB.NET POCO 实体类型表示概念模型。 类不需要任何在基类中派生或实现任何接口。
+在此步骤中，将定义表示概念模型的 VB.NET POCO 实体类型。 类不需要从任何基类派生或实现任何接口。
 
--   将新类添加到项目中，输入**SchoolModel**的类名
--   新类的内容替换为以下代码
+-   向项目中添加一个新类，为类名输入**SchoolModel**
+-   将新类的内容替换为以下代码
 
 ``` vb
    Public Class Department
@@ -133,21 +133,21 @@ ms.locfileid: "46283740"
     End Class
 ```
 
-## <a name="define-a-derived-context"></a>定义派生的上下文
+## <a name="define-a-derived-context"></a>定义派生上下文
 
-我们想要开始使用从实体框架的类型，因此我们需要添加 EntityFramework NuGet 包。
+我们即将开始使用实体框架中的类型，因此我们需要添加 EntityFramework NuGet 包。
 
--   * * 项目 –&gt; **管理 NuGet 包...**
+-   \* * 项目– &gt;**管理 NuGet 程序包 ...**
 > [!NOTE]
-> 如果你没有**管理 NuGet 包...** 应安装的选项[最新版本的 NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c)
--   选择**Online**选项卡
+> 如果你没有 "**管理 NuGet 包 ...** " 选项你应安装[最新版本的 NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c)
+-   选择 "**联机**" 选项卡
 -   选择**EntityFramework**包
--   单击**安装**
+-   单击 "**安装**"
 
-现在就来定义派生的上下文，它表示与数据库中，使我们能够查询和保存数据的会话。 我们定义的上下文，它派生自 System.Data.Entity.DbContext 并公开的类型化的 DbSet&lt;TEntity&gt;我们的模型中的一个类。
+现在可以定义一个派生上下文，它表示与数据库的会话，从而使我们能够查询和保存数据。 我们定义了从 DbContext 派生的上下文，并为模型中的每个类公开了类型化 DbSet @ no__t-0TEntity @ no__t。
 
--   将新类添加到项目中，输入**SchoolContext**的类名
--   新类的内容替换为以下代码
+-   向项目中添加一个新类，为类名输入**SchoolContext**
+-   将新类的内容替换为以下代码
 
 ``` vb
     Imports System.Data.Entity
@@ -169,11 +169,11 @@ ms.locfileid: "46283740"
     End Class
 ```
 
-## <a name="configuring-with-the-fluent-api"></a>使用 Fluent API 配置
+## <a name="configuring-with-the-fluent-api"></a>用熟知 API 配置
 
-本部分演示如何使用 fluent Api 来配置对映射到列映射和表之间的关系的属性的表类型\\在模型中的类型。 通过 fluent API 公开**DbModelBuilder**键入和最常访问通过重写**OnModelCreating**方法**DbContext**。
+本部分演示如何使用熟知的 Api 将类型配置为表映射、属性到列的映射，以及模型中的表 @ no__t-0type 之间的关系。 Fluent API 通过**DbModelBuilder**类型公开，最常用的方法是重写**DbContext**上的**OnModelCreating**方法。
 
--   将以下代码复制并将其添加到**OnModelCreating**上定义的方法**SchoolContext**类注释说明每个映射的作用
+-   复制以下代码并将其添加到**SchoolContext**类中定义的**OnModelCreating**方法中。注释说明了每个映射的作用
 
 ``` vb
 ' Configure Code First to ignore PluralizingTableName convention
@@ -365,9 +365,9 @@ modelBuilder.Entity(Of Course)().
 
 ## <a name="using-the-model"></a>使用模型
 
-让我们来执行某些数据访问使用**SchoolContext**若要查看操作中的模型。
+让我们使用**SchoolContext**执行一些数据访问，以查看操作中的模型。
 
--   打开 Module1.vb 文件，其中定义 Main 函数
+-   打开定义了 Main 函数的 Module1 文件
 -   复制并粘贴以下 Module1 定义
 
 ``` vb
@@ -408,9 +408,9 @@ Module Module1
 End Module
 ```
 
-你现在可以运行该应用程序和它进行测试。
+你现在可以运行该应用程序并对其进行测试。
 
-```
+```console
 Enter a name for a new Department: Computing
 All Departments in the database:
 Computing

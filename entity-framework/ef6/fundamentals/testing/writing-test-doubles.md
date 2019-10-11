@@ -1,51 +1,51 @@
 ---
-title: 使用你自己的 test double 的 EF6 进行测试
+title: 用自己的测试进行测试双 EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 16a8b7c0-2d23-47f4-9cc0-e2eb2e738ca3
-ms.openlocfilehash: 9db56e28cd89084fece36c3e5a2c1b4495991d01
-ms.sourcegitcommit: 645785187ae23ddf7d7b0642c7a4da5ffb0c7f30
+ms.openlocfilehash: 4631206ae26d364e92c932857fa1970804a7a335
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/25/2019
-ms.locfileid: "58419726"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72181414"
 ---
-# <a name="testing-with-your-own-test-doubles"></a>使用你自己的 test double 进行测试
+# <a name="testing-with-your-own-test-doubles"></a>用自己的测试进行测试双精度
 > [!NOTE]
 > **仅限 EF6 及更高版本** - 此页面中讨论的功能、API 等已引入实体框架 6。 如果使用的是早期版本，则部分或全部信息不适用。  
 
-为你的应用程序编写测试是，通常需要避免与数据库进行交互。  实体框架，可通过创建一个上下文 – 替换为你的测试 – 定义行为实现此目的使用内存中的数据。  
+编写应用程序测试时，通常需要避免数据库的命中。  实体框架使你可以通过创建上下文来实现此目的，该上下文具有测试定义的行为，从而利用内存中数据。  
 
-## <a name="options-for-creating-test-doubles"></a>用于创建 test double 的选项  
+## <a name="options-for-creating-test-doubles"></a>用于创建测试双精度的选项  
 
-有两种可用于创建您的上下文的内存中版本的不同方法。  
+可使用两种不同的方法创建上下文的内存中版本。  
 
-- **创建你自己的 test double** – 这种方法涉及编写您自己的上下文和 Dbset 的内存中实现。 这使你可以控制如何类的行为，但可以写入和拥有合理的代码涉及很多。  
-- **使用模拟框架来创建 test double** – 使用模拟框架 （如 Moq)，可以有您的内存中实现上下文和动态创建在运行时为你的设置。  
+- **创建自己的测试双精度**型–此方法涉及编写您自己的上下文和 dbset 的内存中实现。 这使你可以很好地控制类的行为，但可能涉及到编写和拥有合理的代码量。  
+- **使用模拟框架创建测试双精度**型–使用模拟框架（如 Moq），可以在运行时动态创建上下文和集。  
 
-本文将处理创建你自己的测试双精度。 使用模拟框架的信息，请参阅[测试提供了模拟框架](mocking.md)。  
+本文将介绍如何创建自己的测试 double。 有关使用模拟框架的信息，请参阅使用[模拟框架进行测试](mocking.md)。  
 
-## <a name="testing-with-pre-ef6-versions"></a>使用预 EF6 版本进行测试  
+## <a name="testing-with-pre-ef6-versions"></a>用预 EF6 版本测试  
 
-在本文中所示的代码适用于 EF6。 要使用 EF5 和早期版本进行测试，请参阅[测试使用虚设上下文](http://romiller.com/2012/02/14/testing-with-a-fake-dbcontext/)。  
+本文中所示的代码与 EF6 兼容。 若要使用 EF5 和更早的版本进行测试，请参阅[使用虚设上下文进行测试](https://romiller.com/2012/02/14/testing-with-a-fake-dbcontext/)。  
 
-## <a name="limitations-of-ef-in-memory-test-doubles"></a>EF 内存中测试双精度数的限制  
+## <a name="limitations-of-ef-in-memory-test-doubles"></a>EF 内存中测试的限制双精度  
 
-内存中测试双精度型值可以是提供单元级别的测试覆盖率的应用程序使用 EF 的位的好方法。 但是，执行此操作时将使用 LINQ to Objects 对内存中数据执行查询。 这可能导致比使用 EF 的 LINQ 提供程序 (LINQ to Entities) 为针对数据库运行的 SQL 查询转换为不同的行为。  
+内存中测试双精度型可以是一种提供使用 EF 的应用程序的单元测试级别的好方法。 但是，在执行此操作时，将使用 LINQ to Objects 对内存中数据执行查询。 这可能会导致不同的行为，而不是使用 EF 的 LINQ 提供程序（LINQ to Entities）将查询转换为对数据库运行的 SQL。  
 
-此类差异的一个示例加载相关的数据。 如果创建一系列的博客，每个具有相关的文章，则在使用内存中数据相关的帖子将始终加载每个博客。 但是，针对数据库运行时，如果您使用 Include 方法只被加载数据。  
+这种差异的一个示例就是加载相关数据。 如果创建一系列博客，其中每个博客都有相关的文章，则在使用内存中数据时，将始终为每个博客加载相关文章。 但是，在对数据库运行时，仅当使用 Include 方法时才会加载数据。  
 
-出于此原因，建议始终包括一定程度的端到端测试 （除了单元测试），确保正确地对数据库应用程序正常工作。  
+出于此原因，建议始终包括某个级别的端到端测试（除了单元测试），以确保应用程序能够对数据库正常运行。  
 
-## <a name="following-along-with-this-article"></a>根据这篇文章  
+## <a name="following-along-with-this-article"></a>与本文一起介绍  
 
-本文提供了您可以复制到 Visual Studio，若要跟着介绍一起操作，如果您想的完整代码列表。 它是最简单的方法创建**单元测试项目**，你需要为目标 **.NET Framework 4.5**来完成使用异步的部分。  
+本文提供了完整的代码清单，你可以将其复制到 Visual Studio 中，以根据你的需要进行。 最简单的方法是创建一个**单元测试项目**，并需要将 **.NET Framework 4.5**作为目标来完成使用 async 的部分。  
 
 ## <a name="creating-a-context-interface"></a>创建上下文接口  
 
-我们要看一下测试利用了 EF 的服务模型。 为了能够使用内存中版本进行测试替换我们的 EF 上下文，我们将定义我们的 EF 上下文 （和内存中双） 将实现的接口。
+我们将介绍如何测试使用 EF 模型的服务。 为了能够将 EF 上下文替换为内存中用于测试的版本，我们将定义 EF 上下文（和内存中双精度）将实现的接口。
 
-我们要测试该服务将查询和修改使用我们的上下文的 DbSet 属性的数据，调用 SaveChanges 以将更改推送到数据库。 因此我们要包括在接口上的这些成员。  
+我们将要测试的服务将使用上下文的 DbSet 属性来查询和修改数据，还会调用 SaveChanges 将更改推送到数据库。 我们将这些成员包括在接口上。  
 
 ``` csharp
 using System.Data.Entity;
@@ -63,7 +63,7 @@ namespace TestingDemo
 
 ## <a name="the-ef-model"></a>EF 模型  
 
-我们要测试的服务利用了 EF 模型 bloggingcontext 和在博客和文章类组成。 此代码可能由 EF 设计器生成也是 Code First 模型。  
+要测试的服务利用的是由 "Bloggingcontext" 和博客和 Post 类组成的 EF 模型。 此代码可能是由 EF 设计器生成的，或是 Code First 模型中。  
 
 ``` csharp
 using System.Collections.Generic;
@@ -98,11 +98,11 @@ namespace TestingDemo
 }
 ```  
 
-### <a name="implementing-the-context-interface-with-the-ef-designer"></a>实现与 EF 设计器上下文接口  
+### <a name="implementing-the-context-interface-with-the-ef-designer"></a>通过 EF 设计器实现上下文接口  
 
-请注意，我们的上下文实现 IBloggingContext 接口。  
+请注意，我们的上下文实现了 IBloggingContext 接口。  
 
-如果使用 Code First 然后可以编辑您的上下文直接以实现该接口。 如果您使用的 EF 设计器将需要编辑 T4 模板生成您的上下文。 打开\<model_name\>。Context.tt 文件下您 edmx 文件，嵌套的查找以下代码段，并添加在界面中所示。  
+如果使用 Code First，则可以直接编辑上下文来实现接口。 如果使用的是 EF 设计器，则需要编辑生成上下文的 T4 模板。 打开 \<model_name @ no__t-1。Context.tt 文件嵌套在 edmx 文件下，查找以下代码片段，并将其添加到接口中，如下所示。  
 
 ``` csharp  
 <#=Accessibility.ForType(container)#> partial class <#=code.Escape(container)#> : DbContext, IBloggingContext
@@ -110,7 +110,7 @@ namespace TestingDemo
 
 ## <a name="service-to-be-tested"></a>要测试的服务  
 
-若要演示如何使用内存中 test double 测试我们将会为 BlogService 编写一些测试。 该服务是能够创建新的博客 (AddBlog)，返回所有博客按名称 (GetAllBlogs) 排序。 除了 GetAllBlogs，我们还提供了将以异步方式获取按名称 (GetAllBlogsAsync) 排序的所有博客的方法。  
+为了演示使用内存中测试的测试，我们将为 BlogService 编写一些测试。 该服务可以创建新的博客（AddBlog）并返回按名称排序的所有博客（GetAllBlogs）。 除了 GetAllBlogs 之外，我们还提供了一个方法，该方法将异步获取按名称（GetAllBlogsAsync）排序的所有博客。  
 
 ``` csharp
 using System.Collections.Generic;
@@ -159,13 +159,13 @@ namespace TestingDemo
 }
 ```  
 
-<a name="creating-the-in-memory-test-doubles"/> # # 创建内存中测试两倍，  
+<a name="creating-the-in-memory-test-doubles"/> # # 创建内存中测试双精度数  
 
-现在，我们已实际 EF 模型和服务可使用它，就可以创建内存中测试 double，我们可将用于测试。 我们已经为我们的上下文来创建 TestContext 测试双精度。 在 test double 选择我们想要以支持测试的行为，我们将我们将运行。 在此示例中我们只捕获的次数调用 SaveChanges 时，但可以包含验证正在测试的方案所需的任何逻辑。  
+现在，我们已经有了真正的 EF 模型和可使用该模型的服务，接下来可以创建可用于测试的内存中测试双精度。 我们为上下文创建了 TestContext 测试 double。 在测试中，我们会选择所需的行为，以便支持我们将要运行的测试。 在此示例中，我们只是捕获调用 SaveChanges 的次数，但你可以包括验证所测试方案所需的任何逻辑。  
 
-我们还创建了提供内存中实现的 DbSet TestDbSet。 我们提供完整实现的所有方法，以在 DbSet （除外找到），但只需实现你的测试方案将使用的成员。  
+我们还创建了 TestDbSet 来提供 DbSet 的内存中实现。 我们为 DbSet 上的所有方法提供了一个完整的实现（Find 除外），但你只需实现测试方案将使用的成员。  
 
-TestDbSet 使用我们提供了以确保可以处理异步查询的一些其他基础结构类。  
+TestDbSet 利用我们提供的其他一些基础结构类，以确保可以处理异步查询。  
 
 ``` csharp
 using System;
@@ -374,7 +374,7 @@ namespace TestingDemo
 
 ### <a name="implementing-find"></a>实现查找  
 
-Find 方法很难采用一般形式实现。 如果您需要测试进行的代码使用 Find 方法是最简单的方法创建的每种需要支持实体类型的 DbSet 查找的测试。 然后可以编写逻辑来查找实体，该特定类型，如下所示。  
+Find 方法难以以一般方式实现。 如果需要测试使用 Find 方法的代码，最简单的方法是为需要支持 find 的每个实体类型创建测试 DbSet。 然后，可以编写逻辑来查找特定类型的实体，如下所示。  
 
 ``` csharp
 using System.Linq;
@@ -392,11 +392,11 @@ namespace TestingDemo
 }
 ```  
 
-## <a name="writing-some-tests"></a>编写测试  
+## <a name="writing-some-tests"></a>编写一些测试  
 
-这是我们需要执行的操作开始测试。 以下测试创建 TestContext，然后基于此上下文的服务。 然后使用该服务以创建新的博客-使用 AddBlog 方法。 最后，此测试将验证该服务添加到上下文的博客属性的新博客，并在上下文中调用 SaveChanges。  
+这就是开始测试时需要执行的所有操作。 以下测试将创建 TestContext，然后基于此上下文创建一个服务。 然后，使用 AddBlog 方法创建新的博客。 最后，此测试将验证服务是否已将新的博客添加到上下文的 "博客" 属性，并在上下文中调用 "SaveChanges"。  
 
-这是只是一个可以测试与双精度的内存中测试的内容类型的示例，您可以调整的 test double 和以满足您的要求的验证逻辑。  
+这只是您可以使用内存中测试双精度测试的类型的示例，您可以根据您的要求调整测试的逻辑加倍和验证。  
 
 ``` csharp
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -424,7 +424,7 @@ namespace TestingDemo
 }
 ```  
 
-下面是测试的这一次一个的方式执行查询的另一个示例。 测试开始通过使用其网络日志属性-请注意，数据不是按字母顺序中的某些数据创建测试上下文。 我们然后可以创建基于我们的测试上下文 BlogService 并确保我们得到从 GetAllBlogs 的数据按名称排序。  
+下面是测试的另一个示例-这是执行查询的另一个示例。 首先，通过在其 "博客" 属性中创建包含某些数据的测试上下文来开始测试，请注意，数据不按字母顺序排序。 然后，可以基于测试上下文创建 BlogService，并确保从 GetAllBlogs 返回的数据按名称排序。  
 
 ``` csharp
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -454,7 +454,7 @@ namespace TestingDemo
 }
 ```  
 
-最后，我们将编写一个测试，以使用我们的异步方法以确保 async 基础结构我们纳入[TestDbSet](#creating-the-in-memory-test-doubles)是否正常工作。  
+最后，我们将编写一个使用异步方法的测试，以确保[TestDbSet](#creating-the-in-memory-test-doubles)中包含的异步基础结构工作正常。  
 
 ``` csharp
 using Microsoft.VisualStudio.TestTools.UnitTesting;

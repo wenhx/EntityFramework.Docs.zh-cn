@@ -1,101 +1,101 @@
 ---
-title: 使用现有的数据库的 EF6 code First 迁移
+title: 使用现有数据库 Code First 迁移-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: f0cc4f93-67dd-4664-9753-0a9f913814db
-ms.openlocfilehash: 77370ec7d922b8324b924a0b4aca3e58f5ec6066
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: eb7948eafb1322cabcf69b47bd5411f762fe8498
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490566"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72182587"
 ---
-# <a name="code-first-migrations-with-an-existing-database"></a>现有数据库使用 code First 迁移
+# <a name="code-first-migrations-with-an-existing-database"></a>使用现有数据库 Code First 迁移
 > [!NOTE]
-> **EF4.3 及更高版本仅**的功能，Api，Entity Framework 4.1 中引入了此页所述的等。 如果使用的是早期版本，则部分或全部信息不适用。
+> **Ef 4.3 仅向前**-在实体框架4.1 中引入了本页中所述的功能、api 等。 如果使用的是早期版本，则部分或全部信息不适用。
 
-本文介绍如何使用实体框架不创建现有数据库使用 Code First 迁移。
+本文介绍如何将 Code First 迁移与现有数据库（不是由实体框架创建的数据库）结合使用。
 
 > [!NOTE]
-> 本文假定你知道如何在基本方案中使用 Code First 迁移。 如果不这样做，则你将需要读取[Code First 迁移](~/ef6/modeling/code-first/migrations/index.md)然后再继续。
+> 本文假设你知道如何在基本方案中使用 Code First 迁移。 如果没有，则需要先阅读[Code First 迁移](~/ef6/modeling/code-first/migrations/index.md)，然后再继续。
 
 ## <a name="screencasts"></a>屏幕广播
 
-如果您而是将观看截屏视频比阅读这篇文章时，以下两个视频涵盖的内容与这篇文章相同。
+如果你想要观看 screencast 而不是阅读本文，以下两个视频会涵盖与本文相同的内容。
 
-### <a name="video-one-migrations---under-the-hood"></a>视频的一个:"迁移-实质上"
+### <a name="video-one-migrations---under-the-hood"></a>视频一："迁移-在后台"
 
-[此截屏视频](http://channel9.msdn.com/blogs/ef/migrations-under-the-hood)介绍了如何迁移跟踪和使用有关模型的信息来检测模型更改。
+[此 screencast](https://channel9.msdn.com/blogs/ef/migrations-under-the-hood)介绍了迁移如何跟踪并使用有关模型的信息来检测模型更改。
 
-### <a name="video-two-migrations---existing-databases"></a>视频 2:"迁移-现有数据库"
+### <a name="video-two-migrations---existing-databases"></a>视频2："迁移-现有数据库"
 
-在上一视频中，从概念上构建[此截屏视频](http://channel9.msdn.com/blogs/ef/migrations-existing-databases)介绍了如何启用和使用与现有数据库迁移。
+基于前一视频中的概念生成，[此 screencast](https://channel9.msdn.com/blogs/ef/migrations-existing-databases)介绍了如何启用和使用现有数据库的迁移。
 
-## <a name="step-1-create-a-model"></a>步骤 1： 创建模型
+## <a name="step-1-create-a-model"></a>步骤 1：创建模型
 
-第一步将创建以将现有的数据库为目标的 Code First 模型。 [Code First 到现有数据库](~/ef6/modeling/code-first/workflows/existing-database.md)主题提供有关如何执行此操作的详细的指导。
+第一步是创建一个面向现有数据库的 Code First 模型。 " [Code First 现有数据库](~/ef6/modeling/code-first/workflows/existing-database.md)" 主题提供有关如何执行此操作的详细指导。
 
 >[!NOTE]
-> 请务必对您需要对数据库架构的更改的模型进行任何更改之前遵循本主题中的步骤的其余部分。 以下步骤需要的模型要同步数据库架构。
+> 在对模型进行任何需要更改数据库架构的更改之前，请务必遵循本主题中的其余步骤。 以下步骤要求模型与数据库架构保持同步。
 
-## <a name="step-2-enable-migrations"></a>步骤 2： 启用迁移
+## <a name="step-2-enable-migrations"></a>步骤 2：启用迁移
 
-下一步是启用迁移。 您可以执行此操作通过运行**Enable-migrations**程序包管理器控制台命令。
+下一步是启用迁移。 可以通过在 Package Manager Console 中运行 "**启用-迁移**" 命令来执行此操作。
 
-此命令将名为迁移，在解决方案中创建一个文件夹，并将其称为配置内部的单个类。 配置类是在其中配置迁移的应用程序中，可以找出有关它在详细信息[Code First 迁移](~/ef6/modeling/code-first/migrations/index.md)主题。
+此命令将在你的解决方案中创建一个名为 "迁移" 的文件夹，并在其中放置一个名为 "配置" 的类。 配置类是你为应用程序配置迁移的位置，你可以在[Code First 迁移](~/ef6/modeling/code-first/migrations/index.md)主题中找到有关它的详细信息。
 
-## <a name="step-3-add-an-initial-migration"></a>步骤 3： 添加初始迁移
+## <a name="step-3-add-an-initial-migration"></a>步骤 3：添加初始迁移
 
-一旦创建并应用于迁移本地数据库可能还想要应用这些更改到其他数据库。 例如，您的本地数据库可能是一个测试数据库和你最终可能需要以还将更改应用到生产数据库和/或其他开发人员测试数据库。 有两个选项对于此步骤，则应选择的一个依赖的任何其他数据库的架构为空或当前的本地数据库的架构匹配。
+创建迁移并将迁移应用到本地数据库后，您可能还需要将这些更改应用到其他数据库。 例如，您的本地数据库可能是一个测试数据库，您可能最终还需要对生产数据库和/或其他开发人员测试数据库应用所做的更改。 此步骤有两个选项，应选择的选项取决于任何其他数据库的架构是否为空，或当前是否与本地数据库的架构匹配。
 
--   **选项 1： 使用现有的架构作为起始点。** 当您的本地数据库目前的迁移将在以后应用到其他数据库将具有相同的架构时，应使用此方法。 例如，可能会如果则使用此本地测试数据库当前与生产数据库的 v1 和更高版本将应用这些迁移操作，从而为 v2 更新生产数据库。
--   **选项 2： 使用空数据库作为起始点。** 迁移将在以后应用到其他数据库是空的 （或尚不存在） 时，应使用此方法。 例如，你可能会以此如果开始开发应用程序使用一个测试数据库但不使用迁移，将以后想要从头开始创建生产数据库。
+-   **Option：使用现有架构作为起始点。** 如果将来将应用迁移到的其他数据库将具有与本地数据库当前具有的架构相同的架构，则应使用此方法。 例如，如果本地测试数据库当前与生产数据库的 v1 相匹配，则可以使用此项，稍后会应用这些迁移，将生产数据库更新为 v2。
+-   **Option 2：使用空数据库作为起始点。** 如果将来将应用迁移的其他数据库为空（或尚不存在），则应使用此方法。 例如，如果使用测试数据库开始开发应用程序，但不使用迁移，则可以使用此示例，以后要从头开始创建生产数据库。
 
-### <a name="option-one-use-existing-schema-as-a-starting-point"></a>选项 1： 使用现有的架构作为起始点
+### <a name="option-one-use-existing-schema-as-a-starting-point"></a>选项一：使用现有架构作为起点
 
-Code First 迁移使用的最新的迁移存储的模型快照来检测对模型的更改 (您可以找到有关此信息的详细的信息[在团队环境中的 Code First 迁移](~/ef6/modeling/code-first/migrations/teams.md))。 由于我们将假定数据库已有当前模型的架构，因此我们将生成具有以快照形式的当前模型为空 （无操作） 迁移。
+Code First 迁移使用最新迁移中存储的模型的快照来检测对模型所做的更改（可在[团队环境中 Code First 迁移](~/ef6/modeling/code-first/migrations/teams.md)找到有关此内容的详细信息）。 由于我们将假设数据库已具有当前模型的架构，因此，我们将生成一个将当前模型作为快照的空（无操作）迁移。
 
-1.  运行**Add-migration InitialCreate – IgnoreChanges**程序包管理器控制台命令。 这将创建空迁移具有当前模型为以快照形式。
-2.  运行**Update-database**程序包管理器控制台命令。 这会将 InitialCreate 迁移应用到数据库。 因为实际的迁移不包含任何更改，它将只需向其中添加行\_ \_MigrationsHistory 表，该值指示是否已应用此迁移。
+1.  在 Package Manager Console 中运行**Add-迁移 InitialCreate – IgnoreChanges**命令。 这将创建一个空迁移，并将当前模型作为快照。
+2.  在 Package Manager Console 中运行 "**更新数据库**" 命令。 这会将 InitialCreate 迁移应用到数据库。 由于实际迁移不包含任何更改，因此，只需将一行添加到 \_ @ no__t-1MigrationsHistory 表，指出已应用此迁移。
 
-### <a name="option-two-use-empty-database-as-a-starting-point"></a>选项 2： 使用空数据库作为起始点
+### <a name="option-two-use-empty-database-as-a-starting-point"></a>选项二：使用空数据库作为起始点
 
-在这种情况下，我们需要迁移，以便能够从头开始创建整个数据库 – 包括我们的本地数据库中已存在的表。 我们将生成包含创建的现有架构的逻辑的 InitialCreate 迁移。 然后，我们将使现有的数据库看起来像已应用此迁移。
+在此方案中，我们需要迁移才能从头开始创建整个数据库（包括本地数据库中已存在的表）。 我们将生成一个 InitialCreate 迁移，其中包含用于创建现有架构的逻辑。 然后，将使现有的数据库看起来像此迁移已应用。
 
-1.  运行**Add-migration InitialCreate**程序包管理器控制台命令。 这将创建一个迁移创建的现有架构。
-2.  注释掉的方法的新创建的迁移中的所有代码。 这样，我们要迁移应用到本地数据库中，而不尝试重新创建所有表等已经存在。
-3.  运行**Update-database**程序包管理器控制台命令。 这会将 InitialCreate 迁移应用到数据库。 因为实际的迁移不包含任何值发生更改 （因为我们暂时已注释掉这些），它将只需向其中添加行\_ \_MigrationsHistory 表，该值指示是否已应用此迁移。
-4.  取消注释中的方法的代码。 这意味着，当此迁移应用于将来的数据库，在本地数据库中已存在的架构将由创建迁移。
+1.  在 Package Manager Console 中运行**Add-迁移 InitialCreate**命令。 这将创建一个迁移来创建现有架构。
+2.  注释掉新创建的迁移的 Up 方法中的所有代码。 这样，我们就可以 "应用" 将迁移到本地数据库，而无需尝试重新创建所有表，等等。
+3.  在 Package Manager Console 中运行 "**更新数据库**" 命令。 这会将 InitialCreate 迁移应用到数据库。 由于实际的迁移不包含任何更改（因为我们暂时注释它们），因此它只是将一行添加到 \_ @ no__t-1MigrationsHistory 表，指示已应用此迁移。
+4.  取消注释 Up 方法中的代码。 这意味着，将此迁移应用于未来的数据库时，迁移将创建本地数据库中已经存在的架构。
 
-## <a name="things-to-be-aware-of"></a>需要注意的事项
+## <a name="things-to-be-aware-of"></a>需要注意的问题
 
-有您需要对现有数据库使用迁移时应注意的几个事项。
+对现有数据库使用迁移时，需要注意几个事项。
 
-### <a name="defaultcalculated-names-may-not-match-existing-schema"></a>计算默认/名称可能与现有架构不匹配
+### <a name="defaultcalculated-names-may-not-match-existing-schema"></a>默认/计算的名称可能与现有架构不匹配
 
-搭建迁移基架以时，迁移显式指定列和表的名称。 但是，有其他数据库对象时应用迁移，迁移将计算的默认名称。 这包括索引和外键约束。 当目标现有的架构，这些计算的名称可能不匹配内容实际上与数据库中存在。
+迁移时，迁移会显式指定列和表的名称基架。 但是，在应用迁移时，迁移会为其他数据库对象计算默认名称。 这包括索引和外键约束。 当以现有架构为目标时，这些计算的名称可能与数据库中实际存在的名称不匹配。
 
-当您需要注意这一点时，以下是的一些示例：
+下面是需要注意的一些示例：
 
-**如果您使用选项一： 使用现有的架构作为起始点步骤 3 中：**
+@no__t 使用 "Option One" 的0If：使用现有架构作为步骤3中的起始点： **
 
--   如果您的模型中的未来更改需要更改或删除其中一个以不同方式命名的数据库对象，将需要修改基架生成的迁移，以指定正确的名称。 迁移 Api 都具有一个可选的名称参数，它允许您执行此操作。
-    例如，您现有的架构可能包含具有名为 IndexFk 的索引的 BlogId 外键列的 Post 表\_BlogId。 但是，默认情况下迁移所期望此索引命名为 IX\_BlogId。 如果对模型的结果中删除此索引进行了更改，你将需要修改已搭建基架的 DropIndex 调用，以便指定 IndexFk\_BlogId 名称。
+-   如果模型中的未来更改需要更改或删除一个名为不同的数据库对象，则需要修改基架迁移来指定正确的名称。 迁移 Api 有一个可选的 Name 参数，可让你执行此操作。
+    例如，你的现有架构可能有一个带有 BlogId 外键列的 Post 表，该表的索引名为 IndexFk @ no__t-0BlogId。 但是，默认情况下，迁移应将此索引命名为 IX @ no__t-0BlogId。 如果对模型进行更改，导致删除此索引，则需要修改基架 DropIndex 调用以指定 IndexFk @ no__t-0BlogId 名称。
 
-**如果您使用选项二： 使用空数据库作为起始点步骤 3 中：**
+**If 你使用的选项二：使用空数据库作为步骤3中的起始点：**
 
--   尝试对本地数据库运行 Down 方法 （即，还原为一个空数据库） 的初始迁移可能失败，因为迁移将尝试删除索引和外键约束，使用不正确的名称。 这只会影响您的本地数据库，因为将使用的方法的初始迁移从头创建其他数据库。
-    如果你想要将现有本地数据库降级到一个空状态是最简单的方法手动执行此操作，通过删除数据库或删除所有表。 后所有数据库对象将具有默认名称重新都创建此初始降级，因此此问题不会提供自身再次。
--   如果您的模型中的未来更改需要更改或删除其中一个以不同方式命名的数据库对象，这不会对您现有的本地数据库 – 由于名称不匹配默认值。 但是，它将针对已从头开始创建因为它们将使用选择的迁移的默认名称的数据库工作。
-    您无法在本地的现有数据库上手动进行这些更改，或考虑将显示在其他计算机上重新创建从零开始 – 你数据库的迁移。
--   使用的方法的初始迁移创建的数据库可能略有不同的本地数据库自索引的计算得出的默认名称，将使用外键约束。 您可能还采用了额外索引如迁移将索引上创建外键列的默认值-它可以不是原始的本地数据库中的用例。
+-   尝试对本地数据库运行初始迁移的关闭方法（即，恢复为空数据库）可能会失败，因为迁移将尝试使用错误的名称删除索引和外键约束。 这只会影响本地数据库，因为将使用初始迁移的 Up 方法从头开始创建其他数据库。
+    如果要将现有的本地数据库降级到空状态，可以通过删除数据库或删除所有表，手动执行此操作，这是最简单的方法。 在此初始降级后，将用默认名称重新创建所有数据库对象，因此，此问题不会再次出现。
+-   如果您的模型中的未来更改需要更改或删除一个名为不同的数据库对象，则这对您的现有本地数据库不起作用，因为这些名称与默认值不匹配。 但是，它将适用于 "从头开始创建" 的数据库，因为它们将使用迁移选择的默认名称。
+    您可以在本地现有数据库上手动进行这些更改，也可以考虑让迁移从头开始重新创建数据库，因为它将在其他计算机上进行。
+-   使用初始迁移的 Up 方法创建的数据库可能与本地数据库略有不同，因为将使用计算的索引和外键约束的默认名称。 你还可能最终会获得额外的索引，因为迁移将默认在外键列上创建索引-这可能不是你的原始本地数据库中的情况。
 
-### <a name="not-all-database-objects-are-represented-in-the-model"></a>在模型中表示并非所有数据库对象
+### <a name="not-all-database-objects-are-represented-in-the-model"></a>不是所有数据库对象都是在模型中表示的
 
-迁移将不处理不属于您的模型的数据库对象。 这可能包括视图、 存储的过程、 权限、 但不属于您的模型、 其他索引等的表。
+不属于您的模型的数据库对象将不会被迁移处理。 这可能包括视图、存储过程、权限、不是模型一部分的表、附加索引等。
 
-当您需要注意这一点时，以下是的一些示例：
+下面是需要注意的一些示例：
 
--   无论何种选项中选择"步骤 3"，如果您的模型中的未来更改需要更改或删除这些其他的对象迁移将不知道要进行这些更改。 例如，如果您删除对其具有一个附加的索引的列，迁移将不知道要删除的索引。 你将需要手动添加到基架生成的迁移。
--   如果您使用选项二： 使用空数据库作为起始点，在最初迁移 Up 方法将不会创建这些其他的对象。
-    可以修改向上并想关闭方法，如果需要注意的这些附加的对象。 对于在迁移 API-视图-等本机不支持的对象，可以使用[Sql](https://msdn.microsoft.com/library/system.data.entity.migrations.dbmigration.sql.aspx)方法来运行原始 SQL 以创建/删除它们。
+-   无论你在 "步骤 3" 中选择哪个选项，如果将来对模型进行更改，则需要更改或删除这些其他对象迁移将不知道进行这些更改。 例如，如果您删除了一个具有其他索引的列，迁移将不知道删除该索引。 你将需要手动将其添加到基架迁移。
+-   如果使用了 "Option 2：使用空数据库作为起始点 '，初始迁移的 "向上" 方法将不会创建这些附加对象。
+    如果需要，可以修改向上和向下方法来处理这些额外的对象。 对于迁移 API 中不是本机支持的对象（如视图），可以使用[Sql](https://msdn.microsoft.com/library/system.data.entity.migrations.dbmigration.sql.aspx)方法运行原始 Sql 来创建/删除它们。
