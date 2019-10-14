@@ -4,18 +4,18 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: 0dd4c5c4aa1a5d241fb48abf1372a678d0f7a7a3
-ms.sourcegitcommit: 6c28926a1e35e392b198a8729fc13c1c1968a27b
+ms.openlocfilehash: f7f04efa8fb8ebc1eb06f256b8ccbd3110af47ab
+ms.sourcegitcommit: 705e898b4684e639a57c787fb45c932a27650c2d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/02/2019
-ms.locfileid: "71813620"
+ms.lasthandoff: 10/03/2019
+ms.locfileid: "71934885"
 ---
 # <a name="breaking-changes-included-in-ef-core-30"></a>EF Core 3.0 中包含的中断性变更
 以下 API 和行为更改有可能使现有应用程序在升级到 3.0.0 时中断。
 我们将仅影响数据库提供程序的更改记录在[提供程序更改](xref:core/providers/provider-log)下。
 
-## <a name="summary"></a>摘要
+## <a name="summary"></a>总结
 
 | **重大更改**                                                                                               | **影响** |
 |:------------------------------------------------------------------------------------------------------------------|------------|
@@ -25,15 +25,17 @@ ms.locfileid: "71813620"
 | [DetectChanges 遵循存储生成的键值](#dc) | 高      |
 | [FromSql、ExecuteSql 和 ExecuteSqlAsync 已重命名](#fromsql) | 高      |
 | [查询类型与实体类型合并](#qt) | 高      |
-| [Entity Framework Core 不再是 ASP.NET Core 共享框架的一部分](#no-longer) | 中型      |
-| [默认情况下，现在会立即发生级联删除](#cascade) | 中型      |
-| [DeleteBehavior.Restrict 具有更简洁的语义](#deletebehavior) | 中型      |
-| [从属类型关系的配置 API 已更改](#config) | 中型      |
-| [每个属性使用独立的内存中整数键生成](#each) | 中型      |
-| [无跟踪查询不再执行标识解析](#notrackingresolution) | 中型      |
-| [元数据 API 更改](#metadata-api-changes) | 中型      |
-| [特定于提供程序的元数据 API 更改](#provider) | 中型      |
-| [UseRowNumberForPaging 已删除](#urn) | 中型      |
+| [Entity Framework Core 不再是 ASP.NET Core 共享框架的一部分](#no-longer) | 中等      |
+| [默认情况下，现在会立即发生级联删除](#cascade) | 中等      |
+| [单个查询中现在开始预先加载相关实体](#eager-loading-single-query) | 中等      |
+| [DeleteBehavior.Restrict 具有更简洁的语义](#deletebehavior) | 中等      |
+| [从属类型关系的配置 API 已更改](#config) | 中等      |
+| [每个属性使用独立的内存中整数键生成](#each) | 中等      |
+| [无跟踪查询不再执行标识解析](#notrackingresolution) | 中等      |
+| [元数据 API 更改](#metadata-api-changes) | 中等      |
+| [特定于提供程序的元数据 API 更改](#provider) | 中等      |
+| [UseRowNumberForPaging 已删除](#urn) | 中等      |
+| [FromSql 方法在与存储过程配合使用时，无法进行组合](#fromsqlsproc) | 中等      |
 | [只能在查询根上指定 FromSql 方法](#fromsql) | 低      |
 | [~~在调试级别记录查询执行~~已还原](#qe) | 低      |
 | [不再在实体实例上设置临时键值](#tkv) | 低      |
@@ -210,6 +212,35 @@ context.Products.FromSqlInterpolated(
 
 切换到使用新的方法名称。
 
+<a name="fromsqlsproc"></a>
+### <a name="fromsql-method-when-used-with-stored-procedure-cannot-be-composed"></a>FromSql 方法在与存储过程配合使用时，无法进行组合
+
+[跟踪问题 #15392](https://github.com/aspnet/EntityFrameworkCore/issues/15392)
+
+**旧行为**
+
+在 EF Core 3.0 之前，FromSql 方法已尝试检测是否可对传入的 SQL 进行组合。 当 SQL 像存储过程那样不可组合时，该方法进行客户端评估。 以下查询在服务器上运行存储过程并在客户端执行 FirstOrDefault。
+
+```C#
+context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").FirstOrDefault();
+```
+
+**新行为**
+
+从 EF Core 3.0 开始，EF Core 将不再尝试分析 SQL。 因此，如果在 FromSqlRaw/FromSqlInterpolated 之后组合，则 EF Core 会通过引发子查询来组合 SQL。 因此，如果将存储过程用于组合，则出现无效 SQL 语法的异常。
+
+**为什么**
+
+EF Core 3.0 不支持自动客户端评估，因为容易出错，如[此处](#linq-queries-are-no-longer-evaluated-on-the-client)所述。
+
+**缓解措施**
+
+如果在 FromSqlRaw/FromSqlInterpolated 中使用存储过程，你了解无法对其进行组合，因此可以紧随 FromSql 方法调用添加 AsEnumerable/AsAsyncEnumerable，以避免在服务器端上进行任何组合  。
+
+```C#
+context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").AsEnumerable().FirstOrDefault();
+```
+
 <a name="fromsql"></a>
 
 ### <a name="fromsql-methods-can-only-be-specified-on-query-roots"></a>只能在查询根上指定 FromSql 方法
@@ -366,6 +397,29 @@ public string Id { get; set; }
 context.ChangeTracker.CascadeDeleteTiming = CascadeTiming.OnSaveChanges;
 context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 ```
+<a name="eager-loading-single-query"></a>
+### <a name="eager-loading-of-related-entities-now-happens-in-a-single-query"></a>单个查询中现在开始预先加载相关实体
+
+[跟踪问题 #18022](https://github.com/aspnet/EntityFrameworkCore/issues/18022)
+
+**旧行为**
+
+在 3.0 之前，通过 `Include` 运算符预先加载集合导航会导致在关系数据库上生成多个查询，每个相关实体类型对应一个查询。
+
+**新行为**
+
+从 3.0 开始，EF Core 会在关系数据库上使用 JOIN 生成单个查询。
+
+**为什么**
+
+以发出多个查询的方式实现单个 LINQ 查询会导致出现许多问题，包括由于需要执行多次数据库往返而引起的性能不佳问题，以及每个查询都可能会观察到不同的数据库状态的数据不一致问题。
+
+**缓解措施**
+
+尽管从技术上讲，这不是一项中断性变更，但当单个查询在集合导航中包含大量 `Include` 运算符时，这可能对应用程序性能产生相当大的影响。 [请参阅此评论](https://github.com/aspnet/EntityFrameworkCore/issues/18022#issuecomment-537219137)，了解详细信息，以及如何以更有效的方式重写查询。
+
+**
+
 <a name="deletebehavior"></a>
 ### <a name="deletebehaviorrestrict-has-cleaner-semantics"></a>DeleteBehavior.Restrict 具有更简洁的语义
 
@@ -1156,7 +1210,7 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 **新行为**
 
 从 EF Core 3.0 开始，现在支持在关系级别上对索引使用 `Include`。
-使用 `HasIndex().ForSqlServerInclude()`。
+请使用 `HasIndex().ForSqlServerInclude()`。
 
 **为什么**
 

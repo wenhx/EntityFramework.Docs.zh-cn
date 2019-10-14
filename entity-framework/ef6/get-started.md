@@ -3,12 +3,12 @@ title: 开始使用 Entity Framework 6 - EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 66ce9113-81d2-480f-8c16-d00ec405b2f7
-ms.openlocfilehash: c25bf16bd2c39530d54b286b7743ceb83c941e4d
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: bf54879ea94e597dfeac3e4bd70571dad290dd9e
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45489280"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72181400"
 ---
 # <a name="get-started-with-entity-framework-6"></a>开始使用 Entity Framework 6
 
@@ -24,7 +24,7 @@ ms.locfileid: "45489280"
 
   是否希望指定 EF 模型编写代码或绘制方框和线条？
 是否要使用 EF 来将对象映射到现有数据库，或希望 EF 创建为对象量身打造的数据库？
-此处可学习使用 EF6 的两种不同方法：EF 设计器和 Code First。
+本文介绍了使用 EF6 的两种不同方法：EF 设计器和 Code First。
 请确保关注讨论内容并查看有关不同之处的视频。
 
 * [使用 DbContext](~/ef6/fundamentals/working-with-dbcontext.md)
@@ -35,7 +35,7 @@ ms.locfileid: "45489280"
 
   了解如何获取专家的帮助，并向社区贡献自己的答案。
 
-* [参与](http://github.com/aspnet/EntityFramework6/)
+* [参与](https://github.com/aspnet/EntityFramework6/)
 
   Entity Framework 6 采用开放式开发模型。 访问我们的 GitHub 存储库，了解如何帮助改进 EF。
 
