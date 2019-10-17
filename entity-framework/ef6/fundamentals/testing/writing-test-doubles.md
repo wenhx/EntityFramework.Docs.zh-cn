@@ -3,12 +3,12 @@ title: 用自己的测试进行测试双 EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 16a8b7c0-2d23-47f4-9cc0-e2eb2e738ca3
-ms.openlocfilehash: 4631206ae26d364e92c932857fa1970804a7a335
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: 3d8933fb5e17f8c01f3971495a1fcdb5b8cfab57
+ms.sourcegitcommit: 37d0e0fd1703467918665a64837dc54ad2ec7484
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181414"
+ms.lasthandoff: 10/16/2019
+ms.locfileid: "72446030"
 ---
 # <a name="testing-with-your-own-test-doubles"></a>用自己的测试进行测试双精度
 > [!NOTE]
@@ -157,9 +157,9 @@ namespace TestingDemo
         }
     }
 }
-```  
+```
 
-<a name="creating-the-in-memory-test-doubles"/> # # 创建内存中测试双精度数  
+## <a name="creating-the-in-memory-test-doubles"></a>创建内存中测试双精度  
 
 现在，我们已经有了真正的 EF 模型和可使用该模型的服务，接下来可以创建可用于测试的内存中测试双精度。 我们为上下文创建了 TestContext 测试 double。 在测试中，我们会选择所需的行为，以便支持我们将要运行的测试。 在此示例中，我们只是捕获调用 SaveChanges 的次数，但你可以包括验证所测试方案所需的任何逻辑。  
 

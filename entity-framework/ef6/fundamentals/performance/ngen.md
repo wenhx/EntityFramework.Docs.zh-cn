@@ -3,12 +3,12 @@ title: 通过 NGen 提高启动性能 EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: dc6110a0-80a0-4370-8190-cea942841cee
-ms.openlocfilehash: c9b5f8a06add9133d30955e3cc97a92e9b189bdf
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: 841aec645abdb2a56076d0b70bfb2614b0acafb4
+ms.sourcegitcommit: 37d0e0fd1703467918665a64837dc54ad2ec7484
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182683"
+ms.lasthandoff: 10/16/2019
+ms.locfileid: "72446006"
 ---
 # <a name="improving-startup-performance-with-ngen"></a>通过 NGen 改善启动性能
 > [!NOTE]
@@ -24,22 +24,26 @@ ms.locfileid: "72182683"
 
 Ngen.exe 工具的最基本功能是为程序集及其所有直接依赖项 "安装" （即创建和保留到磁盘）本机映像。 下面介绍如何实现此目的：  
 
-1. 以管理员身份打开 "命令提示符" 窗口  
-2. 将当前工作目录更改为你要为其生成本机映像的程序集的位置：  
+1. 以管理员身份打开 "命令提示符" 窗口。
+2. 将当前工作目录更改为你要为其生成本机映像的程序集的位置：
 
-  ``` console
-    cd <*Assemblies location*>  
-  ```
-3. 根据你的操作系统和应用程序的配置，可能需要为32位体系结构、64位体系结构或两者生成本机映像。  
+   ``` console
+   cd <*Assemblies location*>  
+   ```
 
-    对于32位运行：  
-  ``` console
-    %WINDIR%\Microsoft.NET\Framework\v4.0.30319\ngen install <Assembly name>  
-  ```
-    对于64位运行：
-  ``` console
-    %WINDIR%\Microsoft.NET\Framework64\v4.0.30319\ngen install <Assembly name>  
-  ```
+3. 根据你的操作系统和应用程序的配置，可能需要为32位体系结构、64位体系结构或两者生成本机映像。
+
+   对于32位运行：
+
+   ``` console
+   %WINDIR%\Microsoft.NET\Framework\v4.0.30319\ngen install <Assembly name>  
+   ```
+
+   对于64位运行：
+  
+   ``` console
+   %WINDIR%\Microsoft.NET\Framework64\v4.0.30319\ngen install <Assembly name>  
+   ```
 
 > [!TIP]
 > 生成错误体系结构的本机映像是一个非常常见的错误。 如果有疑问，只需为适用于计算机中安装的操作系统的所有体系结构生成本机映像。  
@@ -50,9 +54,9 @@ Ngen.exe 还支持其他功能，例如卸载和显示安装的本机映像、�
 
 当决定在基于 EF 版本6或更高版本的应用程序中为哪些程序集生成本机映像时，应考虑以下选项：  
 
-- **主要 EF 运行时程序集 EntityFramework**：基于 EF 的典型应用程序在启动时或在首次访问数据库时，将从该程序集执行大量的代码。 因此，创建此程序集的本机映像将产生最大的启动性能提升。  
-- **应用程序使用的任何 EF 提供程序程序集**：与生成这些的本机映像相比，启动时间也有很大的优势。 例如，如果应用程序使用 EF 提供程序进行 SQL Server 则需要为 EntityFramework 生成本机映像。  
-- **应用程序的程序集和其他依赖项**：[Ngen.exe 文档](https://msdn.microsoft.com/library/6t9t5wcf.aspx)介绍了选择哪些程序集生成本机映像的一般准则，以及本机映像对安全性的影响、高级选项（如 "硬绑定"）、方案（如在调试时使用本机映像）以及分析方案等。  
+- **主要 ef 运行时程序集 EntityFramework**：基于 EF 的典型应用程序在启动时或在首次访问数据库时，将从该程序集执行大量代码。 因此，创建此程序集的本机映像将产生最大的启动性能提升。  
+- **应用程序使用的任何 EF 提供程序程序集**：启动时间也可能与生成这些的本机映像稍微有利。 例如，如果应用程序使用 EF 提供程序进行 SQL Server 则需要为 EntityFramework 生成本机映像。  
+- **应用程序的程序集和其他依赖项**： [ngen.exe 文档](https://msdn.microsoft.com/library/6t9t5wcf.aspx)介绍了选择哪些程序集生成本机映像的常规条件，以及本机映像对安全性的影响、高级选项（如 "硬性绑定 "，如在调试和分析方案中使用本机映像等。  
 
 > [!TIP]
 > 请确保仔细衡量对应用程序的启动性能和总体性能的使用本机映像的影响，并将其与实际要求进行比较。 尽管本机映像通常有助于改善启动性能，但在某些情况下，会降低内存使用率，并非所有方案都将同样受益。 例如，在稳定状态执行（即，应用程序使用的所有方法都被调用了至少一次），JIT 编译器生成的代码实际上会产生比本机映像更好的性能。  

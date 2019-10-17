@@ -4,18 +4,18 @@ author: roji
 ms.date: 09/09/2019
 ms.assetid: bde4e0ee-fba3-4813-a849-27049323d301
 uid: core/miscellaneous/nullable-reference-types
-ms.openlocfilehash: ab35e63a6eeb2f02ed07a715fd65855b4d30eaf5
-ms.sourcegitcommit: 6c28926a1e35e392b198a8729fc13c1c1968a27b
+ms.openlocfilehash: 055f492214596506ce2c28485ade359d175c4ac2
+ms.sourcegitcommit: 37d0e0fd1703467918665a64837dc54ad2ec7484
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/02/2019
-ms.locfileid: "71813455"
+ms.lasthandoff: 10/16/2019
+ms.locfileid: "72445896"
 ---
 # <a name="working-with-nullable-reference-types"></a>使用可以为 Null 的引用类型
 
 C#8引入了一种名[为 null 的引用类型](/dotnet/csharp/tutorials/nullable-reference-types)的新功能，允许对引用类型进行批注，以指示它是否可用于包含 null。 如果你不熟悉此功能，则建议你通过阅读C#文档来使自己熟悉该功能。
 
-本页介绍 EF Core 支持可以为 null 的引用类型，并介绍了使用它们的最佳做法。
+此页介绍 EF Core 对可为 null 的引用类型的支持，并介绍了使用它们的最佳做法。
 
 ## <a name="required-and-optional-properties"></a>必需属性和可选属性
 
@@ -26,7 +26,7 @@ C#8引入了一种名[为 null 的引用类型](/dotnet/csharp/tutorials/nullabl
 
 ## <a name="dbcontext-and-dbset"></a>DbContext 和 DbSet
 
-如果启用了可以为 null 的引用C#类型，则编译器将为任何未初始化的不可为 null 的属性发出警告，因为这将包含 null。 因此，在上下文中定义不可为 null `DbSet`的常见做法现在会生成一个警告。 但是，EF Core 始终初始化 DbContext `DbSet`派生类型上的所有属性，因此即使编译器不知道此操作，也不能保证它们永远不会为 null。 因此，建议保留你`DbSet`的属性不能为 null-允许你在不使用 null 检查的情况下访问它们，并通过使用包容性运算符（！）的帮助将其显式设置为 null 来使编译器警告静音：
+如果启用了可以为 null 的引用C#类型，则编译器将为任何未初始化的不可为 null 的属性发出警告，因为这将包含 null。 因此，在上下文中定义不可为 null @no__t 0 的常见做法现在会生成一个警告。 但是，EF Core 始终在 DbContext 派生的类型上初始化所有 @no__t 的属性，因此即使编译器不知道此操作，也不能保证它们永远不会为 null。 因此，建议保留你的 `DbSet` 属性，使你能够在不能进行空检查的情况下访问它们，并通过使用包容性运算符（！）的帮助将其显式设置为 null 来使编译器警告静音：
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/NullableReferenceTypesContext.cs?name=Context&highlight=3-4)]
 
@@ -65,4 +65,4 @@ C#8引入了一种名[为 null 的引用类型](/dotnet/csharp/tutorials/nullabl
 
 ## <a name="scaffolding"></a>基架
 
-反向工程当前不支持[8 可为 Null 的C#引用类型功能](/dotnet/csharp/tutorials/nullable-reference-types)：EF Core 始终会C#生成假定功能已关闭的代码。 例如，可以将可为 null 的文本列基架为类型`string`为的属性，而不`string?`是用于配置是否需要属性的熟知 API 或数据批注。 您可以编辑基架代码并将其替换为C#可为 null 的批注。 [#15520](https://github.com/aspnet/EntityFrameworkCore/issues/15520)的问题跟踪了可为 null 的引用类型的基架支持。
+[反向C#工程当前不支持8可为 null 的引用类型功能](/dotnet/csharp/tutorials/nullable-reference-types)： EF Core 始终C#会生成假定功能已关闭的代码。 例如，可以将可为 null 的文本列基架为类型为 `string`，而不是 `string?` 的属性，其中使用的是用于配置是否需要属性的熟知 API 或数据批注。 您可以编辑基架代码并将其替换为C#可为 null 的批注。 [#15520](https://github.com/aspnet/EntityFrameworkCore/issues/15520)的问题跟踪了可为 null 的引用类型的基架支持。

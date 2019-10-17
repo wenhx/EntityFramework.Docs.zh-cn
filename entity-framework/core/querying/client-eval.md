@@ -4,12 +4,12 @@ author: smitpatel
 ms.date: 10/03/2019
 ms.assetid: 8b6697cc-7067-4dc2-8007-85d80503d123
 uid: core/querying/client-eval
-ms.openlocfilehash: 3d70324f0b57a0ea9b165b5140a2154001c326f4
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: 5cfb05041f04246712fb699f58b407f70a75ce92
+ms.sourcegitcommit: 37d0e0fd1703467918665a64837dc54ad2ec7484
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181905"
+ms.lasthandoff: 10/16/2019
+ms.locfileid: "72445970"
 ---
 # <a name="client-vs-server-evaluation"></a>客户端与服务器评估
 
@@ -18,10 +18,10 @@ ms.locfileid: "72181905"
 > [!NOTE]
 > 在 3.0 版之前，Entity Framework Core 支持在查询中的任何位置进行客户端评估。 有关详细信息，请参阅[历史版本部分](#previous-versions)。
 
-## <a name="client-evaluation-in-the-top-level-projection"></a>顶级投影中的客户端评估
-
 > [!TIP]
 > 可在 GitHub 上查看此文章的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying)。
+
+## <a name="client-evaluation-in-the-top-level-projection"></a>顶级投影中的客户端评估
 
 在下面的示例中，一个辅助方法用于标准化从 SQL Server 数据库中返回的博客的 URL。 由于 SQL Server 提供程序不了解此方法的实现方式，因此无法将其转换为 SQL。 查询的所有其余部分是在数据库中评估的，但通过此方法传递返回的 `URL` 却是在客户端上完成。
 

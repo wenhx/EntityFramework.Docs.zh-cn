@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: f7f04efa8fb8ebc1eb06f256b8ccbd3110af47ab
-ms.sourcegitcommit: 705e898b4684e639a57c787fb45c932a27650c2d
+ms.openlocfilehash: 690c7828cfe5019f4e7ae904c92430fab4726cb9
+ms.sourcegitcommit: 37d0e0fd1703467918665a64837dc54ad2ec7484
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/03/2019
-ms.locfileid: "71934885"
+ms.lasthandoff: 10/16/2019
+ms.locfileid: "72446013"
 ---
 # <a name="breaking-changes-included-in-ef-core-30"></a>EF Core 3.0 中包含的中断性变更
 以下 API 和行为更改有可能使现有应用程序在升级到 3.0.0 时中断。
@@ -416,7 +416,7 @@ context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 
 **缓解措施**
 
-尽管从技术上讲，这不是一项中断性变更，但当单个查询在集合导航中包含大量 `Include` 运算符时，这可能对应用程序性能产生相当大的影响。 [请参阅此评论](https://github.com/aspnet/EntityFrameworkCore/issues/18022#issuecomment-537219137)，了解详细信息，以及如何以更有效的方式重写查询。
+尽管从技术上讲，这不是一项中断性变更，但当单个查询在集合导航中包含大量 `Include` 运算符时，这可能对应用程序性能产生相当大的影响。 [请参阅此评论](https://github.com/aspnet/EntityFrameworkCore/issues/18022#issuecomment-542397085)，了解详细信息，以及如何以更有效的方式重写查询。
 
 **
 

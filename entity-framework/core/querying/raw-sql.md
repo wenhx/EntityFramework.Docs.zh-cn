@@ -4,19 +4,19 @@ author: smitpatel
 ms.date: 10/08/2019
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
 uid: core/querying/raw-sql
-ms.openlocfilehash: 33601d570fa0b7a1fcada1705843da3798c00094
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: b7087771f1a9e8ee5e044cfea367d74a0b1c1d35
+ms.sourcegitcommit: 37d0e0fd1703467918665a64837dc54ad2ec7484
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181972"
+ms.lasthandoff: 10/16/2019
+ms.locfileid: "72445920"
 ---
 # <a name="raw-sql-queries"></a>原生 SQL 查询
 
 通过 Entity Framework Core 可以在使用关系数据库时下降到原始 SQL 查询。 所需查询不能使用 LINQ 来表示时，可以使用原始 SQL 查询。 如果使用 LINQ 查询导致 SQL 查询效率低下，也可以使用原始 SQL 查询。 原始 SQL 查询可返回一般实体类型或者模型中的[无键实体类型](xref:core/modeling/keyless-entity-types)。
 
 > [!TIP]  
-> 可在 GitHub 上查看此文章的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying/RawSQL/Sample.cs)。
+> 可在 GitHub 上查看此文章的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying/)。
 
 ## <a name="basic-raw-sql-queries"></a>基本原生 SQL 查询
 
