@@ -175,22 +175,24 @@
           items:
             - name: 概述
               href: core/querying/index.md
-            - name: 加载相关数据
-              href: core/querying/related-data.md
             - name: 客户端与服务器评估
               href: core/querying/client-eval.md
             - name: 跟踪与非跟踪
               href: core/querying/tracking.md
-            - name: 原生 SQL 查询
-              href: core/querying/raw-sql.md
+            - name: 复杂查询运算符
+              href: core/querying/complex-query-operators.md
+            - name: 加载相关数据
+              href: core/querying/related-data.md
             - name: 异步查询
               href: core/querying/async.md
-            - name: 查询的工作原理
-              href: core/querying/how-query-works.md
+            - name: 原生 SQL 查询
+              href: core/querying/raw-sql.md
             - name: 全局查询筛选器
               href: core/querying/filters.md
             - name: 查询标记
               href: core/querying/tags.md
+            - name: 查询的工作原理
+              href: core/querying/how-query-works.md
         - name: 保存数据
           items:
             - name: 概述
