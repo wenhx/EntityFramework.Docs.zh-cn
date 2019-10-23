@@ -4,15 +4,14 @@ author: bricelam
 ms.author: bricelam
 ms.date: 10/05/2018
 uid: core/managing-schemas/migrations/index
-ms.openlocfilehash: ffa9a34f13ab29f0ba93f9fd1f469398630604ce
-ms.sourcegitcommit: d01fc19aa42ca34c3bebccbc96ee26d06fcecaa2
+ms.openlocfilehash: e9c4013d17a2d41772822f77b3ceba15702ffc48
+ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/16/2019
-ms.locfileid: "71005450"
+ms.lasthandoff: 10/23/2019
+ms.locfileid: "72812060"
 ---
-<a name="migrations"></a>迁移
-==========
+# <a name="migrations"></a>迁移
 
 开发期间，数据模型将发生更改并与数据库不同步。 可以删除该数据库，让 EF 创建一个新的数据库来匹配该模型，但此过程会导致数据丢失。 EF Core 中的迁移功能能够以递增方式更新数据库架构，使其与应用程序的数据模型保持同步，同时保留数据库中的现有数据。
 
@@ -29,21 +28,21 @@ ms.locfileid: "71005450"
 > [!TIP]
 > 如果 `DbContext` 与启动项目位于不同程序集中，可以在[包管理器控制台工具](xref:core/miscellaneous/cli/powershell#target-and-startup-project)或 [.NET Core CLI 工具](xref:core/miscellaneous/cli/dotnet#target-project-and-startup-project)中显式指定目标和启动项目。
 
-<a name="install-the-tools"></a>安装工具
------------------
+## <a name="install-the-tools"></a>安装工具
 
 安装[命令提示符工具](xref:core/miscellaneous/cli/index)：
+
 * 对于 Visual Studio，建议使用 [包管理器控制台工具](xref:core/miscellaneous/cli/powershell)。
 * 对于其他开发环境，请选择 [.NET Core CLI 工具](xref:core/miscellaneous/cli/dotnet)。
 
-<a name="create-a-migration"></a>创建迁移
-------------------
+## <a name="create-a-migration"></a>创建迁移
 
 [定义初始模型](xref:core/modeling/index)后，即应创建数据库。 若要添加初始迁移，请运行以下命令。
 
 ``` powershell
 Add-Migration InitialCreate
 ```
+
 ``` Console
 dotnet ef migrations add InitialCreate
 ```
@@ -59,26 +58,26 @@ dotnet ef migrations add InitialCreate
 > [!TIP]
 > 可以自由移动“Migrations”目录下的迁移文件并更改其命名空间。 新建的迁移和上个迁移同级。
 
-<a name="update-the-database"></a>更新数据库
--------------------
+## <a name="update-the-database"></a>更新数据库
 
 接下来，将迁移应用到数据库以创建架构。
 
 ``` powershell
 Update-Database
 ```
+
 ``` Console
 dotnet ef database update
 ```
 
-<a name="customize-migration-code"></a>自定义迁移代码
-------------------------
+## <a name="customize-migration-code"></a>自定义迁移代码
 
 更改 EF Core 模型后，数据库架构可能不同步。为使其保持最新，请再添加一个迁移。 迁移名称的用途与版本控制系统中的提交消息类似。 例如，如果更改对于评审是一个新的实体类，可以选择一个名称，如 AddProductReviews  。
 
 ``` powershell
 Add-Migration AddProductReviews
 ```
+
 ``` Console
 dotnet ef migrations add AddProductReviews
 ```
@@ -133,6 +132,7 @@ migrationBuilder.DropColumn(
 ``` powershell
 Update-Database
 ```
+
 ``` Console
 dotnet ef database update
 ```
@@ -147,37 +147,40 @@ dotnet ef database update
 * 触发器
 * 视图
 
-<a name="remove-a-migration"></a>删除迁移
-------------------
+## <a name="remove-a-migration"></a>删除迁移
+
 有时，你可能在添加迁移后意识到需要在应用迁移前对 EF Core 模型作出其他更改。 要删除上个迁移，请使用如下命令。
 
 ``` powershell
 Remove-Migration
 ```
+
 ``` Console
 dotnet ef migrations remove
 ```
 
 删除迁移后，可对模型作出其他更改，然后再次添加迁移。
 
-<a name="revert-a-migration"></a>还原迁移
-------------------
+## <a name="revert-a-migration"></a>还原迁移
+
 如果已对数据库应用一个迁移（或多个迁移），但需将其复原，则可使用同一命令来应用迁移，并指定回退时的目标迁移名称。
 
 ``` powershell
 Update-Database LastGoodMigration
 ```
+
 ``` Console
 dotnet ef database update LastGoodMigration
 ```
 
-<a name="generate-sql-scripts"></a>生成 SQL 脚本
---------------------
+## <a name="generate-sql-scripts"></a>生成 SQL 脚本
+
 调试迁移或将其部署到生产数据库时，生成一个 SQL 脚本很有帮助。 之后可进一步检查该脚本的准确性，并对其作出调整以满足生产数据库的需求。 该脚本还可与部署技术结合使用。 基本命令如下。
 
 ``` powershell
 Script-Migration
 ```
+
 ``` Console
 dotnet ef migrations script
 ```
@@ -190,8 +193,8 @@ to 迁移是运行该脚本后应用到数据库的最后一个迁移  。 它�
 
 可以选择生成 idempotent 脚本  。 此脚本仅会应用尚未应用到数据库的迁移。 如果不确知应用到数据库的最后一个迁移或需要部署到多个可能分别处于不同迁移的数据库，此脚本非常有用。
 
-<a name="apply-migrations-at-runtime"></a>在运行时应用迁移
----------------------------
+## <a name="apply-migrations-at-runtime"></a>在运行时应用迁移
+
 启动或首次运行期间，一些应用可能需要在运行时应用迁移。 为此，请使用 `Migrate()` 方法。
 
 此方法构建于 `IMigrator` 服务之上，该服务可用于更多高级方案。 请使用 `myDbContext.GetInfrastructure().GetService<IMigrator>()` 进行访问。
@@ -201,10 +204,10 @@ myDbContext.Database.Migrate();
 ```
 
 > [!WARNING]
+>
 > * 此方法并不适合所有人。 尽管此方法非常适合具有本地数据库的应用，但是大多数应用程序需要更可靠的部署策略，例如生成 SQL 脚本。
 > * 请勿在 `Migrate()` 前调用 `EnsureCreated()`。 `EnsureCreated()` 会绕过迁移创建架构，这会导致 `Migrate()` 失败。
 
-<a name="next-steps"></a>后续步骤
-----------
+## <a name="next-steps"></a>后续步骤
 
 有关详细信息，请参阅 <xref:core/miscellaneous/cli/index>。
