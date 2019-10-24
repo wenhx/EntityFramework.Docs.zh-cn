@@ -4,12 +4,12 @@ author: divega
 ms.date: 09/12/2019
 ms.assetid: 41d1f86b-ce66-4bf2-8963-48514406fb4c
 uid: ef6/what-is-new/index
-ms.openlocfilehash: c49f4cba0066d1e218f11c3959d96f9cafa913f4
-ms.sourcegitcommit: 7bc43f21e7bdd64926314ea949aae689f1911956
+ms.openlocfilehash: 9daae787d0cec0ca536413e6263bb363ba76ff2c
+ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/25/2019
-ms.locfileid: "71266786"
+ms.lasthandoff: 10/23/2019
+ms.locfileid: "72812133"
 ---
 # <a name="whats-new-in-ef6"></a>EF6 中的新增功能
 
@@ -25,9 +25,9 @@ EF 6.3.0 运行时已于 2019 年 9 月发布到 NuGet。 此版本的主要目�
   - 除了 .NET Framework 4.x，EntityFramework 包现在还面向 .NET Standard 2.1。
   - 这意味着 EF 6.3 是跨平台的，并在 Windows 之外的其他操作系统（如 Linux 和 macOS）上受支持。
   - 已重新编写迁移命令以在进程外执行，并使用 SDK 样式的项目。
-- 支持 SQL Server HierarchyId
-- 提高了与 Roslyn 和 NuGet PackageReference 的兼容性
-- 添加了 `ef6.exe` 实体工具，用于启用、添加、编写脚本和应用程序集中的迁移。 这会替换 `migrate.exe`
+- 支持 SQL Server HierarchyId。
+- 提高了与 Roslyn 和 NuGet PackageReference 的兼容性。
+- 添加了 `ef6.exe` 实体工具，用于启用、添加、编写脚本和应用程序集中的迁移。 这会替换 `migrate.exe`。
 
 ### <a name="ef-designer-support"></a>EF 设计器支持
 
