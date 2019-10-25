@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: 690c7828cfe5019f4e7ae904c92430fab4726cb9
-ms.sourcegitcommit: 37d0e0fd1703467918665a64837dc54ad2ec7484
+ms.openlocfilehash: b2e3881e3454377dab7851cba999ed6b891def4e
+ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/16/2019
-ms.locfileid: "72446013"
+ms.lasthandoff: 10/23/2019
+ms.locfileid: "72812120"
 ---
 # <a name="breaking-changes-included-in-ef-core-30"></a>EF Core 3.0 中包含的中断性变更
 以下 API 和行为更改有可能使现有应用程序在升级到 3.0.0 时中断。
@@ -69,6 +69,7 @@ ms.locfileid: "72446013"
 | [Microsoft.EntityFrameworkCore.Design 现在是 DevelopmentDependency 包](#dip) | 低      |
 | [SQLitePCL.raw 已更新为版本 2.0.0](#SQLitePCL) | 低      |
 | [NetTopologySuite 已更新为版本 2.0.0](#NetTopologySuite) | 低      |
+| [使用 Microsoft.Data.SqlClient 而不是 System.Data.SqlClient](#SqlClient) | 低      |
 | [必须配置多个不明确的自引用关系](#mersa) | 低      |
 | [DbFunction.Schema 为 null 或者空字符串将其配置为位于模型的默认架构中](#udf-empty-string) | 低      |
 
@@ -1626,6 +1627,29 @@ NetTopologySuite 2.0.0 版旨在解决 EF Core 用户遇到的几个可用性问
 **缓解措施**
 
 NetTopologySuite 2.0.0 版包括一些重大更改。 有关详细信息，请参阅[发行说明](https://www.nuget.org/packages/NetTopologySuite/2.0.0-pre001)。
+
+<a name="SqlClient"></a>
+
+### <a name="microsoftdatasqlclient-is-used-instead-of-systemdatasqlclient"></a>使用 Microsoft.Data.SqlClient 而不是 System.Data.SqlClient
+
+[跟踪问题 #15636](https://github.com/aspnet/EntityFrameworkCore/issues/15636)
+
+**旧行为**
+
+Microsoft.EntityFrameworkCore.SqlServer 以前依赖 System.Data.SqlClient。
+
+**新行为**
+
+我们已将包更新为依赖 Microsoft.Data.SqlClient。
+
+**为什么**
+
+Microsoft.Data.SqlClient 是今后用于 SQL Server 的旗舰版数据访问驱动程序。而 System.Data.SqlClient 不再是开发的重点。
+一些重要功能（例如 Always Encrypted）仅可在 Microsoft.Data.SqlClient 上使用。
+
+**缓解措施**
+
+如果你的代码直接依赖于 System.Data.SqlClient，则必须将其更改为 Microsoft.Data.SqlClient；由于这两个包与 API 的兼容性都非常高，因此这只是简单的包和命名空间更改。
 
 <a name="mersa"></a>
 
