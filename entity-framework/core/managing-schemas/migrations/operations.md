@@ -4,27 +4,26 @@ author: bricelam
 ms.author: bricelam
 ms.date: 11/07/2017
 uid: core/managing-schemas/migrations/operations
-ms.openlocfilehash: 93de6ee1b2eda1875188ace6eda299260fbcc1fe
-ms.sourcegitcommit: 082946dcaa1ee5174e692dbfe53adeed40609c6a
+ms.openlocfilehash: bd2bfdc24977a47eaf7a6756a88b758b563d818a
+ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2018
-ms.locfileid: "51028078"
+ms.lasthandoff: 10/23/2019
+ms.locfileid: "72812045"
 ---
-<a name="custom-migrations-operations"></a><span data-ttu-id="a0676-102">自定义迁移操作</span><span class="sxs-lookup"><span data-stu-id="a0676-102">Custom Migrations Operations</span></span>
-============================
-<span data-ttu-id="a0676-103">MigrationBuilder API，可在迁移过程中执行许多不同类型的操作，但它并不详尽。</span><span class="sxs-lookup"><span data-stu-id="a0676-103">The MigrationBuilder API allows you to perform many different kinds of operations during a migration, but it's far from exhaustive.</span></span> <span data-ttu-id="a0676-104">但是，该 API 是还可扩展允许您定义自己的操作。</span><span class="sxs-lookup"><span data-stu-id="a0676-104">However, the API is also extensible allowing you to define your own operations.</span></span> <span data-ttu-id="a0676-105">有两种方法来扩展 API： 使用`Sql()`方法，或通过定义自定义`MigrationOperation`对象。</span><span class="sxs-lookup"><span data-stu-id="a0676-105">There are two ways to extend the API: Using the `Sql()` method, or by defining custom `MigrationOperation` objects.</span></span>
+# <a name="custom-migrations-operations"></a><span data-ttu-id="9d037-102">自定义迁移操作</span><span class="sxs-lookup"><span data-stu-id="9d037-102">Custom Migrations Operations</span></span>
 
-<span data-ttu-id="a0676-106">为了演示，让我们看一下实现创建使用每种方法的数据库用户的操作。</span><span class="sxs-lookup"><span data-stu-id="a0676-106">To illustrate, let's look at implementing an operation that creates a database user using each approach.</span></span> <span data-ttu-id="a0676-107">在我们迁移中，我们想要启用编写以下代码：</span><span class="sxs-lookup"><span data-stu-id="a0676-107">In our migrations, we want to enable writing the following code:</span></span>
+<span data-ttu-id="9d037-103">借助 MigrationBuilder API，你可以在迁移过程中执行多种不同的操作，但远远超出了这一过程。</span><span class="sxs-lookup"><span data-stu-id="9d037-103">The MigrationBuilder API allows you to perform many different kinds of operations during a migration, but it's far from exhaustive.</span></span> <span data-ttu-id="9d037-104">不过，API 也可通过扩展来定义自己的操作。</span><span class="sxs-lookup"><span data-stu-id="9d037-104">However, the API is also extensible allowing you to define your own operations.</span></span> <span data-ttu-id="9d037-105">可以通过两种方法来扩展 API：使用 `Sql()` 方法，或者通过定义自定义 `MigrationOperation` 对象。</span><span class="sxs-lookup"><span data-stu-id="9d037-105">There are two ways to extend the API: Using the `Sql()` method, or by defining custom `MigrationOperation` objects.</span></span>
+
+<span data-ttu-id="9d037-106">为了说明这一点，让我们看一下如何实现使用每种方法创建数据库用户的操作。</span><span class="sxs-lookup"><span data-stu-id="9d037-106">To illustrate, let's look at implementing an operation that creates a database user using each approach.</span></span> <span data-ttu-id="9d037-107">在我们的迁移中，我们希望能够编写以下代码：</span><span class="sxs-lookup"><span data-stu-id="9d037-107">In our migrations, we want to enable writing the following code:</span></span>
 
 ``` csharp
 migrationBuilder.CreateUser("SQLUser1", "Password");
 ```
 
-<a name="using-migrationbuildersql"></a><span data-ttu-id="a0676-108">使用 MigrationBuilder.Sql()</span><span class="sxs-lookup"><span data-stu-id="a0676-108">Using MigrationBuilder.Sql()</span></span>
-----------------------------
-<span data-ttu-id="a0676-109">若要实现自定义操作的最简单方法是定义扩展方法的调用`MigrationBuilder.Sql()`。</span><span class="sxs-lookup"><span data-stu-id="a0676-109">The easiest way to implement a custom operation is to define an extension method that calls `MigrationBuilder.Sql()`.</span></span>
-<span data-ttu-id="a0676-110">下面是生成相应的 TRANSACT-SQL 示例。</span><span class="sxs-lookup"><span data-stu-id="a0676-110">Here is an example that generates the appropriate Transact-SQL.</span></span>
+## <a name="using-migrationbuildersql"></a><span data-ttu-id="9d037-108">使用 MigrationBuilder （）</span><span class="sxs-lookup"><span data-stu-id="9d037-108">Using MigrationBuilder.Sql()</span></span>
+
+<span data-ttu-id="9d037-109">实现自定义操作的最简单方法是定义调用 `MigrationBuilder.Sql()`的扩展方法。</span><span class="sxs-lookup"><span data-stu-id="9d037-109">The easiest way to implement a custom operation is to define an extension method that calls `MigrationBuilder.Sql()`.</span></span> <span data-ttu-id="9d037-110">下面是生成相应 Transact-sql 的示例。</span><span class="sxs-lookup"><span data-stu-id="9d037-110">Here is an example that generates the appropriate Transact-SQL.</span></span>
 
 ``` csharp
 static MigrationBuilder CreateUser(
@@ -34,7 +33,7 @@ static MigrationBuilder CreateUser(
     => migrationBuilder.Sql($"CREATE USER {name} WITH PASSWORD '{password}';");
 ```
 
-<span data-ttu-id="a0676-111">如果迁移需要支持多个数据库提供程序，则可以使用`MigrationBuilder.ActiveProvider`属性。</span><span class="sxs-lookup"><span data-stu-id="a0676-111">If your migrations need to support multiple database providers, you can use the `MigrationBuilder.ActiveProvider` property.</span></span> <span data-ttu-id="a0676-112">下面是支持 Microsoft SQL Server 和 PostgreSQL 示例。</span><span class="sxs-lookup"><span data-stu-id="a0676-112">Here's an example supporting both Microsoft SQL Server and PostgreSQL.</span></span>
+<span data-ttu-id="9d037-111">如果迁移需要支持多个数据库提供程序，则可以使用 "`MigrationBuilder.ActiveProvider`" 属性。</span><span class="sxs-lookup"><span data-stu-id="9d037-111">If your migrations need to support multiple database providers, you can use the `MigrationBuilder.ActiveProvider` property.</span></span> <span data-ttu-id="9d037-112">下面是同时支持 Microsoft SQL Server 和 PostgreSQL 的示例。</span><span class="sxs-lookup"><span data-stu-id="9d037-112">Here's an example supporting both Microsoft SQL Server and PostgreSQL.</span></span>
 
 ``` csharp
 static MigrationBuilder CreateUser(
@@ -57,11 +56,11 @@ static MigrationBuilder CreateUser(
 }
 ```
 
-<span data-ttu-id="a0676-113">此方法仅适用于您知道每个提供程序的应用自定义操作的位置。</span><span class="sxs-lookup"><span data-stu-id="a0676-113">This approach only works if you know every provider where your custom operation will be applied.</span></span>
+<span data-ttu-id="9d037-113">此方法仅在知道将应用自定义操作的每个提供程序时才有效。</span><span class="sxs-lookup"><span data-stu-id="9d037-113">This approach only works if you know every provider where your custom operation will be applied.</span></span>
 
-<a name="using-a-migrationoperation"></a><span data-ttu-id="a0676-114">使用 MigrationOperation</span><span class="sxs-lookup"><span data-stu-id="a0676-114">Using a MigrationOperation</span></span>
----------------------------
-<span data-ttu-id="a0676-115">若要分离 SQL 的自定义操作，你可以定义自己`MigrationOperation`代表它。</span><span class="sxs-lookup"><span data-stu-id="a0676-115">To decouple the custom operation from the SQL, you can define your own `MigrationOperation` to represent it.</span></span> <span data-ttu-id="a0676-116">该操作然后传递给提供程序以便它可以确定相应的 SQL 生成。</span><span class="sxs-lookup"><span data-stu-id="a0676-116">The operation is then passed to the provider so it can determine the appropriate SQL to generate.</span></span>
+## <a name="using-a-migrationoperation"></a><span data-ttu-id="9d037-114">使用 MigrationOperation</span><span class="sxs-lookup"><span data-stu-id="9d037-114">Using a MigrationOperation</span></span>
+
+<span data-ttu-id="9d037-115">若要将自定义操作与 SQL 分离，可以定义自己的 `MigrationOperation` 来表示它。</span><span class="sxs-lookup"><span data-stu-id="9d037-115">To decouple the custom operation from the SQL, you can define your own `MigrationOperation` to represent it.</span></span> <span data-ttu-id="9d037-116">然后，将操作传递给提供程序，以便它可以确定要生成的相应 SQL。</span><span class="sxs-lookup"><span data-stu-id="9d037-116">The operation is then passed to the provider so it can determine the appropriate SQL to generate.</span></span>
 
 ``` csharp
 class CreateUserOperation : MigrationOperation
@@ -71,7 +70,7 @@ class CreateUserOperation : MigrationOperation
 }
 ```
 
-<span data-ttu-id="a0676-117">使用此方法时，扩展方法只需添加到这些操作之一`MigrationBuilder.Operations`。</span><span class="sxs-lookup"><span data-stu-id="a0676-117">With this approach, the extension method just needs to add one of these operations to `MigrationBuilder.Operations`.</span></span>
+<span data-ttu-id="9d037-117">利用此方法，扩展方法只需将其中一个操作添加到 `MigrationBuilder.Operations`。</span><span class="sxs-lookup"><span data-stu-id="9d037-117">With this approach, the extension method just needs to add one of these operations to `MigrationBuilder.Operations`.</span></span>
 
 ``` csharp
 static MigrationBuilder CreateUser(
@@ -90,7 +89,7 @@ static MigrationBuilder CreateUser(
 }
 ```
 
-<span data-ttu-id="a0676-118">这种方法需要知道如何在此操作生成的 SQL 每个提供程序其`IMigrationsSqlGenerator`服务。</span><span class="sxs-lookup"><span data-stu-id="a0676-118">This approach requires each provider to know how to generate SQL for this operation in their `IMigrationsSqlGenerator` service.</span></span> <span data-ttu-id="a0676-119">下面是示例重写以处理新的操作的 SQL Server 的生成器。</span><span class="sxs-lookup"><span data-stu-id="a0676-119">Here is an example overriding the SQL Server's generator to handle the new operation.</span></span>
+<span data-ttu-id="9d037-118">此方法要求每个提供程序都知道如何在 `IMigrationsSqlGenerator` 服务中为此操作生成 SQL。</span><span class="sxs-lookup"><span data-stu-id="9d037-118">This approach requires each provider to know how to generate SQL for this operation in their `IMigrationsSqlGenerator` service.</span></span> <span data-ttu-id="9d037-119">下面是一个示例，用于重写 SQL Server 的生成器来处理新操作。</span><span class="sxs-lookup"><span data-stu-id="9d037-119">Here is an example overriding the SQL Server's generator to handle the new operation.</span></span>
 
 ``` csharp
 class MyMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
@@ -135,7 +134,7 @@ class MyMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
 }
 ```
 
-<span data-ttu-id="a0676-120">将更新一个替换为默认迁移 sql 生成器服务。</span><span class="sxs-lookup"><span data-stu-id="a0676-120">Replace the default migrations sql generator service with the updated one.</span></span>
+<span data-ttu-id="9d037-120">将默认迁移 sql 生成器服务替换为已更新的。</span><span class="sxs-lookup"><span data-stu-id="9d037-120">Replace the default migrations sql generator service with the updated one.</span></span>
 
 ``` csharp
 protected override void OnConfiguring(DbContextOptionsBuilder options)
