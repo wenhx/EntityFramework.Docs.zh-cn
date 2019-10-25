@@ -1,15 +1,15 @@
 ---
-title: 继承 （关系数据库） 的 EF Core
+title: 继承（关系数据库）-EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 9a7c5488-aaf4-4b40-b1ff-f435ff30f6ec
 uid: core/modeling/relational/inheritance
-ms.openlocfilehash: a7fb19f9c86d1768967d172c006eb5d894254e0c
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: c660107619470a726fe13ad8eee2850749e6dcd9
+ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71196942"
+ms.lasthandoff: 10/23/2019
+ms.locfileid: "72812090"
 ---
 # <a name="inheritance-relational-database"></a>继承（关系数据库）
 
@@ -19,13 +19,13 @@ ms.locfileid: "71196942"
 EF 模型中的继承用于控制如何在数据库中表示实体类中的继承。
 
 > [!NOTE]  
-> 目前，每个层次结构一个表的 (TPH) 模式在 EF Core 实现。 其他常见模式（例如每种类型一个表（TPT））和每个具体的表类型（TPC）尚不可用。
+> 目前，EF Core 中仅实现了每个层次结构一个表（TPH）模式。 其他常见模式（例如每种类型一个表（TPT））和每个具体的表类型（TPC）尚不可用。
 
 ## <a name="conventions"></a>约定
 
 按照约定，将使用每个层次结构一个表（TPH）模式映射继承。 TPH 使用单个表来存储层次结构中所有类型的数据。 鉴别器列用于标识每行所表示的类型。
 
-在模型中显式包含两个或多个继承的类型时，EF Core 将仅安装程序继承 (请参阅[继承](../inheritance.md)有关详细信息)。
+如果模型中显式包括两个或更多个继承类型，EF Core 将仅设置继承（有关更多详细信息，请参阅[继承](../inheritance.md)）。
 
 下面的示例演示了一个简单的继承方案，以及使用 TPH 模式存储在关系数据库表中的数据。 *鉴别*器列标识每个行中存储哪种类型的*博客*。
 
@@ -100,6 +100,7 @@ modelBuilder.Entity<Blog>()
 ```
 
 鉴别器还可以映射到实体中的实际 CLR 属性。 例如:
+
 ```C#
 class MyContext : DbContext
 {
@@ -126,6 +127,7 @@ public class RssBlog : Blog
 ```
 
 将这两个内容组合在一起可以将鉴别器映射到实际属性并对其进行配置：
+
 ```C#
 modelBuilder.Entity<Blog>(b =>
 {

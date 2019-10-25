@@ -1,29 +1,30 @@
 ---
-title: 多个项目的 EF Core 的迁移
+title: 使用单独的迁移项目-EF Core
 author: bricelam
 ms.author: bricelam
 ms.date: 10/30/2017
 uid: core/managing-schemas/migrations/projects
-ms.openlocfilehash: 30a6afad1488e74ce2585be3d780186311379a97
-ms.sourcegitcommit: ad1bdea58ed35d0f19791044efe9f72f94189c18
+ms.openlocfilehash: 0082b0af2905fe9e5c3c6509516f622c9d4f8370
+ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/28/2018
-ms.locfileid: "47447139"
+ms.lasthandoff: 10/23/2019
+ms.locfileid: "72812030"
 ---
-<a name="using-a-separate-project"></a>使用一个独立的项目
-========================
-你可能希望将迁移保存在一个独立的程序集当中，而不是和`DbContext`放在同一个程序集中。 你也可以通过这个策略维护多个迁移集合（针对同一个DbContext）。比如，一份迁移用于开发环境升级，另一份用于发布环境的升级。
+# <a name="using-a-separate-migrations-project"></a>使用单独的迁移项目
 
-为此...
+你可能想要将迁移存储在与包含你的 `DbContext`的程序集不同的程序集中。 你还可以使用此策略来维护多个迁移集，例如，一个用于开发，另一个用于发布到发布升级。
+
+若要执行此操作...
 
 1. 创建一个新的类库。
 
-2. 为该类库添加对 DbContext 所在程序集的引用。
+2. 添加对 DbContext 程序集的引用。
 
-3. 将迁移和模型快照文件移动到这个新类库。
+3. 将迁移和模型快照文件移动到类库。
    > [!TIP]
-   > 如果没有现存的迁移，必须先在 DbContext 所在项目中生成一个迁移，再将其移到上述独立类库项目中。 这非常重要，因为如果迁移程序集不包含现有的迁移，将找不到 DbContext Add-migration 命令。
+   > 如果没有现有迁移，请在包含 DbContext 的项目中生成一个迁移，然后移动它。
+   > 这一点很重要，因为如果迁移程序集不包含现有迁移，则添加迁移命令将无法找到 DbContext。
 
 4. 配置迁移程序集：
 
@@ -33,8 +34,8 @@ ms.locfileid: "47447139"
        x => x.MigrationsAssembly("MyApp.Migrations"));
    ```
 
-5. 为迁移程序集添加对启动程序集的引用。
-   * 如果此操作导致循环依赖，则需修改类库的输出路径：
+5. 从启动程序集添加对迁移程序集的引用。
+   * 如果这导致循环依赖项，请更新类库的输出路径：
 
      ``` xml
      <PropertyGroup>
@@ -42,11 +43,12 @@ ms.locfileid: "47447139"
      </PropertyGroup>
      ```
 
-如果您的操作全部正确，您应能够向项目添加新迁移。
+如果一切正常，应能够向项目添加新的迁移。
 
 ``` powershell
 Add-Migration NewMigration -Project MyApp.Migrations
 ```
+
 ``` Console
 dotnet ef migrations add NewMigration --project MyApp.Migrations
 ```

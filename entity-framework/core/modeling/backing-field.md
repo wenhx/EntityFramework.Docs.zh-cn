@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: a628795e-64df-4f24-a5e8-76bc261e7ed8
 uid: core/modeling/backing-field
-ms.openlocfilehash: c3ca8bb97992c192672e8c2f2040b0de029df68d
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 288440a4494117fe59d27187e24424c4d2fd44ab
+ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197479"
+ms.lasthandoff: 10/23/2019
+ms.locfileid: "72811875"
 ---
 # <a name="backing-fields"></a>支持字段
 
@@ -51,16 +51,12 @@ ms.locfileid: "71197479"
 
 您还可以在您的模型中创建一个概念属性，该属性在实体类中不具有相应的 CLR 属性，而是使用字段来存储实体中的数据。 这不同于[阴影属性](shadow-properties.md)，其中的数据存储在更改跟踪器中。 如果实体类使用方法获取/设置值，通常会使用此方法。
 
-可以在`Property(...)` API 中为 EF 指定字段的名称。 如果没有具有给定名称的属性，则 EF 将查找字段。
+可以为 EF 指定 `Property(...)` API 中的字段的名称。 如果没有具有给定名称的属性，则 EF 将查找字段。
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingFieldNoProperty.cs#Sample)]
 
-您还可以选择为属性指定名称，而不是字段名称。 然后，在创建模型时使用此名称，最值得注意的是，该名称将用于在数据库中映射到的列名称。
-
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingFieldConceptualProperty.cs#Sample)]
-
-如果实体类中没有属性，则可以在 LINQ 查询中使用`EF.Property(...)`方法来引用概念上是模型的一部分的属性。
+如果实体类中没有属性，则可以在 LINQ 查询中使用 `EF.Property(...)` 方法来引用概念上是模型的一部分的属性。
 
 ``` csharp
-var blogs = db.blogs.OrderBy(b => EF.Property<string>(b, "Url"));
+var blogs = db.blogs.OrderBy(b => EF.Property<string>(b, "_validatedUrl"));
 ```
