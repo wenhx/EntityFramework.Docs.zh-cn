@@ -5,12 +5,12 @@ ms.author: bricelam
 ms.date: 11/01/2018
 ms.assetid: 2BDE29FC-4161-41A0-841E-69F51CCD9341
 uid: core/modeling/spatial
-ms.openlocfilehash: cced53edadb890e4e86753ec2628218ffc4d1d5b
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: 335d4f3a601624f7c994b7dcacefe4ef6798beb3
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181382"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73655601"
 ---
 # <a name="spatial-data"></a>空间数据
 
@@ -46,7 +46,7 @@ optionsBuilder.UseSqlServer(
     x => x.UseNetTopologySuite());
 ```
 
-有几种空间数据类型。 使用哪种类型取决于您想要允许的形状的类型。 下面是可用于模型中的属性的 NTS 类型的层次结构。 它们位于 `NetTopologySuite.Geometries` 命名空间内。
+有几种空间数据类型。 使用哪种类型取决于您想要允许的形状的类型。 下面是可用于模型中的属性的 NTS 类型的层次结构。 它们位于 `NetTopologySuite.Geometries` 命名空间中。
 
 * Geometry
   * 点
@@ -101,7 +101,7 @@ var currentLocation = geometryFactory.CreatePoint(-122.121512, 47.6739882);
 
 ### <a name="longitude-and-latitude"></a>经度和纬度
 
-NTS 中的坐标采用 X 和 Y 值。 若要表示经度和纬度，请将 X 用于经度，将 Y 用于纬度。 请注意，这是从 `latitude, longitude` 格式**反向**的，你通常会看到这些值。
+NTS 中的坐标采用 X 和 Y 值。 若要表示经度和纬度，请将 X 用于经度，将 Y 用于纬度。 请注意，这是从通常会看到这些值的 `latitude, longitude` 格式**反向**进行的。
 
 ### <a name="srid-ignored-during-client-operations"></a>在客户端操作过程中忽略 SRID
 
@@ -213,15 +213,15 @@ var currentCountry = db.Countries
 
 ### <a name="geography-or-geometry"></a>地理或几何图形
 
-默认情况下，空间属性映射到 SQL Server 中的 @no__t 列。 若要使用 `geometry`，请在模型中[配置列类型](xref:core/modeling/relational/data-types)。
+默认情况下，空间属性映射到 SQL Server 中的 `geography` 列。 若要使用 `geometry`，请在模型中[配置列类型](xref:core/modeling/relational/data-types)。
 
 ### <a name="geography-polygon-rings"></a>地理多边形环
 
-当使用 @no__t 0 列类型时，SQL Server 会对外部环（或外壳）和内部环（或孔）施加附加要求。 外部环必须逆时针旋转，并顺时针旋转内部环。 NTS 在将值发送到数据库之前对其进行验证。
+使用 `geography` 列类型时，SQL Server 对外环（或外壳）和内部环（或孔）施加附加要求。 外部环必须逆时针旋转，并顺时针旋转内部环。 NTS 在将值发送到数据库之前对其进行验证。
 
 ### <a name="fullglobe"></a>FullGlobe
 
-使用 @no__t 列类型时，SQL Server 具有非标准几何类型来表示全地球。 它还提供了一种方法，用于根据全地球（无外部环）来表示多边形。 NTS 不支持这两种方法。
+使用 `geography` 列类型时，SQL Server 具有非标准几何类型来表示全地球。 它还提供了一种方法，用于根据全地球（无外部环）来表示多边形。 NTS 不支持这两种方法。
 
 > [!WARNING]
 > NTS 不支持基于 FullGlobe 和多边形。
@@ -244,7 +244,7 @@ brew install libspatialite
 
 ### <a name="configuring-srid"></a>配置 SRID
 
-在 SpatiaLite 中，列需要为每个列指定一个 SRID。 默认的 SRID 为 `0`。 使用 ForSqliteHasSrid 方法指定其他 SRID。
+在 SpatiaLite 中，列需要为每个列指定一个 SRID。 默认的 SRID 是 `0`。 使用 ForSqliteHasSrid 方法指定其他 SRID。
 
 ``` csharp
 modelBuilder.Entity<City>().Property(c => c.Location)
@@ -271,7 +271,7 @@ AsBinary （） | ✔ | ✔ | ✔ | ✔
 AsText （） | ✔ | ✔ | ✔ | ✔
 Geometry | ✔ | | ✔ | ✔
 Geometry （双精度型） | ✔ | ✔ | ✔ | ✔
-Geometry （double，int） | | | ✔
+Geometry （double，int） | | | ✔ | ✔
 质心 | ✔ | | ✔ | ✔
 Geometry。 Contains （Geometry） | ✔ | ✔ | ✔ | ✔
 ConvexHull （） | ✔ | ✔ | ✔ | ✔
@@ -287,17 +287,17 @@ EqualsExact （Geometry） | | | | ✔
 EqualsTopologically （Geometry） | ✔ | ✔ | ✔ | ✔
 GeometryType | ✔ | ✔ | ✔ | ✔
 GetGeometryN （int） | ✔ | | ✔ | ✔
-InteriorPoint | ✔ | | ✔
+InteriorPoint | ✔ | | ✔ | ✔
 几何交集（Geometry） | ✔ | ✔ | ✔ | ✔
 几何和交集（Geometry） | ✔ | ✔ | ✔ | ✔
 IsEmpty | ✔ | ✔ | ✔ | ✔
 IsSimple | ✔ | | ✔ | ✔
 Geometry | ✔ | ✔ | ✔ | ✔
-IsWithinDistance （Geometry，double） | ✔ | | ✔
+IsWithinDistance （Geometry，double） | ✔ | | ✔ | ✔
 Geometry。长度 | ✔ | ✔ | ✔ | ✔
 NumGeometries | ✔ | ✔ | ✔ | ✔
 X.numpoints | ✔ | ✔ | ✔ | ✔
-OgcGeometryType | ✔ | ✔ | ✔
+OgcGeometryType | ✔ | ✔ | ✔ | ✔
 Geometry 重叠（Geometry） | ✔ | ✔ | ✔ | ✔
 PointOnSurface | ✔ | | ✔ | ✔
 Geometry （Geometry，string） | ✔ | | ✔ | ✔
@@ -307,7 +307,7 @@ SymmetricDifference （Geometry） | ✔ | ✔ | ✔ | ✔
 ToBinary （） | ✔ | ✔ | ✔ | ✔
 ToText （） | ✔ | ✔ | ✔ | ✔
 几何图形（几何） | ✔ | | ✔ | ✔
-Geometry （） | | | ✔
+Geometry （） | | | ✔ | ✔
 Geometry （Geometry） | ✔ | ✔ | ✔ | ✔
 几何图形。内（Geometry） | ✔ | ✔ | ✔ | ✔
 GeometryCollection | ✔ | ✔ | ✔ | ✔

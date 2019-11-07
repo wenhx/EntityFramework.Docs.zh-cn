@@ -4,12 +4,12 @@ author: bricelam
 ms.author: bricelam
 ms.date: 09/16/2019
 uid: core/miscellaneous/cli/dbcontext-creation
-ms.openlocfilehash: c36dae150085b1ab509288f6fabfdd8ed7201ca8
-ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
+ms.openlocfilehash: f44f0648678af5a70e5171d69692bde1c1d5e0eb
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/23/2019
-ms.locfileid: "72812017"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73655529"
 ---
 # <a name="design-time-dbcontext-creation"></a>设计时 DbContext 创建
 
@@ -23,33 +23,7 @@ ms.locfileid: "72812017"
 
 工具首先尝试通过调用 `Program.CreateHostBuilder()`，调用 `Build()`，然后访问 `Services` 属性来获取服务提供程序。
 
-``` csharp
-public class Program
-{
-    public static void Main(string[] args)
-        => CreateHostBuilder(args).Build().Run();
-
-    // EF Core uses this method at design time to access the DbContext
-    public static IHostBuilder CreateHostBuilder(string[] args)
-        => Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(
-                webBuilder => webBuilder.UseStartup<Startup>());
-}
-
-public class Startup
-{
-    public void ConfigureServices(IServiceCollection services)
-        => services.AddDbContext<ApplicationDbContext>();
-}
-
-public class ApplicationDbContext : DbContext
-{
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options)
-    {
-    }
-}
-```
+[!code-csharp[Main](../../../../samples/core/Miscellaneous/CommandLine/ApplicationService.cs)]
 
 > [!NOTE]
 > 创建新的 ASP.NET Core 应用程序时，默认情况下会包括此挂接。
@@ -64,25 +38,7 @@ public class ApplicationDbContext : DbContext
 
 你还可以通过实现 `IDesignTimeDbContextFactory<TContext>` 接口告诉工具如何创建 DbContext：如果实现此接口的类在与派生的 `DbContext` 相同的项目中或在应用程序的启动项目中找到，则这些工具将绕过其他工具创建 DbContext 并改用设计时工厂的方式。
 
-``` csharp
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-
-namespace MyProject
-{
-    public class BloggingContextFactory : IDesignTimeDbContextFactory<BloggingContext>
-    {
-        public BloggingContext CreateDbContext(string[] args)
-        {
-            var optionsBuilder = new DbContextOptionsBuilder<BloggingContext>();
-            optionsBuilder.UseSqlite("Data Source=blog.db");
-
-            return new BloggingContext(optionsBuilder.Options);
-        }
-    }
-}
-```
+[!code-csharp[Main](../../../../samples/core/Miscellaneous/CommandLine/BloggingContextFactory.cs)]
 
 > [!NOTE]
 > `args` 参数当前未使用。 跟踪从工具中指定设计时参数的功能时出现[问题][8]。

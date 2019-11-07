@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: e6e58473-9f5e-4a1f-ac0f-b87d2cbb667e
 uid: core/modeling/relational/default-schema
-ms.openlocfilehash: ae903ed7200859430aecc55073651236759bc6ce
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 1579fed007997aa4cf49b4c1290aee86c81c0000
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197134"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73655972"
 ---
 # <a name="default-schema"></a>默认架构
 
@@ -20,7 +20,7 @@ ms.locfileid: "71197134"
 
 ## <a name="conventions"></a>约定
 
-按照约定，数据库提供程序将选择最适合的默认架构。 例如，Microsoft SQL Server 将使用`dbo`架构，而且 sqlite 将不使用架构（因为 sqlite 不支持架构）。
+按照约定，数据库提供程序将选择最适合的默认架构。 例如，Microsoft SQL Server 将使用 `dbo` 架构，SQLite 将不使用架构（因为 SQLite 不支持架构）。
 
 ## <a name="data-annotations"></a>数据注释
 
@@ -30,15 +30,4 @@ ms.locfileid: "71197134"
 
 可以使用 "熟知 API" 来指定默认架构。
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Relational/DefaultSchema.cs?highlight=7)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.HasDefaultSchema("blogging");
-    }
-}
-```
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Relational/DefaultSchema.cs?name=DefaultSchema&highlight=7)]

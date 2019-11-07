@@ -4,12 +4,12 @@ author: bricelam
 ms.author: bricelam
 ms.date: 11/07/2017
 uid: core/managing-schemas/migrations/history-table
-ms.openlocfilehash: 0db393ff3101564f8d8081d0a57b264c2c459df7
-ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
+ms.openlocfilehash: 0007da7ce3d78fd8f17007ac79a395bb2e6efd86
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/23/2019
-ms.locfileid: "72812071"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73655706"
 ---
 # <a name="custom-migrations-history-table"></a>自定义迁移历史记录表
 
@@ -22,40 +22,15 @@ ms.locfileid: "72812071"
 
 你可以使用 `OnConfiguring()` 中的 `MigrationsHistoryTable()` 方法（或 ASP.NET Core 上的 `ConfigureServices()`）更改架构和表名。 下面是一个示例，说明如何使用 SQL Server EF Core 提供程序。
 
-``` csharp
-protected override void OnConfiguring(DbContextOptionsBuilder options)
-    => options.UseSqlServer(
-        connectionString,
-        x => x.MigrationsHistoryTable("__MyMigrationsHistory", "mySchema"));
-```
+[!code-csharp[Main](../../../../samples/core/Schemas/Migrations/MigrationTableNameContext.cs#TableNameContext)]
 
 ## <a name="other-changes"></a>其他更改
 
 若要配置表的其他方面，请重写并替换特定于提供程序的 `IHistoryRepository` 服务。 下面是将 MigrationId 列名称更改为 SQL Server 上的*Id*的示例。
 
-``` csharp
-protected override void OnConfiguring(DbContextOptionsBuilder options)
-    => options
-        .UseSqlServer(connectionString)
-        .ReplaceService<IHistoryRepository, MyHistoryRepository>();
-```
+[!code-csharp[Main](../../../../samples/core/Schemas/Migrations/MyHistoryRepository.cs#HistoryRepositoryContext)]
 
 > [!WARNING]
 > `SqlServerHistoryRepository` 位于内部命名空间内部，并且在将来的版本中可能会更改。
 
-``` csharp
-class MyHistoryRepository : SqlServerHistoryRepository
-{
-    public MyHistoryRepository(HistoryRepositoryDependencies dependencies)
-        : base(dependencies)
-    {
-    }
-
-    protected override void ConfigureTable(EntityTypeBuilder<HistoryRow> history)
-    {
-        base.ConfigureTable(history);
-
-        history.Property(h => h.MigrationId).HasColumnName("Id");
-    }
-}
-```
+[!code-csharp[Main](../../../../samples/core/Schemas/Migrations/MyHistoryRepository.cs#HistoryRepository)]

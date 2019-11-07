@@ -4,27 +4,27 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: ddaa0a54-9f43-4c34-aae3-f95c96c69842
 uid: core/modeling/required-optional
-ms.openlocfilehash: fd9e96e6f79965e63b07c21217edd004fd5c4d54
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 62b2b3f5a761c0aacece986ecd0b2dd2f958d048
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197852"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73655663"
 ---
-# <a name="required-and-optional-properties"></a>必需属性和可选属性
+# <a name="required-and-optional-properties"></a>必需和可选属性
 
-如果属性对于包含`null`有效，则将其视为可选。 如果`null`不是要分配给属性的有效值，则将其视为必需属性。
+如果属性对于包含 `null`是有效的，则认为该属性是可选的。 如果 `null` 不是要分配给属性的有效值，则将其视为必需属性。
 
 映射到关系数据库架构时，必需的属性将创建为不可为 null 的列，而可选属性则创建为可以为 null 的列。
 
 ## <a name="conventions"></a>约定
 
-按照约定，.NET 类型可以包含 null 的属性将配置为可选，而 .NET 类型不能包含 null 的属性将根据需要进行配置。 例如，具有 .net 值类型（`int`、 `decimal`、 `bool`等）的所有属性都是必需的，并且具有可为 null 的 .net 值类型（`int?`、 `decimal?`、 `bool?`等）的所有属性都是配置为可选。
+按照约定，.NET 类型可以包含 null 的属性将配置为可选，而 .NET 类型不能包含 null 的属性将根据需要进行配置。 例如，具有 .NET 值类型（`int`、`decimal`、`bool`等）的所有属性都是必需的，并且具有可为 null 的 .NET 值类型（`int?`、`decimal?`、`bool?`等）的所有属性都配置为可选。
 
 C#8引入了一个名[为 null 的引用类型](/dotnet/csharp/tutorials/nullable-reference-types)的新功能，该功能允许对引用类型进行批注，以指示它是否可用于包含空值。 此功能在默认情况下处于禁用状态，如果启用，它将按以下方式修改 EF Core 的行为：
 
-* 如果禁用可为 null 的引用类型（默认值），则所有具有 .NET 引用类型的属性都将按约定配置`string`为可选（例如）。
-* 如果启用了可以为 null 的引用类型，则将根据 .net C#类型的为 null 性配置`string?`属性：将配置为可选， `string`而将配置为 "必需"。
+* 如果禁用了可为 null 的引用类型（默认值），则所有具有 .NET 引用类型的属性都将按约定（例如 `string`）配置为可选。
+* 如果启用了可以为 null 的引用类型，则将根据 .NET C#类型的为 null 性配置属性： `string?` 将配置为可选，而 `string` 将配置为 "必需"。
 
 下面的示例显示了一个具有必需和可选属性的实体类型，禁用了可为 null 的引用功能（默认值），并启用了该功能：
 
@@ -53,7 +53,7 @@ C#8引入了一个名[为 null 的引用类型](/dotnet/csharp/tutorials/nullabl
 
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Required.cs?highlight=14)]
 
-# <a name="fluent-apitabfluent-api"></a>[熟知 API](#tab/fluent-api) 
+# <a name="fluent-apitabfluent-api"></a>[熟知 API](#tab/fluent-api)
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Required.cs?highlight=11-13)]
 

@@ -1,16 +1,16 @@
 ---
 title: Azure Cosmos DB 提供程序-使用非结构化数据-EF Core
+description: 如何使用 Entity Framework Core 处理 Azure Cosmos DB 非结构化数据
 author: AndriySvyryd
 ms.author: ansvyryd
-ms.date: 09/12/2019
-ms.assetid: b47d41b6-984f-419a-ab10-2ed3b95e3919
+ms.date: 11/05/2019
 uid: core/providers/cosmos/unstructured-data
-ms.openlocfilehash: 86bb0f7915c8a2561e7d5cd5dffc27474218a112
-ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
+ms.openlocfilehash: 0bfccbfd3af6e209967004752b5a3947d644544b
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/20/2019
-ms.locfileid: "71150769"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73655518"
 ---
 # <a name="working-with-unstructured-data-in-ef-core-azure-cosmos-db-provider"></a>使用 EF Core Azure Cosmos DB 提供程序中的非结构化数据
 
@@ -18,19 +18,18 @@ EF Core 旨在使使用在模型中定义的架构的数据变得简单。 但 A
 
 ## <a name="accessing-the-raw-json"></a>访问原始 JSON
 
-可以通过名为`"__jObject"`的[卷影状态](../../modeling/shadow-properties.md)中的一个特殊属性来访问未跟踪的属性，该属性包含`JObject`表示从存储中接收的数据的 EF Core 和将存储的数据：
+可以通过名为 `"__jObject"` 的[卷影状态](../../modeling/shadow-properties.md)中 `JObject` 包含表示从存储区接收的数据的特定属性来访问不 EF Core 跟踪的属性，以及将存储的数据：
 
-[!code-csharp[Unmapped](../../../../samples/core/Cosmos/UnstructuredData/Sample.cs?highlight=21-23&name=Unmapped)]
+[!code-csharp[Unmapped](../../../../samples/core/Cosmos/UnstructuredData/Sample.cs?highlight=23,24&name=Unmapped)]
 
 ``` json
 {
     "Id": 1,
-    "Discriminator": "Order",
+    "PartitionKey": "1",
     "TrackingNumber": null,
-    "id": "Order|1",
+    "id": "1",
     "Address": {
         "ShipsToCity": "London",
-        "Discriminator": "StreetAddress",
         "ShipsToStreet": "221 B Baker St"
     },
     "_rid": "eLMaAK8TzkIBAAAAAAAAAA==",
@@ -43,24 +42,24 @@ EF Core 旨在使使用在模型中定义的架构的数据变得简单。 但 A
 ```
 
 > [!WARNING]
-> 该`"__jObject"`属性是 EF Core 基础结构的一部分，只应用作最后的手段，因为在将来的版本中可能会有不同的行为。
+> `"__jObject"` 属性是 EF Core 基础结构的一部分，只应用作最后的手段，因为在将来的版本中可能会有不同的行为。
 
 > [!NOTE]
-> 对实体所做的更改将覆盖在`"__jObject"`过程`SaveChanges`中存储的值。
+> 对实体所做的更改将覆盖 `SaveChanges`期间 `"__jObject"` 中存储的值。
 
 ## <a name="using-cosmosclient"></a>使用 CosmosClient
 
-若要完全分离 EF Core 从获取`CosmosClient` `DbContext` [Azure Cosmos DB SDK 的一部分](https://docs.microsoft.com/en-us/azure/cosmos-db/sql-api-get-started)的对象：
+若要完全分离 EF Core 获取 `DbContext`中[AZURE COSMOS DB SDK 的一部分](/azure/cosmos-db/sql-api-get-started)的[CosmosClient](/dotnet/api/Microsoft.Azure.Cosmos.CosmosClient)对象：
 
 [!code-csharp[CosmosClient](../../../../samples/core/Cosmos/UnstructuredData/Sample.cs?highlight=3&name=CosmosClient)]
 
 ## <a name="missing-property-values"></a>缺少属性值
 
-在上面的示例中，我们`"TrackingNumber"`从顺序中删除了属性。 由于在 Cosmos DB 中索引的工作原理，引用缺少的属性的其他位置的查询可能会返回意外的结果。 例如:
+在上面的示例中，我们从顺序中删除了 `"TrackingNumber"` 属性。 由于在 Cosmos DB 中索引的工作原理，引用缺少的属性的其他位置的查询可能会返回意外的结果。 例如:
 
 [!code-csharp[MissingProperties](../../../../samples/core/Cosmos/UnstructuredData/Sample.cs?name=MissingProperties)]
 
 排序的查询实际上不返回任何结果。 这意味着，当直接使用存储时，应注意始终填充由 EF Core 映射的属性。
 
 > [!NOTE]
-> 在未来版本的 Cosmos 中，此行为可能会发生变化。 例如，当前如果索引策略定义了复合索引 {Id/？ ASC，TrackingNumber/？ ASC）}，then "ORDER BY c.Id asc，.c asc" 的查询__将__返回缺少属性的`"TrackingNumber"`项。
+> 在未来版本的 Cosmos 中，此行为可能会发生变化。 例如，当前如果索引策略定义了复合索引 {Id/？ ASC，TrackingNumber/？ ASC）}，则具有 "ORDER BY c.Id ASC，asc" 的查询__将__返回缺少 `"TrackingNumber"` 属性的项。

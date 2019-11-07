@@ -4,12 +4,12 @@ author: bricelam
 ms.author: bricelam
 ms.date: 10/30/2017
 uid: core/managing-schemas/migrations/teams
-ms.openlocfilehash: e6a1b86761a201cbcae34cced7e64f11df37a420
-ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
+ms.openlocfilehash: 6c17c56277821159962884aef72d46c624442e20
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/23/2019
-ms.locfileid: "72811979"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73655546"
 ---
 # <a name="migrations-in-team-environments"></a>团队环境中的迁移
 
@@ -19,11 +19,13 @@ ms.locfileid: "72811979"
 
 合并团队成员的迁移时，可能会在模型快照文件中出现冲突。 如果这两个更改不相关，则合并很简单，两个迁移可以共存。 例如，你可能会在客户实体类型配置中出现合并冲突，如下所示：
 
-    <<<<<<< Mine
-    b.Property<bool>("Deactivated");
-    =======
-    b.Property<int>("LoyaltyPoints");
-    >>>>>>> Theirs
+``` output
+<<<<<<< Mine
+b.Property<bool>("Deactivated");
+=======
+b.Property<int>("LoyaltyPoints");
+>>>>>>> Theirs
+```
 
 由于这两个属性都需要存在于最终模型中，因此请通过添加这两个属性来完成合并。 在许多情况下，版本控制系统可能会自动合并此类更改。
 
@@ -38,11 +40,13 @@ b.Property<int>("LoyaltyPoints");
 
 当合并模型快照模型时，有时会遇到真正冲突。 例如，你和你的队友可以重命名同一个属性。
 
-    <<<<<<< Mine
-    b.Property<string>("Username");
-    =======
-    b.Property<string>("Alias");
-    >>>>>>> Theirs
+``` output
+<<<<<<< Mine
+b.Property<string>("Username");
+=======
+b.Property<string>("Alias");
+>>>>>>> Theirs
+```
 
 如果遇到这种冲突，请通过重新创建迁移解决此问题。 请执行这些步骤：
 

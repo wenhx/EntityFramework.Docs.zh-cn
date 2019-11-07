@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 0ff736a3-f1b0-4b58-a49c-4a7094bd6935
 uid: core/modeling/relationships
-ms.openlocfilehash: 1e9c62bec47263ef452c7ac425a0bb446f9371d8
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 1e59ce9e19c12aa5564bc8467dcfcb3be8ee8996
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197651"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73655673"
 ---
 # <a name="relationships"></a>关系
 
@@ -38,27 +38,27 @@ ms.locfileid: "71197651"
 
   * **反向导航属性：** 讨论特定导航属性时，此术语是指关系另一端的导航属性。
 
-下面的代码列表显示了与之间`Blog`的一对多关系`Post`
+下面的代码列表显示 `Blog` 和 `Post` 之间的一对多关系
 
-* `Post`是依赖实体
+* `Post` 是依赖实体
 
-* `Blog`是主体实体
+* `Blog` 是主体实体
 
-* `Post.BlogId`为外键
+* `Post.BlogId` 为外键
 
-* `Blog.BlogId` 是主体键（在这种情况下是主键，而不是备用键）
+* `Blog.BlogId` 是主体键（在本例中为主键而不是备用密钥）
 
-* `Post.Blog`是一个引用导航属性
+* `Post.Blog` 是一个引用导航属性
 
-* `Blog.Posts`是集合导航属性
+* `Blog.Posts` 是集合导航属性
 
-* `Post.Blog`是的`Blog.Posts`反向导航属性（反之亦然）
+* `Post.Blog` 是 `Blog.Posts` 的反向导航属性（反之亦然）
 
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/Full.cs#Entities)]
 
 ## <a name="conventions"></a>约定
 
-按照约定，当发现类型上有导航属性时，将创建关系。 如果属性指向的类型不能由当前的数据库提供程序映射为标量类型，则该属性视为一个导航属性。
+按照约定，当在某个类型上发现了导航属性时，将创建一个关系。 如果当前数据库提供程序无法将其指向的类型映射为标量类型，则该属性被视为导航属性。
 
 > [!NOTE]  
 > 按约定发现的关系将始终以主体实体的主键为目标。 若要以备用密钥为目标，则必须使用熟知的 API 执行其他配置。
@@ -69,7 +69,7 @@ ms.locfileid: "71197651"
 
 * 如果在两个类型之间找到一对导航属性，则这些属性将配置为同一关系的反向导航属性。
 
-* 如果依赖实体包含名为`<primary key property name>`、 `<navigation property name><primary key property name>`或`<principal entity name><primary key property name>`的属性，则该属性将被配置为外键。
+* 如果依赖实体包含名为 `<primary key property name>`、`<navigation property name><primary key property name>`或 `<principal entity name><primary key property name>` 的属性，则该属性将被配置为外键。
 
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/Full.cs?name=Entities&highlight=6,15,16)]
 
@@ -78,7 +78,7 @@ ms.locfileid: "71197651"
 
 ### <a name="no-foreign-key-property"></a>无外键属性
 
-尽管建议在依赖实体类中定义外键属性，但这并不是必需的。 如果未找到外键属性，则会以该名称`<navigation property name><principal key property name>`引入阴影外键属性（有关详细信息，请参阅[影子属性](shadow-properties.md)）。
+尽管建议在依赖实体类中定义外键属性，但这并不是必需的。 如果找不到外键属性，则会引入 `<navigation property name><principal key property name>` 名称的阴影外键属性（有关详细信息，请参阅[影子属性](shadow-properties.md)）。
 
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/NoForeignKey.cs?name=Entities&highlight=6,15)]
 
@@ -98,7 +98,7 @@ ms.locfileid: "71197651"
 
 ## <a name="data-annotations"></a>数据注释
 
-可以使用两个数据批注来配置关系`[ForeignKey]`和。 `[InverseProperty]` `System.ComponentModel.DataAnnotations.Schema`命名空间中提供了这些项。
+可以使用两个数据批注来配置关系、`[ForeignKey]` 和 `[InverseProperty]`。 `System.ComponentModel.DataAnnotations.Schema` 命名空间中提供了这些功能。
 
 ### <a name="foreignkey"></a>ForeignKey
 
@@ -107,7 +107,7 @@ ms.locfileid: "71197651"
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Relationships/ForeignKey.cs?highlight=30)]
 
 > [!TIP]  
-> `[ForeignKey]`批注可放置在关系中的任一导航属性上。 它不需要在依赖实体类中定位导航属性。
+> 可以将 `[ForeignKey]` 批注放置在关系中的任一导航属性上。 它不需要在依赖实体类中定位导航属性。
 
 ### <a name="inverseproperty"></a>[InverseProperty]
 
@@ -117,13 +117,13 @@ ms.locfileid: "71197651"
 
 ## <a name="fluent-api"></a>Fluent API
 
-若要在熟知的 API 中配置关系，请首先标识构成关系的导航属性。 `HasOne`或`HasMany`标识要开始配置的实体类型上的导航属性。 然后，将调用链接到`WithOne`或`WithMany`以标识反向导航。 `HasOne`/`WithOne`用于引用导航属性， `HasMany` / `WithMany`用于集合导航属性。
+若要在熟知的 API 中配置关系，请首先标识构成关系的导航属性。 `HasOne` 或 `HasMany` 标识正在开始配置的实体类型上的导航属性。 然后，将调用链接到 `WithOne` 或 `WithMany` 来标识反向导航。 `HasOne`/`WithOne` 用于引用导航属性，`HasMany`/用于集合导航属性。
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/NoForeignKey.cs?highlight=14-16)]
 
 ### <a name="single-navigation-property"></a>单个导航属性
 
-如果只有一个导航属性，则和`WithOne` `WithMany`的无参数重载。 这表示在概念上，关系的另一端有一个引用或集合，但实体类中不包含导航属性。
+如果只有一个导航属性，则 `WithOne` 和 `WithMany`有无参数重载。 这表示在概念上，关系的另一端有一个引用或集合，但实体类中不包含导航属性。
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/OneNavigation.cs?highlight=14-16)]
 
@@ -137,7 +137,7 @@ ms.locfileid: "71197651"
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/CompositeForeignKey.cs?highlight=20)]
 
-您可以使用的`HasForeignKey(...)`字符串重载将影子属性配置为外键（有关详细信息，请参阅[影子属性](shadow-properties.md)）。 建议先将影子属性显式添加到模型，然后再将其用作外键（如下所示）。
+您可以使用 `HasForeignKey(...)` 的字符串重载将影子属性配置为外键（有关详细信息，请参阅[影子属性](shadow-properties.md)）。 建议先将影子属性显式添加到模型，然后再将其用作外键（如下所示）。
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ShadowForeignKey.cs#Sample)]
 
@@ -151,83 +151,11 @@ ms.locfileid: "71197651"
 
 如果你希望外键引用主键之外的属性，则可以使用熟知的 API 来配置关系的主体键属性。 配置为主体密钥的属性将自动设置为备用密钥（有关详细信息，请参阅[备用](alternate-keys.md)密钥）。
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Relationships/PrincipalKey.cs?highlight=11)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Car> Cars { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<RecordOfSale>()
-            .HasOne(s => s.Car)
-            .WithMany(c => c.SaleHistory)
-            .HasForeignKey(s => s.CarLicensePlate)
-            .HasPrincipalKey(c => c.LicensePlate);
-    }
-}
-
-public class Car
-{
-    public int CarId { get; set; }
-    public string LicensePlate { get; set; }
-    public string Make { get; set; }
-    public string Model { get; set; }
-
-    public List<RecordOfSale> SaleHistory { get; set; }
-}
-
-public class RecordOfSale
-{
-    public int RecordOfSaleId { get; set; }
-    public DateTime DateSold { get; set; }
-    public decimal Price { get; set; }
-
-    public string CarLicensePlate { get; set; }
-    public Car Car { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/PrincipalKey.cs?name=PrincipalKey&highlight=11)]
 
 下面的代码列表演示如何配置复合主体键。
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Relationships/CompositePrincipalKey.cs?highlight=11)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Car> Cars { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<RecordOfSale>()
-            .HasOne(s => s.Car)
-            .WithMany(c => c.SaleHistory)
-            .HasForeignKey(s => new { s.CarState, s.CarLicensePlate })
-            .HasPrincipalKey(c => new { c.State, c.LicensePlate });
-    }
-}
-
-public class Car
-{
-    public int CarId { get; set; }
-    public string State { get; set; }
-    public string LicensePlate { get; set; }
-    public string Make { get; set; }
-    public string Model { get; set; }
-
-    public List<RecordOfSale> SaleHistory { get; set; }
-}
-
-public class RecordOfSale
-{
-    public int RecordOfSaleId { get; set; }
-    public DateTime DateSold { get; set; }
-    public decimal Price { get; set; }
-
-    public string CarState { get; set; }
-    public string CarLicensePlate { get; set; }
-    public Car Car { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/CompositePrincipalKey.cs?name=Composite&highlight=11)]
 
 > [!WARNING]  
 > 指定主体键属性的顺序必须与为外键指定这些属性的顺序一致。
@@ -236,39 +164,7 @@ public class RecordOfSale
 
 您可以使用熟知的 API 来配置关系是必需的还是可选的。 最终，这会控制外键属性是必需的还是可选的。 当使用阴影状态外键时，这非常有用。 如果实体类中具有外键属性，则关系的 requiredness 取决于外键属性是必需还是可选（有关详细信息，请参阅[必需和可选属性](required-optional.md)）。
 
-<!-- [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/Required.cs?highlight=11)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
-    public DbSet<Post> Posts { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Post>()
-            .HasOne(p => p.Blog)
-            .WithMany(b => b.Posts)
-            .IsRequired();
-    }
-}
-
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-
-    public List<Post> Posts { get; set; }
-}
-
-public class Post
-{
-    public int PostId { get; set; }
-    public string Title { get; set; }
-    public string Content { get; set; }
-
-    public Blog Blog { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/Required.cs?name=Required&highlight=11)]
 
 ### <a name="cascade-delete"></a>级联删除
 
@@ -276,40 +172,7 @@ public class Post
 
 有关每个选项的详细讨论，请参阅保存数据部分的[级联删除](../saving/cascade-delete.md)。
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Relationships/CascadeDelete.cs?highlight=11)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
-    public DbSet<Post> Posts { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Post>()
-            .HasOne(p => p.Blog)
-            .WithMany(b => b.Posts)
-            .OnDelete(DeleteBehavior.Cascade);
-    }
-}
-
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-
-    public List<Post> Posts { get; set; }
-}
-
-public class Post
-{
-    public int PostId { get; set; }
-    public string Title { get; set; }
-    public string Content { get; set; }
-
-    public int? BlogId { get; set; }
-    public Blog Blog { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/CascadeDelete.cs?name=CascadeDelete&highlight=11)]
 
 ## <a name="other-relationship-patterns"></a>其他关系模式
 
@@ -317,119 +180,19 @@ public class Post
 
 一对多关系在两侧都有一个引用导航属性。 它们遵循与一对多关系相同的约定，但在外键属性上引入了唯一索引，以确保只有一个依赖项与每个主体相关。
 
-<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/Relationships/OneToOne.cs?highlight=6,15,16)] -->
-``` csharp
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-
-    public BlogImage BlogImage { get; set; }
-}
-
-public class BlogImage
-{
-    public int BlogImageId { get; set; }
-    public byte[] Image { get; set; }
-    public string Caption { get; set; }
-
-    public int BlogId { get; set; }
-    public Blog Blog { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/OneToOne.cs?name=Property&highlight=6,15,16)]
 
 > [!NOTE]  
 > EF 会根据其检测外键属性的能力，选择其中一个实体作为依赖项。 如果选择了错误的实体作为依赖项，则可以使用熟知的 API 来更正此问题。
 
-使用 "流畅" API 配置关系时，请使用`HasOne`和`WithOne`方法。
+使用熟知 API 配置关系时，可使用 `HasOne` 和 `WithOne` 方法。
 
-配置外键时，需要指定依赖实体类型-请注意以下列表`HasForeignKey`中提供的泛型参数。 在一对多关系中，可以清楚地表明具有引用导航的实体是依赖项，并且具有集合的实体是主体。 但这并不是一对一的关系，因此需要显式定义它。
+配置外键时，需要指定依赖实体类型-请注意以下列表中 `HasForeignKey` 提供的泛型参数。 在一对多关系中，可以清楚地表明具有引用导航的实体是依赖项，并且具有集合的实体是主体。 但这并不是一对一的关系，因此需要显式定义它。
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Relationships/OneToOne.cs?highlight=11)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
-    public DbSet<BlogImage> BlogImages { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Blog>()
-            .HasOne(p => p.BlogImage)
-            .WithOne(i => i.Blog)
-            .HasForeignKey<BlogImage>(b => b.BlogForeignKey);
-    }
-}
-
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-
-    public BlogImage BlogImage { get; set; }
-}
-
-public class BlogImage
-{
-    public int BlogImageId { get; set; }
-    public byte[] Image { get; set; }
-    public string Caption { get; set; }
-
-    public int BlogForeignKey { get; set; }
-    public Blog Blog { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/OneToOne.cs?name=OneToOne&highlight=11)]
 
 ### <a name="many-to-many"></a>多对多
 
 目前尚不支持多对多关系，没有实体类来表示联接表。 但是，您可以通过包含联接表的实体类并映射两个不同的一对多关系，来表示多对多关系。
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Relationships/ManyToMany.cs?highlight=11,12,13,14,16,17,18,19,39,40,41,42,43,44,45,46)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Post> Posts { get; set; }
-    public DbSet<Tag> Tags { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<PostTag>()
-            .HasKey(pt => new { pt.PostId, pt.TagId });
-
-        modelBuilder.Entity<PostTag>()
-            .HasOne(pt => pt.Post)
-            .WithMany(p => p.PostTags)
-            .HasForeignKey(pt => pt.PostId);
-
-        modelBuilder.Entity<PostTag>()
-            .HasOne(pt => pt.Tag)
-            .WithMany(t => t.PostTags)
-            .HasForeignKey(pt => pt.TagId);
-    }
-}
-
-public class Post
-{
-    public int PostId { get; set; }
-    public string Title { get; set; }
-    public string Content { get; set; }
-
-    public List<PostTag> PostTags { get; set; }
-}
-
-public class Tag
-{
-    public string TagId { get; set; }
-
-    public List<PostTag> PostTags { get; set; }
-}
-
-public class PostTag
-{
-    public int PostId { get; set; }
-    public Post Post { get; set; }
-
-    public string TagId { get; set; }
-    public Tag Tag { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToMany.cs?name=ManyToMany&highlight=11,12,13,14,16,17,18,19,39,40,41,42,43,44,45,46)]

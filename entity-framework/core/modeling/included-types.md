@@ -1,68 +1,33 @@
 ---
-title: 包括和排除类型 - EF Core
+title: 包括类型 & （包括类型）-EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: cbe6935e-2679-4b77-8914-a8d772240cf1
 uid: core/modeling/included-types
-ms.openlocfilehash: ca83b1c432bdf4853dba81e12ec4a739bc8218dc
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 1249e71c02e58afe7fe06b3fdcf523dfa0c9b17c
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197372"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73655740"
 ---
 # <a name="including--excluding-types"></a>包含类型和排除类型
 
-将类型包括到模型中意味着，EF 会有该类型的元数据，并且会尝试从数据库读取实例，以及将实例写入到数据库中。
+如果在模型中包含类型，则意味着 EF 具有与该类型相关的元数据，并将尝试在数据库中读取和写入实例。
 
 ## <a name="conventions"></a>约定
 
-按照约定，在上下文的 `DbSet` 属性中公开的类型会包括在模型中。 此外，在 `OnModelCreating` 方法中提及的类型也会包括模型中。 最后，通过以递归方式浏览已发现类型的导航属性找到的任何类型也会包括在模型中。
+按照约定，你的上下文中 `DbSet` 属性中公开的类型将包含在你的模型中。 此外，还包括 `OnModelCreating` 方法中提到的类型。 最后，通过递归浏览已发现类型的导航属性找到的所有类型也包含在该模型中。
 
 **例如，在以下代码中，将发现所有三种类型：**
 
-* `Blog`，因为它是在上下文的 `DbSet` 属性中公开的
+* `Blog`，因为它在上下文的 `DbSet` 属性中公开
 
 * `Post`，因为它是通过 `Blog.Posts` 导航属性发现的
 
-* `AuditEntry`，因为它是在 `OnModelCreating` 中提及的
+* `AuditEntry`，因为 `OnModelCreating` 中提到了它
 
-<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/IncludedTypes.cs?highlight=3,7,16)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<AuditEntry>();
-    }
-}
-
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-
-    public List<Post> Posts { get; set; }
-}
-
-public class Post
-{
-    public int PostId { get; set; }
-    public string Title { get; set; }
-    public string Content { get; set; }
-
-    public Blog Blog { get; set; }
-}
-
-public class AuditEntry
-{
-    public int AuditEntryId { get; set; }
-    public string Username { get; set; }
-    public string Action { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/IncludedTypes.cs?name=IncludedTypes&highlight=3,7,16)]
 
 ## <a name="data-annotations"></a>数据注释
 
