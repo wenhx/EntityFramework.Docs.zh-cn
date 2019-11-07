@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: d7a22b5a-4c5b-4e3b-9897-4d7320fcd13f
 uid: core/miscellaneous/configuring-dbcontext
-ms.openlocfilehash: e04c1b65df96819f3493e0ed34ccf26609511f6a
-ms.sourcegitcommit: 37d0e0fd1703467918665a64837dc54ad2ec7484
+ms.openlocfilehash: 3ab90d46b7a4476044e5ea38eaf04f995708e7bf
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/16/2019
-ms.locfileid: "72445907"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73655806"
 ---
 # <a name="configuring-a-dbcontext"></a>配置 DbContext
 
@@ -23,7 +23,7 @@ EF Core[的设计时工具需要能够](xref:core/managing-schemas/migrations/in
 
 ## <a name="configuring-dbcontextoptions"></a>配置 DbContextOptions
 
-`DbContext` 必须具有 `DbContextOptions` 的实例才能执行任何工作。 @No__t_0 实例携带如下配置信息：
+`DbContext` 必须具有 `DbContextOptions` 的实例才能执行任何工作。 `DbContextOptions` 实例携带如下配置信息：
 
 - 要使用的数据库提供程序，通常通过调用方法（如 `UseSqlServer` 或 `UseSqlite`）进行选择。 这些扩展方法需要相应的提供程序包，如 `Microsoft.EntityFrameworkCore.SqlServer` 或 `Microsoft.EntityFrameworkCore.Sqlite`。 方法在 `Microsoft.EntityFrameworkCore` 命名空间中定义。
 - 任何必需的数据库实例的连接字符串或标识符，通常作为参数传递给上面提到的提供者选择方法
@@ -163,11 +163,12 @@ using (var context = serviceProvider.GetService<BloggingContext>())
 
 var options = serviceProvider.GetService<DbContextOptions<BloggingContext>>();
 ```
+
 ## <a name="avoiding-dbcontext-threading-issues"></a>避免 DbContext 线程问题
 
 Entity Framework Core 不支持在同一个 `DbContext` 实例上运行多个并行操作。 这包括异步查询的并行执行以及从多个线程进行的任何显式并发使用。 因此，始终 `await` 异步调用，或对并行执行的操作使用单独的 `DbContext` 实例。
 
-当 EF Core 检测到同时尝试使用 `DbContext` 实例时，你将看到一条 `InvalidOperationException`，其中包含类似于下面的消息： 
+当 EF Core 检测到同时尝试使用 `DbContext` 实例时，你将看到一条 `InvalidOperationException`，其中包含类似于下面的消息：
 
 > 在上一个操作完成之前，在此上下文上启动的第二个操作。 这通常是由使用同一个 DbContext 实例的不同线程引起的，但不保证实例成员是线程安全的。
 
@@ -177,13 +178,13 @@ Entity Framework Core 不支持在同一个 `DbContext` 实例上运行多个并
 
 ### <a name="forgetting-to-await-the-completion-of-an-asynchronous-operation-before-starting-any-other-operation-on-the-same-dbcontext"></a>在对同一 DbContext 启动任何其他操作之前，忘记等待异步操作完成
 
-使用异步方法，EF Core 可以启动以非阻止方式访问数据库的操作。 但是，如果调用方不等待其中某个方法完成，并继续对 `DbContext` 执行其他操作，则 `DbContext` 的状态可能会损坏（并且很可能会损坏）。 
+使用异步方法，EF Core 可以启动以非阻止方式访问数据库的操作。 但是，如果调用方不等待其中某个方法完成，并继续对 `DbContext` 执行其他操作，则 `DbContext` 的状态可能会损坏（并且很可能会损坏）。
 
 始终等待立即 EF Core 异步方法。  
 
 ### <a name="implicitly-sharing-dbcontext-instances-across-multiple-threads-via-dependency-injection"></a>通过依赖关系注入在多个线程之间隐式共享 DbContext 实例
 
-默认情况下， [`AddDbContext`](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.entityframeworkservicecollectionextensions.adddbcontext)扩展方法会将 `DbContext` 类型注册为[范围生存期](https://docs.microsoft.com/aspnet/core/fundamentals/dependency-injection#service-lifetimes)。 
+默认情况下， [`AddDbContext`](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.entityframeworkservicecollectionextensions.adddbcontext)扩展方法会将 `DbContext` 类型注册为[范围生存期](https://docs.microsoft.com/aspnet/core/fundamentals/dependency-injection#service-lifetimes)。
 
 这对 ASP.NET Core 应用程序中的并发访问问题是安全的，因为在给定的时间只有一个线程在执行每个客户端请求，并且由于每个请求都将获取单独的依赖项注入范围（因而单独的 `DbContext` 实例）。
 
@@ -193,5 +194,5 @@ Entity Framework Core 不支持在同一个 `DbContext` 实例上运行多个并
 
 ## <a name="more-reading"></a>阅读更多
 
-* 有关使用 DI 的详细信息，请参阅[依赖关系注入](https://docs.microsoft.com/aspnet/core/fundamentals/dependency-injection)。
-* 有关详细信息，请参阅[测试](testing/index.md)。
+- 有关使用 DI 的详细信息，请参阅[依赖关系注入](https://docs.microsoft.com/aspnet/core/fundamentals/dependency-injection)。
+- 有关详细信息，请参阅[测试](testing/index.md)。

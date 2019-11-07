@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 9a7c5488-aaf4-4b40-b1ff-f435ff30f6ec
 uid: core/modeling/relational/inheritance
-ms.openlocfilehash: c660107619470a726fe13ad8eee2850749e6dcd9
-ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
+ms.openlocfilehash: 381d1878007bb78b359eb49649f4356f1e5eb04a
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/23/2019
-ms.locfileid: "72812090"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73655631"
 ---
 # <a name="inheritance-relational-database"></a>继承（关系数据库）
 
@@ -29,25 +29,7 @@ EF 模型中的继承用于控制如何在数据库中表示实体类中的继�
 
 下面的示例演示了一个简单的继承方案，以及使用 TPH 模式存储在关系数据库表中的数据。 *鉴别*器列标识每个行中存储哪种类型的*博客*。
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/Conventions/InheritanceDbSets.cs)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
-    public DbSet<RssBlog> RssBlogs { get; set; }
-}
-
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-}
-
-public class RssBlog : Blog
-{
-    public string RssUrl { get; set; }
-}
-```
+[!code-csharp[Main](../../../../samples/core/Modeling/Conventions/InheritanceDbSets.cs#Model)]
 
 ![图像](_static/inheritance-tph-data.png)
 
@@ -62,32 +44,7 @@ public class RssBlog : Blog
 
 您可以使用熟知的 API 来配置鉴别器列的名称和类型，以及用于标识层次结构中的每个类型的值。
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/InheritanceTPHDiscriminator.cs?highlight=7,8,9,10)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Blog>()
-            .HasDiscriminator<string>("blog_type")
-            .HasValue<Blog>("blog_base")
-            .HasValue<RssBlog>("blog_rss");
-    }
-}
-
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-}
-
-public class RssBlog : Blog
-{
-    public string RssUrl { get; set; }
-}
-```
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/InheritanceTPHDiscriminator.cs#Inheritance)]
 
 ## <a name="configuring-the-discriminator-property"></a>配置鉴别器属性
 
