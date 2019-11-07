@@ -3,12 +3,13 @@ title: 实体框架提供程序 - EF6
 author: divega
 ms.date: 06/27/2018
 ms.assetid: 7BFB7763-CD6C-4520-93A2-7B265F5FA586
-ms.openlocfilehash: bf07296503e4bb5d1e13f5f6f29e7118cbbde61d
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+uid: ef6/fundamentals/providers/index
+ms.openlocfilehash: 661398e7d6037875ce0cdb15c221a729d1f0c7d8
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181689"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73656206"
 ---
 # <a name="entity-framework-6-providers"></a>实体框架 6 提供程序
 > [!NOTE]

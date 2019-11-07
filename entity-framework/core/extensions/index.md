@@ -4,12 +4,12 @@ author: ErikEJ
 ms.date: 01/07/2019
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 uid: core/extensions/index
-ms.openlocfilehash: 0c9671eb77181d85cd493341cd1abf842d13fb0e
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: e70011b42818e4df1ec5b9b88d7adb9d36bb26f1
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181276"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73654800"
 ---
 # <a name="ef-core-tools--extensions"></a>EF Core 工具和扩展
 
@@ -28,7 +28,7 @@ LLBLGen Pro 是一种实体建模解决方案，包含对 Entity Framework 和 E
 
 ### <a name="devart-entity-developer"></a>Devart Entity Developer
 
-Devart Entity Developer 是一种用于 ADO.NET 实体框架、NHibernate、LinqConnect、Telerik 数据访问和 LINQ to SQL 的强大 ORM 设计器。 它支持 EF Core 模型的直观设计、使用“模型优先”或“数据库优先”的方式，还支持 C# 或 Visual Basic 代码生成。 
+Devart Entity Developer 是一种用于 ADO.NET 实体框架、NHibernate、LinqConnect、Telerik 数据访问和 LINQ to SQL 的强大 ORM 设计器。 它支持 EF Core 模型的直观设计、使用“模型优先”或“数据库优先”的方式，还支持 C# 或 Visual Basic 代码生成。
 
 [网站](https://www.devart.com/entitydeveloper/)
 
@@ -52,7 +52,7 @@ CatFactory 是一种面向 .NET Core 的基架引擎，它可自动基于 SQL Se
 
 ### <a name="loresofts-entity-framework-core-generator"></a>LoreSoft 的 Entity Framework Core 生成器
 
-Entity Framework Core Generator (efg) 是一种 .NET Core CLI 工具，可基于现有数据库生成 EF Core 模型，其功能与 `dotnet ef dbcontext scaffold` 很相似，但它还支持通过区域替换或分析映射文件来实现安全代码的[重新生成](https://efg.loresoft.com/en/latest/regeneration/)。 此工具支持生成视图模型、验证和对象映射器代码。 
+Entity Framework Core Generator (efg) 是一种 .NET Core CLI 工具，可基于现有数据库生成 EF Core 模型，其功能与 `dotnet ef dbcontext scaffold` 很相似，但它还支持通过区域替换或分析映射文件来实现安全代码的[重新生成](https://efg.loresoft.com/en/latest/regeneration/)。 此工具支持生成视图模型、验证和对象映射器代码。
 
 [教程](https://www.loresoft.com/Generate-ASP-NET-Web-API)
 [文档](https://efg.loresoft.com/en/latest/)
@@ -86,7 +86,7 @@ System.Linq.Dynamic 最初用作一个 Microsoft 示例，它展示了如何基�
 
 ### <a name="entityframeworkcoretypedoriginalvalues"></a>EntityFrameworkCore.TypedOriginalValues
 
-借助此库，可对实体属性的原始值进行强类型访问。 
+借助此库，可对实体属性的原始值进行强类型访问。
 
 [GitHub 存储库](https://github.com/NickStrupat/EntityFramework.TypedOriginalValues/)
 
