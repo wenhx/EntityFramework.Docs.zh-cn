@@ -24,20 +24,20 @@ ms.locfileid: "71197505"
 
 EF Core 日志记录要求使用一个或多个日志记录提供程序配置的 ILoggerFactory。 以下包中随附有常见提供程序：
 
-* 。[控制台](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console/)：简单的控制台记录器。
-* [Microsoft AzureAppServices](https://www.nuget.org/packages/Microsoft.Extensions.Logging.AzureAppServices/)：支持 Azure 应用服务的 "诊断日志" 和 "日志流" 功能。
-* " ["。](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Debug/)使用 system.exception （）将日志记录到调试器监视器。
-* [Microsoft extension. EventLog](https://www.nuget.org/packages/Microsoft.Extensions.Logging.EventLog/)：日志到 Windows 事件日志。
-* [Microsoft extension. EventSource](https://www.nuget.org/packages/Microsoft.Extensions.Logging.EventSource/)：支持 EventSource/EventListener。
-* [Microsoft TraceSource](https://www.nuget.org/packages/Microsoft.Extensions.Logging.TraceSource/)：使用`System.Diagnostics.TraceSource.TraceEvent()`将日志记录到跟踪侦听器。
+* [Microsoft.Extensions.Logging.Console](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console/)：简单的控制台记录器。
+* [Microsoft.Extensions.Logging.AzureAppServices](https://www.nuget.org/packages/Microsoft.Extensions.Logging.AzureAppServices/)：支持 Azure 应用服务的 "诊断日志" 和 "日志流" 功能。
+* [Microsoft.Extensions.Logging.Debug](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Debug/)使用 system.exception （）将日志记录到调试器监视器。
+* [Microsoft.Extensions.Logging.EventLog](https://www.nuget.org/packages/Microsoft.Extensions.Logging.EventLog/)：日志到 Windows 事件日志。
+* [Microsoft.Extensions.Logging.EventSource](https://www.nuget.org/packages/Microsoft.Extensions.Logging.EventSource/)：支持 EventSource/EventListener。
+* [Microsoft.Extensions.Logging.TraceSource](https://www.nuget.org/packages/Microsoft.Extensions.Logging.TraceSource/)：使用`System.Diagnostics.TraceSource.TraceEvent()`将日志记录到跟踪侦听器。
 
 安装适当的包后，应用程序应创建 Server.loggerfactory 的单一实例/全局实例。 例如，使用控制台记录器：
 
-# <a name="version-30tabv3"></a>[版本3。0](#tab/v3)
+# <a name="version-30tabv3"></a>[版本3.0](#tab/v3)
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs#DefineLoggerFactory)]
 
-# <a name="version-2xtabv2"></a>[版本2。x](#tab/v2)
+# <a name="version-2xtabv2"></a>[版本2.x](#tab/v2)
 
 > [!NOTE]
 > 下面的代码示例使用`ConsoleLoggerProvider`已在版本2.2 中弃用并替换为3.0 的构造函数。 使用2.2 时，可以安全地忽略和禁止显示警告。
@@ -60,11 +60,11 @@ public static readonly LoggerFactory MyLoggerFactory
 
 应用程序可以通过在 ILoggerProvider 上配置筛选器来控制要记录的内容。 例如:
 
-# <a name="version-30tabv3"></a>[版本3。0](#tab/v3)
+# <a name="version-30tabv3"></a>[版本3.0](#tab/v3)
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContextWithFiltering.cs#DefineLoggerFactory)]
 
-# <a name="version-2xtabv2"></a>[版本2。x](#tab/v2)
+# <a name="version-2xtabv2"></a>[版本2.x](#tab/v2)
 
 > [!NOTE]
 > 下面的代码示例使用`ConsoleLoggerProvider`已在版本2.2 中弃用并替换为3.0 的构造函数。 使用2.2 时，可以安全地忽略和禁止显示警告。
