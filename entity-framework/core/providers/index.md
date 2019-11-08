@@ -4,18 +4,19 @@ author: rowanmiller
 ms.date: 02/23/2018
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 uid: core/providers/index
-ms.openlocfilehash: 24b633d17347c7749a02dee1c04c310c2677ff8c
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: 0995c2cb403cf4f0db1462f1e3446a13563a1064
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181350"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73654819"
 ---
 # <a name="database-providers"></a>数据库提供程序
 
 Entity Framework Core 可通过名为数据库提供程序的插件库访问许多不同的数据库。
 
 ## <a name="current-providers"></a>当前提供程序
+
 > [!IMPORTANT]  
 > EF Core 提供程序由多种源生成。 并非所有提供程序均作为 [Entity Framework Core 项目](https://github.com/aspnet/EntityFrameworkCore)的组成部分进行维护。 考虑使用提供程序时，请务必评估质量、授权、支持等因素，确保其满足要求。 同时也请务必查看每个提供程序的文档，详细了解版本兼容性信息。
 
@@ -43,18 +44,19 @@ Entity Framework Core 可通过名为数据库提供程序的插件库访问许�
 | [Devart.Data.PostgreSql.EFCore](https://www.nuget.org/packages/Devart.Data.PostgreSql.EFCore/)                       | PostgreSQL 8.0 及以上版本     | [DevArt](https://www.devart.com/)                                             | 已付                 | [docs](https://www.devart.com/dotconnect/postgresql/docs/)                                                                                                                                         |
 | [Devart.Data.SQLite.EFCore](https://www.nuget.org/packages/Devart.Data.SQLite.EFCore/)                               | SQLite 3 及以上版本           | [DevArt](https://www.devart.com/)                                             | 已付                 | [docs](https://www.devart.com/dotconnect/sqlite/docs/)                                                                                                                                             |
 | [Devart.Data.MySql.EFCore](https://www.nuget.org/packages/Devart.Data.MySql.EFCore/)                                 | MySQL 5 及以上版本            | [DevArt](https://www.devart.com/)                                             | 已付                 | [docs](https://www.devart.com/dotconnect/mysql/docs/)                                                                                                                                              |
+| [FileContextCore](https://www.nuget.org/packages/FileContextCore/)                                 | 在文件中存储数据            | [Morris Janatzek](https://github.com/morrisjdev)                                             | 用于开发                 | [自述文件](https://github.com/morrisjdev/FileContextCore/blob/master/README.md)                                                                                                                                              |
 
 ## <a name="adding-a-database-provider-to-your-application"></a>向应用程序添加数据库提供程序
 
 EF Core 的大多数数据库提供程序都是作为 NuGet 包分发的，可按如下所示安装：
 
-# <a name="net-core-clitabdotnet-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
+## <a name="net-core-clitabdotnet-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
 
 ``` console
 dotnet add package provider_package_name
 ```
 
-# <a name="visual-studiotabvs"></a>[Visual Studio](#tab/vs)
+## <a name="visual-studiotabvs"></a>[Visual Studio](#tab/vs)
 
 ``` powershell
 install-package provider_package_name

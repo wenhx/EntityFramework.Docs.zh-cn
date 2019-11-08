@@ -4,12 +4,12 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 8ae74d63-6bad-4686-b325-bbf9d68f3743
 uid: ef6/index
-ms.openlocfilehash: 9561a7c4b645896cb4e248cb094c6954ed4bcdf1
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: 28a13879416a52cbe8035c23013f16390c75c4c9
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181427"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73656184"
 ---
 # <a name="entity-framework-6"></a>Entity Framework 6
 实体框架 6 (EF6) 是经试验和测试的关系映射器 (O/RM)，适用于 .NET 的对象，其功能和稳定性经过了多年的开发和调试。
@@ -17,11 +17,11 @@ ms.locfileid: "72181427"
 作为 O/RM，EF6 降低了关系方面和面向对象的方面之间的阻抗不匹配，使开发人员能够使用表示应用程序域的强类型 .NET 对象来编写应用程序，该应用程序可与存储在关系数据库中的数据交互，同时使开发人员无需再编写大部分的数据访问“管道”代码。
 
 EF6 可实现许多热门 O/RM 功能：
-- 不依赖于任何 EF 类型的 [POCO](~/ef6/resources/glossary.md#poco) 实体类的映射
+- 不依赖于任何 EF 类型的 [POCO](xref:ef6/resources/glossary#poco) 实体类的映射
 - 自动更改跟踪
 - 标识解析和工作单元
 - 预先、延迟和显式加载
-- 使用 LINQ（语言集成查询）转换强类型查询
+- 使用 [LINQ（语言集成查询）](https://aka.ms/AA6hsvu)转换强类型查询
 - 丰富的映射功能，可支持：
   - 一对一、一对多和多对多关系
   - 继承（每个层次结构一张表、每个类型一张表和每个具体类一张表）
@@ -31,7 +31,7 @@ EF6 可实现许多热门 O/RM 功能：
 - 通过编写代码创建实体模型的“Code First”体验。
 - 既可从现有数据库生成模型，然后手动编辑，也可从头开始创建模型，然后用于生成新的数据库。
 - 与 .NET Framework 应用程序模型（包括 ASP.NET）集成，并通过数据绑定与 WPF 和 WinForms 集成。
-- 基于 ADO.NET 的数据库连接和可用于连接到 SQL Server、Oracle、MySQL、SQLite、PostgreSQL、DB2 等的众多提供程序。
+- 基于 ADO.NET 的数据库连接和可用于连接到 SQL Server、Oracle、MySQL、SQLite、PostgreSQL、DB2 等的众多[提供程序](xref:ef6/fundamentals/providers/index)。
 
 ## <a name="should-i-use-ef6-or-ef-core"></a>应使用 EF6 还是 EF Core？
 
@@ -40,11 +40,11 @@ EF Core 则完全进行了重写，包含许多 EF6 没有的新功能，但还�
 如果功能集与需求匹配，请考虑在新应用程序中使用 EF Core。
 [比较 EF Core 和 EF6](xref:efcore-and-ef6/index)中更详细地讨论了此选项。
 
-## <a name="get-startedef6get-startedmd"></a>[入门](~/ef6/get-started.md)
+## <a name="get-startedxrefef6get-started"></a>[入门](xref:ef6/get-started)
 
-将 EntityFramework NuGet 包添加到项目或安装适用于 Visual Studio 的 Entity Framework Tools。 然后观看视频、阅读教程和高级文档，以充分利用 EF6。
+将 EntityFramework NuGet 包添加到项目或安装[适用于 Visual Studio 的 Entity Framework Tools](https://aka.ms/AA6i8c5)。 然后观看视频、阅读教程和高级文档，以充分利用 EF6。
 
 ## <a name="past-entity-framework-versions"></a>过去的实体框架版本
 
 本文档针对的是最新版本的实体框架 6 ，但其中大部分内容也适用于过去的版本。
-请查看[新增功能](~/ef6/what-is-new/index.md)和[过去的版本](~/ef6/what-is-new/past-releases.md)，了解 EF 版本和其中引入的功能的完整列表。
+请查看[新增功能](xref:ef6/what-is-new/index)和[过去的版本](xref:ef6/what-is-new/past-releases)，了解 EF 版本和其中引入的功能的完整列表。
