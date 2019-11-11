@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: d3e6515b-8181-482c-a790-c4a6778748c1
 uid: core/saving/transactions
-ms.openlocfilehash: ff12c4e7ace1f1b9e503cb2353bcdd53efd87cce
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 952cb891d145a47666f1d506ec00f066be9f245d
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197894"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73654751"
 ---
 # <a name="using-transactions"></a>使用事务
 
@@ -99,9 +99,9 @@ public class BloggingContext : DbContext
 
 ### <a name="limitations-of-systemtransactions"></a>System.Transactions 的限制  
 
-1. EF Core 依赖数据库提供程序以实现对 System.Transactions 的支持。 虽然支持在 .NET Framework 的 ADO.NET 提供程序之间十分常见，但最近才将 API 添加到 .NET Core，因此支持并未得到广泛应用。 如果提供程序未实现对 System.Transactions 的支持，则可能会完全忽略对这些 API 的调用。 SqlClient for .NET Core 从 2.1 及以上版本开始支持 System.Transactions。 如果你尝试使用此功能，SqlClient for .NET Core 2.0 会抛出异常。 
+1. EF Core 依赖数据库提供程序以实现对 System.Transactions 的支持。 虽然支持在 .NET Framework 的 ADO.NET 提供程序之间十分常见，但最近才将 API 添加到 .NET Core，因此支持并未得到广泛应用。 如果提供程序未实现对 System.Transactions 的支持，则可能会完全忽略对这些 API 的调用。 SqlClient for .NET Core 从 2.1 及以上版本开始支持 System.Transactions。 如果你尝试使用此功能，SqlClient for .NET Core 2.0 会抛出异常。
 
    > [!IMPORTANT]  
-   > 建议你测试在依赖提供程序以管理事务之前 API 与该提供程序的行为是否正确。 如果不正确，则建议你与数据库提供程序的维护人员联系。 
+   > 建议你测试在依赖提供程序以管理事务之前 API 与该提供程序的行为是否正确。 如果不正确，则建议你与数据库提供程序的维护人员联系。
 
-2. 自版本 2.1 起，.NET Core 中的 System.Transactions 实现不包括对分布式事务的支持，因此不能使用 `TransactionScope` 或 `CommittableTransaction` 来跨多个资源管理器协调事务。 
+2. 自版本 2.1 起，.NET Core 中的 System.Transactions 实现不包括对分布式事务的支持，因此不能使用 `TransactionScope` 或 `CommittableTransaction` 来跨多个资源管理器协调事务。

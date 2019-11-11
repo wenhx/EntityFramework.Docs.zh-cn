@@ -4,16 +4,17 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: f9fb64e2-6699-4d70-a773-592918c04c19
 uid: core/querying/related-data
-ms.openlocfilehash: 4e4ba21cd099daab4db8a8f358800fde26980c14
-ms.sourcegitcommit: 6c28926a1e35e392b198a8729fc13c1c1968a27b
+ms.openlocfilehash: bfabe8fd5b0a64edd5d97baff3beab9d712f1c20
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/02/2019
-ms.locfileid: "71813580"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73654635"
 ---
 # <a name="loading-related-data"></a>加载相关数据
 
 Entity Framework Core 允许你在模型中使用导航属性来加载相关实体。 有三种常见的 O/RM 模式可用于加载关联数据。
+
 * **预先加载**表示从数据库中加载关联数据，作为初始查询的一部分。
 * **显式加载**表示稍后从数据库中显式加载关联数据。
 * **延迟加载**表示在访问导航属性时，从数据库中以透明方式加载关联数据。
@@ -57,7 +58,7 @@ Entity Framework Core 允许你在模型中使用导航属性来加载相关实�
 
 ### <a name="include-on-derived-types"></a>派生类型上的包含
 
-可以使用 `Include` 和 `ThenInclude` 包括来自仅在派生类型上定义的导航的相关数据。 
+可以使用 `Include` 和 `ThenInclude` 包括来自仅在派生类型上定义的导航的相关数据。
 
 给定以下模型：
 
@@ -95,17 +96,20 @@ public class School
 
 所有人员（可以使用许多模式预先加载的学生）的 `School` 导航的内容：
 
-- 使用强制转换
+* 使用强制转换
+
   ```csharp
   context.People.Include(person => ((Student)person).School).ToList()
   ```
 
-- 使用 `as` 运算符
+* 使用 `as` 运算符
+
   ```csharp
   context.People.Include(person => (person as Student).School).ToList()
   ```
 
-- 使用 `Include` 的重载，该方法采用 `string` 类型的参数
+* 使用 `Include` 的重载，该方法采用 `string` 类型的参数
+
   ```csharp
   context.People.Include("School").ToList()
   ```
@@ -140,6 +144,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         .UseLazyLoadingProxies()
         .UseSqlServer(myConnectionString);
 ```
+
 或在使用 AddDbContext 时：
 
 ```csharp

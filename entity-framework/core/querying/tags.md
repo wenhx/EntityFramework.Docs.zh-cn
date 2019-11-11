@@ -4,19 +4,20 @@ author: divega
 ms.date: 11/14/2018
 ms.assetid: 73C7A627-C8E9-452D-9CD5-AFCC8FEFE395
 uid: core/querying/tags
-ms.openlocfilehash: 3a4d516cab5836c659e42d825c4f1bf89355d671
-ms.sourcegitcommit: b3c2b34d5f006ee3b41d6668f16fe7dcad1b4317
+ms.openlocfilehash: e8415b237df45ce652dcd152013f4f12a992aed7
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/15/2018
-ms.locfileid: "51688741"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73654823"
 ---
 # <a name="query-tags"></a>查询标记
+
 > [!NOTE]
 > 此为 EF Core 2.2 中的新增功能。
 
 此功能有助于将代码中的 LINQ 查询与日志中捕获的已生成 SQL 查询相关联。
-使用新增的 `TagWith()` 方法对 LINQ 查询进行批注： 
+使用新增的 `TagWith()` 方法对 LINQ 查询进行批注：
 
 ``` csharp
   var nearestFriends =
@@ -49,7 +50,7 @@ IQueryable<T> Limit<T>(IQueryable<T> source, int limit) =>
     source.TagWith("Limit").Take(limit);
 ```
 
-以下查询：   
+以下查询：
 
 ``` csharp
 var results = Limit(GetNearestFriends(myLocation), 25).ToList();
@@ -92,5 +93,6 @@ ORDER BY [f].[Location].STDistance(@__myLocation_0) DESC
 ```
 
 ## <a name="known-limitations"></a>已知限制
-**查询标记不可参数化：** EF Core 始终将 LINQ 查询中的查询标记视为，已生成 SQL 中包含的字符串文本。
+
+查询标记不可参数化：  EF Core 始终将 LINQ 查询中的查询标记视为生成的 SQL 中包含的字符串文本。
 禁止使用将查询标记用作参数的已编译查询。
