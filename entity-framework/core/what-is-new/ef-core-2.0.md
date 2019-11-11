@@ -4,16 +4,17 @@ author: divega
 ms.date: 02/20/2018
 ms.assetid: 2CB5809E-0EFB-44F6-AF14-9D5BFFFBFF9D
 uid: core/what-is-new/ef-core-2.0
-ms.openlocfilehash: 781578d9de05895cdbc777aa53c3f6d6f9777869
-ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
+ms.openlocfilehash: 72393e96c195af1df5a169025ca2ce7a7acb16bb
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/20/2019
-ms.locfileid: "71149049"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73656214"
 ---
 # <a name="new-features-in-ef-core-20"></a>EF Core 2.0 中的新增功能
 
 ## <a name="net-standard-20"></a>.NET Standard 2.0
+
 EF Core 现面向 .NET Standard 2.0，这意味着它可用于 .NET Core 2.0、.NET Framework 4.6.1 以及其他实现 .NET Standard 2.0 的库。
 有关支持功能的更多详细信息，请参阅[支持的 .NET 实现](../platforms/index.md)。
 
@@ -32,6 +33,7 @@ modelBuilder.Entity<Product>()
 modelBuilder.Entity<Product>().ToTable("Products");
 modelBuilder.Entity<ProductDetails>().ToTable("Products");
 ```
+
 阅读[有关表拆分的部分](xref:core/modeling/table-splitting)，详细了解此功能。
 
 ### <a name="owned-types"></a>固有类型
@@ -65,6 +67,7 @@ public class StreetAddress
     public string City { get; set; }
 }
 ```
+
 阅读[有关固有实体类型的部分](xref:core/modeling/owned-entities)，详细了解此功能。
 
 ### <a name="model-level-query-filters"></a>模型级别查询筛选器
@@ -92,6 +95,7 @@ public class BloggingContext : DbContext
     }
 }
 ```
+
 我们为 `Post` 实体类型的实例定义一个实现多租户和软删除的模型级别筛选器。 请留意 DbContext 实例级别属性的使用：`TenantId`。 模型级筛选器将使用正确上下文实例（即执行查询的上下文实例）中的值。
 
 可使用 IgnoreQueryFilters() 运算符对各个 LINQ 查询禁用筛选器。
@@ -298,9 +302,11 @@ public class MyPluralizer : IPluralizer
 ## <a name="others"></a>其他
 
 ### <a name="move-adonet-sqlite-provider-to-sqlitepclraw"></a>将 ADO.NET SQLite 提供程序移动到 SQLitePCL.raw
+
 这为我们提供了一个 Microsoft.Data.Sqlite 中的更强大解决方案，用以在不同平台分发本机 SQLite 二进制文件。
 
 ### <a name="only-one-provider-per-model"></a>每个模型仅有一个提供程序
+
 显著增强了提供程序与模型的交互方式，并简化了约定、注释和 Fluent API 用于不同提供程序的方法。
 
 EF Core 2.0 现将对所用的每个不同提供程序生成不同的 [IModel](https://github.com/aspnet/EntityFramework/blob/master/src/EFCore/Metadata/IModel.cs)。 这对应用程序而言通常是透明的。 这有助于简化较低级别的元数据 API，从而始终通过调用 `.Relational`（而不是 `.SqlServer`、`.Sqlite` 等）来访问常见关系元数据概念  。

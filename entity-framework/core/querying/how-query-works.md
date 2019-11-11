@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 09/26/2018
 ms.assetid: de2e34cd-659b-4cab-b5ed-7a979c6bf120
 uid: core/querying/how-query-works
-ms.openlocfilehash: bc085755f39b1288f092a8b2df892c1bf82a89f1
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: ba0d68469530e6272ffbb51946d7856122a261c7
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72186238"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73656242"
 ---
 # <a name="how-queries-work"></a>查询的工作原理
 
@@ -33,13 +33,14 @@ Entity Framework Core 使用语言集成查询 (LINQ) 来查询数据库中的�
       * 如果是，则会返回现有实体 <sup>(1)</sup>
       * 如果不是，则会创建新实体并返回该新实体
 
-<sup>(1)</sup> 非跟踪查询使用弱引用跟踪已返回的实体。 如果具有相同标识的上一个结果超出范围，并运行垃圾回收，则可能会获得新的实体实例。
+<sup>(1)</sup> 非跟踪查询使用弱引用跟踪已返回的实体。 如果具有相同标识的上一个结果超出范围，并遇到垃圾回收机制执行，则可能会获得新的实体实例。
 
 ## <a name="when-queries-are-executed"></a>执行查询时
 
 调用 LINQ 运算符时，只会生成查询的内存中表示形式。 使用结果时，查询只会发送到数据库。
 
 导致查询发送到数据库的最常见操作如下：
+
 * 在 `for` 循环中循环访问结果
 * 使用 `ToList`、`ToArray`、`Single`、`Count` 等运算符
 * 将查询结果数据绑定到 UI

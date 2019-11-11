@@ -4,25 +4,26 @@ author: divega
 ms.date: 11/14/2018
 ms.assetid: 998C04F3-676A-4FCF-8450-CFB0457B4198
 uid: core/what-is-new/ef-core-2.2
-ms.openlocfilehash: 5fcf7c6dfb4d8cb7928ef974af6deb52df7c63eb
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: fb9de799753bebd7b4092cd8f4af74703dee3e45
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181374"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73656188"
 ---
 # <a name="new-features-in-ef-core-22"></a>EF Core 2.2 中的新增功能
 
 ## <a name="spatial-data-support"></a>空间数据支持
 
 空间数据可用于表示对象的物理位置和形状。
-许多数据库都可以本机存储、索引和查询空间数据。 常见方案包括，查询给定距离内的对象，以及测试多边形是否包含给定位置。
+许多数据库都可以本机存储、索引和查询空间数据。
+常见方案包括，查询给定距离内的对象，以及测试多边形是否包含给定位置。
 EF Core 2.2 现在支持使用 [NetTopologySuite](https://github.com/NetTopologySuite/NetTopologySuite) (NTS) 库中的类型，处理各种数据库中的空间数据。
 
 空间数据支持是作为一系列提供程序专用扩展包进行实现。
 每个包都为 NTS 类型和方法以及数据库中相应的空间类型和函数提供映射。
 此类提供程序扩展现在可用于 [SQL Server](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite/)、[SQLite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite/) 和 [PostgreSQL](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite/)（来自 [Npgsql 项目](https://www.npgsql.org/)）。
-空间类型可以直接与 [EF Core 内存中提供程序](https://docs.microsoft.com/en-us/ef/core/providers/in-memory/)一起使用，无需使用额外扩展。
+空间类型可以直接与 [EF Core 内存中提供程序](xref:core/providers/in-memory/index)一起使用，无需使用额外扩展。
 
 安装提供程序扩展后，便能向实体添加受支持类型的属性。 例如:
 
@@ -40,7 +41,7 @@ namespace MyApp
     public Point Location { get; set; }
   }
 }
-``` 
+```
 
 然后，可以暂留包含空间数据的实体：
 
@@ -56,6 +57,7 @@ using (var context = new MyDbContext())
     context.SaveChanges();
 }
 ```
+
 还可以根据空间数据和操作执行数据库查询：
 
 ``` csharp
@@ -65,7 +67,7 @@ using (var context = new MyDbContext())
       select f).Take(5).ToList();
 ```
 
-若要详细了解此功能，请参阅[空间类型文档](xref:core/modeling/spatial)。 
+若要详细了解此功能，请参阅[空间类型文档](xref:core/modeling/spatial)。
 
 ## <a name="collections-of-owned-entities"></a>从属实体集合
 
@@ -74,7 +76,8 @@ EF Core 2.2 将此功能扩展为，将所有权表达为一对多关联。
 所有权有助于约束实体的使用方式。
 
 例如，从属实体：
-- 只能出现在其他实体类型的导航属性中。 
+
+- 只能出现在其他实体类型的导航属性中。
 - 自动加载，并且只能被 DbContext 和所有者跟踪。
 
 在关系数据库中，从属集合映射到所有者的各个表，就像是常规的一对多关联一样。
@@ -112,4 +115,4 @@ FROM [Friends] AS [f]
 ORDER BY [f].[Location].STDistance(@__myLocation_0) DESC
 ```
 
-有关详细信息，请参阅[查询标记文档](xref:core/querying/tags)。 
+有关详细信息，请参阅[查询标记文档](xref:core/querying/tags)。

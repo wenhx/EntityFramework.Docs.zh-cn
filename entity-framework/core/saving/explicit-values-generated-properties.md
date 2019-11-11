@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 3f1993c2-cdf5-425b-bac2-a2665a20322b
 uid: core/saving/explicit-values-generated-properties
-ms.openlocfilehash: d6aa9a0a9ce34e09a39026ad7ea9195b6777858c
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: ea469b9b7199cc767b2d0da1a5999026f938d087
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197853"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73656263"
 ---
 # <a name="setting-explicit-values-for-generated-properties"></a>设置已生成属性的显式值
 
@@ -33,6 +33,7 @@ ms.locfileid: "71197853"
 [!code-csharp[Main](../../../samples/core/Saving/ExplicitValuesGenerateProperties/EmployeeContext.cs#EmploymentStarted)]
 
 以下代码可将两个员工插入到数据库中。
+
 * 对于第一个员工，没有为 `Employee.EmploymentStarted` 属性分配任何值，因此仍将设置为 `DateTime` 的 CLR 默认值。
 * 对于第二个员工，已设置 `1-Jan-2000` 的显式值。
 
@@ -80,6 +81,7 @@ ms.locfileid: "71197853"
 [!code-sql[Main](../../../samples/core/Saving/ExplicitValuesGenerateProperties/employee_UPDATE.sql)]
 
 以下代码可增加数据库中两个员工的薪金。
+
 * 对于第一个员工，没有为 `Employee.LastPayRaise` 属性分配任何值，因此仍将设置为 null。
 * 对于第二个员工，已在一周前设置显式值（使加薪在较早的日期开始生效）。
 

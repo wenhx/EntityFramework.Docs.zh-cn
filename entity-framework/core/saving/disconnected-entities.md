@@ -5,12 +5,12 @@ ms.author: avickers
 ms.date: 10/27/2016
 ms.assetid: 2533b195-d357-4056-b0e0-8698971bc3b0
 uid: core/saving/disconnected-entities
-ms.openlocfilehash: 070f2ad396ec21858096c29413ac80bdf8547328
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 88c3fa8ea5b8246a932f5cf21e674bc7cc71c0ea
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197813"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73656274"
 ---
 # <a name="disconnected-entities"></a>断开连接的实体
 
@@ -18,11 +18,13 @@ DbContext 实例将自动跟踪从数据库返回的实体。 调用 SaveChanges
 
 但是，有时会使用一个上下文实例查询实体，然后使用其他实例对其进行保存。 这通常在“断开连接”的情况下发生，例如 Web 应用程序，此情况下实体被查询、发送到客户端、被修改、在请求中发送回服务器，然后进行保存。 在这种情况下，第二个上下文实例需要知道实体是新实体（应插入）还是现有实体（应更新）。
 
-> [!TIP]  
+<!-- markdownlint-disable MD028 -->
+> [!TIP]
 > 可在 GitHub 上查看此文章的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Disconnected/)。
 
 > [!TIP]
 > EF Core 只能跟踪具有给定主键值的任何实体的一个实例。 为避免这种情况成为一个问题，最好为每个工作单元使用短期上下文，使上下文一开始为空、向其附加实体、保存这些实体，然后释放并放弃该上下文。
+<!-- markdownlint-enable MD028 -->
 
 ## <a name="identifying-new-entities"></a>标识新实体
 
@@ -50,8 +52,9 @@ DbContext 实例将自动跟踪从数据库返回的实体。 调用 SaveChanges
 ### <a name="with-other-keys"></a>使用其他键
 
 未自动生成键值时，需要使用其他某种机制来确定新实体。 有以下两种常规方法：
- * 查询实体
- * 从客户端传递标志
+
+* 查询实体
+* 从客户端传递标志
 
 若要查询实体，只需使用 Find 方法：
 
@@ -79,6 +82,7 @@ Update 方法通常将实体标记为更新，而不是插入。 但是，如果
 [!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertOrUpdateSingleEntityWithFind)]
 
 步骤如下：
+
 * 如果 Find 返回 null，则数据库尚未包含具有此 ID 的博客，因此对 Add 的调用会将其标记为插入。
 * 如果 Find 返回实体，则该实体存在于数据库中，且上下文现在正在跟踪现有实体
   * 然后，使用 SetValues 将此实体上所有属性的值设置为来自客户端的值。
@@ -127,7 +131,7 @@ Update 方法通常将实体标记为更新，而不是插入。 但是，如果
 
 由于实体不存在通常表示应删除该实体，因此删除可能很难处理。 解决此问题的一种方法是使用“软删除”，以便将该实体标记为已删除，而不是实际删除。 然后，删除将变得与更新相同。 可以使用[查询筛选器](xref:core/querying/filters)实现软删除。
 
-对于真删除，常见模式是使用查询模式的扩展来执行本质上为图形差异的操作。例如：
+对于真删除，常见模式是使用查询模式的扩展来执行本质上为图形差异的操作。 例如：
 
 [!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertUpdateOrDeleteGraphWithFind)]
 

@@ -3,12 +3,12 @@ title: 处理并发冲突 - EF Core
 author: rowanmiller
 ms.date: 03/03/2018
 uid: core/saving/concurrency
-ms.openlocfilehash: 4d6ff24e58caa0b228e9c1e4313beda78d1025fc
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: b72fa472698e76e18f155cf96b738b0e193eee0f
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197830"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73654619"
 ---
 # <a name="handling-concurrency-conflicts"></a>处理并发冲突
 
@@ -56,11 +56,9 @@ WHERE [PersonId] = @p0 AND [LastName] = @p2;
 
 **有三组值可用于帮助解决并发冲突：**
 
-* “当前值”  是应用程序尝试写入数据库的值。
-
-* “原始值”  是在进行任何编辑之前最初从数据库中检索的值。
-
-* “数据库值”  是当前存储在数据库中的值。
+- “当前值”  是应用程序尝试写入数据库的值。
+- “原始值”  是在进行任何编辑之前最初从数据库中检索的值。
+- “数据库值”  是当前存储在数据库中的值。
 
 处理并发冲突的常规方法是：
 

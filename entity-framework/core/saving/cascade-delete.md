@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: ee8e14ec-2158-4c9c-96b5-118715e2ed9e
 uid: core/saving/cascade-delete
-ms.openlocfilehash: af86383bad52c87d2874fa4f8eb247a656601312
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: 51c8b6f4517a3f87821ed1e4e2d60549e06ed39d
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182010"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73656058"
 ---
 # <a name="cascade-delete"></a>级联删除
 
@@ -18,9 +18,11 @@ ms.locfileid: "72182010"
 EF Core 实现多种不同的删除行为，并允许配置各个关系的删除行为。 EF Core 还实现基于[关系的需求](../modeling/relationships.md#required-and-optional-relationships)为每个关系自动配置有用的默认删除行为的约定。
 
 ## <a name="delete-behaviors"></a>删除行为
+
 删除行为在 *DeleteBehavior* 枚举器类型中定义，并且可以传递到 *OnDelete* Fluent API 来控制是主体/父实体的删除还是依赖实体/子实体关系的断开会对依赖实体/子实体产生副作用。
 
 删除主体/父实体或断开与子实体的关系时有三个 EF 可执行的操作：
+
 * 可以删除子项/依赖项
 * 子项的外键值可以设置为 null
 * 子项保持不变
@@ -33,6 +35,7 @@ EF Core 实现多种不同的删除行为，并允许配置各个关系的删除
 有四个删除行为，如下表中列出。
 
 ### <a name="optional-relationships"></a>可选关系
+
 对于可选关系（可以为 null 的外键），可以保存 null 外键值，从而产生以下影响： 
 
 | 行为名称               | 对内存中的依赖项/子项的影响    | 对数据库中的依赖项/子项的影响  |
@@ -43,6 +46,7 @@ EF Core 实现多种不同的删除行为，并允许配置各个关系的删除
 | **Restrict**                | 无                                   | 无                                   |
 
 ### <a name="required-relationships"></a>必选关系
+
 对于必选关系（不可为 null 的外键），_不可以_保存 null 外键值，从而产生以下影响：
 
 | 行为名称         | 对内存中的依赖项/子项的影响 | 对数据库中的依赖项/子项的影响 |
@@ -55,6 +59,7 @@ EF Core 实现多种不同的删除行为，并允许配置各个关系的删除
 在上表中，“无”  可能会造成约束冲突。 例如，如果已删除主体/子实体，但不执行任何操作来更改依赖项/子项的外键，则由于发生外键约束冲突，数据库将可能会引发 SaveChanges。
 
 高级别：
+
 * 如果实体在没有父项时不能存在，且希望 EF 负责自动删除子项，则使用“Cascade”  。
   * 在没有父项时不能存在的实体通常使用必选关系，其中“Cascade”  是默认值。
 * 如果实体可能有或可能没有父项，且希望 EF 负责为你将外键变为 null，则使用“ClientSetNull” 
@@ -107,7 +112,7 @@ EF Core 实现多种不同的删除行为，并允许配置各个关系的删除
 
 ### <a name="deletebehaviorclientsetnull-or-deletebehaviorsetnull-with-required-relationship"></a>具有必选关系的 DeleteBehavior.ClientSetNull 或 DeleteBehavior.SetNull
 
-```console
+``` output
   After loading entities:
     Blog '1' is in state Unchanged with 2 posts referenced.
       Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
@@ -130,7 +135,7 @@ EF Core 实现多种不同的删除行为，并允许配置各个关系的删除
 
 ### <a name="deletebehaviorclientsetnull-or-deletebehaviorsetnull-with-optional-relationship"></a>具有可选关系的 DeleteBehavior.ClientSetNull 或 DeleteBehavior.SetNull
 
-```console
+``` output
   After loading entities:
     Blog '1' is in state Unchanged with 2 posts referenced.
       Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
@@ -160,7 +165,7 @@ EF Core 实现多种不同的删除行为，并允许配置各个关系的删除
 
 ### <a name="deletebehaviorrestrict-with-required-or-optional-relationship"></a>具有必选或可选关系的 DeleteBehavior.Restrict
 
-```console
+``` output
   After loading entities:
     Blog '1' is in state Unchanged with 2 posts referenced.
       Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
@@ -189,7 +194,7 @@ EF Core 实现多种不同的删除行为，并允许配置各个关系的删除
 
 ### <a name="deletebehaviorcascade-with-required-or-optional-relationship"></a>具有必选或可选关系的 DeleteBehavior.Cascade
 
-```console
+``` output
   After loading entities:
     Blog '1' is in state Unchanged with 2 posts referenced.
       Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
@@ -217,7 +222,7 @@ EF Core 实现多种不同的删除行为，并允许配置各个关系的删除
 
 ### <a name="deletebehaviorclientsetnull-or-deletebehaviorsetnull-with-required-relationship"></a>具有必选关系的 DeleteBehavior.ClientSetNull 或 DeleteBehavior.SetNull
 
-```console
+``` output
   After loading entities:
     Blog '1' is in state Unchanged with 2 posts referenced.
       Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
@@ -240,7 +245,7 @@ EF Core 实现多种不同的删除行为，并允许配置各个关系的删除
 
 ### <a name="deletebehaviorclientsetnull-or-deletebehaviorsetnull-with-optional-relationship"></a>具有可选关系的 DeleteBehavior.ClientSetNull 或 DeleteBehavior.SetNull
 
-```console
+``` output
   After loading entities:
     Blog '1' is in state Unchanged with 2 posts referenced.
       Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
@@ -268,7 +273,7 @@ EF Core 实现多种不同的删除行为，并允许配置各个关系的删除
 
 ### <a name="deletebehaviorrestrict-with-required-or-optional-relationship"></a>具有必选或可选关系的 DeleteBehavior.Restrict
 
-```console
+``` output
   After loading entities:
     Blog '1' is in state Unchanged with 2 posts referenced.
       Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
