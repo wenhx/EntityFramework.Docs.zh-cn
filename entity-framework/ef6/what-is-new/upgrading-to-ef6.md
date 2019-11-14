@@ -33,7 +33,7 @@ ms.locfileid: "72182102"
 Install-Package EntityFramework
 ```
 
-## <a name="2-ensure-that-assembly-references-to-systemdataentitydll-are-removed"></a>2.确保已删除对 system.exception 的程序集引用
+## <a name="2-ensure-that-assembly-references-to-systemdataentitydll-are-removed"></a>2.确保已删除对 System.Data.Entity.dll 的程序集引用
 
 安装 EF6 NuGet 包应会自动从你的项目中删除对 System.object 的任何引用。
 

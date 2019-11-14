@@ -26,7 +26,7 @@ EF Core 日志记录要求使用一个或多个日志记录提供程序配置的
 
 * [Microsoft.Extensions.Logging.Console](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console/)：简单的控制台记录器。
 * [Microsoft.Extensions.Logging.AzureAppServices](https://www.nuget.org/packages/Microsoft.Extensions.Logging.AzureAppServices/)：支持 Azure 应用服务的 "诊断日志" 和 "日志流" 功能。
-* [Microsoft.Extensions.Logging.Debug](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Debug/)使用 system.exception （）将日志记录到调试器监视器。
+* [Microsoft.Extensions.Logging.Debug](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Debug/)使用 System.Diagnostics.Debug.WriteLine() 将日志记录到调试器监视器。
 * [Microsoft extension. EventLog](https://www.nuget.org/packages/Microsoft.Extensions.Logging.EventLog/)：日志到 Windows 事件日志。
 * [Microsoft extension. EventSource](https://www.nuget.org/packages/Microsoft.Extensions.Logging.EventSource/)：支持 EventSource/EventListener。
 * [Microsoft TraceSource](https://www.nuget.org/packages/Microsoft.Extensions.Logging.TraceSource/)：使用`System.Diagnostics.TraceSource.TraceEvent()`将日志记录到跟踪侦听器。
