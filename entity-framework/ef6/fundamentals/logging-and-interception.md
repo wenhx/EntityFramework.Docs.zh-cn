@@ -104,7 +104,7 @@ WHERE @@ROWCOUNT > 0 AND [Id] = scope_identity()
     - 查询，包括常规 LINQ 查询、eSQL 查询和来自 SqlQuery 等方法的原始查询  
     - 作为 SaveChanges 的一部分生成的插入、更新和删除操作  
     - 关系加载查询，如延迟加载生成的查询  
-- Parameters  
+- 参数  
 - 命令是否正在以异步方式执行  
 - 指示命令开始执行的时间的时间戳  
 - 命令是否已成功完成，引发异常，或是否已取消（对于异步）  
@@ -261,11 +261,11 @@ Context 'BlogContext' is executing command 'insert [dbo].[Posts]([Title], [BlogI
 
 ### <a name="the-interception-context"></a>截获上下文  
 
-查看在任何侦听器接口上定义的方法很明显，就是每个调用都给定 DbInterceptionContext 类型的对象或派生自此类类型的某种类型，如 DbCommandInterceptionContext @ no__t-0 @ no__t。 此对象包含有关 EF 正在采取的操作的上下文信息。 例如，如果该操作是代表 DbContext 执行的，则 DbContext 将包含在 DbInterceptionContext 中。 同样，对于异步执行的命令，将在 DbCommandInterceptionContext 上设置 IsAsync 标志。  
+查看在任何侦听器接口上定义的方法很明显，就是每个调用都给定 DbInterceptionContext 类型的对象或派生的某种类型，如 DbCommandInterceptionContext\<\>。 此对象包含有关 EF 正在采取的操作的上下文信息。 例如，如果该操作是代表 DbContext 执行的，则 DbContext 将包含在 DbInterceptionContext 中。 同样，对于异步执行的命令，将在 DbCommandInterceptionContext 上设置 IsAsync 标志。  
 
 ### <a name="result-handling"></a>结果处理  
 
-DbCommandInterceptionContext @ no__t-0 @ no__t 类包含一个名为 Result、OriginalResult、Exception 和 OriginalException 的属性。 对于对在执行操作之前调用的截取方法的调用，这些属性将设置为 null/零（即，对于 。正在执行方法。 如果执行并成功执行该操作，则结果和 OriginalResult 将设置为操作的结果。 然后，可以在执行操作后调用的截取方法中观察这些值，即 。已执行方法。 同样，如果操作引发，则会设置 Exception 和 OriginalException 属性。  
+DbCommandInterceptionContext\<\> 类包含一个名为 Result、OriginalResult、Exception 和 OriginalException 的属性。 对于对在执行操作之前调用的截取方法的调用，这些属性将设置为 null/零（即，对于 。正在执行方法。 如果执行并成功执行该操作，则结果和 OriginalResult 将设置为操作的结果。 然后，可以在执行操作后调用的截取方法中观察这些值，即 。已执行方法。 同样，如果操作引发，则会设置 Exception 和 OriginalException 属性。  
 
 #### <a name="suppressing-execution"></a>禁止执行  
 
@@ -297,7 +297,7 @@ DbInterception.Add(new NLogCommandInterceptor());
 
 还可以使用基于 DbConfiguration 代码的配置机制在应用域级别注册拦截程序。  
 
-### <a name="example-logging-to-nlog"></a>示例：日志记录到 NLog  
+### <a name="example-logging-to-nlog"></a>示例：记录到 NLog  
 
 让我们将这一切结合起来，使用 IDbCommandInterceptor 和[NLog](https://nlog-project.org/)来执行以下操作：  
 

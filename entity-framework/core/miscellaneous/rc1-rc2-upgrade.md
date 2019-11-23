@@ -17,7 +17,7 @@ ms.locfileid: "72181277"
 
 ## <a name="package-names-and-versions"></a>包名称和版本
 
-在 RC1 和 RC2 之间，我们将从 "实体框架 7" 改为 "Entity Framework Core"。 可以[通过 Scott Hanselman 详细了解此帖子](https://www.hanselman.com/blog/ASPNET5IsDeadIntroducingASPNETCore10AndNETCore10.aspx)中的更改原因。 由于此更改，我们的包名称从 @no__t 更改为 `Microsoft.EntityFrameworkCore.*`，版本从 `7.0.0-rc1-final` 更改为 `1.0.0-rc2-final` （对于工具为 `1.0.0-preview1-final`）。
+在 RC1 和 RC2 之间，我们将从 "实体框架 7" 改为 "Entity Framework Core"。 可以[通过 Scott Hanselman 详细了解此帖子](https://www.hanselman.com/blog/ASPNET5IsDeadIntroducingASPNETCore10AndNETCore10.aspx)中的更改原因。 由于此更改，我们的包名称将从 `EntityFramework.*` 更改为 `Microsoft.EntityFrameworkCore.*`，版本从 `7.0.0-rc1-final` 到 `1.0.0-rc2-final` （或工具 `1.0.0-preview1-final`）。
 
 **需要完全删除 RC1 包，然后安装 RC2 包。** 下面是一些常用包的映射。
 
@@ -35,13 +35,13 @@ ms.locfileid: "72181277"
 
 ## <a name="namespaces"></a>命名空间
 
-除了包名称外，命名空间从 @no__t 更改为 @no__t。 您可以使用 `using Microsoft.EntityFrameworkCore` 的 @no__t 的查找/替换来处理此更改。
+除了包名称，命名空间从 `Microsoft.Data.Entity.*` 更改为 `Microsoft.EntityFrameworkCore.*`。 您可以使用 `using Microsoft.EntityFrameworkCore`的 `using Microsoft.Data.Entity` 的查找/替换来处理此更改。
 
 ## <a name="table-naming-convention-changes"></a>表命名约定更改
 
-RC2 中的一个重要功能更改是将给定实体的 @no__t 的名称指定为其映射到的表名，而不只是类名。 有关此更改的详细信息，请参阅[相关公告问题](https://github.com/aspnet/Announcements/issues/167)。
+RC2 中的一项重大功能更改是将给定实体的 `DbSet<TEntity>` 属性名称用作其映射到的表名，而不只是类名。 有关此更改的详细信息，请参阅[相关公告问题](https://github.com/aspnet/Announcements/issues/167)。
 
-对于现有的 RC1 应用程序，建议将以下代码添加到 `OnModelCreating` 方法的开头，以保留 RC1 命名策略：
+对于现有的 RC1 应用程序，我们建议将以下代码添加到 `OnModelCreating` 方法的开头，以保留 RC1 命名策略：
 
 ``` csharp
 foreach (var entity in modelBuilder.Model.GetEntityTypes())
@@ -63,7 +63,7 @@ services.AddEntityFramework()
     options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 ```
 
-在 RC2 中，你可以删除对 `AddEntityFramework()`、`AddSqlServer()` 等的调用：
+在 RC2 中，你可以删除对 `AddEntityFramework()`、`AddSqlServer()`等的调用：
 
 ``` csharp
 services.AddDbContext<ApplicationDbContext>(options =>
@@ -81,9 +81,9 @@ public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
 
 ## <a name="passing-in-an-iserviceprovider"></a>传入 IServiceProvider
 
-如果你的 RC1 代码将 `IServiceProvider` 传递到上下文，此代码现在已移动到 @no__t，而不是单独的构造函数参数。 使用 @no__t 设置服务提供程序。
+如果有将 `IServiceProvider` 传递给上下文的 RC1 代码，则该代码现在已移动到 `DbContextOptions`，而不是单独的构造函数参数。 使用 `DbContextOptionsBuilder.UseInternalServiceProvider(...)` 设置服务提供程序。
 
-### <a name="testing"></a>正在测试
+### <a name="testing"></a>测试
 
 执行此操作的最常见方案是在测试时控制 InMemory 数据库的范围。 有关使用 RC2 执行此操作的示例，请参阅更新的[测试](testing/index.md)文章。
 
@@ -103,9 +103,9 @@ services.AddEntityFrameworkSqlServer()
 
 ## <a name="dnx-commands--net-cli-aspnet-core-projects-only"></a>DNX 命令 = >.NET CLI （仅适用于 ASP.NET Core 项目）
 
-如果先前对 ASP.NET 5 项目使用了 `dnx ef` 命令，则这些命令现在已移动到 @no__t 1 命令。 相同的命令语法仍适用。 对于语法信息，可以使用 `dotnet ef --help`。
+如果以前使用了 ASP.NET 5 项目的 `dnx ef` 命令，则这些命令现在已移动到 `dotnet ef` 命令。 相同的命令语法仍适用。 您可以使用 `dotnet ef --help` 来提供语法信息。
 
-命令注册的方式在 RC2 中发生了变化，因为 DNX 被 .NET CLI 替换。 现在，命令在 `project.json` 的 @no__t 的部分中注册：
+命令注册的方式在 RC2 中发生了变化，因为 DNX 被 .NET CLI 替换。 命令现在已在 `project.json`中的 `tools` 部分注册：
 
 ``` json
 "tools": {
@@ -144,7 +144,7 @@ Package Remotion.Linq 2.0.2 is not compatible with netcoreapp1.0 (.NETCoreApp,Ve
   - portable-net45+win8+wp8+wpa81 (.NETPortable,Version=v0.0,Profile=Profile259)
 ```
 
-解决方法是手动导入可移植配置文件 "net451 + win8"。 这会强制 NuGet 将与此提供的二进制文件相匹配的二进制文件视为与 .NET Standard 兼容的框架，即使它们不是这样。 尽管 "net451 + win8" 与 .NET Standard 的兼容性不是 100%，但其兼容性足以用于从 PCL 转换到 .NET Standard。 当 EF 的依赖项最终升级到 .NET Standard 时，可以删除导入。
+解决方法是手动导入可移植配置文件 "net451 + win8"。 这会强制 NuGet 将与此提供的二进制文件相匹配的二进制文件视为与 .NET Standard 兼容的框架，即使它们不是这样。 尽管 "net451 + win8" 与 .NET Standard 的兼容性不是100%，但其兼容性足以用于从 PCL 转换到 .NET Standard。 当 EF 的依赖项最终升级到 .NET Standard 时，可以删除导入。
 
 可以在数组语法中将多个框架添加到 "导入"。 如果将其他库添加到项目，则可能需要其他导入。
 

@@ -45,7 +45,7 @@ Install-Package EntityFramework
 Install-Package EntityFramework -Version <number>
 ```
 
-请注意，@no__t 表示要安装的 EF 的特定版本。 例如，6.2.0 是 EF 6.2 的编号版本。   
+请注意，`<number>` 表示要安装的 EF 的特定版本。 例如，6.2.0 是 EF 6.2 的编号版本。   
 
 4\.1 之前的 EF 运行时是 .NET Framework 的一部分，不能单独安装。
 

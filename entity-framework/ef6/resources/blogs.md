@@ -15,7 +15,7 @@ ms.locfileid: "72182414"
 
 ## <a name="ef-team-blogs"></a>EF 团队博客
 
-- @no__t 0.NET 博客-标记：实体框架 @ no__t-0
+- [.NET 博客-标记：实体框架](https://blogs.msdn.microsoft.com/dotnet/tag/entity-framework/)
 - [ADO.NET 博客（不再使用）](https://blogs.msdn.microsoft.com/adonet/)
 - [EF 设计博客（不再使用）](https://blogs.msdn.microsoft.com/efdesign/)
 
@@ -24,7 +24,7 @@ ms.locfileid: "72182414"
 - [Arthur Vickers](https://blog.oneunicorn.com/tag/entity-framework/)
 - [Brice Lambson](https://www.bricelam.net/)
 - [圣地亚哥 Vega](https://blogs.msdn.microsoft.com/diego/)
-- [Rowan 莎莎](https://romiller.com/category/entity-framework/)
+- [Rowan Miller](https://romiller.com/category/entity-framework/)
 - [Pawel Kadluczka](https://blog.3d-logic.com/category/entity-framework/)
 - [Alex James](https://blogs.msdn.microsoft.com/alexj/tag/entity-framework/)
 - [Zlatko Michailov](https://blogs.msdn.microsoft.com/esql/tag/entity-framework/)

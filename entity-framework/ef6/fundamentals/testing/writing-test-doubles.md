@@ -102,7 +102,7 @@ namespace TestingDemo
 
 请注意，我们的上下文实现了 IBloggingContext 接口。  
 
-如果使用 Code First，则可以直接编辑上下文来实现接口。 如果使用的是 EF 设计器，则需要编辑生成上下文的 T4 模板。 打开 \<model_name @ no__t-1。Context.tt 文件嵌套在 edmx 文件下，查找以下代码片段，并将其添加到接口中，如下所示。  
+如果使用 Code First，则可以直接编辑上下文来实现接口。 如果使用的是 EF 设计器，则需要编辑生成上下文的 T4 模板。 打开\>\<model_name。Context.tt 文件嵌套在 edmx 文件下，查找以下代码片段，并将其添加到接口中，如下所示。  
 
 ``` csharp  
 <#=Accessibility.ForType(container)#> partial class <#=code.Escape(container)#> : DbContext, IBloggingContext

@@ -154,12 +154,12 @@ EF6 引入了对异步查询的支持，并使用 .NET 4.5 中引入的[async �
 
 现在，我们已启动并运行程序，接下来可以开始使用新的 async 和 await 关键字。 我们已对 Program.cs 进行了以下更改
 
-1.  第2行：**System.web**命名空间的 using 语句使我们能够访问 EF async extension 方法。
-2.  第4行：用于 " **system.object**命名空间" 命名空间的 using 语句允许我们使用**任务**类型。
-3.  第12行 & 18：我们正在捕获作为任务，用于监视**PerformSomeDatabaseOperations** （第12行）的进度，并在程序的所有工作完成后阻止程序执行完成（第18行）。
+1.  第2行： **system.web**命名空间的 using 语句使我们能够访问 EF async extension 方法。
+2.  第4行：用于**system.web**命名空间的 using 语句允许使用**任务**类型。
+3.  第12行 & 18：我们正在捕获作为任务，用于监视**PerformSomeDatabaseOperations** （第12行）的进度，然后在程序的所有工作完成后阻止程序执行完成此任务完成（第18行）。
 4.  第25行：我们更新了**PerformSomeDatabaseOperations** ，将其标记为**async**并返回一个**任务**。
-5.  第35行：我们现在正在调用方法的异步版本，并等待其完成。
-6.  第42行：我们现在正在调用 System.linq.enumerable.tolist 的异步版本，并等待结果。
+5.  第35行：现在，我们正在调用 SaveChanges 的异步版本，并等待其完成。
+6.  第42行：我们正在调用 System.linq.enumerable.tolist 的异步版本，并等待结果。
 
 有关 System.web 命名空间中可用扩展方法的完整列表，请参阅 QueryableExtensions 类。 *还需要向 using 语句添加 "使用 System.web"。*
 
@@ -222,12 +222,12 @@ EF6 引入了对异步查询的支持，并使用 .NET 4.5 中引入的[async �
 由于代码是异步的，因此，我们可以在运行程序时观察到不同的执行流程：
 
 1. **SaveChanges**开始将新**博客**推送到数据库  
-    @no__t 0Once 将命令发送到数据库，当前托管线程上不再需要计算时间。**PerformDatabaseOperations**方法返回（即使未完成执行）和 Main 方法中的程序流将继续。 *
+    *将命令发送到数据库后，当前托管线程不需要更多计算时间。**PerformDatabaseOperations**方法返回（即使尚未执行完毕）和 Main 方法中的程序流将继续。*
 2. **将日报价写入控制台**  
-    @no__t 0Since，在 Main 方法中没有更多的工作要做，在数据库操作完成前，会阻止在等待调用上托管线程。完成后，我们将执行**PerformDatabaseOperations**的剩余部分。 *
+    *由于在 Main 方法中没有更多的工作要做，因此，在数据库操作完成前，会阻止在等待调用上托管线程。完成后，我们将执行**PerformDatabaseOperations**的剩余部分。*
 3.  **SaveChanges**完成  
 4.  所有**博客**的查询都发送到数据库  
-    @no__t 0Again，在数据库中处理查询时，托管线程可以自由地执行其他工作。由于所有其他执行都已完成，因此线程只会在等待调用时停止。 *
+    *同样，在数据库中处理查询时，托管线程可以自由地执行其他工作。由于所有其他执行都已完成，线程只会在等待调用时停止。*
 5.  查询返回并将结果写入**控制台**  
 
 ![异步输出](~/ef6/media/asyncoutput.png) 

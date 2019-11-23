@@ -84,7 +84,7 @@ namespace TestingDemo
 
 请注意，上下文中的 DbSet 属性标记为虚拟。 这将允许模拟框架从我们的上下文派生，并使用模拟实现覆盖这些属性。  
 
-如果使用 Code First，则可以直接编辑类。 如果使用的是 EF 设计器，则需要编辑生成上下文的 T4 模板。 打开 \<model_name @ no__t-1。Context.tt 文件嵌套在 edmx 文件下，查找以下代码片段，并将其添加到 virtual 关键字中，如下所示。  
+如果使用 Code First，则可以直接编辑类。 如果使用的是 EF 设计器，则需要编辑生成上下文的 T4 模板。 打开\>\<model_name。Context.tt 文件嵌套在 edmx 文件下，查找以下代码片段，并将其添加到 virtual 关键字中，如下所示。  
 
 ``` csharp
 public string DbSet(EntitySet entitySet)
@@ -150,7 +150,7 @@ namespace TestingDemo
 
 ## <a name="testing-non-query-scenarios"></a>测试非查询方案  
 
-这就是开始测试非查询方法所需的所有操作。 以下测试使用 Moq 创建上下文。 然后，它创建一个 DbSet @ no__t-0Blog @ no__t，并将其从上下文的 "博客" 属性中返回。 接下来，使用上下文创建新的 BlogService，然后使用 AddBlog 方法创建新的博客。 最后，测试将验证该服务是否在上下文中添加了新的博客并调用了 SaveChanges。  
+这就是开始测试非查询方法所需的所有操作。 以下测试使用 Moq 创建上下文。 然后，它将创建一个 DbSet\<博客\> 并向其线路，使其从上下文的博客属性返回。 接下来，使用上下文创建新的 BlogService，然后使用 AddBlog 方法创建新的博客。 最后，测试将验证该服务是否在上下文中添加了新的博客并调用了 SaveChanges。  
 
 ``` csharp
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -182,7 +182,7 @@ namespace TestingDemo
 
 ## <a name="testing-query-scenarios"></a>测试查询方案  
 
-为了能够对 DbSet 测试执行查询，我们需要设置 IQueryable 的实现。 第一步是创建一些内存中数据–我们使用的是 List @ no__t-0Blog @ no__t。 接下来，我们将创建一个上下文和 DBSet @ no__t-0Blog @ no__t，然后将 DbSet 的 IQueryable 实现连接在一起–它们只是委托给适用于 List @ no__t-2T @ no__t-3 的 LINQ to Objects 提供程序。  
+为了能够对 DbSet 测试执行查询，我们需要设置 IQueryable 的实现。 第一步是创建一些内存中数据，我们使用的是博客\>\<列表。 接下来，我们将创建一个上下文和 DBSet\<博客\> 然后将 DbSet 的 IQueryable 实现连接在一起–它们只是委托给适用于 List\<T\>的 LINQ to Objects 提供程序。  
 
 然后，可以根据我们的测试来创建 BlogService，并确保从 GetAllBlogs 返回的数据按名称排序。  
 
@@ -235,7 +235,7 @@ namespace TestingDemo
 
 由于实体框架查询使用 LINQ，因此扩展方法是在 IQueryable 和 IEnumerable 上定义的。 但是，因为它们仅设计为与实体框架一起使用，所以如果尝试在不是实体框架查询的 LINQ 查询中使用它们，则可能会收到以下错误：
 
-> 源 IQueryable 不实现 IDbAsyncEnumerable @ no__t-0。 仅实现 IDbAsyncEnumerable 的源可用于实体框架异步操作。 有关详细信息，请参阅[http://go.microsoft.com/fwlink/?LinkId=287068](https://go.microsoft.com/fwlink/?LinkId=287068)。  
+> 源 IQueryable 不实现 IDbAsyncEnumerable{0}。 仅实现 IDbAsyncEnumerable 的源可用于实体框架异步操作。 有关详细信息，请参阅[http://go.microsoft.com/fwlink/?LinkId=287068](https://go.microsoft.com/fwlink/?LinkId=287068)。  
 
 尽管异步方法仅在针对 EF 查询运行时受支持，但在对 DbSet 的内存中测试双精度运行时，您可能需要在单元测试中使用它们。  
 

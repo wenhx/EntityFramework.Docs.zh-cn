@@ -16,7 +16,7 @@ ms.locfileid: "72181612"
 
 EF 与提供程序交互的方式需要进行某些更改，以允许在开源许可证下释放 EF。 这些更改要求针对 EF6 程序集重新生成 EF 提供程序，同时提供用于注册提供程序的新机制。
 
-## <a name="rebuilding"></a>重新生成
+## <a name="rebuilding"></a>重建
 
 在 EF6 中，先前 .NET Framework 的核心代码现在作为带外（OOB）程序集发货。 有关如何针对 EF6 生成应用程序的详细信息，请参阅[更新应用程序的 EF6](~/ef6/what-is-new/upgrading-to-ef6.md)页。 还需要使用这些说明重新生成提供程序。
 
@@ -28,7 +28,7 @@ EF 提供程序实际上是由 CLR 类型定义的特定于提供程序的服务
 
 ### <a name="dbproviderfactory"></a>DbProviderFactory
 
-EF 依赖于从[DbProviderFactory](https://msdn.microsoft.com/library/system.data.common.dbproviderfactory.aspx)派生的类型，以执行所有低级别的数据库访问。 DbProviderFactory 实际上不是 EF 的一部分，而是 .NET Framework 中的一个类，它为 ADO.NET 提供程序的入口点提供服务，这些提供程序可由 EF、其他 O/RMs 或应用程序直接使用以获取连接实例、命令、参数和提供程序不可知的其他 ADO.NET 抽象方法。 有关 DbProviderFactory 的详细信息，请参阅[ADO.NET 的 MSDN 文档](https://msdn.microsoft.com/library/a6cd7c08.aspx)。
+EF 依赖于从[DbProviderFactory](https://msdn.microsoft.com/library/system.data.common.dbproviderfactory.aspx)派生的类型，以执行所有低级别的数据库访问。 DbProviderFactory 实际上不是 EF 的一部分，而是 .NET Framework 中的一个类，它为 ADO.NET 提供程序提供了一个入口点，这些提供程序可由 EF、其他 O/RMs 或应用程序直接使用以获取连接的实例、命令、参数和其他 ADO.NET 抽象的实例。 有关 DbProviderFactory 的详细信息，请参阅[ADO.NET 的 MSDN 文档](https://msdn.microsoft.com/library/a6cd7c08.aspx)。
 
 ### <a name="dbproviderservices"></a>DbProviderServices
 
@@ -36,7 +36,7 @@ EF 依赖于从 Dbproviderservices.createdatabase 派生的类型，以便在 AD
 
 可在[MSDN](https://msdn.microsoft.com/library/ee789835.aspx)上找到有关 dbproviderservices.createdatabase 实现的基本功能的更多详细信息。 但请注意，在撰写本文时，尽管大部分概念仍然有效，但不会对 EF6 进行更新。 Dbproviderservices.createdatabase 的 SQL Server 和 SQL Server Compact 实现也签入到[开源基本代码](https://github.com/aspnet/EntityFramework6/)，并可用作其他实现的有用引用。
 
-在早期版本的 EF 中，Dbproviderservices.createdatabase 实现直接从 ADO.NET 提供程序获取。 这是通过将 DbProviderFactory 强制转换为 IServiceProvider 并调用 GetService 方法来完成的。 这会将 EF 提供程序紧密耦合到 DbProviderFactory。 此耦合阻止的 EF 被移出 .NET Framework，因此对于 EF6，此紧密耦合已被移除，Dbproviderservices.createdatabase 的实现现在直接在应用程序的配置文件或基于代码中注册有关详细信息，请参阅下面的_注册 dbproviderservices.createdatabase_部分。
+在早期版本的 EF 中，Dbproviderservices.createdatabase 实现直接从 ADO.NET 提供程序获取。 这是通过将 DbProviderFactory 强制转换为 IServiceProvider 并调用 GetService 方法来完成的。 这会将 EF 提供程序紧密耦合到 DbProviderFactory。 此耦合阻止的 EF 被移出 .NET Framework，因此对于 EF6，已删除此紧密耦合，并且 Dbproviderservices.createdatabase 的实现现在直接在应用程序的配置文件或基于代码的配置中注册，如下面的_注册 dbproviderservices.createdatabase_部分中所述。
 
 ## <a name="additional-services"></a>其他服务
 
@@ -62,7 +62,7 @@ EF 依赖于从 Dbproviderservices.createdatabase 派生的类型，以便在 AD
 
 ### <a name="funcdbconnection-string-historycontextfactory"></a>Func < DbConnection，string，HistoryContextFactory >
 
-这是一项可选的服务，可让提供程序配置 HistoryContext 与 EF 迁移使用的 @no__t 0 表的映射。 HistoryContext 是一个 Code First DbContext，可以使用普通 Fluent API 进行配置，以更改表名称和列映射规范等项。 如果该提供程序支持所有默认表和列映射，则由 EF 为所有提供程序返回的此服务的默认实现可能适用于给定的数据库服务器。 在这种情况下，提供程序不需要提供此服务的实现。
+这是一种可选的服务，它允许提供程序配置 HistoryContext 与 EF 迁移使用的 `__MigrationHistory` 表的映射。 HistoryContext 是一个 Code First DbContext，可以使用普通 Fluent API 进行配置，以更改表名称和列映射规范等项。 如果该提供程序支持所有默认表和列映射，则由 EF 为所有提供程序返回的此服务的默认实现可能适用于给定的数据库服务器。 在这种情况下，提供程序不需要提供此服务的实现。
 
 ### <a name="idbproviderfactoryresolver"></a>IDbProviderFactoryResolver
 

@@ -17,7 +17,7 @@ ms.locfileid: "72181217"
 
 ## <a name="install-ef-core-nuget-packages"></a>安装 EF Core NuGet 包
 
-若要使用 EF Core，请为要使用的数据库提供程序安装 NuGet 包。 例如，如果以 SQL Server 为目标，则将安装 @no__t。 有关详细信息，请参阅[数据库提供程序](../../core/providers/index.md)。
+若要使用 EF Core，请为要使用的数据库提供程序安装 NuGet 包。 例如，如果以 SQL Server 为目标，则将安装 `Microsoft.EntityFrameworkCore.SqlServer`。 有关详细信息，请参阅[数据库提供程序](../../core/providers/index.md)。
 
 如果计划使用迁移，则还应安装 `Microsoft.EntityFrameworkCore.Tools` 包。
 
@@ -25,13 +25,13 @@ ms.locfileid: "72181217"
 
 ## <a name="swap-namespaces"></a>交换命名空间
 
-在 EF6 中使用的大多数 Api 都在 `System.Data.Entity` 命名空间（以及相关的子命名空间）中。 第一次代码更改是交换到 `Microsoft.EntityFrameworkCore` 命名空间。 通常，您将从派生的上下文代码文件开始，然后从那里开始处理编译错误。
+在 EF6 中使用的大多数 Api 位于 `System.Data.Entity` 命名空间（以及相关的子命名空间）中。 第一次代码更改是交换到 `Microsoft.EntityFrameworkCore` 命名空间。 通常，您将从派生的上下文代码文件开始，然后从那里开始处理编译错误。
 
 ## <a name="context-configuration-connection-etc"></a>上下文配置（连接等）
 
-如[确保 EF Core 适用于你的应用程序](ensure-requirements.md)，EF Core 对检测要连接到的数据库的神奇程度较低。 你将需要覆盖派生上下文上的 @no__t 0 方法，并使用数据库提供程序特定的 API 来设置与数据库的连接。
+如[确保 EF Core 适用于你的应用程序](ensure-requirements.md)，EF Core 对检测要连接到的数据库的神奇程度较低。 你将需要覆盖派生上下文上的 `OnConfiguring` 方法，并使用数据库提供程序特定的 API 来设置与数据库的连接。
 
-大多数 EF6 应用程序将连接字符串存储在应用程序 `App/Web.config` 文件中。 在 EF Core 中，你将使用 @no__t 的 API 读取此连接字符串。 可能需要添加对 `System.Configuration` framework 程序集的引用才能使用此 API。
+大多数 EF6 应用程序将连接字符串存储在应用程序 `App/Web.config` 文件中。 在 EF Core 中，你将使用 `ConfigurationManager` API 读取此连接字符串。 可能需要添加对 `System.Configuration` framework 程序集的引用才能使用此 API。
 
 ``` csharp
 public class BloggingContext : DbContext
@@ -54,7 +54,7 @@ public class BloggingContext : DbContext
 
 目前没有一种可行的方法可以将现有的 EF6 迁移移植到 EF Core。
 
-如果可能，最好假设已将 EF6 中的所有以前的迁移应用到数据库，然后使用 EF Core 开始从该点迁移架构。 若要执行此操作，请在模型移植到 EF Core 后使用 `Add-Migration` 命令添加迁移。 然后，将从基架迁移的 @no__t 0 和 @no__t 方法中删除所有代码。 当基架初始迁移时，后续迁移将与模型进行比较。
+如果可能，最好假设已将 EF6 中的所有以前的迁移应用到数据库，然后使用 EF Core 开始从该点迁移架构。 若要执行此操作，可以使用 `Add-Migration` 命令在模型移植到 EF Core 后添加迁移。 然后，将从基架迁移的 `Up` 和 `Down` 方法中删除所有代码。 当基架初始迁移时，后续迁移将与模型进行比较。
 
 ## <a name="test-the-port"></a>测试端口
 

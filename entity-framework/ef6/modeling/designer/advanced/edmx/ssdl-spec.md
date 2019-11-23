@@ -27,7 +27,7 @@ SSDL 的版本按 XML 命名空间进行区分。
 
 ## <a name="association-element-ssdl"></a>Association 元素 (SSDL)
 
-存储架构定义语言（SSDL）中的**Association**元素指定参与基础数据库中外键约束的表列。 两个必需的子 End 元素指定关联两端的表和每个端的重数。 可选的 ReferentialConstraint 元素指定关联的主体端和依赖端以及参与的列。 如果不存在**ReferentialConstraint**元素，则必须使用 AssociationSetMapping 元素来指定关联的列映射。
+存储架构定义语言（SSDL）中的**Association**元素指定参与基础数据库中外键约束的表列。 两个必需的子 End 元素指定位于关联两端的表和各端的重数。 一个可选的 ReferentialConstraint 元素指定关联的主体端和依赖端以及参与列。 如果不存在**ReferentialConstraint**元素，则必须使用 AssociationSetMapping 元素来指定关联的列映射。
 
 **Association**元素可以具有以下子元素（按所列顺序）：
 
@@ -40,16 +40,16 @@ SSDL 的版本按 XML 命名空间进行区分。
 
 下表介绍可应用于**Association**元素的特性。
 
-| 特性名 | 是否必需 | ReplTest1                                                                            |
+| 特性名 | 是否必需 | 值                                                                            |
 |:---------------|:------------|:---------------------------------------------------------------------------------|
-| **名称**       | 是         | 基础数据库中相应外键约束的名称。 |
+| **Name**       | 是         | 基础数据库中相应外键约束的名称。 |
 
 > [!NOTE]
 > 可以将任意数量的批注特性（自定义 XML 特性）应用于**Association**元素。 然而，自定义特性可能不属于为 SSDL 保留的任何 XML 命名空间。 任何两个自定义特性的完全限定名称都不能相同。
 
 ### <a name="example"></a>示例
 
-下面的示例演示一个**Association**元素，该元素使用**ReferentialConstraint**元素指定参与**FK @ no__t-3CustomerOrders**外键约束的列：
+下面的示例演示一个**Association**元素，该元素使用**ReferentialConstraint**元素指定参与**FK\_CustomerOrders**外键约束的列：
 
 ``` xml
  <Association Name="FK_CustomerOrders">
@@ -72,23 +72,23 @@ SSDL 的版本按 XML 命名空间进行区分。
 
 ## <a name="associationset-element-ssdl"></a>AssociationSet 元素 (SSDL)
 
-存储架构定义语言（SSDL）中的**AssociationSet**元素表示基础数据库中两个表之间的外键约束。 参与外键约束的表列是在 Association 元素中指定的。 与给定**associationset**元素对应的**association**元素是在**AssociationSet**元素的**association**特性中指定的。
+存储架构定义语言（SSDL）中的**AssociationSet**元素表示基础数据库中两个表之间的外键约束。 参与外键约束的表列在 Association 元素中指定。 与给定**associationset**元素对应的**association**元素是在**AssociationSet**元素的**association**特性中指定的。
 
 SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但是，如果使用 ReferentialConstraint 元素定义给定 CSDL 关联集的 CSDL 关联，则不需要相应的**AssociationSetMapping**元素。 在这种情况下，如果存在**AssociationSetMapping**元素，该元素定义的映射将被**ReferentialConstraint**元素重写。
 
 **AssociationSet**元素可以具有以下子元素（按所列顺序）：
 
 -   文档（零个或一个）
--   结束（零个或两个）
+-   End（零个或两个）
 -   批注元素（零个或多个）
 
 ### <a name="applicable-attributes"></a>适用的特性
 
 下表介绍可应用于**AssociationSet**元素的特性。
 
-| 特性名  | 是否必需 | ReplTest1                                                                                                |
+| 特性名  | 是否必需 | 值                                                                                                |
 |:----------------|:------------|:-----------------------------------------------------------------------------------------------------|
-| **名称**        | 是         | 关联集表示的外键约束的名称。                          |
+| **Name**        | 是         | 关联集表示的外键约束的名称。                          |
 | **关联** | 是         | 定义参与外键约束的列的关联的名称。 |
 
 > [!NOTE]
@@ -190,14 +190,14 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 
 **依赖**元素可以具有以下子元素（按所列顺序）：
 
--   PropertyRef （一个或多个）
+-   PropertyRef（一个或多个）
 -   批注元素（零个或多个）
 
 ### <a name="applicable-attributes"></a>适用的特性
 
 下表介绍可应用于**依赖**元素的特性。
 
-| 特性名 | 是否必需 | ReplTest1                                                                                                                                                       |
+| 特性名 | 是否必需 | 值                                                                                                                                                       |
 |:---------------|:------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **角色**       | 是         | 与相应的 End 元素的**Role**特性（如果使用）相同的值;否则为包含引用列的表的名称。 |
 
@@ -206,7 +206,7 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 
 ### <a name="example"></a>示例
 
-下面的示例演示一个 Association 元素，该元素使用**ReferentialConstraint**元素指定参与**FK @ no__t-2CustomerOrders**外键约束的列。 **Dependent**元素将**Order**表的**CustomerId**列指定为约束的依赖端。
+下面的示例演示一个 Association 元素，该元素使用**ReferentialConstraint**元素指定参与**FK\_CustomerOrders**外键约束的列。 **Dependent**元素将**Order**表的**CustomerId**列指定为约束的依赖端。
 
 ``` xml
  <Association Name="FK_CustomerOrders">
@@ -233,7 +233,7 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 
 **文档**元素可以具有以下子元素（按所列顺序）：
 
--   **汇总**：父元素的简要说明。 （零个或一个元素）
+-   **摘要**：父元素的简要说明。 （零个或一个元素）
 -   **LongDescription**：父元素的详细说明。 （零个或一个元素）
 
 ### <a name="applicable-attributes"></a>适用的特性
@@ -276,18 +276,18 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 
 下表描述了当**结束**元素是**Association**元素的子元素时，可应用于该元素的特性。
 
-| 特性名   | 是否必需 | ReplTest1                                                                                                                                                                                                                                                                                                                                                                                      |
+| 特性名   | 是否必需 | 值                                                                                                                                                                                                                                                                                                                                                                                      |
 |:-----------------|:------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 类型         | 是         | 位于 foreign key 约束末尾的 SSDL 实体集的完全限定名称。                                                                                                                                                                                                                                                                                          |
-| **角色**         | 否          | 相应 ReferentialConstraint 元素（如果使用）的主体或从属元素中的**Role**特性的值。                                                                                                                                                                                                                                             |
-| **多样性** | 是         | **1**、 **0、1**或 **\*** ，具体取决于外键约束末尾的行数。 <br/> **1**指示在外键约束端刚好存在一行。 <br/> **0 .0**表示外键约束端处存在零个或一行。 <br/> **\*** 指示在外键约束端处存在零行、一行或多行。 |
+| 类型         | 是         | 处于外键约束端的 SSDL 实体集的完全限定名。                                                                                                                                                                                                                                                                                          |
+| **角色**         | 是          | 相应 ReferentialConstraint 元素（如果使用）的主体或从属元素中的**Role**特性的值。                                                                                                                                                                                                                                             |
+| **多样性** | 是         | **1**、 **0、1**或 **\*** ，具体取决于外键约束末尾的行数。 <br/> **1**指示在外键约束端刚好存在一行。 <br/> **0 .0**表示外键约束端处存在零个或一行。 <br/> **\*** 指示外键约束端处存在零行、一行或多行。 |
 
 > [!NOTE]
 > 可以将任意数量的批注特性（自定义 XML 特性）应用于**结束**元素。 然而，自定义特性可能不属于为 CSDL 保留的任何 XML 命名空间。 任何两个自定义特性的完全限定名称都不能相同。
 
 #### <a name="example"></a>示例
 
-下面的示例演示了一个**Association**元素，该元素定义了**FK @ no__t-2CustomerOrders** foreign key 约束。 在每个**End**元素上指定的**多重性**值指示**Orders**表中的多行可以与**Customers**表中的某一行相关联，但**customers**表中只有一个行可以与行相关联在**Orders**表中。 此外， **OnDelete**元素指示如果删除**customers**表中的行，则将删除**Orders**表中引用**customers**表中的特定行的所有行。
+下面的示例演示了一个**Association**元素，该元素定义了**FK\_CustomerOrders**外键约束。 在每个**End**元素上指定的**多重性**值指示**Orders**表中的多个行可以与**Customers**表中的某一行相关联，但**customers**表中只有一个行可以与**Orders**表中的一行相关联。 此外， **OnDelete**元素指示如果删除**customers**表中的行，则将删除**Orders**表中引用**customers**表中的特定行的所有行。
 
 ``` xml
  <Association Name="FK_CustomerOrders">
@@ -321,10 +321,10 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 
 下表描述了当**结束**元素为**AssociationSet**元素的子元素时，可应用于该元素的特性。
 
-| 特性名 | 是否必需 | ReplTest1                                                                                                                  |
+| 特性名 | 是否必需 | 值                                                                                                                  |
 |:---------------|:------------|:-----------------------------------------------------------------------------------------------------------------------|
-| **EntitySet**  | 是         | 位于 foreign key 约束末尾的 SSDL 实体集的名称。                                      |
-| **角色**       | 否          | 在对应的 Association 元素的一个**End**元素上指定的一个**角色**特性的值。 |
+| **EntitySet**  | 是         | 处于外键约束一端的 SSDL 实体集的名称。                                      |
+| **角色**       | 是          | 在对应的 Association 元素的一个**End**元素上指定的一个**角色**特性的值。 |
 
 > [!NOTE]
 > 可以将任意数量的批注特性（自定义 XML 特性）应用于**结束**元素。 然而，自定义特性可能不属于为 CSDL 保留的任何 XML 命名空间。 任何两个自定义特性的完全限定名称都不能相同。
@@ -351,7 +351,7 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 
 ## <a name="entitycontainer-element-ssdl"></a>EntityContainer 元素 (SSDL)
 
-存储架构定义语言（SSDL）中的**EntityContainer**元素描述实体框架应用程序中的基础数据源的结构：SSDL 实体集（在 EntitySet 元素中定义）表示数据库中的表，SSDL 实体类型（在 EntityType 元素中定义）表示表中的行，关联集（在 AssociationSet 元素中定义）表示中的外键约束数据. 存储模型实体容器通过 EntityContainerMapping 元素映射到概念模型实体容器。
+存储架构定义语言（SSDL）中的**EntityContainer**元素描述实体框架应用程序中的基础数据源的结构： ssdl 实体集（在 EntitySet 元素中定义）表示数据库中的表，ssdl 实体类型（在 EntityType 元素中定义）表示表中的行，关联集（在 AssociationSet 元素中定义）表示数据库中的外键约束。 存储模型实体容器通过 EntityContainerMapping 元素映射到概念模型实体容器。
 
 **EntityContainer**元素可以有零个或一个文档元素。 如果存在**文档**元素，则它必须位于所有其他子元素之前。
 
@@ -365,9 +365,9 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 
 下表介绍可应用于**EntityContainer**元素的特性。
 
-| 特性名 | 是否必需 | ReplTest1                                                                   |
+| 特性名 | 是否必需 | 值                                                                   |
 |:---------------|:------------|:------------------------------------------------------------------------|
-| **名称**       | 是         | 实体容器的名称。 此名称不能包含句点 (.)。 |
+| **Name**       | 是         | 实体容器的名称。 此名称不能包含句点 (.)。 |
 
 > [!NOTE]
 > 可以将任意数量的批注特性（自定义 XML 特性）应用于**EntityContainer**元素。 然而，自定义特性可能不属于为 SSDL 保留的任何 XML 命名空间。 任何两个自定义特性的完全限定名称都不能相同。
@@ -394,7 +394,7 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 
 ## <a name="entityset-element-ssdl"></a>EntitySet 元素 (SSDL)
 
-存储架构定义语言（SSDL）中的**EntitySet**元素表示基础数据库中的表或视图。 SSDL 中的 EntityType 元素表示表或视图中的行。 **EntitySet**元素的**EntityType**特性指定了表示 ssdl 实体集中的行的特定 SSDL 实体类型。 CSDL 实体集与 SSDL 实体集之间的映射是在 EntitySetMapping 元素中指定的。
+存储架构定义语言（SSDL）中的**EntitySet**元素表示基础数据库中的表或视图。 以 SSDL 表示的 EntityType 元素表示表或视图中的行。 **EntitySet**元素的**EntityType**特性指定了表示 ssdl 实体集中的行的特定 SSDL 实体类型。 CSDL 实体集和 SSDL 实体集之间的映射在 EntitySetMapping 元素中指定。
 
 **EntitySet**元素可以具有以下子元素（按所列顺序）：
 
@@ -407,14 +407,14 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 下表介绍可应用于**EntitySet**元素的特性。
 
 > [!NOTE]
-> 某些属性（此处未列出）可以用**存储**别名进行限定。 更新模型时，模型更新向导将使用这些属性。
+> 某些属性（此处未列出）可以用**存储**别名进行限定。 在更新模型时，模型更新向导会使用这些特性。
 
-| 特性名 | 是否必需 | ReplTest1                                                                                    |
+| 特性名 | 是否必需 | 值                                                                                    |
 |:---------------|:------------|:-----------------------------------------------------------------------------------------|
-| **名称**       | 是         | 实体集的名称。                                                              |
+| **Name**       | 是         | 实体集的名称。                                                              |
 | **EntityType** | 是         | 实体集包含其实例的实体类型的完全限定名称。 |
-| **架构**     | 否          | 数据库架构。                                                                     |
-| **Table**      | 否          | 数据库表。                                                                      |
+| **架构**     | 是          | 数据库架构。                                                                     |
+| **Table**      | 是          | 数据库表。                                                                      |
 
 > [!NOTE]
 > 可以向**EntitySet**元素应用任意数量的批注特性（自定义 XML 特性）。 然而，自定义特性可能不属于为 SSDL 保留的任何 XML 命名空间。 任何两个自定义特性的完全限定名称都不能相同。
@@ -441,21 +441,21 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 
 ## <a name="entitytype-element-ssdl"></a>EntityType 元素 (SSDL)
 
-存储架构定义语言（SSDL）中的**EntityType**元素表示基础数据库的表或视图中的行。 SSDL 中的 EntitySet 元素表示发生行的表或视图。 **EntitySet**元素的**EntityType**特性指定了表示 ssdl 实体集中的行的特定 SSDL 实体类型。 SSDL 实体类型和 CSDL 实体类型之间的映射是在 EntityTypeMapping 元素中指定的。
+存储架构定义语言（SSDL）中的**EntityType**元素表示基础数据库的表或视图中的行。 以 SSDL 表示的 EntitySet 元素表示行所在的表或视图。 **EntitySet**元素的**EntityType**特性指定了表示 ssdl 实体集中的行的特定 SSDL 实体类型。 SSDL 实体类型与 CSDL 实体类型之间的映射在 EntityTypeMapping 元素中指定。
 
 **EntityType**元素可以具有以下子元素（按所列顺序）：
 
 -   文档（零个或一个元素）
--   Key （零个或一个元素）
+-   Key（零个或一个元素）
 -   批注元素
 
 ### <a name="applicable-attributes"></a>适用的特性
 
 下表介绍可应用于**EntityType**元素的特性。
 
-| 特性名 | 是否必需 | ReplTest1                                                                                                                                                                  |
+| 特性名 | 是否必需 | 值                                                                                                                                                                  |
 |:---------------|:------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **名称**       | 是         | 实体类型的名称。 此值通常与以实体类型表示行的表的名称相同。 此值可以不包含句点 (.)。 |
+| **Name**       | 是         | 实体类型的名称。 此值通常与以实体类型表示行的表的名称相同。 此值可以不包含句点 (.)。 |
 
 > [!NOTE]
 > 可以向**EntityType**元素应用任意数量的批注特性（自定义 XML 特性）。 然而，自定义特性可能不属于为 SSDL 保留的任何 XML 命名空间。 任何两个自定义特性的完全限定名称都不能相同。
@@ -499,19 +499,19 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 下表介绍可应用于**Function**元素的特性。
 
 > [!NOTE]
-> 某些属性（此处未列出）可以用**存储**别名进行限定。 更新模型时，模型更新向导将使用这些属性。
+> 某些属性（此处未列出）可以用**存储**别名进行限定。 在更新模型时，模型更新向导会使用这些特性。
 
-| 特性名             | 是否必需 | ReplTest1                                                                                                                                                                                                              |
+| 特性名             | 是否必需 | 值                                                                                                                                                                                                              |
 |:---------------------------|:------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **名称**                   | 是         | 存储过程的名称。                                                                                                                                                                                  |
-| **ReturnType**             | 否          | 存储过程的返回类型。                                                                                                                                                                           |
-| **Aggregate**              | 否          | 如果存储过程返回聚合值，**则为 True** ;否则**为 False**。                                                                                                                                  |
-| **L**                | 否          | 如果函数是内置的<sup>1</sup>函数，则为**True** ; 否则为。否则**为 False**。                                                                                                                                  |
-| **StoreFunctionName**      | 否          | 存储过程的名称。                                                                                                                                                                                  |
-| **NiladicFunction**        | 否          | 如果函数是 niladic<sup>2</sup>函数，则为**True** ;否则**为 False** 。                                                                                                                                   |
-| **IsComposable**           | 否          | 如果函数是可组合的<sup>3</sup>函数，则为**True** ;否则**为 False** 。                                                                                                                                |
-| **ParameterTypeSemantics** | 否          | 定义用于解析函数重载的类型语义的枚举。 该枚举是在提供程序清单中根据函数定义来定义的。 默认值为**AllowImplicitConversion**。 |
-| **架构**                 | 否          | 在其中定义存储过程的架构的名称。                                                                                                                                                   |
+| **Name**                   | 是         | 存储过程的名称。                                                                                                                                                                                  |
+| **ReturnType**             | 是          | 存储过程的返回类型。                                                                                                                                                                           |
+| **Aggregate**              | 是          | 如果存储过程返回聚合值，**则为 True** ;否则**为 False**。                                                                                                                                  |
+| **L**                | 是          | 如果函数是内置的<sup>1</sup>函数，则为**True** ; 否则为。否则**为 False**。                                                                                                                                  |
+| **StoreFunctionName**      | 是          | 存储过程的名称。                                                                                                                                                                                  |
+| **NiladicFunction**        | 是          | 如果函数是 niladic<sup>2</sup>函数，则为**True** ;否则**为 False** 。                                                                                                                                   |
+| **IsComposable**           | 是          | 如果函数是可组合的<sup>3</sup>函数，则为**True** ;否则**为 False** 。                                                                                                                                |
+| **ParameterTypeSemantics** | 是          | 定义用于解析函数重载的类型语义的枚举。 该枚举是在提供程序清单中根据函数定义来定义的。 默认值为**AllowImplicitConversion**。 |
+| **架构**                 | 是          | 在其中定义存储过程的架构的名称。                                                                                                                                                   |
 
 <sup>1</sup>内置函数是在数据库中定义的函数。 有关在存储模型中定义的函数的信息，请参阅 CommandText 元素（SSDL）。
 
@@ -545,7 +545,7 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 
 **Key**元素可以具有以下子元素（按所列顺序）：
 
--   PropertyRef （一个或多个）
+-   PropertyRef（一个或多个）
 -   批注元素
 
 没有任何特性适用于**该键**元素。
@@ -581,7 +581,7 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 
 下表介绍可应用于**OnDelete**元素的特性。
 
-| 特性名 | 是否必需 | ReplTest1                                                                                               |
+| 特性名 | 是否必需 | 值                                                                                               |
 |:---------------|:------------|:----------------------------------------------------------------------------------------------------|
 | **Action**     | 是         | **Cascade**或**None**。 （**限制**值有效，但行为与**None**相同。） |
 
@@ -590,7 +590,7 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 
 ### <a name="example"></a>示例
 
-下面的示例演示了一个**Association**元素，该元素定义了**FK @ no__t-2CustomerOrders** foreign key 约束。 **OnDelete**元素指示在删除**customers**表中的某一行时，该**订单**表中引用**该特定**行的所有行都将被删除。
+下面的示例演示了一个**Association**元素，该元素定义了**FK\_CustomerOrders**外键约束。 **OnDelete**元素指示在删除**customers**表中的某一行时，该**订单**表中引用**该特定**行的所有行都将被删除。
 
 ``` xml
  <Association Name="FK_CustomerOrders">
@@ -624,15 +624,15 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 
 下表描述了可应用于**参数**元素的特性。
 
-| 特性名 | 是否必需 | ReplTest1                                                                                                                                                                                                                           |
+| 特性名 | 是否必需 | 值                                                                                                                                                                                                                           |
 |:---------------|:------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **名称**       | 是         | 参数的名称。                                                                                                                                                                                                      |
+| **Name**       | 是         | 参数的名称。                                                                                                                                                                                                      |
 | 类型       | 是         | 参数类型。                                                                                                                                                                                                             |
-| **众**       | 否          | **In**、 **Out**或**InOut** ，具体取决于参数是输入、输出还是输入/输出参数。                                                                                                                |
-| **MaxLength**  | 否          | 参数的最大长度。                                                                                                                                                                                            |
-| **精度**  | 否          | 参数的精度。                                                                                                                                                                                                 |
-| 缩放      | 否          | 参数的小数位数。                                                                                                                                                                                                     |
-| **SRID**       | 否          | 空间系统引用标识符。 仅对空间类型的参数有效。 有关详细信息，请参阅[SRID](https://en.wikipedia.org/wiki/SRID) and [SRID （SQL Server）](https://msdn.microsoft.com/library/bb964707.aspx)。 |
+| **众**       | 是          | **In**、 **Out**或**InOut** ，具体取决于参数是输入、输出还是输入/输出参数。                                                                                                                |
+| **MaxLength**  | 是          | 参数的最大长度。                                                                                                                                                                                            |
+| **精度**  | 是          | 参数的精度。                                                                                                                                                                                                 |
+| 缩放      | 是          | 参数的小数位数。                                                                                                                                                                                                     |
+| **SRID**       | 是          | 空间系统引用标识符。 仅对空间类型的参数有效。 有关详细信息，请参阅[SRID](https://en.wikipedia.org/wiki/SRID) and [SRID （SQL Server）](https://msdn.microsoft.com/library/bb964707.aspx)。 |
 
 > [!NOTE]
 > 可以将任意数量的批注特性（自定义 XML 特性）应用于**参数**元素。 然而，自定义特性可能不属于为 SSDL 保留的任何 XML 命名空间。 任何两个自定义特性的完全限定名称都不能相同。
@@ -660,14 +660,14 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 
 **主体**元素可以具有以下子元素（按所列顺序）：
 
--   PropertyRef （一个或多个）
+-   PropertyRef（一个或多个）
 -   批注元素（零个或多个）
 
 ### <a name="applicable-attributes"></a>适用的特性
 
 下表介绍可应用于**主体**元素的特性。
 
-| 特性名 | 是否必需 | ReplTest1                                                                                                                                                      |
+| 特性名 | 是否必需 | 值                                                                                                                                                      |
 |:---------------|:------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **角色**       | 是         | 与相应的 End 元素的**Role**特性（如果使用）相同的值;否则，为包含被引用列的表的名称。 |
 
@@ -676,7 +676,7 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 
 ### <a name="example"></a>示例
 
-下面的示例演示一个 Association 元素，该元素使用**ReferentialConstraint**元素指定参与**FK @ no__t-2CustomerOrders**外键约束的列。 **主体**元素将**Customer**表的**CustomerId**列指定为约束的主体端。
+下面的示例演示一个 Association 元素，该元素使用**ReferentialConstraint**元素指定参与**FK\_CustomerOrders**外键约束的列。 **主体**元素将**Customer**表的**CustomerId**列指定为约束的主体端。
 
 ``` xml
  <Association Name="FK_CustomerOrders">
@@ -707,20 +707,20 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 
 下表介绍可应用于**属性**元素的特性。
 
-| 特性名            | 是否必需 | ReplTest1                                                                                                                                                                                                                           |
+| 特性名            | 是否必需 | 值                                                                                                                                                                                                                           |
 |:--------------------------|:------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **名称**                  | 是         | 对应列的名称。                                                                                                                                                                                           |
+| **Name**                  | 是         | 对应列的名称。                                                                                                                                                                                           |
 | 类型                  | 是         | 对应列的类型。                                                                                                                                                                                           |
-| **可以为 null**              | 否          | **True** （默认值）或**False** ，具体取决于对应列是否可以具有 null 值。                                                                                                                  |
-| **DefaultValue**          | 否          | 对应列的默认值。                                                                                                                                                                                  |
-| **MaxLength**             | 否          | 对应列的最大长度。                                                                                                                                                                                 |
-| **FixedLength**           | 否          | **True**或**False** ，具体取决于相应的列值是否将作为固定长度字符串存储。                                                                                                              |
-| **精度**             | 否          | 对应列的精度。                                                                                                                                                                                      |
-| 缩放                 | 否          | 对应列的小数位数。                                                                                                                                                                                          |
-| **Unicode**               | 否          | **True**或**False** ，具体取决于对应列值是否将存储为 Unicode 字符串。                                                                                                                   |
-| **归类**             | 否          | 指定要在数据源中使用的排序序列的字符串。                                                                                                                                                   |
-| **SRID**                  | 否          | 空间系统引用标识符。 仅对空间类型的属性有效。 有关详细信息，请参阅[SRID](https://en.wikipedia.org/wiki/SRID) and [SRID （SQL Server）](https://msdn.microsoft.com/library/bb964707.aspx)。 |
-| **StoreGeneratedPattern** | 否          | **无**、**标识**（如果相应的列值是在数据库中生成的标识）或**计算**（如果在数据库中计算了相应的列值）。 对于 RowType 属性无效。 |
+| **可以为 null**              | 是          | **True** （默认值）或**False** ，具体取决于对应列是否可以具有 null 值。                                                                                                                  |
+| **DefaultValue**          | 是          | 对应列的默认值。                                                                                                                                                                                  |
+| **MaxLength**             | 是          | 对应列的最大长度。                                                                                                                                                                                 |
+| **FixedLength**           | 是          | **True**或**False** ，具体取决于相应的列值是否将作为固定长度字符串存储。                                                                                                              |
+| **精度**             | 是          | 对应列的精度。                                                                                                                                                                                      |
+| 缩放                 | 是          | 对应列的小数位数。                                                                                                                                                                                          |
+| **Unicode**               | 是          | **True**或**False** ，具体取决于对应列值是否将存储为 Unicode 字符串。                                                                                                                   |
+| **归类**             | 是          | 指定要在数据源中使用的排序序列的字符串。                                                                                                                                                   |
+| **SRID**                  | 是          | 空间系统引用标识符。 仅对空间类型的属性有效。 有关详细信息，请参阅[SRID](https://en.wikipedia.org/wiki/SRID) and [SRID （SQL Server）](https://msdn.microsoft.com/library/bb964707.aspx)。 |
+| **StoreGeneratedPattern** | 是          | **无**、**标识**（如果相应的列值是在数据库中生成的标识）或**计算**（如果在数据库中计算了相应的列值）。 对于 RowType 属性无效。 |
 
 > [!NOTE]
 > 可以将任意数量的批注特性（自定义 XML 特性）应用于**Property**元素。 然而，自定义特性可能不属于为 SSDL 保留的任何 XML 命名空间。 任何两个自定义特性的完全限定名称都不能相同。
@@ -747,8 +747,8 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 
 存储架构定义语言（SSDL）中的**PropertyRef**元素引用 EntityType 元素上定义的属性，以指示该属性将执行下列角色之一：
 
--   是**EntityType**表示的表的主键的一部分。 一个或多个**PropertyRef**元素可用于定义主键。 有关详细信息，请参阅 Key 元素。
--   是引用约束的依赖端或主体端。 有关详细信息，请参阅 ReferentialConstraint 元素。
+-   是**EntityType**表示的表的主键的一部分。 一个或多个**PropertyRef**元素可用于定义主键。 有关更多信息，请参见 Key 元素。
+-   是引用约束的依赖端或主体端。 有关更多信息，请参见 ReferentialConstraint 元素。
 
 **PropertyRef**元素只能具有以下子元素：
 
@@ -759,9 +759,9 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 
 下表介绍可应用于**PropertyRef**元素的特性。
 
-| 特性名 | 是否必需 | ReplTest1                                |
+| 特性名 | 是否必需 | 值                                |
 |:---------------|:------------|:-------------------------------------|
-| **名称**       | 是         | 所引用属性的名称。 |
+| **Name**       | 是         | 所引用属性的名称。 |
 
 > [!NOTE]
 > 可以将任意数量的批注特性（自定义 XML 特性）应用于**PropertyRef**元素。 然而，自定义特性可能不属于为 CSDL 保留的任何 XML 命名空间。 任何两个自定义特性的完全限定名称都不能相同。
@@ -786,14 +786,14 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 
 ## <a name="referentialconstraint-element-ssdl"></a>ReferentialConstraint 元素 (SSDL)
 
-存储架构定义语言（SSDL）中的**ReferentialConstraint**元素表示基础数据库中的外键约束（也称为引用完整性约束）。 约束的主体端和依赖端分别由主体子元素和从属子元素指定。 参与主体和依赖端的列将被 PropertyRef 元素引用。
+存储架构定义语言（SSDL）中的**ReferentialConstraint**元素表示基础数据库中的外键约束（也称为引用完整性约束）。 约束的主体端和依赖端分别由 Principal 和 Dependent 子元素指定。 通过 PropertyRef 元素引用参与主体端和依赖端的列。
 
 **ReferentialConstraint**元素是 Association 元素的可选子元素。 如果未使用**ReferentialConstraint**元素映射**Association**元素中指定的 foreign key 约束，则必须使用 AssociationSetMapping 元素来执行此操作。
 
 **ReferentialConstraint**元素可以具有以下子元素：
 
 -   文档（零个或一个）
--   主体（恰好一个）
+-   Principal（恰好一个）
 -   依赖项（恰好一个）
 -   批注元素（零个或多个）
 
@@ -803,7 +803,7 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 
 ### <a name="example"></a>示例
 
-下面的示例演示一个**Association**元素，该元素使用**ReferentialConstraint**元素指定参与**FK @ no__t-3CustomerOrders**外键约束的列：
+下面的示例演示一个**Association**元素，该元素使用**ReferentialConstraint**元素指定参与**FK\_CustomerOrders**外键约束的列：
 
 ``` xml
  <Association Name="FK_CustomerOrders">
@@ -866,7 +866,7 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 
 **RowType**元素可以具有以下子元素：
 
-- 属性（一个或多个）  
+- Property（一个或多个）  
 
 ### <a name="example"></a>示例
 
@@ -898,7 +898,7 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 -   关联
 -   EntityType
 -   EntityContainer
--   Functions
+-   函数
 
 **Schema**元素使用**namespace**属性为存储模型中的实体类型和关联对象定义命名空间。 在命名空间内，任何两个对象都不能同名。
 
@@ -908,10 +908,10 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 
 下表描述了可对**Schema**元素应用的属性。
 
-| 特性名            | 是否必需 | ReplTest1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| 特性名            | 是否必需 | 值                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 |:--------------------------|:------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **命名空间**             | 是         | 存储模型的命名空间。 **命名空间**属性的值用于构成类型的完全限定名称。 例如，如果名为*Customer*的**entitytype**在位于 examplemodel.store 命名空间中，则**entitytype**的完全限定名称为位于 examplemodel.store。 <br/> 以下字符串不能用作**Namespace**特性的值：**系统**、**暂时性**或**Edm**。 **Namespace**属性的值不能与 CSDL Schema 元素中**namespace**属性的值相同。 |
-| **Alias**                 | 否          | 用于取代命名空间名称的标识符。 例如，如果名为*Customer*的**EntityType**位于位于 examplemodel.store 命名空间中，并且**Alias**属性的值为*storagemodel.customer*，则可以使用 storagemodel.customer 作为的完全限定名称**EntityType。**                                                                                                                                                                                                                                                                                    |
+| **Namespace**             | 是         | 存储模型的命名空间。 **命名空间**属性的值用于构成类型的完全限定名称。 例如，如果名为*Customer*的**entitytype**在位于 examplemodel.store 命名空间中，则**entitytype**的完全限定名称为位于 examplemodel.store。 <br/> 以下字符串不能用作**Namespace**特性的值： **System**、**暂时性**或**Edm**。 **Namespace**属性的值不能与 CSDL Schema 元素中**namespace**属性的值相同。 |
+| **Alias**                 | 是          | 用于取代命名空间名称的标识符。 例如，如果名为*Customer*的**EntityType**位于位于 examplemodel.store 命名空间中，并且**Alias**属性的值为*Storagemodel.customer*，则可以使用 storagemodel.customer 作为 EntityType 的完全限定名称 **。**                                                                                                                                                                                                                                                                                    |
 | **提供程序**              | 是         | 数据提供程序。                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | **ProviderManifestToken** | 是         | 一个标记，该标记指示提供程序清单返回到的提供程序。 没有为该标记定义格式。 标记的值由提供程序定义。 有关 SQL Server 提供程序清单令牌的信息，请参阅 SqlClient for 实体框架。                                                                                                                                                                                                                                                                                                                        |
 
@@ -1064,11 +1064,11 @@ SSDL 关联集通过 AssociationSetMapping 元素映射到 CSDL 关联集。 但
 
 ## <a name="facets-ssdl"></a>方面 (SSDL)
 
-以存储架构定义语言（SSDL）表示的方面表示对属性元素中指定的列类型的约束。 Facet 作为**属性**元素上的 XML 特性实现。
+以存储架构定义语言 (SSDL) 表示的方面表示对于 Property 元素中指定的列类型的约束。 Facet 作为**属性**元素上的 XML 特性实现。
 
 下表描述了 SSDL 中支持的方面：
 
-| 方面           | 描述                                                                                                                                                                                                                                                 |
+| 方面           | 说明                                                                                                                                                                                                                                                 |
 |:----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **归类**   | 指定在对属性值执行比较和排序操作时要使用的排序序列。                                                                                                             |
 | **FixedLength** | 指定列值的长度是否可变。                                                                                                                                                                                                  |

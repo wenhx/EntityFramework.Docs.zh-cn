@@ -13,13 +13,13 @@ ms.locfileid: "72181677"
 # <a name="performance-considerations-for-ef-4-5-and-6"></a>EF 4、5和6的性能注意事项
 按 David Obando、Eric Dettinger 和其他
 
-发布2012年4月
+发布日期：2012年4月
 
 上次更新时间：可能为2014
 
 ------------------------------------------------------------------------
 
-## <a name="1-introduction"></a>1.介绍
+## <a name="1-introduction"></a>1. 介绍
 
 对象关系映射框架是一种简便的方法，可用于在面向对象的应用程序中提供数据访问的抽象。 对于 .NET 应用程序，Microsoft 推荐的 O/RM 实体框架。 但对于任何抽象，性能都可能会成为问题。
 
@@ -31,7 +31,7 @@ ms.locfileid: "72181677"
 
 实体框架6是带外版本，不依赖于随 .NET 提供实体框架组件。 实体框架6同时适用于 .NET 4.0 和 .NET 4.5，并可为尚未从 .NET 4.0 升级但希望应用程序中的最新实体框架位的用户提供大性能优势。 当本文档提到实体框架6时，它是指在撰写本文时可用的最新版本：版本6.1.0。
 
-## <a name="2-cold-vs-warm-query-execution"></a>2.冷与热查询执行
+## <a name="2-cold-vs-warm-query-execution"></a>2. 冷查询和热查询执行
 
 第一次对给定模型进行任何查询时，实体框架在幕后执行大量工作以加载和验证模型。 我们经常将此第一个查询称为 "冷" 查询。  针对已加载模型的进一步查询称为 "热" 查询，并更快。
 
@@ -43,7 +43,7 @@ ms.locfileid: "72181677"
 |:-----------------------------------------------------------------------------------------------------|:--------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `using(var db = new MyContext())` <br/> `{`                                                          | 上下文创建          | 中等                                                                                                                                                                                                                                                                                                                                                                                                                        | 中等                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | 低                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | `  var q1 = ` <br/> `    from c in db.Customers` <br/> `    where c.Id == id1` <br/> `    select c;` | 查询表达式创建 | 低                                                                                                                                                                                                                                                                                                                                                                                                                           | 低                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | 低                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `  var c1 = q1.First();`                                                                             | LINQ 查询执行      | - 元数据加载：高但缓存 <br/> -查看生成：可能非常高但已缓存 <br/> - 参数评估：中等 <br/> -查询转换：中等 <br/> - 具体化器生成：中型但已缓存 <br/> - 执行数据库查询：可能很高 <br/> + 连接打开 <br/> + ExecuteReader <br/> + DataReader。读取 <br/> 对象具体化：中等 <br/> - 标识查找：中等 | - 元数据加载：高但缓存 <br/> -查看生成：可能非常高但已缓存 <br/> - 参数评估：低 <br/> -查询转换：中型但已缓存 <br/> - 具体化器生成：中型但已缓存 <br/> - 执行数据库查询：可能很高（在某些情况下，更好的查询） <br/> + 连接打开 <br/> + ExecuteReader <br/> + DataReader。读取 <br/> 对象具体化：中等 <br/> - 标识查找：中等 | - 元数据加载：高但缓存 <br/> -查看生成：中型但已缓存 <br/> - 参数评估：低 <br/> -查询转换：中型但已缓存 <br/> - 具体化器生成：中型但已缓存 <br/> - 执行数据库查询：可能很高（在某些情况下，更好的查询） <br/> + 连接打开 <br/> + ExecuteReader <br/> + DataReader。读取 <br/> 对象具体化：中（速度快于 EF5） <br/> - 标识查找：中等 |
+| `  var c1 = q1.First();`                                                                             | LINQ 查询执行      | -元数据加载：高但已缓存 <br/> -视图生成：可能非常高但已被缓存 <br/> -参数求值：中型 <br/> -查询转换：中型 <br/> -Materializer 生成：中型但已缓存 <br/> -数据库查询执行：可能很高 <br/> + 连接打开 <br/> + ExecuteReader <br/> + DataReader。读取 <br/> 对象具体化：中型 <br/> -Identity lookup：中型 | -元数据加载：高但已缓存 <br/> -视图生成：可能非常高但已被缓存 <br/> -参数求值：低 <br/> -查询转换：中型但已缓存 <br/> -Materializer 生成：中型但已缓存 <br/> -数据库查询执行：可能很高（某些情况下更好的查询） <br/> + 连接打开 <br/> + ExecuteReader <br/> + DataReader。读取 <br/> 对象具体化：中型 <br/> -Identity lookup：中型 | -元数据加载：高但已缓存 <br/> -视图生成：中型但已缓存 <br/> -参数求值：低 <br/> -查询转换：中型但已缓存 <br/> -Materializer 生成：中型但已缓存 <br/> -数据库查询执行：可能很高（某些情况下更好的查询） <br/> + 连接打开 <br/> + ExecuteReader <br/> + DataReader。读取 <br/> 对象具体化：中型（速度快于 EF5） <br/> -Identity lookup：中型 |
 | `}`                                                                                                  | Connection.Close          | 低                                                                                                                                                                                                                                                                                                                                                                                                                           | 低                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | 低                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 
 
@@ -53,7 +53,7 @@ ms.locfileid: "72181677"
 |:-----------------------------------------------------------------------------------------------------|:--------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `using(var db = new MyContext())` <br/> `{`                                                          | 上下文创建          | 中等                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | 中等                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | 低                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | `  var q1 = ` <br/> `    from c in db.Customers` <br/> `    where c.Id == id1` <br/> `    select c;` | 查询表达式创建 | 低                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | 低                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | 低                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| `  var c1 = q1.First();`                                                                             | LINQ 查询执行      | - 元数据~~加载~~查找：~~高但缓存~~低级 <br/> -查看~~生成~~查找：~~可能非常高但已缓存~~低级 <br/> - 参数评估：中等 <br/> -查询~~翻译~~查找：中等 <br/> -具体化~~生成~~查找：~~中型但已缓存~~低级 <br/> - 执行数据库查询：可能很高 <br/> + 连接打开 <br/> + ExecuteReader <br/> + DataReader。读取 <br/> 对象具体化：中等 <br/> - 标识查找：中等 | - 元数据~~加载~~查找：~~高但缓存~~低级 <br/> -查看~~生成~~查找：~~可能非常高但已缓存~~低级 <br/> - 参数评估：低 <br/> -查询~~翻译~~查找：~~中型但已缓存~~低级 <br/> -具体化~~生成~~查找：~~中型但已缓存~~低级 <br/> - 执行数据库查询：可能很高（在某些情况下，更好的查询） <br/> + 连接打开 <br/> + ExecuteReader <br/> + DataReader。读取 <br/> 对象具体化：中等 <br/> - 标识查找：中等 | - 元数据~~加载~~查找：~~高但缓存~~低级 <br/> -查看~~生成~~查找：~~中型但已缓存~~低级 <br/> - 参数评估：低 <br/> -查询~~翻译~~查找：~~中型但已缓存~~低级 <br/> -具体化~~生成~~查找：~~中型但已缓存~~低级 <br/> - 执行数据库查询：可能很高（在某些情况下，更好的查询） <br/> + 连接打开 <br/> + ExecuteReader <br/> + DataReader。读取 <br/> 对象具体化：中（速度快于 EF5） <br/> - 标识查找：中等 |
+| `  var c1 = q1.First();`                                                                             | LINQ 查询执行      | -元数据~~加载~~查找：~~高但高速缓存~~低 <br/> -查看~~生成~~查找：~~可能非常高但缓存~~较低 <br/> -参数求值：中型 <br/> -查询~~转换~~查找：中型 <br/> -Materializer~~生成~~查找：~~中速但缓存~~低 <br/> -数据库查询执行：可能很高 <br/> + 连接打开 <br/> + ExecuteReader <br/> + DataReader。读取 <br/> 对象具体化：中型 <br/> -Identity lookup：中型 | -元数据~~加载~~查找：~~高但高速缓存~~低 <br/> -查看~~生成~~查找：~~可能非常高但缓存~~较低 <br/> -参数求值：低 <br/> -查询~~转换~~查找：~~中但缓存~~低 <br/> -Materializer~~生成~~查找：~~中速但缓存~~低 <br/> -数据库查询执行：可能很高（某些情况下更好的查询） <br/> + 连接打开 <br/> + ExecuteReader <br/> + DataReader。读取 <br/> 对象具体化：中型 <br/> -Identity lookup：中型 | -元数据~~加载~~查找：~~高但高速缓存~~低 <br/> -查看~~生成~~查找：~~中但缓存~~低 <br/> -参数求值：低 <br/> -查询~~转换~~查找：~~中但缓存~~低 <br/> -Materializer~~生成~~查找：~~中速但缓存~~低 <br/> -数据库查询执行：可能很高（某些情况下更好的查询） <br/> + 连接打开 <br/> + ExecuteReader <br/> + DataReader。读取 <br/> 对象具体化：中型（速度快于 EF5） <br/> -Identity lookup：中型 |
 | `}`                                                                                                  | Connection.Close          | 低                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | 低                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | 低                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 
 
@@ -68,7 +68,7 @@ ms.locfileid: "72181677"
 
 请记住，概念模型可能不同于数据库架构。 例如，一个表可能用于存储两个不同实体类型的数据。 继承和非日常映射在映射视图的复杂性方面扮演着角色。
 
-基于映射规范计算这些视图的过程是所谓的视图生成。 在加载模型时，或在生成时使用 "预生成的视图"，可以动态地执行视图生成;后者以实体 SQL 语句的形式序列化为 C @ no__t-0 或 VB 文件。
+基于映射规范计算这些视图的过程是所谓的视图生成。 在加载模型时，或在生成时使用 "预生成的视图"，可以动态地执行视图生成;后者以实体 SQL 语句的形式序列化为 C\# 或 VB 文件。
 
 当生成视图时，还会对其进行验证。 从性能角度来看，视图生成的大部分开销实际上是对视图的验证，这可以确保实体之间的连接有意义，并且具有所有支持操作的正确基数。
 
@@ -96,7 +96,7 @@ ms.locfileid: "72181677"
 
 #### <a name="232-how-to-use-pre-generated-views-with-a-model-created-by-edmgen"></a>2.3.2 如何通过 Edmgen.exe 创建的模型使用预先生成的视图
 
-Edmgen.exe 是随 .NET 提供的实用程序，与实体框架4和5（而不是实体框架6）结合使用。 Edmgen.exe 允许您从命令行生成模型文件、对象层和视图。 其中一个输出将是你选择的语言（VB 或 C @ no__t-0）的视图文件。 这是一个代码文件，其中包含每个实体集的实体 SQL 代码段。 若要启用预生成的视图，只需将该文件包含在项目中。
+Edmgen.exe 是随 .NET 提供的实用程序，与实体框架4和5（而不是实体框架6）结合使用。 Edmgen.exe 允许您从命令行生成模型文件、对象层和视图。 其中一个输出将是你选择的语言（VB 或 C）\#的视图文件。 这是一个代码文件，其中包含每个实体集的实体 SQL 代码段。 若要启用预生成的视图，只需将该文件包含在项目中。
 
 如果手动编辑模型的架构文件，则需要重新生成视图文件。 可以通过使用 **/mode： ViewGeneration**标志运行 edmgen.exe 来实现此目的。
 
@@ -104,12 +104,12 @@ Edmgen.exe 是随 .NET 提供的实用程序，与实体框架4和5（而不是�
 
 你还可以使用 Edmgen.exe 为 EDMX 文件生成视图-前面引用的 MSDN 主题介绍如何添加预先生成事件来执行此操作，但这很复杂，但在某些情况下，不可能。 通常，在模型位于 edmx 文件中时，使用 T4 模板生成视图通常更容易。
 
-ADO.NET 团队博客中发布了一文章，介绍如何为视图生成使用 T4 模板 ( \<http://blogs.msdn.com/b/adonet/archive/2008/06/20/how-to-use-a-t4-template-for-view-generation.aspx>) 。 此文章包含可下载并添加到项目中的模板。 模板是为实体框架的第一个版本而编写的，因此不能保证它们使用最新版本的实体框架。 不过，你可以为实体框架4和5from 的 Visual Studio 库下载更多最新的视图生成模板集：
+ADO.NET 团队博客中发布了一文章，介绍如何为视图生成使用 T4 模板 ( \<http://blogs.msdn.com/b/adonet/archive/2008/06/20/how-to-use-a-t4-template-for-view-generation.aspx>)。 此文章包含可下载并添加到项目中的模板。 模板是为实体框架的第一个版本而编写的，因此不能保证它们使用最新版本的实体框架。 不过，你可以为实体框架4和5from 的 Visual Studio 库下载更多最新的视图生成模板集：
 
--   VB.NET： \< @ NO__T-1
--   C @ NO__T-0： \< @ NO__T-2
+-   VB.NET： \<http://visualstudiogallery.msdn.microsoft.com/118b44f2-1b91-4de2-a584-7a680418941d>
+-   C\#： \<http://visualstudiogallery.msdn.microsoft.com/ae7730ce-ddab-470f-8456-1b313cd2c44d>
 
-如果您使用的 Entity Framework 6，可以获取视图生成 T4 模板从 Visual Studio 库\<http://visualstudiogallery.msdn.microsoft.com/18a7db90-6705-4d19-9dd1-0a6c23d0751f> 。
+如果您使用的 Entity Framework 6，可以获取视图生成 T4 模板从 Visual Studio 库\<http://visualstudiogallery.msdn.microsoft.com/18a7db90-6705-4d19-9dd1-0a6c23d0751f>。
 
 ### <a name="24-reducing-the-cost-of-view-generation"></a>2.4 降低视图生成成本
 
@@ -133,11 +133,11 @@ ADO.NET 团队博客中发布了一文章，介绍如何为视图生成使用 T4
 
 在 Visual Studio 中使用 Edmgen.exe 或 Entity Designer 时，默认情况下会获取 Fk，并只使用单个 checkbox 或命令行标志在 Fk 和 IAs 之间切换。
 
-如果使用的是大型 Code First 模型，则使用独立关联将对视图生成产生相同的效果。 可以通过在依赖对象的类上包含外键属性来避免这种影响，尽管某些开发人员会将其视为污染其对象模型。 您可以找到这一主题的详细信息\<http://blog.oneunicorn.com/2011/12/11/whats-the-deal-with-mapping-foreign-keys-using-the-entity-framework/> 。
+如果使用的是大型 Code First 模型，则使用独立关联将对视图生成产生相同的效果。 可以通过在依赖对象的类上包含外键属性来避免这种影响，尽管某些开发人员会将其视为污染其对象模型。 您可以找到这一主题的详细信息\<http://blog.oneunicorn.com/2011/12/11/whats-the-deal-with-mapping-foreign-keys-using-the-entity-framework/>。
 
 | 当使用      | 操作步骤                                                                                                                                                                                                                                                                                                                              |
 |:----------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 实体设计器 | 在两个实体之间添加关联后，请确保具有引用约束。 引用约束告诉实体框架使用外键，而不是独立关联。 有关更多详细信息，请访问\<http://blogs.msdn.com/b/efdesign/archive/2009/03/16/foreign-keys-in-the-entity-framework.aspx> 。 |
+| 实体设计器 | 在两个实体之间添加关联后，请确保具有引用约束。 引用约束告诉实体框架使用外键，而不是独立关联。 有关更多详细信息，请访问\<http://blogs.msdn.com/b/efdesign/archive/2009/03/16/foreign-keys-in-the-entity-framework.aspx>。 |
 | Edmgen.exe          | 当使用 Edmgen.exe 从数据库生成文件时，将遵循外键，并将其添加到模型中。 有关由 EDMGen 公开的不同选项的详细信息，请访问[http://msdn.microsoft.com/library/bb387165.aspx](https://msdn.microsoft.com/library/bb387165.aspx)。                           |
 | Code First      | 有关如何在使用 Code First 时包含依赖对象的外键属性的信息，请参阅[Code First 约定](~/ef6/modeling/code-first/conventions/built-in.md)主题的 "关系约定" 部分。                                                                                              |
 
@@ -145,7 +145,7 @@ ADO.NET 团队博客中发布了一文章，介绍如何为视图生成使用 T4
 
 如果您的模型直接包含在您的应用程序的项目中，并通过预生成事件或 T4 模板生成视图，则在重新生成项目时，将会进行查看生成和验证，即使模型未更改也是如此。 如果将模型移到单独的程序集，并从应用程序的项目中引用它，则可以对应用程序进行其他更改，而无需重新生成包含该模型的项目。
 
-*注意 @no__t：* 1when 将模型移动到不同的程序集，请记住将模型的连接字符串复制到客户端项目的应用程序配置文件中。
+*注意  ：* 将模型移动到不同的程序集时，请记住将模型的连接字符串复制到客户端项目的应用程序配置文件中。
 
 #### <a name="243-disable-validation-of-an-edmx-based-model"></a>2.4.3 禁用基于 edmx 的模型的验证
 
@@ -191,7 +191,7 @@ ADO.NET 团队博客中发布了一文章，介绍如何为视图生成使用 T4
 1.  如果对象不在缓存中，则会对 Find 的优点求反，但语法仍比按键查询更简单。
 2.  如果启用了自动检测更改，Find 方法的成本可能会增加一个数量级，甚至更多，具体取决于模型的复杂程度和对象缓存中的实体数量。
 
-另外，请记住，Find 仅返回你要查找的实体，并且它不会自动加载其关联的实体（如果它们尚未在对象缓存中）。 如果需要检索关联的实体，则可以通过键进行预先加载来使用查询。 有关详细信息，请参阅 **8.1 延迟加载与预先加载 @ no__t-0。
+另外，请记住，Find 仅返回你要查找的实体，并且它不会自动加载其关联的实体（如果它们尚未在对象缓存中）。 如果需要检索关联的实体，则可以通过键进行预先加载来使用查询。 有关详细信息，请参阅**8.1 延迟加载与预先加载**。
 
 #### <a name="312-performance-issues-when-the-object-cache-has-many-entities"></a>当对象缓存具有多个实体时，3.1.2 性能问题
 
@@ -207,7 +207,7 @@ ADO.NET 团队博客中发布了一文章，介绍如何为视图生成使用 T4
 
 #### <a name="321-some-notes-about-query-plan-caching"></a>3.2.1 一些有关查询计划缓存的说明
 
--   为所有查询类型共享查询计划缓存：实体 SQL、LINQ to Entities 和 CompiledQuery 对象。
+-   查询计划缓存对于所有查询类型都是共享的：实体 SQL、LINQ to Entities 和 CompiledQuery 对象。
 -   默认情况下，查询计划缓存针对实体 SQL 查询启用，无论是通过 EntityCommand 还是通过 ObjectQuery 执行。 默认情况下，对于 .NET 4.5 实体框架上的 LINQ to Entities 查询，以及在实体框架6中，它也处于启用状态。
     -   可以通过将 EnablePlanCaching 属性（在 EntityCommand 或 ObjectQuery 上）设置为 false 来禁用查询计划缓存。 例如：
 ``` csharp
@@ -260,7 +260,7 @@ AggregatingSubtotals 查询是我们测试过的查询中最复杂的查询。 �
 
 ### <a name="33-using-compiledquery-to-improve-performance-with-linq-queries"></a>3.3 使用 CompiledQuery 通过 LINQ 查询提高性能
 
-我们的测试表明，使用 CompiledQuery 可以带来 7% over autocompiled LINQ 查询的好处;这意味着，从实体框架堆栈中执行代码的时间减少了 7%;这并不意味着应用程序的速度将更快 7%。 一般而言，与好处相比，在 EF 5.0 中编写和维护 CompiledQuery 对象的成本可能不值得。 你的里程可能会有所不同，因此，如果你的项目需要额外的推送，则请执行此选项。 请注意，CompiledQueries 仅与 ObjectContext 派生模型兼容，不与 DbContext 派生模型兼容。
+我们的测试表明，使用 CompiledQuery 可以带来 7% over autocompiled LINQ 查询的好处;这意味着，从实体框架堆栈中执行代码的时间减少了 7%;这并不意味着应用程序的速度将更快7%。 一般而言，与好处相比，在 EF 5.0 中编写和维护 CompiledQuery 对象的成本可能不值得。 你的里程可能会有所不同，因此，如果你的项目需要额外的推送，则请执行此选项。 请注意，CompiledQueries 仅与 ObjectContext 派生模型兼容，不与 DbContext 派生模型兼容。
 
 有关创建和调用 CompiledQuery 的详细信息，请参阅[已编译的查询（LINQ to Entities）](https://msdn.microsoft.com/library/bb896297.aspx)。
 
@@ -396,7 +396,7 @@ WHERE ((0 = (CASE WHEN (@p__linq__1 IS NOT NULL) THEN cast(1 as bit) WHEN (@p__l
 4.  定期检查 ItemCollection 的使用情况。 如果确定工作区最近未访问过，则会将其标记为在下次缓存扫描时清除。
 5.  仅创建 EntityConnection 将导致创建元数据缓存（尽管在打开连接之前不会对其中的项集合进行初始化）。 此工作区将保留在内存中，直到缓存算法将其确定为 "正在使用"。
 
-客户顾问团队编写了描述保存到 ItemCollection 的引用以使用大型模型时避免"弃用"的博客文章： \<http://blogs.msdn.com/b/appfabriccat/archive/2010/10/22/metadataworkspace-reference-in-wcf-services.aspx> 。
+客户顾问团队编写了描述保存到 ItemCollection 的引用以使用大型模型时避免"弃用"的博客文章： \<http://blogs.msdn.com/b/appfabriccat/archive/2010/10/22/metadataworkspace-reference-in-wcf-services.aspx>。
 
 #### <a name="342-the-relationship-between-metadata-caching-and-query-plan-caching"></a>3.4.2 元数据缓存和查询计划缓存之间的关系
 
@@ -411,7 +411,7 @@ WHERE ((0 = (CASE WHEN (@p__linq__1 IS NOT NULL) THEN cast(1 as bit) WHEN (@p__l
 #### <a name="351-additional-references-for-results-caching-with-the-wrapping-provider"></a>3.5.1 用于包装提供程序的结果缓存的其他引用
 
 -   Julie Lerman 在实体框架和 Windows Azure 中编写了一个 "二级缓存"，其中包括如何更新示例包装提供程序以使用 Windows Server AppFabric 缓存： [https://msdn.microsoft.com/magazine/hh394143.aspx](https://msdn.microsoft.com/magazine/hh394143.aspx)
--   如果您正在使用 Entity Framework 5，团队博客中发布了一文章，介绍如何使用 Entity Framework 5 的缓存提供程序运行的工作： \<http://blogs.msdn.com/b/adonet/archive/2010/09/13/ef-caching-with-jarek-kowalski-s-provider.aspx> 。 它还包含 T4 模板，以帮助自动将二级缓存添加到项目。
+-   如果您正在使用 Entity Framework 5，团队博客中发布了一文章，介绍如何使用 Entity Framework 5 的缓存提供程序运行的工作： \<http://blogs.msdn.com/b/adonet/archive/2010/09/13/ef-caching-with-jarek-kowalski-s-provider.aspx>。 它还包含 T4 模板，以帮助自动将二级缓存添加到项目。
 
 ## <a name="4-autocompiled-queries"></a>4 Autocompiled 查询
 
@@ -426,14 +426,14 @@ WHERE ((0 = (CASE WHEN (@p__linq__1 IS NOT NULL) THEN cast(1 as bit) WHEN (@p__l
 
 其他条件可能会阻止查询使用缓存。 常见示例包括：
 
--   使用 IEnumerable @ no__t-0T @ no__t。包含 @ no__t-2 @ no__t （T 值）。
+-   使用 IEnumerable&lt;T&gt;。包含&lt;&gt;（T 值）。
 -   使用生成包含常量的查询的函数。
 -   使用非映射对象的属性。
 -   将查询链接到需要重新编译的另一个查询。
 
-### <a name="41-using-ienumerablelttgtcontainslttgtt-value"></a>4.1 使用 IEnumerable @ no__t-0T @ no__t。包含 @ no__t-2T @ no__t （T 值）
+### <a name="41-using-ienumerablelttgtcontainslttgtt-value"></a>4.1 使用 IEnumerable&lt;T&gt;。包含&lt;T&gt;（T 值）
 
-实体框架不缓存调用 IEnumerable @ no__t-0T @ no__t-1 的查询。对内存中集合包含 @ no__t-2T @ no__t （T 值），因为集合的值被视为可变的。 下面的示例查询将不会被缓存，因此计划编译器将始终对其进行处理：
+实体框架不缓存调用 IEnumerable&lt;T&gt;的查询。包含针对内存中集合的&lt;T&gt;（T 值），因为集合的值被视为可变的。 下面的示例查询将不会被缓存，因此计划编译器将始终对其进行处理：
 
 ``` csharp
 int[] ids = new int[10000];
@@ -450,7 +450,7 @@ using (var context = new MyContext())
 
 请注意，执行包含的 IEnumerable 的大小决定了查询的编译速度或速度。 使用较大的集合（如上面的示例所示）时，性能可能会显著降低。
 
-实体框架6包含对 IEnumerable @ no__t-0T @ no__t-1 的优化。当执行查询时，包含 @ no__t-2T @ no__t （T 值）起作用。 生成的 SQL 代码的速度要快得多，并且可读性更强，在大多数情况下，它在服务器上的执行速度更快。
+实体框架6包含对 IEnumerable&lt;T&gt;方式的优化。包含&lt;T&gt;（T 值）在执行查询时工作。 生成的 SQL 代码的速度要快得多，并且可读性更强，在大多数情况下，它在服务器上的执行速度更快。
 
 ### <a name="42-using-functions-that-produce-queries-with-constants"></a>4.2 使用生成包含常量的查询的函数
 
@@ -494,7 +494,7 @@ for (var i = 0; i < count; ++i)
 }
 ```
 
-由于每次运行查询时都使用相同的查询计划，因此第二个代码段的运行速度最多可达 11%，这会节省 CPU 时间，并避免查询缓存的污染。 此外，由于 Skip 参数在闭包中，代码可能如下所示：
+由于每次运行查询时都使用相同的查询计划，因此第二个代码段的运行速度最多可达11%，这会节省 CPU 时间，并避免查询缓存的污染。 此外，由于 Skip 参数在闭包中，代码可能如下所示：
 
 ``` csharp
 var i = 0;
@@ -625,9 +625,9 @@ using (var context = new MyContext())
 
 在运行结束时，实体框架5的内存占用量要低于实体框架6。 实体框架6占用的额外内存是附加内存结构和可提高性能的代码的结果。
 
-使用 ObjectStateManager 时，内存占用量也有明显差异。 在跟踪从数据库具体化的所有实体时，实体框架5增加了 30% 的占用量。 执行此操作时，实体框架6增加了 28%。
+使用 ObjectStateManager 时，内存占用量也有明显差异。 在跟踪从数据库具体化的所有实体时，实体框架5增加了30% 的占用量。 执行此操作时，实体框架6增加了28%。
 
-就时间而言，实体框架6在此测试中的实体框架5比大型边距高。 实体框架6在实体框架5消耗的大约 16% 的时间内完成了测试。 此外，在使用 ObjectStateManager 时，实体框架5需要更多的时间来完成。 相比之下，使用 ObjectStateManager 时，实体框架6使用了 3% 的时间。
+就时间而言，实体框架6在此测试中的实体框架5比大型边距高。 实体框架6在实体框架5消耗的大约16% 的时间内完成了测试。 此外，在使用 ObjectStateManager 时，实体框架5需要更多的时间来完成。 相比之下，使用 ObjectStateManager 时，实体框架6使用了3% 的时间。
 
 ## <a name="6-query-execution-options"></a>6查询执行选项
 
@@ -789,7 +789,7 @@ var q = context.InvokeProductsForCategoryCQ("Beverages");
 
 **专业人员**
 
--   通过常规 LINQ 查询提高了 7% 的性能改进。
+-   通过常规 LINQ 查询提高了7% 的性能改进。
 -   完全具体化的对象。
 -   适用于 CUD 操作。
 
@@ -857,7 +857,7 @@ Microbenchmarks 对代码中的小更改非常敏感。 在这种情况下，实
 > [!NOTE]
 > 为完整起见，我们提供了一个变体，用于在 EntityCommand 上执行实体 SQL 查询。 但是，因为对于此类查询，结果不是具体化的，所以比较不一定是苹果。 该测试包含一个接近近似值，旨在尝试进行比较 fairer。
 
-在这种端到端的情况下，实体框架6比实体框架5高，因为在堆栈的几个部分进行了性能改进，包括 DbContext 初始化更轻，更快 MetadataCollection @ no__t-0T @ no__t。
+在这种端到端的情况下，实体框架6比实体框架5高，因为在堆栈的几个部分中进行了性能改进，包括 DbContext 初始化更轻，&lt;&gt; 查找速度更快。
 
 ## <a name="7-design-time-performance-considerations"></a>7设计时性能注意事项
 
@@ -871,13 +871,13 @@ Microbenchmarks 对代码中的小更改非常敏感。 在这种情况下，实
 
 如果模型使用 TPT 继承，则生成的查询将比使用其他继承策略生成的查询更复杂，这可能会导致存储上的执行时间较长。  它通常需要更长的时间来生成针对 TPT 模型的查询并具体化生成的对象。
 
-请参阅"性能注意事项时在实体框架中使用 （每种类型的表） TPT 继承"MSDN 博客文章： \<http://blogs.msdn.com/b/adonet/archive/2010/08/17/performance-considerations-when-using-tpt-table-per-type-inheritance-in-the-entity-framework.aspx> 。
+请参阅"性能注意事项时在实体框架中使用 （每种类型的表） TPT 继承"MSDN 博客文章： \<http://blogs.msdn.com/b/adonet/archive/2010/08/17/performance-considerations-when-using-tpt-table-per-type-inheritance-in-the-entity-framework.aspx>。
 
 #### <a name="711-avoiding-tpt-in-model-first-or-code-first-applications"></a>7.1.1 在 Model First 或 Code First 应用程序中避免了 TPT
 
 在具有 TPT 架构的现有数据库上创建模型时，不会有很多选项。 但在使用 Model First 或 Code First 创建应用程序时，应避免 TPT 继承，以解决性能问题。
 
-使用 Entity Designer 向导中 Model First 时，将获取模型中的任何继承的 TPT。 如果你想要切换到使用模型优先的 TPH 继承策略，可以使用"Entity Designer Database Generation Power Pack"可从 Visual Studio 库 ( \<http://visualstudiogallery.msdn.microsoft.com/df3541c3-d833-4b65-b942-989e7ec74c87/>) 。
+使用 Entity Designer 向导中 Model First 时，将获取模型中的任何继承的 TPT。 如果你想要切换到使用模型优先的 TPH 继承策略，可以使用"Entity Designer Database Generation Power Pack"可从 Visual Studio 库 ( \<http://visualstudiogallery.msdn.microsoft.com/df3541c3-d833-4b65-b942-989e7ec74c87/>)。
 
 当使用 Code First 配置模型与继承的映射时，默认情况下，EF 将使用 TPH，因此继承层次结构中的所有实体都将映射到同一个表。 请参阅 MSDN 杂志 》 中的"代码第一个中实体 Framework4.1"项目的"映射的 Fluent API"一节 ( [http://msdn.microsoft.com/magazine/hh126815.aspx](https://msdn.microsoft.com/magazine/hh126815.aspx)) 的更多详细信息。
 
@@ -889,17 +889,17 @@ Microbenchmarks 对代码中的小更改非常敏感。 在这种情况下，实
 
 | 配置                              | 消耗的时间细目                                                                                                                                               |
 |:-------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Visual Studio 2010，实体框架4     | SSDL 生成：2小时27分钟 <br/> 映射生成：1 秒 <br/> CSDL 生成：1 秒 <br/> ObjectLayer 生成：1 秒 <br/> 视图生成：2 h 14 分钟 |
-| Visual Studio 2010 SP1，实体框架4 | SSDL 生成：1 秒 <br/> 映射生成：1 秒 <br/> CSDL 生成：1 秒 <br/> ObjectLayer 生成：1 秒 <br/> 视图生成：1小时53分钟   |
-| Visual Studio 2013，实体框架5     | SSDL 生成：1 秒 <br/> 映射生成：1 秒 <br/> CSDL 生成：1 秒 <br/> ObjectLayer 生成：1 秒 <br/> 视图生成：65分钟    |
-| Visual Studio 2013，实体框架6     | SSDL 生成：1 秒 <br/> 映射生成：1 秒 <br/> CSDL 生成：1 秒 <br/> ObjectLayer 生成：1 秒 <br/> 视图生成：28秒。   |
+| Visual Studio 2010，实体框架4     | SSDL 生成：2小时27分钟 <br/> 映射生成：1秒 <br/> CSDL 生成：1秒 <br/> ObjectLayer 生成：1秒 <br/> 视图生成： 2 h 14 分钟 |
+| Visual Studio 2010 SP1，实体框架4 | SSDL 生成：1秒 <br/> 映射生成：1秒 <br/> CSDL 生成：1秒 <br/> ObjectLayer 生成：1秒 <br/> 视图生成：1小时53分钟   |
+| Visual Studio 2013，实体框架5     | SSDL 生成：1秒 <br/> 映射生成：1秒 <br/> CSDL 生成：1秒 <br/> ObjectLayer 生成：1秒 <br/> 视图生成：65分钟    |
+| Visual Studio 2013，实体框架6     | SSDL 生成：1秒 <br/> 映射生成：1秒 <br/> CSDL 生成：1秒 <br/> ObjectLayer 生成：1秒 <br/> 视图生成：28秒。   |
 
 
 值得注意的是，在生成 SSDL 时，负载几乎完全花费在 SQL Server 中，而客户端开发计算机等待返回的结果是从服务器返回的。 Dba 应该特别感谢这一改进。 另外，值得注意的是，在生成模型的过程中，只需立即生成模型。
 
 ### <a name="73-splitting-large-models-with-database-first-and-model-first"></a>7.3 将大型模型与 Database First 和 Model First 分离
 
-随着模型大小的增加，设计器图面变得混乱且难以使用。 我们通常会考虑使用超过300个实体的模型太大，无法有效使用设计器。 下面的博客文章介绍了有关拆分大型模型的多个选项： \<http://blogs.msdn.com/b/adonet/archive/2008/11/25/working-with-large-models-in-entity-framework-part-2.aspx> 。
+随着模型大小的增加，设计器图面变得混乱且难以使用。 我们通常会考虑使用超过300个实体的模型太大，无法有效使用设计器。 下面的博客文章介绍了有关拆分大型模型的多个选项： \<http://blogs.msdn.com/b/adonet/archive/2008/11/25/working-with-large-models-in-entity-framework-part-2.aspx>。
 
 张贴内容是为实体框架的第一个版本而编写的，但这些步骤仍适用。
 
@@ -1080,7 +1080,7 @@ WHERE [Extent1].[CustomerID] = @EntityKeyValue1',N'@EntityKeyValue1 nchar(5)',@E
 
 这种情况并不完全适合选择预先加载和延迟加载。 首先尝试了解两个策略之间的差异，以便您可以做出明智的决策;此外，如果你的代码符合以下任一方案，请考虑：
 
-| 应用场景                                                                    | 建议                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| 方案                                                                    | 建议                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 |:----------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 是否需要从提取的实体访问多个导航属性？ | **否**-这两个选项都可能会。 但是，如果你的查询引入的负载并不太大，则使用预先加载可能会遇到性能优势，因为它需要较少的网络往返才能具体化你的对象。 <br/> <br/> **是**-如果需要从实体访问多个导航属性，则可以通过在查询中使用多个 include 语句并预先加载来实现此目的。 包含的实体越多，查询将返回的有效负载越大。 将三个或更多实体添加到查询中后，请考虑切换到延迟加载。 |
 | 您是否确切知道运行时需要哪些数据？                   | **无**-延迟加载将更适合你。 否则，可能会最终查询不需要的数据。 <br/> <br/> **是**-很可能是最好的选择;它有助于更快地加载整个集。 如果查询需要提取大量数据，并且速度太慢，请改为尝试延迟加载。                                                                                                                                                                                                                                                       |
@@ -1141,7 +1141,7 @@ using (NorthwindEntities context = new NorthwindEntities())
 
 实体框架当前不支持标量或复杂属性的延迟加载。 但是，如果您有一个包含大型对象（如 BLOB）的表，则可以使用表拆分将大属性分隔到一个单独的实体中。 例如，假设您有一个包含 varbinary photo 列的产品表。 如果不经常需要在查询中访问此属性，则可以使用表拆分来仅引入通常需要的实体部分。 表示产品照片的实体仅在明确需要时才会加载。
 
-演示如何启用表拆分的良好资源是方便 Gil Fink 的 《 表拆分中 Entity Framework 》 博客文章： \<http://blogs.microsoft.co.il/blogs/gilf/archive/2009/10/13/table-splitting-in-entity-framework.aspx> 。
+演示如何启用表拆分的良好资源是方便 Gil Fink 的 《 表拆分中 Entity Framework 》 博客文章： \<http://blogs.microsoft.co.il/blogs/gilf/archive/2009/10/13/table-splitting-in-entity-framework.aspx>。
 
 ## <a name="9-other-considerations"></a>9其他注意事项
 
@@ -1158,7 +1158,7 @@ using (NorthwindEntities context = new NorthwindEntities())
 </configuration>
 ```
 
-这会减少线程争用，并增加吞吐量，使 CPU 饱和情况最多可达 30%。 通常情况下，应始终使用经典垃圾回收（更好地优化 UI 和客户端方案）以及服务器垃圾回收来测试应用程序的行为。
+这会减少线程争用，并增加吞吐量，使 CPU 饱和情况最多可达30%。 通常情况下，应始终使用经典垃圾回收（更好地优化 UI 和客户端方案）以及服务器垃圾回收来测试应用程序的行为。
 
 ### <a name="92-autodetectchanges"></a>9.2 AutoDetectChanges
 
@@ -1179,7 +1179,7 @@ finally
 }
 ```
 
-在关闭 AutoDetectChanges 之前，最好了解这可能会导致实体框架无法跟踪有关在实体上发生的更改的特定信息。 如果处理不当，这可能会导致应用程序的数据不一致。 关闭 AutoDetectChanges 的详细信息，请阅读\<\ http://blog.oneunicorn.com/2012/03/12/secrets-of-detectchanges-part-3-switching-off-automatic-detectchanges/> 。
+在关闭 AutoDetectChanges 之前，最好了解这可能会导致实体框架无法跟踪有关在实体上发生的更改的特定信息。 如果处理不当，这可能会导致应用程序的数据不一致。 关闭 AutoDetectChanges 的详细信息，请阅读\<\ http://blog.oneunicorn.com/2012/03/12/secrets-of-detectchanges-part-3-switching-off-automatic-detectchanges/>。
 
 ### <a name="93-context-per-request"></a>9.3 每个请求的上下文
 
@@ -1187,7 +1187,7 @@ finally
 
 ### <a name="94-database-null-semantics"></a>9.4 数据库 null 语义
 
-默认情况下实体框架将生成具有 C @ no__t null 比较语义的 SQL 代码。 请看下面的示例查询：
+默认情况下实体框架将生成具有 C\# null 比较语义的 SQL 代码。 请参考以下示例查询：
 
 ``` csharp
             int? categoryId = 7;
@@ -1210,9 +1210,9 @@ finally
             var r = q.ToList();
 ```
 
-在此示例中，我们将多个可以为 null 的变量与实体上的可为 null 的属性进行比较，如供应商和单价。 此查询生成的 SQL 将询问参数值与列值是否相同，或者参数和列值是否为 null。 这将隐藏数据库服务器处理 null 值的方式，并将在不同的数据库供应商之间提供一致的 C @ no__t 0 null 体验。 另一方面，生成的代码有点复杂，如果查询的 where 语句中的比较量增长到了很大的数字，则可能无法正常运行。
+在此示例中，我们将多个可以为 null 的变量与实体上的可为 null 的属性进行比较，如供应商和单价。 此查询生成的 SQL 将询问参数值与列值是否相同，或者参数和列值是否为 null。 这将隐藏数据库服务器处理 null 值的方式，并将在不同的数据库供应商之间提供一致的 C\# null 体验。 另一方面，生成的代码有点复杂，如果查询的 where 语句中的比较量增长到了很大的数字，则可能无法正常运行。
 
-处理这种情况的一种方法是使用数据库 null 语义。 请注意，这可能会表现出与 C @ no__t-0 null 语义不同的行为，因为现在实体框架将生成更简单的 SQL，它会公开数据库引擎处理空值的方式。 对于上下文配置，可以对每个上下文激活数据库 null 语义，并提供一个配置行：
+处理这种情况的一种方法是使用数据库 null 语义。 请注意，这可能会对 C\# null 语义有不同的行为，因为现在实体框架将生成更简单的 SQL，它会公开数据库引擎处理空值的方式。 对于上下文配置，可以对每个上下文激活数据库 null 语义，并提供一个配置行：
 
 ``` csharp
                 context.Configuration.UseDatabaseNullSemantics = true;
@@ -1220,13 +1220,14 @@ finally
 
 当使用数据库 null 语义时，小型到中等大小的查询不会显示明显的性能改进，但不同之处在于具有大量可能的 null 比较的查询会变得更加明显。
 
-在上面的示例查询中，在受控环境中运行的 microbenchmark 中，性能差异低于 2%。
+在上面的示例查询中，在受控环境中运行的 microbenchmark 中，性能差异低于2%。
 
 ### <a name="95-async"></a>9.5 异步
 
 实体框架6在 .NET 4.5 或更高版本上运行时，引入了对异步操作的支持。 大多数情况下，具有 IO 相关争用的应用程序将从使用异步查询和保存操作中获益最多。 如果你的应用程序不会受到 IO 争用的影响，则在最佳情况下，使用 async 会以同步方式运行，并以同步调用的相同时间量返回结果，或者在最坏情况下，只是将执行推迟到异步任务并添加额外的 time 到方案完成。
 
-有关如何异步编程工作，可帮助您决定是否异步会提高应用程序的性能所访问的信息[http://msdn.microsoft.com/library/hh191443.aspx](https://msdn.microsoft.com/library/hh191443.aspx)。 有关在实体框架上使用异步操作的详细信息，请参阅 @no__t 0Async Query，并 Save @ no__t-1。
+有关如何异步编程工作，可帮助您决定是否异步会提高应用程序的性能所访问的信息[http://msdn.microsoft.com/library/hh191443.aspx](https://msdn.microsoft.com/library/hh191443.aspx)。 有关在实体框架上使用异步操作的详细信息，请参阅[Async Query And Save](~/ef6/fundamentals/async.md
+)。
 
 ### <a name="96-ngen"></a>9.6 NGEN
 
@@ -1248,15 +1249,15 @@ Code First 方法就是一种复杂的实体数据模型生成器。 实体框�
 
 如果实体框架存在性能问题，则可以使用类似于 Visual Studio 中内置的探查器来查看应用程序所花费的时间。 这是我们用于生成饼图"探讨 ADO.NET 实体框架的第 1 部分的性能"博客文章中的工具 ( \<http://blogs.msdn.com/b/adonet/archive/2008/02/04/exploring-the-performance-of-the-ado-net-entity-framework-part-1.aspx>) ，可显示实体框架何处消耗在冷和热查询过程及其时间。
 
-"使用 Visual Studio 2010 探查器分析实体框架" 博客文章由数据和建模客户咨询团队介绍了如何使用探查器来调查性能问题的实际示例。  \<http://blogs.msdn.com/b/dmcat/archive/2010/04/30/profiling-entity-framework-using-the-visual-studio-2010-profiler.aspx>. 此帖子是为 windows 应用程序编写的。 如果需要对 web 应用程序进行分析，Windows 性能记录器（"）和 Windows 性能分析器（WPA）工具的工作方式可能比 Visual Studio 中的更好。 WPR 和 WPA 是 Windows 性能工具包附带 Windows 评估和部署工具包的一部分 ( [http://www.microsoft.com/download/details.aspx?id=39982](https://www.microsoft.com/download/details.aspx?id=39982))。
+"使用 Visual Studio 2010 探查器分析实体框架" 博客文章由数据和建模客户咨询团队介绍了如何使用探查器来调查性能问题的实际示例。  \<http://blogs.msdn.com/b/dmcat/archive/2010/04/30/profiling-entity-framework-using-the-visual-studio-2010-profiler.aspx>。 此帖子是为 windows 应用程序编写的。 如果需要对 web 应用程序进行分析，Windows 性能记录器（"）和 Windows 性能分析器（WPA）工具的工作方式可能比 Visual Studio 中的更好。 WPR 和 WPA 是 Windows 性能工具包附带 Windows 评估和部署工具包的一部分 ( [http://www.microsoft.com/download/details.aspx?id=39982](https://www.microsoft.com/download/details.aspx?id=39982))。
 
 ### <a name="102-applicationdatabase-profiling"></a>10.2 应用程序/数据库分析
 
 Visual Studio 中内置的探查器会告诉你应用程序花费时间的位置。  可以使用另一种类型的探查器，根据需要对正在生产或预生产环境中的运行中的应用程序执行动态分析，并查找数据库访问的常见缺陷和反模式。
 
-两个地区销售的探查器是实体框架 Profiler ( \<http://efprof.com>) ORMProfiler 和 ( \<http://ormprofiler.com>) 。
+两个地区销售的探查器是实体框架 Profiler ( \<http://efprof.com>) ORMProfiler 和 ( \<http://ormprofiler.com>)。
 
-如果你的应用程序是使用 Code First 的 MVC 应用程序，则可以使用 Stackexchange.redis 的 MiniProfiler。 Scott Hanselman 在他的博客中介绍了此工具： \<http://www.hanselman.com/blog/NuGetPackageOfTheWeek9ASPNETMiniProfilerFromStackExchangeRocksYourWorld.aspx> 。
+如果你的应用程序是使用 Code First 的 MVC 应用程序，则可以使用 Stackexchange.redis 的 MiniProfiler。 Scott Hanselman 在他的博客中介绍了此工具： \<http://www.hanselman.com/blog/NuGetPackageOfTheWeek9ASPNETMiniProfilerFromStackExchangeRocksYourWorld.aspx>。
 
 有关分析应用程序的数据库活动的详细信息，请参阅 Julie Lerman 的 MSDN 杂志文章，其中标题[实体框架中的 "分析数据库" 活动](https://msdn.microsoft.com/magazine/gg490349.aspx)。
 
@@ -1273,7 +1274,7 @@ Visual Studio 中内置的探查器会告诉你应用程序花费时间的位置
     }
 ```
 
-在此示例中，数据库活动将记录到控制台中，但日志属性可以配置为调用任何 Action @ no__t-0string @ no__t 委托。
+在此示例中，数据库活动将记录到控制台中，但 Log 属性可以配置为调用&lt;字符串&gt; 委托的任何操作。
 
 如果要在不重新编译的情况下启用数据库日志记录，并且使用实体框架6.1 或更高版本，则可以通过在应用程序的 web.config 或 app.config 文件中添加侦听器来执行此操作。
 
@@ -1287,7 +1288,7 @@ Visual Studio 中内置的探查器会告诉你应用程序花费时间的位置
   </interceptors>
 ```
 
-有关如何添加日志记录，无需重新编译转到详细信息\<http://blog.oneunicorn.com/2014/02/09/ef-6-1-turning-on-logging-without-recompiling/> 。
+有关如何添加日志记录，无需重新编译转到详细信息\<http://blog.oneunicorn.com/2014/02/09/ef-6-1-turning-on-logging-without-recompiling/>。
 
 ## <a name="11-appendix"></a>11附录
 
@@ -1300,16 +1301,16 @@ Visual Studio 中内置的探查器会告诉你应用程序花费时间的位置
 ##### <a name="11111-software-environment"></a>11.1.1.1 软件环境
 
 -   实体框架4软件环境
-    -   OS 名称：Windows Server 2008 R2 企业版 SP1。
+    -   OS 名称： Windows Server 2008 R2 Enterprise SP1。
     -   Visual Studio 2010 –旗舰版。
     -   Visual Studio 2010 SP1 （仅适用于某些比较）。
 -   实体框架5和6软件环境
-    -   OS 名称：Windows 8.1 Enterprise
+    -   OS 名称： Windows 8.1 Enterprise
     -   Visual Studio 2013 –旗舰版。
 
 ##### <a name="11112-hardware-environment"></a>11.1.1.2 硬件环境
 
--   双处理器：    Intel （R）至强（R） CPU L5520 W3530 @ 2.27 GHz，2261 Mhz8 GHz，4核，84逻辑处理器。
+-   双处理器： Intel （R） L5520 W3530 @ 2.27 GHz，2261 Mhz8 GHz，4核，84逻辑处理器。
 -   2412 GB RamRAM。
 -   136 GB SCSI250GB SATA 7200 rpm 3GB/s 驱动器拆分为4个分区。
 
@@ -1317,12 +1318,12 @@ Visual Studio 中内置的探查器会告诉你应用程序花费时间的位置
 
 ##### <a name="11121-software-environment"></a>11.1.2.1 软件环境
 
--   OS 名称：Windows Server 2008 R 28.1 Enterprise SP1。
+-   OS 名称： Windows Server 2008 R 28.1 Enterprise SP1。
 -   SQL Server 2008 R22012.
 
 ##### <a name="11122-hardware-environment"></a>11.1.2.2 硬件环境
 
--   单处理器：Intel （R）强（R） CPU L5520 @ 2.27 GHz，2261 MhzES-1620 0 @ 3.60 GHz，4核，8个逻辑处理器。
+-   单处理器： Intel （R）至强（R） CPU L5520 @ 2.27 GHz，2261 MhzES-1620 0 @ 3.60 GHz，4核，8个逻辑处理器。
 -   824 GB RamRAM。
 -   465 GB ATA500GB SATA 7200 rpm 6GB/s 驱动器拆分为4个分区。
 
@@ -1507,8 +1508,8 @@ Navision 数据库是用于演示 Microsoft Dynamics –导航的大型数据库
 
 不带聚合的简单查找查询
 
--   计数:16232
--   例如：
+-   计数：16232
+-   示例：
 
 ``` xml
   <Query complexity="Lookup">
@@ -1520,8 +1521,8 @@ Navision 数据库是用于演示 Microsoft Dynamics –导航的大型数据库
 
 具有多个聚合但没有小计（单个查询）的普通 BI 查询
 
--   计数:2313
--   例如：
+-   计数：2313
+-   示例：
 
 ``` xml
   <Query complexity="SingleAggregating">
@@ -1529,7 +1530,7 @@ Navision 数据库是用于演示 Microsoft Dynamics –导航的大型数据库
   </Query>
 ```
 
-其中 MDF @ no__t-0SessionLogin @ no__t-1Time @ no__t-2Max （）在模型中定义为：
+其中 MDF\_SessionLogin\_Time\_Max （）在模型中定义为：
 
 ``` xml
   <Function Name="MDF_SessionLogin_Time_Max" ReturnType="Collection(DateTime)">
@@ -1541,8 +1542,8 @@ Navision 数据库是用于演示 Microsoft Dynamics –导航的大型数据库
 
 具有聚合和小计的 BI 查询（通过 union all）
 
--   计数:178
--   例如：
+-   计数：178
+-   示例：
 
 ``` xml
   <Query complexity="AggregatingSubtotals">

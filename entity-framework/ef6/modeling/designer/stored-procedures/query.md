@@ -28,26 +28,26 @@ var query = context.Products.SqlQuery("EXECUTE [dbo].[GetAllProducts]")`;
 ## <a name="set-up-the-project"></a>设置项目
 
 -   打开 Visual Studio 2012。
--   选择 "**文件-&gt;" &gt; 项目**
--   在左窗格中，单击 " **Visual C @ no__t**"，然后选择**控制台**模板。
--   在名称中输入 " **EFwithSProcsSample** as"。
+-   选择 "**文件-&gt;"&gt; 项目**
+-   在左窗格中，单击 " **Visual C\#** "，然后选择 "**控制台**" 模板。
+-   输入 " **EFwithSProcsSample** " 作为名称。
 -   选择 **"确定"** 。
 
 ## <a name="create-a-model"></a>创建模型
 
--   在解决方案资源管理器中右键单击项目，然后选择 "**添加-&gt;" "新项**"。
+-   在解决方案资源管理器中右键单击项目，然后选择 "**添加-&gt; 新项**"。
 -   从左侧菜单中选择 "**数据**"，然后在 "模板" 窗格中选择 " **ADO.NET 实体数据模型**。
 -   输入**EFwithSProcsModel**作为文件名，然后单击 "**添加**"。
 -   在 "选择模型内容" 对话框中，选择 " **从数据库生成**"，然后单击 " **下一步**"。
 -   单击 " **新建连接**"。  
-    在 "连接属性" 对话框中，输入服务器名称（例如， **（localdb） \\mssqllocaldb**），选择 "身份验证方法"，键入 " **School** for"，然后单击 **"确定"** 。  
+    在 "连接属性" 对话框中，输入服务器名称（例如， **（localdb）\\mssqllocaldb**），选择身份验证方法，为数据库名称键入 **School** ，然后单击 **"确定"** 。  
     "选择您的数据连接" 对话框将通过数据库连接设置进行更新。
--   在 "选择数据库对象" 对话框中，检查**表** checkbox 以选择所有表。  
-    另外，在 "**存储过程和函数**" 节点下选择以下存储过程：**GetStudentGrades**和**GetDepartmentName**。 
+-   在 "选择数据库对象" 对话框中，选中 "**表** " 复选框以选择所有表。  
+    另外，在 "**存储过程和函数**" 节点下选择以下存储过程： **GetStudentGrades**和**GetDepartmentName**。 
 
     ![导入](~/ef6/media/import.jpg)
 
-    *Starting 与 Visual Studio 2012，EF 设计器支持存储过程的大容量导入。默认情况下，将选中 "将**选定的存储过程和函数导入 entity 模型**"。*
+    *从 Visual Studio 2012 开始，EF 设计器支持存储过程的大容量导入。默认情况下，将选中 "将**选定的存储过程和函数导入 entity 模型**"。*
 -   单击 " **完成**"。
 
 默认情况下，返回多个列的每个导入的存储过程或函数的结果形状将自动成为新的复杂类型。 在此示例中，我们想要将 **GetStudentGrades**函数的结果映射到 **StudentGrade**实体，并将**GetDepartmentName**结果映射到 "**无**" （默认值为 "**无**"）。
@@ -56,14 +56,14 @@ var query = context.Products.SqlQuery("EXECUTE [dbo].[GetAllProducts]")`;
 
 -   右键单击设计图面，然后选择 " **模型浏览器**"。
 -   在**模型浏览器**中，选择 " **函数导入**"，然后双击 " **GetStudentGrades** " 函数。
--   在 "编辑函数导入" 对话框中，选择 " **实体**"  And 选择 **StudentGrade**。  
-    "**函数**导入" 对话框顶部的 "0The**函数导入是可组合**的" 复选框允许映射到可组合函数。 @no__t如果选中此复选框，则 "**存储过程/函数名称**" 下拉列表中将只显示可组合函数（表值函数）。如果不选中此框，则列表中将只显示不可组合的函数。 *
+-   在 "编辑函数导入" 对话框中，选择 " **实体**" 然后选择 " **StudentGrade**"。  
+    *函数导入**对话框顶部**的 "函数**导入是可组合**的" 复选框允许您映射到可组合函数。如果选中此复选框，则 "**存储过程/函数名称**" 下拉列表中将只显示可组合函数（表值函数）。如果不选中此框，则列表中将只显示不可组合的函数。*
 
 ## <a name="use-the-model"></a>使用模型
 
 打开**Program.cs**文件，其中定义了**Main**方法。 将以下代码添加到 Main 函数中。
 
-此代码将调用两个存储过程：**GetStudentGrades** （为指定的*StudentId*返回**StudentGrades** ）和**GetDepartmentName** （返回 output 参数中部门的名称）。  
+此代码将调用两个存储过程： **GetStudentGrades** （为指定的*StudentId*返回**StudentGrades** ）和**GetDepartmentName** （返回 output 参数中部门的名称）。  
 
 ``` csharp
     using (SchoolEntities context = new SchoolEntities())

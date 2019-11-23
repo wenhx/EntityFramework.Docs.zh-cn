@@ -13,7 +13,7 @@ ms.locfileid: "72181792"
 # <a name="databinding-with-winforms"></a>通过 WinForms 进行数据绑定
 此分步演练演示如何将 POCO 类型绑定到 "主/详细信息" 窗体中的窗口窗体（WinForms）控件。 应用程序使用实体框架使用数据库中的数据填充对象、跟踪更改并将数据保存到数据库。
 
-该模型定义了两种参与一对多关系的类型：Category （principal @ no__t-0master）和 Product （依赖项 @ no__t-1detail）。 然后，使用 Visual Studio 工具将模型中定义的类型绑定到 WinForms 控件。 WinForms 数据绑定框架允许在相关对象之间导航：在主视图中选择行后，详细信息视图将更新为相应的子数据。
+该模型定义了两种参与一对多关系的类型：类别（主体\\主）和产品（依赖\\详细信息）。 然后，使用 Visual Studio 工具将模型中定义的类型绑定到 WinForms 控件。 WinForms 数据绑定框架允许在相关对象之间导航：在主视图中选择行后，详细信息视图将更新为相应的子数据。
 
 本演练中的屏幕截图和代码清单取自 Visual Studio 2013，但你可以通过 Visual Studio 2012 或 Visual Studio 2010 完成此演练。
 
@@ -26,7 +26,7 @@ ms.locfileid: "72181792"
 ## <a name="create-the-application"></a>创建应用程序
 
 -   打开 Visual Studio
--   **文件-&gt; &gt; 项目 ...。**
+-   **文件-&gt;&gt; 项目 。**
 -   在左侧窗格中选择 " **windows** "，在右窗格中选择 " **windows FormsApplication** "
 -   输入**WinFormswithEFSample**作为名称
 -   选择“确定”
@@ -46,11 +46,11 @@ ms.locfileid: "72181792"
 
 -   将**ObservableListSource**类添加到项目：
     -   右键单击项目名称
-    -   选择 **&gt; 新项**
+    -   选择 "**添加-&gt; 新项**"
     -   选择**类**，并输入**ObservableListSource**作为类名
 -   将默认生成的代码替换为以下代码：
 
-@no__t 0This 类启用双向数据绑定和排序。该类派生自 ObservableCollection @ no__t-0T @ no__t，并添加了 IListSource 的显式实现。实现 IListSource 的执行 getlist （）方法以返回保持与 ObservableCollection 同步的 IBindingList 实现。对 tobindinglist 获得生成的 IBindingList 实现支持排序。对 tobindinglist 获得扩展方法在 EntityFramework 程序集中定义。 *
+*此类启用双向数据绑定和排序。类从 ObservableCollection 派生&lt;T&gt; 并添加 IListSource 的显式实现。实现 IListSource 的执行 getlist （）方法以返回保持与 ObservableCollection 同步的 IBindingList 实现。对 tobindinglist 获得生成的 IBindingList 实现支持排序。对 tobindinglist 获得扩展方法是在 EntityFramework 程序集中定义的。*
 
 ``` csharp
     using System.Collections;
@@ -81,9 +81,9 @@ ms.locfileid: "72181792"
 
 在本演练中，您可以使用 Code First 或 EF 设计器选择实现模型。 完成以下两个部分中的一个。
 
-### <a name="option-1-define-a-model-using-code-first"></a>选项 1：使用 Code First 定义模型
+### <a name="option-1-define-a-model-using-code-first"></a>选项1：使用 Code First 定义模型
 
-本部分说明如何使用 Code First 创建模型及其关联的数据库。 跳到下一部分（@no__t 0Option 2：使用 Database First）定义模型（如果要 Database First 使用 EF 设计器从数据库中反向工程模型，则 **）
+本部分说明如何使用 Code First 创建模型及其关联的数据库。 如果要 Database First 使用 EF 设计器从数据库中反向工程模型，请跳到下一节（**选项2：使用 Database First 定义模型）**
 
 使用 Code First 开发时，通常首先编写定义概念（域）模型 .NET Framework 类。
 
@@ -134,7 +134,7 @@ ms.locfileid: "72181792"
     }
 ```
 
-除了定义实体外，还需要定义派生自**DbContext**的类，并公开**DbSet @ no__t-2TEntity @ no__t**属性。 **DbSet**属性让上下文知道要包括在模型中的类型。 **DbContext**和**DbSet**类型是在 EntityFramework 程序集中定义的。
+除了定义实体外，还需要定义派生自**DbContext**的类，并公开**DbSet&lt;TEntity&gt;** 属性。 **DbSet**属性让上下文知道要包括在模型中的类型。 **DbContext**和**DbSet**类型是在 EntityFramework 程序集中定义的。
 
 DbContext 派生类型的实例在运行时管理实体对象，这包括使用数据库中的数据填充对象、更改跟踪以及将数据保存到数据库。
 
@@ -160,9 +160,9 @@ DbContext 派生类型的实例在运行时管理实体对象，这包括使用�
 
 编译该项目。
 
-### <a name="option-2-define-a-model-using-database-first"></a>选项 2：使用 Database First 定义模型
+### <a name="option-2-define-a-model-using-database-first"></a>选项2：使用 Database First 定义模型
 
-本部分说明如何使用 Database First 从使用 EF 设计器的数据库中对模型进行反向工程。 如果已完成上一部分（@no__t 0Option 1：使用 Code First） ** 定义模型，然后跳过此部分，直接转到**延迟加载**部分。
+本部分说明如何使用 Database First 从使用 EF 设计器的数据库中对模型进行反向工程。 如果已完成上一部分（**选项1：使用 Code First 定义模型）** ，则跳过此部分，直接转到**延迟加载**部分。
 
 #### <a name="create-an-existing-database"></a>创建现有数据库
 
@@ -217,7 +217,7 @@ DbContext 派生类型的实例在运行时管理实体对象，这包括使用�
 
 我们将使用在 Visual Studio 中包含的 Entity Framework Designer 来创建模型。
 
--   **项目-@no__t "添加新项 ..."**
+-   **项目-&gt; "添加新项 ..."**
 -   从左侧菜单中选择 "**数据**"，然后**ADO.NET 实体数据模型**
 -   输入**ProductModel**作为名称，然后单击 **"确定"**
 -   这将启动**实体数据模型向导**
@@ -241,11 +241,11 @@ DbContext 派生类型的实例在运行时管理实体对象，这包括使用�
 
 -   在 EF 设计器中右键单击模型的空位置，然后选择 "**添加代码生成项 ...** "
 -   从左侧菜单中选择 "**联机模板**"，然后搜索**DbContext**
--   选择**用于 C @ no__t 的 EF DbContext 生成器-1，** 输入**ProductsModel**作为名称，然后单击 "添加"
+-   选择**用于 C\#的 EF 1.X DbContext 生成器，** 输入**ProductsModel**作为名称，然后单击 "添加"
 
 #### <a name="updating-code-generation-for-data-binding"></a>更新数据绑定的代码生成
 
-EF 使用 T4 模板从模型生成代码。 Visual Studio 附带的模板或从 Visual Studio 库下载的模板专用于一般用途。 这意味着从这些模板生成的实体具有简单的 ICollection @ no__t-0T @ no__t-1 属性。 但是，在执行数据绑定时，需要具有实现 IListSource 的集合属性。 这就是我们创建上述 ObservableListSource 类的原因，现在我们要修改模板以使用此类。
+EF 使用 T4 模板从模型生成代码。 Visual Studio 附带的模板或从 Visual Studio 库下载的模板专用于一般用途。 这意味着从这些模板生成的实体具有简单的 ICollection&lt;T&gt; 属性。 但是，在执行数据绑定时，需要具有实现 IListSource 的集合属性。 这就是我们创建上述 ObservableListSource 类的原因，现在我们要修改模板以使用此类。
 
 -   打开**解决方案资源管理器**并查找**ProductModel**文件
 -   查找**ProductModel.tt**文件，该文件将嵌套在 ProductModel 文件下
@@ -257,7 +257,7 @@ EF 使用 T4 模板从模型生成代码。 Visual Studio 附带的模板或从 
 -   查找并将 "**HashSet**" 的第一个匹配项替换为 "**ObservableListSource**"。 此事件大约位于第50行。 **请勿**替换稍后在代码中找到的第二个 HashSet。
 -   保存 ProductModel.tt 文件。 这会导致重新生成实体的代码。 如果代码未自动重新生成，则右键单击 ProductModel.tt 并选择 "运行自定义工具"。
 
-如果现在打开 Category.cs 文件（嵌套在 ProductModel.tt 下），则应看到 Products 集合的类型为**ObservableListSource @ no__t-1Product @ no__t-2**。
+如果你现在打开 Category.cs 文件（该文件嵌套在 ProductModel.tt 下），则应看到 Products 集合具有类型**ObservableListSource&lt;产品&gt;** 。
 
 编译该项目。
 
@@ -274,14 +274,14 @@ EF 使用 T4 模板从模型生成代码。 Visual Studio 附带的模板或从 
 将在模型中定义的类添加为此 WinForms 应用程序的数据源。
 
 -   从主菜单中，选择 "**项目-&gt; 添加新数据源 ...** "
-    （在 Visual Studio 2010 中，需要选择 "**数据 &gt; 添加新数据源 ...** "）
+    （在 Visual Studio 2010 中，需要选择 "**数据&gt;" 添加新数据源 ...** "）
 -   在 "选择数据源类型" 窗口中，选择 "**对象**"，然后单击 "**下一步**"
 -   在 "选择数据对象" 对话框中，展开**WinFormswithEFSample**两次，然后选择 "**类别**"，因为我们将通过类别数据源上的产品属性来获取产品数据源。
 
-    ![“数据源”](~/ef6/media/datasource.png)
+    ![数据源](~/ef6/media/datasource.png)
 
--   单击 "**完成"。**
-    如果 "数据源" 窗口未显示，请选择 "**视图 &gt;" 其他 Windows &gt; 数据源**
+-   单击 **“完成”** 。
+    如果 "数据源" 窗口未显示，请选择 "**查看"-&gt; 其他 Windows&gt; 数据源**
 -   按固定图标，使 "数据源" 窗口不会自动隐藏。 如果窗口已显示，可能需要按 "刷新" 按钮。
 
     ![数据源2](~/ef6/media/datasource2.png)
@@ -297,14 +297,14 @@ EF 使用 T4 模板从模型生成代码。 Visual Studio 附带的模板或从 
     -   右键单击 DataGridView 控件，然后选择 "**编辑列 ...** "。
     -   选择 " **ProductId** " 列并将 " **ReadOnly** " 设置为**True**。
     -   选择 "**类别 id** " 列并按 "**删除**" 按钮。 对**Category**列执行相同的操作。
-    -   按**确定**。
+    -   按“确定”。
 
     到目前为止，我们在设计器中将 DataGridView 控件与 BindingSource 组件相关联。 在下一部分中，我们将向隐藏代码中添加代码，以便将 categoryBindingSource 设置为 DbContext 当前跟踪的实体集合。 当我们从类别中拖放产品时，WinForms 会将 productsBindingSource 属性设置为 "categoryBindingSource" 和 "productsBindingSource" 属性设置为 "产品"。 由于此绑定，只会在 productDataGridView 中显示属于当前选定类别的产品。
 -   通过单击鼠标右键并选择 "**启用**"，启用导航工具栏上的 "**保存**" 按钮。
 
     ![窗体1设计器](~/ef6/media/form1-designer.png)
 
--   双击按钮，为 "保存" 按钮添加事件处理程序。 这将添加事件处理程序，并将你带入窗体的隐藏代码。 将在下一节中添加**categoryBindingNavigatorSaveItem @ no__t-1Click**事件处理程序的代码。
+-   双击按钮，为 "保存" 按钮添加事件处理程序。 这将添加事件处理程序，并将你带入窗体的隐藏代码。 下一部分将添加**categoryBindingNavigatorSaveItem\_单击**"事件处理程序" 的代码。
 
 ## <a name="add-the-code-that-handles-data-interaction"></a>添加处理数据交互的代码
 

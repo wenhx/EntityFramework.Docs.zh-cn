@@ -56,4 +56,4 @@ SQL Server 空间支持取决于低级别、SQL Server 特定类型 SqlGeography
 
 安装 Visual Studio 时，它通常还会安装 SQL Server 的版本，这将包括安装 Microsoft。  
 
-如果 SQL Server 未安装在要使用空间类型的计算机上，或者如果从 SQL Server 安装中排除了空间类型，则需要手动安装它们。 可以使用 @no__t 为 Microsoft SQL Server 功能包的一部分来安装这些类型。 空间类型 SQL Server 特定于版本，因此我们建议在 Microsoft 下载中心[搜索 "SQL Server 功能包"](https://www.microsoft.com/search/result.aspx?q=sql+server+feature+pack) ，然后选择和下载与将使用的 SQL Server 版本相对应的选项。
+如果 SQL Server 未安装在要使用空间类型的计算机上，或者如果从 SQL Server 安装中排除了空间类型，则需要手动安装它们。 可以使用 `SQLSysClrTypes.msi`（这是 Microsoft SQL Server 功能包的一部分）安装类型。 空间类型 SQL Server 特定于版本，因此我们建议在 Microsoft 下载中心[搜索 "SQL Server 功能包"](https://www.microsoft.com/search/result.aspx?q=sql+server+feature+pack) ，然后选择和下载与将使用的 SQL Server 版本相对应的选项。

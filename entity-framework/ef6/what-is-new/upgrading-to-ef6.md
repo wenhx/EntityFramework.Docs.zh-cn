@@ -18,7 +18,7 @@ ms.locfileid: "72182102"
 
 下面是将现有应用程序升级到 EF6 所需执行的操作清单。
 
-## <a name="1-install-the-ef6-nuget-package"></a>1.安装 EF6 NuGet 包
+## <a name="1-install-the-ef6-nuget-package"></a>1. 安装 EF6 NuGet 包
 
 需要升级到新的实体框架6运行时。
 
@@ -33,18 +33,18 @@ ms.locfileid: "72182102"
 Install-Package EntityFramework
 ```
 
-## <a name="2-ensure-that-assembly-references-to-systemdataentitydll-are-removed"></a>2.确保已删除对 System.Data.Entity.dll 的程序集引用
+## <a name="2-ensure-that-assembly-references-to-systemdataentitydll-are-removed"></a>2. 确保删除对 system.string 的程序集引用
 
 安装 EF6 NuGet 包应会自动从你的项目中删除对 System.object 的任何引用。
 
-## <a name="3-swap-any-ef-designer-edmx-models-to-use-ef-6x-code-generation"></a>3.交换任何 EF 设计器（EDMX）模型以使用 EF 1.x 代码生成
+## <a name="3-swap-any-ef-designer-edmx-models-to-use-ef-6x-code-generation"></a>3. 将任何 EF 设计器（EDMX）模型交换为使用 EF 1.x 代码生成
 
 如果使用 EF 设计器创建了任何模型，则需要更新代码生成模板以生成 EF6 兼容代码。
 
 > [!NOTE]
 > 目前只有适用于 Visual Studio 2012 和2013的 EF 1.x DbContext 生成器模板。
 
-1. 删除现有代码生成模板。 通常，这些文件将命名为 **\<edmx_file_name\>.tt**和 **\<edmx_file_name @ no__t。Context.tt** ，并将其嵌套在解决方案资源管理器中的 edmx 文件下。 可以在解决方案资源管理器中选择模板，然后按**Del**键将它们删除。  
+1. 删除现有代码生成模板。 通常，这些文件将命名为 **\<edmx_file_name\>tt**和 **\<edmx_file_name\>。Context.tt** ，并将其嵌套在解决方案资源管理器中的 edmx 文件下。 可以在解决方案资源管理器中选择模板，然后按**Del**键将它们删除。  
    > [!NOTE]
    > 在网站项目中，模板不会嵌套在 edmx 文件下，但会在解决方案资源管理器中列出。  
 
@@ -58,7 +58,7 @@ Install-Package EntityFramework
     - 如果你使用的是 ObjectContext API，则需要选择 "**联机**" 选项卡，然后搜索**EF EntityObject 生成器**。  
 3. 如果对代码生成模板应用了任何自定义，则需要将其重新应用到更新的模板。
 
-## <a name="4-update-namespaces-for-any-core-ef-types-being-used"></a>4.更新正在使用的任何 core EF 类型的命名空间
+## <a name="4-update-namespaces-for-any-core-ef-types-being-used"></a>4. 更新正在使用的任何 core EF 类型的命名空间
 
 DbContext 和 Code First 类型的命名空间尚未更改。 这意味着，对于使用 EF 4.1 或更高版本的许多应用程序，你无需更改任何内容。
 
