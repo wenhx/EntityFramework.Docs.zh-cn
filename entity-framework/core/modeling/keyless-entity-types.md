@@ -1,16 +1,16 @@
 ---
 title: 无键实体类型-EF Core
+description: 如何使用 Entity Framework Core 配置无键实体类型
 author: AndriySvyryd
 ms.author: ansvyryd
-ms.date: 02/26/2018
-ms.assetid: 9F4450C5-1A3F-4BB6-AC19-9FAC64292AAD
+ms.date: 9/13/2019
 uid: core/modeling/keyless-entity-types
-ms.openlocfilehash: 3dbc2700fc9bb277eb90885dfc2506c250ae21f1
-ms.sourcegitcommit: 37d0e0fd1703467918665a64837dc54ad2ec7484
+ms.openlocfilehash: 129e24b154ba32583435aeb742dbf478350344e8
+ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/16/2019
-ms.locfileid: "72445943"
+ms.lasthandoff: 12/04/2019
+ms.locfileid: "74824658"
 ---
 # <a name="keyless-entity-types"></a>无键实体类型
 
@@ -47,7 +47,7 @@ ms.locfileid: "72445943"
 
 ## <a name="mapping-to-database-objects"></a>映射到数据库对象
 
-将无键实体类型映射到数据库对象是使用 `ToTable` 或 `ToView` Fluent API 实现的。 此方法中指定的数据库对象是从 EF Core 的角度来看，_视图_，这意味着它将被视为只读查询源和不能作为目标的更新、 插入或删除操作。 但是，这并不意味着数据库对象实际上必须是数据库视图。 它也可以是将被视为只读的数据库表。 相反，对于常规实体类型，EF Core 假设在 `ToTable` 方法中指定的数据库对象可以视为_表_，这意味着它可用作查询源，但也可作为更新、删除和插入操作的目标。 事实上，你可以在 `ToTable` 中指定数据库视图的名称，所有内容应该都能够正常运行，只要在数据库上将视图配置为可更新即可。
+将无键实体类型映射到数据库对象是使用 `ToTable` 或 `ToView` Fluent API 实现的。 从 EF Core 角度来看，此方法中指定的数据库对象是视图，这意味着它将被系统视为只读查询源，不能作为更新、插入或删除操作的目标。 但是，这并不意味着数据库对象实际上必须是数据库视图。 它也可以是将被视为只读的数据库表。 相反，对于常规实体类型，EF Core 假设在 `ToTable` 方法中指定的数据库对象可以视为_表_，这意味着它可用作查询源，但也可作为更新、删除和插入操作的目标。 事实上，你可以在 `ToTable` 中指定数据库视图的名称，所有内容应该都能够正常运行，只要在数据库上将视图配置为可更新即可。
 
 > [!NOTE]
 > `ToView` 假设对象已存在于数据库中，并且不是由迁移创建的。

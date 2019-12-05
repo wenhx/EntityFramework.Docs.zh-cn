@@ -1,21 +1,21 @@
 ---
 title: 表拆分-EF Core
+description: 如何使用 Entity Framework Core 配置表拆分
 author: AndriySvyryd
 ms.author: ansvyryd
 ms.date: 04/10/2019
-ms.assetid: 0EC2CCE1-BD55-45D8-9EA9-20634987F094
 uid: core/modeling/table-splitting
-ms.openlocfilehash: a3a2e5842a6c6b4b490084d205a0d44bb46c17ee
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 0e48c516de43cdc2b54c56f1a96f5e01f9fbbbc4
+ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73656031"
+ms.lasthandoff: 12/04/2019
+ms.locfileid: "74824554"
 ---
 # <a name="table-splitting"></a>表拆分
 
 >[!NOTE]
-> 此功能是 EF Core 2.0 中新增的功能。
+> 此功能是在 EF Core 2.0 中的新增功能。
 
 EF Core 允许将两个或多个实体映射到单个行。 这称为 "_表拆分_" 或 "_表共享_"。
 
@@ -38,7 +38,7 @@ EF Core 允许将两个或多个实体映射到单个行。 这称为 "_表拆�
 > [!TIP]
 > 有关更多上下文，请参阅[完整的示例项目](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Modeling/TableSplitting)。
 
-## <a name="usage"></a>用法
+## <a name="usage"></a>用量
 
 使用表拆分来保存和查询实体的方式与处理其他实体的方式相同。 从 EF Core 3.0 开始，可以将依赖实体引用 `null`。 如果依赖实体使用的所有列都 `NULL` 数据库，则查询时将不会创建该数据库的实例。 这也会导致所有属性都是可选的并且设置为 `null`，这可能不是预期的。
 

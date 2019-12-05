@@ -4,18 +4,18 @@ author: bricelam
 ms.author: bricelam
 ms.date: 10/30/2017
 uid: core/managing-schemas/migrations/projects
-ms.openlocfilehash: 0c08855db77470d28e23f9ef1d147497dfcdff83
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 89b7f50fe750c2953aa75efcdffcb1a5199ce90c
+ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655558"
+ms.lasthandoff: 12/04/2019
+ms.locfileid: "74824407"
 ---
 # <a name="using-a-separate-migrations-project"></a>使用单独的迁移项目
 
 你可能想要将迁移存储在与包含你的 `DbContext`的程序集不同的程序集中。 你还可以使用此策略来维护多个迁移集，例如，一个用于开发，另一个用于发布到发布升级。
 
-若要执行此操作...
+为此，请执行以下操作...
 
 1. 创建一个新的类库。
 
@@ -47,7 +47,7 @@ ms.locfileid: "73655558"
 
 ## <a name="net-core-clitabdotnet-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
 
-``` Console
+```dotnetcli
 dotnet ef migrations add NewMigration --project MyApp.Migrations
 ```
 

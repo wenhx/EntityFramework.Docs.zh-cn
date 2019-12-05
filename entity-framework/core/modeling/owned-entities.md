@@ -1,29 +1,29 @@
 ---
-title: 拥有的实体类型-EF Core
+title: 拥有 EF Core 的实体类型-
+description: 如何在使用时配置拥有的实体类型或聚合 Entity Framework Core
 author: AndriySvyryd
 ms.author: ansvyryd
-ms.date: 02/26/2018
-ms.assetid: 2B0BADCE-E23E-4B28-B8EE-537883E16DF3
+ms.date: 11/06/2019
 uid: core/modeling/owned-entities
-ms.openlocfilehash: a0665bfa27134b8dc3eba854ff3f7b1af4b69217
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 7b6d1b3bccbfceb85f03a580ba03a45984d29c74
+ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655933"
+ms.lasthandoff: 12/04/2019
+ms.locfileid: "74824604"
 ---
 # <a name="owned-entity-types"></a>从属实体类型
 
 > [!NOTE]
-> 此功能是 EF Core 2.0 中新增的功能。
+> 此功能是在 EF Core 2.0 中的新增功能。
 
-EF Core 允许您为只能出现在其他实体类型的导航属性中的实体类型建模。 它们称为_拥有的实体类型_。 包含拥有的实体类型的实体是其_所有者_。
+EF Core 让你可以只显示对其他实体类型的导航属性的模型实体类型。 它们称为_拥有的实体类型_。 包含拥有的实体类型的实体是其_所有者_。
 
-拥有的实体实质上是所有者的一部分，并且在没有它的情况下不存在，它们在概念上类似于[聚合](https://martinfowler.com/bliki/DDD_Aggregate.html)。
+拥有的实体实质上是所有者的一部分，并且在没有它的情况下不存在，它们在概念上类似于[聚合](https://martinfowler.com/bliki/DDD_Aggregate.html)。 这意味着，拥有的类型是根据与所有者的关系的依赖端上的定义。
 
 ## <a name="explicit-configuration"></a>显式配置
 
-所有实体类型永远不会通过约定 EF Core 在模型中。 你可以使用中的 `OwnsOne` 方法 `OnModelCreating` 或使用 `OwnedAttribute` （EF Core 2.1 中的 new）批注该类型，以便将该类型配置为拥有的类型。
+拥有永远不会包含类型由 EF Core 模型中按照约定的实体。 你可以使用`OwnsOne`中的方法`OnModelCreating`或批注与类型`OwnedAttribute`（新在 EF Core 2.1） 配置为拥有类型的类型。
 
 在此示例中，`StreetAddress` 是无标识属性的类型。 它用作 Order 类型的属性来指定特定订单的发货地址。
 
@@ -74,7 +74,7 @@ EF Core 允许您为只能出现在其他实体类型的导航属性中的实体
 [!code-csharp[OwnsMany](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsMany)]
 
 > [!NOTE]
-> EF Core 3.0 `WithOwner()` 方法不存在，因此应删除此调用。
+> EF Core 3.0 `WithOwner()` 方法不存在，因此应删除此调用。 此外，不会自动发现主键，因此始终指定了它。
 
 ## <a name="mapping-owned-types-with-table-splitting"></a>将拥有的类型映射到表拆分
 
@@ -86,17 +86,20 @@ EF Core 允许您为只能出现在其他实体类型的导航属性中的实体
 
 [!code-csharp[ColumnNames](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=ColumnNames)]
 
+> [!NOTE]
+> 大多数正常的实体类型配置方法（如[Ignore](/dotnet/api/microsoft.entityframeworkcore.metadata.builders.ownednavigationbuilder.ignore) ）都可以通过相同的方式进行调用。
+
 ## <a name="sharing-the-same-net-type-among-multiple-owned-types"></a>在多个所拥有的类型之间共享相同的 .NET 类型
 
 一个拥有的实体类型可以是与另一个拥有的实体类型相同的 .NET 类型，因此，.NET 类型可能不足以标识某个所有者的类型。
 
-在这些情况下，从所有者指向拥有的实体的属性将成为所拥有实体类型的_定义导航_。 从 EF Core 的角度来看，定义导航是类型标识与 .NET 类型的一部分。
+在这些情况下，从所有者指向拥有的实体的属性将成为所拥有实体类型的_定义导航_。 从 EF Core 的角度来看，定义导航是标识的旁边的.NET 类型的类型的一部分。
 
 例如，在下面的类中 `ShippingAddress` 和 `BillingAddress` 均为同一 .NET 类型，`StreetAddress`：
 
 [!code-csharp[OrderDetails](../../../samples/core/Modeling/OwnedEntities/OrderDetails.cs?name=OrderDetails)]
 
-为了理解 EF Core 如何区分跟踪的这些对象的实例，可能会认为定义导航已成为实例的键的一部分，以及所有者的键的值和拥有的类型的 .NET 类型。
+若要了解如何 EF Core 将区分跟踪这些对象的实例，可能会有用考虑定义导航已旁边的值的键的所有者的实例键的一部分，拥有类型的.NET 类型。
 
 ## <a name="nested-owned-types"></a>嵌套的所属类型
 
@@ -106,6 +109,8 @@ EF Core 允许您为只能出现在其他实体类型的导航属性中的实体
 
 [!code-csharp[OrderStatus](../../../samples/core/Modeling/OwnedEntities/OrderStatus.cs?name=OrderStatus)]
 
+每个指向所拥有的类型的导航都定义一个具有完全独立配置的单独实体类型。
+
 除了嵌套的类型外，拥有的类型还可以引用常规实体，只要拥有的实体在依赖方，就可以是所有者或其他实体。 此功能在 EF6 中除复杂类型外，会设置拥有的实体类型。
 
 [!code-csharp[OrderDetails](../../../samples/core/Modeling/OwnedEntities/OrderDetails.cs?name=OrderDetails)]
@@ -114,15 +119,17 @@ EF Core 允许您为只能出现在其他实体类型的导航属性中的实体
 
 [!code-csharp[OwnsOneNested](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsOneNested)]
 
-请注意用于配置指向所有者的导航属性的 `WithOwner` 调用。
+请注意用于配置指向所有者的导航属性的 `WithOwner` 调用。 若要配置不包含在所有权关系中的 owner 实体类型的导航 `WithOwner()` 应在不使用任何参数的情况下调用。
 
-使用 `OrderDetails` 和 `StreetAdress`上的 `OwnedAttribute` 可以获得结果。
+使用 `OrderDetails` 和 `StreetAddress`上的 `OwnedAttribute` 可以获得结果。
 
 ## <a name="storing-owned-types-in-separate-tables"></a>将拥有的类型存储在单独的表中
 
 与 EF6 复杂类型不同的是，拥有的类型可以存储在所有者的单独表中。 若要重写将拥有的类型映射到与所有者相同的表的约定，只需调用 `ToTable` 并提供不同的表名即可。 下面的示例将 `OrderDetails` 及其两个地址映射到不同 `DetailedOrder`的表中：
 
 [!code-csharp[OwnsOneTable](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsOneTable)]
+
+还可以使用 `TableAttribute` 来实现此目的，但请注意，如果有多个导航到拥有的类型，则这会失败，因为在这种情况下，多个实体类型会映射到同一个表。
 
 ## <a name="querying-owned-types"></a>查询拥有的类型
 
@@ -141,7 +148,7 @@ EF Core 允许您为只能出现在其他实体类型的导航属性中的实体
 
 ### <a name="current-shortcomings"></a>当前缺陷
 
-- 不支持包含拥有的实体类型的继承层次结构
+- 拥有的实体类型不能具有继承层次结构
 - 引用导航到拥有的实体类型不能为 null，除非它们显式映射到与所有者不同的表
 - 拥有的实体类型的实例不能由多个所有者共享（这是一个已知的值对象方案，不能使用拥有的实体类型来实现）
 

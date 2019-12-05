@@ -1,15 +1,16 @@
 ---
 title: 继承-EF Core
-author: rowanmiller
+description: 如何使用 Entity Framework Core 配置实体类型继承
+author: AndriySvyryd
+ms.author: ansvyryd
 ms.date: 10/27/2016
-ms.assetid: 754be334-dd21-450e-9d22-2591e80012a2
 uid: core/modeling/inheritance
-ms.openlocfilehash: abc1caa4d3839b7cdb52b316bcfc8f648b609b70
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 4d43a432174c92ab7f3f9d78a234aefb0a4a17e8
+ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655689"
+ms.lasthandoff: 12/04/2019
+ms.locfileid: "74824674"
 ---
 # <a name="inheritance"></a>继承
 
@@ -17,7 +18,7 @@ EF 模型中的继承用于控制如何在数据库中表示实体类中的继�
 
 ## <a name="conventions"></a>约定
 
-按照约定，由数据库提供商确定如何在数据库中表示继承。 有关如何使用关系数据库提供程序来处理此情况的详细说明，请参阅[继承（关系数据库）](relational/inheritance.md) 。
+默认情况下，由数据库提供程序确定如何在数据库中表示继承。 有关如何使用关系数据库提供程序来处理此情况的详细说明，请参阅[继承（关系数据库）](relational/inheritance.md) 。
 
 如果模型中显式包括两个或更多个继承类型，则 EF 仅会设置继承。 EF 不会扫描模型中未包含的基类型或派生类型。 可以通过为继承层次结构中的每个类型公开*DbSet\<TEntity >* ，在模型中包含类型。
 
