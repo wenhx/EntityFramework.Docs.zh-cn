@@ -1,98 +1,99 @@
 ---
-title: 生成的值-EF Core
-author: rowanmiller
-ms.date: 10/27/2016
-ms.assetid: eb082011-11a1-41b4-a108-15daafa03e80
+title: 生成的值的 EF Core
+description: 如何在使用时配置属性的值生成 Entity Framework Core
+author: AndriySvyryd
+ms.author: ansvyryd
+ms.date: 11/06/2019
 uid: core/modeling/generated-properties
-ms.openlocfilehash: 6643d3c5c9b3363e450e820793f449a41e2eba80
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 7fa3eae5e2edb7b4c40ed4f99ce4a29f367e622a
+ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655750"
+ms.lasthandoff: 12/04/2019
+ms.locfileid: "74824698"
 ---
-# <a name="generated-values"></a><span data-ttu-id="87438-102">生成的值</span><span class="sxs-lookup"><span data-stu-id="87438-102">Generated Values</span></span>
+# <a name="generated-values"></a><span data-ttu-id="e5df5-103">生成的值</span><span class="sxs-lookup"><span data-stu-id="e5df5-103">Generated Values</span></span>
 
-## <a name="value-generation-patterns"></a><span data-ttu-id="87438-103">值生成模式</span><span class="sxs-lookup"><span data-stu-id="87438-103">Value Generation Patterns</span></span>
+## <a name="value-generation-patterns"></a><span data-ttu-id="e5df5-104">值生成模式</span><span class="sxs-lookup"><span data-stu-id="e5df5-104">Value Generation Patterns</span></span>
 
-<span data-ttu-id="87438-104">有三个可用于属性的值生成模式：</span><span class="sxs-lookup"><span data-stu-id="87438-104">There are three value generation patterns that can be used for properties:</span></span>
+<span data-ttu-id="e5df5-105">有三个可用于属性的值生成模式：</span><span class="sxs-lookup"><span data-stu-id="e5df5-105">There are three value generation patterns that can be used for properties:</span></span>
 
-* <span data-ttu-id="87438-105">无值生成</span><span class="sxs-lookup"><span data-stu-id="87438-105">No value generation</span></span>
-* <span data-ttu-id="87438-106">添加时生成的值</span><span class="sxs-lookup"><span data-stu-id="87438-106">Value generated on add</span></span>
-* <span data-ttu-id="87438-107">添加或更新时生成的值</span><span class="sxs-lookup"><span data-stu-id="87438-107">Value generated on add or update</span></span>
+* <span data-ttu-id="e5df5-106">无值生成</span><span class="sxs-lookup"><span data-stu-id="e5df5-106">No value generation</span></span>
+* <span data-ttu-id="e5df5-107">在添加时生成值</span><span class="sxs-lookup"><span data-stu-id="e5df5-107">Value generated on add</span></span>
+* <span data-ttu-id="e5df5-108">在添加或更新时生成值</span><span class="sxs-lookup"><span data-stu-id="e5df5-108">Value generated on add or update</span></span>
 
-### <a name="no-value-generation"></a><span data-ttu-id="87438-108">无值生成</span><span class="sxs-lookup"><span data-stu-id="87438-108">No value generation</span></span>
+### <a name="no-value-generation"></a><span data-ttu-id="e5df5-109">无值生成</span><span class="sxs-lookup"><span data-stu-id="e5df5-109">No value generation</span></span>
 
-<span data-ttu-id="87438-109">无值生成意味着您将始终提供要保存到数据库中的有效值。</span><span class="sxs-lookup"><span data-stu-id="87438-109">No value generation means that you will always supply a valid value to be saved to the database.</span></span> <span data-ttu-id="87438-110">必须先将此有效值分配给新实体，然后才能将其添加到上下文中。</span><span class="sxs-lookup"><span data-stu-id="87438-110">This valid value must be assigned to new entities before they are added to the context.</span></span>
+<span data-ttu-id="e5df5-110">没有值生成意味着，需始终提供要保存到数据库的有效值。</span><span class="sxs-lookup"><span data-stu-id="e5df5-110">No value generation means that you will always supply a valid value to be saved to the database.</span></span> <span data-ttu-id="e5df5-111">必须先将有效的值赋予新的实体，再将这些新的实体添加到上下文中。</span><span class="sxs-lookup"><span data-stu-id="e5df5-111">This valid value must be assigned to new entities before they are added to the context.</span></span>
 
-### <a name="value-generated-on-add"></a><span data-ttu-id="87438-111">添加时生成的值</span><span class="sxs-lookup"><span data-stu-id="87438-111">Value generated on add</span></span>
+### <a name="value-generated-on-add"></a><span data-ttu-id="e5df5-112">在添加时生成值</span><span class="sxs-lookup"><span data-stu-id="e5df5-112">Value generated on add</span></span>
 
-<span data-ttu-id="87438-112">"添加时生成的值" 表示为新实体生成值。</span><span class="sxs-lookup"><span data-stu-id="87438-112">Value generated on add means that a value is generated for new entities.</span></span>
+<span data-ttu-id="e5df5-113">在添加时生成值，意思是为新实体生成值。</span><span class="sxs-lookup"><span data-stu-id="e5df5-113">Value generated on add means that a value is generated for new entities.</span></span>
 
-<span data-ttu-id="87438-113">根据所使用的数据库提供程序，值可能是由 EF 或数据库中的客户端生成的。</span><span class="sxs-lookup"><span data-stu-id="87438-113">Depending on the database provider being used, values may be generated client side by EF or in the database.</span></span> <span data-ttu-id="87438-114">如果值是由数据库生成的，则在将实体添加到上下文时，EF 可能会分配临时值。</span><span class="sxs-lookup"><span data-stu-id="87438-114">If the value is generated by the database, then EF may assign a temporary value when you add the entity to the context.</span></span> <span data-ttu-id="87438-115">在 `SaveChanges()`期间，此临时值将替换为数据库生成的值。</span><span class="sxs-lookup"><span data-stu-id="87438-115">This temporary value will then be replaced by the database generated value during `SaveChanges()`.</span></span>
+<span data-ttu-id="e5df5-114">根据所用数据库提供程序的不同，值可能会通过 EF 在客户端生成或者由数据库生成。</span><span class="sxs-lookup"><span data-stu-id="e5df5-114">Depending on the database provider being used, values may be generated client side by EF or in the database.</span></span> <span data-ttu-id="e5df5-115">如果由数据库生成值，则当你将实体添加到上下文时，EF 可能会赋予一个临时值。</span><span class="sxs-lookup"><span data-stu-id="e5df5-115">If the value is generated by the database, then EF may assign a temporary value when you add the entity to the context.</span></span> <span data-ttu-id="e5df5-116">而后，由数据库生成的值会在 `SaveChanges()` 过程中替换这个临时值。</span><span class="sxs-lookup"><span data-stu-id="e5df5-116">This temporary value will then be replaced by the database generated value during `SaveChanges()`.</span></span>
 
-<span data-ttu-id="87438-116">如果向具有分配给属性的值的上下文添加实体，则 EF 将尝试插入该值，而不是生成新的值。</span><span class="sxs-lookup"><span data-stu-id="87438-116">If you add an entity to the context that has a value assigned to the property, then EF will attempt to insert that value rather than generating a new one.</span></span> <span data-ttu-id="87438-117">如果某个属性未分配 CLR 默认值（`null` 用于 `string`，`0` 用于 `int`，`Guid.Empty` `Guid`等），则该属性被视为已分配值。</span><span class="sxs-lookup"><span data-stu-id="87438-117">A property is considered to have a value assigned if it is not assigned the CLR default value (`null` for `string`, `0` for `int`, `Guid.Empty` for `Guid`, etc.).</span></span> <span data-ttu-id="87438-118">有关详细信息，请参阅[生成的属性的显式值](../saving/explicit-values-generated-properties.md)。</span><span class="sxs-lookup"><span data-stu-id="87438-118">For more information, see [Explicit values for generated properties](../saving/explicit-values-generated-properties.md).</span></span>
+<span data-ttu-id="e5df5-117">如果将一个实体添加到已经为属性赋予值的上下文，则 EF 会尝试插入该值而不是生成新值。</span><span class="sxs-lookup"><span data-stu-id="e5df5-117">If you add an entity to the context that has a value assigned to the property, then EF will attempt to insert that value rather than generating a new one.</span></span> <span data-ttu-id="e5df5-118">属性被认为已赋值的前提是该属性未被赋予 CLR 默认值（`string` 的默认值为 `null`，`int` 的默认值为 `0`，`Guid.Empty` 的默认值为 `Guid`，等等)。</span><span class="sxs-lookup"><span data-stu-id="e5df5-118">A property is considered to have a value assigned if it is not assigned the CLR default value (`null` for `string`, `0` for `int`, `Guid.Empty` for `Guid`, etc.).</span></span> <span data-ttu-id="e5df5-119">有关详细信息，请参阅[已生成属性的显式值](../saving/explicit-values-generated-properties.md)。</span><span class="sxs-lookup"><span data-stu-id="e5df5-119">For more information, see [Explicit values for generated properties](../saving/explicit-values-generated-properties.md).</span></span>
 
 > [!WARNING]  
-> <span data-ttu-id="87438-119">如何为添加的实体生成值将取决于所使用的数据库提供程序。</span><span class="sxs-lookup"><span data-stu-id="87438-119">How the value is generated for added entities will depend on the database provider being used.</span></span> <span data-ttu-id="87438-120">数据库提供程序可以为某些属性类型自动设置值生成，但其他属性可能要求您手动设置如何生成值。</span><span class="sxs-lookup"><span data-stu-id="87438-120">Database providers may automatically setup value generation for some property types, but others may require you to manually setup how the value is generated.</span></span>
+> <span data-ttu-id="e5df5-120">如何为添加的实体生成值取决于所用数据库提供程序。</span><span class="sxs-lookup"><span data-stu-id="e5df5-120">How the value is generated for added entities will depend on the database provider being used.</span></span> <span data-ttu-id="e5df5-121">数据库提供程序可能会为某些属性类型自动设置值的生成，但其他的属性类型可能要求你手动设置值的生成方式。</span><span class="sxs-lookup"><span data-stu-id="e5df5-121">Database providers may automatically setup value generation for some property types, but others may require you to manually setup how the value is generated.</span></span>
 >
-> <span data-ttu-id="87438-121">例如，使用 SQL Server 时，将自动为 `GUID` 属性（使用 SQL Server 顺序 GUID 算法）生成值。</span><span class="sxs-lookup"><span data-stu-id="87438-121">For example, when using SQL Server, values will be automatically generated for `GUID` properties (using the SQL Server sequential GUID algorithm).</span></span> <span data-ttu-id="87438-122">但是，如果您指定在添加时生成 `DateTime` 属性，则必须设置一个方法来生成值。</span><span class="sxs-lookup"><span data-stu-id="87438-122">However, if you specify that a `DateTime` property is generated on add, then you must setup a way for the values to be generated.</span></span> <span data-ttu-id="87438-123">执行此操作的一种方法是配置默认值 `GETDATE()`，请参阅[默认值](relational/default-values.md)。</span><span class="sxs-lookup"><span data-stu-id="87438-123">One way to do this, is to configure a default value of `GETDATE()`, see [Default Values](relational/default-values.md).</span></span>
+> <span data-ttu-id="e5df5-122">例如，使用 SQL Server 时，会自动生成 `GUID` 属性的值（使用 SQL Server 的顺序 GUID 算法）。</span><span class="sxs-lookup"><span data-stu-id="e5df5-122">For example, when using SQL Server, values will be automatically generated for `GUID` properties (using the SQL Server sequential GUID algorithm).</span></span> <span data-ttu-id="e5df5-123">但是，如果指定在添加时生成 `DateTime` 属性，则必须设置生成值的方法。</span><span class="sxs-lookup"><span data-stu-id="e5df5-123">However, if you specify that a `DateTime` property is generated on add, then you must setup a way for the values to be generated.</span></span> <span data-ttu-id="e5df5-124">若要执行此操作，一种方法是配置 `GETDATE()` 的默认值，请参阅[默认值](relational/default-values.md)。</span><span class="sxs-lookup"><span data-stu-id="e5df5-124">One way to do this, is to configure a default value of `GETDATE()`, see [Default Values](relational/default-values.md).</span></span>
 
-### <a name="value-generated-on-add-or-update"></a><span data-ttu-id="87438-124">添加或更新时生成的值</span><span class="sxs-lookup"><span data-stu-id="87438-124">Value generated on add or update</span></span>
+### <a name="value-generated-on-add-or-update"></a><span data-ttu-id="e5df5-125">在添加或更新时生成值</span><span class="sxs-lookup"><span data-stu-id="e5df5-125">Value generated on add or update</span></span>
 
-<span data-ttu-id="87438-125">添加或更新时生成的值意味着每次保存记录（insert 或 update）时都会生成一个新值。</span><span class="sxs-lookup"><span data-stu-id="87438-125">Value generated on add or update means that a new value is generated every time the record is saved (insert or update).</span></span>
+<span data-ttu-id="e5df5-126">在添加或更新时生成值，意味着在每次保存该记录（插入或更新）时生成新值。</span><span class="sxs-lookup"><span data-stu-id="e5df5-126">Value generated on add or update means that a new value is generated every time the record is saved (insert or update).</span></span>
 
-<span data-ttu-id="87438-126">与 `value generated on add`一样，如果为新添加的实体实例的属性指定值，则将插入该值，而不是要生成的值。</span><span class="sxs-lookup"><span data-stu-id="87438-126">Like `value generated on add`, if you specify a value for the property on a newly added instance of an entity, that value will be inserted rather than a value being generated.</span></span> <span data-ttu-id="87438-127">还可以在更新时设置显式值。</span><span class="sxs-lookup"><span data-stu-id="87438-127">It is also possible to set an explicit value when updating.</span></span> <span data-ttu-id="87438-128">有关详细信息，请参阅[生成的属性的显式值](../saving/explicit-values-generated-properties.md)。</span><span class="sxs-lookup"><span data-stu-id="87438-128">For more information, see [Explicit values for generated properties](../saving/explicit-values-generated-properties.md).</span></span>
+<span data-ttu-id="e5df5-127">就像`value generated on add`一样，如果为一个实体的新增实例上的属性指定了一个值，则 EF 会尝试插入该值而不是生成新值。</span><span class="sxs-lookup"><span data-stu-id="e5df5-127">Like `value generated on add`, if you specify a value for the property on a newly added instance of an entity, that value will be inserted rather than a value being generated.</span></span> <span data-ttu-id="e5df5-128">还可以在更新时设置显式值。</span><span class="sxs-lookup"><span data-stu-id="e5df5-128">It is also possible to set an explicit value when updating.</span></span> <span data-ttu-id="e5df5-129">有关详细信息，请参阅[已生成属性的显式值](../saving/explicit-values-generated-properties.md)。</span><span class="sxs-lookup"><span data-stu-id="e5df5-129">For more information, see [Explicit values for generated properties](../saving/explicit-values-generated-properties.md).</span></span>
 
 > [!WARNING]
-> <span data-ttu-id="87438-129">为添加的和更新的实体生成值的方式将取决于所使用的数据库提供程序。</span><span class="sxs-lookup"><span data-stu-id="87438-129">How the value is generated for added and updated entities will depend on the database provider being used.</span></span> <span data-ttu-id="87438-130">数据库提供程序可以为某些属性类型自动设置值生成，而其他提供程序则要求您手动设置如何生成值。</span><span class="sxs-lookup"><span data-stu-id="87438-130">Database providers may automatically setup value generation for some property types, while others will require you to manually setup how the value is generated.</span></span>
+> <span data-ttu-id="e5df5-130">如何在添加和更新实体时生成值取决于所用数据库提供程序。</span><span class="sxs-lookup"><span data-stu-id="e5df5-130">How the value is generated for added and updated entities will depend on the database provider being used.</span></span> <span data-ttu-id="e5df5-131">数据库提供程序可能会为某些属性类型自动设置值的生成，但其他的属性类型会要求你手动设置值的生成方式。</span><span class="sxs-lookup"><span data-stu-id="e5df5-131">Database providers may automatically setup value generation for some property types, while others will require you to manually setup how the value is generated.</span></span>
 >
-> <span data-ttu-id="87438-131">例如，使用 SQL Server 时，将使用 `rowversion` 数据类型设置在添加或更新时生成的 `byte[]` 属性，并将其标记为并发标记，以便在数据库中生成值。</span><span class="sxs-lookup"><span data-stu-id="87438-131">For example, when using SQL Server, `byte[]` properties that are set as generated on add or update and marked as concurrency tokens, will be setup with the `rowversion` data type - so that values will be generated in the database.</span></span> <span data-ttu-id="87438-132">但是，如果您指定在添加或更新时生成 `DateTime` 属性，则必须设置一个方法来生成值。</span><span class="sxs-lookup"><span data-stu-id="87438-132">However, if you specify that a `DateTime` property is generated on add or update, then you must setup a way for the values to be generated.</span></span> <span data-ttu-id="87438-133">实现此目的的一种方法是将默认值 `GETDATE()` （请参阅[默认](relational/default-values.md)值）配置为为新行生成值。</span><span class="sxs-lookup"><span data-stu-id="87438-133">One way to do this, is to configure a default value of `GETDATE()` (see [Default Values](relational/default-values.md)) to generate values for new rows.</span></span> <span data-ttu-id="87438-134">然后，你可以在更新期间使用数据库触发器来生成值（如下面的示例触发器）。</span><span class="sxs-lookup"><span data-stu-id="87438-134">You could then use a database trigger to generate values during updates (such as the following example trigger).</span></span>
+> <span data-ttu-id="e5df5-132">例如，在使用 SQL Server 时，设置为在添加和更新时生成值并标注为并发标记的 `byte[]` 属性会被设置为 `rowversion` 数据类型，以便在数据库中生成值。</span><span class="sxs-lookup"><span data-stu-id="e5df5-132">For example, when using SQL Server, `byte[]` properties that are set as generated on add or update and marked as concurrency tokens, will be setup with the `rowversion` data type - so that values will be generated in the database.</span></span> <span data-ttu-id="e5df5-133">但是，如果指定在添加或更新时生成 `DateTime` 属性，则必须设置生成值的方法。</span><span class="sxs-lookup"><span data-stu-id="e5df5-133">However, if you specify that a `DateTime` property is generated on add or update, then you must setup a way for the values to be generated.</span></span> <span data-ttu-id="e5df5-134">若要执行此操作，一种方法是配置 `GETDATE()` 的默认值（请参阅[默认值](relational/default-values.md)）以生成新行的值。</span><span class="sxs-lookup"><span data-stu-id="e5df5-134">One way to do this, is to configure a default value of `GETDATE()` (see [Default Values](relational/default-values.md)) to generate values for new rows.</span></span> <span data-ttu-id="e5df5-135">然后即可使用数据库触发器在更新过程中生成值（如下面的示例触发器所示）。</span><span class="sxs-lookup"><span data-stu-id="e5df5-135">You could then use a database trigger to generate values during updates (such as the following example trigger).</span></span>
 >
 > [!code-sql[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedOnAddOrUpdate.sql)]
 
-## <a name="conventions"></a><span data-ttu-id="87438-135">约定</span><span class="sxs-lookup"><span data-stu-id="87438-135">Conventions</span></span>
+## <a name="conventions"></a><span data-ttu-id="e5df5-136">约定</span><span class="sxs-lookup"><span data-stu-id="e5df5-136">Conventions</span></span>
 
-<span data-ttu-id="87438-136">按照约定，将设置 short、int、long 或 Guid 类型的非复合主键，使其在 add 时生成值。</span><span class="sxs-lookup"><span data-stu-id="87438-136">By convention, non-composite primary keys of type short, int, long, or Guid will be setup to have values generated on add.</span></span> <span data-ttu-id="87438-137">所有其他属性都将设置，并且不生成值。</span><span class="sxs-lookup"><span data-stu-id="87438-137">All other properties will be setup with no value generation.</span></span>
+<span data-ttu-id="e5df5-137">默认情况下，将设置 short、int、long 或 Guid 类型的非复合主键，使其在 add 时生成值。</span><span class="sxs-lookup"><span data-stu-id="e5df5-137">By default, non-composite primary keys of type short, int, long, or Guid will be setup to have values generated on add.</span></span> <span data-ttu-id="e5df5-138">所有其他属性会被设置为不生成值。</span><span class="sxs-lookup"><span data-stu-id="e5df5-138">All other properties will be setup with no value generation.</span></span>
 
-## <a name="data-annotations"></a><span data-ttu-id="87438-138">数据注释</span><span class="sxs-lookup"><span data-stu-id="87438-138">Data Annotations</span></span>
+## <a name="data-annotations"></a><span data-ttu-id="e5df5-139">数据注释</span><span class="sxs-lookup"><span data-stu-id="e5df5-139">Data Annotations</span></span>
 
-### <a name="no-value-generation-data-annotations"></a><span data-ttu-id="87438-139">无值生成（数据批注）</span><span class="sxs-lookup"><span data-stu-id="87438-139">No value generation (Data Annotations)</span></span>
+### <a name="no-value-generation-data-annotations"></a><span data-ttu-id="e5df5-140">无值生成（数据批注）</span><span class="sxs-lookup"><span data-stu-id="e5df5-140">No value generation (Data Annotations)</span></span>
 
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ValueGeneratedNever.cs#Sample)]
 
-### <a name="value-generated-on-add-data-annotations"></a><span data-ttu-id="87438-140">添加时生成的值（数据批注）</span><span class="sxs-lookup"><span data-stu-id="87438-140">Value generated on add (Data Annotations)</span></span>
+### <a name="value-generated-on-add-data-annotations"></a><span data-ttu-id="e5df5-141">在添加时生成值（数据注释）</span><span class="sxs-lookup"><span data-stu-id="e5df5-141">Value generated on add (Data Annotations)</span></span>
 
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ValueGeneratedOnAdd.cs#Sample)]
 
 > [!WARNING]  
-> <span data-ttu-id="87438-141">这只是让 EF 知道为添加的实体生成的值并不保证 EF 将设置实际机制来生成值。</span><span class="sxs-lookup"><span data-stu-id="87438-141">This just lets EF know that values are generated for added entities, it does not guarantee that EF will setup the actual mechanism to generate values.</span></span> <span data-ttu-id="87438-142">有关更多详细信息，请参阅[add 部分生成的值](#value-generated-on-add)。</span><span class="sxs-lookup"><span data-stu-id="87438-142">See [Value generated on add](#value-generated-on-add) section for more details.</span></span>
+> <span data-ttu-id="e5df5-142">这只是让 EF 知道为已添加的实体生成值，并不保证 EF 会设置实际机制来生成值。</span><span class="sxs-lookup"><span data-stu-id="e5df5-142">This just lets EF know that values are generated for added entities, it does not guarantee that EF will setup the actual mechanism to generate values.</span></span> <span data-ttu-id="e5df5-143">请参阅[在添加时生成值](#value-generated-on-add)部分，了解更多详细信息。</span><span class="sxs-lookup"><span data-stu-id="e5df5-143">See [Value generated on add](#value-generated-on-add) section for more details.</span></span>
 
-### <a name="value-generated-on-add-or-update-data-annotations"></a><span data-ttu-id="87438-143">添加或更新时生成的值（数据批注）</span><span class="sxs-lookup"><span data-stu-id="87438-143">Value generated on add or update (Data Annotations)</span></span>
+### <a name="value-generated-on-add-or-update-data-annotations"></a><span data-ttu-id="e5df5-144">在添加或更新时生成值（数据注释）</span><span class="sxs-lookup"><span data-stu-id="e5df5-144">Value generated on add or update (Data Annotations)</span></span>
 
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ValueGeneratedOnAddOrUpdate.cs#Sample)]
 
 > [!WARNING]  
-> <span data-ttu-id="87438-144">这只是让 EF 知道为添加或更新的实体生成的值，它不保证 EF 将设置实际机制来生成值。</span><span class="sxs-lookup"><span data-stu-id="87438-144">This just lets EF know that values are generated for added or updated entities, it does not guarantee that EF will setup the actual mechanism to generate values.</span></span> <span data-ttu-id="87438-145">有关更多详细信息，请参阅[add or update 部分上生成的值](#value-generated-on-add-or-update)。</span><span class="sxs-lookup"><span data-stu-id="87438-145">See [Value generated on add or update](#value-generated-on-add-or-update) section for more details.</span></span>
+> <span data-ttu-id="e5df5-145">这只是让 EF 知道为添加或更新的实体生成值，并不保证 EF 会设置实际机制来生成值。</span><span class="sxs-lookup"><span data-stu-id="e5df5-145">This just lets EF know that values are generated for added or updated entities, it does not guarantee that EF will setup the actual mechanism to generate values.</span></span> <span data-ttu-id="e5df5-146">请参阅[在添加或更新时生成值](#value-generated-on-add-or-update)部分，了解更多详细信息。</span><span class="sxs-lookup"><span data-stu-id="e5df5-146">See [Value generated on add or update](#value-generated-on-add-or-update) section for more details.</span></span>
 
-## <a name="fluent-api"></a><span data-ttu-id="87438-146">Fluent API</span><span class="sxs-lookup"><span data-stu-id="87438-146">Fluent API</span></span>
+## <a name="fluent-api"></a><span data-ttu-id="e5df5-147">Fluent API</span><span class="sxs-lookup"><span data-stu-id="e5df5-147">Fluent API</span></span>
 
-<span data-ttu-id="87438-147">您可以使用熟知的 API 来更改给定属性的值生成模式。</span><span class="sxs-lookup"><span data-stu-id="87438-147">You can use the Fluent API to change the value generation pattern for a given property.</span></span>
+<span data-ttu-id="e5df5-148">您可以使用熟知的 API 来更改给定属性的值生成模式。</span><span class="sxs-lookup"><span data-stu-id="e5df5-148">You can use the Fluent API to change the value generation pattern for a given property.</span></span>
 
-### <a name="no-value-generation-fluent-api"></a><span data-ttu-id="87438-148">无值生成（流畅 API）</span><span class="sxs-lookup"><span data-stu-id="87438-148">No value generation (Fluent API)</span></span>
+### <a name="no-value-generation-fluent-api"></a><span data-ttu-id="e5df5-149">无值生成（流畅 API）</span><span class="sxs-lookup"><span data-stu-id="e5df5-149">No value generation (Fluent API)</span></span>
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedNever.cs#Sample)]
 
-### <a name="value-generated-on-add-fluent-api"></a><span data-ttu-id="87438-149">添加时生成的值（流畅 API）</span><span class="sxs-lookup"><span data-stu-id="87438-149">Value generated on add (Fluent API)</span></span>
+### <a name="value-generated-on-add-fluent-api"></a><span data-ttu-id="e5df5-150">在添加时生成值 (Fluent API)</span><span class="sxs-lookup"><span data-stu-id="e5df5-150">Value generated on add (Fluent API)</span></span>
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedOnAdd.cs#Sample)]
 
 > [!WARNING]  
-> <span data-ttu-id="87438-150">`ValueGeneratedOnAdd()` 只允许 EF 知道为添加的实体生成的值，它不保证 EF 将设置实际机制来生成值。</span><span class="sxs-lookup"><span data-stu-id="87438-150">`ValueGeneratedOnAdd()` just lets EF know that values are generated for added entities, it does not guarantee that EF will setup the actual mechanism to generate values.</span></span>  <span data-ttu-id="87438-151">有关更多详细信息，请参阅[add 部分生成的值](#value-generated-on-add)。</span><span class="sxs-lookup"><span data-stu-id="87438-151">See [Value generated on add](#value-generated-on-add) section for more details.</span></span>
+> <span data-ttu-id="e5df5-151">`ValueGeneratedOnAdd()` 只是让 EF 知道为添加的实体生成值，并不保证 EF 会设置实际机制来生成值。</span><span class="sxs-lookup"><span data-stu-id="e5df5-151">`ValueGeneratedOnAdd()` just lets EF know that values are generated for added entities, it does not guarantee that EF will setup the actual mechanism to generate values.</span></span>  <span data-ttu-id="e5df5-152">请参阅[在添加时生成值](#value-generated-on-add)部分，了解更多详细信息。</span><span class="sxs-lookup"><span data-stu-id="e5df5-152">See [Value generated on add](#value-generated-on-add) section for more details.</span></span>
 
-### <a name="value-generated-on-add-or-update-fluent-api"></a><span data-ttu-id="87438-152">添加或更新时生成的值（熟知的 API）</span><span class="sxs-lookup"><span data-stu-id="87438-152">Value generated on add or update (Fluent API)</span></span>
+### <a name="value-generated-on-add-or-update-fluent-api"></a><span data-ttu-id="e5df5-153">在添加或更新时生成值 (Fluent API)</span><span class="sxs-lookup"><span data-stu-id="e5df5-153">Value generated on add or update (Fluent API)</span></span>
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedOnAddOrUpdate.cs#Sample)]
 
 > [!WARNING]  
-> <span data-ttu-id="87438-153">这只是让 EF 知道为添加或更新的实体生成的值，它不保证 EF 将设置实际机制来生成值。</span><span class="sxs-lookup"><span data-stu-id="87438-153">This just lets EF know that values are generated for added or updated entities, it does not guarantee that EF will setup the actual mechanism to generate values.</span></span> <span data-ttu-id="87438-154">有关更多详细信息，请参阅[add or update 部分上生成的值](#value-generated-on-add-or-update)。</span><span class="sxs-lookup"><span data-stu-id="87438-154">See [Value generated on add or update](#value-generated-on-add-or-update) section for more details.</span></span>
+> <span data-ttu-id="e5df5-154">这只是让 EF 知道为添加或更新的实体生成值，并不保证 EF 会设置实际机制来生成值。</span><span class="sxs-lookup"><span data-stu-id="e5df5-154">This just lets EF know that values are generated for added or updated entities, it does not guarantee that EF will setup the actual mechanism to generate values.</span></span> <span data-ttu-id="e5df5-155">请参阅[在添加或更新时生成值](#value-generated-on-add-or-update)部分，了解更多详细信息。</span><span class="sxs-lookup"><span data-stu-id="e5df5-155">See [Value generated on add or update](#value-generated-on-add-or-update) section for more details.</span></span>

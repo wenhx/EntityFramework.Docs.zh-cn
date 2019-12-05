@@ -1,27 +1,27 @@
 ---
-title: 多个提供程序的迁移-EF Core
+title: 多个提供程序的 EF Core 的迁移
 author: bricelam
 ms.author: bricelam
 ms.date: 11/08/2017
 uid: core/managing-schemas/migrations/providers
-ms.openlocfilehash: c764a7c7858dc46a5e478f79476f55a34e0fdabd
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 384ad27e405adc2bccb5e96aae30e5bd7ac556be
+ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655579"
+ms.lasthandoff: 12/04/2019
+ms.locfileid: "74824720"
 ---
-# <a name="migrations-with-multiple-providers"></a><span data-ttu-id="51a2c-102">迁移多个提供程序</span><span class="sxs-lookup"><span data-stu-id="51a2c-102">Migrations with Multiple Providers</span></span>
+# <a name="migrations-with-multiple-providers"></a><span data-ttu-id="1f6c9-102">迁移多个提供程序</span><span class="sxs-lookup"><span data-stu-id="1f6c9-102">Migrations with Multiple Providers</span></span>
 
-<span data-ttu-id="51a2c-103">[EF Core 工具][1]仅基架活动提供程序的迁移。</span><span class="sxs-lookup"><span data-stu-id="51a2c-103">The [EF Core Tools][1] only scaffold migrations for the active provider.</span></span> <span data-ttu-id="51a2c-104">但有时，您可能想要将多个提供程序（例如 Microsoft SQL Server 和 SQLite）用于 DbContext。</span><span class="sxs-lookup"><span data-stu-id="51a2c-104">Sometimes, however, you may want to use more than one provider (for example Microsoft SQL Server and SQLite) with your DbContext.</span></span> <span data-ttu-id="51a2c-105">可以通过两种方式来处理迁移。</span><span class="sxs-lookup"><span data-stu-id="51a2c-105">There are two ways to handle this with Migrations.</span></span> <span data-ttu-id="51a2c-106">您可以维护两组迁移-每个提供程序一个，或将它们合并到可以同时使用的单个集。</span><span class="sxs-lookup"><span data-stu-id="51a2c-106">You can maintain two sets of migrations--one for each provider--or merge them into a single set that can work on both.</span></span>
+<span data-ttu-id="1f6c9-103">[EF Core 工具][1]仅基架活动提供程序的迁移。</span><span class="sxs-lookup"><span data-stu-id="1f6c9-103">The [EF Core Tools][1] only scaffold migrations for the active provider.</span></span> <span data-ttu-id="1f6c9-104">但有时，您可能想要将多个提供程序（例如 Microsoft SQL Server 和 SQLite）用于 DbContext。</span><span class="sxs-lookup"><span data-stu-id="1f6c9-104">Sometimes, however, you may want to use more than one provider (for example Microsoft SQL Server and SQLite) with your DbContext.</span></span> <span data-ttu-id="1f6c9-105">可以通过两种方式来处理迁移。</span><span class="sxs-lookup"><span data-stu-id="1f6c9-105">There are two ways to handle this with Migrations.</span></span> <span data-ttu-id="1f6c9-106">您可以维护两组迁移-每个提供程序一个，或将它们合并到可以同时使用的单个集。</span><span class="sxs-lookup"><span data-stu-id="1f6c9-106">You can maintain two sets of migrations--one for each provider--or merge them into a single set that can work on both.</span></span>
 
-## <a name="two-migration-sets"></a><span data-ttu-id="51a2c-107">两个迁移集</span><span class="sxs-lookup"><span data-stu-id="51a2c-107">Two migration sets</span></span>
+## <a name="two-migration-sets"></a><span data-ttu-id="1f6c9-107">两个迁移集</span><span class="sxs-lookup"><span data-stu-id="1f6c9-107">Two migration sets</span></span>
 
-<span data-ttu-id="51a2c-108">第一种方法是为每个模型更改生成两个迁移。</span><span class="sxs-lookup"><span data-stu-id="51a2c-108">In the first approach, you generate two migrations for each model change.</span></span>
+<span data-ttu-id="1f6c9-108">第一种方法是为每个模型更改生成两个迁移。</span><span class="sxs-lookup"><span data-stu-id="1f6c9-108">In the first approach, you generate two migrations for each model change.</span></span>
 
-<span data-ttu-id="51a2c-109">实现此目的的一种方法是将每个迁移集放[在单独的程序集中][2]，并在添加两个迁移之间手动切换活动提供程序（和迁移程序集）。</span><span class="sxs-lookup"><span data-stu-id="51a2c-109">One way to do this is to put each migration set [in a separate assembly][2] and manually switch the active provider (and migrations assembly) between adding the two migrations.</span></span>
+<span data-ttu-id="1f6c9-109">实现此目的的一种方法是将每个迁移集放[在单独的程序集中][2]，并在添加两个迁移之间手动切换活动提供程序（和迁移程序集）。</span><span class="sxs-lookup"><span data-stu-id="1f6c9-109">One way to do this is to put each migration set [in a separate assembly][2] and manually switch the active provider (and migrations assembly) between adding the two migrations.</span></span>
 
-<span data-ttu-id="51a2c-110">更轻松地使用工具的另一种方法是创建一个从 DbContext 派生的新类型并重写活动提供程序。</span><span class="sxs-lookup"><span data-stu-id="51a2c-110">Another approach that makes working with the tools easier is to create a new type that derives from your DbContext and overrides the active provider.</span></span> <span data-ttu-id="51a2c-111">此类型在设计时用于添加或应用迁移。</span><span class="sxs-lookup"><span data-stu-id="51a2c-111">This type is used at design time when adding or applying migrations.</span></span>
+<span data-ttu-id="1f6c9-110">更轻松地使用工具的另一种方法是创建一个从 DbContext 派生的新类型并重写活动提供程序。</span><span class="sxs-lookup"><span data-stu-id="1f6c9-110">Another approach that makes working with the tools easier is to create a new type that derives from your DbContext and overrides the active provider.</span></span> <span data-ttu-id="1f6c9-111">此类型在设计时用于添加或应用迁移。</span><span class="sxs-lookup"><span data-stu-id="1f6c9-111">This type is used at design time when adding or applying migrations.</span></span>
 
 ``` csharp
 class MySqliteDbContext : MyDbContext
@@ -32,18 +32,18 @@ class MySqliteDbContext : MyDbContext
 ```
 
 > [!NOTE]
-> <span data-ttu-id="51a2c-112">由于每个迁移集使用自己的 DbContext 类型，因此此方法不需要使用单独的迁移程序集。</span><span class="sxs-lookup"><span data-stu-id="51a2c-112">Since each migration set uses its own DbContext types, this approach doesn't require using a separate migrations assembly.</span></span>
+> <span data-ttu-id="1f6c9-112">由于每个迁移集使用自己的 DbContext 类型，因此此方法不需要使用单独的迁移程序集。</span><span class="sxs-lookup"><span data-stu-id="1f6c9-112">Since each migration set uses its own DbContext types, this approach doesn't require using a separate migrations assembly.</span></span>
 
-<span data-ttu-id="51a2c-113">添加新迁移时，指定上下文类型。</span><span class="sxs-lookup"><span data-stu-id="51a2c-113">When adding new migration, specify the context types.</span></span>
+<span data-ttu-id="1f6c9-113">添加新迁移时，指定上下文类型。</span><span class="sxs-lookup"><span data-stu-id="1f6c9-113">When adding new migration, specify the context types.</span></span>
 
-## <a name="net-core-clitabdotnet-core-cli"></a>[<span data-ttu-id="51a2c-114">.NET Core CLI</span><span class="sxs-lookup"><span data-stu-id="51a2c-114">.NET Core CLI</span></span>](#tab/dotnet-core-cli)
+## <a name="net-core-clitabdotnet-core-cli"></a>[<span data-ttu-id="1f6c9-114">.NET Core CLI</span><span class="sxs-lookup"><span data-stu-id="1f6c9-114">.NET Core CLI</span></span>](#tab/dotnet-core-cli)
 
-``` Console
+```dotnetcli
 dotnet ef migrations add InitialCreate --context MyDbContext --output-dir Migrations/SqlServerMigrations
 dotnet ef migrations add InitialCreate --context MySqliteDbContext --output-dir Migrations/SqliteMigrations
 ```
 
-## <a name="visual-studiotabvs"></a>[<span data-ttu-id="51a2c-115">Visual Studio</span><span class="sxs-lookup"><span data-stu-id="51a2c-115">Visual Studio</span></span>](#tab/vs)
+## <a name="visual-studiotabvs"></a>[<span data-ttu-id="1f6c9-115">Visual Studio</span><span class="sxs-lookup"><span data-stu-id="1f6c9-115">Visual Studio</span></span>](#tab/vs)
 
 ``` powershell
 Add-Migration InitialCreate -Context MyDbContext -OutputDir Migrations\SqlServerMigrations
@@ -53,13 +53,13 @@ Add-Migration InitialCreate -Context MySqliteDbContext -OutputDir Migrations\Sql
 ***
 
 > [!TIP]
-> <span data-ttu-id="51a2c-116">无需指定输出目录即可进行后续迁移，因为它们是以同级方式创建的。</span><span class="sxs-lookup"><span data-stu-id="51a2c-116">You don't need to specify the output directory for subsequent migrations since they are created as siblings to the last one.</span></span>
+> <span data-ttu-id="1f6c9-116">无需指定输出目录即可进行后续迁移，因为它们是以同级方式创建的。</span><span class="sxs-lookup"><span data-stu-id="1f6c9-116">You don't need to specify the output directory for subsequent migrations since they are created as siblings to the last one.</span></span>
 
-## <a name="one-migration-set"></a><span data-ttu-id="51a2c-117">一个迁移集</span><span class="sxs-lookup"><span data-stu-id="51a2c-117">One migration set</span></span>
+## <a name="one-migration-set"></a><span data-ttu-id="1f6c9-117">一个迁移集</span><span class="sxs-lookup"><span data-stu-id="1f6c9-117">One migration set</span></span>
 
-<span data-ttu-id="51a2c-118">如果不喜欢两组迁移，可以手动将它们合并为可应用于这两个提供程序的单个集。</span><span class="sxs-lookup"><span data-stu-id="51a2c-118">If you don't like having two sets of migrations, you can manually combine them into a single set that can be applied to both providers.</span></span>
+<span data-ttu-id="1f6c9-118">如果不喜欢两组迁移，可以手动将它们合并为可应用于这两个提供程序的单个集。</span><span class="sxs-lookup"><span data-stu-id="1f6c9-118">If you don't like having two sets of migrations, you can manually combine them into a single set that can be applied to both providers.</span></span>
 
-<span data-ttu-id="51a2c-119">批注可以共存，因为提供程序会忽略它不理解的任何批注。</span><span class="sxs-lookup"><span data-stu-id="51a2c-119">Annotations can coexist since a provider ignores any annotations that it doesn't understand.</span></span> <span data-ttu-id="51a2c-120">例如，使用 Microsoft SQL Server 和 SQLite 的主键列可能如下所示。</span><span class="sxs-lookup"><span data-stu-id="51a2c-120">For example, a primary key column that works with both Microsoft SQL Server and SQLite might look like this.</span></span>
+<span data-ttu-id="1f6c9-119">批注可以共存，因为提供程序会忽略它不理解的任何批注。</span><span class="sxs-lookup"><span data-stu-id="1f6c9-119">Annotations can coexist since a provider ignores any annotations that it doesn't understand.</span></span> <span data-ttu-id="1f6c9-120">例如，使用 Microsoft SQL Server 和 SQLite 的主键列可能如下所示。</span><span class="sxs-lookup"><span data-stu-id="1f6c9-120">For example, a primary key column that works with both Microsoft SQL Server and SQLite might look like this.</span></span>
 
 ``` csharp
 Id = table.Column<int>(nullable: false)
@@ -68,7 +68,7 @@ Id = table.Column<int>(nullable: false)
     .Annotation("Sqlite:Autoincrement", true),
 ```
 
-<span data-ttu-id="51a2c-121">如果只能在一个提供程序上应用操作（或在提供程序之间以不同方式进行操作），请使用 `ActiveProvider` 属性告诉哪个提供程序处于活动状态。</span><span class="sxs-lookup"><span data-stu-id="51a2c-121">If operations can only be applied on one provider (or they're differently between providers), use the `ActiveProvider` property to tell which provider is active.</span></span>
+<span data-ttu-id="1f6c9-121">如果只能在一个提供程序上应用操作（或在提供程序之间以不同方式进行操作），请使用 `ActiveProvider` 属性告诉哪个提供程序处于活动状态。</span><span class="sxs-lookup"><span data-stu-id="1f6c9-121">If operations can only be applied on one provider (or they're differently between providers), use the `ActiveProvider` property to tell which provider is active.</span></span>
 
 ``` csharp
 if (migrationBuilder.ActiveProvider == "Microsoft.EntityFrameworkCore.SqlServer")
