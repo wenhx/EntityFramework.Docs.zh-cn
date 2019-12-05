@@ -4,12 +4,12 @@ author: divega
 ms.date: 08/06/2017
 ms.assetid: 608cc774-c570-4809-8a3e-cd2c8446b8b2
 uid: core/get-started/install/index
-ms.openlocfilehash: aeb3ed1af8725ed6f92e0c0ba022a89b651bff80
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 1121b2bde1ada74ee189287501bc770aeb65e358
+ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655595"
+ms.lasthandoff: 12/04/2019
+ms.locfileid: "74824438"
 ---
 # <a name="installing-entity-framework-core"></a>安装 Entity Framework Core
 
@@ -37,7 +37,7 @@ ms.locfileid: "73655595"
 
 * 在操作系统的命令行中使用以下 .NET Core CLI 命令来安装或更新 EF Core SQL Server 提供程序：
 
-  ``` Console
+  ```dotnetcli
   dotnet add package Microsoft.EntityFrameworkCore.SqlServer
   ```
 
@@ -95,7 +95,7 @@ ms.locfileid: "73655595"
 
 `dotnet ef` 命令包含在当前版本的 .NET Core SDK 中，但若要对特定命令启用该命令，必须安装 `Microsoft.EntityFrameworkCore.Design` 包：
 
-``` Console
+```dotnetcli
 dotnet add package Microsoft.EntityFrameworkCore.Design
 ```
 
