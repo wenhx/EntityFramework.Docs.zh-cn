@@ -225,6 +225,8 @@
                   href: core/providers/sql-server/index.md
                 - name: 内存优化表
                   href: core/providers/sql-server/memory-optimized-tables.md
+                - name: 指定 Azure SQL 数据库选项
+                  href: core/providers/sql-server/azure-sql-database.md
             - name: SQLite
               items:
                 - name: 概述
