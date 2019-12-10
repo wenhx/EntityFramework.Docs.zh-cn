@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/20/2018
 ms.assetid: 2CB5809E-0EFB-44F6-AF14-9D5BFFFBFF9D
 uid: core/what-is-new/ef-core-2.0
-ms.openlocfilehash: 72393e96c195af1df5a169025ca2ce7a7acb16bb
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 83f6b819409d502dba17a678d44a0746a4a77f4b
+ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73656214"
+ms.lasthandoff: 12/04/2019
+ms.locfileid: "74824877"
 ---
 # <a name="new-features-in-ef-core-20"></a>EF Core 2.0 中的新增功能
 
@@ -91,12 +91,12 @@ public class BloggingContext : DbContext
     {
         modelBuilder.Entity<Post>().HasQueryFilter(
             p => !p.IsDeleted
-            && p.TenantId == this.TenantId );
+            && p.TenantId == this.TenantId);
     }
 }
 ```
 
-我们为 `Post` 实体类型的实例定义一个实现多租户和软删除的模型级别筛选器。 请留意 DbContext 实例级别属性的使用：`TenantId`。 模型级筛选器将使用正确上下文实例（即执行查询的上下文实例）中的值。
+我们为 `Post` 实体类型的实例定义一个实现多租户和软删除的模型级别筛选器。 请留意 `DbContext` 实例级别属性的使用：`TenantId`。 模型级筛选器将使用正确上下文实例（即执行查询的上下文实例）中的值。
 
 可使用 IgnoreQueryFilters() 运算符对各个 LINQ 查询禁用筛选器。
 
@@ -119,7 +119,7 @@ public class BloggingContext : DbContext
     [DbFunction]
     public static int PostReadCount(int blogId)
     {
-        throw new Exception();
+        throw new NotImplementedException();
     }
 }
 ```
@@ -135,9 +135,9 @@ var query =
 
 需要注意以下事项：
 
-- 依照约定，方法名称在生成 SQL 时会用作函数（此情况下为用户定义的函数）名称，但是你可以在方法注册期间替代名称和架构
-- 当前仅支持标量函数
-- 必须在数据库中创建映射函数。 EF Core 迁移不创建此函数
+- 依照约定，方法名称在生成 SQL 时会用作函数（此情况下为用户定义的函数）名称，但是你可以在方法注册期间替代名称和架构。
+- 当前仅支持标量函数。
+- 必须在数据库中创建映射函数。 EF Core 迁移不创建此函数。
 
 ### <a name="self-contained-type-configuration-for-code-first"></a>Code First 的自包含类型配置
 
@@ -146,11 +146,11 @@ var query =
 ``` csharp
 class CustomerConfiguration : IEntityTypeConfiguration<Customer>
 {
-  public void Configure(EntityTypeBuilder<Customer> builder)
-  {
-     builder.HasKey(c => c.AlternateKey);
-     builder.Property(c => c.Name).HasMaxLength(200);
-   }
+    public void Configure(EntityTypeBuilder<Customer> builder)
+    {
+        builder.HasKey(c => c.AlternateKey);
+        builder.Property(c => c.Name).HasMaxLength(200);
+    }
 }
 
 ...

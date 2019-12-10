@@ -1,15 +1,14 @@
 ---
 title: EF Core 3.0 中的中断性变更 - EF Core
-author: divega
-ms.date: 02/19/2019
-ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
+author: ajcvickers
+ms.date: 12/03/2019
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: f02825f5303959997dca6e14e4efe64020b3cb22
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: d614103169837238810fabd0a8889043c851ef14
+ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655880"
+ms.lasthandoff: 12/04/2019
+ms.locfileid: "74824861"
 ---
 # <a name="breaking-changes-included-in-ef-core-30"></a>EF Core 3.0 中包含的中断性变更
 
@@ -42,6 +41,7 @@ ms.locfileid: "73655880"
 | [不再在实体实例上设置临时键值](#tkv) | 低      |
 | [与主体共享表的依赖实体现为可选项](#de) | 低      |
 | [与并发标记列共享表的所有实体均必须将其映射到属性](#aes) | 低      |
+| [如果没有所有者，则无法使用跟踪查询来查询从属实体](#owned-query) | 低      |
 | [对于所有派生的类型而言，从未映射的类型继承的属性现在会映射到一个列中](#ip) | 低      |
 | [外键属性约定不再匹配与主体属性相同的名称](#fkp) | 低      |
 | [现在，如果在 TransactionScope 完成前不再使用数据库连接，则该连接会关闭](#dbc) | 低      |
@@ -49,6 +49,7 @@ ms.locfileid: "73655880"
 | [如果找到多个兼容的支持字段，则引发](#throw-if-multiple-compatible-backing-fields-are-found) | 低      |
 | [“仅字段”属性名应与字段名匹配](#field-only-property-names-should-match-the-field-name) | 低      |
 | [AddDbContext/AddDbContextPool 不再调用 AddLogging 和 AddMemoryCache](#adddbc) | 低      |
+| [AddEntityFramework* 添加具有大小限制的 IMemoryCache](#addentityframework-adds-imemorycache-with-a-size-limit) | 低      |
 | [DbContext.Entry 现在执行本地 DetectChanges](#dbe) | 低      |
 | [默认情况下，字符串和字节数组键不是客户端生成的](#string-and-byte-array-keys-are-not-client-generated-by-default) | 低      |
 | [ILoggerFactory 现在是一个在一定范围内有效的服务](#ilf) | 低      |
@@ -189,7 +190,7 @@ ms.locfileid: "73655880"
 自 EF Core 3.0 起，可使用 `FromSqlRaw`、`ExecuteSqlRaw` 和 `ExecuteSqlRawAsync` 创建一个参数化的查询，其中参数是从查询字符串中单独传递的。
 例如:
 
-```C#
+```csharp
 context.Products.FromSqlRaw(
     "SELECT * FROM Products WHERE Name = {0}",
     product.Name);
@@ -198,7 +199,7 @@ context.Products.FromSqlRaw(
 使用 `FromSqlInterpolated`、`ExecuteSqlInterpolated` 和 `ExecuteSqlInterpolatedAsync` 创建一个参数化的查询，其中参数作为内插查询字符串的一部分进行传递。
 例如:
 
-```C#
+```csharp
 context.Products.FromSqlInterpolated(
     $"SELECT * FROM Products WHERE Name = {product.Name}");
 ```
@@ -223,7 +224,7 @@ context.Products.FromSqlInterpolated(
 
 在 EF Core 3.0 之前，FromSql 方法已尝试检测是否可对传入的 SQL 进行组合。 当 SQL 像存储过程那样不可组合时，该方法进行客户端评估。 以下查询在服务器上运行存储过程并在客户端执行 FirstOrDefault。
 
-```C#
+```csharp
 context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").FirstOrDefault();
 ```
 
@@ -239,7 +240,7 @@ EF Core 3.0 不支持自动客户端评估，因为容易出错，如[此处](#l
 
 如果在 FromSqlRaw/FromSqlInterpolated 中使用存储过程，你了解无法对其进行组合，因此可以紧随 FromSql 方法调用添加 AsEnumerable/AsAsyncEnumerable，以避免在服务器端上进行任何组合  。
 
-```C#
+```csharp
 context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").AsEnumerable().FirstOrDefault();
 ```
 
@@ -274,7 +275,7 @@ context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").AsEnumerable(
 
 在 EF Core 3.0 之前，将对具有给定类型和 ID 的实体的每个匹配项使用同一个实体实例。 这与跟踪查询的行为匹配。 例如，以下查询：
 
-```C#
+```csharp
 var results = context.Products.Include(e => e.Category).AsNoTracking().ToList();
 ```
 会为与给定类别关联的每个 `Product` 返回相同的 `Category` 实例。
@@ -298,7 +299,7 @@ var results = context.Products.Include(e => e.Category).AsNoTracking().ToList();
 [跟踪问题 #14523](https://github.com/aspnet/EntityFrameworkCore/issues/14523)
 
 我们之所以还原此更改是因为，EF Core 3.0 中的新配置允许应用程序指定任何事件的日志级别。 例如，若要将 SQL 日志记录切换为 `Debug`，请在 `OnConfiguring` 或 `AddDbContext` 中显式配置级别：
-```C#
+```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder
         .UseSqlServer(connectionString)
@@ -359,7 +360,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 解决方案是显式配置键属性，使其不使用生成的值。
 例如，使用 Fluent API：
 
-```C#
+```csharp
 modelBuilder
     .Entity<Blog>()
     .Property(e => e.Id)
@@ -368,7 +369,7 @@ modelBuilder
 
 或使用数据注释：
 
-```C#
+```csharp
 [DatabaseGenerated(DatabaseGeneratedOption.None)]
 public string Id { get; set; }
 ```
@@ -395,7 +396,7 @@ public string Id { get; set; }
 可以通过 `context.ChangedTracker` 上的设置还原以前的行为。
 例如:
 
-```C#
+```csharp
 context.ChangeTracker.CascadeDeleteTiming = CascadeTiming.OnSaveChanges;
 context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 ```
@@ -488,7 +489,7 @@ EF Core 3.0 之前，会在 `OwnsOne` 或 `OwnsMany` 调用之后直接执行所
 从 EF Core 3.0 开始，Fluent API 会使用 `WithOwner()` 为所有者配置导航属性。
 例如:
 
-```C#
+```csharp
 modelBuilder.Entity<Order>.OwnsOne(e => e.Details).WithOwner(e => e.Order);
 ```
 
@@ -496,7 +497,7 @@ modelBuilder.Entity<Order>.OwnsOne(e => e.Details).WithOwner(e => e.Order);
 但从属类型本身的配置仍会在 `OwnsOne()/OwnsMany()` 之后关联。
 例如:
 
-```C#
+```csharp
 modelBuilder.Entity<Order>.OwnsOne(e => e.Details, eb =>
     {
         eb.WithOwner()
@@ -538,7 +539,7 @@ modelBuilder.Entity<Order>.OwnsOne(e => e.Details, eb =>
 **旧行为**
 
 考虑下列模型：
-```C#
+```csharp
 public class Order
 {
     public int Id { get; set; }
@@ -573,7 +574,7 @@ public class OrderDetails
 **旧行为**
 
 考虑下列模型：
-```C#
+```csharp
 public class Order
 {
     public int Id { get; set; }
@@ -608,12 +609,44 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 **缓解措施**
 
 共享表的所有实体都必须包含一个映射到并发标记列的属性。 可在影子状态中创建一个：
-```C#
+```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder.Entity<OrderDetails>()
         .Property<byte[]>("Version").IsRowVersion().HasColumnName("Version");
 }
+```
+
+<a name="owned-query"></a>
+
+### <a name="owned-entities-cannot-be-queried-without-the-owner-using-a-tracking-query"></a>如果没有所有者，则无法使用跟踪查询来查询从属实体
+
+[跟踪问题 #18876](https://github.com/aspnet/EntityFrameworkCore/issues/18876)
+
+**旧行为**
+
+在 EF Core 3.0 之前，可像任何其他导航一样查询从属实体。
+
+```csharp
+context.People.Select(p => p.Address);
+```
+
+**新行为**
+
+自版本 3.0 起，如果跟踪查询在没有所有者的情况下投射一个从属实体，EF Core 将引发异常。
+
+**为什么**
+
+如果没有所有者，则无法操作从属实体，因此在绝大多数情况下，不该使用此方式查询它们。
+
+**缓解措施**
+
+如果应跟踪从属实体，以便之后以任何方式进行修改，则应在查询中包含所有者。
+
+否则，请添加一个 `AsNoTracking()` 调用：
+
+```csharp
+context.People.Select(p => p.Address).AsNoTracking();
 ```
 
 <a name="ip"></a>
@@ -625,7 +658,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 **旧行为**
 
 考虑下列模型：
-```C#
+```csharp
 public abstract class EntityBase
 {
     public int Id { get; set; }
@@ -667,7 +700,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 属性仍可显式映射到所派生的类型上的单独的列中：
 
-```C#
+```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder.Ignore<OrderBase>();
@@ -688,7 +721,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 **旧行为**
 
 考虑下列模型：
-```C#
+```csharp
 public class Customer
 {
     public int CustomerId { get; set; }
@@ -710,7 +743,7 @@ public class Order
 与主体属性名称关联的主体类型名称和与主体属性名称模式关联的导航名称仍然相匹配。
 例如:
 
-```C#
+```csharp
 public class Customer
 {
     public int Id { get; set; }
@@ -724,7 +757,7 @@ public class Order
 }
 ```
 
-```C#
+```csharp
 public class Customer
 {
     public int Id { get; set; }
@@ -757,7 +790,7 @@ public class Order
 
 在 EF Core 3.0 之前，如果上下文打开了 `TransactionScope` 中的连接，则该连接在 `TransactionScope` 处于活动期间仍保持打开状态。
 
-```C#
+```csharp
 using (new TransactionScope())
 {
     using (AdventureWorks context = new AdventureWorks())
@@ -766,7 +799,7 @@ using (new TransactionScope())
         context.SaveChanges();
 
         // Old behavior: Connection is still open at this point
-        
+
         var categories = context.ProductCategories().ToList();
     }
 }
@@ -784,7 +817,7 @@ using (new TransactionScope())
 
 如果连接需要保持打开状态，则显式调用 `OpenConnection()` 将确保 EF Core 不永久关闭此连接：
 
-```C#
+```csharp
 using (new TransactionScope())
 {
     using (AdventureWorks context = new AdventureWorks())
@@ -792,7 +825,7 @@ using (new TransactionScope())
         context.Database.OpenConnection();
         context.ProductCategories.Add(new ProductCategory());
         context.SaveChanges();
-        
+
         var categories = context.ProductCategories().ToList();
         context.Database.CloseConnection();
     }
@@ -846,7 +879,7 @@ using (new TransactionScope())
 可以通过在 `ModelBuilder` 上配置属性访问模式来恢复 3.0 之前的行为。
 例如:
 
-```C#
+```csharp
 modelBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferFieldDuringConstruction);
 ```
 
@@ -872,7 +905,7 @@ modelBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferFieldDuringConstruct
 具有不明确的支持字段的属性必须具有显式指定的字段。
 例如，使用 Fluent API：
 
-```C#
+```csharp
 modelBuilder
     .Entity<Blog>()
     .Property(e => e.Id)
@@ -884,14 +917,16 @@ modelBuilder
 **旧行为**
 
 在 EF Core 3.0 之前，可通过字符串值指定属性，如果在 .NET 类型上找不到具有该名称的属性，则 EF Core 将尝试使用约定规则将其与字段匹配。
-```C#
+
+```csharp
 private class Blog
 {
     private int _id;
     public string Name { get; set; }
 }
 ```
-```C#
+
+```csharp
 modelBuilder
     .Entity<Blog>()
     .Property("Id");
@@ -901,7 +936,7 @@ modelBuilder
 
 从 EF Core 3.0 开始，“仅字段”属性必须与字段名完全匹配。
 
-```C#
+```csharp
 modelBuilder
     .Entity<Blog>()
     .Property("_id");
@@ -916,7 +951,7 @@ modelBuilder
 仅字段属性名必须与它们映射到的字段名相同。
 在 3.0 版之后的 EF Core 未来版本中，我们计划重新启用显式配置与属性名称不同的字段名称（请参阅问题 [15307](https://github.com/aspnet/EntityFrameworkCore/issues/15307)）：
 
-```C#
+```csharp
 modelBuilder
     .Entity<Blog>()
     .Property("Id")
@@ -931,7 +966,7 @@ modelBuilder
 
 **旧行为**
 
-在 EF Core 3.0 之前，调用 `AddDbContext` 或 `AddDbContextPool` 的操作也可以通过调用 [AddLogging](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.loggingservicecollectionextensions.addlogging) 和 [AddMemoryCache](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache) 在 DI 中注册日志记录和内存缓存服务。
+在 EF Core 3.0 之前，调用 `AddDbContext` 或 `AddDbContextPool` 的操作也会通过调用 [AddLogging](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.loggingservicecollectionextensions.addlogging) 和 [AddMemoryCache](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache) 向 DI 注册日志记录和内存缓存服务。
 
 **新行为**
 
@@ -944,6 +979,28 @@ EF Core 3.0 不要求这些服务位于应用程序的 DI 容器中。 但是，
 **缓解措施**
 
 如果应用程序需要这些服务，则使用 [AddLogging](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.loggingservicecollectionextensions.addlogging) 或 [AddMemoryCache](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache) 将它们显式注册到 DI 容器中。
+
+### <a name="addentityframework-adds-imemorycache-with-a-size-limit"></a>AddEntityFramework* 添加具有大小限制的 IMemoryCache
+
+[跟踪问题 #12905](https://github.com/aspnet/EntityFrameworkCore/issues/12905)
+
+**旧行为**
+
+在 EF Core 3.0 之前，调用 `AddEntityFramework*` 方法还将向 DI 注册内存缓存服务，且没有大小限制。
+
+**新行为**
+
+自 EF Core 3.0 起，`AddEntityFramework*` 注册的 IMemoryCache 服务具有大小限制。 如果随后添加的任何其他服务依赖于 IMemoryCache，则它们很快就会达到默认限制，从而导致异常或性能下降。
+
+**为什么**
+
+如果查询缓存逻辑中存在 bug 或者查询是动态生成的，则无限制地使用 IMemoryCache 可能会导致内存使用量不受控制。 设定默认限制可减少潜在的 DoS 攻击。
+
+**缓解措施**
+
+在大多数情况下，如果同时调用了 `AddDbContext` 或 `AddDbContextPool`，则无需调用 `AddEntityFramework*`。 因此，最好的缓解措施是删除 `AddEntityFramework*` 调用。
+
+如果应用程序需要这些服务，则使用 [AddMemoryCache](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache) 预先向 DI 容器显式注册 IMemoryCache 实现。
 
 <a name="dbe"></a>
 
@@ -995,7 +1052,7 @@ EF Core 3.0 不要求这些服务位于应用程序的 DI 容器中。 但是，
 如果没有设置其他非 null 值，则可以通过显式指定键属性应使用生成的值来获得 3.0 之前的行为。
 例如，使用 Fluent API：
 
-```C#
+```csharp
 modelBuilder
     .Entity<Blog>()
     .Property(e => e.Id)
@@ -1004,7 +1061,7 @@ modelBuilder
 
 或使用数据注释：
 
-```C#
+```csharp
 [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 public string Id { get; set; }
 ```
@@ -1082,7 +1139,7 @@ public string Id { get; set; }
 但是，可以通过 `DbContextOptionsBuilder` 上的配置将错误转换回警告（或忽略）。
 例如:
 
-```C#
+```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 {
     optionsBuilder
@@ -1100,7 +1157,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 在 EF Core 3.0 之前，对通过单个字符串调用 `HasOne` 或 `HasMany` 的代码的解释令人困惑。
 例如:
-```C#
+```csharp
 modelBuilder.Entity<Samurai>().HasOne("Entrance").WithOne();
 ```
 
@@ -1123,7 +1180,7 @@ modelBuilder.Entity<Samurai>().HasOne("Entrance").WithOne();
 以前的行为可以通过显式传递导航属性名称的 `null` 获得。
 例如:
 
-```C#
+```csharp
 modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 ```
 
@@ -1513,7 +1570,7 @@ SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 
 
 在 EF Core 3.0 之前，外键约束名称被简单地称为“名称”。 例如:
 
-```C#
+```csharp
 var constraintName = myForeignKey.Name;
 ```
 
@@ -1521,7 +1578,7 @@ var constraintName = myForeignKey.Name;
 
 从 EF Core 3.0 开始，外键约束名称现在被称为“约束名称”。 例如:
 
-```C#
+```csharp
 var constraintName = myForeignKey.ConstraintName;
 ```
 
@@ -1662,7 +1719,7 @@ Microsoft.Data.SqlClient 是今后用于 SQL Server 的旗舰版数据访问驱�
 
 具有多个自引用单向导航属性和匹配的 FK 的实体类型被错误配置为单个关系。 例如:
 
-```C#
+```csharp
 public class User 
 {
         public Guid Id { get; set; }
@@ -1685,7 +1742,7 @@ public class User
 
 使用关系的完全配置。 例如:
 
-```C#
+```csharp
 modelBuilder
      .Entity<User>()
      .HasOne(e => e.CreatedBy)
@@ -1706,7 +1763,7 @@ modelBuilder
 
 配置了实为空字符串的架构的 DbFunction 被视为不带架构的内置函数。 例如，下述代码会将 `DatePart` CLR 函数映射到 SqlServer 上的 `DATEPART` 内置函数。
 
-```C#
+```csharp
 [DbFunction("DATEPART", Schema = "")]
 public static int? DatePart(string datePartArg, DateTime? date) => throw new Exception();
 
@@ -1724,7 +1781,7 @@ public static int? DatePart(string datePartArg, DateTime? date) => throw new Exc
 
 手动配置 DbFunction 的转换，以将其映射到内置函数中。
 
-```C#
+```csharp
 modelBuilder
     .HasDbFunction(typeof(MyContext).GetMethod(nameof(MyContext.DatePart)))
     .HasTranslation(args => SqlFunctionExpression.Create("DatePart", args, typeof(int?), null));
