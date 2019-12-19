@@ -27,9 +27,9 @@ ms.locfileid: "72182654"
 ## <a name="watch-the-video"></a>观看视频
 此视频演示如何实体框架 Code First 映射空间类型。 它还演示了如何使用 LINQ 查询查找两个位置之间的距离。
 
-**提供者**：Julia Kornich
+**提供者**： Julia Kornich
 
-**视频**：[WMV](https://download.microsoft.com/download/9/1/3/913EA17E-6F97-41D8-A4FE-805A0D83D26A/HDI-ITPro-MSDN-winvideo-spatialwithcodefirst.wmv)@NO__T[-1 .WMV](https://download.microsoft.com/download/9/1/3/913EA17E-6F97-41D8-A4FE-805A0D83D26A/HDI-ITPro-MSDN-mp4video-spatialwithcodefirst.m4v) | [WMV （ZIP）](https://download.microsoft.com/download/9/1/3/913EA17E-6F97-41D8-A4FE-805A0D83D26A/HDI-ITPro-MSDN-winvideo-spatialwithcodefirst.zip)
+**视频**：[WMV](https://download.microsoft.com/download/9/1/3/913EA17E-6F97-41D8-A4FE-805A0D83D26A/HDI-ITPro-MSDN-winvideo-spatialwithcodefirst.wmv) | [MP4](https://download.microsoft.com/download/9/1/3/913EA17E-6F97-41D8-A4FE-805A0D83D26A/HDI-ITPro-MSDN-mp4video-spatialwithcodefirst.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/9/1/3/913EA17E-6F97-41D8-A4FE-805A0D83D26A/HDI-ITPro-MSDN-winvideo-spatialwithcodefirst.zip)
 
 ## <a name="pre-requisites"></a>先决条件
 
@@ -39,7 +39,7 @@ ms.locfileid: "72182654"
 
 1.  打开 Visual Studio 2012
 2.  在 "**文件**" 菜单上，指向 "**新建**"，然后单击 "**项目**"
-3.  在左窗格中，单击 " **Visual C @ no__t**"，然后选择**控制台**模板
+3.  在左窗格中，单击 " **Visual C\#** "，然后选择**控制台**模板
 4.  输入**SpatialCodeFirst**作为项目名称，然后单击 **"确定"**
 
 ## <a name="define-a-new-model-using-code-first"></a>使用 Code First 定义新模型
@@ -67,7 +67,7 @@ public class University
 
 ## <a name="define-the-dbcontext-derived-type"></a>定义 DbContext 派生类型
 
-除了定义实体外，还需要定义派生自 DbContext 的类，并公开 DbSet @ no__t-0TEntity @ no__t 属性。 DbSet @ no__t-0TEntity @ no__t 属性使上下文知道要包括在模型中的类型。
+除了定义实体外，还需要定义派生自 DbContext 的类，并公开 DbSet&lt;TEntity&gt; 属性。 DbSet&lt;TEntity&gt; 属性使上下文知道要包括在模型中的类型。
 
 DbContext 派生类型的实例在运行时管理实体对象，这包括使用数据库中的数据填充对象、更改跟踪以及将数据保存到数据库。
 
@@ -144,12 +144,12 @@ The closest University to you is: School of Fine Art.
 
 若要查看数据库和数据，请执行以下操作：
 
-1.  在 Visual Studio 2012 主菜单中，选择**View** - @ no__t-2 **SQL Server 对象资源管理器**。
+1.  在 Visual Studio 2012 主菜单中，选择 "**查看** -&gt; **SQL Server 对象资源管理器**"。
 2.  如果 LocalDB 不在服务器列表中，请在**SQL Server**上单击鼠标右键按钮，然后选择 "**添加 SQL Server**使用默认**Windows 身份验证**连接到 LocalDB 实例
 3.  展开 LocalDB 节点
 4.  展开 "**数据库**" 文件夹，以查看新数据库并浏览到**大学**表
 5.  若要查看数据，请右键单击该表，然后选择 "**查看数据**"
 
-## <a name="summary"></a>总结
+## <a name="summary"></a>摘要
 
 在本演练中，我们介绍了如何在实体框架 Code First 中使用空间类型。 

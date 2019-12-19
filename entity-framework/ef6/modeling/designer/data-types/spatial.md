@@ -27,9 +27,9 @@ ms.locfileid: "72182505"
 ## <a name="watch-the-video"></a>观看视频
 此视频演示如何用 Entity Framework Designer 映射空间类型。 它还演示了如何使用 LINQ 查询查找两个位置之间的距离。
 
-**提供者**：Julia Kornich
+**提供者**： Julia Kornich
 
-**视频**：[WMV](https://download.microsoft.com/download/E/C/9/EC9E6547-8983-4C1F-A919-D33210E4B213/HDI-ITPro-MSDN-winvideo-spatialwithdesigner.wmv)@NO__T[-1 .WMV](https://download.microsoft.com/download/E/C/9/EC9E6547-8983-4C1F-A919-D33210E4B213/HDI-ITPro-MSDN-mp4video-spatialwithdesigner.m4v) | [WMV （ZIP）](https://download.microsoft.com/download/E/C/9/EC9E6547-8983-4C1F-A919-D33210E4B213/HDI-ITPro-MSDN-winvideo-spatialwithdesigner.zip)
+**视频**：[WMV](https://download.microsoft.com/download/E/C/9/EC9E6547-8983-4C1F-A919-D33210E4B213/HDI-ITPro-MSDN-winvideo-spatialwithdesigner.wmv) | [MP4](https://download.microsoft.com/download/E/C/9/EC9E6547-8983-4C1F-A919-D33210E4B213/HDI-ITPro-MSDN-mp4video-spatialwithdesigner.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/E/C/9/EC9E6547-8983-4C1F-A919-D33210E4B213/HDI-ITPro-MSDN-winvideo-spatialwithdesigner.zip)
 
 ## <a name="pre-requisites"></a>先决条件
 
@@ -39,7 +39,7 @@ ms.locfileid: "72182505"
 
 1.  打开 Visual Studio 2012
 2.  在 "**文件**" 菜单上，指向 "**新建**"，然后单击 "**项目**"
-3.  在左窗格中，单击 " **Visual C @ no__t**"，然后选择**控制台**模板
+3.  在左窗格中，单击 " **Visual C\#** "，然后选择**控制台**模板
 4.  输入**SpatialEFDesigner**作为项目名称，然后单击 **"确定"**
 
 ## <a name="create-a-new-model-using-the-ef-designer"></a>使用 EF 设计器创建新模型
@@ -55,15 +55,15 @@ ms.locfileid: "72182505"
 该向导执行下列操作：
 
 -   生成 EnumTestModel 文件，该文件定义概念模型、存储模型和这些模型之间的映射。 设置要嵌入到输出程序集的 .edmx 文件的元数据项目处理属性，以便将生成的元数据文件嵌入到程序集中。
--   添加对以下程序集的引用：EntityFramework、System.componentmodel、DataAnnotations 和 System.object。
+-   添加对以下程序集的引用： EntityFramework、System.componentmodel 和 DataAnnotations。
 -   创建 UniversityModel.tt 和 UniversityModel.Context.tt 文件，并将它们添加到 .edmx 文件下。 这些 T4 模板文件生成代码，该代码定义 DbContext 派生类型和映射到 .edmx 模型中的实体的 POCO 类型
 
 ## <a name="add-a-new-entity-type"></a>添加新的实体类型
 
-1.  右键单击设计图面的空白区域，选择 "**外 &gt;" 实体**，此时将显示 "新建实体" 对话框。
+1.  右键单击设计图面的空白区域，选择 "**外接&gt; 实体**"，将显示 "新建实体" 对话框。
 2.  指定类型名称的**大学**，并为键属性名称指定**UniversityID** ，将类型保留为**Int32**
 3.  单击“确定”
-4.  右键单击该实体，然后选择 "**添加 &gt; 标量属性**"
+4.  右键单击该实体，然后选择 "**添加新的&gt; 标量属性**"
 5.  将新属性重命名为**名称**
 6.  添加另一个标量属性，并将其重命名为**Location**打开属性窗口并将新属性的类型更改为**Geography**
 7.  保存模型并生成项目
@@ -75,11 +75,11 @@ ms.locfileid: "72182505"
 现在，我们可以生成一个基于该模型的数据库。
 
 1.  右键单击 Entity Designer 图面上的空白区域，然后选择 "**从模型生成数据库**"
-2.  随即显示 "生成数据库" 向导的 "选择数据连接" 对话框，单击 "**新建连接**" 按钮 "指定 **（localdb） \\mssqllocaldb** " 作为数据库的服务器名称和**大学**，并单击 **"确定"**
+2.  "生成数据库" 向导的 "选择您的数据连接" 对话框随即出现，单击 "**新建连接**" 按钮 "指定 **（localdb）\\mssqllocaldb**作为数据库的服务器名称和**大学**，并单击 **" 确定 "**
 3.  询问是否要创建新数据库的对话框将弹出，单击 **"是"** 。
-4.  单击 "**下一步**"，"创建数据库向导" 生成用于创建数据库的数据定义语言（ddl）。在 "摘要和设置" 对话框中显示该 ddl 不包含映射到的表的定义枚举类型
+4.  单击 "**下一步**"，"创建数据库向导" 生成用于创建数据库的数据定义语言（ddl）。在 "摘要和设置" 对话框中显示该 ddl 不包含映射到枚举类型的表的定义
 5.  单击 "**完成**"，单击 "完成" 不执行 DDL 脚本。
-6.  创建数据库向导执行以下操作：在 T-sql 编辑器中打开**UniversityModel**生成存储架构并将连接字符串信息添加到 app.config 文件中的映射部分。
+6.  "创建数据库向导" 执行以下操作：在 T-sql 编辑器中打开**UniversityModel** ，并生成 edmx 文件的存储架构和映射部分，并将连接字符串信息添加到 app.config 文件
 7.  在 T-sql 编辑器中单击鼠标右键，然后选择 "**执行**连接到服务器" 对话框，输入步骤2中的连接信息，然后单击 "**连接**"
 8.  若要查看生成的架构，请在 SQL Server 对象资源管理器中右键单击数据库名称，然后选择 "**刷新**"
 
@@ -126,6 +126,6 @@ The closest University to you is: School of Fine Art.
 
 若要查看数据库中的数据，请在 SQL Server 对象资源管理器中右键单击数据库名称，然后选择 "**刷新**"。 然后，单击表上的鼠标右键，然后选择 "**查看数据**"。
 
-## <a name="summary"></a>总结
+## <a name="summary"></a>摘要
 
 在本演练中，我们介绍了如何使用 Entity Framework Designer 映射空间类型，以及如何在代码中使用空间类型。 

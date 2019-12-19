@@ -16,9 +16,9 @@ ms.locfileid: "72182450"
 ## <a name="watch-the-video"></a>观看视频
 此视频介绍了使用实体框架进行 Database First 开发的简介。 Database First 允许从现有数据库对模型进行反向工程。 模型存储在 EDMX 文件（.edmx 扩展名）中，可在 Entity Framework Designer 中查看和编辑。 在应用程序中与之交互的类将自动从 EDMX 文件生成。
 
-**提供者**：[Rowan 莎莎](https://romiller.com/)
+**主讲人**：[Rowan Miller](https://romiller.com/)
 
-**视频**：[WMV](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-winvideo-databasefirst.wmv)@NO__T[-1 .WMV](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-mp4video-databasefirst.m4v) | [WMV （ZIP）](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-winvideo-databasefirst.zip)
+**视频**：[WMV](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-winvideo-databasefirst.wmv) | [MP4](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-mp4video-databasefirst.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-winvideo-databasefirst.zip)
 
 ## <a name="pre-requisites"></a>先决条件
 
@@ -28,7 +28,7 @@ ms.locfileid: "72182450"
 
  
 
-## <a name="1-create-an-existing-database"></a>1.创建现有数据库
+## <a name="1-create-an-existing-database"></a>1. 创建现有数据库
 
 通常，当目标为现有数据库时，它将被创建，但在本演练中，我们需要创建一个要访问的数据库。
 
@@ -79,23 +79,23 @@ CREATE TABLE [dbo].[Posts] (
 );
 ```
 
-## <a name="2-create-the-application"></a>2.创建应用程序
+## <a name="2-create-the-application"></a>2. 创建应用程序
 
 为了简单起见，我们将构建一个使用 Database First 执行数据访问的基本控制台应用程序：
 
 -   打开 Visual Studio
--   **文件-&gt; &gt; 项目 。**
+-   **文件-&gt;&gt; 项目 。**
 -   从左侧菜单和**控制台应用程序**选择**Windows**
 -   输入**DatabaseFirstSample**作为名称
 -   选择“确定”
 
  
 
-## <a name="3-reverse-engineer-model"></a>3.反向工程模型
+## <a name="3-reverse-engineer-model"></a>3. 反向工程模型
 
 我们将使用在 Visual Studio 中包含的 Entity Framework Designer 来创建模型。
 
--   **项目-@no__t "添加新项 ..."**
+-   **项目-&gt; "添加新项 ..."**
 -   从左侧菜单中选择 "**数据**"，然后**ADO.NET 实体数据模型**
 -   输入**BloggingModel**作为名称，然后单击 **"确定"**
 -   这将启动**实体数据模型向导**
@@ -123,8 +123,8 @@ CREATE TABLE [dbo].[Posts] (
 
 首先，我们需要从 NuGet 获取最新版本的实体框架。
 
--   **项目– &gt; 管理 NuGet 程序包 ...** 
-    *如果你没有 "**管理 NuGet 包 ...** " 选项，则应安装[最新版本的 nuget](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) *
+-   **项目–&gt; 管理 NuGet 程序包 ...** 
+    *如果你没有 "**管理 nuget 包 ...** " 选项，则应安装[最新版本的 nuget](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) *
 -   选择 "**联机**" 选项卡
 -   选择**EntityFramework**包
 -   单击 "**安装**"
@@ -133,13 +133,13 @@ CREATE TABLE [dbo].[Posts] (
 
 -   在 EF 设计器中右键单击模型的空位置，然后选择 "**添加代码生成项 ...** "
 -   从左侧菜单中选择 "**联机模板**"，然后搜索**DbContext**
--   选择**适用于 C @ no__t 的 EF DbContext 生成器**，并输入**BloggingModel**作为名称，然后单击 "**添加**"
+-   选择**用于 C\#的 EF DbContext 生成器**，输入**BloggingModel**作为名称，然后单击 "**添加**"
 
     ![DbContext 模板](~/ef6/media/dbcontexttemplate.png)
 
  
 
-## <a name="4-reading--writing-data"></a>4.读取 & 写入数据
+## <a name="4-reading--writing-data"></a>4. 读取 & 写入数据
 
 现在，我们有了一个模型，可以使用它来访问某些数据了。 要用于访问数据的类将根据 EDMX 文件自动生成。
 
@@ -194,7 +194,7 @@ Press any key to exit...
 ```
  
 
-## <a name="5-dealing-with-database-changes"></a>5.处理数据库更改
+## <a name="5-dealing-with-database-changes"></a>5. 处理数据库更改
 
 现在，需要对数据库架构进行一些更改，我们进行这些更改时，我们还需要更新模型以反映这些更改。
 
@@ -215,7 +215,7 @@ CREATE TABLE [dbo].[Users]
 
 -   在 EF 设计器中右键单击模型的空白点，然后选择 "从数据库更新模型 ..."，这将启动更新向导
 -   在更新向导的 "添加" 选项卡上，选中 "表" 旁边的框，这表示要从架构中添加任何新表。
-    @no__t 0The 刷新 "选项卡显示模型中的所有现有表，这些表将在更新过程中检查更改。删除选项卡显示已从架构中删除的所有表，并将作为更新的一部分从模型中删除。这两个选项卡上的信息是自动检测的，并仅供参考，无法更改任何设置。 *
+    *"刷新" 选项卡显示模型中的所有现有表，将在更新过程中检查这些表中的更改。删除选项卡显示已从架构中删除的所有表，并将作为更新的一部分从模型中删除。这两个选项卡上的信息是自动检测的，仅提供提供信息，无法更改任何设置。*
 
     ![刷新向导](~/ef6/media/refreshwizard.png)
 
@@ -227,6 +227,6 @@ CREATE TABLE [dbo].[Users]
 
 ![已更新模型](~/ef6/media/modelupdated.png)
 
-## <a name="summary"></a>总结
+## <a name="summary"></a>摘要
 
 在本演练中，我们将讨论 Database First 开发，这允许我们基于现有数据库在 EF 设计器中创建模型。 然后，使用该模型从数据库中读取和写入一些数据。 最后，我们更新了模型以反映对数据库架构所做的更改。

@@ -16,9 +16,9 @@ ms.locfileid: "72182445"
 ## <a name="watch-the-video"></a>观看视频
 此视频和分步演练提供使用实体框架 Model First 开发的简介。 Model First 允许使用 Entity Framework Designer 创建新模型，然后从该模型生成数据库架构。 模型存储在 EDMX 文件（.edmx 扩展名）中，可在 Entity Framework Designer 中查看和编辑。 在应用程序中与之交互的类将自动从 EDMX 文件生成。
 
-**提供者**：[Rowan 莎莎](https://romiller.com/)
+**主讲人**：[Rowan Miller](https://romiller.com/)
 
-**视频**：[WMV](https://download.microsoft.com/download/5/B/1/5B1C338C-AFA7-4F68-B304-48BB008146EF/HDI-ITPro-MSDN-winvideo-modelfirst.wmv)@NO__T[-1 .WMV](https://download.microsoft.com/download/5/B/1/5B1C338C-AFA7-4F68-B304-48BB008146EF/HDI-ITPro-MSDN-mp4video-modelfirst.m4v) | [WMV （ZIP）](https://download.microsoft.com/download/5/B/1/5B1C338C-AFA7-4F68-B304-48BB008146EF/HDI-ITPro-MSDN-winvideo-modelfirst.zip)
+**视频**：[WMV](https://download.microsoft.com/download/5/B/1/5B1C338C-AFA7-4F68-B304-48BB008146EF/HDI-ITPro-MSDN-winvideo-modelfirst.wmv) | [MP4](https://download.microsoft.com/download/5/B/1/5B1C338C-AFA7-4F68-B304-48BB008146EF/HDI-ITPro-MSDN-mp4video-modelfirst.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/5/B/1/5B1C338C-AFA7-4F68-B304-48BB008146EF/HDI-ITPro-MSDN-winvideo-modelfirst.zip)
 
 ## <a name="pre-requisites"></a>先决条件
 
@@ -26,21 +26,21 @@ ms.locfileid: "72182445"
 
 如果你使用的是 Visual Studio 2010，你还需要安装[NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) 。
 
-## <a name="1-create-the-application"></a>1.创建应用程序
+## <a name="1-create-the-application"></a>1. 创建应用程序
 
 为了简单起见，我们将构建一个使用 Model First 执行数据访问的基本控制台应用程序：
 
 -   打开 Visual Studio
--   **文件-&gt; &gt; 项目 。**
+-   **文件-&gt;&gt; 项目 。**
 -   从左侧菜单和**控制台应用程序**选择**Windows**
 -   输入**ModelFirstSample**作为名称
 -   选择“确定”
 
-## <a name="2-create-model"></a>2.创建模型
+## <a name="2-create-model"></a>2. 创建模型
 
 我们将使用在 Visual Studio 中包含的 Entity Framework Designer 来创建模型。
 
--   **项目-@no__t "添加新项 ..."**
+-   **项目-&gt; "添加新项 ..."**
 -   从左侧菜单中选择 "**数据**"，然后**ADO.NET 实体数据模型**
 -   输入**BloggingModel**作为名称，然后单击 **"确定"** ，这将启动实体数据模型向导
 -   选择 "**空模型**"，然后单击 "**完成**"
@@ -51,24 +51,24 @@ ms.locfileid: "72182445"
 
 -   右键单击设计图面，然后选择 "**属性**"
 -   在属性窗口将**实体容器名称**更改为 **"bloggingcontext"** 
-    *这是将为你生成的派生上下文的名称，上下文表示与数据库的会话，从而使我们能够进行查询并保存数据*
--   右键单击设计图面，然后选择 "**添加 &gt; 实体 ...** "
+    *这是将为你生成的派生上下文的名称，上下文表示与数据库的会话，从而使我们能够查询和保存数据*
+-   右键单击设计图面，然后选择 "**添加新的-&gt; 实体 ...** "
 -   以 "实体名称" 和 " **BlogId** " 作为键名称输入**博客**，然后单击 **"确定"**
 
     ![添加博客实体](~/ef6/media/addblogentity.png)
 
--   右键单击设计图面上的新实体，然后选择 "**添加新的 &gt; 标量属性**"，输入**name**作为属性的名称。
+-   右键单击设计图面上的新实体，然后选择 "**添加新的&gt; 标量属性**"，输入**name**作为属性的名称。
 -   重复此过程以添加**Url**属性。
--   右键单击设计图面上的 " **Url** " 属性，然后选择 "**属性**"，在属性窗口将**可为 Null**的设置更改为**True**
-     *，这允许我们将博客保存到数据库，而无需向其分配 Url*
+-   右键单击设计图面上的 " **Url** " 属性，然后选择 "**属性**"，在 "属性窗口将**可为 Null**的设置更改为**True**
+    *这样就可以将博客保存到数据库，而无需向其分配 Url*
 -   使用刚才了解到的技术，添加具有**PostId**键属性的**Post**实体
 -   向**Post**实体添加**Title**和**Content**标量属性
 
 现在我们有了几个实体，可以在它们之间添加关联（或关系）。
 
--   右键单击设计图面，然后选择 "**添加 &gt; 关联 ...** "
--   将关系点的一端作为**博客**，使其重数为**1** ，另一个终结点使用**多**个 
-    **的重数**，*这意味着博客包含多篇文章，张贴内容属于一个博客*
+-   右键单击设计图面，然后选择 "**添加新&gt; 关联 ...** "
+-   将关系点的一端作为**博客**，使其重数为**1** ，另一个终结**点使用** **多个**
+    的重数，*这意味着，博客有多篇文章，张贴内容属于一个博客*
 -   确保选中 "**将外键属性添加到 ' Post ' 实体**" 框，然后单击 **"确定**"
 
     ![添加 Association MF](~/ef6/media/addassociationmf.png)
@@ -83,8 +83,8 @@ ms.locfileid: "72182445"
 
 首先，我们需要从 NuGet 获取最新版本的实体框架。
 
--   **项目– &gt; 管理 NuGet 程序包 ...** 
-    *如果你没有 "**管理 NuGet 包 ...** " 选项，则应安装[最新版本的 nuget](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) *
+-   **项目–&gt; 管理 NuGet 程序包 ...** 
+    *如果你没有 "**管理 nuget 包 ...** " 选项，则应安装[最新版本的 nuget](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) *
 -   选择 "**联机**" 选项卡
 -   选择**EntityFramework**包
 -   单击 "**安装**"
@@ -93,11 +93,11 @@ ms.locfileid: "72182445"
 
 -   在 EF 设计器中右键单击模型的空位置，然后选择 "**添加代码生成项 ...** "
 -   从左侧菜单中选择 "**联机模板**"，然后搜索**DbContext**
--   选择**适用于 C @ no__t 的 EF DbContext 生成器**，并输入**BloggingModel**作为名称，然后单击 "**添加**"
+-   选择**用于 C\#的 EF DbContext 生成器**，输入**BloggingModel**作为名称，然后单击 "**添加**"
 
     ![DbContext 模板](~/ef6/media/dbcontexttemplate.png)
 
-## <a name="3-generating-the-database"></a>3.正在生成数据库
+## <a name="3-generating-the-database"></a>3. 生成数据库
 
 考虑到我们的模型，实体框架可以计算一个数据库架构，该架构将允许我们使用模型存储和检索数据。
 
@@ -120,7 +120,7 @@ ms.locfileid: "72182445"
 -   显示脚本后，单击 "**完成**"，脚本将添加到项目中并打开
 -   右键单击该脚本，然后选择 "**执行**"，系统将提示您指定要连接到的数据库，指定 LocalDB 或 SQL Server Express，具体取决于您使用的 Visual Studio 的版本
 
-## <a name="4-reading--writing-data"></a>4.读取 & 写入数据
+## <a name="4-reading--writing-data"></a>4. 读取 & 写入数据
 
 现在，我们有了一个模型，可以使用它来访问某些数据了。 要用于访问数据的类将根据 EDMX 文件自动生成。
 
@@ -172,7 +172,7 @@ ADO.NET Blog
 Press any key to exit...
 ```
 
-## <a name="5-dealing-with-model-changes"></a>5.处理模型更改
+## <a name="5-dealing-with-model-changes"></a>5. 处理模型更改
 
 现在，可以对模型进行一些更改，当我们进行这些更改时，我们还需要更新数据库架构。
 
@@ -182,8 +182,8 @@ Press any key to exit...
 
     ![添加用户实体](~/ef6/media/adduserentity.png)
 
--   右键单击设计图面上的 "**用户名**" 属性，然后选择 "**属性**"，在 "属性窗口将**MaxLength**设置更改为**50**
-    ，*这会将用户名中存储的数据限制为50字符*
+-   右键单击设计图面上的 "**用户名**" 属性，然后选择 "**属性**"，在 "属性窗口将" **MaxLength** "设置更改为**50**
+    *这会将用户名中存储的数据限制为50个字符*
 -   向**用户**实体添加**DisplayName**标量属性
 
 现在，我们有了一个更新的模型，我们可以更新数据库以适应新的用户实体类型。
@@ -192,9 +192,9 @@ Press any key to exit...
 -   单击 "**完成**"
 -   你可能会收到有关覆盖模型的现有 DDL 脚本以及映射和存储部分的警告，请单击 **"是"** 以显示这两个警告
 -   将为您打开用于创建数据库的更新的 SQL 脚本  
-    生成的0The 脚本将删除所有现有的表，然后从头开始重新创建该架构。 @no__t这可能适用于本地开发，但并不适合将更改推送到已部署的数据库。如果需要将更改发布到已部署的数据库，则需要编辑该脚本或使用架构比较工具来计算迁移脚本。 *
+    *生成的脚本将删除所有现有的表，然后从头开始重新创建该架构。这可能适用于本地开发，但并不适合将更改推送到已部署的数据库。如果需要将更改发布到已部署的数据库，则需要编辑该脚本或使用架构比较工具来计算迁移脚本。*
 -   右键单击该脚本，然后选择 "**执行**"，系统将提示您指定要连接到的数据库，指定 LocalDB 或 SQL Server Express，具体取决于您使用的 Visual Studio 的版本
 
-## <a name="summary"></a>总结
+## <a name="summary"></a>摘要
 
 在本演练中，我们介绍 Model First 开发，这允许我们在 EF 设计器中创建模型，然后从该模型生成数据库。 然后，使用该模型从数据库中读取和写入一些数据。 最后，我们更新了模型，然后重新创建了数据库架构以匹配模型。
