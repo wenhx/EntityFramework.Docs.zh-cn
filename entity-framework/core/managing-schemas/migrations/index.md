@@ -4,12 +4,12 @@ author: bricelam
 ms.author: bricelam
 ms.date: 10/05/2018
 uid: core/managing-schemas/migrations/index
-ms.openlocfilehash: 7de465d483ab2c183c7f37d08c84de00ef113651
-ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
+ms.openlocfilehash: dc0c1ae1a03c98c6f230557dc0bdd4d29ec191dd
+ms.sourcegitcommit: 32c51c22988c6f83ed4f8e50a1d01be3f4114e81
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 12/04/2019
-ms.locfileid: "74824498"
+ms.lasthandoff: 12/27/2019
+ms.locfileid: "75502196"
 ---
 # <a name="migrations"></a>迁移
 
@@ -39,13 +39,13 @@ ms.locfileid: "74824498"
 
 [定义初始模型](xref:core/modeling/index)后，即应创建数据库。 若要添加初始迁移，请运行以下命令。
 
-## <a name="net-core-clitabdotnet-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
+### <a name="net-core-clitabdotnet-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef migrations add InitialCreate
 ```
 
-## <a name="visual-studiotabvs"></a>[Visual Studio](#tab/vs)
+### <a name="visual-studiotabvs"></a>[Visual Studio](#tab/vs)
 
 ``` powershell
 Add-Migration InitialCreate
@@ -68,13 +68,13 @@ Add-Migration InitialCreate
 
 接下来，将迁移应用到数据库以创建架构。
 
-## <a name="net-core-clitabdotnet-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
+### <a name="net-core-clitabdotnet-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef database update
 ```
 
-## <a name="visual-studiotabvs"></a>[Visual Studio](#tab/vs)
+### <a name="visual-studiotabvs"></a>[Visual Studio](#tab/vs)
 
 ``` powershell
 Update-Database
@@ -86,13 +86,13 @@ Update-Database
 
 更改 EF Core 模型后，数据库架构可能不同步。为使其保持最新，请再添加一个迁移。 迁移名称的用途与版本控制系统中的提交消息类似。 例如，如果更改对于评审是一个新的实体类，可以选择一个名称，如 AddProductReviews  。
 
-## <a name="net-core-clitabdotnet-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
+### <a name="net-core-clitabdotnet-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef migrations add AddProductReviews
 ```
 
-## <a name="visual-studiotabvs"></a>[Visual Studio](#tab/vs)
+### <a name="visual-studiotabvs"></a>[Visual Studio](#tab/vs)
 
 ``` powershell
 Add-Migration AddProductReviews
@@ -147,13 +147,13 @@ migrationBuilder.DropColumn(
 
 使用相应命令将迁移应用到数据库。
 
-## <a name="net-core-clitabdotnet-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
+### <a name="net-core-clitabdotnet-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef database update
 ```
 
-## <a name="visual-studiotabvs"></a>[Visual Studio](#tab/vs)
+### <a name="visual-studiotabvs"></a>[Visual Studio](#tab/vs)
 
 ``` powershell
 Update-Database
@@ -175,13 +175,13 @@ Update-Database
 
 有时，你可能在添加迁移后意识到需要在应用迁移前对 EF Core 模型作出其他更改。 要删除上个迁移，请使用如下命令。
 
-## <a name="net-core-clitabdotnet-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
+### <a name="net-core-clitabdotnet-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef migrations remove
 ```
 
-## <a name="visual-studiotabvs"></a>[Visual Studio](#tab/vs)
+### <a name="visual-studiotabvs"></a>[Visual Studio](#tab/vs)
 
 ``` powershell
 Remove-Migration
@@ -195,13 +195,13 @@ Remove-Migration
 
 如果已对数据库应用一个迁移（或多个迁移），但需将其复原，则可使用同一命令来应用迁移，并指定回退时的目标迁移名称。
 
-## <a name="net-core-clitabdotnet-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
+### <a name="net-core-clitabdotnet-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef database update LastGoodMigration
 ```
 
-## <a name="visual-studiotabvs"></a>[Visual Studio](#tab/vs)
+### <a name="visual-studiotabvs"></a>[Visual Studio](#tab/vs)
 
 ``` powershell
 Update-Database LastGoodMigration
@@ -213,13 +213,13 @@ Update-Database LastGoodMigration
 
 调试迁移或将其部署到生产数据库时，生成一个 SQL 脚本很有帮助。 之后可进一步检查该脚本的准确性，并对其作出调整以满足生产数据库的需求。 该脚本还可与部署技术结合使用。 基本命令如下。
 
-## <a name="net-core-clitabdotnet-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
+### <a name="net-core-clitabdotnet-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef migrations script
 ```
 
-## <a name="visual-studiotabvs"></a>[Visual Studio](#tab/vs)
+### <a name="visual-studiotabvs"></a>[Visual Studio](#tab/vs)
 
 ``` powershell
 Script-Migration
