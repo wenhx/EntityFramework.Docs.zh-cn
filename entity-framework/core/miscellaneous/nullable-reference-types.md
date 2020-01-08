@@ -4,12 +4,12 @@ author: roji
 ms.date: 09/09/2019
 ms.assetid: bde4e0ee-fba3-4813-a849-27049323d301
 uid: core/miscellaneous/nullable-reference-types
-ms.openlocfilehash: 055f492214596506ce2c28485ade359d175c4ac2
-ms.sourcegitcommit: 37d0e0fd1703467918665a64837dc54ad2ec7484
+ms.openlocfilehash: 0d05902566b6b166f1267915d9f698ed29dff588
+ms.sourcegitcommit: 32c51c22988c6f83ed4f8e50a1d01be3f4114e81
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/16/2019
-ms.locfileid: "72445896"
+ms.lasthandoff: 12/27/2019
+ms.locfileid: "75502062"
 ---
 # <a name="working-with-nullable-reference-types"></a>使用可以为 Null 的引用类型
 
@@ -19,7 +19,7 @@ C#8引入了一种名[为 null 的引用类型](/dotnet/csharp/tutorials/nullabl
 
 ## <a name="required-and-optional-properties"></a>必需属性和可选属性
 
-对于必需属性和可选属性及其与可为 null 的引用类型的交互，主要文档是[必需的和可选的属性](xref:core/modeling/required-optional)页。 建议首先阅读该页面。
+对于必需属性和可选属性及其与可为 null 的引用类型的交互，主要文档是[必需的和可选的属性](xref:core/modeling/entity-properties#required-and-optional-properties)页。 建议首先阅读该页面。
 
 > [!NOTE]
 > 在现有项目上启用可以为 null 的引用类型时要格外小心：现在配置为可选的引用类型属性现在将配置为 "必需"，除非它们显式批注为可为 null。 管理关系数据库架构时，这可能会导致生成更改数据库列的为 null 性的迁移。
