@@ -5,12 +5,12 @@ author: AndriySvyryd
 ms.author: ansvyryd
 ms.date: 11/05/2019
 uid: core/providers/cosmos/index
-ms.openlocfilehash: 162e5d387bcbfbf1e90baf27fc62dd2ed562ae58
-ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
+ms.openlocfilehash: 6903aab4911f7478afe3d8987a791ae1c5ccebce
+ms.sourcegitcommit: 32c51c22988c6f83ed4f8e50a1d01be3f4114e81
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 12/04/2019
-ms.locfileid: "74824548"
+ms.lasthandoff: 12/27/2019
+ms.locfileid: "75502209"
 ---
 # <a name="ef-core-azure-cosmos-db-provider"></a>EF Core Azure Cosmos DB Provider
 
@@ -28,13 +28,13 @@ ms.locfileid: "74824548"
 
 安装 [Microsoft.EntityFrameworkCore.Cosmos NuGet 包](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Cosmos/)。
 
-## <a name="net-core-clitabdotnet-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
+### <a name="net-core-clitabdotnet-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet add package Microsoft.EntityFrameworkCore.Cosmos
 ```
 
-## <a name="visual-studiotabvs"></a>[Visual Studio](#tab/vs)
+### <a name="visual-studiotabvs"></a>[Visual Studio](#tab/vs)
 
 ``` powershell
 Install-Package Microsoft.EntityFrameworkCore.Cosmos
@@ -54,7 +54,7 @@ Install-Package Microsoft.EntityFrameworkCore.Cosmos
 > [!WARNING]
 > 为了简单起见，此处对终结点和密钥进行了硬编码，但在生产应用中，应[安全地存储](/aspnet/core/security/app-secrets#secret-manager)这些终结点和密钥
 
-在此示例中，`Order` 是一个简单实体，其中包含对[从属类型](../../modeling/owned-entities.md) `StreetAddress` 的引用。
+在本例中，`Order` 是一个简单实体，其中包含对[从属类型](../../modeling/owned-entities.md) `StreetAddress` 的引用。
 
 [!code-csharp[Order](../../../../samples/core/Cosmos/ModelBuilding/Order.cs?name=Order)]
 
