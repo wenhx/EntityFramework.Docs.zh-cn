@@ -5,12 +5,12 @@ ms.author: bricelam
 ms.date: 11/01/2018
 ms.assetid: 2BDE29FC-4161-41A0-841E-69F51CCD9341
 uid: core/modeling/spatial
-ms.openlocfilehash: 335d4f3a601624f7c994b7dcacefe4ef6798beb3
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 8dae1ab949c77ffa08904b12a5716b729e6913a1
+ms.sourcegitcommit: 32c51c22988c6f83ed4f8e50a1d01be3f4114e81
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655601"
+ms.lasthandoff: 12/27/2019
+ms.locfileid: "75502235"
 ---
 # <a name="spatial-data"></a>空间数据
 
@@ -48,12 +48,12 @@ optionsBuilder.UseSqlServer(
 
 有几种空间数据类型。 使用哪种类型取决于您想要允许的形状的类型。 下面是可用于模型中的属性的 NTS 类型的层次结构。 它们位于 `NetTopologySuite.Geometries` 命名空间中。
 
-* Geometry
+* 几何结构
   * 点
   * LineString
   * 多边形
   * GeometryCollection
-    * 单
+    * MultiPoint
     * MultiLineString
     * MultiPolygon
 
@@ -207,13 +207,13 @@ var currentCountry = db.Countries
     .FirstOrDefault(c => c.Border.Contains(currentLocation));
 ```
 
-## <a name="sql-server"></a>SQL Server
+## <a name="sql-server"></a>SQL 服务器
 
 如果你正在使用 SQL Server，你还应该注意一些其他问题。
 
 ### <a name="geography-or-geometry"></a>地理或几何图形
 
-默认情况下，空间属性映射到 SQL Server 中的 `geography` 列。 若要使用 `geometry`，请在模型中[配置列类型](xref:core/modeling/relational/data-types)。
+默认情况下，空间属性映射到 SQL Server 中的 `geography` 列。 若要使用 `geometry`，请在模型中[配置列类型](xref:core/modeling/entity-properties#column-data-types)。
 
 ### <a name="geography-polygon-rings"></a>地理多边形环
 
@@ -232,7 +232,7 @@ var currentCountry = db.Countries
 
 ### <a name="installing-spatialite"></a>安装 SpatiaLite
 
-在 Windows 上，本机 mod_spatialite 库以 NuGet 包依赖关系的形式分发。 其他平台需要单独安装它。 通常使用软件程序包管理器完成此操作。 例如，可以在 Ubuntu 上使用 APT 和 MacOS 上的 Homebrew。
+在 Windows 上，本机 mod_spatialite 库以 NuGet 包的依赖项的形式分发。 其他平台需要单独安装它。 通常使用软件程序包管理器完成此操作。 例如，可以在 Ubuntu 上使用 APT 和 MacOS 上的 Homebrew。
 
 ``` sh
 # Ubuntu
@@ -251,7 +251,7 @@ modelBuilder.Entity<City>().Property(c => c.Location)
     .ForSqliteHasSrid(4326);
 ```
 
-### <a name="dimension"></a>维度
+### <a name="dimension"></a>Dimension
 
 类似于 SRID，列的维度（或坐标）也被指定为列的一部分。 默认坐标为 X 和 Y。使用 ForSqliteHasDimension 方法启用其他坐标（Z 和 M）。
 

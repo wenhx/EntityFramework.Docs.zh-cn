@@ -4,12 +4,12 @@ description: 如何在使用 Entity Framework Core 时配置实体类型之间�
 author: AndriySvyryd
 ms.date: 11/21/2019
 uid: core/modeling/relationships
-ms.openlocfilehash: 452169c902d56fda0a65a5c2846a9b42c80640fd
-ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
+ms.openlocfilehash: 6b3e0636bfa266b78baafe1b6e318c9707294560
+ms.sourcegitcommit: 32c51c22988c6f83ed4f8e50a1d01be3f4114e81
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 12/04/2019
-ms.locfileid: "74824763"
+ms.lasthandoff: 12/27/2019
+ms.locfileid: "75502183"
 ---
 # <a name="relationships"></a>关系
 
@@ -42,7 +42,7 @@ ms.locfileid: "74824763"
 
 下面的代码显示 `Blog` 与 `Post` 之间的一对多关系。
 
-[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/Full.cs#Entities)]
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/Full.cs#Full)]
 
 * `Post` 是依赖实体
 
@@ -71,13 +71,13 @@ ms.locfileid: "74824763"
 
 * 如果在两个类型之间找到一对导航属性，则这些属性将配置为同一关系的反向导航属性。
 
-* 如果依赖实体包含名称为 mathing 的属性，则该属性将被配置为外键：
+* 如果依赖实体包含名称与其中一种模式相匹配的属性，则该属性将被配置为外键：
   * `<navigation property name><principal key property name>`
   * `<navigation property name>Id`
   * `<principal entity name><principal key property name>`
   * `<principal entity name>Id`
 
-[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/Full.cs?name=Entities&highlight=6,15,16)]
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/Full.cs?name=Full&highlight=6,15-16)]
 
 在此示例中，突出显示的属性将用于配置关系。
 
@@ -91,7 +91,7 @@ ms.locfileid: "74824763"
 
 尽管建议在依赖实体类中定义外键属性，但这并不是必需的。 如果未找到外键属性，则会引入名称为 `<navigation property name><principal key property name>` 或 `<principal entity name><principal key property name>` 的[阴影外键属性](shadow-properties.md)（如果依赖类型上没有导航）。
 
-[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/NoForeignKey.cs?name=Entities&highlight=6,15)]
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/NoForeignKey.cs?name=NoForeignKey&highlight=6,15)]
 
 在此示例中，隐藏外键是 `BlogId` 的，因为预先计算导航名称将是冗余的。
 
@@ -102,7 +102,7 @@ ms.locfileid: "74824763"
 
 只包含一个导航属性（无反向导航，没有外键属性）就足以具有约定定义的关系。 还可以有一个导航属性和一个外键属性。
 
-[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/OneNavigation.cs?name=Entities&highlight=6)]
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/OneNavigation.cs?name=OneNavigation&highlight=6)]
 
 ### <a name="limitations"></a>限制
 
@@ -118,17 +118,17 @@ ms.locfileid: "74824763"
 
 ## <a name="manual-configuration"></a>手动配置
 
-#### <a name="fluent-apitabfluent-api"></a>[熟知 API](#tab/fluent-api)
+### <a name="fluent-apitabfluent-api"></a>[熟知 API](#tab/fluent-api)
 
 若要在熟知的 API 中配置关系，请首先标识构成关系的导航属性。 `HasOne` 或 `HasMany` 标识正在开始配置的实体类型上的导航属性。 然后，将调用链接到 `WithOne` 或 `WithMany` 来标识反向导航。 `HasOne`/`WithOne` 用于引用导航属性，`HasMany`/用于集合导航属性。
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/NoForeignKey.cs?highlight=14-16)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/NoForeignKey.cs?name=NoForeignKey&highlight=8-10)]
 
-#### <a name="data-annotationstabdata-annotations"></a>[数据批注](#tab/data-annotations)
+### <a name="data-annotationstabdata-annotations"></a>[数据批注](#tab/data-annotations)
 
 您可以使用数据批注来配置依赖项和主体实体上的导航属性如何配对。 这通常在两个实体类型之间存在多个导航属性对时执行。
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Relationships/InverseProperty.cs?highlight=33,36)]
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Relationships/InverseProperty.cs?name=InverseProperty&highlight=20,23)]
 
 > [!NOTE]
 > 只能在依赖实体上的属性上使用 [Required] 来影响关系的 requiredness。 [必需] 在主体实体的导航中通常会忽略，但这可能会导致实体成为依赖实体。
@@ -142,21 +142,27 @@ ms.locfileid: "74824763"
 
 如果只有一个导航属性，则 `WithOne` 和 `WithMany`有无参数重载。 这表示在概念上，关系的另一端有一个引用或集合，但实体类中不包含导航属性。
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/OneNavigation.cs?highlight=14-16)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/OneNavigation.cs?name=OneNavigation&highlight=8-10)]
 
 ### <a name="foreign-key"></a>外键
 
-#### <a name="fluent-apitabfluent-api"></a>[熟知 API](#tab/fluent-api)
+#### <a name="fluent-api-simple-keytabfluent-api-simple-key"></a>[熟知 API （简单密钥）](#tab/fluent-api-simple-key)
 
-您可以使用 "熟知 API" 来配置应用作给定关系的外键属性的属性。
+您可以使用熟知的 API 来配置应用作给定关系的外键属性的属性：
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ForeignKey.cs?highlight=17)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ForeignKey.cs?name=ForeignKey&highlight=11)]
 
-#### <a name="data-annotationstabdata-annotations"></a>[数据批注](#tab/data-annotations)
+#### <a name="fluent-api-composite-keytabfluent-api-composite-key"></a>[熟知 API （组合键）](#tab/fluent-api-composite-key)
 
-您可以使用数据批注来配置应用作给定关系的外键属性的属性。 通常，当不按约定发现外键属性时，会执行此操作。
+您可以使用熟知的 API 来配置哪些属性应用作给定关系的复合外键属性：
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Relationships/ForeignKey.cs?highlight=30)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/CompositeForeignKey.cs?name=CompositeForeignKey&highlight=13)]
+
+#### <a name="data-annotations-simple-keytabdata-annotations-simple-key"></a>[数据批注（简单键）](#tab/data-annotations-simple-key)
+
+您可以使用数据批注来配置应用作给定关系的外键属性的属性。 通常，当不按约定发现外键属性时，会执行此操作：
+
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Relationships/ForeignKey.cs?name=ForeignKey&highlight=17)]
 
 > [!TIP]  
 > 可以将 `[ForeignKey]` 批注放置在关系中的任一导航属性上。 它不需要在依赖实体类中定位导航属性。
@@ -166,38 +172,48 @@ ms.locfileid: "74824763"
 
 ---
 
-下面的代码演示如何配置复合外键。
-
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/CompositeForeignKey.cs?highlight=20)]
+#### <a name="shadow-foreign-key"></a>影子外键
 
 您可以使用 `HasForeignKey(...)` 的字符串重载将影子属性配置为外键（有关详细信息，请参阅[影子属性](shadow-properties.md)）。 建议先将影子属性显式添加到模型，然后再将其用作外键（如下所示）。
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ShadowForeignKey.cs#Sample)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ShadowForeignKey.cs?name=ShadowForeignKey&highlight=10,16)]
+
+#### <a name="foreign-key-constraint-name"></a>Foreign key 约束名称
+
+按照约定，以关系数据库为目标时，外键约束将命名 FK_<dependent type name> _<principal type name>_ <foreign key property name>。 对于复合外键 <foreign key property name> 成为外键属性名称的以下划线分隔的列表。
+
+你还可以配置约束名称，如下所示：
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ConstraintName.cs?name=ConstraintName&highlight=6-7)]
 
 ### <a name="without-navigation-property"></a>无导航属性
 
 不一定需要提供导航属性。 您可以直接在关系的一端提供外键。
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/NoNavigation.cs?highlight=14-17)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/NoNavigation.cs?name=NoNavigation&highlight=8-11)]
 
 ### <a name="principal-key"></a>主体密钥
 
 如果你希望外键引用主键之外的属性，则可以使用熟知的 API 来配置关系的主体键属性。 配置为主体密钥的属性将自动设置为[备用密钥](alternate-keys.md)。
 
+#### <a name="simple-keytabsimple-key"></a>[简单键](#tab/simple-key)
+
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/PrincipalKey.cs?name=PrincipalKey&highlight=11)]
 
-下面的代码演示如何配置复合主体键。
+#### <a name="composite-keytabcomposite-key"></a>[组合键](#tab/composite-key)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/CompositePrincipalKey.cs?name=Composite&highlight=11)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/CompositePrincipalKey.cs?name=CompositePrincipalKey&highlight=11)]
 
 > [!WARNING]  
 > 指定主体键属性的顺序必须与为外键指定这些属性的顺序一致。
+
+---
 
 ### <a name="required-and-optional-relationships"></a>必需和可选的关系
 
 您可以使用熟知的 API 来配置关系是必需的还是可选的。 最终，这会控制外键属性是必需的还是可选的。 当使用阴影状态外键时，这非常有用。 如果实体类中具有外键属性，则关系的 requiredness 取决于外键属性是必需还是可选（有关详细信息，请参阅[必需和可选属性](required-optional.md)）。
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/Required.cs?name=Required&highlight=11)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/Required.cs?name=Required&highlight=6)]
 
 > [!NOTE]
 > 调用 `IsRequired(false)` 还会使外键属性为可选，除非已对其进行配置。
@@ -208,7 +224,7 @@ ms.locfileid: "74824763"
 
 有关每个选项的详细讨论，请参阅[级联删除](../saving/cascade-delete.md)。
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/CascadeDelete.cs?name=CascadeDelete&highlight=11)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/CascadeDelete.cs?name=CascadeDelete&highlight=6)]
 
 ## <a name="other-relationship-patterns"></a>其他关系模式
 
@@ -216,7 +232,7 @@ ms.locfileid: "74824763"
 
 一对多关系在两侧都有一个引用导航属性。 它们遵循与一对多关系相同的约定，但在外键属性上引入了唯一索引，以确保只有一个依赖项与每个主体相关。
 
-[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/OneToOne.cs?name=Property&highlight=6,15,16)]
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/OneToOne.cs?name=OneToOne&highlight=6,15-16)]
 
 > [!NOTE]  
 > EF 会根据其检测外键属性的能力，选择其中一个实体作为依赖项。 如果选择了错误的实体作为依赖项，则可以使用熟知的 API 来更正此问题。
@@ -231,4 +247,4 @@ ms.locfileid: "74824763"
 
 目前尚不支持多对多关系，没有实体类来表示联接表。 但是，您可以通过包含联接表的实体类并映射两个不同的一对多关系，来表示多对多关系。
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToMany.cs?name=ManyToMany&highlight=11,12,13,14,16,17,18,19,39,40,41,42,43,44,45,46)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToMany.cs?name=ManyToMany&highlight=11-14,16-19,39-46)]
