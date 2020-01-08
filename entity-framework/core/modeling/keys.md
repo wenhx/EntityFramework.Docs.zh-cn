@@ -1,55 +1,78 @@
 ---
-title: EF Core 中的主键
+title: 密钥-EF Core
 description: 如何在使用 Entity Framework Core 时配置实体类型的密钥
 author: AndriySvyryd
 ms.author: ansvyryd
 ms.date: 11/06/2019
 uid: core/modeling/keys
-ms.openlocfilehash: fdaccb42259ba9dad97a05c626edd0291ca96cb0
-ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
+ms.openlocfilehash: abd65a5ea079a49fd7a3bbc84a9337f6ee19fab1
+ms.sourcegitcommit: 32c51c22988c6f83ed4f8e50a1d01be3f4114e81
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 12/04/2019
-ms.locfileid: "74824620"
+ms.lasthandoff: 12/27/2019
+ms.locfileid: "75502001"
 ---
-# <a name="keys-primary"></a><span data-ttu-id="4cc4e-103">键（主要）</span><span class="sxs-lookup"><span data-stu-id="4cc4e-103">Keys (primary)</span></span>
+# <a name="keys"></a><span data-ttu-id="87ff7-103">Keys</span><span class="sxs-lookup"><span data-stu-id="87ff7-103">Keys</span></span>
 
-<span data-ttu-id="4cc4e-104">键用作每个实体实例的主要唯一标识符。</span><span class="sxs-lookup"><span data-stu-id="4cc4e-104">A key serves as the primary unique identifier for each entity instance.</span></span> <span data-ttu-id="4cc4e-105">使用关系数据库时，这会映射到主键的概念。</span><span class="sxs-lookup"><span data-stu-id="4cc4e-105">When using a relational database this maps to the concept of a *primary key*.</span></span> <span data-ttu-id="4cc4e-106">您还可以配置不是主键的唯一标识符（有关详细信息，请参阅[备用键](alternate-keys.md)</span><span class="sxs-lookup"><span data-stu-id="4cc4e-106">You can also configure a unique identifier that is not the primary key (see [Alternate Keys](alternate-keys.md) for more information).</span></span>
+<span data-ttu-id="87ff7-104">键充当每个实体实例的唯一标识符。</span><span class="sxs-lookup"><span data-stu-id="87ff7-104">A key serves as a unique identifier for each entity instance.</span></span> <span data-ttu-id="87ff7-105">EF 中的大多数实体都有一个键，此键映射到关系数据库中*主键*的概念（对于没有键的实体，请参阅[无键实体](xref:core/modeling/keyless-entity-types)）。</span><span class="sxs-lookup"><span data-stu-id="87ff7-105">Most entities in EF have a single key, which maps to the concept of a *primary key* in relational databases (for entities without keys, see [Keyless entities](xref:core/modeling/keyless-entity-types)).</span></span> <span data-ttu-id="87ff7-106">实体可以有超过主键的其他键（有关详细信息，请参阅[备用键](#alternate-keys)）。</span><span class="sxs-lookup"><span data-stu-id="87ff7-106">Entities can have additional keys beyond the primary key (see [Alternate Keys](#alternate-keys) for more information).</span></span>
 
-<span data-ttu-id="4cc4e-107">可以使用以下方法之一来设置/创建主键。</span><span class="sxs-lookup"><span data-stu-id="4cc4e-107">One of the following methods can be used to setup/create a primary key.</span></span>
+<span data-ttu-id="87ff7-107">按照约定，将名为 `Id` 或 `<type name>Id` 的属性配置为实体的主键。</span><span class="sxs-lookup"><span data-stu-id="87ff7-107">By convention, a property named `Id` or `<type name>Id` will be configured as the primary key of an entity.</span></span>
 
-## <a name="conventions"></a><span data-ttu-id="4cc4e-108">约定</span><span class="sxs-lookup"><span data-stu-id="4cc4e-108">Conventions</span></span>
-
-<span data-ttu-id="4cc4e-109">默认情况下，将名为 `Id` 或 `<type name>Id` 的属性配置为实体的键。</span><span class="sxs-lookup"><span data-stu-id="4cc4e-109">By default, a property named `Id` or `<type name>Id` will be configured as the key of an entity.</span></span>
-
-[!code-csharp[Main](../../../samples/core/Modeling/Conventions/KeyId.cs?name=KeyId&highlight=3)]
-
-[!code-csharp[Main](../../../samples/core/Modeling/Conventions/KeyTypeNameId.cs?name=KeyId&highlight=3)]
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/KeyId.cs?name=KeyId&highlight=3,11)]
 
 > [!NOTE]
-> <span data-ttu-id="4cc4e-110">[拥有的实体类型](xref:core/modeling/owned-entities)使用不同的规则来定义密钥。</span><span class="sxs-lookup"><span data-stu-id="4cc4e-110">[Owned entity types](xref:core/modeling/owned-entities) use different rules to define keys.</span></span>
+> <span data-ttu-id="87ff7-108">[拥有的实体类型](xref:core/modeling/owned-entities)使用不同的规则来定义密钥。</span><span class="sxs-lookup"><span data-stu-id="87ff7-108">[Owned entity types](xref:core/modeling/owned-entities) use different rules to define keys.</span></span>
 
-## <a name="data-annotations"></a><span data-ttu-id="4cc4e-111">数据注释</span><span class="sxs-lookup"><span data-stu-id="4cc4e-111">Data Annotations</span></span>
+<span data-ttu-id="87ff7-109">可以将单个属性配置为实体的主键，如下所示：</span><span class="sxs-lookup"><span data-stu-id="87ff7-109">You can configure a single property to be the primary key of an entity as follows:</span></span>
 
-<span data-ttu-id="4cc4e-112">可以使用数据注释将单个属性配置为实体的键。</span><span class="sxs-lookup"><span data-stu-id="4cc4e-112">You can use Data Annotations to configure a single property to be the key of an entity.</span></span>
+## <a name="data-annotationstabdata-annotations"></a>[<span data-ttu-id="87ff7-110">数据注释</span><span class="sxs-lookup"><span data-stu-id="87ff7-110">Data Annotations</span></span>](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/KeySingle.cs?highlight=13)]
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/KeySingle.cs?name=KeySingle&highlight=3)]
 
-## <a name="fluent-api"></a><span data-ttu-id="4cc4e-113">Fluent API</span><span class="sxs-lookup"><span data-stu-id="4cc4e-113">Fluent API</span></span>
+## <a name="fluent-apitabfluent-api"></a>[<span data-ttu-id="87ff7-111">熟知 API</span><span class="sxs-lookup"><span data-stu-id="87ff7-111">Fluent API</span></span>](#tab/fluent-api)
 
-<span data-ttu-id="4cc4e-114">可以使用 Fluent API 将单个属性配置为实体的键。</span><span class="sxs-lookup"><span data-stu-id="4cc4e-114">You can use the Fluent API to configure a single property to be the key of an entity.</span></span>
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/KeySingle.cs?name=KeySingle&highlight=4)]
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/KeySingle.cs?highlight=11,12)]
+***
 
-<span data-ttu-id="4cc4e-115">Fluent API 还可用于将多个属性配置为实体的键（称为复合键）。</span><span class="sxs-lookup"><span data-stu-id="4cc4e-115">You can also use the Fluent API to configure multiple properties to be the key of an entity (known as a composite key).</span></span> <span data-ttu-id="4cc4e-116">只能使用 Fluent API 配置复合键 - 不能使用约定来设置复合键，也不能使用数据注释来配置复合键。</span><span class="sxs-lookup"><span data-stu-id="4cc4e-116">Composite keys can only be configured using the Fluent API - conventions will never setup a composite key and you can not use Data Annotations to configure one.</span></span>
+<span data-ttu-id="87ff7-112">你还可以将多个属性配置为实体的键，这称为组合键。</span><span class="sxs-lookup"><span data-stu-id="87ff7-112">You can also configure multiple properties to be the key of an entity - this is known as a composite key.</span></span> <span data-ttu-id="87ff7-113">复合密钥只能使用熟知的 API 进行配置;约定将永远不会设置组合键，你不能使用数据批注来配置它。</span><span class="sxs-lookup"><span data-stu-id="87ff7-113">Composite keys can only be configured using the Fluent API; conventions will never setup a composite key, and you can not use Data Annotations to configure one.</span></span>
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/KeyComposite.cs?highlight=11,12)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/KeyComposite.cs?name=KeyComposite&highlight=4)]
 
-## <a name="key-types-and-values"></a><span data-ttu-id="4cc4e-117">键类型和值</span><span class="sxs-lookup"><span data-stu-id="4cc4e-117">Key types and values</span></span>
+## <a name="primary-key-name"></a><span data-ttu-id="87ff7-114">主键名称</span><span class="sxs-lookup"><span data-stu-id="87ff7-114">Primary key name</span></span>
 
-<span data-ttu-id="4cc4e-118">EF Core 支持使用任何基元类型的属性作为主键，包括 `string`、`Guid`、`byte[]` 和其他项。</span><span class="sxs-lookup"><span data-stu-id="4cc4e-118">EF Core supports using properties of any primitive type as the primary key, including `string`, `Guid`, `byte[]` and others.</span></span> <span data-ttu-id="4cc4e-119">但并非所有数据库都支持它们。</span><span class="sxs-lookup"><span data-stu-id="4cc4e-119">But not all databases support them.</span></span> <span data-ttu-id="4cc4e-120">在某些情况下，可以自动将键值转换为支持的类型，否则应[手动指定](xref:core/modeling/value-conversions)转换。</span><span class="sxs-lookup"><span data-stu-id="4cc4e-120">In some cases the key values can be converted to a supported type automatically, otherwise the conversion should be [specified manually](xref:core/modeling/value-conversions).</span></span>
+<span data-ttu-id="87ff7-115">按照约定，使用名称 `PK_<type name>`创建关系数据库主键。</span><span class="sxs-lookup"><span data-stu-id="87ff7-115">By convention, on relational databases primary keys are created with the name `PK_<type name>`.</span></span> <span data-ttu-id="87ff7-116">可以按如下所示配置 primary key 约束的名称：</span><span class="sxs-lookup"><span data-stu-id="87ff7-116">You can configure the name of the primary key constraint as follows:</span></span>
 
-<span data-ttu-id="4cc4e-121">在将新实体添加到上下文时，键属性必须始终具有非默认值，但某些类型将[由数据库生成](xref:core/modeling/generated-properties)。</span><span class="sxs-lookup"><span data-stu-id="4cc4e-121">Key properties must always have a non-default value when adding a new entity to the context, but some types will be [generated by the database](xref:core/modeling/generated-properties).</span></span> <span data-ttu-id="4cc4e-122">在这种情况下，当添加实体进行跟踪时，EF 会尝试生成一个临时值。</span><span class="sxs-lookup"><span data-stu-id="4cc4e-122">In that case EF will try to generate a temporary value when the entity is added for tracking purposes.</span></span> <span data-ttu-id="4cc4e-123">在调用[SaveChanges](/dotnet/api/Microsoft.EntityFrameworkCore.DbContext.SaveChanges)后，临时值将替换为数据库生成的值。</span><span class="sxs-lookup"><span data-stu-id="4cc4e-123">After [SaveChanges](/dotnet/api/Microsoft.EntityFrameworkCore.DbContext.SaveChanges) is called the temporary value will be replaced by the value generated by the database.</span></span>
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/KeyName.cs?name=KeyName&highlight=5)]
+
+## <a name="key-types-and-values"></a><span data-ttu-id="87ff7-117">键类型和值</span><span class="sxs-lookup"><span data-stu-id="87ff7-117">Key types and values</span></span>
+
+<span data-ttu-id="87ff7-118">虽然 EF Core 支持使用任何基元类型的属性作为主键，包括 `string`、`Guid`、`byte[]` 和其他类型，但并非所有数据库都支持将所有类型作为键。</span><span class="sxs-lookup"><span data-stu-id="87ff7-118">While EF Core supports using properties of any primitive type as the primary key, including `string`, `Guid`, `byte[]` and others, not all databases support all types as keys.</span></span> <span data-ttu-id="87ff7-119">在某些情况下，可以自动将键值转换为支持的类型，否则应[手动指定](xref:core/modeling/value-conversions)转换。</span><span class="sxs-lookup"><span data-stu-id="87ff7-119">In some cases the key values can be converted to a supported type automatically, otherwise the conversion should be [specified manually](xref:core/modeling/value-conversions).</span></span>
+
+<span data-ttu-id="87ff7-120">在将新实体添加到上下文时，键属性必须始终具有非默认值，但某些类型将[由数据库生成](xref:core/modeling/generated-properties)。</span><span class="sxs-lookup"><span data-stu-id="87ff7-120">Key properties must always have a non-default value when adding a new entity to the context, but some types will be [generated by the database](xref:core/modeling/generated-properties).</span></span> <span data-ttu-id="87ff7-121">在这种情况下，当添加实体进行跟踪时，EF 会尝试生成一个临时值。</span><span class="sxs-lookup"><span data-stu-id="87ff7-121">In that case EF will try to generate a temporary value when the entity is added for tracking purposes.</span></span> <span data-ttu-id="87ff7-122">在调用[SaveChanges](/dotnet/api/Microsoft.EntityFrameworkCore.DbContext.SaveChanges)后，临时值将替换为数据库生成的值。</span><span class="sxs-lookup"><span data-stu-id="87ff7-122">After [SaveChanges](/dotnet/api/Microsoft.EntityFrameworkCore.DbContext.SaveChanges) is called the temporary value will be replaced by the value generated by the database.</span></span>
 
 > [!Important]
-> <span data-ttu-id="4cc4e-124">如果某个键属性具有数据库生成的值，并且在添加实体时指定了一个非默认值，则 EF 将假定该实体在数据库中已存在，并且将尝试进行更新，而不是插入一个新的值。</span><span class="sxs-lookup"><span data-stu-id="4cc4e-124">If a key property has value generated by the database and a non-default value is specified when an entity is added then EF will assume that the entity already exists in the database and will try to update it instead of inserting a new one.</span></span> <span data-ttu-id="4cc4e-125">若要避免这种情况，请禁用值生成或了解[如何为生成的属性指定显式值](../saving/explicit-values-generated-properties.md)。</span><span class="sxs-lookup"><span data-stu-id="4cc4e-125">To avoid this turn off value generation or see [how to specify explicit values for generated properties](../saving/explicit-values-generated-properties.md).</span></span>
+> <span data-ttu-id="87ff7-123">如果某个键属性的值由数据库生成，而在添加实体时指定了一个非默认值，则 EF 将假定该实体在数据库中已存在，并且将尝试对其进行更新而不是插入一个新的值。</span><span class="sxs-lookup"><span data-stu-id="87ff7-123">If a key property has its value generated by the database and a non-default value is specified when an entity is added, then EF will assume that the entity already exists in the database and will try to update it instead of inserting a new one.</span></span> <span data-ttu-id="87ff7-124">若要避免这种情况，请禁用值生成或了解[如何为生成的属性指定显式值](../saving/explicit-values-generated-properties.md)。</span><span class="sxs-lookup"><span data-stu-id="87ff7-124">To avoid this turn off value generation or see [how to specify explicit values for generated properties](../saving/explicit-values-generated-properties.md).</span></span>
+
+## <a name="alternate-keys"></a><span data-ttu-id="87ff7-125">备用键</span><span class="sxs-lookup"><span data-stu-id="87ff7-125">Alternate Keys</span></span>
+
+<span data-ttu-id="87ff7-126">除了主键外，备用键还可用作每个实体实例的替代唯一标识符;它可用作关系的目标。</span><span class="sxs-lookup"><span data-stu-id="87ff7-126">An alternate key serves as an alternate unique identifier for each entity instance in addition to the primary key; it can be used as the target of a relationship.</span></span> <span data-ttu-id="87ff7-127">使用关系数据库时，这将映射到备用键列上的唯一索引/约束和引用列的一个或多个外键约束的概念。</span><span class="sxs-lookup"><span data-stu-id="87ff7-127">When using a relational database this maps to the concept of a unique index/constraint on the alternate key column(s) and one or more foreign key constraints that reference the column(s).</span></span>
+
+> [!TIP]
+> <span data-ttu-id="87ff7-128">如果只是想要在列上强制唯一性，请定义唯一索引而不是备用键（请参阅[索引](indexes.md)）。</span><span class="sxs-lookup"><span data-stu-id="87ff7-128">If you just want to enforce uniqueness on a column, define a unique index rather than an alternate key (see [Indexes](indexes.md)).</span></span> <span data-ttu-id="87ff7-129">在 EF 中，备用键为只读，并在唯一索引之上提供附加语义，因为它们可用作外键的目标。</span><span class="sxs-lookup"><span data-stu-id="87ff7-129">In EF, alternate keys are read-only and provide additional semantics over unique indexes because they can be used as the target of a foreign key.</span></span>
+
+<span data-ttu-id="87ff7-130">系统通常会在需要时为你引入备用键，你无需手动配置它们。</span><span class="sxs-lookup"><span data-stu-id="87ff7-130">Alternate keys are typically introduced for you when needed and you do not need to manually configure them.</span></span> <span data-ttu-id="87ff7-131">按照约定，当您标识的属性不是作为关系目标的主键时，将为您引入备用密钥。</span><span class="sxs-lookup"><span data-stu-id="87ff7-131">By convention, an alternate key is introduced for you when you identify a property which isn't the primary key as the target of a relationship.</span></span>
+
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/AlternateKey.cs?name=AlternateKey&highlight=12)]
+
+<span data-ttu-id="87ff7-132">你还可以将单个属性配置为备用密钥：</span><span class="sxs-lookup"><span data-stu-id="87ff7-132">You can also configure a single property to be an alternate key:</span></span>
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/AlternateKeySingle.cs?name=AlternateKeySingle&highlight=4)]
+
+<span data-ttu-id="87ff7-133">你还可以将多个属性配置为备用密钥（称为复合备用密钥）：</span><span class="sxs-lookup"><span data-stu-id="87ff7-133">You can also configure multiple properties to be an alternate key (known as a composite alternate key):</span></span>
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/AlternateKeyComposite.cs?name=AlternateKeyComposite&highlight=4)]
+
+<span data-ttu-id="87ff7-134">最后，按照约定，为备用键引入的索引和约束将被命名为 `AK_<type name>_<property name>` （对于复合备用键 `<property name>` 变成以下划线分隔的属性名称列表）。</span><span class="sxs-lookup"><span data-stu-id="87ff7-134">Finally, by convention, the index and constraint that are introduced for an alternate key will be named `AK_<type name>_<property name>` (for composite alternate keys `<property name>` becomes an underscore separated list of property names).</span></span> <span data-ttu-id="87ff7-135">您可以配置备用密钥的 index 和 unique 约束的名称：</span><span class="sxs-lookup"><span data-stu-id="87ff7-135">You can configure the name of the alternate key's index and unique constraint:</span></span>
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/AlternateKeyName.cs?name=AlternateKeyName&highlight=5)]
