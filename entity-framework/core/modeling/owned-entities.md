@@ -5,17 +5,14 @@ author: AndriySvyryd
 ms.author: ansvyryd
 ms.date: 11/06/2019
 uid: core/modeling/owned-entities
-ms.openlocfilehash: 7b6d1b3bccbfceb85f03a580ba03a45984d29c74
-ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
+ms.openlocfilehash: 30b91b6e66b6c0f516d1ba12485304b52770cbef
+ms.sourcegitcommit: 4e86f01740e407ff25e704a11b1f7d7e66bfb2a6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 12/04/2019
-ms.locfileid: "74824604"
+ms.lasthandoff: 01/09/2020
+ms.locfileid: "75781230"
 ---
 # <a name="owned-entity-types"></a>从属实体类型
-
-> [!NOTE]
-> 此功能是在 EF Core 2.0 中的新增功能。
 
 EF Core 让你可以只显示对其他实体类型的导航属性的模型实体类型。 它们称为_拥有的实体类型_。 包含拥有的实体类型的实体是其_所有者_。
 
@@ -56,7 +53,7 @@ EF Core 让你可以只显示对其他实体类型的导航属性的模型实体
 
 若要配置拥有类型的集合，请使用 `OnModelCreating`中 `OwnsMany`。
 
-拥有的类型需要主键。 如果 .NET 类型上没有合适的候选属性，EF Core 可以尝试创建一个。 但是，当所有类型是通过集合定义的时，只需创建一个影子属性以同时充当所有者的外键和该拥有实例的主键，就像 `OwnsOne`一样：对于每个，都可以有多个拥有的类型实例所有者，因此所有者的密钥不足以为每个拥有的实例提供唯一标识。
+拥有的类型需要主键。 如果 .NET 类型上没有合适的候选属性，EF Core 可以尝试创建一个。 但是，当所有类型都通过集合进行定义时，只需创建一个影子属性以同时充当所有者的外键和该拥有实例的主键，就像在 `OwnsOne`中一样：对于每个所有者，可以有多个拥有的类型实例，因此，所有者的密钥不足以为每个拥有的实例提供唯一标识。
 
 这两个最直接的解决方案是：
 

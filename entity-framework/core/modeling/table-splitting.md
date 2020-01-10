@@ -3,19 +3,16 @@ title: 表拆分-EF Core
 description: 如何使用 Entity Framework Core 配置表拆分
 author: AndriySvyryd
 ms.author: ansvyryd
-ms.date: 04/10/2019
+ms.date: 01/03/2020
 uid: core/modeling/table-splitting
-ms.openlocfilehash: 0e48c516de43cdc2b54c56f1a96f5e01f9fbbbc4
-ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
+ms.openlocfilehash: c38d3ee0efa82f84a1051017ae40c9f3fdd57f1f
+ms.sourcegitcommit: 4e86f01740e407ff25e704a11b1f7d7e66bfb2a6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 12/04/2019
-ms.locfileid: "74824554"
+ms.lasthandoff: 01/09/2020
+ms.locfileid: "75781165"
 ---
 # <a name="table-splitting"></a>表拆分
-
->[!NOTE]
-> 此功能是在 EF Core 2.0 中的新增功能。
 
 EF Core 允许将两个或多个实体映射到单个行。 这称为 "_表拆分_" 或 "_表共享_"。
 
@@ -33,21 +30,28 @@ EF Core 允许将两个或多个实体映射到单个行。 这称为 "_表拆�
 
 除了所需的配置之外，我们还 `Property(o => o.Status).HasColumnName("Status")` 将 `DetailedOrder.Status` 映射到与 `Order.Status`相同的列。
 
-[!code-csharp[TableSplittingConfiguration](../../../samples/core/Modeling/TableSplitting/TableSplittingContext.cs?name=TableSplitting&highlight=3)]
+[!code-csharp[TableSplittingConfiguration](../../../samples/core/Modeling/TableSplitting/TableSplittingContext.cs?name=TableSplitting)]
 
 > [!TIP]
 > 有关更多上下文，请参阅[完整的示例项目](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Modeling/TableSplitting)。
 
 ## <a name="usage"></a>用量
 
-使用表拆分来保存和查询实体的方式与处理其他实体的方式相同。 从 EF Core 3.0 开始，可以将依赖实体引用 `null`。 如果依赖实体使用的所有列都 `NULL` 数据库，则查询时将不会创建该数据库的实例。 这也会导致所有属性都是可选的并且设置为 `null`，这可能不是预期的。
+使用表拆分来保存和查询实体的方式与其他实体相同：
 
 [!code-csharp[Usage](../../../samples/core/Modeling/TableSplitting/Program.cs?name=Usage)]
 
+## <a name="optional-dependent-entity"></a>可选依赖实体
+
+> [!NOTE]
+> EF Core 3.0 中引入了此功能。
+
+如果依赖实体使用的所有列都 `NULL` 在数据库中，则查询时将不会创建该实体的任何实例。 这允许对一个可选的依赖实体建模，其中主体的关系属性将为 null。 请注意，这也会导致所有依赖属性均为可选，并设置为 `null`，这可能不是预期的。
+
 ## <a name="concurrency-tokens"></a>并发令牌
 
-如果共享表的任何实体类型都具有并发标记，则必须将其包含在所有其他实体类型中，以避免在仅更新映射到同一个表的一个实体时出现过时并发令牌值。
+如果共享表的任何实体类型都有并发标记，则还必须将其包含在所有其他实体类型中。 当只更新映射到同一个表中的一个实体时，必须使用此值来避免陈旧并发令牌值。
 
-为避免向使用代码公开它，可以在影子状态中创建一个。
+若要避免向使用代码公开并发标记，可以将其创建为[影子属性](xref:core/modeling/shadow-properties)：
 
 [!code-csharp[TableSplittingConfiguration](../../../samples/core/Modeling/TableSplitting/TableSplittingContext.cs?name=ConcurrencyToken&highlight=2)]

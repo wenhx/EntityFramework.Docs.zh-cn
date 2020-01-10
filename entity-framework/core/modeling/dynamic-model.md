@@ -1,26 +1,34 @@
 ---
-title: 在具有相同 DbContext 类型的多个模型之间交替-EF Core
+title: 使用相同的 DbContext 类型的 EF Core 的多个模型之间交替
 author: AndriySvyryd
-ms.date: 12/10/2017
+ms.date: 01/03/2020
 ms.assetid: 3154BF3C-1749-4C60-8D51-AE86773AA116
 uid: core/modeling/dynamic-model
-ms.openlocfilehash: 034076b1595894e80b98467354f6c9f139bd7426
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 156d5666cbd9352b274ddc70c99704ca62aeb1fd
+ms.sourcegitcommit: 4e86f01740e407ff25e704a11b1f7d7e66bfb2a6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655730"
+ms.lasthandoff: 01/09/2020
+ms.locfileid: "75781126"
 ---
 # <a name="alternating-between-multiple-models-with-the-same-dbcontext-type"></a>在具有相同 DbContext 类型的多个模型之间交替
 
-`OnModelCreating` 中生成的模型可以使用上下文中的属性来更改模型的生成方式。 例如，它可用于排除某个属性：
+`OnModelCreating` 中生成的模型可以使用上下文中的属性来更改模型的生成方式。 例如，假设你想要根据某些属性以不同的方式配置实体：
 
-[!code-csharp[Main](../../../samples/core/DynamicModel/DynamicContext.cs?name=Class)]
+[!code-csharp[Main](../../../samples/core/Modeling/DynamicModel/DynamicContext.cs?name=OnModelCreating)]
+
+遗憾的是，此代码不会按原样工作，因为 EF 会构建模型并只运行一次 `OnModelCreating`，出于性能原因缓存结果。 但是，可以挂钩到模型缓存机制，使 EF 知道生成不同模型的属性。
 
 ## <a name="imodelcachekeyfactory"></a>IModelCacheKeyFactory
 
-但是，如果尝试执行上述操作而不进行其他更改，则每次为 `IgnoreIntProperty`的任何值创建新上下文时，都将获得相同的模型。 这是因为模型缓存机制 EF 使用来通过只调用一次 `OnModelCreating` 并缓存模型来提高性能。
+EF 使用 `IModelCacheKeyFactory` 来生成模型的缓存键;默认情况下，EF 假设对于任何给定的上下文类型，模型都是相同的，因此该服务的默认实现将返回只包含上下文类型的键。 若要从相同的上下文类型生成不同的模型，需要将 `IModelCacheKeyFactory` 服务替换为正确的实现;将使用 `Equals` 方法将生成的键与其他模型键进行比较，并考虑影响模型的所有变量：
 
-默认情况下，EF 假设对于任何给定的上下文类型，模型都是相同的。 为实现此目的，`IModelCacheKeyFactory` 的默认实现将返回只包含上下文类型的键。 若要更改此更改，需要替换 `IModelCacheKeyFactory` 服务。 新实现需要返回一个对象，该对象可使用 `Equals` 方法进行比较，该方法将影响模型的所有变量：
+生成模型缓存密钥时，以下实现会考虑 `IgnoreIntProperty`：
 
-[!code-csharp[Main](../../../samples/core/DynamicModel/DynamicModelCacheKeyFactory.cs?name=Class)]
+[!code-csharp[Main](../../../samples/core/Modeling/DynamicModel/DynamicModelCacheKeyFactory.cs?name=DynamicModel)]
+
+最后，在上下文的 `OnConfiguring`中注册新 `IModelCacheKeyFactory`：
+
+[!code-csharp[Main](../../../samples/core/Modeling/DynamicModel/DynamicContext.cs?name=OnConfiguring)]
+
+有关更多上下文，请参阅[完整的示例项目](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Modeling/DynamicModel)。

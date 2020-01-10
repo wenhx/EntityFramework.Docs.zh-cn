@@ -1,15 +1,15 @@
 ---
 title: 并发标记的 EF Core
-author: rowanmiller
-ms.date: 03/03/2018
+author: AndriySvyryd
+ms.date: 01/03/2020
 ms.assetid: bc8b1cb0-befe-4b67-8004-26e6c5f69385
 uid: core/modeling/concurrency
-ms.openlocfilehash: db768c1de99000be91d33764ccd3c3924237f8bb
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 8a5f3aa09c2a83d5be0998a11ef2ee8100437514
+ms.sourcegitcommit: 4e86f01740e407ff25e704a11b1f7d7e66bfb2a6
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197452"
+ms.lasthandoff: 01/09/2020
+ms.locfileid: "75781139"
 ---
 # <a name="concurrency-tokens"></a>并发标记
 
@@ -18,40 +18,30 @@ ms.locfileid: "71197452"
 
 配置为并发标记的属性用于实现乐观并发控制。
 
-## <a name="conventions"></a>约定
+## <a name="configuration"></a>配置
 
-按照约定，属性永远不会配置为并发标记。
+### <a name="data-annotationstabdata-annotations"></a>[数据注释](#tab/data-annotations)
 
-## <a name="data-annotations"></a>数据注释
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Concurrency.cs?name=Concurrency&highlight=5)]
 
-您可以使用数据批注将属性配置为并发标记。
+### <a name="fluent-apitabfluent-api"></a>[熟知 API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Concurrency.cs#ConfigureConcurrencyAnnotations)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Concurrency.cs?name=Concurrency&highlight=5)]
 
-## <a name="fluent-api"></a>Fluent API
+***
 
-您可以使用熟知的 API 将属性配置为并发标记。
+## <a name="timestamprowversion"></a>Timestamp/rowversion
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Concurrency.cs#ConfigureConcurrencyFluent)]
+Timestamp/rowversion 是一个属性，在每次插入或更新行时，数据库会自动为其生成新值。 此属性也被视为并发标记，这确保了在你查询行后，如果正在更新的行发生了更改，则会出现异常。 确切的详细信息取决于所使用的数据库提供程序;对于 SQL Server，通常使用*byte []* 属性，该属性将设置为数据库中的*ROWVERSION*列。
 
-## <a name="timestamprow-version"></a>时间戳/行版本
+可以按如下所示将属性配置为 timestamp/rowversion：
 
-时间戳是一个属性，在每次插入或更新行时，数据库都会生成一个新值。 此属性也被视为并发标记。 这可以确保在其他人修改了您尝试在查询数据后尝试更新的行时，您将收到异常。
+### <a name="data-annotationstabdata-annotations"></a>[数据注释](#tab/data-annotations)
 
-实现此目的的方式取决于所使用的数据库提供程序。 对于 SQL Server，时间戳通常用于*byte []* 属性，该属性将设置为数据库中的*ROWVERSION*列。
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Timestamp.cs?name=Timestamp&highlight=7)]
 
-### <a name="conventions"></a>约定
+### <a name="fluent-apitabfluent-api"></a>[熟知 API](#tab/fluent-api)
 
-按照约定，属性永远不会配置为时间戳。
+[！ code-csharp [Main] （.。/../../samples/core/Modeling/FluentAPI/Timestamp.cs？ name = Timestamp & 高光 = 9，17]
 
-### <a name="data-annotations"></a>数据注释
-
-您可以使用数据批注将属性配置为时间戳。
-
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Timestamp.cs#ConfigureTimestampAnnotations)]
-
-### <a name="fluent-api"></a>Fluent API
-
-你可以使用熟知的 API 将属性配置为时间戳。
-
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Timestamp.cs#ConfigureTimestampFluent)]
+***
