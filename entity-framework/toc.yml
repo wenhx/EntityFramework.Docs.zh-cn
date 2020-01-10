@@ -79,18 +79,14 @@
           items:
             - name: 概述
               href: core/modeling/index.md
-            - name: 包含类型和排除类型
-              href: core/modeling/included-types.md
-            - name: 包含属性和排除属性
-              href: core/modeling/included-properties.md
-            - name: 键（主要）
+            - name: 实体类型
+              href: core/modeling/entity-types.md
+            - name: 实体属性
+              href: core/modeling/entity-properties.md
+            - name: 键
               href: core/modeling/keys.md
             - name: 生成的值
               href: core/modeling/generated-properties.md
-            - name: 必需和可选属性
-              href: core/modeling/required-optional.md
-            - name: 最大长度
-              href: core/modeling/max-length.md
             - name: 并发标记
               href: core/modeling/concurrency.md
             - name: 阴影属性
@@ -99,10 +95,10 @@
               href: core/modeling/relationships.md
             - name: 索引
               href: core/modeling/indexes.md
-            - name: 备用键
-              href: core/modeling/alternate-keys.md
             - name: 继承
               href: core/modeling/inheritance.md
+            - name: 序列
+              href: core/modeling/sequences.md
             - name: 支持字段
               href: core/modeling/backing-field.md
             - name: 值转换
@@ -119,36 +115,13 @@
               href: core/modeling/keyless-entity-types.md
             - name: 具有相同 DbContext 的交替模型
               href: core/modeling/dynamic-model.md
-            - name: 空间数据 (GIS)
+            - name: 空间数据
+              displayName: GIS
               href: core/modeling/spatial.md
             - name: 关系数据库建模
               items:
                 - name: 概述
                   href: core/modeling/relational/index.md
-                - name: 表映射
-                  href: core/modeling/relational/tables.md
-                - name: 列映射
-                  href: core/modeling/relational/columns.md
-                - name: 数据类型
-                  href: core/modeling/relational/data-types.md
-                - name: 主键
-                  href: core/modeling/relational/primary-keys.md
-                - name: 默认架构
-                  href: core/modeling/relational/default-schema.md
-                - name: 计算列
-                  href: core/modeling/relational/computed-columns.md
-                - name: 序列
-                  href: core/modeling/relational/sequences.md
-                - name: 默认值
-                  href: core/modeling/relational/default-values.md
-                - name: 索引
-                  href: core/modeling/relational/indexes.md
-                - name: 外键约束
-                  href: core/modeling/relational/fk-constraints.md
-                - name: 备用键（唯一约束）
-                  href: core/modeling/relational/unique-constraints.md
-                - name: 继承（关系数据库）
-                  href: core/modeling/relational/inheritance.md
         - name: 管理数据库架构
           items:
             - name: 概述
@@ -521,7 +494,7 @@
               items:
                 - name: EF5
                   items:
-                    - name: 中文(简体)
+                    - name: 简体中文
                       href: ef6/resources/licenses/ef5/chs.md
                     - name: 繁体中文
                       href: ef6/resources/licenses/ef5/cht.md
@@ -549,7 +522,7 @@
                           href: ef6/resources/licenses/ef6/prerelease/alpha.md
                         - name: Beta 版本 - 候选发布
                           href: ef6/resources/licenses/ef6/prerelease/beta-rc.md
-                    - name: 中文(简体)
+                    - name: 简体中文
                       href: ef6/resources/licenses/ef6/chs.md
                     - name: 繁体中文
                       href: ef6/resources/licenses/ef6/cht.md

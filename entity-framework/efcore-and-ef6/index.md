@@ -5,12 +5,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: a6b9cd22-6803-4c6c-a4d4-21147c0a81cb
 uid: efcore-and-ef6/index
-ms.openlocfilehash: 9fe4905de5bd81fce083d620724b7fad4c6dd11b
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: 62f7da64bbb6289edd38b877af71fc126e03d0f6
+ms.sourcegitcommit: 32c51c22988c6f83ed4f8e50a1d01be3f4114e81
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182052"
+ms.lasthandoff: 12/27/2019
+ms.locfileid: "75502284"
 ---
 # <a name="compare-ef-core--ef6"></a>比较 EF Core 和 EF6
 
@@ -30,7 +30,7 @@ EF Core 旨在提供类似于 EF6 的开发人员体验。 大多数顶级 API �
 
 ## <a name="feature-comparison"></a>功能比较
 
-EF Core 提供了在 EF6 中不会实现的新功能（如[备选键](xref:core/modeling/alternate-keys)、[批量更新](xref:core/what-is-new/ef-core-1.0#relational-batching-of-statements)以及 [LINQ 查询中的混合客户端/数据库评估](xref:core/querying/client-eval)。 但由于它是一个新代码库，所以会缺少一些 EF6 中的功能。
+EF Core 提供了在 EF6 中不会实现的新功能（如[备选键](xref:core/modeling/keys#alternate-keys)、[批量更新](xref:core/what-is-new/ef-core-1.0#relational-batching-of-statements)以及 [LINQ 查询中的混合客户端/数据库评估](xref:core/querying/client-eval)。 但由于它是一个新代码库，所以会缺少一些 EF6 中的功能。
 
 下表比较了 EF Core 和 EF6 中可用的功能。 这只是大致比较，没有列出全部功能或解释不同 EF 版本中相同功能之间的差异。
 
