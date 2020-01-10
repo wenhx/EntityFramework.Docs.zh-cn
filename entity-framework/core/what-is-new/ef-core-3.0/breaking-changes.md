@@ -3,12 +3,12 @@ title: EF Core 3.0 中的中断性变更 - EF Core
 author: ajcvickers
 ms.date: 12/03/2019
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: d614103169837238810fabd0a8889043c851ef14
-ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
+ms.openlocfilehash: cac166e9e194e512de7d730d27c061e6deaf5191
+ms.sourcegitcommit: 32c51c22988c6f83ed4f8e50a1d01be3f4114e81
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 12/04/2019
-ms.locfileid: "74824861"
+ms.lasthandoff: 12/27/2019
+ms.locfileid: "75502222"
 ---
 # <a name="breaking-changes-included-in-ef-core-30"></a>EF Core 3.0 中包含的中断性变更
 
@@ -17,7 +17,7 @@ ms.locfileid: "74824861"
 
 ## <a name="summary"></a>总结
 
-| **重大更改**                                                                                               | **影响** |
+| **中断性变更**                                                                                               | **影响** |
 |:------------------------------------------------------------------------------------------------------------------|------------|
 | [不再在客户端上计算 LINQ 查询](#linq-queries-are-no-longer-evaluated-on-the-client)         | 高       |
 | [EF Core 3.0 面向 .NET Standard 2.1，而不是 .NET Standard 2.0](#netstandard21) | 高      |
@@ -188,7 +188,7 @@ ms.locfileid: "74824861"
 **新行为**
 
 自 EF Core 3.0 起，可使用 `FromSqlRaw`、`ExecuteSqlRaw` 和 `ExecuteSqlRawAsync` 创建一个参数化的查询，其中参数是从查询字符串中单独传递的。
-例如:
+例如：
 
 ```csharp
 context.Products.FromSqlRaw(
@@ -197,7 +197,7 @@ context.Products.FromSqlRaw(
 ```
 
 使用 `FromSqlInterpolated`、`ExecuteSqlInterpolated` 和 `ExecuteSqlInterpolatedAsync` 创建一个参数化的查询，其中参数作为内插查询字符串的一部分进行传递。
-例如:
+例如：
 
 ```csharp
 context.Products.FromSqlInterpolated(
@@ -273,7 +273,7 @@ context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").AsEnumerable(
 
 **旧行为**
 
-在 EF Core 3.0 之前，将对具有给定类型和 ID 的实体的每个匹配项使用同一个实体实例。 这与跟踪查询的行为匹配。 例如，以下查询：
+在 EF Core 3.0 之前，将对具有给定类型和 ID 的实体的每个匹配项使用同一个实体实例。 这与跟踪查询的行为匹配。 例如下面的查询：
 
 ```csharp
 var results = context.Products.Include(e => e.Category).AsNoTracking().ToList();
@@ -389,12 +389,12 @@ public string Id { get; set; }
 
 **为什么**
 
-此更改是为了改善数据绑定和审核方案的体验，在相关体验中，需要了解在调用 `SaveChanges` _之前_会删除哪些实体。
+此更改是为了改善数据绑定和审核方案的体验；在相关体验中，有必要了解在调用 `SaveChanges` 之前会删除哪些实体  。
 
 **缓解措施**
 
-可以通过 `context.ChangedTracker` 上的设置还原以前的行为。
-例如:
+可以通过 `context.ChangeTracker` 上的设置还原以前的行为。
+例如：
 
 ```csharp
 context.ChangeTracker.CascadeDeleteTiming = CascadeTiming.OnSaveChanges;
@@ -487,7 +487,7 @@ EF Core 3.0 之前，会在 `OwnsOne` 或 `OwnsMany` 调用之后直接执行所
 **新行为**
 
 从 EF Core 3.0 开始，Fluent API 会使用 `WithOwner()` 为所有者配置导航属性。
-例如:
+例如：
 
 ```csharp
 modelBuilder.Entity<Order>.OwnsOne(e => e.Details).WithOwner(e => e.Order);
@@ -495,7 +495,7 @@ modelBuilder.Entity<Order>.OwnsOne(e => e.Details).WithOwner(e => e.Order);
 
 与所有者之间关系相关的配置现会在 `WithOwner()` 之后关联起来，就像配置其他关系一样。
 但从属类型本身的配置仍会在 `OwnsOne()/OwnsMany()` 之后关联。
-例如:
+例如：
 
 ```csharp
 modelBuilder.Entity<Order>.OwnsOne(e => e.Details, eb =>
@@ -741,7 +741,7 @@ public class Order
 
 自 3.0 起，如果外键的主体属性名称相同，EF Core 不会尝试通过转换来为外键使用属性。
 与主体属性名称关联的主体类型名称和与主体属性名称模式关联的导航名称仍然相匹配。
-例如:
+例如：
 
 ```csharp
 public class Customer
@@ -877,7 +877,7 @@ using (new TransactionScope())
 **缓解措施**
 
 可以通过在 `ModelBuilder` 上配置属性访问模式来恢复 3.0 之前的行为。
-例如:
+例如：
 
 ```csharp
 modelBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferFieldDuringConstruction);
@@ -1137,7 +1137,7 @@ public string Id { get; set; }
 
 遇到此错误时，最合适的操作是了解根本原因并停止创建如此多的内部服务提供程序。
 但是，可以通过 `DbContextOptionsBuilder` 上的配置将错误转换回警告（或忽略）。
-例如:
+例如：
 
 ```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -1156,7 +1156,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 **旧行为**
 
 在 EF Core 3.0 之前，对通过单个字符串调用 `HasOne` 或 `HasMany` 的代码的解释令人困惑。
-例如:
+例如：
 ```csharp
 modelBuilder.Entity<Samurai>().HasOne("Entrance").WithOne();
 ```
@@ -1178,7 +1178,7 @@ modelBuilder.Entity<Samurai>().HasOne("Entrance").WithOne();
 这只会中断使用类型名称字符串显式配置关系而无需显式指定导航属性的应用程序。
 这并不常见。
 以前的行为可以通过显式传递导航属性名称的 `null` 获得。
-例如:
+例如：
 
 ```csharp
 modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
@@ -1568,7 +1568,7 @@ SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 
 
 **旧行为**
 
-在 EF Core 3.0 之前，外键约束名称被简单地称为“名称”。 例如:
+在 EF Core 3.0 之前，外键约束名称被简单地称为“名称”。 例如：
 
 ```csharp
 var constraintName = myForeignKey.Name;
@@ -1576,7 +1576,7 @@ var constraintName = myForeignKey.Name;
 
 **新行为**
 
-从 EF Core 3.0 开始，外键约束名称现在被称为“约束名称”。 例如:
+从 EF Core 3.0 开始，外键约束名称现在被称为“约束名称”。 例如：
 
 ```csharp
 var constraintName = myForeignKey.ConstraintName;
@@ -1632,7 +1632,7 @@ EF 使用这些方法来确定数据库是否已创建但为空。 这也适用�
 
 **缓解措施**
 
-如果需要引用此包来重写 EF Core 的设计时行为，可以更新项目中的 PackageReference 项元数据。 如果正在通过 Microsoft.EntityFrameworkCore.Tools 过渡引用此包，必须向此包添加显式 PackageReference，以更改它的元数据。
+如果需要引用此包来重写 EF Core 的设计时行为，则可更新项目中的 PackageReference 项元数据。
 
 ``` xml
 <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0">
@@ -1641,6 +1641,8 @@ EF 使用这些方法来确定数据库是否已创建但为空。 这也适用�
   <!--<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>-->
 </PackageReference>
 ```
+
+如果正在通过 Microsoft.EntityFrameworkCore.Tools 过渡引用此包，必须向此包添加显式 PackageReference，以更改它的元数据。 必须在需要此包中的类型的任何项目下添加此类显式引用。
 
 <a name="SQLitePCL"></a>
 
@@ -1717,7 +1719,7 @@ Microsoft.Data.SqlClient 是今后用于 SQL Server 的旗舰版数据访问驱�
 
 **旧行为**
 
-具有多个自引用单向导航属性和匹配的 FK 的实体类型被错误配置为单个关系。 例如:
+具有多个自引用单向导航属性和匹配的 FK 的实体类型被错误配置为单个关系。 例如：
 
 ```csharp
 public class User 
@@ -1740,7 +1742,7 @@ public class User
 
 **缓解措施**
 
-使用关系的完全配置。 例如:
+使用关系的完全配置。 例如：
 
 ```csharp
 modelBuilder
