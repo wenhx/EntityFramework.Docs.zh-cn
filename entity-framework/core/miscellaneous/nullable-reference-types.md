@@ -4,12 +4,12 @@ author: roji
 ms.date: 09/09/2019
 ms.assetid: bde4e0ee-fba3-4813-a849-27049323d301
 uid: core/miscellaneous/nullable-reference-types
-ms.openlocfilehash: 0d05902566b6b166f1267915d9f698ed29dff588
-ms.sourcegitcommit: 32c51c22988c6f83ed4f8e50a1d01be3f4114e81
+ms.openlocfilehash: c16a475c363320cd18804a4efe78ccae1ae22f0d
+ms.sourcegitcommit: f2a38c086291699422d8b28a72d9611d1b24ad0d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 12/27/2019
-ms.locfileid: "75502062"
+ms.lasthandoff: 01/16/2020
+ms.locfileid: "76124348"
 ---
 # <a name="working-with-nullable-reference-types"></a>使用可以为 Null 的引用类型
 
@@ -38,9 +38,9 @@ C#8引入了一种名[为 null 的引用类型](/dotnet/csharp/tutorials/nullabl
 
 处理这些方案的一种方法是使用一个可以为 null 的[支持字段](xref:core/modeling/backing-field)的不可为 null 的属性：
 
-[!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/Order.cs?range=12-17)]
+[!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/Order.cs?range=10-17)]
 
-由于导航属性不可为 null，因此配置了必需的导航;只要正确加载导航，就可以通过属性访问依赖项。 但是，如果在未事先正确加载相关实体的情况下访问属性，则会引发 InvalidOperationException，因为 API 协定的使用不正确。
+由于导航属性不可为 null，因此配置了必需的导航;只要正确加载导航，就可以通过属性访问依赖项。 但是，如果在未事先正确加载相关实体的情况下访问属性，则会引发 InvalidOperationException，因为 API 协定的使用不正确。 请注意，必须将 EF 配置为始终访问支持字段而不是属性，因为它依赖于即使在未设置时也能读取值;请参阅有关如何执行此操作的[支持字段](xref:core/modeling/backing-field)的文档，并考虑指定 `PropertyAccessMode.Field` 以确保配置正确。
 
 作为 terser 的替代方法，可以使用包容性运算符（！）的帮助简单地将属性初始化为 null：
 
@@ -63,6 +63,7 @@ C#8引入了一种名[为 null 的引用类型](/dotnet/csharp/tutorials/nullabl
 
 如果你发现自己执行了很多操作，并且所涉及的实体类型是在 EF Core 查询中主要（或独占）使用的，请考虑使导航属性不可为 null，并将其配置为可通过熟知 API 或数据批注进行选择。 这将删除所有编译器警告，同时保持关系为可选;但是，如果你的实体是在 EF Core 之外遍历的，则你可能会观察到 null 值，尽管这些属性已批注为不可为 null。
 
-## <a name="scaffolding"></a>基架
+## <a name="limitations"></a>限制
 
-[反向C#工程当前不支持8可为 null 的引用类型功能](/dotnet/csharp/tutorials/nullable-reference-types)： EF Core 始终C#会生成假定功能已关闭的代码。 例如，可为 null 的文本列将被基架为具有类型 `string` 的属性，而不是 `string?`，其中使用的是用于配置是否需要属性的流畅 API 或数据批注。 您可以编辑基架代码并将其替换为C#可为 null 的批注。 [#15520](https://github.com/aspnet/EntityFrameworkCore/issues/15520)的问题跟踪了可为 null 的引用类型的基架支持。
+* 反向工程目前不支持[ C# 8 个可以为 null 的引用类型（NRTs）](/dotnet/csharp/tutorials/nullable-reference-types)： C# EF Core 始终会生成假定该功能已关闭的代码。 例如，可为 null 的文本列将被基架为具有类型 `string` 的属性，而不是 `string?`，其中使用的是用于配置是否需要属性的流畅 API 或数据批注。 您可以编辑基架代码并将其替换为C#可为 null 的批注。 [#15520](https://github.com/aspnet/EntityFrameworkCore/issues/15520)的问题跟踪了可为 null 的引用类型的基架支持。
+* EF Core 的公共 API 图面尚未批注为为空性（公共 API 为 "在意"），这使得在 NRT 功能打开时使用它有时会很难使用。 这特别包括 EF Core 公开的异步 LINQ 运算符，如[FirstOrDefaultAsync](/dotnet/api/microsoft.entityframeworkcore.entityframeworkqueryableextensions.firstordefaultasync#Microsoft_EntityFrameworkCore_EntityFrameworkQueryableExtensions_FirstOrDefaultAsync__1_System_Linq_IQueryable___0__System_Linq_Expressions_Expression_System_Func___0_System_Boolean___System_Threading_CancellationToken_)。 我们计划为5.0 版本解决这一情况。

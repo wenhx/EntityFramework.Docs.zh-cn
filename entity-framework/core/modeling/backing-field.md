@@ -4,58 +4,58 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: a628795e-64df-4f24-a5e8-76bc261e7ed8
 uid: core/modeling/backing-field
-ms.openlocfilehash: 288440a4494117fe59d27187e24424c4d2fd44ab
-ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
+ms.openlocfilehash: 20cf9dc9b0d556f29680bce588bcbdc4ea48fa74
+ms.sourcegitcommit: f2a38c086291699422d8b28a72d9611d1b24ad0d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/23/2019
-ms.locfileid: "72811875"
+ms.lasthandoff: 01/16/2020
+ms.locfileid: "76124374"
 ---
 # <a name="backing-fields"></a>支持字段
 
-> [!NOTE]  
-> 此功能是 EF Core 1.1 中新增的功能。
+支持字段允许 EF 读取和/或写入字段，而不是属性。 当使用类中的封装来限制和/或通过应用程序代码对数据访问进行限制时，这可能很有用，但在不使用这些限制/增强功能的情况下，应从数据库中读取和/或写入值。
 
-支持字段允许 EF 读取和/或写入字段，而不是属性。 当使用类中的封装来限制和/或通过应用程序代码对数据访问进行限制时，这可能很有用，但在不使用这些限制的情况下，应从数据库中读取和/或写入值。举措.
+## <a name="basic-configuration"></a>基本配置
 
-## <a name="conventions"></a>约定
-
-按照约定，将发现以下字段作为给定属性的支持字段（按优先级顺序列出）。 仅为模型中包含的属性发现字段。 有关模型中包含哪些属性的详细信息，请参阅[包括 & 排除属性](included-properties.md)。
+按照约定，将发现以下字段作为给定属性的支持字段（按优先级顺序列出）。 
 
 * `_<camel-cased property name>`
 * `_<property name>`
 * `m_<camel-cased property name>`
 * `m_<property name>`
 
+在下面的示例中，`Url` 属性配置为具有与其支持字段 `_url`：
+
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/BackingField.cs#Sample)]
 
-配置了支持字段后，当从数据库具体化实体实例（而不是使用属性资源库）时，EF 将直接写入该字段。 如果 EF 需要在其他时间读取或写入值，则它将使用属性（如果可能）。 例如，如果 EF 需要更新某个属性的值，则它将使用属性 setter （如果已定义）。 如果该属性为只读，则它将写入字段。
+请注意，仅为模型中包含的属性发现支持字段。 有关模型中包含哪些属性的详细信息，请参阅[包括 & 排除属性](included-properties.md)。
 
-## <a name="data-annotations"></a>数据注释
+还可以显式配置支持字段，例如，如果字段名称与上述约定不对应：
 
-不能通过数据批注配置支持字段。
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingField.cs?name=BackingField&highlight=5)]
 
-## <a name="fluent-api"></a>Fluent API
+## <a name="field-and-property-access"></a>字段和属性访问
 
-您可以使用熟知的 API 来配置属性的支持字段。
+默认情况下，EF 将始终读取并写入到支持字段-假设已正确配置了一个字段，并且永远不会使用属性。 但是，EF 还支持其他访问模式。 例如，下面的示例指示 EF 仅在具体化时写入支持字段，并在所有其他情况下使用属性：
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingField.cs#Sample)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingFieldAccessMode.cs?name=BackingFieldAccessMode&highlight=6)]
 
-### <a name="controlling-when-the-field-is-used"></a>控制何时使用字段
+有关完整的支持选项集，请参阅[PropertyAccessMode 枚举](https://docs.microsoft.com/dotnet/api/microsoft.entityframeworkcore.propertyaccessmode)。
 
-可以配置 EF 何时使用字段或属性。 有关支持的选项，请参阅[PropertyAccessMode 枚举](https://docs.microsoft.com/dotnet/api/microsoft.entityframeworkcore.propertyaccessmode)。
+> [!NOTE]
+> 使用 EF Core 3.0，默认属性访问模式从 `PreferFieldDuringConstruction` 改为 `PreferField`。
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingFieldAccessMode.cs#Sample)]
+## <a name="field-only-properties"></a>仅限字段的属性
 
-### <a name="fields-without-a-property"></a>没有属性的字段
+您还可以在您的模型中创建一个概念属性，该属性在实体类中不具有相应的 CLR 属性，而是使用字段来存储实体中的数据。 这不同于[阴影属性](shadow-properties.md)，其中的数据存储在更改跟踪器中，而不是存储在实体的 CLR 类型中。 仅字段属性在实体类使用方法而不是属性来获取/设置值时使用，或者在字段不应在域模型中公开（例如主键）的情况下使用。
 
-您还可以在您的模型中创建一个概念属性，该属性在实体类中不具有相应的 CLR 属性，而是使用字段来存储实体中的数据。 这不同于[阴影属性](shadow-properties.md)，其中的数据存储在更改跟踪器中。 如果实体类使用方法获取/设置值，通常会使用此方法。
-
-可以为 EF 指定 `Property(...)` API 中的字段的名称。 如果没有具有给定名称的属性，则 EF 将查找字段。
+可以通过在 `Property(...)` API 中提供名称来配置仅限字段的属性：
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingFieldNoProperty.cs#Sample)]
 
-如果实体类中没有属性，则可以在 LINQ 查询中使用 `EF.Property(...)` 方法来引用概念上是模型的一部分的属性。
+EF 将尝试查找具有给定名称的 CLR 属性，如果找不到属性，则尝试查找一个字段。 如果属性和字段均未找到，则将改为设置影子属性。
+
+您可能需要从 LINQ 查询中引用仅限字段的属性，但此类字段通常是私有的。 可以在 LINQ 查询中使用 `EF.Property(...)` 方法来引用字段：
 
 ``` csharp
 var blogs = db.blogs.OrderBy(b => EF.Property<string>(b, "_validatedUrl"));
