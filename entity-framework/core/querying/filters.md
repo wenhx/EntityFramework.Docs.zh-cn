@@ -3,12 +3,12 @@ title: 全局查询筛选器 - EF Core
 author: anpete
 ms.date: 11/03/2017
 uid: core/querying/filters
-ms.openlocfilehash: c9bbb8a5889834ea078ddb7e432863b3d0cf2ffe
-ms.sourcegitcommit: 0cc9578fd49802789a00c0044b4e57325476ca2e
+ms.openlocfilehash: f4ee9b77411290249e763f9cb8492eea61803e91
+ms.sourcegitcommit: f2a38c086291699422d8b28a72d9611d1b24ad0d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/04/2019
-ms.locfileid: "70271460"
+ms.lasthandoff: 01/16/2020
+ms.locfileid: "76124387"
 ---
 # <a name="global-query-filters"></a>全局查询筛选器
 
@@ -55,5 +55,4 @@ ms.locfileid: "70271460"
 
 全局查询筛选器具有以下限制：
 
-* 筛选器不能包含对导航属性的引用。
 * 仅可为继承层次结构的根实体类型定义筛选器。
