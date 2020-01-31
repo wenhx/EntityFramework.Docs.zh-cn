@@ -1,21 +1,21 @@
 ---
 title: EF6 和 EF Core - 在同一应用程序中使用它们
-author: rowanmiller
-ms.date: 10/27/2016
+author: ajcvickers
+ms.date: 01/23/2019
 ms.assetid: a06e3c35-110c-4294-a1e2-32d2c31c90a7
 uid: efcore-and-ef6/side-by-side
-ms.openlocfilehash: 8bf9f51c0e5c4b1b3adf4a6a9a894689dc13d2d9
-ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
+ms.openlocfilehash: bcf0a26535c4ec880a9ac25478c987fb683f6d26
+ms.sourcegitcommit: b3cf5d2e3cb170b9916795d1d8c88678269639b1
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/20/2019
-ms.locfileid: "71149295"
+ms.lasthandoff: 01/30/2020
+ms.locfileid: "76888130"
 ---
 # <a name="using-ef-core-and-ef6-in-the-same-application"></a>在同一个应用程序中使用 EF Core 和 EF6
 
 通过安装这两个 NuGet 包，可在同一应用程序或库中使用 EF Core 和 EF6。
 
-某些类型在 EF Core 和 EF6 中具有相同的名称，并且仅命名空间有所不同，这可能会使在同一代码文件中同时使用 EF Core 和 EF6 变得复杂。 可通过命名空间别名指令轻松消除多义性。 例如:
+某些类型在 EF Core 和 EF6 中具有相同的名称，并且仅命名空间有所不同，这可能会使在同一代码文件中同时使用 EF Core 和 EF6 变得复杂。 可通过命名空间别名指令轻松消除多义性。 例如：
 
 ``` csharp
 using Microsoft.EntityFrameworkCore; // use DbContext for EF Core

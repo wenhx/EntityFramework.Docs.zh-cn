@@ -5,12 +5,12 @@ author: AndriySvyryd
 ms.author: ansvyryd
 ms.date: 11/05/2019
 uid: core/providers/cosmos/unstructured-data
-ms.openlocfilehash: 0bfccbfd3af6e209967004752b5a3947d644544b
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 69f979d46174ff56310b334f28438ac271f45155
+ms.sourcegitcommit: b3cf5d2e3cb170b9916795d1d8c88678269639b1
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655518"
+ms.lasthandoff: 01/30/2020
+ms.locfileid: "76888091"
 ---
 # <a name="working-with-unstructured-data-in-ef-core-azure-cosmos-db-provider"></a>使用 EF Core Azure Cosmos DB 提供程序中的非结构化数据
 
@@ -55,11 +55,11 @@ EF Core 旨在使使用在模型中定义的架构的数据变得简单。 但 A
 
 ## <a name="missing-property-values"></a>缺少属性值
 
-在上面的示例中，我们从顺序中删除了 `"TrackingNumber"` 属性。 由于在 Cosmos DB 中索引的工作原理，引用缺少的属性的其他位置的查询可能会返回意外的结果。 例如:
+在上面的示例中，我们从顺序中删除了 `"TrackingNumber"` 属性。 由于在 Cosmos DB 中索引的工作原理，引用缺少的属性的其他位置的查询可能会返回意外的结果。 例如：
 
 [!code-csharp[MissingProperties](../../../../samples/core/Cosmos/UnstructuredData/Sample.cs?name=MissingProperties)]
 
 排序的查询实际上不返回任何结果。 这意味着，当直接使用存储时，应注意始终填充由 EF Core 映射的属性。
 
 > [!NOTE]
-> 在未来版本的 Cosmos 中，此行为可能会发生变化。 例如，当前如果索引策略定义了复合索引 {Id/？ ASC，TrackingNumber/？ ASC）}，则具有 "ORDER BY c.Id ASC，asc" 的查询__将__返回缺少 `"TrackingNumber"` 属性的项。
+> 在未来版本的 Cosmos 中，此行为可能会发生变化。 例如，当前如果索引策略定义了复合索引 {Id/？ ASC，TrackingNumber/？ ASC）}，则为 "ORDER BY c.Id ASC，ASC" 的查询__将__返回缺少 `"TrackingNumber"` 属性的项。
