@@ -1,15 +1,15 @@
 ---
 title: EF Core 版本和计划
 author: ajcvickers
-ms.date: 01/14/2020
+ms.date: 01/29/2020
 ms.assetid: C21F89EE-FB08-4ED9-A2A0-76CB7656E6E4
 uid: core/what-is-new/index
-ms.openlocfilehash: 8d74c24021fd62c5c5d944eaf3973b344fdb1e9c
-ms.sourcegitcommit: f2a38c086291699422d8b28a72d9611d1b24ad0d
+ms.openlocfilehash: 0704b624a50d0736fefbb5633e9e7e657499a703
+ms.sourcegitcommit: b3cf5d2e3cb170b9916795d1d8c88678269639b1
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/16/2020
-ms.locfileid: "76124400"
+ms.lasthandoff: 01/30/2020
+ms.locfileid: "76888070"
 ---
 # <a name="ef-core-releases-and-planning"></a>EF Core 版本和计划
 
@@ -35,18 +35,32 @@ ms.locfileid: "76124400"
 * 主版本更新（例如，从 EF Core 2 更新到 EF Core 3）通常包含重大更改。 在进行主版本更新时，建议进行全面测试。 使用上面的“重大更改”链接获取有关处理重大更改的指导。
 * 次要版本更新通常不包含重大更改。 但仍建议进行全面测试，因为新功能可能会引入回归。
 
+## <a name="release-planning-and-schedules"></a>版本规划和安排
+
+EF Core 版本与 [.NET Core 发货计划](https://github.com/dotnet/core/blob/master/roadmap.md)保持一致。
+
+修补程序版本通常每月交付，但提前期较长。
+我们正在努力对此进行改进。
+
+要详细了解我们如何确定要在每个版本中提供的内容，请参阅[版本规划过程](release-planning.md)。
+我们通常不会对下一个主版本或次要版本之后的版本进行详规划。
+
 ## <a name="ef-core-50"></a>EF Core 5.0
 
-EF Core 版本与 [.NET Core 发货计划](https://github.com/dotnet/core/blob/master/roadmap.md)保持一致。 下一个计划的稳定版本是 **EF Core 5.0**，计划于 2020 年 11 月发布。
+下一个计划的稳定版本是 **EF Core 5.0**，计划于 2020 年 11 月发布。
 
 已根据记录的[发布计划流程](release-planning.md)创建了 [EF Core 5.0 的高级计划](ef-core-5.0/plan.md)。
 
-你对计划的反馈非常重要。 指示问题重要性的最佳方式是在 GitHub 上为该问题投票（竖起大拇指）。 然后，此数据将进入下一个版本的计划过程。
+你对计划的反馈非常重要。
+指示问题重要性的最佳方式是在 GitHub 上为该问题投票（竖起大拇指 👍）。
+然后，此数据将进入下一个版本的计划过程。
 
 ### <a name="get-it-now"></a>立即获取！
 
 EF Core 5.0 包现在以[每日生成](https://github.com/aspnet/AspNetCore/blob/master/docs/DailyBuilds.md)的形式提供  。 
 
-使用每日生成是一种查找问题并尽快提供反馈的绝佳方式。 我们获取此类反馈的速度越快，就越有可能在发布下一个正式版本前实施该反馈。 我们针对每个生成在每个平台上运行超过 55,000 个测试，致力于使每日生成保持良好状态。
+使用每日生成是一种查找问题并尽快提供反馈的绝佳方式。
+我们获取此类反馈的速度越快，就越有可能在发布下一个正式版本前实施该反馈。
+我们针对每个生成在每个平台上运行超过 56,000 个测试，致力于使每日生成保持良好状态。
 
 预览包将在今年晚些时候发送到 NuGet。

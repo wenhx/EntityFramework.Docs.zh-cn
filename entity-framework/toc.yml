@@ -21,7 +21,7 @@
           href: core/index.md
         - name: 版本和计划
           items:
-            - name: 概述
+            - name: 当前和计划的版本（路线图）
               href: core/what-is-new/index.md
             - name: 版本规划过程
               href: core/what-is-new/release-planning.md
@@ -264,7 +264,7 @@
               href: ef6/fundamentals/relationships.md
             - name: 异步查询和保存
               href: ef6/fundamentals/async.md
-            - name: 配置
+            - name: Configuration
               items:
                 - name: 基于代码
                   href: ef6/fundamentals/configuring/code-based.md
