@@ -3,12 +3,12 @@ title: EF Core 3.0 中的中断性变更 - EF Core
 author: ajcvickers
 ms.date: 12/03/2019
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: 0626ffe98843fbf5ee0e2de4b269da6c395c07f6
-ms.sourcegitcommit: 4e86f01740e407ff25e704a11b1f7d7e66bfb2a6
+ms.openlocfilehash: 6e0c17a22b56b206f18e47f678e3e237d5c42375
+ms.sourcegitcommit: b3cf5d2e3cb170b9916795d1d8c88678269639b1
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/09/2020
-ms.locfileid: "75781217"
+ms.lasthandoff: 01/30/2020
+ms.locfileid: "76888104"
 ---
 # <a name="breaking-changes-included-in-ef-core-30"></a>EF Core 3.0 中包含的中断性变更
 
@@ -109,6 +109,9 @@ ms.locfileid: "75781217"
 
 [跟踪问题 #15498](https://github.com/aspnet/EntityFrameworkCore/issues/15498)
 
+> [!IMPORTANT] 
+> EF Core 3.1 也面向 .NET Standard 2.0。 它重新支持 NET Framework。
+
 **旧行为**
 
 在 3.0 之前，EF Core 面向 .NET Standard 2.0，并在支持 .NET Standard 2.0 的所有平台上运行，包括 .NET Framework。
@@ -123,7 +126,7 @@ ms.locfileid: "75781217"
 
 **缓解措施**
 
-请考虑迁移到新式 .NET 平台。 如果无法做到这一点，请继续使用 EF Core 2.1 或 EF Core 2.2，这两者都支持 .NET Framework。
+使用 EF Core 3.1。
 
 <a name="no-longer"></a>
 ### <a name="entity-framework-core-is-no-longer-part-of-the-aspnet-core-shared-framework"></a>Entity Framework Core 不再是 ASP.NET Core 共享框架的一部分
