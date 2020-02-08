@@ -4,12 +4,12 @@ description: 如何在使用 Entity Framework Core 时配置实体类型之间�
 author: AndriySvyryd
 ms.date: 11/21/2019
 uid: core/modeling/relationships
-ms.openlocfilehash: 6b3e0636bfa266b78baafe1b6e318c9707294560
-ms.sourcegitcommit: 32c51c22988c6f83ed4f8e50a1d01be3f4114e81
+ms.openlocfilehash: 6d68e813cec6c989e8e4cb848f8740489645c65c
+ms.sourcegitcommit: 89567d08c9d8bf9c33bb55a62f17067094a4065a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 12/27/2019
-ms.locfileid: "75502183"
+ms.lasthandoff: 02/06/2020
+ms.locfileid: "77051402"
 ---
 # <a name="relationships"></a>关系
 
@@ -26,9 +26,9 @@ ms.locfileid: "75502183"
 
 * **主体实体：** 这是包含主/备用键属性的实体。 有时称为关系的 "父项"。
 
-* **外键：** 用于存储相关实体的主体键值的依赖实体中的属性。
-
 * **主体密钥：** 唯一标识主体实体的属性。 这可能是主键或备用密钥。
+
+* **外键：** 用于存储相关实体的主体键值的依赖实体中的属性。
 
 * **导航属性：** 在主体和/或从属实体上定义的属性，该属性引用相关实体。
 
@@ -48,9 +48,9 @@ ms.locfileid: "75502183"
 
 * `Blog` 是主体实体
 
-* `Post.BlogId` 为外键
+* `Blog.BlogId` 是主体键（在本例中为主键而不是备用密钥）
 
-* `Blog.BlogId` 是主体键（在这种情况下是主键，而不是备用键）
+* `Post.BlogId` 为外键
 
 * `Post.Blog` 是一个引用导航属性
 
@@ -120,7 +120,7 @@ ms.locfileid: "75502183"
 
 ### <a name="fluent-apitabfluent-api"></a>[熟知 API](#tab/fluent-api)
 
-若要在熟知的 API 中配置关系，请首先标识构成关系的导航属性。 `HasOne` 或 `HasMany` 标识正在开始配置的实体类型上的导航属性。 然后，将调用链接到 `WithOne` 或 `WithMany` 来标识反向导航。 `HasOne`/`WithOne` 用于引用导航属性，`HasMany`/用于集合导航属性。
+若要在熟知的 API 中配置关系，请首先标识构成关系的导航属性。 `HasOne` 或 `HasMany` 标识正在开始配置的实体类型上的导航属性。 然后，将调用链接到 `WithOne` 或 `WithMany` 来标识反向导航。 `HasOne`/`WithOne` 用于引用导航属性，`HasMany`/用于集合导航属性。`WithMany`
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/NoForeignKey.cs?name=NoForeignKey&highlight=8-10)]
 
