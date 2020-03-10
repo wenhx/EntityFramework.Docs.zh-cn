@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 12138003-a373-4817-b1b7-724130202f5f
 ms.openlocfilehash: f1ce44e7b00ec4c60a81ed850ce5c9d866495e1b
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181760"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78413362"
 ---
 # <a name="working-with-disconnected-entities"></a>使用断开连接的实体
 在基于实体框架的应用程序中，上下文类负责检测应用于已跟踪实体的更改。 调用 SaveChanges 方法会将上下文跟踪的更改保存到数据库。 使用 n 层应用程序时，实体对象通常会在从上下文断开连接时发生变动，且必须决定如何跟踪更改并向上下文报告这些更改。 本主题讨论使用实体框架和断开连接的实体时不同的可用选项。   

@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 65bb3db2-2226-44af-8864-caa575cf1b46
 ms.openlocfilehash: 29a86817e250a2f53ecaa73e8fa4bf93452f0497
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45489786"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78412972"
 ---
 # <a name="querying-and-finding-entities"></a>查询和查找实体
 本主题介绍使用实体框架查询数据的各种方法，包括 LINQ 和 Find 方法。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  
@@ -34,16 +34,16 @@ using (var context = new BloggingContext())
 
 请注意，DbSet 和 IDbSet 始终针对数据库创建查询，并且始终会涉及数据库往返，即使返回的实体已存在于上下文中。 出现以下情况时，会针对数据库执行查询：  
 
-- 查询由 foreach (C#) 或 For Each (Visual Basic) 语句枚举。  
+- 查询由 foreach (C#) 或 For Each (Visual Basic) 语句枚举   。  
 - 查询由集合操作（如 [ToArray](https://msdn.microsoft.com/library/bb298736)、[ToDictionary](https://msdn.microsoft.com/library/system.linq.enumerable.todictionary) 或 [ToList](https://msdn.microsoft.com/library/bb342261)）枚举。  
 - 在查询最外部指定了 LINQ 运算符，例如 [First](https://msdn.microsoft.com/library/bb291976) 或 [Any](https://msdn.microsoft.com/library/bb337697)。  
 - 调用了以下方法：DbSet 上的 [Load](https://msdn.microsoft.com/library/system.data.entity.dbextensions.load) 扩展方法、[DbEntityEntry.Reload](https://msdn.microsoft.com/library/system.data.entity.infrastructure.dbentityentry.reload.aspx) 和 Database.ExecuteSqlCommand。  
 
-从数据库返回结果时，上下文中不存在的对象会附加到上下文。 如果某个对象已存在于上下文中，则不返回现有对象（不会使用数据库值覆盖该对象的属性在对应项中的当前值和原始值）。  
+从数据库返回结果时，上下文中不存在的对象会附加到上下文。 如果某个对象已存在于上下文中，则不返回现有对象（不会使用数据库值覆盖该对象的属性在对应项中的当前值和原始值）  。  
 
 执行查询时，结果集中不回返回已添加到上下文但尚未保存到数据库的实体。 若要获取上下文中的数据，请参阅[本地数据](~/ef6/querying/local-data.md)。  
 
-如果查询未从数据库返回任何行，则结果将是空集合，而不是 NULL。  
+如果查询未从数据库返回任何行，则结果将是空集合，而不是 NULL  。  
 
 ## <a name="finding-entities-using-primary-keys"></a>使用主键查找实体  
 

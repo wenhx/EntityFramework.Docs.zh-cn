@@ -4,16 +4,16 @@ author: divega
 ms.date: 08/06/2017
 ms.assetid: 608cc774-c570-4809-8a3e-cd2c8446b8b2
 uid: core/get-started/install/index
-ms.openlocfilehash: 1121b2bde1ada74ee189287501bc770aeb65e358
-ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
+ms.openlocfilehash: 987b6f38954c291f88b5167fa9b061853b15a6cb
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 12/04/2019
-ms.locfileid: "74824438"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78412852"
 ---
 # <a name="installing-entity-framework-core"></a>安装 Entity Framework Core
 
-## <a name="prerequisites"></a>系统必备
+## <a name="prerequisites"></a>先决条件
 
 * EF Core 是一个 [.NET Standard 2.1](/dotnet/standard/net-standard) 库。 因此，EF Core 需要支持运行 .NET Standard 2.1 的 .NET 实现。 其他 .NET Standard 2.1 库也可引用 EF Core。
 
@@ -98,8 +98,6 @@ ms.locfileid: "74824438"
 ```dotnetcli
 dotnet add package Microsoft.EntityFrameworkCore.Design
 ```
-
-ASP.NET Core 应用自动随附此包。
 
 > [!IMPORTANT]
 > 请务必使用与运行时包主版本匹配的工具包版本。

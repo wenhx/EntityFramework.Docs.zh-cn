@@ -5,11 +5,11 @@ ms.date: 10/23/2016
 ms.assetid: 8ae74d63-6bad-4686-b325-bbf9d68f3743
 uid: ef6/index
 ms.openlocfilehash: 28a13879416a52cbe8035c23013f16390c75c4c9
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73656184"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78412752"
 ---
 # <a name="entity-framework-6"></a>Entity Framework 6
 实体框架 6 (EF6) 是经试验和测试的关系映射器 (O/RM)，适用于 .NET 的对象，其功能和稳定性经过了多年的开发和调试。
@@ -40,7 +40,7 @@ EF Core 则完全进行了重写，包含许多 EF6 没有的新功能，但还�
 如果功能集与需求匹配，请考虑在新应用程序中使用 EF Core。
 [比较 EF Core 和 EF6](xref:efcore-and-ef6/index)中更详细地讨论了此选项。
 
-## <a name="get-startedxrefef6get-started"></a>[入门](xref:ef6/get-started)
+## <a name="get-started"></a>[入门](xref:ef6/get-started)
 
 将 EntityFramework NuGet 包添加到项目或安装[适用于 Visual Studio 的 Entity Framework Tools](https://aka.ms/AA6i8c5)。 然后观看视频、阅读教程和高级文档，以充分利用 EF6。
 
