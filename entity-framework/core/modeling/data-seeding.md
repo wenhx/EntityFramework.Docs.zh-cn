@@ -1,16 +1,16 @@
 ---
-title: 数据种子设定-EF Core
+title: 数据种子设定的 EF Core
 author: AndriySvyryd
 ms.author: ansvyryd
 ms.date: 11/02/2018
 ms.assetid: 3154BF3C-1749-4C60-8D51-AE86773AA116
 uid: core/modeling/data-seeding
-ms.openlocfilehash: 0b11b6b3104b74e09c60c9c455e22f164df493c7
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 5c056c600f696ad1443ddb7b8c95c4b0ead06d21
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655764"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414571"
 ---
 # <a name="data-seeding"></a>数据种子设定
 
@@ -48,7 +48,7 @@ ms.locfileid: "73655764"
 
 [!code-csharp[OwnedTypeSeed](../../../samples/core/Modeling/DataSeeding/DataSeedingContext.cs?name=OwnedTypeSeed)]
 
-有关更多上下文，请参阅[完整的示例项目](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Modeling/DataSeeding)。
+有关更多上下文，请参阅[完整的示例项目](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Modeling/DataSeeding)。
 
 将数据添加到模型后，应使用[迁移](xref:core/managing-schemas/migrations/index)来应用更改。
 

@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: f8fcfb34-35de-4e82-b419-8f99fd2eb92a
 ms.openlocfilehash: 6900ce3d139f4ae017edc764d55a7b746561a226
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182414"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414451"
 ---
 # <a name="entity-framework-blogs"></a>实体框架博客
 除了产品文档，这些博客可能是有关实体框架的有用信息的源：

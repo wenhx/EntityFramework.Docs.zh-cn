@@ -5,11 +5,11 @@ ms.date: 04/09/2017
 ms.assetid: 94ab4800-c460-4caa-a5e8-acdfee6e6ce2
 uid: core/providers/sqlite/limitations
 ms.openlocfilehash: 2f80dc195265787318ac4925dd937da45ffad011
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72179773"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414757"
 ---
 # <a name="sqlite-ef-core-database-provider-limitations"></a>SQLite EF Core 数据库提供程序限制
 
@@ -25,7 +25,7 @@ SQLite 提供程序有很多迁移限制。 其中的大多数限制是由基础
 
 ## <a name="query-limitations"></a>查询限制
 
-SQLite 本身并不支持以下数据类型。 EF Core 可以读取和写入这些类型的值，也支持查询是否相等（`where e.Property == value`）。 但其他操作（如比较和排序）将需要对客户端进行评估。
+SQLite 本身并不支持以下数据类型。 EF Core 可以读取和写入这些类型的值，也支持查询相等性（`where e.Property == value`）。 但其他操作（如比较和排序）将需要对客户端进行评估。
 
 * DateTimeOffset
 * Decimal
@@ -34,7 +34,7 @@ SQLite 本身并不支持以下数据类型。 EF Core 可以读取和写入这�
 
 建议使用 DateTime 值，而不是 `DateTimeOffset`。 处理多个时区时，建议在保存之前将值转换为 UTC，然后将其转换回适当的时区。
 
-@No__t 0 类型提供了高级别的精度。 但是，如果不需要该级别的精度，则建议改为使用 double。 您可以使用[值转换器](../../modeling/value-conversions.md)在类中继续使用 decimal。
+`Decimal` 类型提供了较高的精度级别。 但是，如果不需要该级别的精度，则建议改为使用 double。 您可以使用[值转换器](../../modeling/value-conversions.md)在类中继续使用 decimal。
 
 ``` csharp
 modelBuilder.Entity<MyEntity>()
@@ -46,7 +46,7 @@ modelBuilder.Entity<MyEntity>()
 
 SQLite 数据库引擎不支持许多其他关系数据库所支持的架构操作。 如果尝试将不受支持的操作之一应用于 SQLite 数据库，则会引发 `NotSupportedException`。
 
-| 操作            | 受? | 需要版本 |
+| 操作            | 是否支持？ | 需要版本 |
 |:---------------------|:-----------|:-----------------|
 | AddColumn            | ✔          | 1.0              |
 | AddForeignKey        | ✗          |                  |
@@ -66,13 +66,13 @@ SQLite 数据库引擎不支持许多其他关系数据库所支持的架构操�
 | RenameTable          | ✔          | 1.0              |
 | EnsureSchema         | ✔ (no-op)  | 2.0              |
 | DropSchema           | ✔ (no-op)  | 2.0              |
-| Insert               | ✔          | 2.0              |
-| Update               | ✔          | 2.0              |
-| DELETE               | ✔          | 2.0              |
+| 插入               | ✔          | 2.0              |
+| 更新               | ✔          | 2.0              |
+| 删除               | ✔          | 2.0              |
 
 ## <a name="migrations-limitations-workaround"></a>迁移限制解决方法
 
-通过在迁移中手动编写代码来执行表重新生成，可以解决其中一些限制。 表重新生成包括重命名现有表、创建新表、将数据复制到新表和删除旧表。 需要使用 `Sql(string)` 方法执行其中一些步骤。
+通过在迁移中手动编写代码来执行表重新生成，可以解决其中一些限制。 表重新生成包括重命名现有表、创建新表、将数据复制到新表和删除旧表。 你将需要使用 `Sql(string)` 方法来执行其中一些步骤。
 
 有关更多详细信息，请参阅在 SQLite 文档中[进行其他类型的表架构更改](https://sqlite.org/lang_altertable.html#otheralter)。
 

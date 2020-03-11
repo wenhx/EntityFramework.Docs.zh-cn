@@ -1,31 +1,31 @@
 ---
-title: 第一个数据注释-EF6 的代码
+title: Code First 数据批注-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 80abefbd-23c9-4fce-9cd3-520e5df9856e
-ms.openlocfilehash: fcd01aef7303573001460b352f8099b2cc6e224a
-ms.sourcegitcommit: e90d6cfa3e96f10b8b5275430759a66a0c714ed1
+ms.openlocfilehash: 9fac2a90c46d78ff5fd632800cc0050276467773
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/17/2019
-ms.locfileid: "68286483"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78415855"
 ---
-# <a name="code-first-data-annotations"></a>Code First 数据注释
+# <a name="code-first-data-annotations"></a>Code First 数据批注
 > [!NOTE]
-> **EF4.1 及更高版本仅**的功能，Api，Entity Framework 4.1 中引入了此页所述的等。 如果您使用的是早期版本，则不适用的部分或所有这些信息。
+> **仅限 ef 4.1** -在实体框架4.1 中引入了本页中所述的功能、api 等。 如果你使用的是早期版本，则不会应用此信息中的部分或全部。
 
-此页上的内容是从作者： Julie Lerman 最初编写一篇文章 (\<http://thedatafarm.com>) 。
+此页面上的内容适用于最初由 Julie Lerman （\<http://thedatafarm.com>)编写的文章。
 
-实体框架 Code First 允许您使用您自己的域类来表示 EF 依赖于执行查询，该模型更改跟踪和更新功能。 代码首先将利用一种编程模式称为惯例优先于配置。 代码首先将假定您的类遵循的约定的实体框架，以及在这种情况下，将自动解决如何执行它的作业。 但是，如果您的类不遵循这些约定，必须将配置添加到您的类以提供必要的信息，EF 的功能。
+利用实体框架 Code First，你可以使用自己的域类来表示 EF 依赖来执行查询、更改跟踪和更新功能的模型。 Code First 利用称为 "约定 over 配置" 的编程模式。 Code First 将假设你的类遵循实体框架的约定，在这种情况下，将自动处理如何执行其作业。 但是，如果你的类不遵循这些约定，则可以将配置添加到你的类，以便为 EF 提供必需的信息。
 
-代码首先提供了两种方法将这些配置添加到您的类。 一种使用简单的属性名为 DataAnnotations，并且第二个使用 Code First Fluent API，后者为您提供一种在代码中以强制方式，描述配置方法。
+Code First 提供了向你的类添加这些配置的两种方法。 其中一种方法是使用名为 DataAnnotations 的简单特性，第二种方法是使用 Code First 的流畅 API，这为你提供了一种在代码中以强制方式描述配置的方式。
 
-本文将重点介绍使用 DataAnnotations （System.ComponentModel.DataAnnotations 命名空间中） 来配置你的类，突出显示的最常见所需的配置。 DataAnnotations 还能够理解的大量的.NET 应用程序，如 ASP.NET MVC 允许这些应用程序可以利用相同的注释进行客户端验证。
+本文重点介绍如何使用 DataAnnotations （DataAnnotations 命名空间中的 System.componentmodel）来配置类-突出显示最常用的配置。 DataAnnotations 也可由许多 .NET 应用程序（如 ASP.NET MVC）理解，这允许这些应用程序利用相同的注释进行客户端验证。
 
 
 ## <a name="the-model"></a>模型
 
-我将演示代码使用类的一个简单的对第一个 DataAnnotations:博客和文章。
+我将使用简单的类对 Code First DataAnnotations 进行演示：博客和文章。
 
 ``` csharp
     public class Blog
@@ -47,15 +47,15 @@ ms.locfileid: "68286483"
     }
 ```
 
-因为它们是在博客和文章类方便地遵循代码的第一个约定并需要启用 EF 兼容性的调整。 但是，您可以使用批注的类和数据库映射到的有关向 EF 提供的详细信息。
+正如他们一样，博客和文章类可以方便地遵循 code first 约定，无需进行调整即可启用 EF 兼容性。 但是，您还可以使用批注向 EF 提供有关它们所映射到的类和数据库的详细信息。
 
  
 
 ## <a name="key"></a>Key
 
-Entity Framework 依赖于具有一个密钥值，用于跟踪的实体的每个实体。 一种约定的 Code First 是隐式键属性;第一次代码将查找名为"Id"或类名称和"Id"，如"BlogId"的组合的属性。 此属性将映射到数据库中的主键列。
+实体框架依赖于每个实体，每个实体都有一个用于实体跟踪的键值。 Code First 的一种约定是隐式键属性;Code First 将查找名为 "Id" 的属性，或者查找类名称和 "Id" （如 "BlogId"）的组合。 此属性将映射到数据库中的主键列。
 
-博客和文章类都遵循此约定。 如果他们不乐意这样？ 如果博客使用名称*PrimaryTrackingKey*相反，或甚至*foo*？ 如果代码第一次未找到匹配此约定属性它将引发异常，由于实体框架的需求，您必须具有键属性。 关键批注用于指定哪些属性是要使用的 entitykey。
+博客和帖子类都遵循此约定。 如果不是，怎么办？ 如果博客使用的是名称*PrimaryTrackingKey* （甚至是*foo*），该怎么办？ 如果代码优先找不到与此约定相匹配的属性，则会引发异常，因为实体框架要求必须有一个键属性。 你可以使用密钥批注来指定要用作 EntityKey 的属性。
 
 ``` csharp
     public class Blog
@@ -68,13 +68,13 @@ Entity Framework 依赖于具有一个密钥值，用于跟踪的实体的每个
     }
 ```
 
-如果您是使用 code first 是数据库生成功能、 博客表具有名为 PrimaryTrackingKey，默认情况下也定义为标识主键列。
+如果使用代码优先的数据库生成功能，博客表将具有名为 PrimaryTrackingKey 的主键列，默认情况下，此列也定义为标识。
 
-![博客具有主键的表](~/ef6/media/jj591583-figure01.png)
+![带主键的博客表](~/ef6/media/jj591583-figure01.png)
 
 ### <a name="composite-keys"></a>组合键
 
-实体框架支持的复合键-主键由多个属性组成。 例如，你可以其主键为 PassportNumber 和 IssuingCountry 的组合的 Passport 类。
+实体框架支持组合键-由多个属性组成的主键。 例如，你可以有一个 Passport 类，其 primary key 是 PassportNumber 和 IssuingCountry 的组合。
 
 ``` csharp
     public class Passport
@@ -88,14 +88,14 @@ Entity Framework 依赖于具有一个密钥值，用于跟踪的实体的每个
     }
 ```
 
-尝试在 EF 模型中使用上述的类将导致`InvalidOperationException`:
+尝试在 EF 模型中使用以上类将导致 `InvalidOperationException`：
 
-*无法确定复合主键排序类型 Passport。使用 ColumnAttribute 或 HasKey 方法指定为复合主键的订单。*
+*无法确定类型 "Passport" 的组合键。使用 ColumnAttribute 或 HasKey 方法为组合主键指定顺序。*
 
-若要使用的复合键，实体框架要求定义键属性的顺序。 可以使用列批注以指定的顺序来执行此操作。
+若要使用组合键，实体框架要求您定义键属性的顺序。 为此，可以使用列批注指定顺序。
 
 >[!NOTE]
-> 将顺序值是相对 （而非基于索引） 以便可以使用任何值。 例如，100 到 200 个将代替 1 和 2 可接受。
+> 顺序值是相对的（而不是基于索引的），因此可以使用任何值。 例如，100和200可接受而不是1和2。
 
 ``` csharp
     public class Passport
@@ -111,9 +111,9 @@ Entity Framework 依赖于具有一个密钥值，用于跟踪的实体的每个
     }
 ```
 
-如果你有具有复合外键的实体，则必须指定相同的列排序用于相应的主键属性。
+如果有包含复合外键的实体，则必须指定用于相应主键属性的相同列排序。
 
-仅的相对顺序中的外键属性必须是相同的确切的值分配给**顺序**不需要匹配。 例如，在以下类中，3 和 4 可用来代替 1 和 2。
+只有外键属性中的相对顺序需要相同，分配给**Order**的确切值不需要匹配。 例如，在下面的类中，可以使用3和4代替1和2。
 
 ``` csharp
     public class PassportStamp
@@ -135,63 +135,63 @@ Entity Framework 依赖于具有一个密钥值，用于跟踪的实体的每个
     }
 ```
 
-## <a name="required"></a>必填
+## <a name="required"></a>必需
 
-需要的批注告知 EF 特定的属性是必需。
+必需的批注告诉 EF 需要特定属性。
 
-添加所需的 Title 属性将强制 EF （和 MVC） 以确保该属性中包含的数据。
+向 Title 属性添加所需的将强制 EF （和 MVC）确保属性中包含数据。
 
 ``` csharp
     [Required]
     public string Title { get; set; }
 ```
 
-无需额外的代码或标记在应用程序中的更改，与 MVC 应用程序将执行客户端验证，甚至动态生成使用的属性和批注名称的消息。
+如果应用程序中没有额外的代码或标记更改，MVC 应用程序将执行客户端验证，甚至使用属性和批注名称动态生成消息。
 
-![创建具有标题页是所需的错误](~/ef6/media/jj591583-figure02.png)
+![需要标题的 "创建页面" 错误](~/ef6/media/jj591583-figure02.png)
 
-所需的属性也会影响生成的数据库，从而映射的属性不可为 null。 请注意，标题字段已更改为"not null"。
+必需的属性还会影响生成的数据库，方法是将映射的属性设为不可为 null。 请注意，Title 字段已更改为 "not null"。
 
 >[!NOTE]
-> 在某些情况下它不可能要为不可为 null，即使该属性是必需的数据库中的列。 例如，当对多个类型使用 TPH 继承策略数据存储在单个表。 如果派生的类型包括必需的属性列不能成为不可为 null 因为层次结构中的不是所有类型都将都具有此属性。
+> 在某些情况下，即使属性是必需的，也无法使数据库中的列不可为 null。 例如，对多个类型使用 TPH 继承战略数据时，会将其存储在一个表中。 如果派生的类型包含所需的属性，则列不能为 null，因为并不是层次结构中的所有类型都具有此属性。
 
  
 
-![Blogs 表](~/ef6/media/jj591583-figure03.png)
+![博客表](~/ef6/media/jj591583-figure03.png)
 
  
 
 ## <a name="maxlength-and-minlength"></a>MaxLength 和 MinLength
 
-MaxLength 和 MinLength 属性，可以指定其他属性验证，像您那样使用所需。
+MaxLength 和 MinLength 属性允许您指定附加的属性验证，就像您在需要时所做的那样。
 
-下面是具有长度要求 BloggerName。 该示例还演示如何组合属性。
+下面是具有长度要求的 BloggerName。 该示例还演示了如何合并特性。
 
 ``` csharp
     [MaxLength(10),MinLength(5)]
     public string BloggerName { get; set; }
 ```
 
-MaxLength 批注会影响数据库的属性的长度设置为 10。
+MaxLength 批注将属性的长度设置为10，将影响数据库。
 
-![Blogs 表 BloggerName 列上显示的最大长度](~/ef6/media/jj591583-figure04.png)
+![显示 BloggerName 列的最大长度的博客表格](~/ef6/media/jj591583-figure04.png)
 
-客户端的批注 MVC 和 EF 4.1 服务器端批注都将遵循此验证，再次动态生成一条错误消息："字段 BloggerName 具有最大长度为"10"的字符串或数组类型必须是"。该消息是有点长。 很多批注，可以使用 ErrorMessage 属性指定一条错误消息。
+MVC 客户端批注和 EF 4.1 服务器端批注都将接受此验证，并再次动态生成错误消息： "字段 BloggerName 必须是最大长度为" 10 "的字符串或数组类型。"该消息只需很长时间。 许多批注允许您使用 ErrorMessage 特性指定错误消息。
 
 ``` csharp
     [MaxLength(10, ErrorMessage="BloggerName must be 10 characters or less"),MinLength(5)]
     public string BloggerName { get; set; }
 ```
 
-此外可以在所需的批注中指定错误消息。
+您还可以在所需的批注中指定 ErrorMessage。
 
-![创建具有自定义错误消息页](~/ef6/media/jj591583-figure05.png)
+![创建具有自定义错误消息的页面](~/ef6/media/jj591583-figure05.png)
 
  
 
 ## <a name="notmapped"></a>NotMapped
 
-第一个代码约定决定了是受支持的数据类型的每个属性表示为数据库中。 但这并非总是这种情况在您的应用程序。 例如，可能博客类，用于创建基于字段的标题和 BloggerName 代码中有属性。 该属性可以动态创建实体并且不需要存储。 可以将标记不会映射到此 BlogCode 属性如 NotMapped 批注与数据库的任何属性。
+Code first 约定规定每个属于受支持数据类型的属性都在数据库中表示。 但在应用程序中并不总是如此。 例如，你可能在博客类中有一个属性，该属性基于 "标题" 和 "BloggerName" 字段创建代码。 该属性可以动态创建，不需要存储。 可以用 NotMapped 批注（如此 BlogCode 属性）来标记不映射到数据库的任何属性。
 
 ``` csharp
     [NotMapped]
@@ -208,7 +208,7 @@ MaxLength 批注会影响数据库的属性的长度设置为 10。
 
 ## <a name="complextype"></a>ComplexType
 
-不常见对域实体跨一组类的描述，然后分层这些类来描述完整实体。 例如，您可以添加到您的模型名 BlogDetails 的类。
+请不要在一组类中描述域实体，然后将这些类分层以描述完整的实体。 例如，可以将名为 BlogDetails 的类添加到模型。
 
 ``` csharp
     public class BlogDetails
@@ -220,9 +220,9 @@ MaxLength 批注会影响数据库的属性的长度设置为 10。
     }
 ```
 
-请注意 BlogDetails 不具有任何类型的键属性。 在域驱动设计中，BlogDetails 称为值对象。 实体框架将值对象称为复杂类型。  不能自行跟踪复杂类型。
+请注意，BlogDetails 没有任何类型的键属性。 在域驱动设计中，BlogDetails 称为值对象。 实体框架将值对象引用为复杂类型。  不能自行跟踪复杂类型。
 
-但是作为博客类，它将作为博客对象的一部分进行跟踪的 BlogDetails 中的属性。 为了使代码首先将这种情况，你必须将 BlogDetails 类标记为复杂类型。
+但作为博客类中的属性，BlogDetails 将作为博客对象的一部分进行跟踪。 为了使代码优先识别这一点，必须将 BlogDetails 类标记为 ComplexType。
 
 ``` csharp
     [ComplexType]
@@ -235,42 +235,42 @@ MaxLength 批注会影响数据库的属性的长度设置为 10。
     }
 ```
 
-现在可以在博客类来表示该博客 BlogDetails 中添加一个属性。
+现在，可以在博客类中添加一个属性，用于表示该博客的 BlogDetails。
 
 ``` csharp
         public BlogDetails BlogDetail { get; set; }
 ```
 
-在数据库中，博客表将包含的所有博客包括其 BlogDetail 属性中包含的属性的属性。 默认情况下，每个前面带有复杂类型，BlogDetail 的名称。
+在数据库中，博客表将包含博客的所有属性，包括其 BlogDetail 属性中包含的属性。 默认情况下，每个名称的前面都有复杂类型 BlogDetail 的名称。
 
-![具有复杂类型的网络日志表](~/ef6/media/jj591583-figure06.png)
+![包含复杂类型的博客表](~/ef6/media/jj591583-figure06.png)
 
 
 ## <a name="concurrencycheck"></a>ConcurrencyCheck
 
-ConcurrencyCheck 批注可以标记一个或多个要在进行并发检查数据库中，当用户编辑或删除的实体的属性。 如果您一直使用 EF 设计器，这会将与将属性的 ConcurrencyMode 设置为 Fixed。
+ConcurrencyCheck 批注允许标记一个或多个属性，用户在编辑或删除实体时，此属性将用于数据库中的并发检查。 如果你使用的是 EF 设计器，则会将属性的 ConcurrencyMode 设置为 Fixed。
 
-让我们了解 ConcurrencyCheck 通过将其添加到 BloggerName 属性的工作原理。
+让我们通过将其添加到 BloggerName 属性来了解 ConcurrencyCheck 的工作原理。
 
 ``` csharp
     [ConcurrencyCheck, MaxLength(10, ErrorMessage="BloggerName must be 10 characters or less"),MinLength(5)]
     public string BloggerName { get; set; }
 ```
 
-当调用 SaveChanges 时，由于 ConcurrencyCheck 批注 BloggerName 字段中，将更新中使用该属性的原始值。 该命令将尝试查找正确的行通过筛选不仅上的密钥值，还在 BloggerName 的原始值。  以下是 UPDATE 命令发送到数据库，您可以看到该命令将更新包含 PrimaryTrackingKey 的行的关键部分为 1，该博客从数据库中检索时的原始值的"Julie"BloggerName。
+当调用 SaveChanges 时，由于 BloggerName 字段上的 ConcurrencyCheck 批注，将在更新中使用该属性的原始值。 此命令将尝试通过筛选键值而不是 BloggerName 的原始值来查找正确的行。  下面是发送到数据库的 UPDATE 命令的关键部分，您可以在其中看到命令将更新 PrimaryTrackingKey 为1的行，BloggerName 为 "Julie"，这是从数据库中检索到该博客时的原始值。
 
 ``` SQL
     where (([PrimaryTrackingKey] = @4) and ([BloggerName] = @5))
     @4=1,@5=N'Julie'
 ```
 
-如果有人已更改该博客的博主名称，请在此期间，此更新将失败，则会将需要处理 DbUpdateConcurrencyException。
+如果用户同时更改了博客的博客名称，则此更新将会失败，并且你将收到需要处理的 DbUpdateConcurrencyException。
 
  
 
 ## <a name="timestamp"></a>TimeStamp
 
-它是更常见的是进行并发检查中使用行版本或时间戳字段。 但是，而不是使用 ConcurrencyCheck 批注，您可以使用更具体的时间戳批注的属性类型为字节数组。 代码首先将相同的处理时间戳属性为 ConcurrencyCheck 属性，但它还将确保代码首先生成的数据库字段是不可为 null。 仅可以在给定类中有一个时间戳属性。
+更常见的情况是使用 rowversion 或时间戳字段进行并发检查。 而不是使用 ConcurrencyCheck 批注，只要属性的类型是字节数组，就可以使用更具体的时间戳注释。 Code first 会将 Timestamp 属性视为与 ConcurrencyCheck 属性相同，但它还将确保代码第一次生成的数据库字段不可为 null。 给定的类中只能有一个时间戳属性。
 
 将以下属性添加到博客类：
 
@@ -279,61 +279,61 @@ ConcurrencyCheck 批注可以标记一个或多个要在进行并发检查数据
     public Byte[] TimeStamp { get; set; }
 ```
 
-在代码中首次在数据库表中创建不可以为 null 的时间戳列的结果。
+在数据库表中生成一个不可以为 null 的时间戳列的代码。
 
-![使用时间戳列的 Blogs 表](~/ef6/media/jj591583-figure07.png)
+![带有时间戳列的博客表](~/ef6/media/jj591583-figure07.png)
 
  
 
 ## <a name="table-and-column"></a>表和列
 
-如果您让代码优先在创建数据库，可能想要更改的表和列创建的名称。 您还可以使用 Code First 与现有数据库。 但它并不总是类和你的域中的属性的名称与表和数据库中的列的名称相匹配的情况。
+如果允许 Code First 创建数据库，则可能需要更改要创建的表和列的名称。 您还可以将 Code First 与现有数据库一起使用。 但并非总是域中类和属性的名称与数据库中的表和列的名称相匹配。
 
-我的类名为博客，并按照约定，代码首先假定这会映射到名为博客的表。 如果不是这种情况可以使用表属性中指定的表的名称。 此处，批注指定表名 InternalBlogs。
+我的类称为博客和惯例，代码优先假设这将映射到名为 Blog 的表。 如果不是这种情况，则可以指定具有表属性的表的名称。 例如，批注正在将表名指定为 InternalBlogs。
 
 ``` csharp
     [Table("InternalBlogs")]
     public class Blog
 ```
 
-列批注是详细擅长中指定的映射列的特性。 您可以规定名称、 数据类型或甚至一列的表中显示的顺序。 下面是列属性的一个示例。
+在指定映射列的特性时，列批注更熟练地使用。 您可以规定名称、数据类型，甚至是列在表中的显示顺序。 下面是列属性的示例。
 
 ``` csharp
     [Column("BlogDescription", TypeName="ntext")]
     public String Description {get;set;}
 ```
 
-不要混淆列的数据类型 DataAnnotation TypeName 属性。 数据类型是 UI 使用一条注释，并忽略由 Code First。
+不要将列的 TypeName 特性与 DataType DataAnnotation 混淆。 数据类型是一种用于 UI 的批注，Code First 会将其忽略。
 
-下面是表后已重新生成。 表名已更改为 InternalBlogs，从复杂类型说明列现在是 BlogDescription。 因为在批注中指定了名称，但代码首先将不使用的复杂类型的名称开头的列名称的约定。
+下面是重新生成表后的表。 表名称已更改为 InternalBlogs，并且来自复杂类型的说明列现在为 BlogDescription。 由于在注释中指定了名称，因此 code first 将不会使用以复杂类型名称开头的列名称。
 
-![Blogs 表和列重命名](~/ef6/media/jj591583-figure08.png)
+![博客表和列已重命名](~/ef6/media/jj591583-figure08.png)
 
  
 
 ## <a name="databasegenerated"></a>DatabaseGenerated
 
-重要的数据库功能是能够具有计算属性。 如果您打算映射代码优先类到包含的表的计算列，您不希望实体框架可以尝试更新这些列。 但您希望 EF 从数据库中返回这些值后已插入或更新数据。 DatabaseGenerated 批注可用于计算枚举以及在类中标记这些属性。 其他枚举都是无和标识。
+重要的数据库功能是具有计算属性的能力。 如果要将 Code First 类映射到包含计算列的表，则不希望实体框架尝试更新这些列。 但是，在插入或更新数据后，您确实需要 EF 从数据库返回这些值。 可以使用 DatabaseGenerated 批注来标记类中的这些属性以及计算所得的枚举。 其他枚举为 None 和 Identity。
 
 ``` csharp
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public DateTime DateCreated { get; set; }
 ```
 
-可以使用代码首先生成数据库时生成字节或时间戳列上的数据库，否则您才应使用此时指向现有数据库，因为代码首先将无法确定的公式计算所得的列。
+当代码优先生成数据库时，可以使用在字节或时间戳列上生成的数据库，否则，只应在指向现有数据库时使用此数据库，因为 code first 无法确定计算列的公式。
 
-默认情况下，读取上面是一个整数键属性将成为在数据库中的标识键。 这将是与将 DatabaseGenerated 设为 DatabaseGeneratedOption.Identity 相同。 如果不希望其成为标识键，您可以将值设置为 DatabaseGeneratedOption.None。
+如上所述，在默认情况下，作为整数的键属性将成为数据库中的标识键。 这与将 DatabaseGenerated 设置为 DatabaseGeneratedOption 相同。 如果您不希望它是标识密钥，则可以将该值设置为 DatabaseGeneratedOption。
 
  
 
-## <a name="index"></a>索引
+## <a name="index"></a>Index
 
 > [!NOTE]
-> **EF6.1 及更高版本仅**-Entity Framework 6.1 中引入了索引属性。 如果您使用的是早期版本不适用于此部分中的信息。
+> **Ef 6.1 仅**往上-索引属性是在实体框架6.1 中引入的。 如果你使用的是早期版本，则本部分中的信息不适用。
 
-可以使用的一个或多个列创建索引**IndexAttribute**。 将特性添加到一个或多个属性将导致 EF 在数据库中创建相应的索引时自动创建该数据库，或创建相应的基架**CreateIndex**调用，如果使用 Code First 迁移。
+您可以使用**IndexAttribute**对一个或多个列创建索引。 将属性添加到一个或多个属性时，将导致 EF 在创建数据库时在数据库中创建相应的索引，或者如果使用 Code First 迁移，则为相应的**CreateIndex**调用基架。
 
-例如，下面的代码将导致在创建索引**评级**的列**帖子**数据库表中的。
+例如，下面的代码将生成一个索引，该索引是在数据库的 "**发布**" 表的 "**分级**" 列上创建的。
 
 ``` csharp
     public class Post
@@ -347,14 +347,14 @@ ConcurrencyCheck 批注可以标记一个或多个要在进行并发检查数据
     }
 ```
 
-默认情况下，将名为索引**IX\_&lt;属性名称&gt;** (IX\_评级在上面的示例)。 但还可以指定索引的名称。 下面的示例指定该索引，应将命名为**PostRatingIndex**。
+默认情况下，索引将命名为**IX\_&lt;属性名称&gt;** （在上面的示例中为 Ix\_评级）。 您还可以指定索引的名称。 下面的示例指定索引应命名为**PostRatingIndex**。
 
 ``` csharp
     [Index("PostRatingIndex")]
     public int Rating { get; set; }
 ```
 
-默认情况下，索引是非唯一的但你可以使用**IsUnique**名为参数来指定应该唯一索引。 下面的示例上引入了唯一索引**用户**的登录名。
+默认情况下，索引是不唯一的，但您可以使用**IsUnique**命名参数指定索引应是唯一的。 下面的示例对**用户**的登录名引入唯一索引。
 
 ``` csharp
     public class User
@@ -371,7 +371,7 @@ ConcurrencyCheck 批注可以标记一个或多个要在进行并发检查数据
 
 ### <a name="multiple-column-indexes"></a>多列索引
 
-跨多个列的索引指定为给定的表在多个索引批注中使用相同的名称。 创建多列索引时，需要在索引中指定列的顺序。 例如，以下代码将创建在多列索引**评级**并**BlogId**调用**IX\_BlogIdAndRating**。 **BlogId**是在索引中的第一列和**评级**是第二个。
+跨多个列的索引通过在给定表的多个索引批注中使用相同的名称来指定。 创建多列索引时，需要指定索引中列的顺序。 例如，下面的代码创建一个名为**IX\_BlogIdAndRating**的**分级**和**BlogId**的多列索引。 **BlogId**是索引中的第一列，而**评级**是第二列。
 
 ``` csharp
     public class Post
@@ -388,16 +388,16 @@ ConcurrencyCheck 批注可以标记一个或多个要在进行并发检查数据
 
  
 
-## <a name="relationship-attributes-inverseproperty-and-foreignkey"></a>关系的属性：InverseProperty 和 ForeignKey
+## <a name="relationship-attributes-inverseproperty-and-foreignkey"></a>关系属性： InverseProperty 和 ForeignKey
 
 > [!NOTE]
-> 此页提供了有关设置关系中使用数据注释在 Code First 模型的信息。 有关在 EF 和如何访问和处理数据使用关系的关系的常规信息，请参阅[关系和导航属性](~/ef6/fundamentals/relationships.md)。 *
+> 本页提供有关使用数据批注设置 Code First 模型中的关系的信息。 有关 EF 中的关系以及如何使用关系访问和操作数据的一般信息，请参阅[关系 & 导航属性](~/ef6/fundamentals/relationships.md)。 *
 
-第一个代码约定将负责在模型中最常见的关系，但有某些情况下，应帮助在位置。
+Code first 约定将负责您的模型中最常见的关系，但在某些情况下，需要帮助。
 
-更改造成的问题及其与文章的博客类中的键属性的名称。 
+更改博客类中键属性的名称时，会创建一个与发布的关系相关的问题。 
 
-在生成数据库时，代码将首先看到在开机自检类的 BlogId 属性，并识别它，通过它与类名以及"Id"，匹配作为博客类的外键的约定。 但在博客类中没有任何 BlogId 属性。 此问题的解决方案是在 Post 中创建导航属性并使用外 DataAnnotation 帮助代码首先了解如何生成两个类之间的关系，使用 Post.BlogId 属性，以及如何指定中的约束数据库。
+生成数据库时，代码优先会在 Post 类中看到 BlogId 属性，并将其识别为与博客类的外键匹配的类名和 "Id"。 但博客类中没有 BlogId 属性。 此解决方案的作用是在 Post 中创建一个导航属性，并使用外 DataAnnotation 帮助代码首先了解如何使用 BlogId 属性构建这两个类之间的关系，以及如何在数据.
 
 ``` csharp
     public class Post
@@ -413,20 +413,20 @@ ConcurrencyCheck 批注可以标记一个或多个要在进行并发检查数据
     }
 ```
 
-在数据库中的约束演示 InternalBlogs.PrimaryTrackingKey 和 Posts.BlogId 之间的关系。 
+数据库中的约束显示 InternalBlogs 和 BlogId 之间的关系。 
 
-![InternalBlogs.PrimaryTrackingKey 与 Posts.BlogId 之间的关系](~/ef6/media/jj591583-figure09.png)
+![InternalBlogs 和 PrimaryTrackingKey 之间的关系。 BlogId](~/ef6/media/jj591583-figure09.png)
 
-有多个类之间的关系时，使用 InverseProperty。
+当类之间存在多个关系时，将使用 InverseProperty。
 
-在发布类中，你可能想要跟踪谁编写了一篇博客文章的以及谁对其进行编辑。 以下是 Post 类的两个新的导航属性。
+在 Post 类中，你可能需要跟踪博客文章的作者，以及编辑者。 下面是 Post 类的两个新导航属性。
 
 ``` csharp
     public Person CreatedBy { get; set; }
     public Person UpdatedBy { get; set; }
 ```
 
-此外需要引用这些属性的 Person 类中添加。 Person 类具有导航属性返回到 Post，一个用于所有的人，一个用于更新由该作者的文章的所有文章。
+还需要添加到这些属性引用的 Person 类中。 Person 类将导航属性返回到张贴内容，一个用于该用户撰写的所有帖子，另一个用于该人员所更新的所有帖子。
 
 ``` csharp
     public class Person
@@ -438,11 +438,11 @@ ConcurrencyCheck 批注可以标记一个或多个要在进行并发检查数据
     }
 ```
 
-代码首先不能在其自己的两个类中的属性匹配。 文章的数据库表应拥有的 CreatedBy 人员，另一个用于 UpdatedBy 人员的一个外键，但代码首先将创建四个外键属性：Person\_Id、 人\_Id1、 CreatedBy\_Id 和 UpdatedBy\_id。
+Code first 不能自行匹配两个类中的属性。 用于发布的数据库表应具有 System.createdby 人员的一个外键，另一个用于 UpdatedBy 人员，而 code first 将创建四个外键属性： Person\_Id、Person\_Id1、System.createdby\_Id 和 UpdatedBy\_Id。
 
-![Posts 表包含的额外外键](~/ef6/media/jj591583-figure10.png)
+![带有额外外键的 post 表](~/ef6/media/jj591583-figure10.png)
 
-若要解决这些问题，可以使用 InverseProperty 批注指定属性的对齐方式。
+若要解决这些问题，可以使用 InverseProperty 批注来指定属性的对齐方式。
 
 ``` csharp
     [InverseProperty("CreatedBy")]
@@ -452,14 +452,14 @@ ConcurrencyCheck 批注可以标记一个或多个要在进行并发检查数据
     public List<Post> PostsUpdated { get; set; }
 ```
 
-亲自 PostsWritten 属性就知道，这是指 Post 类型，因为它将生成与 Post.CreatedBy 之间的关系。 同样，PostsUpdated 将连接到 Post.UpdatedBy。 且代码首先会创建额外外键。
+因为 Person 中的 PostsWritten 属性知道这指的是 Post 类型，它将生成与 System.createdby 的关系。 同样，PostsUpdated 将连接到 UpdatedBy。 和 code first 不会创建额外的外键。
 
-![Posts 表，而无需额外外键](~/ef6/media/jj591583-figure11.png)
+![发送无额外外键的表](~/ef6/media/jj591583-figure11.png)
 
  
 
-## <a name="summary"></a>总结
+## <a name="summary"></a>摘要
 
-DataAnnotations 不仅允许您描述客户端和服务器端验证在您的代码的第一个类，但它们还使你可以增强和甚至更正代码首先将使有关基于其约定类的假设。 使用 DataAnnotations，可不只让数据库架构生成，但还可以将您的代码的第一类映射到预先存在的数据库。
+DataAnnotations 不仅使你能够在代码优先类中描述客户端和服务器端验证，还允许你增强，甚至更正代码优先根据其约定对类进行的假设。 使用 DataAnnotations，不仅可以驱动数据库架构生成，还可以将代码的第一类映射到预先存在的数据库。
 
-尽管它们非常灵活，请记住，DataAnnotations 提供仅大多数通常所需的配置更改可以使您的代码的第一个类。 若要配置您的类的一些边缘情况，您应查找的备用配置机制，Code First Fluent API。
+尽管它们非常灵活，但请记住，DataAnnotations 仅提供您可以在代码优先类上进行的最常见的配置更改。 若要为某些边缘事例配置类，应查看备用配置机制，Code First 的 "流畅" API。

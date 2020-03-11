@@ -6,11 +6,11 @@ ms.date: 12/10/2019
 ms.assetid: e9dff604-3469-4a05-8f9e-18ac281d82a9
 uid: core/modeling/entity-properties
 ms.openlocfilehash: b67603fbffd1f1c8506bc21f8972c851eb8eef29
-ms.sourcegitcommit: 32c51c22988c6f83ed4f8e50a1d01be3f4114e81
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 12/27/2019
-ms.locfileid: "75502425"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414565"
 ---
 # <a name="entity-properties"></a>实体属性
 
@@ -22,11 +22,11 @@ ms.locfileid: "75502425"
 
 可以按如下所述排除特定属性：
 
-### <a name="data-annotationstabdata-annotations"></a>[数据注释](#tab/data-annotations)
+### <a name="data-annotations"></a>[数据注释](#tab/data-annotations)
 
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/IgnoreProperty.cs?name=IgnoreProperty&highlight=6)]
 
-### <a name="fluent-apitabfluent-api"></a>[熟知 API](#tab/fluent-api)
+### <a name="fluent-api"></a>[熟知 API](#tab/fluent-api)
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/IgnoreProperty.cs?name=IgnoreProperty&highlight=3,4)]
 
@@ -38,11 +38,11 @@ ms.locfileid: "75502425"
 
 如果希望使用不同的名称配置列，可以执行以下操作：
 
-### <a name="data-annotationstabdata-annotations"></a>[数据注释](#tab/data-annotations)
+### <a name="data-annotations"></a>[数据注释](#tab/data-annotations)
 
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ColumnName.cs?Name=ColumnName&highlight=3)]
 
-### <a name="fluent-apitabfluent-api"></a>[熟知 API](#tab/fluent-api)
+### <a name="fluent-api"></a>[熟知 API](#tab/fluent-api)
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ColumnName.cs?Name=ColumnName&highlight=3-5)]
 
@@ -56,17 +56,17 @@ ms.locfileid: "75502425"
 
 您还可以配置列，以便为列指定精确的数据类型。 例如，下面的代码将 `Url` 配置为具有最大长度的非 unicode 字符串 `200` 并将 `Rating` 为 decimal，精度为 `5`，小数位数为 `2`：
 
-### <a name="data-annotationstabdata-annotations"></a>[数据注释](#tab/data-annotations)
+### <a name="data-annotations"></a>[数据注释](#tab/data-annotations)
 
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ColumnDataType.cs?name=ColumnDataType&highlight=4,6)]
 
-### <a name="fluent-apitabfluent-api"></a>[熟知 API](#tab/fluent-api)
+### <a name="fluent-api"></a>[熟知 API](#tab/fluent-api)
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ColumnDataType.cs?name=ColumnDataType&highlight=5-6)]
 
 ***
 
-### <a name="maximum-length"></a>最大长度。
+### <a name="maximum-length"></a>最大长度
 
 配置最大长度会向数据库提供程序提供有关要为给定属性选择的相应列数据类型的提示。 最大长度仅适用于数组数据类型，如 `string` 和 `byte[]`。
 
@@ -75,11 +75,11 @@ ms.locfileid: "75502425"
 
 在下面的示例中，配置最大长度为500将导致在 SQL Server 上创建 `nvarchar(500)` 类型的列：
 
-#### <a name="data-annotationstabdata-annotations"></a>[数据注释](#tab/data-annotations)
+#### <a name="data-annotations"></a>[数据注释](#tab/data-annotations)
 
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/MaxLength.cs?name=MaxLength&highlight=4)]
 
-#### <a name="fluent-apitabfluent-api"></a>[熟知 API](#tab/fluent-api)
+#### <a name="fluent-api"></a>[熟知 API](#tab/fluent-api)
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/MaxLength.cs?name=MaxLength&highlight=3-5)]
 
@@ -100,11 +100,11 @@ C#8引入了一个名[为 null 的引用类型](/dotnet/csharp/tutorials/nullabl
 
 下面的示例显示了一个具有必需和可选属性的实体类型，禁用了可为 null 的引用功能（默认值），并启用了该功能：
 
-#### <a name="without-nullable-reference-types-defaulttabwithout-nrt"></a>[没有可为 null 的引用类型（默认值）](#tab/without-nrt)
+#### <a name="without-nullable-reference-types-default"></a>[没有可为 null 的引用类型（默认值）](#tab/without-nrt)
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/CustomerWithoutNullableReferenceTypes.cs?name=Customer&highlight=4-8)]
 
-#### <a name="with-nullable-reference-typestabwith-nrt"></a>[具有可以为 null 的引用类型](#tab/with-nrt)
+#### <a name="with-nullable-reference-types"></a>[具有可以为 null 的引用类型](#tab/with-nrt)
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/Customer.cs?name=Customer&highlight=4-6)]
 
@@ -121,11 +121,11 @@ C#8引入了一个名[为 null 的引用类型](/dotnet/csharp/tutorials/nullabl
 
 可以按如下所示将 "约定" 可以为 "可选" 的属性配置为 "必需"：
 
-#### <a name="data-annotationstabdata-annotations"></a>[数据注释](#tab/data-annotations)
+#### <a name="data-annotations"></a>[数据注释](#tab/data-annotations)
 
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Required.cs?name=Required&highlight=4)]
 
-#### <a name="fluent-apitabfluent-api"></a>[熟知 API](#tab/fluent-api)
+#### <a name="fluent-api"></a>[熟知 API](#tab/fluent-api)
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Required.cs?name=Required&highlight=3-5)]
 

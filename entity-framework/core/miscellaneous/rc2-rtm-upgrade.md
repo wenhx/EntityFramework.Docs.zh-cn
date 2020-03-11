@@ -1,15 +1,15 @@
 ---
-title: 从 EF Core 1.0 RC2 升级到 RTM-EF Core
+title: 从 EF 升级核心到 RTM-1.0 RC2 EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: c3c1940b-136d-45d8-aa4f-cb5040f8980a
 uid: core/miscellaneous/rc2-rtm-upgrade
 ms.openlocfilehash: 779caad7883d13684b389dab7515be44bc42e1ef
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655817"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414037"
 ---
 # <a name="upgrading-from-ef-core-10-rc2-to-rtm"></a>从 EF Core 1.0 RC2 升级到 RTM
 
@@ -36,7 +36,7 @@ ms.locfileid: "73655817"
 此更改会影响使用 ASP.NET Identity 的项目和从 RTM 之前的项目模板创建的项目。 项目模板包含用于创建数据库的迁移。 必须编辑此迁移以指定以下列的最大 `256` 长度。
 
 * **AspNetRoles**
-  * “属性”
+  * 名称
   * NormalizedName
 * **AspNetUsers**
   * 电子邮件
@@ -50,7 +50,7 @@ ms.locfileid: "73655817"
 System.Data.SqlClient.SqlException (0x80131904): Column 'NormalizedName' in table 'AspNetRoles' is of a type that is invalid for use as a key column in an index.
 ```
 
-## <a name="net-core-remove-imports-in-projectjson"></a>.NET Core：删除项目中的 "导入"
+## <a name="net-core-remove-imports-in-projectjson"></a>.NET Core： project.json 中删除"导入"
 
 如果面向带有 RC2 的 .NET Core，则需要将 `imports` 添加到项目 json，作为某些 EF Core 的依赖项（不支持 .NET Standard）的临时解决方法。 现在可将其删除。
 

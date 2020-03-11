@@ -1,70 +1,70 @@
 ---
-title: 与 WPF-EF6 的数据绑定
+title: 用 WPF 进行数据绑定-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: e90d48e6-bea5-47ef-b756-7b89cce4daf0
 ms.openlocfilehash: 1933988277d3be8fecc02fced3293f2b7f80c901
-ms.sourcegitcommit: ae399f9f3d1bae2c446b552247bd3af3ca5a2cf9
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/04/2018
-ms.locfileid: "48575660"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414097"
 ---
-# <a name="databinding-with-wpf"></a>使用 WPF 数据绑定
-此分步演练说明如何将 POCO 类型绑定到"母版-详细信息"窗体中的 WPF 控件。 应用程序使用 Entity Framework Api 填充数据库中的数据对象、 跟踪更改，然后将数据保存到数据库。
+# <a name="databinding-with-wpf"></a>用 WPF 进行数据绑定
+此分步演练演示如何将 POCO 类型绑定到 "主/详细信息" 窗体中的 WPF 控件。 应用程序使用实体框架 Api 使用数据库中的数据填充对象、跟踪更改并将数据保存到数据库。
 
-模型定义一个对多关系中参与的两种类型：**类别**(主体\\master) 和**产品**(相关\\详细信息)。 然后，Visual Studio 工具用于绑定到 WPF 控件模型中定义的类型。 WPF 数据绑定框架，相关对象之间导航： 在母版视图中选择行导致要使用相应的子数据更新的详细信息视图。
+该模型定义了两种参与一对多关系的类型：**类别**（主体\\主）和**产品**（依赖\\详细信息）。 然后，使用 Visual Studio 工具将模型中定义的类型绑定到 WPF 控件。 WPF 数据绑定框架允许在相关对象之间导航：在主视图中选择行将导致详细信息视图与相应的子数据一起更新。
 
-从 Visual Studio 2013 创建屏幕快照和在本演练中的代码列表，但你可以完成此演练使用 Visual Studio 2012 或 Visual Studio 2010。
+本演练中的屏幕截图和代码清单取自 Visual Studio 2013，但你可以通过 Visual Studio 2012 或 Visual Studio 2010 完成此演练。
 
-## <a name="use-the-object-option-for-creating-wpf-data-sources"></a>使用 Object 选项来创建的 WPF 数据源
+## <a name="use-the-object-option-for-creating-wpf-data-sources"></a>使用 "对象" 选项创建 WPF 数据源
 
-我们使用建议使用与以前版本的实体框架**数据库**选项时创建新的数据源基于使用 EF 设计器创建的模型。 这是因为设计器将生成派生自 ObjectContext 的上下文和从 entityobject 继承派生的实体类。 使用数据库选项可帮助你编写与此 API 图面进行交互的最佳代码。
+使用早期版本的实体框架我们在基于使用 EF 设计器创建的模型创建新数据源时，建议使用**数据库**选项。 这是因为设计器将生成派生自 EntityObject 的 ObjectContext 和实体类的上下文。 使用数据库选项有助于编写与此 API 图面交互的最佳代码。
 
-用于 Visual Studio 2012 和 Visual Studio 2013 EF 设计器生成派生自 DbContext 和简单的 POCO 实体类的上下文。 使用 Visual Studio 2010，我们建议交换到使用 DbContext，稍后在本演练中所述的代码生成模板。
+Visual Studio 2012 和 Visual Studio 2013 的 EF 设计器生成一个从 DbContext 派生的上下文以及简单的 POCO 实体类。 在 Visual Studio 2010 中，我们建议使用 DbContext，如本演练稍后所述，换到使用的代码生成模板。
 
-使用 DbContext API 外围应用时应使用**对象**选项时创建新的数据源，如本演练中所示。
+使用 DbContext API 图面时，应在创建新的数据源时使用**Object**选项，如本演练中所示。
 
-如果需要可以[还原到基于 ObjectContext 代码生成](~/ef6/modeling/designer/codegen/legacy-objectcontext.md)使用 EF 设计器创建的模型。
+如果需要，可以针对用 EF 设计器创建的模型，[恢复为基于 ObjectContext 的代码生成](~/ef6/modeling/designer/codegen/legacy-objectcontext.md)。
 
-## <a name="pre-requisites"></a>系统必备组件
+## <a name="pre-requisites"></a>先决条件
 
-需要具有 Visual Studio 2013，Visual Studio 2012 或 Visual Studio 2010 安装来完成本演练。
+需要安装 Visual Studio 2013、Visual Studio 2012 或 Visual Studio 2010 才能完成此演练。
 
-如果使用 Visual Studio 2010，您还必须安装 NuGet。 有关详细信息，请参阅[安装 NuGet](https://docs.microsoft.com/nuget/install-nuget-client-tools)。  
+如果你使用的是 Visual Studio 2010，则还必须安装 NuGet。 有关详细信息，请参阅[安装 NuGet](https://docs.microsoft.com/nuget/install-nuget-client-tools)。  
 
 ## <a name="create-the-application"></a>创建应用程序
 
 -   打开 Visual Studio
--   **文件-&gt;新增-&gt;项目...**
--   选择**Windows**的左窗格中并**WPFApplication**右窗格中
--   输入**WPFwithEFSample**作为名称
--   选择“确定”
+-   **文件-&gt;&gt; 项目 。**
+-   在左窗格中选择 " **Windows** ，并在右窗格中选择" **WPFApplication** "
+-   输入 **WPFwithEFSample** 作为名称
+-   选择 **"确定"**
 
-## <a name="install-the-entity-framework-nuget-package"></a>安装 Entity Framework NuGet 包
+## <a name="install-the-entity-framework-nuget-package"></a>安装实体框架 NuGet 包
 
--   在解决方案资源管理器，右键单击**WinFormswithEFSample**项目
--   选择**管理 NuGet 包...**
--   在管理 NuGet 包对话框中，选择**联机**选项卡，选择**EntityFramework**包
--   单击**安装**  
+-   在解决方案资源管理器中，右键单击**WinFormswithEFSample**项目
+-   选择 "**管理 NuGet 包 ...** "
+-   在 "管理 NuGet 包" 对话框中，选择 "**联机**" 选项卡，然后选择 " **EntityFramework** " 包
+-   单击“安装”  
     >[!NOTE]
-    > 除了 EntityFramework 程序集也添加到 System.ComponentModel.DataAnnotations 的引用。 如果项目具有对 System.Data.Entity 的引用，然后它将删除在安装 EntityFramework 包。 System.data.entity 的引用程序集不能再用于 Entity Framework 6 应用程序。
+    > 除了 EntityFramework 程序集之外，还添加了对 System.componentmodel 的引用。 如果项目具有对 EntityFramework 的引用，则在安装包时将被删除。 System.web 程序集不再用于实体框架6应用程序。
 
 ## <a name="define-a-model"></a>定义模型
 
-在本演练中你可以选择实现使用 Code First 或 EF 设计器的模型。 完成以下两个部分之一。
+在本演练中，您可以使用 Code First 或 EF 设计器选择实现模型。 完成以下两个部分中的一个。
 
-### <a name="option-1-define-a-model-using-code-first"></a>选项 1： 定义使用 Code First 模型
+### <a name="option-1-define-a-model-using-code-first"></a>选项1：使用 Code First 定义模型
 
-本部分演示如何创建模型和其关联的数据库使用 Code First。 请跳到下一节 (**选项 2： 定义模型使用 Database First)** 如果您更愿意使用 Database First 进行反向工程使用 EF 设计器从数据库模型
+本部分说明如何使用 Code First 创建模型及其关联的数据库。 如果要 Database First 使用 EF 设计器从数据库中反向工程模型，请跳到下一节（**选项2：使用 Database First 定义模型）**
 
-使用 Code First 开发时通常首先编写.NET Framework 类定义概念 （域） 模型。
+使用 Code First 开发时，通常首先编写定义概念（域）模型 .NET Framework 类。
 
--   添加到一个新类**WPFwithEFSample:**
+-   向 WPFwithEFSample 添加新类 **：**
     -   右键单击项目名称
-    -   选择**添加**，然后**新项**
-    -   选择**类**并输入**产品**的类名
--   替换**产品**类定义替换以下代码：
+    -   选择 "**添加**"，然后选择 "**新建项**"
+    -   选择**类**并输入类名的 **产品** 
+-   将 **Product** 类定义替换为以下代码：
 
 ``` csharp
     namespace WPFwithEFSample
@@ -100,13 +100,13 @@ ms.locfileid: "48575660"
     }
 ```
 
-**产品**上的属性**类别**类并**类别**属性**产品**类是导航属性。 在实体框架中，导航属性提供一种导航两个实体类型之间的关系方法。
+**Product**类上 "**类别**类" 和 "**类别**" 属性的 "**产品**" 属性是导航属性。 在实体框架中，导航属性提供了一种方法，用于在两个实体类型之间导航关系。
 
-除了定义实体，还需要定义一个类，派生自 DbContext，并公开 DbSet&lt;TEntity&gt;属性。 DbSet&lt;TEntity&gt;属性使知道你想要在模型中包含哪些的类型的上下文。
+除了定义实体外，还需要定义派生自 DbContext 的类，并公开 DbSet&lt;TEntity&gt; 属性。 DbSet&lt;TEntity&gt; 属性使上下文知道要包括在模型中的类型。
 
-在运行时，其中包括填充数据库中的数据的对象期间将 DbContext 派生类型的实例管理的实体对象，到数据库更改跟踪，并保留数据。
+DbContext 派生类型的实例在运行时管理实体对象，这包括使用数据库中的数据填充对象、更改跟踪以及将数据保存到数据库。
 
--   添加一个新**ProductContext**类具有以下定义的项目：
+-   使用以下定义将新的**ProductContext**类添加到项目：
 
 ``` csharp
     using System.Data.Entity;
@@ -123,39 +123,39 @@ ms.locfileid: "48575660"
 
 编译该项目。
 
-### <a name="option-2-define-a-model-using-database-first"></a>选项 2： 定义模型使用 Database First
+### <a name="option-2-define-a-model-using-database-first"></a>选项2：使用 Database First 定义模型
 
-本部分演示如何使用第一个数据库进行反向工程，使用 EF 设计器从数据库模型。 如果你在完成上一节 (**选项 1： 使用 Code First 定义模型)**，然后跳过此部分并直接转到**延迟加载**部分。
+本部分说明如何使用 Database First 从使用 EF 设计器的数据库中对模型进行反向工程。 如果已完成上一部分（**选项1：使用 Code First 定义模型）** ，则跳过此部分，直接转到**延迟加载**部分。
 
 #### <a name="create-an-existing-database"></a>创建现有数据库
 
-通常当你面向的现有数据库，则将已创建，但我们需要在本演练中创建的数据库访问。
+通常，当目标为现有数据库时，它将被创建，但在本演练中，我们需要创建一个要访问的数据库。
 
-随 Visual Studio 一起安装的数据库服务器是已安装的 Visual Studio 的版本而异：
+随 Visual Studio 一起安装的数据库服务器因安装的 Visual Studio 版本而异：
 
--   如果您使用的 Visual Studio 2010 系统将创建一个 SQL Express 数据库。
--   如果你正在使用 Visual Studio 2012，则您将创建[LocalDB](https://msdn.microsoft.com/library/hh510202.aspx)数据库。
+-   如果使用的是 Visual Studio 2010，则将创建 SQL Express 数据库。
+-   如果使用的是 Visual Studio 2012，则将创建一个[LocalDB](https://msdn.microsoft.com/library/hh510202.aspx)数据库。
 
-让我们继续并生成的数据库。
+接下来，生成数据库。
 
--   **视图-&gt;服务器资源管理器**
--   右键单击**数据连接-&gt;添加连接...**
--   如果你尚未连接到数据库服务器资源管理器之前将需要选择 Microsoft SQL Server 作为数据源
+-   **视图-&gt; 服务器资源管理器**
+-   右键单击 "**数据连接-&gt; 添加连接 ...** "
+-   如果尚未从服务器资源管理器连接到数据库，则需要选择 Microsoft SQL Server 作为数据源
 
     ![更改数据源](~/ef6/media/changedatasource.png)
 
--   连接到 LocalDB 或 SQL Express，具体取决于哪一个已安装，并输入**产品**作为数据库名称
+-   连接到 LocalDB 或 SQL Express，具体取决于已安装的数据，并输入**Products**作为数据库名称
 
     ![添加连接 LocalDB](~/ef6/media/addconnectionlocaldb.png)
 
     ![添加连接 Express](~/ef6/media/addconnectionexpress.png)
 
--   选择**确定**并将你想要创建新数据库，请选择要求你**是**
+-   选择 **"确定"** ，系统会询问您是否要创建新数据库，请选择 **"是"**
 
     ![创建数据库](~/ef6/media/createdatabase.png)
 
--   新数据库现在将出现在服务器资源管理器，右键单击它并选择**新查询**
--   将下面的 SQL 复制到新的查询，然后右键单击查询并选择**Execute**
+-   新数据库现在将出现在服务器资源管理器中，右键单击该数据库并选择 "**新建查询**"
+-   将以下 SQL 复制到新的查询中，然后右键单击该查询，然后选择 "**执行**"
 
 ``` SQL
     CREATE TABLE [dbo].[Categories] (
@@ -178,86 +178,86 @@ ms.locfileid: "48575660"
 
 #### <a name="reverse-engineer-model"></a>反向工程模型
 
-我们将使用实体框架设计器，它是作为 Visual Studio 的一部分，若要创建我们的模型。
+我们将使用在 Visual Studio 中包含的 Entity Framework Designer 来创建模型。
 
--   **项目-&gt;添加新项...**
--   选择**数据**左侧的菜单，然后**ADO.NET 实体数据模型**
--   输入**ProductModel**作为名称，然后单击**确定**
+-   **项目-&gt; "添加新项 ..."**
+-   从左侧菜单中选择 "**数据**"，然后**ADO.NET 实体数据模型**
+-   输入**ProductModel**作为名称，然后单击 **"确定"**
 -   这将启动**实体数据模型向导**
--   选择**从数据库生成**单击**下一步**
+-   选择 "**从数据库生成**"，然后单击 "**下一步**"
 
     ![选择模型内容](~/ef6/media/choosemodelcontents.png)
 
--   选择连接到第一个部分中创建的数据库中，输入**ProductContext**作为名称的连接字符串和单击**下一步**
+-   选择在第一部分中创建的数据库的连接，输入 " **ProductContext** " 作为连接字符串的名称，然后单击 "**下一步**"
 
-    ![选择您的连接](~/ef6/media/chooseyourconnection.png)
+    ![选择连接](~/ef6/media/chooseyourconnection.png)
 
--   单击表导入的所有表并单击完成旁边的复选框
+-   单击 "表" 旁边的复选框以导入所有表，然后单击 "完成"
 
     ![选择对象](~/ef6/media/chooseyourobjects.png)
 
-反向工程过程完成后的新模型添加到你的项目，并打开，以便在实体框架设计器中查看。 此外具有已 App.config 文件添加到你的项目数据库的连接详细信息。
+反向工程过程完成后，会将新模型添加到项目中，并打开，以便在 Entity Framework Designer 中查看。 App.config 文件也已添加到您的项目中，其中包含数据库的连接详细信息。
 
 #### <a name="additional-steps-in-visual-studio-2010"></a>Visual Studio 2010 中的其他步骤
 
-如果你正在 Visual Studio 2010 中将需要更新 EF 设计器使用 EF6 代码生成。
+如果使用的是 Visual Studio 2010，则需要更新 EF 设计器以使用 EF6 代码生成。
 
--   在您的模型在 EF 设计器中的某一空白点上右键单击并选择**添加代码生成项...**
--   选择**联机模板**从左侧的菜单并搜索**DbContext**
--   选择**EF 6.x DbContext Generator 于 c 语言\#，** 输入**ProductsModel**作为名称并单击添加
+-   在 EF 设计器中右键单击模型的空位置，然后选择 "**添加代码生成项 ...** "
+-   从左侧菜单中选择 "**联机模板**"，然后搜索**DbContext**
+-   选择**用于 C\#的 EF 1.X DbContext 生成器，** 输入**ProductsModel**作为名称，然后单击 "添加"
 
 #### <a name="updating-code-generation-for-data-binding"></a>更新数据绑定的代码生成
 
-EF 从您的模型使用 T4 模板生成代码。 随 Visual Studio 或从 Visual Studio 库中下载的模板适用于常规用途使用。 这意味着从这些模板生成的实体具有简单 ICollection&lt;T&gt;属性。 但是，执行数据绑定使用 WPF 时，需使用**ObservableCollection**集合属性，以便该 WPF 可以跟踪对集合所做的更改。 为此，我们将修改为使用 ObservableCollection 的模板。
+EF 使用 T4 模板从模型生成代码。 Visual Studio 附带的模板或从 Visual Studio 库下载的模板专用于一般用途。 这意味着从这些模板生成的实体具有简单的 ICollection&lt;T&gt; 属性。 但是，使用 WPF 进行数据绑定时，需要使用**ObservableCollection**作为集合属性，以便 WPF 可以跟踪对集合所做的更改。 为此，我们将修改模板以使用 ObservableCollection。
 
--   打开**解决方案资源管理器**并找到**ProductModel.edmx**文件
--   查找**ProductModel.tt**将嵌套在 ProductModel.edmx 文件下的文件
+-   打开**解决方案资源管理器**并查找**ProductModel**文件
+-   查找**ProductModel.tt**文件，该文件将嵌套在 ProductModel 文件下
 
-    ![WPF 产品模型模板](~/ef6/media/wpfproductmodeltemplate.png)
+    ![WPF 产品型号模板](~/ef6/media/wpfproductmodeltemplate.png)
 
--   双击 ProductModel.tt 文件以在 Visual Studio 编辑器中打开它
--   查找和替换的两个实例"**ICollection**"with"**ObservableCollection**"。 这些文件位于大约有 296 和 484 的行。
--   查找和替换第一个匹配项"**HashSet**"with"**ObservableCollection**"。 这种情况非常大约位于第 50 行。 **不这样做**替换 HashSet 更高版本的代码中找到的第二个匹配项。
--   查找和替换的唯一匹配项"**System.Collections.Generic**"with"**System.Collections.ObjectModel**"。 这是大约位于行 424。
--   保存 ProductModel.tt 文件。 这应该会导致重新生成的实体的代码。 如果不自动重新生成代码，然后 ProductModel.tt 右键单击并选择"运行自定义工具"。
+-   双击 ProductModel.tt 文件以在 Visual Studio 编辑器中将其打开
+-   查找并将 "**ICollection**" 的两个匹配项替换为 "**ObservableCollection**"。 它们大约位于第296行和第484行。
+-   查找并将 "**HashSet**" 的第一个匹配项替换为 "**ObservableCollection**"。 此事件大约位于第50行。 **请勿**替换稍后在代码中找到的第二个 HashSet。
+-   查找并将 "System.collections.objectmodel.collection" 的唯一匹配项替换**为 "** "。 此位置大致位于第424行。
+-   保存 ProductModel.tt 文件。 这会导致重新生成实体的代码。 如果代码未自动重新生成，则右键单击 ProductModel.tt 并选择 "运行自定义工具"。
 
-如果现在打开 Category.cs 文件 （其中嵌套在 ProductModel.tt 下），则你应看到产品集合具有类型**ObservableCollection&lt;产品&gt;**。
+如果你现在打开 Category.cs 文件（该文件嵌套在 ProductModel.tt 下），则应看到 Products 集合具有类型**ObservableCollection&lt;产品&gt;** 。
 
 编译该项目。
 
 ## <a name="lazy-loading"></a>延迟加载
 
-**产品**上的属性**类别**类并**类别**属性**产品**类是导航属性。 在实体框架中，导航属性提供一种导航两个实体类型之间的关系方法。
+**Product**类上 "**类别**类" 和 "**类别**" 属性的 "**产品**" 属性是导航属性。 在实体框架中，导航属性提供了一种方法，用于在两个实体类型之间导航关系。
 
-EF 提供了一个选项的相关的实体从数据库中加载自动首次访问导航属性。 使用此类型的加载 （称为延迟加载），注意，访问每个导航属性的第一次一个单独的查询时将执行针对数据库内容尚不在上下文中。
+当首次访问导航属性时，EF 使你可以选择自动从数据库加载相关实体。 使用这种类型的加载（称为 "延迟加载"）时，请注意，第一次访问每个导航属性时，将对数据库执行单独的查询（如果内容尚未出现在上下文中）。
 
-使用 POCO 实体类型时，EF 可以通过在运行时期间创建派生的代理类型的实例，然后重写虚拟属性添加加载挂钩在类中的实现延迟加载。 若要获取相关对象的延迟加载，您必须声明导航属性 getter 作为**公共**和**虚拟**(**Overridable**在 Visual Basic 中)，而且不能为您的类**密封**(**NotOverridable**在 Visual Basic 中)。 使用数据库时将自动进行虚拟若要启用延迟加载第一个导航属性。 在代码优先部分中我们所做的导航属性虚拟出于同样的原因
+使用 POCO 实体类型时，EF 通过在运行时创建派生代理类型的实例，然后重写类中的虚拟属性来添加加载挂钩来实现延迟加载。 若要获取相关对象的延迟加载，必须将导航属性 getter 声明为**公共**和**虚拟**（在 Visual Basic 中可**重写**），并且不能**密封**类（Visual Basic**NotOverridable** ）。 使用时，会自动将 Database First 导航属性设为虚拟，以启用延迟加载。 在 "Code First" 部分中，我们选择将导航属性设置为虚拟，因为同一原因
 
 ## <a name="bind-object-to-controls"></a>将对象绑定到控件
 
-添加此 WPF 应用程序的数据源作为模型中定义的类。
+将在模型中定义的类作为此 WPF 应用程序的数据源添加。
 
--   双击**MainWindow.xaml**在解决方案资源管理器打开主窗体
--   从主菜单中，选择**项目-&gt;添加新数据源...**
-    (需要在 Visual Studio 2010 中，选择要**数据-&gt;添加新数据源...**)
--   在选择数据源 Typewindow 中，选择**对象**单击**下一步**
--   在选择数据对象对话框中，展开**WPFwithEFSample**两次，然后选择**类别**  
-    *若要选择无需**产品**数据源，因为会对通过此**产品**的属性**类别**数据源*  
+-   在解决方案资源管理器中双击 " **mainwindow.xaml** " 以打开主窗体
+-   从主菜单中，选择 "**项目-&gt; 添加新数据源 ...** "
+    （在 Visual Studio 2010 中，需要选择 "**数据&gt;" 添加新数据源 ...** "）
+-   在 "选择数据源" Typewindow 中，选择 "**对象**"，然后单击 "**下一步**"
+-   在 "选择数据对象" 对话框中，展开**WPFwithEFSample** 两次，然后选择 "**类别**"  
+    *不需要选择**产品**数据源，因为我们将通过**类别**数据源上的**产品**属性来访问它。*  
 
     ![选择数据对象](~/ef6/media/selectdataobjects.png)
 
--   单击**完成。**
--   数据源窗口打开 MainWindow.xaml 窗口的旁边*如果未显示数据源窗口，选择**视图-&gt;其他 Windows-&gt;数据源***
--   按固定图标，以便数据源窗口不会不会自动隐藏。 您可能需要按刷新按钮，如果窗口已可见。
+-   单击 **“完成”** 。
+-   如果 "数据源" 窗口未显示，请在 "Mainwindow.xaml" 窗口旁打开 "数据源" 窗口 *，选择 "**视图&gt; 其他 Windows&gt; 数据源***
+-   按固定图标，使 "数据源" 窗口不会自动隐藏。 如果窗口已显示，可能需要按 "刷新" 按钮。
 
-    ![Data Sources](~/ef6/media/datasources.png)
+    ![数据源](~/ef6/media/datasources.png)
 
--   选择**类别**数据源，并将其拖动窗体上。
+-   选择 **类别**数据源并将其拖到窗体上。
 
-我们拖动到此源时，将发生以下的情况：
+拖动此源时，会发生以下情况：
 
--   **CategoryViewSource**资源并**categoryDataGrid**控件添加到 XAML 
--   父网格元素的 DataContext 属性设置为"{StaticResource **categoryViewSource** }"。 **CategoryViewSource**资源用作绑定源的外部\\父网格元素。 内部的网格元素然后从父网格 （categoryDataGrid 的 ItemsSource 属性设置为"{Binding}"） 继承的 DataContext 值
+-   **CategoryViewSource**资源和**categoryDataGrid**控件添加到了 XAML 
+-   父网格元素上的 DataContext 属性已设置为 "{StaticResource **categoryViewSource** }"。 **CategoryViewSource**资源用作外部\\父网格元素的绑定源。 然后，内部网格元素从父网格继承 DataContext 值（categoryDataGrid 的 System.windows.controls.itemscontrol.itemssource 属性设置为 "{Binding}"）
 
 ``` xml
     <Window.Resources>
@@ -280,32 +280,32 @@ EF 提供了一个选项的相关的实体从数据库中加载自动首次访�
 
 ## <a name="adding-a-details-grid"></a>添加详细信息网格
 
-现在，我们已有一个网格，可以让我们来显示类别添加详细信息网格以显示相关联的产品。
+现在，我们有了一个显示类别的网格，接下来要添加详细信息网格以显示关联的产品。
 
--   选择**产品**属性从下的**类别**数据源，并将其拖动窗体上。
-    -   **CategoryProductsViewSource**资源并**productDataGrid**网格添加到 XAML
-    -   此资源的绑定路径设置为产品
-    -   WPF 数据绑定框架可确保，与所选类别相关的唯一产品显示在**productDataGrid**
--   从工具箱拖动**按钮**到窗体。 设置**名称**属性设置为**buttonSave**并**内容**属性设置为**保存**。
+-   从 **类别**数据源下面选择 **Products**属性，并将其拖到窗体上。
+    -   **CategoryProductsViewSource**资源和**productDataGrid**网格将添加到 XAML
+    -   此资源的绑定路径已设置为 "产品"
+    -   WPF 数据绑定框架可确保仅在**productDataGrid**中显示与所选类别相关的产品
+-   从 "工具箱" 中，将**按钮**拖到窗体上。 将 "**名称**" 属性设置为**buttonSave** ，将 " **Content** " 属性设置为 "**保存**"。
 
-在窗体应类似于以下所示：
+窗体应该如下所示：
 
-![Designer](~/ef6/media/designer.png) 
+![设计器](~/ef6/media/designer.png) 
 
-## <a name="add-code-that-handles-data-interaction"></a>添加代码来处理数据交互
+## <a name="add-code-that-handles-data-interaction"></a>添加处理数据交互的代码
 
-就可以将一些事件处理程序添加到主窗口。
+现在可以向主窗口添加一些事件处理程序。
 
--   在 XAML 窗口中，单击**&lt;窗口**元素，这将选择主窗口
--   在中**属性**窗口中选择**事件**右上角，然后双击右侧的文本框**Loaded**标签
+-   在 XAML 窗口中，单击 " **&lt;" 窗口**元素，这将选择主窗口
+-   在 "**属性**" 窗口中，选择右上角的 "**事件**"，然后双击**加载**的标签右侧的文本框
 
     ![主窗口属性](~/ef6/media/mainwindowproperties.png)
 
--   此外将添加**单击**事件**保存**通过双击设计器中的保存按钮的按钮。 
+-   同时，通过双击设计器中的 "保存" 按钮，为 "**保存**" 按钮添加**Click**事件。 
 
-转到代码隐藏窗体中，我们现在将编辑代码以使用 ProductContext 执行数据访问。 更新代码的主窗口，如下所示。
+这会使你转到窗体的隐藏代码，现在我们将编辑代码以使用 ProductContext 来执行数据访问。 更新 Mainwindow.xaml 的代码，如下所示。
 
-该代码声明了的长时间运行的实例**ProductContext**。 **ProductContext**对象用于查询并将数据保存到数据库。 **Dispose （)** 上**ProductContext**实例然后称为从重写**OnClosing**方法。 代码注释提供了有关代码的作用的详细信息。
+该代码声明了**ProductContext**的长时间运行的实例。 **ProductContext**对象用于查询数据并将数据保存到数据库。 然后，从重写的**OnClosing**方法中调用**ProductContext**实例上的**Dispose （）** 。 代码注释提供有关代码的作用的详细信息。
 
 ``` csharp
     using System.Data.Entity;
@@ -380,19 +380,19 @@ EF 提供了一个选项的相关的实体从数据库中加载自动首次访�
     }
 ```
 
-## <a name="test-the-wpf-application"></a>测试的 WPF 应用程序
+## <a name="test-the-wpf-application"></a>测试 WPF 应用程序
 
--   编译并运行该应用程序。 如果使用 Code First，那么，你将看到**WPFwithEFSample.ProductContext**为您创建数据库。
--   在底部网格中的顶级网格和产品名称中输入类别名称*不要输入任何内容 ID 在列中，因为由数据库生成的主键*
+-   编译并运行该应用程序。 如果使用 Code First，则会看到为你创建**WPFwithEFSample. ProductContext**数据库。
+-   在顶部网格中输入类别名称，底部网格中的产品名称*不要在 ID 列中输入任何内容，因为主键是由数据库生成的*
 
-    ![使用新类别和产品的主窗口](~/ef6/media/screen1.png)
+    ![新类别和产品的主窗口](~/ef6/media/screen1.png)
 
--   按**保存**按钮以将数据保存到数据库
+-   按 "**保存**" 按钮将数据保存到数据库
 
-调用的 DbContext 的后面**savechanges （)**，Id 将填入数据库生成值。 因为我们调用**Refresh()** 后**savechanges （)** **DataGrid**控件更新使用新值。
+调用 DbContext 的**SaveChanges （）** 后，将用数据库生成的值填充 id。 因为我们在**SaveChanges （）** 后调用了**Refresh （）** ，所以**DataGrid**控件也将更新为新值。
 
-![使用 Id 填充主窗口](~/ef6/media/screen2.png)
+![主窗口，其中填充了 Id](~/ef6/media/screen2.png)
 
 ## <a name="additional-resources"></a>其他资源
 
-若要了解有关数据绑定到集合使用 WPF 的详细信息，请参阅[本主题](https://docs.microsoft.com/dotnet/framework/wpf/data/data-binding-overview#binding-to-collections)WPF 文档中。  
+若要了解有关使用 WPF 将数据绑定到集合的详细信息，请参阅 WPF 文档中的[此主题](https://docs.microsoft.com/dotnet/framework/wpf/data/data-binding-overview#binding-to-collections)。  

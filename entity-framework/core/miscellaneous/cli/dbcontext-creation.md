@@ -5,11 +5,11 @@ ms.author: bricelam
 ms.date: 09/16/2019
 uid: core/miscellaneous/cli/dbcontext-creation
 ms.openlocfilehash: f44f0648678af5a70e5171d69692bde1c1d5e0eb
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655529"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414217"
 ---
 # <a name="design-time-dbcontext-creation"></a>设计时 DbContext 创建
 
@@ -36,14 +36,14 @@ ms.locfileid: "73655529"
 
 ## <a name="from-a-design-time-factory"></a>从设计时工厂
 
-你还可以通过实现 `IDesignTimeDbContextFactory<TContext>` 接口告诉工具如何创建 DbContext：如果实现此接口的类在与派生的 `DbContext` 相同的项目中或在应用程序的启动项目中找到，则这些工具将绕过其他工具创建 DbContext 并改用设计时工厂的方式。
+还可以通过实现 `IDesignTimeDbContextFactory<TContext>` 接口告诉工具如何创建 DbContext：如果实现此接口的类在与派生 `DbContext` 相同的项目中或在应用程序的启动项目中找到，则这些工具将绕过其他创建 DbContext 的方法，而改用设计时工厂。
 
 [!code-csharp[Main](../../../../samples/core/Miscellaneous/CommandLine/BloggingContextFactory.cs)]
 
 > [!NOTE]
 > `args` 参数当前未使用。 跟踪从工具中指定设计时参数的功能时出现[问题][8]。
 
-如果需要在设计时与运行时不同的情况下配置 DbContext，则设计时工厂特别有用。如果 `DbContext` 构造函数采用其他参数，但未在 DI 中注册，如果根本不使用 DI，或者出于某种原因而你不愿在 ASP.NET Core 应用程序的 `Main` 类中使用 `BuildWebHost` 方法。
+如果需要在设计时与运行时不同的情况下配置 DbContext，则设计时工厂特别有用。如果 `DbContext` 构造函数采用其他参数，但未在 DI 中注册，则如果根本不使用 DI，或者出于某种原因而不希望在 ASP.NET Core 应用程序的 `Main` 类中使用 `BuildWebHost` 方法。
 
   [1]: xref:core/managing-schemas/migrations/index
   [2]: xref:core/miscellaneous/configuring-dbcontext

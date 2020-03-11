@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 80fc5062-2f1c-4dbd-ab6e-b99496784b36
 ms.openlocfilehash: 4b3eee20ff238864b94ef4edfb97c1bae0713300
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181792"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78416203"
 ---
 # <a name="databinding-with-winforms"></a>通过 WinForms 进行数据绑定
 此分步演练演示如何将 POCO 类型绑定到 "主/详细信息" 窗体中的窗口窗体（WinForms）控件。 应用程序使用实体框架使用数据库中的数据填充对象、跟踪更改并将数据保存到数据库。
@@ -36,7 +36,7 @@ ms.locfileid: "72181792"
 -   在解决方案资源管理器中，右键单击**WinFormswithEFSample**项目
 -   选择 "**管理 NuGet 包 ...** "
 -   在 "管理 NuGet 包" 对话框中，选择 "**联机**" 选项卡，然后选择 " **EntityFramework** " 包
--   单击 "**安装**"  
+-   单击“安装”  
     > [!NOTE]
     > 除了 EntityFramework 程序集之外，还添加了对 System.componentmodel 的引用。 如果项目具有对 EntityFramework 的引用，则在安装包时将被删除。 System.web 程序集不再用于实体框架6应用程序。
 
@@ -297,7 +297,7 @@ EF 使用 T4 模板从模型生成代码。 Visual Studio 附带的模板或从 
     -   右键单击 DataGridView 控件，然后选择 "**编辑列 ...** "。
     -   选择 " **ProductId** " 列并将 " **ReadOnly** " 设置为**True**。
     -   选择 "**类别 id** " 列并按 "**删除**" 按钮。 对**Category**列执行相同的操作。
-    -   按“确定”。
+    -   按 **“确定”** 。
 
     到目前为止，我们在设计器中将 DataGridView 控件与 BindingSource 组件相关联。 在下一部分中，我们将向隐藏代码中添加代码，以便将 categoryBindingSource 设置为 DbContext 当前跟踪的实体集合。 当我们从类别中拖放产品时，WinForms 会将 productsBindingSource 属性设置为 "categoryBindingSource" 和 "productsBindingSource" 属性设置为 "产品"。 由于此绑定，只会在 productDataGridView 中显示属于当前选定类别的产品。
 -   通过单击鼠标右键并选择 "**启用**"，启用导航工具栏上的 "**保存**" 按钮。

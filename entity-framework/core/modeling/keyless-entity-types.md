@@ -5,12 +5,12 @@ author: AndriySvyryd
 ms.author: ansvyryd
 ms.date: 9/13/2019
 uid: core/modeling/keyless-entity-types
-ms.openlocfilehash: 129e24b154ba32583435aeb742dbf478350344e8
-ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
+ms.openlocfilehash: 520c9ed93240c05deee36fa527a3757490fd7082
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 12/04/2019
-ms.locfileid: "74824658"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414643"
 ---
 # <a name="keyless-entity-types"></a>无键实体类型
 
@@ -47,7 +47,7 @@ ms.locfileid: "74824658"
 
 ## <a name="mapping-to-database-objects"></a>映射到数据库对象
 
-将无键实体类型映射到数据库对象是使用 `ToTable` 或 `ToView` Fluent API 实现的。 从 EF Core 角度来看，此方法中指定的数据库对象是视图，这意味着它将被系统视为只读查询源，不能作为更新、插入或删除操作的目标。 但是，这并不意味着数据库对象实际上必须是数据库视图。 它也可以是将被视为只读的数据库表。 相反，对于常规实体类型，EF Core 假设在 `ToTable` 方法中指定的数据库对象可以视为_表_，这意味着它可用作查询源，但也可作为更新、删除和插入操作的目标。 事实上，你可以在 `ToTable` 中指定数据库视图的名称，所有内容应该都能够正常运行，只要在数据库上将视图配置为可更新即可。
+将无键实体类型映射到数据库对象是使用 `ToTable` 或 `ToView` Fluent API 实现的。 从 EF Core 的角度来看，此方法中指定的数据库对象是一个_视图_，这意味着它将被视为只读查询源，并且不能作为更新、插入或删除操作的目标。 但是，这并不意味着数据库对象实际上必须是数据库视图。 它也可以是将被视为只读的数据库表。 相反，对于常规实体类型，EF Core 假设在 `ToTable` 方法中指定的数据库对象可以视为_表_，这意味着它可用作查询源，但也可作为更新、删除和插入操作的目标。 事实上，您可以在 `ToTable` 中指定数据库视图的名称，只要该视图配置为可在数据库上更新，一切都应正常运行。
 
 > [!NOTE]
 > `ToView` 假设对象已存在于数据库中，并且不是由迁移创建的。
@@ -57,7 +57,7 @@ ms.locfileid: "74824658"
 下面的示例演示如何使用无键实体类型来查询数据库视图。
 
 > [!TIP]
-> 可在 GitHub 上查看此文章的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/KeylessEntityTypes)。
+> 可在 GitHub 上查看此文章的[示例](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/KeylessEntityTypes)。
 
 首先，我们定义一个简单的博客和文章模型：
 

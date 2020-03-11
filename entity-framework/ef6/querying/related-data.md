@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: c8417e18-a2ee-499c-9ce9-2a48cc5b468a
 ms.openlocfilehash: c359d8d32a88049213fd5e98e99fe49d7e3121a3
-ms.sourcegitcommit: d01fc19aa42ca34c3bebccbc96ee26d06fcecaa2
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/16/2019
-ms.locfileid: "71005480"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414463"
 ---
 # <a name="loading-related-entities"></a>正在加载相关实体
 
@@ -102,7 +102,7 @@ public class Blog
 
 ### <a name="turn-lazy-loading-off-for-serialization"></a>为序列化关闭延迟加载
 
-延迟加载和序列化不会很好地混合，如果您不小心，只是因为启用了延迟加载，最终就可以对整个数据库进行查询。 大多数序列化程序通过访问类型实例上的每个属性来工作。 属性访问会触发延迟加载，因此会序列化更多的实体。 在这些实体上，将访问这些实体的属性，甚至还会加载更多实体。 在对实体进行序列化之前，最好关闭延迟加载。 以下部分介绍了如何执行此操作。
+延迟加载和序列化不会很好地混合，如果您不小心，只是因为启用了延迟加载，最终就可以对整个数据库进行查询。 大多数序列化程序通过访问类型实例上的每个属性来工作。 属性访问会触发延迟加载，因此会序列化更多的实体。 在这些实体上，将访问这些实体的属性，甚至还会加载更多实体。 在对实体进行序列化之前，最好关闭延迟加载。 以下部分介绍了如何执行该操作。
 
 ### <a name="turning-off-lazy-loading-for-specific-navigation-properties"></a>关闭特定导航属性的延迟加载
 

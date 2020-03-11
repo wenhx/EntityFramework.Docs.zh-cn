@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 9430e2ab-261c-4e8e-8545-2ebc52d7a247
 ms.openlocfilehash: 28ec5446ce9faf98fb8fff141832236d70b29daf
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181576"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78413977"
 ---
 # <a name="testability-and-entity-framework-40"></a>可测试性和实体框架4。0
 Scott Allen

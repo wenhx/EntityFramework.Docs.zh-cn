@@ -1,29 +1,29 @@
 ---
-title: 处理事务提交失败的 EF6
+title: 处理事务提交失败-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 5b1f7a7d-1b24-4645-95ec-5608a31ef577
 ms.openlocfilehash: 27e75e6a1919ee2300fe76cfcdf67cceaad887b3
-ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/18/2018
-ms.locfileid: "46283649"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414673"
 ---
 # <a name="handling-transaction-commit-failures"></a>处理事务提交失败
 > [!NOTE]
-> **EF6.1 及更高版本仅**的功能，Api，Entity Framework 6.1 中引入了此页所述的等。 如果使用的是早期版本，则部分或全部信息不适用。  
+> **Ef 6.1 仅向前**-在实体框架6.1 中引入了本页中讨论的功能、api 等。 如果使用的是早期版本，则部分或全部信息不适用。  
 
-6.1 的一部分，我们引入新的连接复原功能 ef： 检测和暂时性连接故障影响的确认的事务提交时自动恢复的能力。 该方案的完整详细信息是最适合的博客文章中所述[SQL 数据库连接和幂等性问题](https://blogs.msdn.com/b/adonet/archive/2013/03/11/sql-database-connectivity-and-the-idempotency-issue.aspx)。  总之，该方案是在事务提交过程中引发异常时有两个可能的原因：  
+作为6.1 的一部分，我们将为 EF 引入新的连接复原功能：当暂时性连接故障影响事务提交确认时，自动检测和恢复。 有关该方案的完整详细信息，请参阅博客文章[SQL 数据库连接和幂等性问题](https://blogs.msdn.com/b/adonet/archive/2013/03/11/sql-database-connectivity-and-the-idempotency-issue.aspx)。  总的来说，方案是在事务提交期间引发异常时，有两个可能的原因：  
 
-1. 在服务器上的事务提交失败
-2. 在服务器上的事务提交成功，但连接问题导致无法从到达客户端的成功通知  
+1. 服务器上的事务提交失败
+2. 服务器上的事务提交成功，但连接问题阻止成功通知到达客户端  
 
-第一种情况发生在应用程序或用户可以重试该操作，但第二种情况发生时应避免使用重试次数和应用程序无法自动恢复。 面临的挑战是操作的，如果不能检测异常报告，在提交期间，应用程序不能选择正确过程的实际原因是操作的什么。 EF 6.1 中的新功能使得 EF 可仔细检查与数据库，如果事务成功，并以透明方式采取适当的操作过程。  
+在第一种情况下，应用程序或用户可以重试该操作，但当发生第二种情况时，应避免重试，并且应用程序可能会自动恢复。 难点在于，如果不能检测到在提交期间报告异常的实际原因，应用程序将无法选择正确的操作过程。 EF 6.1 中的新功能允许 EF 在事务成功并以透明方式执行正确操作的过程中仔细检查数据库。  
 
-## <a name="using-the-feature"></a>使用的功能  
+## <a name="using-the-feature"></a>使用功能  
 
-若要启用该功能需要包括对[SetTransactionHandler](https://msdn.microsoft.com/library/system.data.entity.dbconfiguration.setdefaulttransactionhandler.aspx)的构造函数中你**DbConfiguration**。 如果您不熟悉**DbConfiguration**，请参阅[代码基于配置](~/ef6/fundamentals/configuring/code-based.md)。 可以结合使用自动重试机制在 EF6 中，我们引入了可帮助在中，事务实际上无法提交对服务器造成暂时性故障的情况下使用此功能：  
+若要启用此功能，需要在**DbConfiguration**的构造函数中包括对[SetTransactionHandler](https://msdn.microsoft.com/library/system.data.entity.dbconfiguration.setdefaulttransactionhandler.aspx)的调用。 如果不熟悉**DbConfiguration**，请参阅[基于代码的配置](~/ef6/fundamentals/configuring/code-based.md)。 此功能可以与我们在 EF6 中引入的自动重试结合使用，这有助于在发生暂时性故障的情况下，事务实际上未能在服务器上提交：  
 
 ``` csharp
 using System.Data.Entity;
@@ -42,31 +42,31 @@ public class MyConfiguration : DbConfiguration
 
 ## <a name="how-transactions-are-tracked"></a>如何跟踪事务  
 
-启用该功能后，EF 将自动将新表添加到名为数据库 **__Transactions**。 每次事务创建的 EF，如果在提交期间发生事务失败，检查该行存在时，此表中插入新行。  
+启用此功能后，EF 会自动将新表添加到名为 **__Transactions**的数据库。 在此表中，每次创建事务时都会在此表中插入一个新行，并在提交期间发生事务失败时检查该行是否存在。  
 
-尽管 EF 将执行这一最大努力来修剪表中的行，当不再需要时，应用程序在退出过早，因此可能需要手动在某些情况下表中清除表可能增大。  
+尽管 EF 在不再需要时可以最大程度地修剪表中的行，但如果应用程序过早退出，则表可能会增长，因此，在某些情况下，可能需要手动清除该表。  
 
-## <a name="how-to-handle-commit-failures-with-previous-versions"></a>如何处理与早期版本的提交失败
+## <a name="how-to-handle-commit-failures-with-previous-versions"></a>如何处理以前版本的提交失败
 
-在 EF 6.1 之前没有机制来处理 EF 产品中的提交失败。 有几种方法来处理这种情况可与以前版本的 EF6 应用：  
+EF 6.1 之前没有处理 EF 产品中的提交失败的机制。 可以通过多种方式来处理可应用于早期版本的 EF6 的情况：  
 
 * 选项 1-不执行任何操作  
 
-  因此，可能会使应用程序直接失败，如果实际上发生这种情况可接受的事务提交过程中的连接故障的可能性较低。  
+  事务提交期间连接失败的可能性很低，因此如果实际发生此情况，应用程序可能会失败。  
 
-* 选项 2-使用数据库来重置状态  
+* 选项 2-使用数据库重置状态  
 
-  1. 放弃当前的 DbContext  
-  2. 创建新的 DbContext 和从数据库中还原应用程序的状态  
-  3. 通知用户，最后一次操作可能不具有已成功完成  
+  1. 放弃当前 DbContext  
+  2. 创建新的 DbContext 并从数据库还原应用程序的状态  
+  3. 通知用户上一次操作可能未成功完成  
 
 * 选项 3-手动跟踪事务  
 
-  1. 将非跟踪的表添加到用于跟踪事务的状态的数据库。  
-  2. 插入到表中每个事务的开始处的行。  
-  3. 如果连接失败在提交期间，检查存在的数据库中的相应行。  
-     - 如果存在该行，则继续正常运行，因为该事务已提交成功  
-     - 如果该行不存在，使用执行策略以重试当前操作。  
-  4. 如果提交成功，删除对应的行，以避免对表的增长。  
+  1. 将非跟踪表添加到用于跟踪事务状态的数据库。  
+  2. 在每个事务开头的表中插入一行。  
+  3. 如果在提交期间连接失败，请检查数据库中是否存在相应的行。  
+     - 如果行存在，则继续正常，因为事务已成功提交  
+     - 如果该行不存在，请使用执行策略重试当前操作。  
+  4. 如果提交成功，则删除相应的行以避免表增长。  
 
-[这篇博客文章](https://blogs.msdn.com/b/adonet/archive/2013/03/11/sql-database-connectivity-and-the-idempotency-issue.aspx)包含在 SQL Azure 上实现此目的的示例代码。  
+[此博客文章](https://blogs.msdn.com/b/adonet/archive/2013/03/11/sql-database-connectivity-and-the-idempotency-issue.aspx)包含 SQL Azure 的示例代码。  

@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 0fc4eef8-29b8-4192-9c77-08fd33d3db3a
 ms.openlocfilehash: c873e9a216bd9bd1934f2149ae6af602072f3608
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73656172"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78415843"
 ---
 # <a name="model-based-conventions"></a>基于模型的约定
 > [!NOTE]
@@ -83,7 +83,7 @@ class DiscriminatorRenamingConvention : IStoreModelConvention<EdmProperty>
 
 其他更复杂的基于模型的约定示例是配置独立关联（IAs）的命名方式。  这种情况下，模型约定适用，因为 IAs 由 EF 生成，并且不存在于 DbModelBuilder API 可以访问的模型中。  
 
-当 EF 生成 IA 时，它将创建一个名为 EntityType_KeyName 的列。 例如，对于名为 Customer 且名为 CustomerId 的键列的关联，它将生成一个名为 Customer_CustomerId 的列。 下面的约定从为 IA 生成的列名称中去除 "\_" 字符。  
+当 EF 生成 IA 时，它将创建一个名为 EntityType_KeyName 的列。 例如，对于名为 Customer 且名为 CustomerId 的键列的关联，它会生成一个名为 Customer_CustomerId 的列。 下面的约定从为 IA 生成的列名称中去除 "\_" 字符。  
 
 ``` csharp
 using System.Data.Entity;

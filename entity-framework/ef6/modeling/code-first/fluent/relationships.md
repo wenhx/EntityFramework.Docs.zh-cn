@@ -1,30 +1,30 @@
 ---
-title: Fluent API 的关系-EF6
+title: 熟知的 API 关系-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: fd73b4f8-16d5-40f1-9640-885ceafe67a1
 ms.openlocfilehash: 05f282c02699f8bf3c71197ac5e01000f1855917
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490462"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78415759"
 ---
-# <a name="fluent-api---relationships"></a>Fluent API 的关系
+# <a name="fluent-api---relationships"></a>熟知 API-关系
 > [!NOTE]
-> 此页提供了有关设置关系中第一个代码模型使用 fluent API 的信息。 有关在 EF 和如何访问和处理数据使用关系的关系的常规信息，请参阅[关系和导航属性](~/ef6/fundamentals/relationships.md)。  
+> 本页提供有关使用 Fluent API 设置 Code First 模型中的关系的信息。 有关 EF 中的关系以及如何使用关系访问和操作数据的一般信息，请参阅[关系 & 导航属性](~/ef6/fundamentals/relationships.md)。  
 
-在使用 Code First，可以通过定义域 CLR 类定义您的模型。 默认情况下，实体框架使用 Code First 约定来将您的类映射到数据库架构。 如果使用 Code First 的命名约定，在大多数情况下您可以依赖于 Code First 来设置基于外键和导航属性在类定义的表之间的关系。 如果定义您的类时不遵循约定或约定如果你想要更改的方式工作，可以使用 fluent API 或数据注释来配置您的类，以便代码优先可以映射在表之间的关系。  
+使用 Code First 时，可通过定义域 CLR 类定义模型。 默认情况下，实体框架使用 Code First 约定将类映射到数据库架构。 如果你使用 Code First 命名约定，则在大多数情况下，你可以依赖于 Code First 根据你在类上定义的外键和导航属性来设置表之间的关系。 如果在定义类时不遵循约定，或者若要更改约定的工作方式，可以使用 Fluent API 或数据批注来配置类，以便 Code First 可以映射表之间的关系。  
 
 ## <a name="introduction"></a>介绍  
 
-在通过 fluent API 配置关系时，开始 EntityTypeConfiguration 实例，然后使用 HasRequired、 HasOptional 或 HasMany 方法指定的此实体所参与的关系的类型。 这些 HasRequired 和 HasOptional 方法采用表示引用导航属性的 lambda 表达式。 HasMany 方法采用 lambda 表达式，表示集合导航属性。 然后可以使用 WithRequired、 WithOptional 和 WithMany 方法配置一个反向导航属性。 这些方法具有重载，它们不采用自变量和可用于单向导航使用指定的基数。  
+在配置与 Fluent API 的关系时，请从 EntityTypeConfiguration 实例开始，然后使用 HasRequired、HasOptional 或 HasMany 方法来指定此实体参与的关系的类型。 HasRequired 和 HasOptional 方法采用表示引用导航属性的 lambda 表达式。 HasMany 方法采用表示集合导航属性的 lambda 表达式。 然后，可以通过使用 WithRequired、WithOptional 和 WithMany 方法配置反向导航属性。 这些方法具有不带参数的重载，可用于通过单向导航指定基数。  
 
-然后可以使用 HasForeignKey 方法来配置外键属性。 此方法采用 lambda 表达式，表示要用作外键的属性。  
+然后，可以使用 HasForeignKey 方法配置外键属性。 此方法采用一个表示要用作外键的属性的 lambda 表达式。  
 
-## <a name="configuring-a-required-to-optional-relationship-one-tozero-or-one"></a>配置所需-到-可选关系 （一个-到-零或一）  
+## <a name="configuring-a-required-to-optional-relationship-one-tozero-or-one"></a>配置所需的可选关系（一对零或一）  
 
-下面的示例配置对零或一一关系。 OfficeAssignment 具有 primary key 和 foreign key 的 InstructorID 属性，因为该属性的名称不遵循 HasKey 方法用于配置为主键的约定。  
+下面的示例将配置一对零或一关系。 OfficeAssignment 具有 InstructorID 属性，该属性是主键和外键，因为属性的名称不遵循该约定。 HasKey 方法用于配置主键。  
 
 ``` csharp
 // Configure the primary key for the OfficeAssignment
@@ -37,9 +37,9 @@ modelBuilder.Entity<OfficeAssignment>()
     .WithOptional(t => t.OfficeAssignment);
 ```  
 
-## <a name="configuring-a-relationship-where-both-ends-are-required-one-to-one"></a>配置两个边界所需 （一对一） 的关系  
+## <a name="configuring-a-relationship-where-both-ends-are-required-one-to-one"></a>配置两个端都需要的关系（一对一）  
 
-在大多数情况下 Entity Framework 可以推断出哪种类型是依赖项以及哪一个是一种关系中的主体。 但是，当同时关系所需或两侧均可选实体框架无法识别依赖和主体可以。 当此关系的两端都是必需的时之后，使用 WithRequiredPrincipal 或 WithRequiredDependent HasRequired 方法。 当此关系的两端都是可选的时之后，使用 WithOptionalPrincipal 或 WithOptionalDependent HasOptional 方法。  
+在大多数情况下实体框架可以推断哪个类型是依赖项并且是关系中的主体。 但是，如果需要关系的两端，或者两个两侧都是可选的，则实体框架无法识别依赖项和主体。 如果关系的两端都是必需的，请在 HasRequired 方法后面使用 WithRequiredPrincipal 或 WithRequiredDependent。 如果关系两端都是可选的，请在 HasOptional 方法后面使用 WithOptionalPrincipal 或 WithOptionalDependent。  
 
 ``` csharp
 // Configure the primary key for the OfficeAssignment
@@ -53,7 +53,7 @@ modelBuilder.Entity<Instructor>()
 
 ## <a name="configuring-a-many-to-many-relationship"></a>配置多对多关系  
 
-下面的代码配置 Course 和 Instructor 类型之间的多对多关系。 在以下示例中，默认 Code First 约定用于创建联接表。 因此 CourseInstructor 表是使用 Course_CourseID 和 Instructor_InstructorID 列创建。  
+下面的代码配置课程类型和指导员类型之间的多对多关系。 在下面的示例中，使用了默认 Code First 约定来创建联接表。 因此，Courseinstructor.courseid 表是使用 Course_CourseID 和 Instructor_InstructorID 列创建的。  
 
 ``` csharp
 modelBuilder.Entity<Course>()
@@ -61,7 +61,7 @@ modelBuilder.Entity<Course>()
     .WithMany(t => t.Courses)
 ```  
 
-如果你想要在表中指定联接表名称和列的名称需要使用 Map 方法来执行其他配置。 下面的代码生成 CourseID 和 InstructorID 列 CourseInstructor 表。  
+如果要使用 Map 方法指定联接表名称和表中列的名称，则需要执行其他配置。 下面的代码生成包含 CourseID 和 InstructorID 列的 Courseinstructor.courseid 表。  
 
 ``` csharp
 modelBuilder.Entity<Course>()
@@ -77,7 +77,7 @@ modelBuilder.Entity<Course>()
 
 ## <a name="configuring-a-relationship-with-one-navigation-property"></a>使用一个导航属性配置关系  
 
-单向 （也称为单向） 仅之一的关系端而不是两者定义导航属性时，关系。 按照约定，代码优先始终解释为一个多单向关系。 例如，如果你想一对一关系之间 Instructor 和 OfficeAssignment，其中只有 Instructor 类型有一个导航属性，需要使用 fluent API 来配置此关系。  
+单向（也称为单向）关系是指仅在一个关系端上定义导航属性，而不是在两者上定义。 按照约定，Code First 始终将单向关系解释为一对多。 例如，如果你想要在讲师与 OfficeAssignment 之间进行一对一关系，其中仅有指导员类型的导航属性，则需要使用 Fluent API 来配置此关系。  
 
 ``` csharp
 // Configure the primary Key for the OfficeAssignment
@@ -91,14 +91,14 @@ modelBuilder.Entity<Instructor>()
 
 ## <a name="enabling-cascade-delete"></a>启用级联删除  
 
-可以通过使用 WillCascadeOnDelete 方法在关系上配置级联删除。 如果依赖实体的外键不可为 null，则第一个代码设置级联删除的关系。 如果依赖实体的外键是可以为 null，Code First 不会设置级联删除的关系，并且当删除主体将设置外键为 null。  
+您可以通过使用 WillCascadeOnDelete 方法为关系配置级联删除。 如果从属实体上的外键不可为 null，则 Code First 在关系上设置级联删除。 如果从属实体上的外键可为 null，则 Code First 不会对关系设置级联删除，并且在删除主体时，外键将设置为 null。  
 
-可通过删除以下级联删除约定：  
+您可以使用以下方法删除这些级联删除约定：  
 
-modelBuilder.Conventions.Remove\<OneToManyCascadeDeleteConvention\>（)  
-modelBuilder.Conventions.Remove\<ManyToManyCascadeDeleteConvention\>（)  
+modelBuilder\<OneToManyCascadeDeleteConvention\>（）  
+modelBuilder\<ManyToManyCascadeDeleteConvention\>（）  
 
-下面的代码将关系是必需的配置，然后禁用级联删除。  
+下面的代码将关系配置为 "必需"，然后禁用级联删除。  
 
 ``` csharp
 modelBuilder.Entity<Course>()
@@ -110,7 +110,7 @@ modelBuilder.Entity<Course>()
 
 ## <a name="configuring-a-composite-foreign-key"></a>配置复合外键  
 
-如果部门类型的主键包含 DepartmentID 和 Name 属性，则配置为主键部门和课程类型上的外键，如下所示：  
+如果部门类型上的主键由 DepartmentID 和 Name 属性组成，则可以为该部门配置主键，并为课程类型配置外键，如下所示：  
 
 ``` csharp
 // Composite primary key
@@ -124,9 +124,9 @@ modelBuilder.Entity<Course>()
     .HasForeignKey(d => new { d.DepartmentID, d.DepartmentName });
 ```  
 
-## <a name="renaming-a-foreign-key-that-is-not-defined-in-the-model"></a>重命名模型中未定义的外键  
+## <a name="renaming-a-foreign-key-that-is-not-defined-in-the-model"></a>重命名未在模型中定义的外键  
 
-如果您选择不在 CLR 类型上定义外键，但想要在数据库中指定它应具有什么名称，请执行以下操作：  
+如果选择不在 CLR 类型上定义外键，但要指定它应在数据库中具有的名称，请执行以下操作：  
 
 ``` csharp
 modelBuilder.Entity<Course>()
@@ -135,9 +135,9 @@ modelBuilder.Entity<Course>()
     .Map(m => m.MapKey("ChangedDepartmentID"));
 ```  
 
-## <a name="configuring-a-foreign-key-name-that-does-not-follow-the-code-first-convention"></a>配置不遵循代码的第一个约定的外键名称  
+## <a name="configuring-a-foreign-key-name-that-does-not-follow-the-code-first-convention"></a>配置不遵循 Code First 约定的外键名称  
 
-如果外的键属性课程类上调用而不是 DepartmentID SomeDepartmentID，需要执行以下操作来指定你想要作为外键的 SomeDepartmentID:  
+如果课程类的外键属性称为 SomeDepartmentID 而不是 DepartmentID，则需要执行以下操作，以指定要 SomeDepartmentID 为外键：  
 
 ``` csharp
 modelBuilder.Entity<Course>()
@@ -146,9 +146,9 @@ modelBuilder.Entity<Course>()
          .HasForeignKey(c => c.SomeDepartmentID);
 ```  
 
-## <a name="model-used-in-samples"></a>示例中所用的模型  
+## <a name="model-used-in-samples"></a>示例中使用的模型  
 
-下面的代码优先模型用于在此页上的示例。  
+以下 Code First 模型用于此页上的示例。  
 
 ``` csharp
 using System.Data.Entity;

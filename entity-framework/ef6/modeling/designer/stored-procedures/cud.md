@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 1e773972-2da5-45e0-85a2-3cf3fbcfa5cf
 ms.openlocfilehash: bdb0df969c33d5ad3f103bfa9af6002c9c2bb9b3
-ms.sourcegitcommit: 6c28926a1e35e392b198a8729fc13c1c1968a27b
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/02/2019
-ms.locfileid: "71813552"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78415141"
 ---
 # <a name="designer-cud-stored-procedures"></a>设计器 CUD 存储过程
 
@@ -42,7 +42,7 @@ var query = context.Products.SqlQuery("EXECUTE [dbo].[GetAllProducts]");
 - 选择 "**文件-&gt;"&gt; 项目**
 - 在左窗格中，单击 " **Visual C\#** "，然后选择 "**控制台**" 模板。
 - 输入 " **CUDSProcsSample** " 作为名称。
-- 选择 **"确定"** 。
+- 选择“确定”。 ****
 
 ## <a name="create-a-model"></a>创建模型
 

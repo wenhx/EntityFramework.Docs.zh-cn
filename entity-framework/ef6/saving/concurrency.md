@@ -4,26 +4,26 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 2318e4d3-f561-4720-bbc3-921556806476
 ms.openlocfilehash: 81ae186201fdfac331b1d4e7836b222545fe78b5
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45489149"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78416245"
 ---
 # <a name="handling-concurrency-conflicts"></a>处理并发冲突
-乐观并发涉及到乐观地尝试将实体保存到数据库中的实体不更改那里的数据希望加载。 事实证明，如果数据已更改，则会引发异常并尝试再次保存之前，必须解决该冲突。 本主题介绍如何处理实体框架中的此类异常。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  
+乐观并发性涉及到乐观地尝试将实体保存到数据库，希望数据在加载实体后未发生更改。 如果事实证明数据已更改，则会引发异常，并且在尝试再次保存之前必须解决冲突。 本主题介绍如何在实体框架中处理此类异常。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  
 
-此帖子不是开放式并发的完整讨论的适当位置。 以下各节假定并发解决方法的一些知识和显示模式的常见任务。  
+这篇文章并不适合完整讨论开放式并发。 以下各节介绍了并发解决方案的一些知识，并显示了常见任务的模式。  
 
-许多这些模式都使用的讨论中的主题[属性值使用方面](~/ef6/saving/change-tracking/property-values.md)。  
+其中的许多模式使用[属性值](~/ef6/saving/change-tracking/property-values.md)中讨论的主题。  
 
-使用独立关联 （其中外键不映射到你的实体中的属性） 时解决并发问题是比使用外键关联时要困难得多。 因此如果您打算执行并发应用程序中的解决方法建议始终将外键映射到你的实体。 下面的所有示例均都假定使用外键关联。  
+在使用独立关联（其中外键未映射到实体中的属性）时解决并发性问题比使用外键关联更难。 因此，如果你要在应用程序中执行并发解析，则建议你始终将外键映射到你的实体中。 以下所有示例假设你使用的是外键关联。  
 
-尝试保存使用外键关联的实体时检测到开放式并发异常时，将通过 SaveChanges 引发 DbUpdateConcurrencyException。  
+当尝试保存使用外键关联的实体时，如果检测到乐观并发异常，则 SaveChanges 将引发 DbUpdateConcurrencyException。  
 
-## <a name="resolving-optimistic-concurrency-exceptions-with-reload-database-wins"></a>解决重新加载 （数据库优先） 的开放式并发异常  
+## <a name="resolving-optimistic-concurrency-exceptions-with-reload-database-wins"></a>通过重载解决开放式并发异常（数据库入选）  
 
-Reload 方法可以用于使用现在在数据库中的值覆盖该实体的当前值。 实体然后通常送回给中某种形式的用户，他们必须尝试再次进行更改并重新保存。 例如：  
+可以使用 Reload.sql 方法，用数据库中的值覆盖当前实体的值。 然后，通常以某种形式向用户返回该实体，并且这些实体必须重试更改，然后重新保存。 例如：  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -52,18 +52,18 @@ using (var context = new BloggingContext())
 }
 ```  
 
-模拟并发异常的好方法是在 SaveChanges 调用处设置断点，然后修改正在使用另一个 SQL Management Studio 等工具在数据库中保存的实体。 您还可以插入行之前 SaveChanges 以直接使用 SqlCommand 更新数据库。 例如：  
+模拟并发异常的一种好方法是在 SaveChanges 调用上设置断点，然后使用其他工具（如 SQL Management Studio）修改要保存在数据库中的实体。 您还可以在 SaveChanges 之前插入一行，以便使用 SqlCommand 直接更新数据库。 例如：  
 
 ``` csharp
 context.Database.SqlCommand(
     "UPDATE dbo.Blogs SET Name = 'Another Name' WHERE BlogId = 1");
 ```  
 
-DbUpdateConcurrencyException 条目方法返回实体的更新失败的 DbEntityEntry 的实例。 （此属性当前始终返回单个值的并发问题。 它可能返回多个值的一般性的更新异常。）在某些情况下的替代方法可能是以获得可能需要从数据库重新加载的所有实体的条目并调用重新加载的每个。  
+DbUpdateConcurrencyException 上的条目方法返回未能更新的实体的 DbEntityEntry 实例。 （此属性当前总是返回并发问题的单个值。 对于常规更新异常，它可能会返回多个值。）在某些情况下，另一种方法可能是从数据库中获取可能需要重新加载的所有实体的条目，并为每个实体调用 "重新加载"。  
 
-## <a name="resolving-optimistic-concurrency-exceptions-as-client-wins"></a>作为客户端 wins 解决开放式并发异常  
+## <a name="resolving-optimistic-concurrency-exceptions-as-client-wins"></a>将开放式并发异常解析为客户端入选  
 
-上面的示例使用重新加载有时称为数据库优先或存储优先因为的数据库中的值将覆盖该实体中的值。 有时您可能希望执行相反的操作并使用该实体中的当前值覆盖该数据库中的值。 这有时称为客户端 wins，可以通过获取当前的数据库值并将它们设置为实体的原始值。 (请参阅[属性值使用方面](~/ef6/saving/change-tracking/property-values.md)有关当前和原始值的信息。)例如：  
+以上使用重载的示例有时被称为数据库入选或存储入选，因为该实体中的值由数据库中的值覆盖。 有时，您可能希望执行相反的操作，并用实体中当前的值覆盖数据库中的值。 这有时称为客户端入选，可以通过获取当前数据库值并将其设置为实体的原始值来完成。 （有关当前值和原始值的信息，请参阅使用[属性值](~/ef6/saving/change-tracking/property-values.md)。）例如：  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -92,9 +92,9 @@ using (var context = new BloggingContext())
 }
 ```  
 
-## <a name="custom-resolution-of-optimistic-concurrency-exceptions"></a>自定义解析的开放式并发异常  
+## <a name="custom-resolution-of-optimistic-concurrency-exceptions"></a>开放式并发异常的自定义解决  
 
-有时你可能想要将数据库中的当前值与实体中的当前值相结合。 这通常需要一些自定义逻辑或用户交互。 例如，可能会给用户，其中包含当前值，在数据库中的值呈现窗体和一组默认的解析的值。 然后，用户将编辑根据需要解析的值并会保存到数据库中获取这些解析的值。 这可以使用 DbPropertyValues 对象从当前值和 GetDatabaseValues 返回实体的条目。 例如：  
+有时，您可能想要将数据库中当前的值与实体中的当前值组合在一起。 这通常需要一些自定义逻辑或用户交互。 例如，您可能向用户提供窗体，其中包含当前值、数据库中的值和一组默认的已解析值。 然后，用户将根据需要编辑解析的值，并将这些已解决的值保存到数据库中。 为此，可以使用 DbPropertyValues 对象，该对象是从实体条目的 CurrentValues 和 GetDatabaseValues 返回的。 例如：  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -145,7 +145,7 @@ public void HaveUserResolveConcurrency(DbPropertyValues currentValues,
 
 ## <a name="custom-resolution-of-optimistic-concurrency-exceptions-using-objects"></a>使用对象的开放式并发异常的自定义解决  
 
-上面的代码使用 DbPropertyValues 实例的当前传递、 数据库和解析的值。 有时可能会更轻松地使用此实体类型的实例。 这可以使用 DbPropertyValues ToObject 和 SetValues 方法。 例如：  
+上面的代码使用 DbPropertyValues 实例来传递当前、数据库和解析的值。 有时，使用实体类型的实例可能会更容易。 可以使用 DbPropertyValues 的 ToObject 和 SetValues 方法完成此操作。 例如：  
 
 ``` csharp
 using (var context = new BloggingContext())

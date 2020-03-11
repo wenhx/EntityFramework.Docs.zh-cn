@@ -4,17 +4,17 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 32d19ac6-9186-4ae1-8655-64ee49da55d0
 ms.openlocfilehash: 6082124481f5795bbcb62fff2bb6a58ecdcb48e4
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490956"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414793"
 ---
 # <a name="dependency-resolution"></a>依赖项解析
 > [!NOTE]
 > **仅限 EF6 及更高版本** - 此页面中讨论的功能、API 等已引入实体框架 6。 如果使用的是早期版本，则部分或全部信息不适用。  
 
-从 EF6 开始，实体框架包含用于获取它需要的服务的实现的通用机制。 也就是说，EF 使用一些接口或基类的实例时它将要求提供的接口或基类的类的具体实现使用。 这可以通过使用 IDbDependencyResolver 接口的实现：  
+从 EF6 开始，实体框架包含用于获取所需服务实现的通用机制。 也就是说，当 EF 使用某些接口或基类的实例时，它将要求使用接口或基类的具体实现。 这是通过使用 IDbDependencyResolver 接口实现的：  
 
 ``` csharp
 public interface IDbDependencyResolver
@@ -23,186 +23,186 @@ public interface IDbDependencyResolver
 }
 ```  
 
-GetService 方法通常由 EF 调用和由 IDbDependencyResolver EF 或应用程序提供的实现。 类型参数调用时，是所请求的服务的接口或基类的类类型和键的对象为 null 或对象，用于提供有关所请求服务的上下文信息。  
+GetService 方法通常由 EF 调用，由 EF 或应用程序提供的 IDbDependencyResolver 的实现进行处理。 调用时，类型参数是所请求服务的接口或基类类型，并且密钥对象为 null 或提供有关所请求服务的上下文信息的对象。  
 
-除非另有说明返回任何对象必须是线程安全，因为它可以用作单一实例。 在许多情况下，在这种情况下是一个工厂返回的对象工厂本身必须是线程安全，但从工厂返回的对象不需要是线程安全，因为从每次使用工厂请求的新实例。
+除非另有说明，否则返回的任何对象都必须是线程安全的，因为它可用作单一实例。 在许多情况下，返回的对象是一个工厂，在这种情况下，工厂本身必须是线程安全的，但从工厂返回的对象不需要是线程安全的，因为每次使用都从工厂请求了一个新实例。
 
-这篇文章不包含有关如何实现 IDbDependencyResolver，完整的详细信息，但充当其 EF 调用 GetService 和键的对象的语义的每个服务类型 （即，接口和基类类类型） 的引用调用。
+本文不包含有关如何实现 IDbDependencyResolver 的完整详细信息，而是充当 EF 为其调用 GetService 的服务类型（即接口和基类类型）的参考和其中每个对象的密钥对象的语义拨号.
 
-## <a name="systemdataentityidatabaseinitializertcontext"></a>System.Data.Entity.IDatabaseInitializer < TContext\>  
+## <a name="systemdataentityidatabaseinitializertcontext"></a>IDatabaseInitializer < TContext\>  
 
-**版本引入了**: EF6.0.0  
+**引入的版本**： ef 6.0。0  
 
-**返回对象**： 给定的上下文类型的数据库初始值设定项  
+**返回的对象**：给定上下文类型的数据库初始值设定项  
 
-**密钥**： 未使用; 将为 null  
+**键**：未使用;将为 null  
 
-## <a name="funcsystemdataentitymigrationssqlmigrationsqlgenerator"></a>Func < System.Data.Entity.Migrations.Sql.MigrationSqlGenerator\>  
+## <a name="funcsystemdataentitymigrationssqlmigrationsqlgenerator"></a>MigrationSqlGenerator\> 的函数的 Func <  
 
-**版本引入了**: EF6.0.0
+**引入的版本**： ef 6.0。0
 
-**返回对象**： 用于创建可用于迁移和其他操作，会导致创建，例如数据库初始值设定项使用的数据库创建数据库的 SQL 生成器工厂。  
+**返回的对象**：用于创建 SQL 生成器的工厂，该生成器可用于迁移和导致创建数据库的其他操作（如使用数据库初始值设定项创建数据库）。  
 
-**密钥**： 包含指定的类型将为其生成 SQL 数据库的 ADO.NET 提供程序固定名称的字符串。 例如，SQL Server SQL 生成器返回密钥"System.Data.SqlClient"。  
-
->[!NOTE]
-> 有关在 EF6 中与提供程序相关的服务的详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
-
-## <a name="systemdataentitycorecommondbproviderservices"></a>System.Data.Entity.Core.Common.DbProviderServices  
-
-**版本引入了**: EF6.0.0  
-
-**返回对象**： 要用于给定提供程序固定名称的 EF 提供程序  
-
-**密钥**： 包含指定的类型为其提供程序所需的数据库的 ADO.NET 提供程序固定名称的字符串。 例如，SQL Server 提供程序返回密钥"System.Data.SqlClient"。  
+**Key**：包含 ADO.NET 提供程序固定名称的字符串，该名称指定要为其生成 SQL 的数据库的类型。 例如，对于密钥 "SqlClient"，将返回 SQL Server SQL 生成器。  
 
 >[!NOTE]
-> 有关在 EF6 中与提供程序相关的服务的详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
+> 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
 
-## <a name="systemdataentityinfrastructureidbconnectionfactory"></a>System.Data.Entity.Infrastructure.IDbConnectionFactory  
+## <a name="systemdataentitycorecommondbproviderservices"></a>Dbproviderservices.createdatabase 的数据的实体。  
 
-**版本引入了**: EF6.0.0  
+**引入的版本**： ef 6.0。0  
 
-**返回对象**： 将按照惯例 EF 创建数据库连接时使用的连接工厂。 也就是说时没有连接或连接字符串被授予对 EF，并且可以在 app.config 或 web.config 中找到任何连接字符串，, 然后此服务用于创建连接按照约定。 默认情况下，更改连接工厂可以允许 EF 使用不同类型的数据库 (例如，SQL Server Compact Edition)。  
+**返回的对象**：用于给定提供程序固定名称的 EF 提供程序  
 
-**密钥**： 未使用; 将为 null  
-
->[!NOTE]
-> 有关在 EF6 中与提供程序相关的服务的详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
-
-## <a name="systemdataentityinfrastructureimanifesttokenservice"></a>System.Data.Entity.Infrastructure.IManifestTokenService  
-
-**版本引入了**: EF6.0.0  
-
-**返回对象**： 一种服务，可以从连接生成提供程序清单标记。 通常通过两种方式使用此服务。 首先，它可以用于避免 Code First 生成模型时，连接到数据库。 其次，它可以用于强制代码优先，若要生成的模型特定的数据库版本--例如，若要强制进行 SQL Server 2005 的一个模型，即使有时使用 SQL Server 2008。  
-
-**对象生存期**： 单一实例-相同的对象可能是使用多个时间同时由不同的线程  
-
-**密钥**： 未使用; 将为 null  
-
-## <a name="systemdataentityinfrastructureidbproviderfactoryservice"></a>System.Data.Entity.Infrastructure.IDbProviderFactoryService  
-
-**版本引入了**: EF6.0.0  
-
-**返回对象**： 一种服务，可以从给定的连接获取提供程序工厂。 在.NET 4.5 提供程序是从连接可公开访问。 .NET 4 上的此服务的默认实现使用某些试探方法查找匹配的提供程序。 如果这些然后失败，此服务的新实现可以注册为提供相应的解决方法。  
-
-**密钥**： 未使用; 将为 null  
-
-## <a name="funcdbcontext-systemdataentityinfrastructureidbmodelcachekey"></a>Func < DbContext，System.Data.Entity.Infrastructure.IDbModelCacheKey\>  
-
-**版本引入了**: EF6.0.0  
-
-**返回对象**： 一个工厂，它将生成给定上下文的模型缓存键。 默认情况下，EF 缓存每个 DbContext 类型，每个提供程序的一个模型。 此服务的不同实现可以用于将其他信息，如架构名称添加到缓存键。  
-
-**密钥**： 未使用; 将为 null  
-
-## <a name="systemdataentityspatialdbspatialservices"></a>System.Data.Entity.Spatial.DbSpatialServices  
-
-**版本引入了**: EF6.0.0  
-
-**返回对象**： 向 geography 和 geometry 空间类型的基本 EF 提供程序支持的 EF 空间提供程序。  
-
-**密钥**: DbSptialServices 要求的两种方式。 首先，提供程序特定的空间服务请求使用 DbProviderInfo 对象 (其中包含固定条件名称和清单标记) 作为键。 其次，DbSpatialServices 可以要求不含键。 这用于解决"全局空间提供程序"在创建独立的 DbGeography 或 DbGeometry 类型时使用。  
+**Key**：包含 ADO.NET 提供程序固定名称的字符串，用于指定需要提供程序的数据库类型。 例如，对于密钥 "SqlClient"，将返回 SQL Server 提供程序。  
 
 >[!NOTE]
-> 有关在 EF6 中与提供程序相关的服务的详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
+> 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
 
-## <a name="funcsystemdataentityinfrastructureidbexecutionstrategy"></a>Func < System.Data.Entity.Infrastructure.IDbExecutionStrategy\>  
+## <a name="systemdataentityinfrastructureidbconnectionfactory"></a>"IDbConnectionFactory"。  
 
-**版本引入了**: EF6.0.0  
+**引入的版本**： ef 6.0。0  
 
-**返回对象**： 工厂可以创建允许提供程序时对数据库执行查询和命令实现重试或其他行为的服务。 如果未不提供任何实现，然后 EF 将只需执行命令并引发任何异常传播。 SQL Server 的此服务用于提供的重试策略，这是针对基于云的数据库服务器，例如 SQL Azure 运行时特别有用。  
+**返回的对象**：当 EF 按约定创建数据库连接时将使用的连接工厂。 也就是说，如果不向 EF 提供连接或连接字符串，并且在 app.config 或 web.config 中找不到连接字符串，则将使用此服务按约定创建连接。 默认情况下，更改连接工厂可以允许 EF 使用其他类型的数据库（例如，SQL Server Compact Edition）。  
 
-**密钥**: ExecutionStrategyKey 对象，其中包含提供程序固定名称和 （可选） 将用于执行策略的服务器名称。  
-
->[!NOTE]
-> 有关在 EF6 中与提供程序相关的服务的详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
-
-## <a name="funcdbconnection-string-systemdataentitymigrationshistoryhistorycontext"></a>Func < DbConnection，字符串，System.Data.Entity.Migrations.History.HistoryContext\>  
-
-**版本引入了**: EF6.0.0  
-
-**返回对象**： 一个工厂，它允许一个提供程序来配置映射到 HistoryContext`__MigrationHistory`使用 EF 迁移的表。 HistoryContext 是代码的第一个 DbContext，并且可以使用正常的 fluent API 来更改像表和列映射规范的名称进行配置。  
-
-**密钥**： 未使用; 将为 null  
+**键**：未使用;将为 null  
 
 >[!NOTE]
-> 有关在 EF6 中与提供程序相关的服务的详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
+> 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
 
-## <a name="systemdatacommondbproviderfactory"></a>System.Data.Common.DbProviderFactory  
+## <a name="systemdataentityinfrastructureimanifesttokenservice"></a>"IManifestTokenService"。  
 
-**版本引入了**: EF6.0.0  
+**引入的版本**： ef 6.0。0  
 
-**返回对象**： 要用于给定提供程序固定名称的 ADO.NET 提供程序。  
+**返回的对象**：一种服务，可从连接生成提供程序清单标记。 此服务通常以两种方式使用。 首先，可以使用它来避免 Code First 在生成模型时连接到数据库。 其次，它可以用于强制 Code First 为特定的数据库版本生成模型-例如，即使使用 SQL Server 2008，也可以强制对 SQL Server 2005 的模型进行强制。  
 
-**密钥**： 包含 ADO.NET 提供程序固定名称的字符串  
+**对象生存期**：单一实例--相同的对象可以多次使用，并且可以同时由不同的线程使用  
+
+**键**：未使用;将为 null  
+
+## <a name="systemdataentityinfrastructureidbproviderfactoryservice"></a>"IDbProviderFactoryService"。  
+
+**引入的版本**： ef 6.0。0  
+
+**返回的对象**：可以从给定连接获得提供程序工厂的服务。 在 .NET 4.5 中，提供程序可以从连接中公开访问。 在 .NET 4 中，此服务的默认实现使用一些试探法来查找匹配的提供程序。 如果这些失败，则可以注册此服务的新实现以提供适当的解决方法。  
+
+**键**：未使用;将为 null  
+
+## <a name="funcdbcontext-systemdataentityinfrastructureidbmodelcachekey"></a>Func < DbContext，IDbModelCacheKey 的\>  
+
+**引入的版本**： ef 6.0。0  
+
+**返回的对象**：将为给定上下文生成模型缓存键的工厂。 默认情况下，EF 按每个提供程序的 DbContext 类型缓存一个模型。 此服务的不同实现可用于向缓存键添加其他信息，如架构名称。  
+
+**键**：未使用;将为 null  
+
+## <a name="systemdataentityspatialdbspatialservices"></a>DbSpatialServices..。  
+
+**引入的版本**： ef 6.0。0  
+
+**返回的对象**：一个 EF 空间提供程序，它添加对 geography 和 geometry 空间类型的基本 EF 提供程序的支持。  
+
+**键**：以两种方式请求 DbSptialServices。 首先，使用 DbProviderInfo 对象（其中包含固定名称和清单标记）来请求特定于提供程序的空间服务作为密钥。 其次，无关键字就可以要求 DbSpatialServices。 这用于解析在创建独立的 DbGeography 或 DbGeometry 类型时使用的 "全局空间提供程序"。  
 
 >[!NOTE]
-> 此服务不通常会更改直接由于的默认实现使用普通 ADO.NET 提供程序注册。 有关在 EF6 中与提供程序相关的服务的详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
+> 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
 
-## <a name="systemdataentityinfrastructureiproviderinvariantname"></a>System.Data.Entity.Infrastructure.IProviderInvariantName  
+## <a name="funcsystemdataentityinfrastructureidbexecutionstrategy"></a>函数函数的 Func <\> IDbExecutionStrategy  
 
-**版本引入了**: EF6.0.0  
+**引入的版本**： ef 6.0。0  
 
-**返回对象**： 一种服务，用于确定给定类型的 DbProviderFactory 的提供程序固定名称。 此服务的默认实现使用 ADO.NET 提供程序注册。 这意味着，如果因为 DbProviderFactory 正在解析由 EF，ADO.NET 提供程序未注册以正常方式，然后它将还需要解析此服务。  
+**返回的对象**：一个工厂，用于创建一个服务，该服务允许提供程序在针对数据库执行查询和命令时实现重试或其他行为。 如果未提供实现，则 EF 只会执行命令并传播引发的任何异常。 对于 SQL Server 此服务用于提供重试策略，这在对基于云的数据库服务器（如 SQL Azure）运行时特别有用。  
 
-**密钥**: DbProviderFactory 的固定名称是必需的实例。  
+**Key**：包含提供程序固定名称的 ExecutionStrategyKey 对象，还可以选择要对其使用执行策略的服务器名称。  
 
 >[!NOTE]
-> 有关在 EF6 中与提供程序相关的服务的详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
+> 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
 
-## <a name="systemdataentitycoremappingviewgenerationiviewassemblycache"></a>System.Data.Entity.Core.Mapping.ViewGeneration.IViewAssemblyCache  
+## <a name="funcdbconnection-string-systemdataentitymigrationshistoryhistorycontext"></a>Func < DbConnection，string，HistoryContext，\>  
 
-**版本引入了**: EF6.0.0  
+**引入的版本**： ef 6.0。0  
 
-**返回对象**： 包含预生成的视图的程序集的缓存。 替换通常用于让 EF 知道哪些程序集而无需执行任何发现包含预生成的视图。  
+**返回的对象**：允许提供程序配置 HISTORYCONTEXT 与 EF 迁移使用的 `__MigrationHistory` 表的映射的工厂。 HistoryContext 是一个 Code First DbContext，可以使用普通 Fluent API 进行配置，以更改表名称和列映射规范等项。  
 
-**密钥**： 未使用; 将为 null  
+**键**：未使用;将为 null  
 
-## <a name="systemdataentityinfrastructurepluralizationipluralizationservice"></a>System.Data.Entity.Infrastructure.Pluralization.IPluralizationService
+>[!NOTE]
+> 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
 
-**版本引入了**: EF6.0.0  
+## <a name="systemdatacommondbproviderfactory"></a>DbProviderFactory。  
 
-**返回对象**： 由 EF 来改为复数形式和所名称的服务。 默认情况下使用英语复数化服务。  
+**引入的版本**： ef 6.0。0  
 
-**密钥**： 未使用; 将为 null  
+**返回的对象**：要用于给定提供程序固定名称的 ADO.NET 提供程序。  
 
-## <a name="systemdataentityinfrastructureinterceptionidbinterceptor"></a>System.Data.Entity.Infrastructure.Interception.IDbInterceptor  
+**Key**：包含 ADO.NET 提供程序固定名称的字符串  
 
-**版本引入了**: EF6.0.0
+>[!NOTE]
+> 此服务通常不会直接更改，因为默认实现使用普通的 ADO.NET 提供程序注册。 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
 
-**返回的对象**: 应用程序启动时应注册任何侦听器。 请注意，这些对象使用 getservices 进行提取调用请求和返回的任何依赖关系解析程序的所有侦听器都会注册。
+## <a name="systemdataentityinfrastructureiproviderinvariantname"></a>"IProviderInvariantName"。  
 
-**密钥**： 未使用; 将为 null。  
+**引入的版本**： ef 6.0。0  
 
-## <a name="funcsystemdataentitydbcontext-actionstring-systemdataentityinfrastructureinterceptiondatabaselogformatter"></a>Func < System.Data.Entity.DbContext、 操作 < 字符串\>，System.Data.Entity.Infrastructure.Interception.DatabaseLogFormatter\>  
+**返回的对象**：用于确定给定类型的 DbProviderFactory 的提供程序固定名称的服务。 此服务的默认实现使用 ADO.NET 提供程序注册。 这意味着，如果 ADO.NET 提供程序未以正常方式注册，因为 DbProviderFactory 正在由 EF 解析，则还需要解析此服务。  
 
-**版本引入了**: EF6.0.0  
+**Key**：需要固定名称的 DbProviderFactory 实例。  
 
-**返回对象**： 将用于创建的数据库日志格式化程序将是一个工厂时使用的上下文。Database.Log 属性设置在给定的上下文。  
+>[!NOTE]
+> 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
 
-**密钥**： 未使用; 将为 null。  
+## <a name="systemdataentitycoremappingviewgenerationiviewassemblycache"></a>ViewGeneration. IViewAssemblyCache 的数据。  
 
-## <a name="funcsystemdataentitydbcontext"></a>Func < System.Data.Entity.DbContext\>  
+**引入的版本**： ef 6.0。0  
 
-**版本引入了**: EF6.1.0  
+**返回的对象**：包含预先生成的视图的程序集的缓存。 替换通常用于让 EF 知道哪些程序集包含预生成的视图，而无需执行任何发现。  
 
-**返回对象**： 将用于当上下文不具有可访问的无参数构造函数时为迁移创建上下文实例的工厂。  
+**键**：未使用;将为 null  
 
-**密钥**: 工厂为其所需的派生 dbcontext 类型的类型对象。  
+## <a name="systemdataentityinfrastructurepluralizationipluralizationservice"></a>复数形式... IPluralizationService
 
-## <a name="funcsystemdataentitycoremetadataedmimetadataannotationserializer"></a>Func < System.Data.Entity.Core.Metadata.Edm.IMetadataAnnotationSerializer\>  
+**引入的版本**： ef 6.0。0  
 
-**版本引入了**: EF6.1.0  
+**返回的对象**：由 EF 用于复数形式和确定所名称的服务。 默认情况下，使用英语复数形式服务。  
 
-**返回对象**： 一个工厂，它将用于创建序列化程序进行序列化强类型化自定义批注，以便它们能够序列化并在 Code First 迁移中使用 desterilized 为 XML。  
+**键**：未使用;将为 null  
 
-**密钥**： 正在批注的名称序列化或反序列化。  
+## <a name="systemdataentityinfrastructureinterceptionidbinterceptor"></a>IDbInterceptor 的数据的元数据  
 
-## <a name="funcsystemdataentityinfrastructuretransactionhandler"></a>Func < System.Data.Entity.Infrastructure.TransactionHandler\>  
+**引入的版本**： ef 6.0。0
 
-**版本引入了**: EF6.1.0  
+**返回的对象**：在应用程序启动时应注册的所有侦听器。 请注意，这些对象是使用 GetServices 调用请求的，所有依赖关系解析程序返回的所有拦截器都将进行注册。
 
-**返回对象**： 一个工厂，它将用于创建事务的处理程序，以便可以如处理提交失败的情况下应用特殊处理。  
+**键**：未使用;将为 null。  
 
-**密钥**: ExecutionStrategyKey 对象，其中包含提供程序固定名称和 （可选） 将使用事务处理程序的服务器名称。  
+## <a name="funcsystemdataentitydbcontext-actionstring-systemdataentityinfrastructureinterceptiondatabaselogformatter"></a>Func < DbContext，Action < string\>，DatabaseLogFormatter\> 的操作中执行的操作  
+
+**引入的版本**： ef 6.0。0  
+
+**返回的对象**：一个工厂，用于创建将在上下文时使用的数据库日志格式化程序。在给定的上下文中设置了数据库. 日志属性。  
+
+**键**：未使用;将为 null。  
+
+## <a name="funcsystemdataentitydbcontext"></a>Func < DbContext\>  
+
+**引入的版本**： ef 6.1。0  
+
+**返回的对象**：当上下文不具有可访问的无参数构造函数时，将用于创建用于迁移的上下文实例的工厂。  
+
+**Key**：需要工厂的派生 DbContext 的类型的类型对象。  
+
+## <a name="funcsystemdataentitycoremetadataedmimetadataannotationserializer"></a>函数函数 IMetadataAnnotationSerializer\> 的 < 函数（）  
+
+**引入的版本**： ef 6.1。0  
+
+**返回的对象**：一个工厂，用于创建用于序列化强类型自定义批注的序列化程序，以便可以将其序列化并 DESTERILIZED 到 XML 中以便在 Code First 迁移中使用。  
+
+**键**：要序列化或反序列化的批注的名称。  
+
+## <a name="funcsystemdataentityinfrastructuretransactionhandler"></a>函数函数的 Func <\> TransactionHandler  
+
+**引入的版本**： ef 6.1。0  
+
+**返回的对象**：将用于为事务创建处理程序的工厂，以便在处理提交失败的情况下可以应用特殊处理。  
+
+**Key**：包含提供程序固定名称的 ExecutionStrategyKey 对象，还可以选择要对其使用事务处理程序的服务器名称。  

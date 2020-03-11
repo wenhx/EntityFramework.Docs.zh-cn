@@ -1,43 +1,43 @@
 ---
-title: 使用实体状态的 EF6
+title: 使用实体状态-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: acb27f46-3f3a-4179-874a-d6bea5d7120c
 ms.openlocfilehash: ef0e8d5a5a9d66adab7046088c49d8cd472edc8a
-ms.sourcegitcommit: e5f9ca4aa41e64141fa63a1e5fcf4d4775d67d24
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 12/05/2018
-ms.locfileid: "52899647"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78416251"
 ---
 # <a name="working-with-entity-states"></a>使用实体状态
-本主题将介绍如何添加和将实体附加到上下文和实体框架如何处理这些在 SaveChanges 期间。
-实体框架负责的跟踪的实体时它们已连接到一个上下文，但在断开连接或 N 层方案中，您可以让 EF 知道你的实体的何种状态的状态应为。
+本主题将介绍如何添加实体并将其附加到上下文，以及实体框架如何在 SaveChanges 期间处理这些实体。
+实体框架负责在实体连接到上下文时跟踪实体的状态，但在断开连接或 N 层方案中，你可以让 EF 知道实体应采用的状态。
 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  
 
 ## <a name="entity-states-and-savechanges"></a>实体状态和 SaveChanges
 
-实体可以是一个五种状态中定义的 EntityState 枚举。 这些状态包括：  
+实体可以是 EntityState 枚举定义的五种状态之一。 这些状态是：  
 
-- 添加了： 实体正在由上下文跟踪，但在数据库中尚不存在  
-- 未更改： 实体正在由上下文跟踪和在数据库中存在并从数据库中的值未更改其属性值  
-- 修改： 实体正在由上下文跟踪和在数据库中存在并已修改某些或所有其属性值  
-- 已删除： 实体正在由上下文跟踪和在数据库中存在但已标记为删除从数据库下次调用 SaveChanges 时  
-- 已分离： 实体未被跟踪的上下文  
+- 已添加：上下文正在跟踪实体，但数据库中尚不存在该实体  
+- 保持不变：上下文正在跟踪实体，该实体存在于数据库中，并且其属性值未更改为数据库中的值  
+- 已修改：实体正在由上下文跟踪，并存在于数据库中，并且其部分或全部属性值已修改  
+- 已删除：实体正在由上下文跟踪，并存在于数据库中，但在下次调用 SaveChanges 时已标记为要从数据库中删除  
+- 已分离：上下文未跟踪该实体  
 
-SaveChanges 将执行不同操作的实体中的不同状态：  
+对于不同状态中的实体，SaveChanges 执行不同的操作：  
 
-- 未更改的实体不涉及通过 SaveChanges。 更新会向数据库中未更改状态的实体。  
-- 添加实体插入到数据库，然后会保持不变时 SaveChanges 返回。  
-- 已修改的实体在数据库中更新，然后会保持不变时 SaveChanges 返回。  
-- 已删除的实体从数据库中删除，然后从上下文分离。  
+- SaveChanges 不会接触到未更改的实体。 对于处于未更改状态的实体，不会将更新发送到数据库。  
+- 添加的实体将插入到数据库中，并在 SaveChanges 返回时变为不变。  
+- 修改后的实体将在数据库中更新，并在 SaveChanges 返回时变得不变。  
+- 删除的实体将从数据库中删除，然后与上下文分离。  
 
-以下示例显示实体或实体关系图状态可以更改的方法。  
+下面的示例演示了如何更改实体或实体关系图的状态。  
 
-## <a name="adding-a-new-entity-to-the-context"></a>将新实体添加到上下文  
+## <a name="adding-a-new-entity-to-the-context"></a>向上下文中添加新实体  
 
-新的实体可以通过在 DbSet 上调用 Add 方法添加到上下文。
-这将实体的已添加状态，这意味着，它将插入到数据库调用 SaveChanges 的下一个时间。
+可以通过对 DbSet 调用 Add 方法，将新实体添加到上下文中。
+这会使实体处于已添加状态，这意味着它将在下一次调用 SaveChanges 时插入到数据库中。
 例如：  
 
 ``` csharp
@@ -49,7 +49,7 @@ using (var context = new BloggingContext())
 }
 ```  
 
-若要将新实体添加到上下文的另一种方法是将其状态更改为 Added。 例如：  
+向上下文中添加新实体的另一种方法是将其状态更改为 "已添加"。 例如：  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -60,8 +60,8 @@ using (var context = new BloggingContext())
 }
 ```  
 
-最后，可以挂接到已被跟踪的另一个实体的上下文中添加新实体。
-这可能是通过将新实体添加到另一个实体的集合导航属性或通过设置另一个实体以指向新的实体的引用导航属性。 例如：  
+最后，可以通过将新实体挂钩到已跟踪的另一个实体来向上下文中添加新实体。
+这可以是将新实体添加到另一个实体的集合导航属性中，或通过设置另一个实体的引用导航属性来指向新实体。 例如：  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -77,11 +77,11 @@ using (var context = new BloggingContext())
 }
 ```  
 
-请注意，对于所有这些示例，如果要添加的实体具有对不是其他实体的引用尚未然后跟踪这些新实体也将添加到上下文，并将插入到该数据库下次调用 SaveChanges。  
+请注意，对于所有这些示例，如果添加的实体具有对尚未跟踪的其他实体的引用，则这些新实体也将添加到上下文中，并将在下次调用 SaveChanges 时插入到数据库中。  
 
 ## <a name="attaching-an-existing-entity-to-the-context"></a>将现有实体附加到上下文  
 
-如果你有已经知道的实体存在于数据库，但这当前未跟踪上下文则可指示要跟踪对 DbSet 使用附加方法的实体的上下文。 实体将处于 Unchanged 状态的上下文中。 例如：  
+如果你的实体已存在于数据库中，但当前未由上下文跟踪，则可以使用 DbSet 上的 Attach 方法告诉上下文跟踪实体。 实体在上下文中将处于未更改状态。 例如：  
 
 ``` csharp
 var existingBlog = new Blog { BlogId = 1, Name = "ADO.NET Blog" };
@@ -96,9 +96,9 @@ using (var context = new BloggingContext())
 }
 ```  
 
-请注意是否 SaveChanges 调用而无需执行附加的任何的实体其他操作将对数据库进行任何更改。 这是因为实体处于 Unchanged 状态。  
+请注意，如果在调用 SaveChanges 时未执行附加实体的任何其他操作，则不会对数据库进行任何更改。 这是因为实体处于未更改状态。  
 
-若要将现有实体附加到上下文的另一种方法是将其状态更改为 Unchanged。 例如：  
+将现有实体附加到上下文的另一种方法是将其状态更改为 "未更改"。 例如：  
 
 ``` csharp
 var existingBlog = new Blog { BlogId = 1, Name = "ADO.NET Blog" };
@@ -113,11 +113,11 @@ using (var context = new BloggingContext())
 }
 ```  
 
-请注意，为这两个示例如果要附加的实体具有对其他实体未被跟踪的引用然后这些新的实体将还附加到上下文中未更改状态。  
+请注意，对于这两个示例，如果附加的实体已引用尚未跟踪的其他实体，则这些新实体还会附加到处于未更改状态的上下文。  
 
-## <a name="attaching-an-existing-but-modified-entity-to-the-context"></a>附加现有的修改后的实体的上下文  
+## <a name="attaching-an-existing-but-modified-entity-to-the-context"></a>将现有的但修改的实体附加到上下文  
 
-如果你有已经知道的实体存在在数据库中，但到哪个可能进行了更改则可指示要将附加该实体并将其状态设置为已修改的上下文。
+如果你的实体已存在于数据库中，但可能已对其进行了更改，则可以通知上下文附加实体并将其状态设置为 "已修改"。
 例如：  
 
 ``` csharp
@@ -133,14 +133,14 @@ using (var context = new BloggingContext())
 }
 ```  
 
-时将状态更改为已修改的实体的所有属性将都标记为已修改，并调用 SaveChanges 时的所有属性值将都发送到数据库。  
+当你将状态更改为 "已修改" 时，实体的所有属性都将标记为已修改，并且在调用 SaveChanges 时，所有属性值都将发送到数据库。  
 
-请注意是否要附加的实体具有对其他实体未被跟踪的引用，这些新的实体将附加到上下文中未更改状态，它们将不被指定为已修改。
-如果有多个需要标记为已修改的实体应在单独的每个实体设置状态。  
+请注意，如果附加的实体具有对尚未跟踪的其他实体的引用，则这些新实体将以未更改状态附加到上下文中，而不会自动进行修改。
+如果需要将多个实体标记为 "已修改"，则应单独设置每个实体的状态。  
 
-## <a name="changing-the-state-of-a-tracked-entity"></a>更改跟踪的实体的状态  
+## <a name="changing-the-state-of-a-tracked-entity"></a>更改所跟踪实体的状态  
 
-你可以通过在其条目上设置的状态属性已被跟踪实体的状态。 例如：  
+您可以通过对其项设置状态属性来更改已被跟踪的实体的状态。 例如：  
 
 ``` csharp
 var existingBlog = new Blog { BlogId = 1, Name = "ADO.NET Blog" };
@@ -156,13 +156,13 @@ using (var context = new BloggingContext())
 }
 ```  
 
-请注意，已跟踪的实体调用添加或附加还可用来将实体状态更改。 例如，调用附加的实体，当前处于已添加状态将更改其状态为 Unchanged。  
+请注意，为已跟踪的实体调用 "添加或附加" 也可用于更改实体状态。 例如，为当前处于添加状态的实体调用 Attach 会将其状态更改为 "不更改"。  
 
 ## <a name="insert-or-update-pattern"></a>插入或更新模式  
 
-某些应用程序的常见模式是将实体添加为新的 （导致数据库插入） 或附加与现有实体并将其标记为修改 （导致数据库更新） 根据为主键的值。
-例如，使用数据库生成整数主键时，通常会将具有零个密钥作为新的实体和具有非零值密钥作为现有的实体。
-此模式可以通过设置基于主键值的检查的实体状态来实现。 例如：  
+某些应用程序的一种常见模式是将实体添加为新实体（生成数据库插入），或将实体附加到现有实体并将其标记为已修改（生成数据库更新），具体取决于主键的值。
+例如，在使用数据库生成的整数主键时，通常将包含零键的实体作为新的和具有非零键的实体视为现有的。
+可以通过基于主键值的检查设置实体状态来实现此模式。 例如：  
 
 ``` csharp
 public void InsertOrUpdate(Blog blog)
@@ -178,4 +178,4 @@ public void InsertOrUpdate(Blog blog)
 }
 ```  
 
-请注意时将状态更改为已修改的实体的所有属性将都标记为已修改的所有属性值将在调用 SaveChanges 时被都发送到数据库。  
+请注意，当你将状态更改为 "已修改" 时，实体的所有属性都将标记为已修改，并且在调用 SaveChanges 时，所有属性值都将发送到数据库。  

@@ -1,39 +1,39 @@
 ---
-title: School 示例数据库的 EF6
+title: School 示例数据库-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: e83a6a06-e63b-4530-8656-614bf609b12b
 ms.openlocfilehash: 1e9dc98edb8590021bbf3393e9edda1929d505e0
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490709"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414391"
 ---
 # <a name="school-sample-database"></a>School 示例数据库
-本主题包含的架构和 School 数据库的数据。 School 示例数据库中的实体框架文档的各个位置使用。  
+本主题包含 School 数据库的架构和数据。 示例 School 数据库在整个实体框架文档的不同位置使用。  
 
 > [!NOTE]
-> 随 Visual Studio 一起安装的数据库服务器是您使用的 Visual Studio 的版本而异。 请参阅[Visual Studio 版本](~/ef6/what-is-new/visual-studio.md)有关要使用的详细信息。  
+> 随 Visual Studio 一起安装的数据库服务器取决于你使用的 Visual Studio 版本。 有关使用内容的详细信息，请参阅[Visual Studio 版本](~/ef6/what-is-new/visual-studio.md)。  
 
 下面是创建数据库的步骤：
 
 - 打开 Visual Studio  
-- **视图** -> **服务器资源管理器**  
-- 右键单击**数据连接** -> **添加连接...**  
-- 如果你尚未连接到数据库服务器资源管理器之前将需要选择**Microsoft SQL Server**作为数据源  
-- 连接到 LocalDB 或 SQL Express，具体取决于哪一个已安装  
-- 输入**学校**作为数据库名称  
-- 选择**确定**并将你想要创建新数据库，请选择要求你**是**  
-- 新的数据库现在将出现在服务器资源管理器  
-- 如果使用的 Visual Studio 2012 或更高版本
-    - 右键单击服务器资源管理器中的数据库，然后选择**新查询**  
-    - 将下面的 SQL 复制到新的查询，然后右键单击查询并选择**Execute**  
-- 如果您使用的 Visual Studio 2010  
-    - 选择**数据** -> **Transact SQL 编辑器** -> **新建查询连接...**  
-    - 输入 **。 \SQLEXPRESS**作为服务器名称，然后单击**确定**  
-    - 选择**STESample**数据库从下拉列表顶部的查询编辑器  
-    - 将下面的 SQL 复制到新的查询，然后右键单击查询并选择**执行 SQL**  
+- **查看** -> **服务器资源管理器**  
+- 右键单击 "**数据连接**" -> "**添加连接 ...** "  
+- 如果尚未从服务器资源管理器连接到数据库，则需要选择**Microsoft SQL Server**作为数据源  
+- 连接到 LocalDB 或 SQL Express，具体取决于你安装的是哪个  
+- 输入**School**作为数据库名称  
+- 选择 **"确定"** ，系统会询问您是否要创建新数据库，请选择 **"是"**  
+- 新数据库现在将出现在服务器资源管理器  
+- 如果使用的是 Visual Studio 2012 或更高版本
+    - 在服务器资源管理器中右键单击该数据库，然后选择 "**新建查询**"  
+    - 将以下 SQL 复制到新的查询中，然后右键单击该查询，然后选择 "**执行**"  
+- 如果使用的是 Visual Studio 2010  
+    - 选择**数据** -> **Transact-sql 编辑器** -> **新建查询连接 ...**  
+    - 输入 **.\SQLEXPRESS**作为服务器名称，然后单击 **"确定"**  
+    - 从 "查询编辑器" 顶部的下拉菜单中选择 " **STESample** " 数据库  
+    - 将以下 SQL 复制到新的查询中，然后右键单击该查询，然后选择 "**执行 SQL** "。  
 
 ``` SQL  
 SET ANSI_NULLS ON

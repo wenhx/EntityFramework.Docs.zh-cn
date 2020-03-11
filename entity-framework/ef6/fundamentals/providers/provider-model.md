@@ -4,11 +4,11 @@ author: divega
 ms.date: 06/27/2018
 ms.assetid: 066832F0-D51B-4655-8BE7-C983C557E0E4
 ms.openlocfilehash: 8bda3f51e8934f2add862c30e60f1185f068c515
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181612"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78416005"
 ---
 # <a name="the-entity-framework-6-provider-model"></a>实体框架6提供程序模型
 

@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 77d6a095-c0d0-471e-80b9-8f9aea6108b2
 ms.openlocfilehash: 2c5e6f1b3f60862124bafcac42e8859a7591f8e6
-ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/23/2019
-ms.locfileid: "72812148"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414367"
 ---
 # <a name="data-validation"></a>数据验证
 > [!NOTE]
@@ -54,7 +54,7 @@ public string Title { get; set; }
 
 如果应用程序中没有额外的代码或标记更改，则现有 MVC 应用程序会执行客户端验证，甚至使用属性和批注名称动态生成消息。
 
-![图1](~/ef6/media/figure01.png)
+![图 1](~/ef6/media/figure01.png)
 
 在此 "创建" 视图的 "回发" 方法中，实体框架用于将新的博客保存到数据库中，但在应用程序到达该代码之前触发了 MVC 的客户端验证。
 
@@ -158,7 +158,7 @@ public class Blog : IValidatableObject
 
 ![图2](~/ef6/media/figure02.png)
 
-## <a name="dbcontextvalidateentity"></a>DbContext. ValidateEntity
+## <a name="dbcontextvalidateentity"></a>DbContext.ValidateEntity
 
 `DbContext` 具有称为 `ValidateEntity`的可重写方法。 调用 `SaveChanges`时，实体框架将为其缓存中其状态为 "不 `Unchanged`" 的每个实体调用此方法。 您可以在此处直接放置验证逻辑，甚至可以使用此方法来调用，例如，在上一节中添加的 `Blog.Validate` 方法。
 
@@ -235,7 +235,7 @@ foreach (var validationResult in db.GetValidationErrors())
   - 针对复杂类型属性的属性级验证
   - 对复杂类型的类型级别验证，包括对复杂类型 `IValidatableObject` 验证
 
-## <a name="summary"></a>总结
+## <a name="summary"></a>摘要
 
 实体框架中的验证 API 与 MVC 中的客户端验证非常完美，但你不必依赖于客户端验证。 实体框架将在服务器端对 DataAnnotations 或使用 code first 流畅 API 应用的配置进行验证。
 

@@ -1,35 +1,35 @@
 ---
-title: 自动检测到更改-EF6
+title: 自动检测更改-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: a8d1488d-9a54-4623-a76b-e81329ff2756
 ms.openlocfilehash: 9af85fd7ca48a14432a1f33c59079fc438ef8810
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490982"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414379"
 ---
 # <a name="automatic-detect-changes"></a>自动检测更改
-使用大多数的 POCO 实体时由检测更改算法处理的实体的更改方式 （并因此需要发送到数据库的更新） 确定。 通过检测该实体的当前属性值和当查询或附加该实体已在快照中存储的原始属性值之间的差异来检测更改的工作原理。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  
+使用最多 POCO 实体时，会通过检测更改算法来处理实体如何更改（以及需要向数据库发送更新）。 检测更改的工作方式是检测实体的当前属性值与在查询或附加实体时存储在快照中的原始属性值之间的差异。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  
 
-默认情况下，实体框架会自动执行检测更改，当调用以下方法：  
+默认情况下，在调用以下方法时，实体框架自动执行检测更改：  
 
 - DbSet.Find  
-- DbSet.Local  
-- DbSet.Add  
-- DbSet.AddRange
-- DbSet.Remove  
-- DbSet.RemoveRange
-- DbSet.Attach  
+- DbSet  
+- DbSet  
+- DbSet. AddRange
+- DbSet  
+- DbSet. RemoveRange
+- DbSet  
 - DbContext.SaveChanges  
-- DbContext.GetValidationErrors  
+- DbContext. GetValidationErrors  
 - DbContext.Entry  
-- DbChangeTracker.Entries  
+- DbChangeTracker  
 
-## <a name="disabling-automatic-detection-of-changes"></a>禁用自动检测更改  
+## <a name="disabling-automatic-detection-of-changes"></a>禁用更改的自动检测  
 
-如果您正在跟踪大量实体在上下文中并调用下列方法之一很多时候在循环中，然后可能会显著的性能改进通过关闭更改检测循环的持续时间。 例如：  
+如果正在跟踪上下文中的大量实体，并在循环中多次调用其中一种方法，则可以通过在循环的持续时间内关闭更改检测来显著提高性能。 例如：  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -51,8 +51,8 @@ using (var context = new BloggingContext())
 }
 ```  
 
-不要忘记重新启用更改检测循环后的，我们使用了 try/finally 来确保始终重新启用即使循环中的代码引发异常。  
+不要忘记重新启用循环后的更改检测，我们使用了 try/finally 来确保始终重新启用该循环，即使循环中的代码引发异常也是如此。  
 
-除了禁用和重新启用是将自动在所有时间和任一调用上下文已关闭的更改检测。ChangeTracker.DetectChanges 显式或使用更改跟踪代理努力。 这两种选项都高级和可以轻松地细微 bug 引入你的应用程序因此请谨慎使用它们。  
+禁用和重新启用的替代方法是始终始终关闭更改的自动检测，并调用上下文。ChangeTracker 显式或使用更改跟踪代理。 这两个选项都是高级选项，可轻松地在应用程序中引入微妙 bug，因此请谨慎使用。  
 
-如果需要添加或删除许多对象上下文中，请考虑使用 DbSet.AddRange 和 DbSet.RemoveRange。 此方法会自动检测更改一次后添加或删除操作都已完成。 
+如果需要在上下文中添加或删除多个对象，请考虑使用 AddRange 和 DbSet RemoveRange。 此方法在添加或删除操作完成后，只自动检测更改一次。 

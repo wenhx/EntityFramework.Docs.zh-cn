@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 29958ae5-85d3-4585-9ba6-550b8ec9393a
 ms.openlocfilehash: 4395a9c117a6cf38e7fc08f11ee689d6fffa6fed
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182102"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78416227"
 ---
 # <a name="upgrading-to-entity-framework-6"></a>升级到实体框架6
 
@@ -66,20 +66,20 @@ DbContext 和 Code First 类型的命名空间尚未更改。 这意味着，对
 
 命名空间更改的一般规则是将 System.web. * 中的任何类型都移到 "system.string"。 换言之，只需插入**Entity。** 在 System.object 之后。 例如：
 
-- System.Data.EntityException = > System.Data.**Entity.Core**.EntityException  
-- System.Data.Objects.ObjectContext = > System.Data.**Entity.Core**.Objects.ObjectContext  
-- System.Data.Objects.DataClasses.RelationshipManager = > System.Data.**Entity.Core**.Objects.DataClasses.RelationshipManager  
+- EntityException = > System.object。**Entity。** EntityException  
+- System.web. ObjectContext = > System.object。**Entity。** 对象。 ObjectContext  
+- Dataclasses.dll. RelationshipManager = > 的数据。**Entity。** Dataclasses.dll. RelationshipManager  
 
-这些类型位于*核心*命名空间中，因为它们不能直接用于大多数基于 DbContext 的应用程序。 作为 DbContext 的一部分的某些类型仍经常用于基于的应用程序，因此尚未移入*核心*命名空间。 这些是：
+这些类型位于*核心*命名空间中，因为它们不能直接用于大多数基于 DbContext 的应用程序。 作为 DbContext 的一部分的某些类型仍经常用于基于的应用程序，因此尚未移入*核心*命名空间。 这些位置包括：
 
-- System.Data.EntityState = > System.Data.**实体**.EntityState  
-- System.Data.Objects.DataClasses.EdmFunctionAttribute = > System.Data.**Entity.DbFunctionAttribute**  
+- EntityState = > System.object。**实体**。EntityState  
+- Dataclasses.dll. EdmFunctionAttribute = > 的数据。**DbFunctionAttribute**  
   > [!NOTE]
   > 此类已重命名;具有旧名称的类仍然存在并且工作正常，但现在标记为过时。  
-- System.Data.Objects.EntityFunctions = > System.Data.**Entity.DbFunctions**  
+- EntityFunctions = = >。**DbFunctions**  
   > [!NOTE]
   > 此类已重命名;具有旧名称的类仍然存在并且工作正常，但现在标记为已过时。）  
-- 空间类 （例如，DbGeography，DbGeometry） 已从 System.Data.Spatial = > System.Data.**实体**.空间
+- 空间类（例如，DbGeography、DbGeometry）已从 System.web = >。**实体**。空间
 
 > [!NOTE]
 > System.web 命名空间中的某些类型不是 EF 程序集。 这些类型不会移动，因此它们的命名空间保持不变。

@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 763dc6a2-764a-4600-896c-f6f13abf56ec
 ms.openlocfilehash: 1c889877b827408919c6170cf997e8805cc607cf
-ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 12/04/2019
-ms.locfileid: "74824828"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78415747"
 ---
 # <a name="fluent-api-with-vbnet"></a>通过 VB.NET 的流畅 API
 Code First 允许使用 C\# 或 VB.NET 类定义模型。 还可以选择使用类和属性上的属性或使用 Fluent API 来执行其他配置。 本演练演示如何使用 VB.NET 执行 Fluent API 配置。

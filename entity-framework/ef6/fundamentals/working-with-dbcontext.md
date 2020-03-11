@@ -1,31 +1,31 @@
 ---
-title: 使用 DbContext 的 EF6
+title: 使用 DbContext-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: b0e6bddc-8a87-4d51-b1cb-7756df938c23
 ms.openlocfilehash: d961ffd8bed7f5b2f82dcfa30fc0241b7437be50
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45489058"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78413881"
 ---
 # <a name="working-with-dbcontext"></a>使用 DbContext
 
-若要使用实体框架查询、 插入、 更新和删除使用.NET 对象的数据，需首先[创建模型](~/ef6/modeling/index.md)映射的实体和关系数据库中的表在模型中定义的。
+若要使用实体框架来使用 .NET 对象查询、插入、更新和删除数据，您首先需要[创建一个模型](~/ef6/modeling/index.md)，该模型将模型中定义的实体和关系映射到数据库中的表。
 
-一旦您有一个模型，与你的应用程序进行交互的主类是`System.Data.Entity.DbContext`（通常称为上下文类）。 可以使用与模型关联的 DbContext:
+有了模型后，应用程序与之交互的主类就 `System.Data.Entity.DbContext` （通常称为上下文类）。 您可以使用与模型关联的 DbContext 来执行以下操作：
 - 编写和执行查询   
 - 将查询结果具体化为实体对象
-- 跟踪对这些对象所做的更改
-- 保存在数据库上返回的对象更改
-- 在内存中对象绑定到 UI 控件
+- 跟踪对这些对象进行的更改
+- 将对象更改保存回数据库
+- 将内存中的对象绑定到 UI 控件
 
-此页提供有关如何管理上下文类的一些指导。  
+本页提供有关如何管理上下文类的一些指导。  
 
-## <a name="defining-a-dbcontext-derived-class"></a>定义派生的 DbContext 类  
+## <a name="defining-a-dbcontext-derived-class"></a>定义 DbContext 派生类  
 
-使用上下文的建议的方法是定义一个派生自 DbContext，并公开 DbSet 属性所表示的上下文中的指定实体的集合类。 如果您正在使用 EF 设计器，将为您生成上下文。 如果您正在使用 Code First，你将通常上下文自行编写。  
+使用上下文的建议方法是定义从 DbContext 派生的类，并公开 DbSet 属性，这些属性表示上下文中指定实体的集合。 如果使用的是 EF 设计器，则会为您生成上下文。 如果使用 Code First，则通常会自行编写上下文。  
 
 ``` csharp
 public class ProductContext : DbContext
@@ -35,16 +35,16 @@ public class ProductContext : DbContext
 }
 ```  
 
-上下文后，你将查询，添加 (使用`Add`或`Attach`方法) 或删除 (使用`Remove`) 通过这些属性的上下文中的实体。 访问`DbSet`上下文对象上的属性表示返回指定类型的所有实体的起始查询。 请注意，只需访问属性时，将执行查询。 执行查询时：  
+拥有上下文后，可以通过这些属性查询、添加（使用 `Add` 或 `Attach` 方法）或在上下文中删除（使用 `Remove`）实体。 访问上下文对象上的 `DbSet` 属性表示一个启动查询，该查询返回指定类型的所有实体。 请注意，仅访问属性不会执行查询。 执行以下操作时执行查询：  
 
 - `foreach` (C#) 或 `For Each` (Visual Basic) 语句枚举对象。  
-- 它枚举一组操作如`ToArray`， `ToDictionary`，或`ToList`。  
-- LINQ 运算符，如`First`或`Any`查询的最外面部分中指定。  
-- 调用以下方法之一：`Load`扩展方法`DbEntityEntry.Reload`， `Database.ExecuteSqlCommand`，和`DbSet<T>.Find`，如果具有指定键的实体找不到已加载的上下文中。  
+- 它通过集合操作（如 `ToArray`、`ToDictionary`或 `ToList`）进行枚举。  
+- 在查询的最外面部分指定 LINQ 运算符，例如 `First` 或 `Any`。  
+- 如果在上下文中未找到具有指定键的实体，则调用以下方法之一： `Load` 扩展方法 `DbEntityEntry.Reload`、`Database.ExecuteSqlCommand`和 `DbSet<T>.Find`。  
 
 ## <a name="lifetime"></a>生存期  
 
-上下文的生存期开始时创建实例，并结束时释放或垃圾回收该实例。 使用**使用**如果你想在块的末尾释放上下文控制的所有资源。 当你使用**使用**，编译器将自动创建 try/finally 块中调用释放**最后**块。  
+上下文的生存期在实例创建时开始，并在实例被释放或被回收时结束。 如果希望在块的末尾释放上下文控制的所有资源，**请使用。** **使用时，编译器**会自动创建 try/finally 块并在**finally**块中调用 dispose。  
 
 ``` csharp
 public void UseProducts()
@@ -56,20 +56,20 @@ public void UseProducts()
 }
 ```  
 
-在决定对上下文的生存期时，以下是一些通用准则：  
+下面是决定上下文生存期时的一些一般指导原则：  
 
-- 使用 Web 应用程序，使用每个请求的上下文实例。  
-- 使用 Windows Presentation Foundation (WPF) 或 Windows 窗体，使用每个窗体的上下文实例。 这使您可以使用更改跟踪功能提供了该上下文。  
-- 如果上下文实例创建了依赖关系注入容器，它通常是容器的要释放上下文的责任。
-- 如果应用程序代码中创建了上下文，请记住在不再需要时释放上下文。  
-- 使用长时间运行的上下文时考虑以下方面：  
-    - 加载到内存更多对象和它们的引用，如上下文的内存消耗可能会快速增加。 这可能会导致性能问题。  
-    - 上下文不是线程安全的因此它不应共享跨多个线程同时执行它的工作。
-    - 如果异常会导致上下文处于不可恢复的状态，可能会终止整个应用程序。  
+- 使用 Web 应用程序时，请为每个请求使用上下文实例。  
+- 使用 Windows Presentation Foundation （WPF）或 Windows 窗体时，请使用每个窗体的上下文实例。 这使你可以使用上下文提供的更改跟踪功能。  
+- 如果上下文实例是由依赖关系注入容器创建的，则该容器通常负责释放上下文。
+- 如果上下文是在应用程序代码中创建的，请记得在不再需要时释放上下文。  
+- 使用长时间运行的上下文时，请考虑以下事项：  
+    - 在将更多对象及其引用加载到内存中时，上下文的内存消耗可能会迅速增加。 这可能会导致性能问题。  
+    - 上下文不是线程安全的，因此不应在多个线程上同时对其执行工作。
+    - 如果异常导致上下文处于不可恢复的状态，则整个应用程序可能会终止。  
     - 随着查询数据的时间和更新数据的时间的差距增大，出现与并发性相关的问题的可能性将会增加。  
 
 ## <a name="connections"></a>连接  
 
-默认情况下，上下文管理与数据库的连接。 上下文将打开和关闭连接，根据需要。 例如，上下文打开连接来执行查询，，并在处理所有结果集时，然后关闭连接。  
+默认情况下，上下文管理与数据库的连接。 上下文会根据需要打开和关闭连接。 例如，上下文打开一个连接来执行查询，然后在处理完所有结果集后关闭连接。  
 
-在某些情况下，您需要加强控制应在哪些情况下打开和关闭连接。 例如，在使用 SQL Server Compact，通常建议来维护与数据库的应用程序以提高性能的生存期内的单独打开连接。 您可以使用 `Connection` 属性手动管理此过程。  
+在某些情况下，您需要加强控制应在哪些情况下打开和关闭连接。 例如，使用 SQL Server Compact 时，通常建议在应用程序的生存期内维护单独的数据库打开连接，以提高性能。 您可以使用 `Connection` 属性手动管理此过程。  

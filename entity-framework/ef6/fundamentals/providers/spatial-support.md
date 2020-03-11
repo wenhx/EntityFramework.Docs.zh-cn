@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 1097cb00-15f5-453d-90ed-bff9403d23e3
 ms.openlocfilehash: 863f1b4551bd62160915eba90fee7ba6c49c169c
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181596"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78413893"
 ---
 # <a name="provider-support-for-spatial-types"></a>提供程序对空间类型的支持
 实体框架支持通过 DbGeography 或 DbGeometry 类处理空间数据。 这些类依赖于由实体框架提供程序提供的数据库特定功能。 并非所有提供程序都支持空间数据，其中可能有其他先决条件，如安装空间类型程序集。 下面提供了有关为空间类型提供程序支持的详细信息。  

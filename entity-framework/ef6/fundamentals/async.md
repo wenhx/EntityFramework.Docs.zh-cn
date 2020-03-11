@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: d56e6f1d-4bd1-4b50-9558-9a30e04a8ec3
 ms.openlocfilehash: 0642dc13e7aa3906fa1495031c62701fc16f0192
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181837"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414859"
 ---
 # <a name="async-query-and-save"></a>异步查询并保存
 > [!NOTE]
@@ -41,7 +41,7 @@ EF6 引入了对异步查询的支持，并使用 .NET 4.5 中引入的[async �
     -   在解决方案资源管理器中，右键单击**AsyncDemo**项目
     -   选择 "**管理 NuGet 包 ...** "
     -   在 "管理 NuGet 包" 对话框中，选择 "**联机**" 选项卡，然后选择 " **EntityFramework** " 包
-    -   单击 "**安装**"
+    -   单击“安装”
 -   添加具有以下实现的**Model.cs**类
 
 ``` csharp

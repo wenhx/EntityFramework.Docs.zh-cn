@@ -3,19 +3,20 @@ title: 关系、导航属性和外键-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 8a21ae73-6d9b-4b50-838a-ec1fddffcf37
-ms.openlocfilehash: cc7160f2d0ab7ac0c6009f820441c88590cacfaf
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 892e872e3cb11ea95084cf6d9ab43c8d500bc0de
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655868"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78415999"
 ---
 # <a name="relationships-navigation-properties-and-foreign-keys"></a>关系、导航属性和外键
-本主题概述了实体框架如何管理实体之间的关系。 它还提供了一些有关如何映射和操作关系的指导。
+
+本文概述了实体框架如何管理实体之间的关系。 它还提供了一些有关如何映射和操作关系的指导。
 
 ## <a name="relationships-in-ef"></a>EF 中的关系
 
-在关系数据库中，表之间的关系（也称为关联）通过外键定义。 外键（FK）是用于在两个表中的数据之间建立和强制链接的一列或多列的组合。 通常有三种类型的关系：一对一、一对多和多对多的关系。 在一对多关系中，外键在表示关系的多个端的表上定义。 多对多关系涉及定义第三个表（称为 "联接表" 或 "联接表"），其主键由这两个相关表中的外键构成。 在一对一关系中，主键除了作为外键以外，对于任何一个表都没有单独的外键列。
+在关系数据库中，表之间的关系（也称为关联）通过外键定义。 外键 (FK) 是用于建立和加强两个表数据之间的链接的一列或多列。 通常有三种类型的关系：一对一、一对多和多对多的关系。 在一对多关系中，外键在表示关系的多个端的表上定义。 多对多关系涉及定义第三个表（称为 "联接表" 或 "联接表"），其主键由这两个相关表中的外键构成。 在一对一关系中，主键除了作为外键以外，对于任何一个表都没有单独的外键列。
 
 下图显示了参与一对多关系的两个表。 **课程**表是依赖表，因为它包含将其链接到**部门**表的**DepartmentID**列。
 
@@ -93,7 +94,7 @@ public class Department
   course.Department = department;
   ```
 
-- 若要删除关系，请将导航属性设置为 `null`。 如果使用的是基于 .NET 4.0 的实体框架，则需要加载相关端，然后将其设置为 null。 例如:   
+- 若要删除关系，请将导航属性设置为 `null`。 如果使用的是基于 .NET 4.0 的实体框架，则需要加载相关端，然后将其设置为 null。 例如：   
   ``` csharp
   context.Entry(course).Reference(c => c.Department).Load();
   course.Department = null;

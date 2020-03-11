@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: b5ee7eb1-88cc-456e-b53c-c67e24c3f8ca
 ms.openlocfilehash: 35b0284a5ad8b2b732f074589bd458d243312575
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181658"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78416101"
 ---
 # <a name="logging-and-intercepting-database-operations"></a>记录和截取数据库操作
 > [!NOTE]

@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: d6d5a465-6434-45fa-855d-5eb48c61a2ea
 ms.openlocfilehash: 07eb605f0d39f0c1bcfe781540525180f0dd0b22
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181677"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78416077"
 ---
 # <a name="performance-considerations-for-ef-4-5-and-6"></a>EF 4、5和6的性能注意事项
 按 David Obando、Eric Dettinger 和其他
@@ -104,12 +104,12 @@ Edmgen.exe 是随 .NET 提供的实用程序，与实体框架4和5（而不是�
 
 你还可以使用 Edmgen.exe 为 EDMX 文件生成视图-前面引用的 MSDN 主题介绍如何添加预先生成事件来执行此操作，但这很复杂，但在某些情况下，不可能。 通常，在模型位于 edmx 文件中时，使用 T4 模板生成视图通常更容易。
 
-ADO.NET 团队博客中发布了一文章，介绍如何为视图生成使用 T4 模板 ( \<http://blogs.msdn.com/b/adonet/archive/2008/06/20/how-to-use-a-t4-template-for-view-generation.aspx>)。 此文章包含可下载并添加到项目中的模板。 模板是为实体框架的第一个版本而编写的，因此不能保证它们使用最新版本的实体框架。 不过，你可以为实体框架4和5from 的 Visual Studio 库下载更多最新的视图生成模板集：
+ADO.NET 团队博客提供了一篇文章，介绍如何使用 T4 模板生成视图（\<http://blogs.msdn.com/b/adonet/archive/2008/06/20/how-to-use-a-t4-template-for-view-generation.aspx>)。 此文章包含可下载并添加到项目中的模板。 模板是为实体框架的第一个版本而编写的，因此不能保证它们使用最新版本的实体框架。 不过，你可以为实体框架4和5from 的 Visual Studio 库下载更多最新的视图生成模板集：
 
 -   VB.NET： \<http://visualstudiogallery.msdn.microsoft.com/118b44f2-1b91-4de2-a584-7a680418941d>
 -   C\#： \<http://visualstudiogallery.msdn.microsoft.com/ae7730ce-ddab-470f-8456-1b313cd2c44d>
 
-如果您使用的 Entity Framework 6，可以获取视图生成 T4 模板从 Visual Studio 库\<http://visualstudiogallery.msdn.microsoft.com/18a7db90-6705-4d19-9dd1-0a6c23d0751f>。
+如果使用实体框架6，则可以从 Visual Studio 库中的 \<http://visualstudiogallery.msdn.microsoft.com/18a7db90-6705-4d19-9dd1-0a6c23d0751f>获取查看生成 T4 模板。
 
 ### <a name="24-reducing-the-cost-of-view-generation"></a>2.4 降低视图生成成本
 
@@ -133,12 +133,12 @@ ADO.NET 团队博客中发布了一文章，介绍如何为视图生成使用 T4
 
 在 Visual Studio 中使用 Edmgen.exe 或 Entity Designer 时，默认情况下会获取 Fk，并只使用单个 checkbox 或命令行标志在 Fk 和 IAs 之间切换。
 
-如果使用的是大型 Code First 模型，则使用独立关联将对视图生成产生相同的效果。 可以通过在依赖对象的类上包含外键属性来避免这种影响，尽管某些开发人员会将其视为污染其对象模型。 您可以找到这一主题的详细信息\<http://blog.oneunicorn.com/2011/12/11/whats-the-deal-with-mapping-foreign-keys-using-the-entity-framework/>。
+如果使用的是大型 Code First 模型，则使用独立关联将对视图生成产生相同的效果。 可以通过在依赖对象的类上包含外键属性来避免这种影响，尽管某些开发人员会将其视为污染其对象模型。 可以在 \<http://blog.oneunicorn.com/2011/12/11/whats-the-deal-with-mapping-foreign-keys-using-the-entity-framework/>中找到有关此主题的详细信息。
 
-| 当使用      | 操作步骤                                                                                                                                                                                                                                                                                                                              |
+| 当使用      | 操作                                                                                                                                                                                                                                                                                                                              |
 |:----------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 实体设计器 | 在两个实体之间添加关联后，请确保具有引用约束。 引用约束告诉实体框架使用外键，而不是独立关联。 有关更多详细信息，请访问\<http://blogs.msdn.com/b/efdesign/archive/2009/03/16/foreign-keys-in-the-entity-framework.aspx>。 |
-| Edmgen.exe          | 当使用 Edmgen.exe 从数据库生成文件时，将遵循外键，并将其添加到模型中。 有关由 EDMGen 公开的不同选项的详细信息，请访问[http://msdn.microsoft.com/library/bb387165.aspx](https://msdn.microsoft.com/library/bb387165.aspx)。                           |
+| 实体设计器 | 在两个实体之间添加关联后，请确保具有引用约束。 引用约束告诉实体框架使用外键，而不是独立关联。 有关更多详细信息，请访问 \<http://blogs.msdn.com/b/efdesign/archive/2009/03/16/foreign-keys-in-the-entity-framework.aspx>。 |
+| Edmgen.exe          | 当使用 Edmgen.exe 从数据库生成文件时，将遵循外键，并将其添加到模型中。 有关 Edmgen.exe 公开的不同选项的详细信息，请[http://msdn.microsoft.com/library/bb387165.aspx](https://msdn.microsoft.com/library/bb387165.aspx)。                           |
 | Code First      | 有关如何在使用 Code First 时包含依赖对象的外键属性的信息，请参阅[Code First 约定](~/ef6/modeling/code-first/conventions/built-in.md)主题的 "关系约定" 部分。                                                                                              |
 
 #### <a name="242-moving-your-model-to-a-separate-assembly"></a>2.4.2 sections 将模型移到单独的程序集
@@ -175,7 +175,7 @@ ADO.NET 团队博客中发布了一文章，介绍如何为视图生成使用 T4
 
 使用 "查找" 时应考虑性能。 默认情况下，对此方法的调用会触发对象缓存的验证，以检测仍处于挂起状态的对数据库的提交的更改。 如果对象缓存或要添加到对象缓存中的大型对象图中有大量对象，则此过程可能会非常昂贵，但也可以禁用。 在某些情况下，你可能会发现在禁用自动检测更改时调用 Find 方法时的差异数量级。 但当对象实际在缓存中时，以及当必须从数据库中检索对象时，还可以看到另一种数量级。 下面是一个示例图，其中使用了我们的一些 microbenchmarks （以毫秒为单位，以毫秒为单位）进行测量，负载为5000个实体：
 
-![.Net 4.5 对数刻度](~/ef6/media/net45logscale.png ".net 4.5-对数刻度")
+![.NET 4.5 对数刻度](~/ef6/media/net45logscale.png ".NET 4.5-对数刻度")
 
 禁用自动检测更改的查找示例：
 
@@ -396,7 +396,7 @@ WHERE ((0 = (CASE WHEN (@p__linq__1 IS NOT NULL) THEN cast(1 as bit) WHEN (@p__l
 4.  定期检查 ItemCollection 的使用情况。 如果确定工作区最近未访问过，则会将其标记为在下次缓存扫描时清除。
 5.  仅创建 EntityConnection 将导致创建元数据缓存（尽管在打开连接之前不会对其中的项集合进行初始化）。 此工作区将保留在内存中，直到缓存算法将其确定为 "正在使用"。
 
-客户顾问团队编写了描述保存到 ItemCollection 的引用以使用大型模型时避免"弃用"的博客文章： \<http://blogs.msdn.com/b/appfabriccat/archive/2010/10/22/metadataworkspace-reference-in-wcf-services.aspx>。
+客户咨询团队已经编写了一篇博客文章，其中介绍了如何保存对 ItemCollection 的引用，以便在使用大型模型时避免 "弃用"： \<http://blogs.msdn.com/b/appfabriccat/archive/2010/10/22/metadataworkspace-reference-in-wcf-services.aspx>。
 
 #### <a name="342-the-relationship-between-metadata-caching-and-query-plan-caching"></a>3.4.2 元数据缓存和查询计划缓存之间的关系
 
@@ -411,7 +411,7 @@ WHERE ((0 = (CASE WHEN (@p__linq__1 IS NOT NULL) THEN cast(1 as bit) WHEN (@p__l
 #### <a name="351-additional-references-for-results-caching-with-the-wrapping-provider"></a>3.5.1 用于包装提供程序的结果缓存的其他引用
 
 -   Julie Lerman 在实体框架和 Windows Azure 中编写了一个 "二级缓存"，其中包括如何更新示例包装提供程序以使用 Windows Server AppFabric 缓存： [https://msdn.microsoft.com/magazine/hh394143.aspx](https://msdn.microsoft.com/magazine/hh394143.aspx)
--   如果您正在使用 Entity Framework 5，团队博客中发布了一文章，介绍如何使用 Entity Framework 5 的缓存提供程序运行的工作： \<http://blogs.msdn.com/b/adonet/archive/2010/09/13/ef-caching-with-jarek-kowalski-s-provider.aspx>。 它还包含 T4 模板，以帮助自动将二级缓存添加到项目。
+-   如果使用实体框架5，则团队博客会提供一篇文章，其中介绍了如何使用缓存提供程序为实体框架5： \<http://blogs.msdn.com/b/adonet/archive/2010/09/13/ef-caching-with-jarek-kowalski-s-provider.aspx>运行操作。 它还包含 T4 模板，以帮助自动将二级缓存添加到项目。
 
 ## <a name="4-autocompiled-queries"></a>4 Autocompiled 查询
 
@@ -647,14 +647,14 @@ using (var context = new MyContext())
 var q = context.Products.Where(p => p.Category.CategoryName == "Beverages");
 ```
 
-**专业人员**
+**优点**
 
 -   适用于 CUD 操作。
 -   完全具体化的对象。
 -   最简单的方式是用编程语言内置的语法编写。
 -   性能良好。
 
-**各有利弊**
+**缺点**
 
 -   某些技术限制，例如：
     -   对外部联接查询使用 System.linq.enumerable.defaultifempty 的模式将导致更复杂的查询，而不是实体 SQL 中的简单外部联接语句。
@@ -676,13 +676,13 @@ var q = context.Products.AsNoTracking()
                         .Where(p => p.Category.CategoryName == "Beverages");
 ```
 
-**专业人员**
+**优点**
 
 -   通过常规 LINQ 查询提高了性能。
 -   完全具体化的对象。
 -   最简单的方式是用编程语言内置的语法编写。
 
-**各有利弊**
+**缺点**
 
 -   不适用于 CUD 操作。
 -   某些技术限制，例如：
@@ -703,13 +703,13 @@ var q = context.Products.Where(p => p.Category.CategoryName == "Beverages").Sele
 ObjectQuery<Product> products = context.Products.Where("it.Category.CategoryName = 'Beverages'");
 ```
 
-**专业人员**
+**优点**
 
 -   适用于 CUD 操作。
 -   完全具体化的对象。
 -   支持查询计划缓存。
 
-**各有利弊**
+**缺点**
 
 -   涉及与语言中内置的查询构造更容易出现用户错误的文本查询字符串。
 
@@ -728,11 +728,11 @@ using (EntityDataReader reader = cmd.ExecuteReader(CommandBehavior.SequentialAcc
 }
 ```
 
-**专业人员**
+**优点**
 
 -   支持 .NET 4.0 中的查询计划缓存（.NET 4.5 中的所有其他查询类型都支持计划缓存）。
 
-**各有利弊**
+**缺点**
 
 -   涉及与语言中内置的查询构造更容易出现用户错误的文本查询字符串。
 -   不适用于 CUD 操作。
@@ -764,13 +764,13 @@ var beverages = context.ExecuteStoreQuery<Product>(
 );
 ```
 
-**专业人员**
+**优点**
 
 -   由于计划编译器被绕过，因此速度一般最快。
 -   完全具体化的对象。
 -   适用于从 DbSet 中使用的 CUD 操作。
 
-**各有利弊**
+**缺点**
 
 -   查询的文本和容易出错。
 -   查询通过使用存储语义而不是概念语义绑定到特定的后端。
@@ -787,13 +787,13 @@ private static readonly Func<NorthwindEntities, string, IQueryable<Product>> pro
 var q = context.InvokeProductsForCategoryCQ("Beverages");
 ```
 
-**专业人员**
+**优点**
 
 -   通过常规 LINQ 查询提高了7% 的性能改进。
 -   完全具体化的对象。
 -   适用于 CUD 操作。
 
-**各有利弊**
+**缺点**
 
 -   增加了复杂性和编程开销。
 -   在已编译的查询顶部编写时，性能改进会丢失。
@@ -871,15 +871,15 @@ Microbenchmarks 对代码中的小更改非常敏感。 在这种情况下，实
 
 如果模型使用 TPT 继承，则生成的查询将比使用其他继承策略生成的查询更复杂，这可能会导致存储上的执行时间较长。  它通常需要更长的时间来生成针对 TPT 模型的查询并具体化生成的对象。
 
-请参阅"性能注意事项时在实体框架中使用 （每种类型的表） TPT 继承"MSDN 博客文章： \<http://blogs.msdn.com/b/adonet/archive/2010/08/17/performance-considerations-when-using-tpt-table-per-type-inheritance-in-the-entity-framework.aspx>。
+请参阅实体框架 "MSDN 博客文章： \<http://blogs.msdn.com/b/adonet/archive/2010/08/17/performance-considerations-when-using-tpt-table-per-type-inheritance-in-the-entity-framework.aspx>中" 使用 TPT 时的性能注意事项 "（每种类型的表）继承。
 
 #### <a name="711-avoiding-tpt-in-model-first-or-code-first-applications"></a>7.1.1 在 Model First 或 Code First 应用程序中避免了 TPT
 
 在具有 TPT 架构的现有数据库上创建模型时，不会有很多选项。 但在使用 Model First 或 Code First 创建应用程序时，应避免 TPT 继承，以解决性能问题。
 
-使用 Entity Designer 向导中 Model First 时，将获取模型中的任何继承的 TPT。 如果你想要切换到使用模型优先的 TPH 继承策略，可以使用"Entity Designer Database Generation Power Pack"可从 Visual Studio 库 ( \<http://visualstudiogallery.msdn.microsoft.com/df3541c3-d833-4b65-b942-989e7ec74c87/>)。
+使用 Entity Designer 向导中 Model First 时，将获取模型中的任何继承的 TPT。 如果要使用 Model First 切换到 TPH 继承策略，则可以使用 Visual Studio 库中提供的 "Entity Designer 数据库生成 Power Pack" （\<http://visualstudiogallery.msdn.microsoft.com/df3541c3-d833-4b65-b942-989e7ec74c87/>)。
 
-当使用 Code First 配置模型与继承的映射时，默认情况下，EF 将使用 TPH，因此继承层次结构中的所有实体都将映射到同一个表。 请参阅 MSDN 杂志 》 中的"代码第一个中实体 Framework4.1"项目的"映射的 Fluent API"一节 ( [http://msdn.microsoft.com/magazine/hh126815.aspx](https://msdn.microsoft.com/magazine/hh126815.aspx)) 的更多详细信息。
+当使用 Code First 配置模型与继承的映射时，默认情况下，EF 将使用 TPH，因此继承层次结构中的所有实体都将映射到同一个表。 有关更多详细信息，请参阅 MSDN 杂志（ [http://msdn.microsoft.com/magazine/hh126815.aspx](https://msdn.microsoft.com/magazine/hh126815.aspx)）中 "Code First 实体框架 4.1" 文章中的 "与熟知 API 的映射" 部分。
 
 ### <a name="72-upgrading-from-ef4-to-improve-model-generation-time"></a>7.2 从 EF4 升级以改善模型生成时间
 
@@ -899,7 +899,7 @@ Microbenchmarks 对代码中的小更改非常敏感。 在这种情况下，实
 
 ### <a name="73-splitting-large-models-with-database-first-and-model-first"></a>7.3 将大型模型与 Database First 和 Model First 分离
 
-随着模型大小的增加，设计器图面变得混乱且难以使用。 我们通常会考虑使用超过300个实体的模型太大，无法有效使用设计器。 下面的博客文章介绍了有关拆分大型模型的多个选项： \<http://blogs.msdn.com/b/adonet/archive/2008/11/25/working-with-large-models-in-entity-framework-part-2.aspx>。
+随着模型大小的增加，设计器图面变得混乱且难以使用。 我们通常会考虑使用超过300个实体的模型太大，无法有效使用设计器。 以下博客文章介绍了用于拆分大型模型的几个选项： \<http://blogs.msdn.com/b/adonet/archive/2008/11/25/working-with-large-models-in-entity-framework-part-2.aspx>。
 
 张贴内容是为实体框架的第一个版本而编写的，但这些步骤仍适用。
 
@@ -915,7 +915,7 @@ Microbenchmarks 对代码中的小更改非常敏感。 在这种情况下，实
 
 实体框架使你能够将自定义数据类与数据模型一起使用，而无需对数据类本身进行任何修改。 这意味着可以将“纯旧式”CLR 对象 (POCO)（例如，现有的域对象）与数据模型一起使用。 这些 POCO 数据类（也称为持久性未知对象）映射到数据模型中定义的实体，支持与实体数据模型工具生成的实体类型相同的查询、插入、更新和删除行为。
 
-实体框架还可以创建从 POCO 类型派生的代理类，当你想要在 POCO 实体上启用延迟加载和自动更改跟踪等功能时，可以使用这些类。 POCO 类必须满足某些要求允许实体框架才能使用代理，如下所述： [http://msdn.microsoft.com/library/dd468057.aspx](https://msdn.microsoft.com/library/dd468057.aspx)。
+实体框架还可以创建从 POCO 类型派生的代理类，当你想要在 POCO 实体上启用延迟加载和自动更改跟踪等功能时，可以使用这些类。 POCO 类必须满足某些要求，才能允许实体框架使用代理，如下面所述： [http://msdn.microsoft.com/library/dd468057.aspx](https://msdn.microsoft.com/library/dd468057.aspx)。
 
 每次实体的属性值发生更改时，机会跟踪代理都会通知对象状态管理器，因此实体框架知道实体的实际状态。 为此，可将通知事件添加到属性的 setter 方法体，并使对象状态管理器处理此类事件。 请注意，创建代理实体通常比创建非代理 POCO 实体更昂贵，因为添加了实体框架创建的事件集。
 
@@ -1080,7 +1080,7 @@ WHERE [Extent1].[CustomerID] = @EntityKeyValue1',N'@EntityKeyValue1 nchar(5)',@E
 
 这种情况并不完全适合选择预先加载和延迟加载。 首先尝试了解两个策略之间的差异，以便您可以做出明智的决策;此外，如果你的代码符合以下任一方案，请考虑：
 
-| 方案                                                                    | 建议                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| 场景                                                                    | 建议                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 |:----------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 是否需要从提取的实体访问多个导航属性？ | **否**-这两个选项都可能会。 但是，如果你的查询引入的负载并不太大，则使用预先加载可能会遇到性能优势，因为它需要较少的网络往返才能具体化你的对象。 <br/> <br/> **是**-如果需要从实体访问多个导航属性，则可以通过在查询中使用多个 include 语句并预先加载来实现此目的。 包含的实体越多，查询将返回的有效负载越大。 将三个或更多实体添加到查询中后，请考虑切换到延迟加载。 |
 | 您是否确切知道运行时需要哪些数据？                   | **无**-延迟加载将更适合你。 否则，可能会最终查询不需要的数据。 <br/> <br/> **是**-很可能是最好的选择;它有助于更快地加载整个集。 如果查询需要提取大量数据，并且速度太慢，请改为尝试延迟加载。                                                                                                                                                                                                                                                       |
@@ -1141,7 +1141,7 @@ using (NorthwindEntities context = new NorthwindEntities())
 
 实体框架当前不支持标量或复杂属性的延迟加载。 但是，如果您有一个包含大型对象（如 BLOB）的表，则可以使用表拆分将大属性分隔到一个单独的实体中。 例如，假设您有一个包含 varbinary photo 列的产品表。 如果不经常需要在查询中访问此属性，则可以使用表拆分来仅引入通常需要的实体部分。 表示产品照片的实体仅在明确需要时才会加载。
 
-演示如何启用表拆分的良好资源是方便 Gil Fink 的 《 表拆分中 Entity Framework 》 博客文章： \<http://blogs.microsoft.co.il/blogs/gilf/archive/2009/10/13/table-splitting-in-entity-framework.aspx>。
+显示如何启用表拆分的一个好资源是 Gil Fink 的 "实体框架中的表拆分" 博客文章： \<http://blogs.microsoft.co.il/blogs/gilf/archive/2009/10/13/table-splitting-in-entity-framework.aspx>。
 
 ## <a name="9-other-considerations"></a>9其他注意事项
 
@@ -1179,7 +1179,7 @@ finally
 }
 ```
 
-在关闭 AutoDetectChanges 之前，最好了解这可能会导致实体框架无法跟踪有关在实体上发生的更改的特定信息。 如果处理不当，这可能会导致应用程序的数据不一致。 关闭 AutoDetectChanges 的详细信息，请阅读\<\ http://blog.oneunicorn.com/2012/03/12/secrets-of-detectchanges-part-3-switching-off-automatic-detectchanges/>。
+在关闭 AutoDetectChanges 之前，最好了解这可能会导致实体框架无法跟踪有关在实体上发生的更改的特定信息。 如果处理不当，这可能会导致应用程序的数据不一致。 有关关闭 AutoDetectChanges 的详细信息，请参阅 \<http://blog.oneunicorn.com/2012/03/12/secrets-of-detectchanges-part-3-switching-off-automatic-detectchanges/>。
 
 ### <a name="93-context-per-request"></a>9.3 每个请求的上下文
 
@@ -1226,7 +1226,7 @@ finally
 
 实体框架6在 .NET 4.5 或更高版本上运行时，引入了对异步操作的支持。 大多数情况下，具有 IO 相关争用的应用程序将从使用异步查询和保存操作中获益最多。 如果你的应用程序不会受到 IO 争用的影响，则在最佳情况下，使用 async 会以同步方式运行，并以同步调用的相同时间量返回结果，或者在最坏情况下，只是将执行推迟到异步任务并添加额外的 time 到方案完成。
 
-有关如何异步编程工作，可帮助您决定是否异步会提高应用程序的性能所访问的信息[http://msdn.microsoft.com/library/hh191443.aspx](https://msdn.microsoft.com/library/hh191443.aspx)。 有关在实体框架上使用异步操作的详细信息，请参阅[Async Query And Save](~/ef6/fundamentals/async.md
+有关异步编程如何工作以帮助你确定 async 是否会提高应用程序的性能的详细信息，请[http://msdn.microsoft.com/library/hh191443.aspx](https://msdn.microsoft.com/library/hh191443.aspx)。 有关在实体框架上使用异步操作的详细信息，请参阅[Async Query And Save](~/ef6/fundamentals/async.md
 )。
 
 ### <a name="96-ngen"></a>9.6 NGEN
@@ -1247,15 +1247,15 @@ Code First 方法就是一种复杂的实体数据模型生成器。 实体框�
 
 ### <a name="101-using-the-visual-studio-profiler"></a>10.1 使用 Visual Studio 探查器
 
-如果实体框架存在性能问题，则可以使用类似于 Visual Studio 中内置的探查器来查看应用程序所花费的时间。 这是我们用于生成饼图"探讨 ADO.NET 实体框架的第 1 部分的性能"博客文章中的工具 ( \<http://blogs.msdn.com/b/adonet/archive/2008/02/04/exploring-the-performance-of-the-ado-net-entity-framework-part-1.aspx>) ，可显示实体框架何处消耗在冷和热查询过程及其时间。
+如果实体框架存在性能问题，则可以使用类似于 Visual Studio 中内置的探查器来查看应用程序所花费的时间。 这是一种工具，用于在 "浏览 ADO.NET 实体框架-第1部分" 博客文章（\<http://blogs.msdn.com/b/adonet/archive/2008/02/04/exploring-the-performance-of-the-ado-net-entity-framework-part-1.aspx>)，其中显示实体框架在冷和温查询过程中花费的时间。
 
-"使用 Visual Studio 2010 探查器分析实体框架" 博客文章由数据和建模客户咨询团队介绍了如何使用探查器来调查性能问题的实际示例。  \<http://blogs.msdn.com/b/dmcat/archive/2010/04/30/profiling-entity-framework-using-the-visual-studio-2010-profiler.aspx>。 此帖子是为 windows 应用程序编写的。 如果需要对 web 应用程序进行分析，Windows 性能记录器（"）和 Windows 性能分析器（WPA）工具的工作方式可能比 Visual Studio 中的更好。 WPR 和 WPA 是 Windows 性能工具包附带 Windows 评估和部署工具包的一部分 ( [http://www.microsoft.com/download/details.aspx?id=39982](https://www.microsoft.com/download/details.aspx?id=39982))。
+"使用 Visual Studio 2010 探查器分析实体框架" 博客文章由数据和建模客户咨询团队介绍了如何使用探查器来调查性能问题的实际示例。  \<http://blogs.msdn.com/b/dmcat/archive/2010/04/30/profiling-entity-framework-using-the-visual-studio-2010-profiler.aspx>。 此帖子是为 windows 应用程序编写的。 如果需要对 web 应用程序进行分析，Windows 性能记录器（"）和 Windows 性能分析器（WPA）工具的工作方式可能比 Visual Studio 中的更好。 "和 WPA 是 windows 评估和部署工具包（ [http://www.microsoft.com/download/details.aspx?id=39982](https://www.microsoft.com/download/details.aspx?id=39982)）随附的 Windows 性能工具包的一部分。
 
 ### <a name="102-applicationdatabase-profiling"></a>10.2 应用程序/数据库分析
 
 Visual Studio 中内置的探查器会告诉你应用程序花费时间的位置。  可以使用另一种类型的探查器，根据需要对正在生产或预生产环境中的运行中的应用程序执行动态分析，并查找数据库访问的常见缺陷和反模式。
 
-两个地区销售的探查器是实体框架 Profiler ( \<http://efprof.com>) ORMProfiler 和 ( \<http://ormprofiler.com>)。
+两个商用探查器是实体框架探查器（\<http://efprof.com>) 和 ORMProfiler （\<http://ormprofiler.com>)。
 
 如果你的应用程序是使用 Code First 的 MVC 应用程序，则可以使用 Stackexchange.redis 的 MiniProfiler。 Scott Hanselman 在他的博客中介绍了此工具： \<http://www.hanselman.com/blog/NuGetPackageOfTheWeek9ASPNETMiniProfilerFromStackExchangeRocksYourWorld.aspx>。
 
@@ -1288,7 +1288,7 @@ Visual Studio 中内置的探查器会告诉你应用程序花费时间的位置
   </interceptors>
 ```
 
-有关如何添加日志记录，无需重新编译转到详细信息\<http://blog.oneunicorn.com/2014/02/09/ef-6-1-turning-on-logging-without-recompiling/>。
+有关如何添加不进行重新编译的日志记录的详细信息，请参阅 \<http://blog.oneunicorn.com/2014/02/09/ef-6-1-turning-on-logging-without-recompiling/>。
 
 ## <a name="11-appendix"></a>11附录
 

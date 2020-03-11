@@ -1,22 +1,22 @@
 ---
-title: 编写数据库提供程序-EF Core
+title: 编写数据库提供程序的 EF Core
 author: anmiller
 ms.date: 10/27/2016
 ms.assetid: 1165e2ec-e421-43fc-92ab-d92f9ab3c494
 uid: core/providers/writing-a-provider
-ms.openlocfilehash: 9d52a8581772cc5405e94966fa7ebdff4128c252
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 2d9e4a6cdfda80d7dfcfb6e7bf0480eb49f8e057
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73654781"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414805"
 ---
 # <a name="writing-a-database-provider"></a>编写数据库提供程序
 
 有关编写 Entity Framework Core 数据库提供程序的信息，请参阅，希望通过[Arthur Vickers](https://github.com/ajcvickers)[编写 EF Core 提供程序](https://blog.oneunicorn.com/2016/11/11/so-you-want-to-write-an-ef-core-provider/)。
 
 > [!NOTE]
-> 自 EF Core 1.1 起，这些文章尚未更新，因为此时间之后发生了重大更改， [681](https://github.com/aspnet/EntityFramework.Docs/issues/681)正在跟踪此文档的更新。
+> 自 EF Core 1.1 起，这些文章尚未更新，因为此时间之后发生了重大更改， [681](https://github.com/dotnet/EntityFramework.Docs/issues/681)正在跟踪此文档的更新。
 
 EF Core 基本代码是开放源代码，并且包含多个可用作参考的数据库提供程序。 可以在 <https://github.com/aspnet/EntityFrameworkCore>中找到源代码。 查看常用的第三方提供程序（例如[Npgsql](https://github.com/npgsql/Npgsql.EntityFrameworkCore.PostgreSQL)、 [Pomelo MySQL](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql)和[SQL Server Compact](https://github.com/ErikEJ/EntityFramework.SqlServerCompact)）的代码可能也很有帮助。 特别是，设置这些项目是为了从和运行我们在 NuGet 上发布的功能测试。 强烈建议使用这种设置。
 
@@ -28,11 +28,11 @@ EF Core 基本代码是开放源代码，并且包含多个可用作参考的数
 
 ## <a name="suggested-naming-of-third-party-providers"></a>建议的第三方提供程序命名
 
-建议为 NuGet 包使用以下命名。 这与 EF Core 团队传递的包的名称一致。
+建议为 NuGet 包使用以下命名。 这是与 EF Core 小组所传递的包名称一致。
 
 `<Optional project/company name>.EntityFrameworkCore.<Database engine name>`
 
-例如:
+例如：
 
 * `Microsoft.EntityFrameworkCore.SqlServer`
 * `Npgsql.EntityFrameworkCore.PostgreSQL`

@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: f019c97b-87b0-4e93-98f4-2c539f77b2dc
 ms.openlocfilehash: 35684196dcd7b708a8feeb1eca3096e8d4e555ec
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182525"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78415447"
 ---
 # <a name="table-valued-functions-tvfs"></a>表值函数（Tvf）
 > [!NOTE]
@@ -24,7 +24,7 @@ Tvf 非常类似于具有一个关键区别的存储过程： TVF 的结果是�
 
 ## <a name="watch-the-video"></a>观看视频
 
-**提供者**： Julia Kornich
+**主讲人**：Julia Kornich
 
 [WMV](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-winvideo-tvf.wmv) | [MP4](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-mp4video-tvf.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-winvideo-tvf.zip)
 
@@ -46,7 +46,7 @@ Tvf 非常类似于具有一个关键区别的存储过程： TVF 的结果是�
 ## <a name="add-a-tvf-to-the-database"></a>将 TVF 添加到数据库
 
 -   选择 " **&gt; SQL Server 对象资源管理器**
--   如果 LocalDB 不在服务器列表中：右键单击 " **SQL Server** "，然后选择 "**添加 SQL Server**使用默认**Windows 身份验证**连接到 LocalDB 服务器
+-   如果 LocalDB 不在服务器列表中：右键单击**SQL Server** ，然后选择 "**添加 SQL Server**使用默认**Windows 身份验证**连接到 LocalDB 服务器
 -   展开 LocalDB 节点
 -   在 "数据库" 节点下，右键单击 "School" 数据库节点，然后选择 " **新建查询 ...** "
 -   在 T-sql 编辑器中粘贴以下 TVF 定义
@@ -83,7 +83,7 @@ RETURN
 7.  从 Visual Studio 2012 开始，选择 " **存储过程" 和 "函数** " 节点下的 **GetStudentGradesForCourse**函数，该函数从 Visual Studio 开始，Entity Designer 允许批处理导入存储过程和函数
 8.  单击 " **完成**"
 9.  此时会显示 Entity Designer，它提供了用于编辑模型的设计图面。 您在 " **选择数据库对象** " 对话框中选择的所有对象都将添加到模型中。
-10. 默认情况下，每个导入的存储过程或函数的结果形状将自动成为实体模型中的新复杂类型。 但我们想要将 GetStudentGradesForCourse 函数的结果映射到 StudentGrade 实体：右键单击设计图面并在模型浏览器中选择 " **模型浏览器**"，选择 " **函数导**入"，然后在 "编辑函数导入" 对话框中，选择 " **实体** **" ** 并选择 **StudentGrade**
+10. 默认情况下，每个导入的存储过程或函数的结果形状将自动成为实体模型中的新复杂类型。 但我们想要将 GetStudentGradesForCourse 函数的结果映射到 StudentGrade 实体：右键单击设计图面，然后在 "模型浏览器" 中选择 " **模型浏览器**"，选择 " **函数导**入"，然后在 "编辑函数导入" 对话框中双击 " **GetStudentGradesForCourse** " 函数，选择 " **实体**" 并选择 **StudentGrade**
 
 ## <a name="persist-and-retrieve-data"></a>保留和检索数据
 
@@ -124,6 +124,6 @@ Couse: Microeconomics, Student: Arturo Anand
 Couse: Microeconomics, Student: Carson Bryant
 ```
 
-## <a name="summary"></a>摘要
+## <a name="summary"></a>Summary
 
 在本演练中，我们介绍了如何使用 Entity Framework Designer 映射表值函数（Tvf）。 它还演示了如何从 LINQ 查询调用 TVF。

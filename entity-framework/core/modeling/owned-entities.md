@@ -5,22 +5,22 @@ author: AndriySvyryd
 ms.author: ansvyryd
 ms.date: 11/06/2019
 uid: core/modeling/owned-entities
-ms.openlocfilehash: 30b91b6e66b6c0f516d1ba12485304b52770cbef
-ms.sourcegitcommit: 4e86f01740e407ff25e704a11b1f7d7e66bfb2a6
+ms.openlocfilehash: da4a459fbc40010fc14190204c8ed66fe0495b84
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/09/2020
-ms.locfileid: "75781230"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78413983"
 ---
 # <a name="owned-entity-types"></a>从属实体类型
 
 EF Core 让你可以只显示对其他实体类型的导航属性的模型实体类型。 它们称为_拥有的实体类型_。 包含拥有的实体类型的实体是其_所有者_。
 
-拥有的实体实质上是所有者的一部分，并且在没有它的情况下不存在，它们在概念上类似于[聚合](https://martinfowler.com/bliki/DDD_Aggregate.html)。 这意味着，拥有的类型是根据与所有者的关系的依赖端上的定义。
+拥有的实体实质上是所有者的一部分，并且在没有它的情况下不存在，它们在概念上类似于[聚合](https://martinfowler.com/bliki/DDD_Aggregate.html)。 这意味着，拥有的实体由与所有者的关系的从属方定义。
 
 ## <a name="explicit-configuration"></a>显式配置
 
-拥有永远不会包含类型由 EF Core 模型中按照约定的实体。 你可以使用`OwnsOne`中的方法`OnModelCreating`或批注与类型`OwnedAttribute`（新在 EF Core 2.1） 配置为拥有类型的类型。
+拥有永远不会包含类型由 EF Core 模型中按照约定的实体。 你可以使用中的 `OwnsOne` 方法 `OnModelCreating` 或使用 `OwnedAttribute` （EF Core 2.1 中的 new）批注该类型，以便将该类型配置为拥有的类型。
 
 在此示例中，`StreetAddress` 是无标识属性的类型。 它用作 Order 类型的属性来指定特定订单的发货地址。
 
@@ -38,7 +38,7 @@ EF Core 让你可以只显示对其他实体类型的导航属性的模型实体
 
 [!code-csharp[OwnsOneString](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsOneString)]
 
-有关更多上下文，请参阅[完整的示例项目](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Modeling/OwnedEntities)。
+有关更多上下文，请参阅[完整的示例项目](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Modeling/OwnedEntities)。
 
 ## <a name="implicit-keys"></a>隐式键
 

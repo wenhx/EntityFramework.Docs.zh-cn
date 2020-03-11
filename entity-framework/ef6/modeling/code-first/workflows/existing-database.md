@@ -3,12 +3,12 @@ title: Code First 现有数据库-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: a7e60b74-973d-4480-868f-500a3899932e
-ms.openlocfilehash: 61980bbd1f236f496a9d4fd92aa52264f1454615
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: 0a51f826422d7e2bff33b968605eace1e754c425
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182622"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78415597"
 ---
 # <a name="code-first-to-an-existing-database"></a>Code First 到现有数据库
 此视频和分步演练提供了面向现有数据库 Code First 开发的简介。 Code First 允许使用 C\# 或 VB.Net 类定义模型。 另外，还可以使用类和属性上的属性或使用 Fluent API 来执行其他配置。
@@ -72,7 +72,7 @@ VALUES ('.NET Framework Blog', 'http://blogs.msdn.com/dotnet/')
 
 ## <a name="2-create-the-application"></a>2. 创建应用程序
 
-为简单起见，我们将构建一个使用 Code First 执行数据访问的基本控制台应用程序：
+为简单起见，我们将构建一个使用 Code First 进行数据访问的基本控制台应用程序：
 
 -   打开 Visual Studio
 -   **文件-&gt;&gt; 项目 。**
@@ -84,7 +84,7 @@ VALUES ('.NET Framework Blog', 'http://blogs.msdn.com/dotnet/')
 
 ## <a name="3-reverse-engineer-model"></a>3. 反向工程模型
 
-我们将使用 Visual Studio Entity Framework Tools，帮助我们生成一些用于映射到数据库的初始代码。 这些工具只是生成代码，你也可以根据需要手动键入代码。
+我们将使用适用于 Visual Studio 的 Entity Framework Tools 帮助我们生成一些用于映射到数据库的初始代码。 这些工具只是生成代码，你也可以根据需要手动键入代码。
 
 -   **项目-&gt; "添加新项 ..."**
 -   从左侧菜单中选择 "**数据**"，然后**ADO.NET 实体数据模型**
@@ -204,7 +204,7 @@ class Program
 }
 ```
 
-你现在可以运行该应用程序并对其进行测试。
+现在可以运行应用程序并对其进行测试。
 
 ```console
 Enter a name for a new Blog: ADO.NET Blog

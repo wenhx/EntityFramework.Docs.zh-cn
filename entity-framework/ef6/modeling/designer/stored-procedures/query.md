@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 9554ed25-c5c1-43be-acad-5da37739697f
 ms.openlocfilehash: 2e0092b526278597e8477d47eeb642598647bb91
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182485"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78415201"
 ---
 # <a name="designer-query-stored-procedures"></a>设计器查询存储过程
 此分步演练演示如何使用 Entity Framework Designer （EF 设计器）将存储过程导入到模型中，然后调用导入的存储过程来检索结果。 
@@ -31,7 +31,7 @@ var query = context.Products.SqlQuery("EXECUTE [dbo].[GetAllProducts]")`;
 -   选择 "**文件-&gt;"&gt; 项目**
 -   在左窗格中，单击 " **Visual C\#** "，然后选择 "**控制台**" 模板。
 -   输入 " **EFwithSProcsSample** " 作为名称。
--   选择 **"确定"** 。
+-   选择“确定”。 ****
 
 ## <a name="create-a-model"></a>创建模型
 

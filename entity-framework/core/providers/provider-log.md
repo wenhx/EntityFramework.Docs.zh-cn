@@ -7,11 +7,11 @@ ms.assetid: 7CEF496E-A5B0-4F5F-B68E-529609B23EF9
 ms.technology: entity-framework-core
 uid: core/providers/provider-log
 ms.openlocfilehash: b911a2da493e20c4e4ce6f1e25024bd0efd38b44
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73656133"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414769"
 ---
 # <a name="provider-impacting-changes"></a>提供程序影响的更改
 
@@ -19,7 +19,7 @@ ms.locfileid: "73656133"
 
 我们正在从2.1 到2.2 的更改启动此日志。 在2.1 之前，我们使用[`providers-beware`](https://github.com/aspnet/EntityFrameworkCore/labels/providers-beware) ，并[`providers-fyi`](https://github.com/aspnet/EntityFrameworkCore/labels/providers-fyi)标签和拉取请求。
 
-## <a name="22-----30"></a>2.2---> 3。0
+## <a name="22-----30"></a>2.2 ---> 3.0
 
 请注意，许多[应用程序级别的重大更改](../what-is-new/ef-core-3.0/breaking-changes.md)还会影响提供程序。
 
@@ -65,7 +65,7 @@ ms.locfileid: "73656133"
 * <https://github.com/aspnet/EntityFrameworkCore/pull/15288>
   * 数据种子已重构为公共 API，以避免需要使用内部类型。 这只会影响非关系提供程序，因为种子设定由所有关系提供程序的基本关系类处理。
 
-## <a name="21-----22"></a>2.1---> 2。2
+## <a name="21-----22"></a>2.1 ---> 2.2
 
 ### <a name="test-only-changes"></a>仅限测试更改
 

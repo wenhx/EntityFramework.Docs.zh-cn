@@ -1,15 +1,15 @@
 ---
-title: 配置 DbContext-EF Core
+title: 配置 DbContext 的 EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: d7a22b5a-4c5b-4e3b-9897-4d7320fcd13f
 uid: core/miscellaneous/configuring-dbcontext
 ms.openlocfilehash: 3ab90d46b7a4476044e5ea38eaf04f995708e7bf
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655806"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414157"
 ---
 # <a name="configuring-a-dbcontext"></a>配置 DbContext
 
@@ -28,9 +28,9 @@ EF Core[的设计时工具需要能够](xref:core/managing-schemas/migrations/in
 - 要使用的数据库提供程序，通常通过调用方法（如 `UseSqlServer` 或 `UseSqlite`）进行选择。 这些扩展方法需要相应的提供程序包，如 `Microsoft.EntityFrameworkCore.SqlServer` 或 `Microsoft.EntityFrameworkCore.Sqlite`。 方法在 `Microsoft.EntityFrameworkCore` 命名空间中定义。
 - 任何必需的数据库实例的连接字符串或标识符，通常作为参数传递给上面提到的提供者选择方法
 - 任何提供程序级别的可选行为选择器，通常还链接到对提供程序选择方法的调用中
-- 任何常规 EF Core 行为选择器，通常在提供程序选择器方法之后或之前链接
+- 任何常规 EF Core 行为选择器，通常链接之后或之前提供程序选择器方法
 
-下面的示例将 `DbContextOptions` 配置为使用 SQL Server 提供程序、`connectionString` 变量中包含的连接、提供程序级别的命令超时，以及使所有查询都在 `DbContext` 的[无跟踪](xref:core/querying/tracking#no-tracking-queries)中执行的 EF Core 行为选择器默认情况下：
+下面的示例将 `DbContextOptions` 配置为使用 SQL Server 提供程序、包含在 `connectionString` 变量中的连接、提供程序级别的命令超时，以及在默认情况下 `DbContext` 执行[所有查询的](xref:core/querying/tracking#no-tracking-queries)EF Core 行为选择器：
 
 ``` csharp
 optionsBuilder
@@ -61,7 +61,7 @@ public class BloggingContext : DbContext
 ```
 
 > [!TIP]  
-> DbContext 的基本构造函数还接受 `DbContextOptions` 的非泛型版本，但对于具有多个上下文类型的应用程序，不建议使用非泛型版本。
+> DbContext 的基本构造函数还接受 `DbContextOptions`的非泛型版本，但对于具有多个上下文类型的应用程序，不建议使用非泛型版本。
 
 应用程序现在可以在实例化上下文时传递 `DbContextOptions`，如下所示：
 
@@ -79,7 +79,7 @@ using (var context = new BloggingContext(optionsBuilder.Options))
 
 您还可以在上下文本身中初始化 `DbContextOptions`。 虽然你可以将此方法用于基本配置，但你通常仍需要从外部获取某些配置详细信息，例如数据库连接字符串。 可以使用配置 API 或其他任何方法来完成此操作。
 
-若要在上下文中初始化 `DbContextOptions`，请重写 `OnConfiguring` 方法，并对提供的 `DbContextOptionsBuilder` 调用方法：
+若要在上下文中初始化 `DbContextOptions`，请重写 `OnConfiguring` 方法，并对提供的 `DbContextOptionsBuilder`调用方法：
 
 ``` csharp
 public class BloggingContext : DbContext
@@ -109,7 +109,7 @@ using (var context = new BloggingContext())
 
 EF Core 支持将 `DbContext` 与依赖关系注入容器一起使用。 可以通过使用 `AddDbContext<TContext>` 方法将 DbContext 类型添加到服务容器中。
 
-`AddDbContext<TContext>` 将使你的 DbContext 类型、`TContext` 和对应的 `DbContextOptions<TContext>` 可用于从服务容器中注入。
+`AddDbContext<TContext>` 将使你的 DbContext 类型、`TContext`和对应的 `DbContextOptions<TContext>` 可用于从服务容器中注入。
 
 有关依赖关系注入的其他信息[，请参阅](#more-reading)下文。
 
@@ -122,7 +122,7 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-这需要将[构造函数参数](#constructor-argument)添加到接受 `DbContextOptions<TContext>` 的 DbContext 类型。
+这需要将[构造函数参数](#constructor-argument)添加到接受 `DbContextOptions<TContext>`的 DbContext 类型。
 
 上下文代码：
 
@@ -137,7 +137,7 @@ public class BloggingContext : DbContext
 }
 ```
 
-应用程序代码（在 ASP.NET Core 中）：
+（在 ASP.NET Core) 的应用程序代码：
 
 ``` csharp
 public class MyController
@@ -178,7 +178,7 @@ Entity Framework Core 不支持在同一个 `DbContext` 实例上运行多个并
 
 ### <a name="forgetting-to-await-the-completion-of-an-asynchronous-operation-before-starting-any-other-operation-on-the-same-dbcontext"></a>在对同一 DbContext 启动任何其他操作之前，忘记等待异步操作完成
 
-使用异步方法，EF Core 可以启动以非阻止方式访问数据库的操作。 但是，如果调用方不等待其中某个方法完成，并继续对 `DbContext` 执行其他操作，则 `DbContext` 的状态可能会损坏（并且很可能会损坏）。
+使用异步方法，EF Core 可以启动以非阻止方式访问数据库的操作。 但是，如果调用方不等待其中某个方法完成，并继续对 `DbContext`执行其他操作，则 `DbContext` 的状态可能会损坏（并且很可能会损坏）。
 
 始终等待立即 EF Core 异步方法。  
 

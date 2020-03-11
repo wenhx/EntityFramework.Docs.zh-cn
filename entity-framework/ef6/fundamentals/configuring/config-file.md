@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 000044c6-1d32-4cf7-ae1f-ea21d86ebf8f
 ms.openlocfilehash: 86389e4a3a3bac46e2a4cf2da648a4b19e29f3c3
-ms.sourcegitcommit: 299011fc4bd576eed58a4274f967639fa13fec53
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/21/2019
-ms.locfileid: "69886557"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414853"
 ---
 # <a name="configuration-file-settings"></a>配置文件设置
 实体框架允许在配置文件中指定多个设置。 在常规 EF 中，遵循 "约定 over 配置" 原则：在此文章中讨论的所有设置都有默认行为，你只需考虑在默认不再满足你的要求时更改设置。  
@@ -40,7 +40,7 @@ ms.locfileid: "69886557"
 
 连接字符串位于标准**connectionStrings**元素中，不需要**entityFramework**部分。  
 
-基于 Code First 的模型使用常规 ADO.NET 连接字符串。 例如:  
+基于 Code First 的模型使用常规 ADO.NET 连接字符串。 例如：  
 
 ``` xml
 <connectionStrings>
@@ -50,7 +50,7 @@ ms.locfileid: "69886557"
 </connectionStrings>
 ```  
 
-基于 EF 设计器的模型使用特殊 EF 连接字符串。 例如:  
+基于 EF 设计器的模型使用特殊 EF 连接字符串。 例如：  
 
 ``` xml  
 <connectionStrings>
@@ -145,7 +145,7 @@ ms.locfileid: "69886557"
 </interceptors>
 ```  
 
-有关**DatabaseLogger**和注册侦听器的其他信息，请参阅博客文章[EF 6.1：无需重新编译](https://blog.oneunicorn.com/2014/02/09/ef-6-1-turning-on-logging-without-recompiling/)即可启用日志记录。  
+有关**DatabaseLogger**和注册侦听器的其他信息，请参阅博客文章[EF 6.1：在不重新编译的情况下启用日志记录](https://blog.oneunicorn.com/2014/02/09/ef-6-1-turning-on-logging-without-recompiling/)。  
 
 ## <a name="code-first-default-connection-factory"></a>Code First 默认连接工厂  
 
@@ -180,7 +180,7 @@ ms.locfileid: "69886557"
 </entityFramework>
 ```  
 
-如果未设置默认的连接工厂，Code First 将使用指向`.\SQLEXPRESS`的 SqlConnectionFactory。 SqlConnectionFactory 还具有一个构造函数，该构造函数允许你重写连接字符串的各个部分。 如果要使用以外的 SQL Server 实例`.\SQLEXPRESS` ，则可以使用此构造函数来设置服务器。  
+如果未设置默认的连接工厂，则 Code First 使用 SqlConnectionFactory，指向 `.\SQLEXPRESS`。 SqlConnectionFactory 还具有一个构造函数，该构造函数允许你重写连接字符串的各个部分。 如果要使用 `.\SQLEXPRESS` 之外的 SQL Server 实例，则可以使用此构造函数来设置服务器。  
 
 以下配置将导致 Code First 为未设置显式连接字符串的上下文使用**MyDatabaseServer** 。  
 
@@ -240,7 +240,7 @@ ms.locfileid: "69886557"
 
 可以配置实体框架中包含的其中一个泛型数据库初始值设定项。 **Type**特性使用泛型类型的 .NET Framework 格式。  
 
-例如，如果使用 Code First 迁移，则可以将数据库配置为使用`MigrateDatabaseToLatestVersion<TContext, TMigrationsConfiguration>`初始值设定项自动迁移。  
+例如，如果使用 Code First 迁移，则可以将数据库配置为使用 `MigrateDatabaseToLatestVersion<TContext, TMigrationsConfiguration>` 初始值设定项自动迁移。  
 
 ``` xml
 <contexts>

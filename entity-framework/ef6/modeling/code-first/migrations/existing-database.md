@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: f0cc4f93-67dd-4664-9753-0a9f913814db
 ms.openlocfilehash: eb7948eafb1322cabcf69b47bd5411f762fe8498
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182587"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78415693"
 ---
 # <a name="code-first-migrations-with-an-existing-database"></a>使用现有数据库 Code First 迁移
 > [!NOTE]
@@ -67,7 +67,7 @@ Code First 迁移使用最新迁移中存储的模型的快照来检测对模型
 3.  在 Package Manager Console 中运行 "**更新数据库**" 命令。 这会将 InitialCreate 迁移应用到数据库。 由于实际的迁移不包含任何更改（因为我们暂时注释它们），因此它只是将一行添加到 \_\_MigrationsHistory 表，指示已应用此迁移。
 4.  取消注释 Up 方法中的代码。 这意味着，将此迁移应用于未来的数据库时，迁移将创建本地数据库中已经存在的架构。
 
-## <a name="things-to-be-aware-of"></a>需要注意的问题
+## <a name="things-to-be-aware-of"></a>注意事项
 
 对现有数据库使用迁移时，需要注意几个事项。
 

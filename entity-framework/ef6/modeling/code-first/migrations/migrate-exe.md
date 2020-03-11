@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 989ea862-e936-4c85-926a-8cfbef5df5b8
 ms.openlocfilehash: 34866ddbbf81f090a064af148a612dd354ae9401
-ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 12/04/2019
-ms.locfileid: "74824811"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78415669"
 ---
 # <a name="using-migrateexe"></a>使用 debug.exe
 Code First 迁移可用于从 visual studio 内部更新数据库，但也可以通过命令行工具 debug.exe 来执行。 此页将简要介绍如何使用 debug.exe 来对数据库执行迁移。
@@ -92,4 +92,4 @@ Migrate.exe BlogDemo.dll /connectionString="Data Source=localhost;Initial Catalo
 | 未经处理的异常： NullReferenceException：对象引用未设置为对象的实例。 <br/>   在 System.web. Main （String [] args）上。                                                                                                                                             | 这可能是由于未为你使用的方案指定必需参数引起的。 例如，在不指定提供程序名称的情况下指定连接字符串。                                                                                                                        |
 | 错误：在程序集 "Classlibrary1.chainone" 中找到了多个迁移配置类型。 指定要使用的名称。                                                                                                                                                                                                  | 作为错误状态，在给定的程序集中有多个配置类。 必须使用/configurationType 开关来指定要使用的。                                                                                                                                           |
 | 错误：无法加载文件或程序集 "&lt;assemblyName&gt;" 或其依赖项之一。 给定的程序集名称或基本代码无效。 （异常来自 HRESULT：0x80131047）                                                                                                                                                    | 这可能是由于不正确地指定程序集名称或                                                                                                                                                                                                                          |
-| 错误：无法加载文件或程序集 "&lt;assemblyName&gt;" 或其依赖项之一。 试图加载格式不正确的程序。                                                                                                                                                                          | 如果尝试对 x64 应用程序运行迁移，则会发生这种情况。 EF 5.0 和更低的将仅适用于 x86。                                                                                                                                                                                |
+| 错误：无法加载文件或程序集 "&lt;assemblyName&gt;" 或其依赖项之一。 试图加载的程序的格式不正确。                                                                                                                                                                          | 如果尝试对 x64 应用程序运行迁移，则会发生这种情况。 EF 5.0 和更低的将仅适用于 x86。                                                                                                                                                                                |

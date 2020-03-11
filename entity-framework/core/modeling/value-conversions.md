@@ -5,11 +5,11 @@ ms.date: 02/19/2018
 ms.assetid: 3154BF3C-1749-4C60-8D51-AE86773AA116
 uid: core/modeling/value-conversions
 ms.openlocfilehash: 93774bc1bc3887f982faeac151825a6643c1107c
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73654784"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414553"
 ---
 # <a name="value-conversions"></a>值转换
 
@@ -18,7 +18,7 @@ ms.locfileid: "73654784"
 
 值转换器允许在读取或写入数据库时转换属性值。 此转换可以是同一类型的另一个值（例如，加密字符串）或从一种类型的值转换为另一种类型的值（例如，在数据库中将枚举值与字符串相互转换）。
 
-## <a name="fundamentals"></a>基础知识
+## <a name="fundamentals"></a>基础
 
 值转换器根据 `ModelClrType` 和 `ProviderClrType`来指定。 模型类型是实体类型中的属性的 .NET 类型。 提供程序类型是数据库提供程序理解的 .NET 类型。 例如，若要将枚举作为字符串保存在数据库中，模型类型是枚举的类型，提供程序类型为 `String`。 这两种类型可以相同。
 
@@ -63,7 +63,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ## <a name="the-valueconverter-class"></a>ValueConverter 类
 
-如上所述调用 `HasConversion` 将创建一个 `ValueConverter` 实例，并在属性上对其进行设置。 可以改为显式创建 `ValueConverter`。 例如:
+如上所述调用 `HasConversion` 将创建一个 `ValueConverter` 实例，并在属性上对其进行设置。 可以改为显式创建 `ValueConverter`。 例如：
 
 ``` csharp
 var converter = new ValueConverter<EquineBeast, string>(
@@ -83,7 +83,7 @@ modelBuilder
 
 ## <a name="built-in-converters"></a>内置转换器
 
-EF Core 附带一组预定义的 `ValueConverter` 类，这些类在 `Microsoft.EntityFrameworkCore.Storage.ValueConversion` 命名空间中找到。 这些是：
+EF Core 附带一组预定义的 `ValueConverter` 类，这些类在 `Microsoft.EntityFrameworkCore.Storage.ValueConversion` 命名空间中找到。 这些位置包括：
 
 * `BoolToZeroOneConverter`-布尔值到零和一个
 * `BoolToStringConverter`-布尔值到字符串（如 "Y" 和 "N"）

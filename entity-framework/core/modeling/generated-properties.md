@@ -6,11 +6,11 @@ ms.author: ansvyryd
 ms.date: 11/06/2019
 uid: core/modeling/generated-properties
 ms.openlocfilehash: 9c616e157ff1bdb9700f436a7ae2788330fe5d45
-ms.sourcegitcommit: 32c51c22988c6f83ed4f8e50a1d01be3f4114e81
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 12/27/2019
-ms.locfileid: "75502027"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78413899"
 ---
 # <a name="generated-values"></a>生成的值
 
@@ -30,25 +30,25 @@ ms.locfileid: "75502027"
 
 在添加时生成值，意思是为新实体生成值。
 
-根据所用数据库提供程序的不同，值可能会通过 EF 在客户端生成或者由数据库生成。 如果由数据库生成值，则当你将实体添加到上下文时，EF 可能会赋予一个临时值。 而后，由数据库生成的值会在 `SaveChanges()` 过程中替换这个临时值。
+根据所用数据库提供程序的不同，值可能会通过 EF 在客户端生成或者由数据库生成。 如果由数据库生成值，则当你将实体添加到上下文时，EF 可能会赋予一个临时值。 在 `SaveChanges()`期间，此临时值将替换为数据库生成的值。
 
-如果将一个实体添加到已经为属性赋予值的上下文，则 EF 会尝试插入该值而不是生成新值。 属性被认为已赋值的前提是该属性未被赋予 CLR 默认值（`string` 的默认值为 `null`，`int` 的默认值为 `0`，`Guid.Empty` 的默认值为 `Guid`，等等)。 有关详细信息，请参阅[已生成属性的显式值](../saving/explicit-values-generated-properties.md)。
+如果将一个实体添加到已经为属性赋予值的上下文，则 EF 会尝试插入该值而不是生成新值。 如果某个属性未分配 CLR 默认值（`null` 用于 `string`，`0` 用于 `int`，`Guid.Empty` `Guid`等），则该属性被视为已分配值。 有关详细信息，请参阅[生成的属性的显式值](../saving/explicit-values-generated-properties.md)。
 
 > [!WARNING]
 > 如何为添加的实体生成值取决于所用数据库提供程序。 数据库提供程序可能会为某些属性类型自动设置值的生成，但其他的属性类型可能要求你手动设置值的生成方式。
 >
-> 例如，使用 SQL Server 时，会自动生成 `GUID` 属性的值（使用 SQL Server 的顺序 GUID 算法）。 但是，如果指定在添加时生成 `DateTime` 属性，则必须设置生成值的方法。 若要执行此操作，一种方法是配置 `GETDATE()` 的默认值，请参阅[默认值](relational/default-values.md)。
+> 例如，使用 SQL Server 时，将自动为 `GUID` 属性（使用 SQL Server 顺序 GUID 算法）生成值。 但是，如果您指定在添加时生成 `DateTime` 属性，则必须设置一个方法来生成值。 执行此操作的一种方法是配置默认值 `GETDATE()`，请参阅[默认值](relational/default-values.md)。
 
 ### <a name="value-generated-on-add-or-update"></a>在添加或更新时生成值
 
 在添加或更新时生成值，意味着在每次保存该记录（插入或更新）时生成新值。
 
-就像`value generated on add`一样，如果为一个实体的新增实例上的属性指定了一个值，则 EF 会尝试插入该值而不是生成新值。 还可以在更新时设置显式值。 有关详细信息，请参阅[已生成属性的显式值](../saving/explicit-values-generated-properties.md)。
+与 `value generated on add`一样，如果为新添加的实体实例的属性指定值，则将插入该值，而不是要生成的值。 还可以在更新时设置显式值。 有关详细信息，请参阅[生成的属性的显式值](../saving/explicit-values-generated-properties.md)。
 
 > [!WARNING]
 > 如何在添加和更新实体时生成值取决于所用数据库提供程序。 数据库提供程序可能会为某些属性类型自动设置值的生成，但其他的属性类型会要求你手动设置值的生成方式。
 >
-> 例如，在使用 SQL Server 时，设置为在添加和更新时生成值并标注为并发标记的 `byte[]` 属性会被设置为 `rowversion` 数据类型，以便在数据库中生成值。 但是，如果指定在添加或更新时生成 `DateTime` 属性，则必须设置生成值的方法。 若要执行此操作，一种方法是配置 `GETDATE()` 的默认值（请参阅[默认值](relational/default-values.md)）以生成新行的值。 然后即可使用数据库触发器在更新过程中生成值（如下面的示例触发器所示）。
+> 例如，使用 SQL Server 时，将使用 `rowversion` 数据类型设置在添加或更新时生成的 `byte[]` 属性，并将其标记为并发标记，以便在数据库中生成值。 但是，如果您指定在添加或更新时生成 `DateTime` 属性，则必须设置一个方法来生成值。 实现此目的的一种方法是将默认值 `GETDATE()` （请参阅[默认](relational/default-values.md)值）配置为为新行生成值。 然后即可使用数据库触发器在更新过程中生成值（如下面的示例触发器所示）。
 >
 > [!code-sql[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedOnAddOrUpdate.sql)]
 
@@ -58,18 +58,18 @@ ms.locfileid: "75502027"
 
 可以将任何属性配置为为插入的实体生成其值，如下所示：
 
-### <a name="data-annotationstabdata-annotations"></a>[数据注释](#tab/data-annotations)
+### <a name="data-annotations"></a>[数据注释](#tab/data-annotations)
 
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ValueGeneratedOnAdd.cs?name=ValueGeneratedOnAdd&highlight=5)]
 
-### <a name="fluent-apitabfluent-api"></a>[熟知 API](#tab/fluent-api)
+### <a name="fluent-api"></a>[熟知 API](#tab/fluent-api)
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedOnAdd.cs?name=ValueGeneratedOnAdd&highlight=5)]
 
 ***
 
 > [!WARNING]
-> 这只是让 EF 知道为已添加的实体生成值，并不保证 EF 会设置实际机制来生成值。 请参阅[在添加时生成值](#value-generated-on-add)部分，了解更多详细信息。
+> 这只是让 EF 知道为已添加的实体生成值，并不保证 EF 会设置实际机制来生成值。 有关更多详细信息，请参阅[add 部分生成的值](#value-generated-on-add)。
 
 ### <a name="default-values"></a>默认值
 
@@ -87,18 +87,18 @@ ms.locfileid: "75502027"
 
 ## <a name="value-generated-on-add-or-update"></a>在添加或更新时生成值
 
-### <a name="data-annotationstabdata-annotations"></a>[数据注释](#tab/data-annotations)
+### <a name="data-annotations"></a>[数据注释](#tab/data-annotations)
 
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ValueGeneratedOnAddOrUpdate.cs?name=ValueGeneratedOnAddOrUpdate&highlight=5)]
 
-### <a name="fluent-apitabfluent-api"></a>[熟知 API](#tab/fluent-api)
+### <a name="fluent-api"></a>[熟知 API](#tab/fluent-api)
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedOnAddOrUpdate.cs?name=ValueGeneratedOnAddOrUpdate&highlight=5)]
 
 ***
 
 > [!WARNING]
-> 这只是让 EF 知道为添加或更新的实体生成值，并不保证 EF 会设置实际机制来生成值。 请参阅[在添加或更新时生成值](#value-generated-on-add-or-update)部分，了解更多详细信息。
+> 这只是让 EF 知道为添加或更新的实体生成值，并不保证 EF 会设置实际机制来生成值。 有关更多详细信息，请参阅[add or update 部分上生成的值](#value-generated-on-add-or-update)。
 
 ### <a name="computed-columns"></a>计算列
 
@@ -113,11 +113,11 @@ ms.locfileid: "75502027"
 
 如果对属性的值生成进行了配置，则通常需要对其进行值生成。 例如，如果你有一个 int 类型的主键，则它将被隐式设置配置为在 add 时生成的值;可以通过以下方式禁用此操作：
 
-### <a name="data-annotationstabdata-annotations"></a>[数据注释](#tab/data-annotations)
+### <a name="data-annotations"></a>[数据注释](#tab/data-annotations)
 
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ValueGeneratedNever.cs?name=ValueGeneratedNever&highlight=3)]
 
-### <a name="fluent-apitabfluent-api"></a>[熟知 API](#tab/fluent-api)
+### <a name="fluent-api"></a>[熟知 API](#tab/fluent-api)
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedNever.cs?name=ValueGeneratedNever&highlight=5)]
 

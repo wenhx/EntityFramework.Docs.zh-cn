@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 2eda668b-1e5d-487d-9a8c-0e3beef03fcb
 ms.openlocfilehash: efd646348d8a18bbeed2d0a0e708d4d36eb26eac
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182429"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414481"
 ---
 # <a name="local-data"></a>本地数据
 直接对 DbSet 运行 LINQ 查询将始终向数据库发送查询，但你可以使用 DbSet 属性访问当前在内存中的数据。 使用 DbContext 和 DbContext 方法，还可以访问额外的信息 EF 正在跟踪实体。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  

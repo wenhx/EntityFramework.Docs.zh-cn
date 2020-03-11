@@ -5,12 +5,12 @@ author: AndriySvyryd
 ms.author: ansvyryd
 ms.date: 01/03/2020
 uid: core/modeling/table-splitting
-ms.openlocfilehash: c38d3ee0efa82f84a1051017ae40c9f3fdd57f1f
-ms.sourcegitcommit: 4e86f01740e407ff25e704a11b1f7d7e66bfb2a6
+ms.openlocfilehash: de24f8903af79ebd7f68e6b74288257883c1fa8d
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/09/2020
-ms.locfileid: "75781165"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414697"
 ---
 # <a name="table-splitting"></a>表拆分
 
@@ -33,9 +33,9 @@ EF Core 允许将两个或多个实体映射到单个行。 这称为 "_表拆�
 [!code-csharp[TableSplittingConfiguration](../../../samples/core/Modeling/TableSplitting/TableSplittingContext.cs?name=TableSplitting)]
 
 > [!TIP]
-> 有关更多上下文，请参阅[完整的示例项目](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Modeling/TableSplitting)。
+> 有关更多上下文，请参阅[完整的示例项目](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Modeling/TableSplitting)。
 
-## <a name="usage"></a>用量
+## <a name="usage"></a>用法
 
 使用表拆分来保存和查询实体的方式与其他实体相同：
 

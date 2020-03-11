@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: e3278b4b-9378-4fdb-923d-f64d80aaae70
 ms.openlocfilehash: d8a18182754980d79b71df3f227b30c4ce40366f
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182144"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414373"
 ---
 # <a name="working-with-property-values"></a>使用属性值
 大多数情况下实体框架将负责跟踪实体实例的属性的状态、原始值和当前值。 但是，在某些情况下（例如，已断开连接的情况下），你希望查看或操作有关属性的信息 EF。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  
@@ -287,7 +287,7 @@ using (var context = new BloggingContext())
 
 ## <a name="getting-and-setting-the-current-or-original-values-of-complex-properties"></a>获取和设置复杂属性的当前值或原始值  
 
-可以使用属性方法读取和设置整个复杂对象的值，就像它可用于基元属性一样。 此外，还可以向下钻取到复杂对象，并读取或设置该对象的属性，甚至是嵌套的对象。 下面是一些可能的恶意活动：  
+可以使用属性方法读取和设置整个复杂对象的值，就像它可用于基元属性一样。 此外，还可以向下钻取到复杂对象，并读取或设置该对象的属性，甚至是嵌套的对象。 下面是一些示例：  
 
 ``` csharp
 using (var context = new BloggingContext())

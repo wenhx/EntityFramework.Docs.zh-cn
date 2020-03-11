@@ -5,11 +5,11 @@ ms.date: 10/27/2016
 ms.assetid: 6d75b229-cc79-4d08-88cd-3a1c1b24d88f
 uid: core/miscellaneous/rc1-rc2-upgrade
 ms.openlocfilehash: 887b7cd539b9c0f5a680398f5039757420228710
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181277"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414109"
 ---
 # <a name="upgrading-from-ef-core-10-rc1-to-10-rc2"></a>从 EF Core 1.0 RC1 升级到 1.0 RC2
 
@@ -25,7 +25,7 @@ ms.locfileid: "72181277"
 |:----------------------------------------------------------|:---------------------------------------------------------------------|
 | EntityFramework.MicrosoftSqlServer        7.0.0-rc1-final | Microsoft.EntityFrameworkCore.SqlServer         1.0.0-rc2-final      |
 | EntityFramework.SQLite                    7.0.0-rc1-final | Microsoft.EntityFrameworkCore.Sqlite            1.0.0-rc2-final      |
-| EntityFramework7.Npgsql                   3.1.0-rc1-3     | NpgSql.EntityFrameworkCore.Postgres             <to be advised>      |
+| EntityFramework7.Npgsql                   3.1.0-rc1-3     | NpgSql. Microsoft.entityframeworkcore. Postgres <to be advised>      |
 | EntityFramework.SqlServerCompact35        7.0.0-rc1-final | EntityFrameworkCore.SqlServerCompact35          1.0.0-rc2-final      |
 | EntityFramework.SqlServerCompact40        7.0.0-rc1-final | EntityFrameworkCore.SqlServerCompact40          1.0.0-rc2-final      |
 | EntityFramework 7.0.0 版-rc1-最终 | Microsoft.EntityFrameworkCore.InMemory          1.0.0-rc2-final      |
@@ -89,7 +89,7 @@ public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
 
 ### <a name="resolving-internal-services-from-application-service-provider-aspnet-core-projects-only"></a>解析内部服务从应用程序服务提供商 （仅适用于 ASP.NET Core 项目）
 
-如果你有一个 ASP.NET Core 应用并且想 EF 若要解决应用程序服务提供商提供的内部服务，则的重载`AddDbContext`，可以对此进行配置：
+如果你有一个 ASP.NET Core 的应用程序，并且你希望 EF 解析应用程序服务提供程序中的内部服务，则可以使用 `AddDbContext` 的重载来配置：
 
 ``` csharp
 services.AddEntityFrameworkSqlServer()

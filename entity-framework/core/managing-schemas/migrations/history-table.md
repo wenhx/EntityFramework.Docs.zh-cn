@@ -5,11 +5,11 @@ ms.author: bricelam
 ms.date: 11/07/2017
 uid: core/managing-schemas/migrations/history-table
 ms.openlocfilehash: 0007da7ce3d78fd8f17007ac79a395bb2e6efd86
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655706"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414301"
 ---
 # <a name="custom-migrations-history-table"></a>自定义迁移历史记录表
 

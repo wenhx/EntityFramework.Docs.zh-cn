@@ -5,11 +5,11 @@ ms.author: bricelam
 ms.date: 11/08/2017
 uid: core/managing-schemas/migrations/providers
 ms.openlocfilehash: efe95893f7dbfc8e5c4775e86d58abb32eee3c83
-ms.sourcegitcommit: 32c51c22988c6f83ed4f8e50a1d01be3f4114e81
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 12/27/2019
-ms.locfileid: "75502105"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414253"
 ---
 # <a name="migrations-with-multiple-providers"></a>迁移多个提供程序
 
@@ -36,14 +36,14 @@ class MySqliteDbContext : MyDbContext
 
 添加新迁移时，指定上下文类型。
 
-### <a name="net-core-clitabdotnet-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
+### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef migrations add InitialCreate --context MyDbContext --output-dir Migrations/SqlServerMigrations
 dotnet ef migrations add InitialCreate --context MySqliteDbContext --output-dir Migrations/SqliteMigrations
 ```
 
-### <a name="visual-studiotabvs"></a>[Visual Studio](#tab/vs)
+### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
 
 ``` powershell
 Add-Migration InitialCreate -Context MyDbContext -OutputDir Migrations\SqlServerMigrations

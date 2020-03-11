@@ -6,11 +6,11 @@ ms.date: 11/01/2018
 ms.assetid: 2BDE29FC-4161-41A0-841E-69F51CCD9341
 uid: core/modeling/spatial
 ms.openlocfilehash: 5b45f83ca7f02665f52ccfe16b5af506a6046a62
-ms.sourcegitcommit: f2a38c086291699422d8b28a72d9611d1b24ad0d
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/16/2020
-ms.locfileid: "76124426"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414703"
 ---
 # <a name="spatial-data"></a>空间数据
 
@@ -48,10 +48,10 @@ optionsBuilder.UseSqlServer(
 
 有几种空间数据类型。 使用哪种类型取决于您想要允许的形状的类型。 下面是可用于模型中的属性的 NTS 类型的层次结构。 它们位于 `NetTopologySuite.Geometries` 命名空间中。
 
-* 几何结构
+* Geometry
   * 点
   * LineString
-  * 多边形
+  * Polygon
   * GeometryCollection
     * MultiPoint
     * MultiLineString
@@ -207,7 +207,7 @@ var currentCountry = db.Countries
     .FirstOrDefault(c => c.Border.Contains(currentLocation));
 ```
 
-## <a name="sql-server"></a>SQL 服务器
+## <a name="sql-server"></a>SQL Server
 
 如果你正在使用 SQL Server，你还应该注意一些其他问题。
 

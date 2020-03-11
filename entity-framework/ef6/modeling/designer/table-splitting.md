@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 452f17c3-9f26-4de4-9894-8bc036e23b0f
 ms.openlocfilehash: f5e7532e6c0b473d8ce77cbd11e3e673b0af6cbe
-ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/12/2019
-ms.locfileid: "70921785"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78415009"
 ---
 # <a name="designer-table-splitting"></a>设计器表拆分
 本演练演示如何通过使用 Entity Framework Designer （EF 设计器）修改模型，将多个实体类型映射到单个表。
@@ -31,7 +31,7 @@ ms.locfileid: "70921785"
 本演练使用 Visual Studio 2012。
 
 -   打开 Visual Studio 2012。
--   在 **“文件”** 菜单上，指向 **“新建”** ，然后单击 **“项目”** 。
+-   在 **“文件”** 菜单上，指向 **“新建”** ，再单击 **“项目”** 。
 -   在左窗格中，单击 "Visual C\#"，然后选择 "控制台应用程序" 模板。
 -   输入**TableSplittingSample**作为项目名称，然后单击 **"确定"** 。
 
@@ -65,7 +65,7 @@ ms.locfileid: "70921785"
 -   创建**Person**和**HireInfo**之间的关联。 为此，请右键单击设计图面的空白区域，指向 " **添加新**项"，然后单击 " **关联**"。
 -   此时将显示 " **添加关联** " 对话框。 默认情况下，指定**PersonHireInfo**名称。
 -   指定关系两端的重数**1 （一）** 。
--   按“确定”。
+-   按 **“确定”** 。
 
 下一步需要 "窗口中的" **映射详细信息**"。 如果看不到此窗口，请右键单击设计图面，然后选择 "**映射详细信息**"。
 
@@ -79,7 +79,7 @@ ms.locfileid: "70921785"
 -   右键单击设计图面上的关联，然后选择 "**属性**"。
 -   在 "**属性**" 窗口中，选择 "**引用约束**" 属性，然后单击省略号按钮。
 -   从 "**主体**" 下拉列表中选择 "**人员**"。
--   按“确定”。
+-   按 **“确定”** 。
 
  
 
