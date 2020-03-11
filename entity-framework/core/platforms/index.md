@@ -1,14 +1,14 @@
 ---
 title: 支持的 .NET 实现 - EF Core
-author: rowanmiller
-ms.date: 08/30/2017
+author: bricelam
+ms.date: 03/03/2020
 uid: core/platforms/index
-ms.openlocfilehash: 6450884ea8f1b7bfd12d6b0c722b150b2574c5c3
-ms.sourcegitcommit: 4e86f01740e407ff25e704a11b1f7d7e66bfb2a6
+ms.openlocfilehash: 693d4cae85eddf86d01e17084415147c52a008c7
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/09/2020
-ms.locfileid: "75781191"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78413062"
 ---
 # <a name="net-implementations-supported-by-ef-core"></a>EF Core 支持的 .NET 实现
 
@@ -18,16 +18,16 @@ ms.locfileid: "75781191"
 
 下表提供了每个 .NET 实现的指南：
 
-| EF Core                       | 2.1        | 3.0             | 3.1        |
-|:------------------------------|:-----------|:----------------|:-----------|
-| .NET Standard                 | 2.0        | 2.1             | 2.0        |
-| .NET Core                     | 2.0        | 3.0             | 2.0        |
-| .NET Framework<sup>(1)</sup>  | 4.7.2      | （不支持） | 4.7.2      |
-| Mono                          | 5.4        | 6.4             | 5.4        |
-| Xamarin.iOS<sup>(2)</sup>     | 10.14      | 12.16           | 10.14      |
-| Xamarin.Android<sup>(2)</sup> | 8.0        | 10.0            | 8.0        |
-| UWP<sup>(3)</sup>             | 10.0.16299 | 待定             | 10.0.16299 |
-| Unity<sup>(4)</sup>           | 2018 年 1 月     | 待定             | 2018 年 1 月     |
+| EF Core                       | 2.1 和 3.1 |
+|:------------------------------|:------------|
+| .NET Standard                 | 2.0         |
+| .NET Core                     | 2.0         |
+| .NET Framework<sup>(1)</sup>  | 4.7.2       |
+| Mono                          | 5.4         |
+| Xamarin.iOS<sup>(2)</sup>     | 10.14       |
+| Xamarin.Android<sup>(2)</sup> | 8.0         |
+| UWP<sup>(3)</sup>             | 10.0.16299  |
+| Unity<sup>(4)</sup>           | 2018 年 1 月      |
 
 <sup>(1)</sup> 请参阅下面的 [.NET Framework](#net-framework) 部分。
 
@@ -73,4 +73,4 @@ ms.locfileid: "75781191"
 
 ## <a name="report-issues"></a>报告问题
 
-对于未按预期工作的任意组合，我们建议在 [EF Core 问题跟踪程序](https://github.com/aspnet/entityframeworkcore/issues/new)中创建新问题。 对于特定于 Xamarin 的问题，请使用 [Xamarin.Android](https://github.com/xamarin/xamarin-android/issues/new) 或 [Xamarin.iOS](https://github.com/xamarin/xamarin-macios/issues/new) 问题跟踪程序。
+对于未按预期工作的任意组合，建议在 [EF Core 问题跟踪程序](https://github.com/aspnet/entityframeworkcore/issues/new)中创建新问题。 对于特定于 Xamarin 的问题，请使用 [Xamarin.Android](https://github.com/xamarin/xamarin-android/issues/new) 或 [Xamarin.iOS](https://github.com/xamarin/xamarin-macios/issues/new) 问题跟踪程序。
