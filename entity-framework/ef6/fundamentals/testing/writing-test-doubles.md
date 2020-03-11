@@ -4,48 +4,48 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 16a8b7c0-2d23-47f4-9cc0-e2eb2e738ca3
 ms.openlocfilehash: 3d8933fb5e17f8c01f3971495a1fcdb5b8cfab57
-ms.sourcegitcommit: 37d0e0fd1703467918665a64837dc54ad2ec7484
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/16/2019
-ms.locfileid: "72446030"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78413887"
 ---
-# <a name="testing-with-your-own-test-doubles"></a><span data-ttu-id="1c3c1-102">用自己的测试进行测试双精度</span><span class="sxs-lookup"><span data-stu-id="1c3c1-102">Testing with your own test doubles</span></span>
+# <a name="testing-with-your-own-test-doubles"></a><span data-ttu-id="0320b-102">用自己的测试进行测试双精度</span><span class="sxs-lookup"><span data-stu-id="0320b-102">Testing with your own test doubles</span></span>
 > [!NOTE]
-> <span data-ttu-id="1c3c1-103">**仅限 EF6 及更高版本** - 此页面中讨论的功能、API 等已引入实体框架 6。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-103">**EF6 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 6.</span></span> <span data-ttu-id="1c3c1-104">如果使用的是早期版本，则部分或全部信息不适用。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-104">If you are using an earlier version, some or all of the information does not apply.</span></span>  
+> <span data-ttu-id="0320b-103">**仅限 EF6 及更高版本** - 此页面中讨论的功能、API 等已引入实体框架 6。</span><span class="sxs-lookup"><span data-stu-id="0320b-103">**EF6 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 6.</span></span> <span data-ttu-id="0320b-104">如果使用的是早期版本，则部分或全部信息不适用。</span><span class="sxs-lookup"><span data-stu-id="0320b-104">If you are using an earlier version, some or all of the information does not apply.</span></span>  
 
-<span data-ttu-id="1c3c1-105">编写应用程序测试时，通常需要避免数据库的命中。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-105">When writing tests for your application it is often desirable to avoid hitting the database.</span></span>  <span data-ttu-id="1c3c1-106">实体框架使你可以通过创建上下文来实现此目的，该上下文具有测试定义的行为，从而利用内存中数据。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-106">Entity Framework allows you to achieve this by creating a context – with behavior defined by your tests – that makes use of in-memory data.</span></span>  
+<span data-ttu-id="0320b-105">编写应用程序测试时，通常需要避免数据库的命中。</span><span class="sxs-lookup"><span data-stu-id="0320b-105">When writing tests for your application it is often desirable to avoid hitting the database.</span></span>  <span data-ttu-id="0320b-106">实体框架使你可以通过创建上下文来实现此目的，该上下文具有测试定义的行为，从而利用内存中数据。</span><span class="sxs-lookup"><span data-stu-id="0320b-106">Entity Framework allows you to achieve this by creating a context – with behavior defined by your tests – that makes use of in-memory data.</span></span>  
 
-## <a name="options-for-creating-test-doubles"></a><span data-ttu-id="1c3c1-107">用于创建测试双精度的选项</span><span class="sxs-lookup"><span data-stu-id="1c3c1-107">Options for creating test doubles</span></span>  
+## <a name="options-for-creating-test-doubles"></a><span data-ttu-id="0320b-107">用于创建测试双精度的选项</span><span class="sxs-lookup"><span data-stu-id="0320b-107">Options for creating test doubles</span></span>  
 
-<span data-ttu-id="1c3c1-108">可使用两种不同的方法创建上下文的内存中版本。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-108">There are two different approaches that can be used to create an in-memory version of your context.</span></span>  
+<span data-ttu-id="0320b-108">可使用两种不同的方法创建上下文的内存中版本。</span><span class="sxs-lookup"><span data-stu-id="0320b-108">There are two different approaches that can be used to create an in-memory version of your context.</span></span>  
 
-- <span data-ttu-id="1c3c1-109">**创建自己的测试双精度**型–此方法涉及编写您自己的上下文和 dbset 的内存中实现。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-109">**Create your own test doubles** – This approach involves writing your own in-memory implementation of your context and DbSets.</span></span> <span data-ttu-id="1c3c1-110">这使你可以很好地控制类的行为，但可能涉及到编写和拥有合理的代码量。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-110">This gives you a lot of control over how the classes behave but can involve writing and owning a reasonable amount of code.</span></span>  
-- <span data-ttu-id="1c3c1-111">**使用模拟框架创建测试双精度**型–使用模拟框架（如 Moq），可以在运行时动态创建上下文和集。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-111">**Use a mocking framework to create test doubles** – Using a mocking framework (such as Moq) you can have the in-memory implementations of you context and sets created dynamically at runtime for you.</span></span>  
+- <span data-ttu-id="0320b-109">**创建自己的测试双精度**型–此方法涉及编写您自己的上下文和 dbset 的内存中实现。</span><span class="sxs-lookup"><span data-stu-id="0320b-109">**Create your own test doubles** – This approach involves writing your own in-memory implementation of your context and DbSets.</span></span> <span data-ttu-id="0320b-110">这使你可以很好地控制类的行为，但可能涉及到编写和拥有合理的代码量。</span><span class="sxs-lookup"><span data-stu-id="0320b-110">This gives you a lot of control over how the classes behave but can involve writing and owning a reasonable amount of code.</span></span>  
+- <span data-ttu-id="0320b-111">**使用模拟框架创建测试双精度**型–使用模拟框架（如 Moq），可以在运行时动态创建上下文和集。</span><span class="sxs-lookup"><span data-stu-id="0320b-111">**Use a mocking framework to create test doubles** – Using a mocking framework (such as Moq) you can have the in-memory implementations of you context and sets created dynamically at runtime for you.</span></span>  
 
-<span data-ttu-id="1c3c1-112">本文将介绍如何创建自己的测试 double。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-112">This article will deal with creating your own test double.</span></span> <span data-ttu-id="1c3c1-113">有关使用模拟框架的信息，请参阅使用[模拟框架进行测试](mocking.md)。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-113">For information on using a mocking framework see [Testing with a Mocking Framework](mocking.md).</span></span>  
+<span data-ttu-id="0320b-112">本文将介绍如何创建自己的测试 double。</span><span class="sxs-lookup"><span data-stu-id="0320b-112">This article will deal with creating your own test double.</span></span> <span data-ttu-id="0320b-113">有关使用模拟框架的信息，请参阅使用[模拟框架进行测试](mocking.md)。</span><span class="sxs-lookup"><span data-stu-id="0320b-113">For information on using a mocking framework see [Testing with a Mocking Framework](mocking.md).</span></span>  
 
-## <a name="testing-with-pre-ef6-versions"></a><span data-ttu-id="1c3c1-114">用预 EF6 版本测试</span><span class="sxs-lookup"><span data-stu-id="1c3c1-114">Testing with pre-EF6 versions</span></span>  
+## <a name="testing-with-pre-ef6-versions"></a><span data-ttu-id="0320b-114">用预 EF6 版本测试</span><span class="sxs-lookup"><span data-stu-id="0320b-114">Testing with pre-EF6 versions</span></span>  
 
-<span data-ttu-id="1c3c1-115">本文中所示的代码与 EF6 兼容。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-115">The code shown in this article is compatible with EF6.</span></span> <span data-ttu-id="1c3c1-116">若要使用 EF5 和更早的版本进行测试，请参阅[使用虚设上下文进行测试](https://romiller.com/2012/02/14/testing-with-a-fake-dbcontext/)。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-116">For testing with EF5 and earlier version see [Testing with a Fake Context](https://romiller.com/2012/02/14/testing-with-a-fake-dbcontext/).</span></span>  
+<span data-ttu-id="0320b-115">本文中所示的代码与 EF6 兼容。</span><span class="sxs-lookup"><span data-stu-id="0320b-115">The code shown in this article is compatible with EF6.</span></span> <span data-ttu-id="0320b-116">若要使用 EF5 和更早的版本进行测试，请参阅[使用虚设上下文进行测试](https://romiller.com/2012/02/14/testing-with-a-fake-dbcontext/)。</span><span class="sxs-lookup"><span data-stu-id="0320b-116">For testing with EF5 and earlier version see [Testing with a Fake Context](https://romiller.com/2012/02/14/testing-with-a-fake-dbcontext/).</span></span>  
 
-## <a name="limitations-of-ef-in-memory-test-doubles"></a><span data-ttu-id="1c3c1-117">EF 内存中测试的限制双精度</span><span class="sxs-lookup"><span data-stu-id="1c3c1-117">Limitations of EF in-memory test doubles</span></span>  
+## <a name="limitations-of-ef-in-memory-test-doubles"></a><span data-ttu-id="0320b-117">EF 内存中测试的限制双精度</span><span class="sxs-lookup"><span data-stu-id="0320b-117">Limitations of EF in-memory test doubles</span></span>  
 
-<span data-ttu-id="1c3c1-118">内存中测试双精度型可以是一种提供使用 EF 的应用程序的单元测试级别的好方法。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-118">In-memory test doubles can be a good way to provide unit test level coverage of bits of your application that use EF.</span></span> <span data-ttu-id="1c3c1-119">但是，在执行此操作时，将使用 LINQ to Objects 对内存中数据执行查询。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-119">However, when doing this you are using LINQ to Objects to execute queries against in-memory data.</span></span> <span data-ttu-id="1c3c1-120">这可能会导致不同的行为，而不是使用 EF 的 LINQ 提供程序（LINQ to Entities）将查询转换为对数据库运行的 SQL。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-120">This can result in different behavior than using EF’s LINQ provider (LINQ to Entities) to translate queries into SQL that is run against your database.</span></span>  
+<span data-ttu-id="0320b-118">内存中测试双精度型可以是一种提供使用 EF 的应用程序的单元测试级别的好方法。</span><span class="sxs-lookup"><span data-stu-id="0320b-118">In-memory test doubles can be a good way to provide unit test level coverage of bits of your application that use EF.</span></span> <span data-ttu-id="0320b-119">但是，在执行此操作时，将使用 LINQ to Objects 对内存中数据执行查询。</span><span class="sxs-lookup"><span data-stu-id="0320b-119">However, when doing this you are using LINQ to Objects to execute queries against in-memory data.</span></span> <span data-ttu-id="0320b-120">这可能会导致不同的行为，而不是使用 EF 的 LINQ 提供程序（LINQ to Entities）将查询转换为对数据库运行的 SQL。</span><span class="sxs-lookup"><span data-stu-id="0320b-120">This can result in different behavior than using EF’s LINQ provider (LINQ to Entities) to translate queries into SQL that is run against your database.</span></span>  
 
-<span data-ttu-id="1c3c1-121">这种差异的一个示例就是加载相关数据。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-121">One example of such a difference is loading related data.</span></span> <span data-ttu-id="1c3c1-122">如果创建一系列博客，其中每个博客都有相关的文章，则在使用内存中数据时，将始终为每个博客加载相关文章。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-122">If you create a series of Blogs that each have related Posts, then when using in-memory data the related Posts will always be loaded for each Blog.</span></span> <span data-ttu-id="1c3c1-123">但是，在对数据库运行时，仅当使用 Include 方法时才会加载数据。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-123">However, when running against a database the data will only be loaded if you use the Include method.</span></span>  
+<span data-ttu-id="0320b-121">这种差异的一个示例就是加载相关数据。</span><span class="sxs-lookup"><span data-stu-id="0320b-121">One example of such a difference is loading related data.</span></span> <span data-ttu-id="0320b-122">如果创建一系列博客，其中每个博客都有相关的文章，则在使用内存中数据时，将始终为每个博客加载相关文章。</span><span class="sxs-lookup"><span data-stu-id="0320b-122">If you create a series of Blogs that each have related Posts, then when using in-memory data the related Posts will always be loaded for each Blog.</span></span> <span data-ttu-id="0320b-123">但是，在对数据库运行时，仅当使用 Include 方法时才会加载数据。</span><span class="sxs-lookup"><span data-stu-id="0320b-123">However, when running against a database the data will only be loaded if you use the Include method.</span></span>  
 
-<span data-ttu-id="1c3c1-124">出于此原因，建议始终包括某个级别的端到端测试（除了单元测试），以确保应用程序能够对数据库正常运行。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-124">For this reason, it is recommended to always include some level of end-to-end testing (in addition to your unit tests) to ensure your application works correctly against a database.</span></span>  
+<span data-ttu-id="0320b-124">出于此原因，建议始终包括某个级别的端到端测试（除了单元测试），以确保应用程序能够对数据库正常运行。</span><span class="sxs-lookup"><span data-stu-id="0320b-124">For this reason, it is recommended to always include some level of end-to-end testing (in addition to your unit tests) to ensure your application works correctly against a database.</span></span>  
 
-## <a name="following-along-with-this-article"></a><span data-ttu-id="1c3c1-125">与本文一起介绍</span><span class="sxs-lookup"><span data-stu-id="1c3c1-125">Following along with this article</span></span>  
+## <a name="following-along-with-this-article"></a><span data-ttu-id="0320b-125">与本文一起介绍</span><span class="sxs-lookup"><span data-stu-id="0320b-125">Following along with this article</span></span>  
 
-<span data-ttu-id="1c3c1-126">本文提供了完整的代码清单，你可以将其复制到 Visual Studio 中，以根据你的需要进行。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-126">This article gives complete code listings that you can copy into Visual Studio to follow along if you wish.</span></span> <span data-ttu-id="1c3c1-127">最简单的方法是创建一个**单元测试项目**，并需要将 **.NET Framework 4.5**作为目标来完成使用 async 的部分。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-127">It's easiest to create a **Unit Test Project** and you will need to target **.NET Framework 4.5** to complete the sections that use async.</span></span>  
+<span data-ttu-id="0320b-126">本文提供了完整的代码清单，你可以将其复制到 Visual Studio 中，以根据你的需要进行。</span><span class="sxs-lookup"><span data-stu-id="0320b-126">This article gives complete code listings that you can copy into Visual Studio to follow along if you wish.</span></span> <span data-ttu-id="0320b-127">最简单的方法是创建一个**单元测试项目**，并需要将 **.NET Framework 4.5**作为目标来完成使用 async 的部分。</span><span class="sxs-lookup"><span data-stu-id="0320b-127">It's easiest to create a **Unit Test Project** and you will need to target **.NET Framework 4.5** to complete the sections that use async.</span></span>  
 
-## <a name="creating-a-context-interface"></a><span data-ttu-id="1c3c1-128">创建上下文接口</span><span class="sxs-lookup"><span data-stu-id="1c3c1-128">Creating a context interface</span></span>  
+## <a name="creating-a-context-interface"></a><span data-ttu-id="0320b-128">创建上下文接口</span><span class="sxs-lookup"><span data-stu-id="0320b-128">Creating a context interface</span></span>  
 
-<span data-ttu-id="1c3c1-129">我们将介绍如何测试使用 EF 模型的服务。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-129">We're going to look at testing a service that makes use of an EF model.</span></span> <span data-ttu-id="1c3c1-130">为了能够将 EF 上下文替换为内存中用于测试的版本，我们将定义 EF 上下文（和内存中双精度）将实现的接口。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-130">In order to be able to replace our EF context with an in-memory version for testing, we'll define an interface that our EF context (and it's in-memory double) will implement.</span></span>
+<span data-ttu-id="0320b-129">我们将介绍如何测试使用 EF 模型的服务。</span><span class="sxs-lookup"><span data-stu-id="0320b-129">We're going to look at testing a service that makes use of an EF model.</span></span> <span data-ttu-id="0320b-130">为了能够将 EF 上下文替换为内存中用于测试的版本，我们将定义 EF 上下文（和内存中双精度）将实现的接口。</span><span class="sxs-lookup"><span data-stu-id="0320b-130">In order to be able to replace our EF context with an in-memory version for testing, we'll define an interface that our EF context (and it's in-memory double) will implement.</span></span>
 
-<span data-ttu-id="1c3c1-131">我们将要测试的服务将使用上下文的 DbSet 属性来查询和修改数据，还会调用 SaveChanges 将更改推送到数据库。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-131">The service we are going to test will query and modify data using the DbSet properties of our context and also call SaveChanges to push changes to the database.</span></span> <span data-ttu-id="1c3c1-132">我们将这些成员包括在接口上。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-132">So we're including these members on the interface.</span></span>  
+<span data-ttu-id="0320b-131">我们将要测试的服务将使用上下文的 DbSet 属性来查询和修改数据，还会调用 SaveChanges 将更改推送到数据库。</span><span class="sxs-lookup"><span data-stu-id="0320b-131">The service we are going to test will query and modify data using the DbSet properties of our context and also call SaveChanges to push changes to the database.</span></span> <span data-ttu-id="0320b-132">我们将这些成员包括在接口上。</span><span class="sxs-lookup"><span data-stu-id="0320b-132">So we're including these members on the interface.</span></span>  
 
 ``` csharp
 using System.Data.Entity;
@@ -61,9 +61,9 @@ namespace TestingDemo
 }
 ```  
 
-## <a name="the-ef-model"></a><span data-ttu-id="1c3c1-133">EF 模型</span><span class="sxs-lookup"><span data-stu-id="1c3c1-133">The EF model</span></span>  
+## <a name="the-ef-model"></a><span data-ttu-id="0320b-133">EF 模型</span><span class="sxs-lookup"><span data-stu-id="0320b-133">The EF model</span></span>  
 
-<span data-ttu-id="1c3c1-134">要测试的服务利用的是由 "Bloggingcontext" 和博客和 Post 类组成的 EF 模型。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-134">The service we're going to test makes use of an EF model made up of the BloggingContext and the Blog and Post classes.</span></span> <span data-ttu-id="1c3c1-135">此代码可能是由 EF 设计器生成的，或是 Code First 模型中。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-135">This code may have been generated by the EF Designer or be a Code First model.</span></span>  
+<span data-ttu-id="0320b-134">要测试的服务利用的是由 "Bloggingcontext" 和博客和 Post 类组成的 EF 模型。</span><span class="sxs-lookup"><span data-stu-id="0320b-134">The service we're going to test makes use of an EF model made up of the BloggingContext and the Blog and Post classes.</span></span> <span data-ttu-id="0320b-135">此代码可能是由 EF 设计器生成的，或是 Code First 模型中。</span><span class="sxs-lookup"><span data-stu-id="0320b-135">This code may have been generated by the EF Designer or be a Code First model.</span></span>  
 
 ``` csharp
 using System.Collections.Generic;
@@ -98,19 +98,19 @@ namespace TestingDemo
 }
 ```  
 
-### <a name="implementing-the-context-interface-with-the-ef-designer"></a><span data-ttu-id="1c3c1-136">通过 EF 设计器实现上下文接口</span><span class="sxs-lookup"><span data-stu-id="1c3c1-136">Implementing the context interface with the EF Designer</span></span>  
+### <a name="implementing-the-context-interface-with-the-ef-designer"></a><span data-ttu-id="0320b-136">通过 EF 设计器实现上下文接口</span><span class="sxs-lookup"><span data-stu-id="0320b-136">Implementing the context interface with the EF Designer</span></span>  
 
-<span data-ttu-id="1c3c1-137">请注意，我们的上下文实现了 IBloggingContext 接口。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-137">Note that our context implements the IBloggingContext interface.</span></span>  
+<span data-ttu-id="0320b-137">请注意，我们的上下文实现了 IBloggingContext 接口。</span><span class="sxs-lookup"><span data-stu-id="0320b-137">Note that our context implements the IBloggingContext interface.</span></span>  
 
-<span data-ttu-id="1c3c1-138">如果使用 Code First，则可以直接编辑上下文来实现接口。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-138">If you are using Code First then you can edit your context directly to implement the interface.</span></span> <span data-ttu-id="1c3c1-139">如果使用的是 EF 设计器，则需要编辑生成上下文的 T4 模板。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-139">If you are using the EF Designer then you’ll need to edit the T4 template that generates your context.</span></span> <span data-ttu-id="1c3c1-140">打开\>\<model_name。Context.tt 文件嵌套在 edmx 文件下，查找以下代码片段，并将其添加到接口中，如下所示。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-140">Open up the \<model_name\>.Context.tt file that is nested under you edmx file, find the following fragment of code and add in the interface as shown.</span></span>  
+<span data-ttu-id="0320b-138">如果使用 Code First，则可以直接编辑上下文来实现接口。</span><span class="sxs-lookup"><span data-stu-id="0320b-138">If you are using Code First then you can edit your context directly to implement the interface.</span></span> <span data-ttu-id="0320b-139">如果使用的是 EF 设计器，则需要编辑生成上下文的 T4 模板。</span><span class="sxs-lookup"><span data-stu-id="0320b-139">If you are using the EF Designer then you’ll need to edit the T4 template that generates your context.</span></span> <span data-ttu-id="0320b-140">打开\>\<model_name。Context.tt 文件嵌套在 edmx 文件下，查找以下代码片段，并将其添加到接口中，如下所示。</span><span class="sxs-lookup"><span data-stu-id="0320b-140">Open up the \<model_name\>.Context.tt file that is nested under you edmx file, find the following fragment of code and add in the interface as shown.</span></span>  
 
 ``` csharp  
 <#=Accessibility.ForType(container)#> partial class <#=code.Escape(container)#> : DbContext, IBloggingContext
 ```  
 
-## <a name="service-to-be-tested"></a><span data-ttu-id="1c3c1-141">要测试的服务</span><span class="sxs-lookup"><span data-stu-id="1c3c1-141">Service to be tested</span></span>  
+## <a name="service-to-be-tested"></a><span data-ttu-id="0320b-141">要测试的服务</span><span class="sxs-lookup"><span data-stu-id="0320b-141">Service to be tested</span></span>  
 
-<span data-ttu-id="1c3c1-142">为了演示使用内存中测试的测试，我们将为 BlogService 编写一些测试。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-142">To demonstrate testing with in-memory test doubles we are going to be writing a couple of tests for a BlogService.</span></span> <span data-ttu-id="1c3c1-143">该服务可以创建新的博客（AddBlog）并返回按名称排序的所有博客（GetAllBlogs）。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-143">The service is capable of creating new blogs (AddBlog) and returning all Blogs ordered by name (GetAllBlogs).</span></span> <span data-ttu-id="1c3c1-144">除了 GetAllBlogs 之外，我们还提供了一个方法，该方法将异步获取按名称（GetAllBlogsAsync）排序的所有博客。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-144">In addition to GetAllBlogs, we’ve also provided a method that will asynchronously get all blogs ordered by name (GetAllBlogsAsync).</span></span>  
+<span data-ttu-id="0320b-142">为了演示使用内存中测试的测试，我们将为 BlogService 编写一些测试。</span><span class="sxs-lookup"><span data-stu-id="0320b-142">To demonstrate testing with in-memory test doubles we are going to be writing a couple of tests for a BlogService.</span></span> <span data-ttu-id="0320b-143">该服务可以创建新的博客（AddBlog）并返回按名称排序的所有博客（GetAllBlogs）。</span><span class="sxs-lookup"><span data-stu-id="0320b-143">The service is capable of creating new blogs (AddBlog) and returning all Blogs ordered by name (GetAllBlogs).</span></span> <span data-ttu-id="0320b-144">除了 GetAllBlogs 之外，我们还提供了一个方法，该方法将异步获取按名称（GetAllBlogsAsync）排序的所有博客。</span><span class="sxs-lookup"><span data-stu-id="0320b-144">In addition to GetAllBlogs, we’ve also provided a method that will asynchronously get all blogs ordered by name (GetAllBlogsAsync).</span></span>  
 
 ``` csharp
 using System.Collections.Generic;
@@ -159,13 +159,13 @@ namespace TestingDemo
 }
 ```
 
-## <a name="creating-the-in-memory-test-doubles"></a><span data-ttu-id="1c3c1-145">创建内存中测试双精度</span><span class="sxs-lookup"><span data-stu-id="1c3c1-145">Creating the in-memory test doubles</span></span>  
+## <a name="creating-the-in-memory-test-doubles"></a><span data-ttu-id="0320b-145">创建内存中测试双精度</span><span class="sxs-lookup"><span data-stu-id="0320b-145">Creating the in-memory test doubles</span></span>  
 
-<span data-ttu-id="1c3c1-146">现在，我们已经有了真正的 EF 模型和可使用该模型的服务，接下来可以创建可用于测试的内存中测试双精度。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-146">Now that we have the real EF model and the service that can use it, it's time to create the in-memory test double that we can use for testing.</span></span> <span data-ttu-id="1c3c1-147">我们为上下文创建了 TestContext 测试 double。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-147">We've created a TestContext test double for our context.</span></span> <span data-ttu-id="1c3c1-148">在测试中，我们会选择所需的行为，以便支持我们将要运行的测试。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-148">In test doubles we get to choose the behavior we want in order to support the tests we are going to run.</span></span> <span data-ttu-id="1c3c1-149">在此示例中，我们只是捕获调用 SaveChanges 的次数，但你可以包括验证所测试方案所需的任何逻辑。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-149">In this example we're just capturing the number of times SaveChanges is called, but you can include whatever logic is needed to verify the scenario you are testing.</span></span>  
+<span data-ttu-id="0320b-146">现在，我们已经有了真正的 EF 模型和可使用该模型的服务，接下来可以创建可用于测试的内存中测试双精度。</span><span class="sxs-lookup"><span data-stu-id="0320b-146">Now that we have the real EF model and the service that can use it, it's time to create the in-memory test double that we can use for testing.</span></span> <span data-ttu-id="0320b-147">我们为上下文创建了 TestContext 测试 double。</span><span class="sxs-lookup"><span data-stu-id="0320b-147">We've created a TestContext test double for our context.</span></span> <span data-ttu-id="0320b-148">在测试中，我们会选择所需的行为，以便支持我们将要运行的测试。</span><span class="sxs-lookup"><span data-stu-id="0320b-148">In test doubles we get to choose the behavior we want in order to support the tests we are going to run.</span></span> <span data-ttu-id="0320b-149">在此示例中，我们只是捕获调用 SaveChanges 的次数，但你可以包括验证所测试方案所需的任何逻辑。</span><span class="sxs-lookup"><span data-stu-id="0320b-149">In this example we're just capturing the number of times SaveChanges is called, but you can include whatever logic is needed to verify the scenario you are testing.</span></span>  
 
-<span data-ttu-id="1c3c1-150">我们还创建了 TestDbSet 来提供 DbSet 的内存中实现。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-150">We've also created a TestDbSet that provides an in-memory implementation of DbSet.</span></span> <span data-ttu-id="1c3c1-151">我们为 DbSet 上的所有方法提供了一个完整的实现（Find 除外），但你只需实现测试方案将使用的成员。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-151">We've provided a complete implemention for all the methods on DbSet (except for Find), but you only need to implement the members that your test scenario will use.</span></span>  
+<span data-ttu-id="0320b-150">我们还创建了 TestDbSet 来提供 DbSet 的内存中实现。</span><span class="sxs-lookup"><span data-stu-id="0320b-150">We've also created a TestDbSet that provides an in-memory implementation of DbSet.</span></span> <span data-ttu-id="0320b-151">我们为 DbSet 上的所有方法提供了一个完整的实现（Find 除外），但你只需实现测试方案将使用的成员。</span><span class="sxs-lookup"><span data-stu-id="0320b-151">We've provided a complete implemention for all the methods on DbSet (except for Find), but you only need to implement the members that your test scenario will use.</span></span>  
 
-<span data-ttu-id="1c3c1-152">TestDbSet 利用我们提供的其他一些基础结构类，以确保可以处理异步查询。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-152">TestDbSet makes use of some other infrastructure classes that we've included to ensure that async queries can be processed.</span></span>  
+<span data-ttu-id="0320b-152">TestDbSet 利用我们提供的其他一些基础结构类，以确保可以处理异步查询。</span><span class="sxs-lookup"><span data-stu-id="0320b-152">TestDbSet makes use of some other infrastructure classes that we've included to ensure that async queries can be processed.</span></span>  
 
 ``` csharp
 using System;
@@ -372,9 +372,9 @@ namespace TestingDemo
 }
 ```  
 
-### <a name="implementing-find"></a><span data-ttu-id="1c3c1-153">实现查找</span><span class="sxs-lookup"><span data-stu-id="1c3c1-153">Implementing Find</span></span>  
+### <a name="implementing-find"></a><span data-ttu-id="0320b-153">实现查找</span><span class="sxs-lookup"><span data-stu-id="0320b-153">Implementing Find</span></span>  
 
-<span data-ttu-id="1c3c1-154">Find 方法难以以一般方式实现。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-154">The Find method is difficult to implement in a generic fashion.</span></span> <span data-ttu-id="1c3c1-155">如果需要测试使用 Find 方法的代码，最简单的方法是为需要支持 find 的每个实体类型创建测试 DbSet。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-155">If you need to test code that makes use of the Find method it is easiest to create a test DbSet for each of the entity types that need to support find.</span></span> <span data-ttu-id="1c3c1-156">然后，可以编写逻辑来查找特定类型的实体，如下所示。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-156">You can then write logic to find that particular type of entity, as shown below.</span></span>  
+<span data-ttu-id="0320b-154">Find 方法难以以一般方式实现。</span><span class="sxs-lookup"><span data-stu-id="0320b-154">The Find method is difficult to implement in a generic fashion.</span></span> <span data-ttu-id="0320b-155">如果需要测试使用 Find 方法的代码，最简单的方法是为需要支持 find 的每个实体类型创建测试 DbSet。</span><span class="sxs-lookup"><span data-stu-id="0320b-155">If you need to test code that makes use of the Find method it is easiest to create a test DbSet for each of the entity types that need to support find.</span></span> <span data-ttu-id="0320b-156">然后，可以编写逻辑来查找特定类型的实体，如下所示。</span><span class="sxs-lookup"><span data-stu-id="0320b-156">You can then write logic to find that particular type of entity, as shown below.</span></span>  
 
 ``` csharp
 using System.Linq;
@@ -392,11 +392,11 @@ namespace TestingDemo
 }
 ```  
 
-## <a name="writing-some-tests"></a><span data-ttu-id="1c3c1-157">编写一些测试</span><span class="sxs-lookup"><span data-stu-id="1c3c1-157">Writing some tests</span></span>  
+## <a name="writing-some-tests"></a><span data-ttu-id="0320b-157">编写一些测试</span><span class="sxs-lookup"><span data-stu-id="0320b-157">Writing some tests</span></span>  
 
-<span data-ttu-id="1c3c1-158">这就是开始测试时需要执行的所有操作。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-158">That’s all we need to do to start testing.</span></span> <span data-ttu-id="1c3c1-159">以下测试将创建 TestContext，然后基于此上下文创建一个服务。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-159">The following test creates a TestContext and then a service based on this context.</span></span> <span data-ttu-id="1c3c1-160">然后，使用 AddBlog 方法创建新的博客。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-160">The service is then used to create a new blog – using the AddBlog method.</span></span> <span data-ttu-id="1c3c1-161">最后，此测试将验证服务是否已将新的博客添加到上下文的 "博客" 属性，并在上下文中调用 "SaveChanges"。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-161">Finally, the test verifies that the service added a new Blog to the context's Blogs property and called SaveChanges on the context.</span></span>  
+<span data-ttu-id="0320b-158">这就是开始测试时需要执行的所有操作。</span><span class="sxs-lookup"><span data-stu-id="0320b-158">That’s all we need to do to start testing.</span></span> <span data-ttu-id="0320b-159">以下测试将创建 TestContext，然后基于此上下文创建一个服务。</span><span class="sxs-lookup"><span data-stu-id="0320b-159">The following test creates a TestContext and then a service based on this context.</span></span> <span data-ttu-id="0320b-160">然后，使用 AddBlog 方法创建新的博客。</span><span class="sxs-lookup"><span data-stu-id="0320b-160">The service is then used to create a new blog – using the AddBlog method.</span></span> <span data-ttu-id="0320b-161">最后，此测试将验证服务是否已将新的博客添加到上下文的 "博客" 属性，并在上下文中调用 "SaveChanges"。</span><span class="sxs-lookup"><span data-stu-id="0320b-161">Finally, the test verifies that the service added a new Blog to the context's Blogs property and called SaveChanges on the context.</span></span>  
 
-<span data-ttu-id="1c3c1-162">这只是您可以使用内存中测试双精度测试的类型的示例，您可以根据您的要求调整测试的逻辑加倍和验证。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-162">This is just an example of the types of things you can test with an in-memory test double and you can adjust the logic of the test doubles and the verification to meet your requirements.</span></span>  
+<span data-ttu-id="0320b-162">这只是您可以使用内存中测试双精度测试的类型的示例，您可以根据您的要求调整测试的逻辑加倍和验证。</span><span class="sxs-lookup"><span data-stu-id="0320b-162">This is just an example of the types of things you can test with an in-memory test double and you can adjust the logic of the test doubles and the verification to meet your requirements.</span></span>  
 
 ``` csharp
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -424,7 +424,7 @@ namespace TestingDemo
 }
 ```  
 
-<span data-ttu-id="1c3c1-163">下面是测试的另一个示例-这是执行查询的另一个示例。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-163">Here is another example of a test - this time one that performs a query.</span></span> <span data-ttu-id="1c3c1-164">首先，通过在其 "博客" 属性中创建包含某些数据的测试上下文来开始测试，请注意，数据不按字母顺序排序。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-164">The test starts by creating a test context with some data in its Blog property - note that the data is not in alphabetical order.</span></span> <span data-ttu-id="1c3c1-165">然后，可以基于测试上下文创建 BlogService，并确保从 GetAllBlogs 返回的数据按名称排序。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-165">We can then create a BlogService based on our test context and ensure that the data we get back from GetAllBlogs is ordered by name.</span></span>  
+<span data-ttu-id="0320b-163">下面是测试的另一个示例-这是执行查询的另一个示例。</span><span class="sxs-lookup"><span data-stu-id="0320b-163">Here is another example of a test - this time one that performs a query.</span></span> <span data-ttu-id="0320b-164">首先，通过在其 "博客" 属性中创建包含某些数据的测试上下文来开始测试，请注意，数据不按字母顺序排序。</span><span class="sxs-lookup"><span data-stu-id="0320b-164">The test starts by creating a test context with some data in its Blog property - note that the data is not in alphabetical order.</span></span> <span data-ttu-id="0320b-165">然后，可以基于测试上下文创建 BlogService，并确保从 GetAllBlogs 返回的数据按名称排序。</span><span class="sxs-lookup"><span data-stu-id="0320b-165">We can then create a BlogService based on our test context and ensure that the data we get back from GetAllBlogs is ordered by name.</span></span>  
 
 ``` csharp
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -454,7 +454,7 @@ namespace TestingDemo
 }
 ```  
 
-<span data-ttu-id="1c3c1-166">最后，我们将编写一个使用异步方法的测试，以确保[TestDbSet](#creating-the-in-memory-test-doubles)中包含的异步基础结构工作正常。</span><span class="sxs-lookup"><span data-stu-id="1c3c1-166">Finally, we'll write one more test that uses our async method to ensure that the async infrastructure we included in [TestDbSet](#creating-the-in-memory-test-doubles) is working.</span></span>  
+<span data-ttu-id="0320b-166">最后，我们将编写一个使用异步方法的测试，以确保[TestDbSet](#creating-the-in-memory-test-doubles)中包含的异步基础结构工作正常。</span><span class="sxs-lookup"><span data-stu-id="0320b-166">Finally, we'll write one more test that uses our async method to ensure that the async infrastructure we included in [TestDbSet](#creating-the-in-memory-test-doubles) is working.</span></span>  
 
 ``` csharp
 using Microsoft.VisualStudio.TestTools.UnitTesting;

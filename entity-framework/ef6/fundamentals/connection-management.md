@@ -4,32 +4,32 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: ecaa5a27-b19e-4bf9-8142-a3fb00642270
 ms.openlocfilehash: a6352bbbc38c38bd5f30536736ec969056df2c7d
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45489331"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414865"
 ---
-# <a name="connection-management"></a><span data-ttu-id="ba834-102">连接管理</span><span class="sxs-lookup"><span data-stu-id="ba834-102">Connection management</span></span>
-<span data-ttu-id="ba834-103">此页介绍实体框架的行为将连接传递给上下文和功能方面**Database.Connection.Open()** API。</span><span class="sxs-lookup"><span data-stu-id="ba834-103">This page describes the behavior of Entity Framework with regard to passing connections to the context and the functionality of the **Database.Connection.Open()** API.</span></span>  
+# <a name="connection-management"></a><span data-ttu-id="cf062-102">连接管理</span><span class="sxs-lookup"><span data-stu-id="cf062-102">Connection management</span></span>
+<span data-ttu-id="cf062-103">本页介绍了在将连接传递到上下文和**数据库**的功能时，实体框架的行为。</span><span class="sxs-lookup"><span data-stu-id="cf062-103">This page describes the behavior of Entity Framework with regard to passing connections to the context and the functionality of the **Database.Connection.Open()** API.</span></span>  
 
-## <a name="passing-connections-to-the-context"></a><span data-ttu-id="ba834-104">传递到上下文的连接</span><span class="sxs-lookup"><span data-stu-id="ba834-104">Passing Connections to the Context</span></span>  
+## <a name="passing-connections-to-the-context"></a><span data-ttu-id="cf062-104">将连接传递到上下文</span><span class="sxs-lookup"><span data-stu-id="cf062-104">Passing Connections to the Context</span></span>  
 
-### <a name="behavior-for-ef5-and-earlier-versions"></a><span data-ttu-id="ba834-105">EF5 和较早版本的行为</span><span class="sxs-lookup"><span data-stu-id="ba834-105">Behavior for EF5 and earlier versions</span></span>  
+### <a name="behavior-for-ef5-and-earlier-versions"></a><span data-ttu-id="cf062-105">EF5 及更早版本的行为</span><span class="sxs-lookup"><span data-stu-id="cf062-105">Behavior for EF5 and earlier versions</span></span>  
 
-<span data-ttu-id="ba834-106">有两个构造函数接受连接：</span><span class="sxs-lookup"><span data-stu-id="ba834-106">There are two constructors which accept connections:</span></span>  
+<span data-ttu-id="cf062-106">有两个接受连接的构造函数：</span><span class="sxs-lookup"><span data-stu-id="cf062-106">There are two constructors which accept connections:</span></span>  
 
 ``` csharp
 public DbContext(DbConnection existingConnection, bool contextOwnsConnection)
 public DbContext(DbConnection existingConnection, DbCompiledModel model, bool contextOwnsConnection)
 ```  
 
-<span data-ttu-id="ba834-107">可以使用这些，但必须先解决了几个限制：</span><span class="sxs-lookup"><span data-stu-id="ba834-107">It is possible to use these but you have to work around a couple of limitations:</span></span>  
+<span data-ttu-id="cf062-107">可以使用这些方法，但必须解决几个限制：</span><span class="sxs-lookup"><span data-stu-id="cf062-107">It is possible to use these but you have to work around a couple of limitations:</span></span>  
 
-1. <span data-ttu-id="ba834-108">如果传递的打开连接到其中一种然后第一次该框架将尝试使用它引发 InvalidOperationException 说它无法重新打开已打开的连接。</span><span class="sxs-lookup"><span data-stu-id="ba834-108">If you pass an open connection to either of these then the first time the framework attempts to use it an InvalidOperationException is thrown saying it cannot re-open an already open connection.</span></span>  
-2. <span data-ttu-id="ba834-109">ContextOwnsConnection 标志被解释为表示在释放上下文时应释放基础存储区连接。</span><span class="sxs-lookup"><span data-stu-id="ba834-109">The contextOwnsConnection flag is interpreted to mean whether or not the underlying store connection should be disposed when the context is disposed.</span></span> <span data-ttu-id="ba834-110">但是，无论启用该设置存储连接始终关闭时释放上下文。</span><span class="sxs-lookup"><span data-stu-id="ba834-110">But, regardless of that setting, the store connection is always closed when the context is disposed.</span></span> <span data-ttu-id="ba834-111">因此如果必须使用相同的连接的多个 DbContext 任何上下文被处置首先将关闭连接 （同样如果具有混合的现有的 ADO.NET 连接，使用 DbContext，DbContext 将始终关闭连接时它已释放）.</span><span class="sxs-lookup"><span data-stu-id="ba834-111">So if you have more than one DbContext with the same connection whichever context is disposed first will close the connection (similarly if you have mixed an existing ADO.NET connection with a DbContext, DbContext will always close the connection when it is disposed).</span></span>  
+1. <span data-ttu-id="cf062-108">如果将打开的连接传递到其中的任何一个连接，则在框架第一次尝试使用它时，将引发 InvalidOperationException，指出它无法重新打开已打开的连接。</span><span class="sxs-lookup"><span data-stu-id="cf062-108">If you pass an open connection to either of these then the first time the framework attempts to use it an InvalidOperationException is thrown saying it cannot re-open an already open connection.</span></span>  
+2. <span data-ttu-id="cf062-109">ContextOwnsConnection 标志解释为在释放上下文时是否应释放基础存储连接。</span><span class="sxs-lookup"><span data-stu-id="cf062-109">The contextOwnsConnection flag is interpreted to mean whether or not the underlying store connection should be disposed when the context is disposed.</span></span> <span data-ttu-id="cf062-110">但无论此设置如何，在释放上下文时，存储连接始终关闭。</span><span class="sxs-lookup"><span data-stu-id="cf062-110">But, regardless of that setting, the store connection is always closed when the context is disposed.</span></span> <span data-ttu-id="cf062-111">因此，如果有多个具有相同连接的 DbContext，则在第一次处理上下文时将关闭连接（同样，如果已使用 DbContext 混合了现有的 ADO.NET 连接，DbContext 将始终在其释放时关闭连接）.</span><span class="sxs-lookup"><span data-stu-id="cf062-111">So if you have more than one DbContext with the same connection whichever context is disposed first will close the connection (similarly if you have mixed an existing ADO.NET connection with a DbContext, DbContext will always close the connection when it is disposed).</span></span>  
 
-<span data-ttu-id="ba834-112">就可以通过传递已关闭的连接，并仅执行已创建的所有上下文后会打开它的代码解决上面的第一个限制：</span><span class="sxs-lookup"><span data-stu-id="ba834-112">It is possible to work around the first limitation above by passing a closed connection and only executing code that would open it once all contexts have been created:</span></span>  
+<span data-ttu-id="cf062-112">通过传递关闭的连接并仅执行在创建所有上下文后将打开该连接的代码，可以绕过上述首个限制：</span><span class="sxs-lookup"><span data-stu-id="cf062-112">It is possible to work around the first limitation above by passing a closed connection and only executing code that would open it once all contexts have been created:</span></span>  
 
 ``` csharp
 using System.Collections.Generic;
@@ -71,11 +71,11 @@ namespace ConnectionManagementExamples
 }
 ```  
 
-<span data-ttu-id="ba834-113">第二个限制只是意味着您需要避免在您准备好要关闭的连接之前释放任何 DbContext 对象。</span><span class="sxs-lookup"><span data-stu-id="ba834-113">The second limitation just means you need to refrain from disposing any of your DbContext objects until you are ready for the connection to be closed.</span></span>  
+<span data-ttu-id="cf062-113">第二个限制是指您需要避免释放任何 DbContext 对象，直到您已准备好连接才能关闭。</span><span class="sxs-lookup"><span data-stu-id="cf062-113">The second limitation just means you need to refrain from disposing any of your DbContext objects until you are ready for the connection to be closed.</span></span>  
 
-### <a name="behavior-in-ef6-and-future-versions"></a><span data-ttu-id="ba834-114">EF6 和未来版本中的行为</span><span class="sxs-lookup"><span data-stu-id="ba834-114">Behavior in EF6 and future versions</span></span>  
+### <a name="behavior-in-ef6-and-future-versions"></a><span data-ttu-id="cf062-114">EF6 和未来版本中的行为</span><span class="sxs-lookup"><span data-stu-id="cf062-114">Behavior in EF6 and future versions</span></span>  
 
-<span data-ttu-id="ba834-115">在 EF6 和未来版本 DbContext 具有相同的两个构造函数，但不再需要时接收到关闭的连接传递给构造函数。</span><span class="sxs-lookup"><span data-stu-id="ba834-115">In EF6 and future versions the DbContext has the same two constructors but no longer requires that the connection passed to the constructor be closed when it is received.</span></span> <span data-ttu-id="ba834-116">因此，这是现在可以：</span><span class="sxs-lookup"><span data-stu-id="ba834-116">So this is now possible:</span></span>  
+<span data-ttu-id="cf062-115">在 EF6 和未来的版本中，DbContext 具有相同的两个构造函数，但不再要求在收到时传递到构造函数的连接被关闭。</span><span class="sxs-lookup"><span data-stu-id="cf062-115">In EF6 and future versions the DbContext has the same two constructors but no longer requires that the connection passed to the constructor be closed when it is received.</span></span> <span data-ttu-id="cf062-116">现在可以这样做：</span><span class="sxs-lookup"><span data-stu-id="cf062-116">So this is now possible:</span></span>  
 
 ``` csharp
 using System.Collections.Generic;
@@ -123,24 +123,24 @@ namespace ConnectionManagementExamples
 }
 ```  
 
-<span data-ttu-id="ba834-117">此外 contextOwnsConnection 标志现在可以控制连接是同时关闭和释放时释放 DbContext。</span><span class="sxs-lookup"><span data-stu-id="ba834-117">Also the contextOwnsConnection flag now controls whether or not the connection is both closed and disposed when the DbContext is disposed.</span></span> <span data-ttu-id="ba834-118">因此在上面的示例连接时不会关闭的上下文是重要的是在以前版本的 EF，但而不是连接本身被释放后释放 （第 32 行） （第 40 行）。</span><span class="sxs-lookup"><span data-stu-id="ba834-118">So in the above example the connection is not closed when the context is disposed (line 32) as it would have been in previous versions of EF, but rather when the connection itself is disposed (line 40).</span></span>  
+<span data-ttu-id="cf062-117">此外，contextOwnsConnection 标志现在控制在释放 DbContext 时是否关闭并释放连接。</span><span class="sxs-lookup"><span data-stu-id="cf062-117">Also the contextOwnsConnection flag now controls whether or not the connection is both closed and disposed when the DbContext is disposed.</span></span> <span data-ttu-id="cf062-118">因此，在上述示例中，当上下文被释放（行32）时，连接将不会关闭，因为它已在 EF 的以前版本中，而是在断开连接本身的情况下（第40行）。</span><span class="sxs-lookup"><span data-stu-id="cf062-118">So in the above example the connection is not closed when the context is disposed (line 32) as it would have been in previous versions of EF, but rather when the connection itself is disposed (line 40).</span></span>  
 
-<span data-ttu-id="ba834-119">当然，这是连接 (只需设置 contextOwnsConnection 为 true，或使用其他构造函数之一) 控制对 dbcontext 仍可以根据需要。</span><span class="sxs-lookup"><span data-stu-id="ba834-119">Of course it is still possible for the DbContext to take control of the connection (just set contextOwnsConnection to true or use one of the other constructors) if you so wish.</span></span>  
+<span data-ttu-id="cf062-119">当然，DbContext 仍有可能控制连接（只需将 contextOwnsConnection 设置为 true，或者使用其他构造函数之一）。</span><span class="sxs-lookup"><span data-stu-id="cf062-119">Of course it is still possible for the DbContext to take control of the connection (just set contextOwnsConnection to true or use one of the other constructors) if you so wish.</span></span>  
 
 > [!NOTE]
-> <span data-ttu-id="ba834-120">使用此新模型中使用事务时，有一些其他注意事项。</span><span class="sxs-lookup"><span data-stu-id="ba834-120">There are some additional considerations when using transactions with this new model.</span></span> <span data-ttu-id="ba834-121">有关详细信息，请参阅[使用事务](~/ef6/saving/transactions.md)。</span><span class="sxs-lookup"><span data-stu-id="ba834-121">For details see [Working with Transactions](~/ef6/saving/transactions.md).</span></span>  
+> <span data-ttu-id="cf062-120">在此新模型中使用事务时，还有一些其他注意事项。</span><span class="sxs-lookup"><span data-stu-id="cf062-120">There are some additional considerations when using transactions with this new model.</span></span> <span data-ttu-id="cf062-121">有关详细信息，请参阅使用[事务](~/ef6/saving/transactions.md)。</span><span class="sxs-lookup"><span data-stu-id="cf062-121">For details see [Working with Transactions](~/ef6/saving/transactions.md).</span></span>  
 
-## <a name="databaseconnectionopen"></a><span data-ttu-id="ba834-122">Database.Connection.Open()</span><span class="sxs-lookup"><span data-stu-id="ba834-122">Database.Connection.Open()</span></span>  
+## <a name="databaseconnectionopen"></a><span data-ttu-id="cf062-122">Connection. Open （）</span><span class="sxs-lookup"><span data-stu-id="cf062-122">Database.Connection.Open()</span></span>  
 
-### <a name="behavior-for-ef5-and-earlier-versions"></a><span data-ttu-id="ba834-123">EF5 和较早版本的行为</span><span class="sxs-lookup"><span data-stu-id="ba834-123">Behavior for EF5 and earlier versions</span></span>  
+### <a name="behavior-for-ef5-and-earlier-versions"></a><span data-ttu-id="cf062-123">EF5 及更早版本的行为</span><span class="sxs-lookup"><span data-stu-id="cf062-123">Behavior for EF5 and earlier versions</span></span>  
 
-<span data-ttu-id="ba834-124">在 EF5 和早期版本中是一个 bug，以便**ObjectContext.Connection.State**未更新以反映基础存储区连接的真实状态。</span><span class="sxs-lookup"><span data-stu-id="ba834-124">In EF5 and earlier versions there is a bug such that the **ObjectContext.Connection.State** was not updated to reflect the true state of the underlying store connection.</span></span> <span data-ttu-id="ba834-125">例如，如果执行下面的代码，可以返回状态**Closed**尽管事实上基础存储连接**打开**。</span><span class="sxs-lookup"><span data-stu-id="ba834-125">For example, if you executed the following code you can be returned the status **Closed** even though in fact the underlying store connection is **Open**.</span></span>  
+<span data-ttu-id="cf062-124">在 EF5 及更早版本中，存在一个 bug，以便不会更新**ObjectContext** ，以反映基础存储连接的真实状态。</span><span class="sxs-lookup"><span data-stu-id="cf062-124">In EF5 and earlier versions there is a bug such that the **ObjectContext.Connection.State** was not updated to reflect the true state of the underlying store connection.</span></span> <span data-ttu-id="cf062-125">例如，如果执行了下面的代码，则可以将状态视为**已关闭**，即使基础存储连接已**打开**。</span><span class="sxs-lookup"><span data-stu-id="cf062-125">For example, if you executed the following code you can be returned the status **Closed** even though in fact the underlying store connection is **Open**.</span></span>  
 
 ``` csharp
 ((IObjectContextAdapter)context).ObjectContext.Connection.State
 ```  
 
-<span data-ttu-id="ba834-126">另外，如果通过调用 Database.Connection.Open() 打开数据库连接将打开直到下一次执行查询或调用任何内容需要数据库连接 (例如，但在 SaveChanges())，基础存储连接将关闭。</span><span class="sxs-lookup"><span data-stu-id="ba834-126">Separately, if you open the database connection by calling Database.Connection.Open() it will be open until the next time you execute a query or call anything which requires a database connection (for example, SaveChanges()) but after that the underlying store connection will be closed.</span></span> <span data-ttu-id="ba834-127">上下文将然后重新打开并重新关闭连接另一个数据库操作是必需的任何时间：</span><span class="sxs-lookup"><span data-stu-id="ba834-127">The context will then re-open and re-close the connection any time another database operation is required:</span></span>  
+<span data-ttu-id="cf062-126">另外，如果您通过调用 "数据库连接" 打开数据库连接（），则在下一次执行查询或调用需要数据库连接的任何内容（例如 SaveChanges （））之后但在底层存储区之后，就会打开数据库连接。连接将关闭。</span><span class="sxs-lookup"><span data-stu-id="cf062-126">Separately, if you open the database connection by calling Database.Connection.Open() it will be open until the next time you execute a query or call anything which requires a database connection (for example, SaveChanges()) but after that the underlying store connection will be closed.</span></span> <span data-ttu-id="cf062-127">然后，上下文将重新打开并在每次需要另一数据库操作时重新关闭连接：</span><span class="sxs-lookup"><span data-stu-id="cf062-127">The context will then re-open and re-close the connection any time another database operation is required:</span></span>  
 
 ``` csharp
 using System;
@@ -184,14 +184,14 @@ namespace ConnectionManagementExamples
 }
 ```  
 
-### <a name="behavior-in-ef6-and-future-versions"></a><span data-ttu-id="ba834-128">EF6 和未来版本中的行为</span><span class="sxs-lookup"><span data-stu-id="ba834-128">Behavior in EF6 and future versions</span></span>  
+### <a name="behavior-in-ef6-and-future-versions"></a><span data-ttu-id="cf062-128">EF6 和未来版本中的行为</span><span class="sxs-lookup"><span data-stu-id="cf062-128">Behavior in EF6 and future versions</span></span>  
 
-<span data-ttu-id="ba834-129">EF6 和未来版本我们已采取的方法，如果调用代码选择通过调用上下文打开连接。Database.Connection.Open()，则具有充分的理由这样做，框架将假定它想要控制打开和关闭的连接，并将不再自动关闭连接。</span><span class="sxs-lookup"><span data-stu-id="ba834-129">For EF6 and future versions we have taken the approach that if the calling code chooses to open the connection by calling context.Database.Connection.Open() then it has a good reason for doing so and the framework will assume that it wants control over opening and closing of the connection and will no longer close the connection automatically.</span></span>  
+<span data-ttu-id="cf062-129">对于 EF6 和更早的版本，如果调用代码选择通过调用上下文来打开连接，我们采用了这种方法。然后打开（），它有一个很好的理由来完成此操作，框架将假定它要控制连接的打开和关闭，并且将不再自动关闭连接。</span><span class="sxs-lookup"><span data-stu-id="cf062-129">For EF6 and future versions we have taken the approach that if the calling code chooses to open the connection by calling context.Database.Connection.Open() then it has a good reason for doing so and the framework will assume that it wants control over opening and closing of the connection and will no longer close the connection automatically.</span></span>  
 
 > [!NOTE]
-> <span data-ttu-id="ba834-130">这会导致连接这种情况对于长时间，因此使用谨慎处于打开状态。</span><span class="sxs-lookup"><span data-stu-id="ba834-130">This can potentially lead to connections which are open for a long time so use with care.</span></span>  
+> <span data-ttu-id="cf062-130">这可能会导致连接长时间处于打开状态，因此请谨慎使用。</span><span class="sxs-lookup"><span data-stu-id="cf062-130">This can potentially lead to connections which are open for a long time so use with care.</span></span>  
 
-<span data-ttu-id="ba834-131">我们还更新了代码，以便 ObjectContext.Connection.State 现在跟踪的基础连接的状态正确。</span><span class="sxs-lookup"><span data-stu-id="ba834-131">We also updated the code so that ObjectContext.Connection.State now keeps track of the state of the underlying connection correctly.</span></span>  
+<span data-ttu-id="cf062-131">我们还更新了代码，使 ObjectContext 连接状态立即跟踪基础连接的状态。</span><span class="sxs-lookup"><span data-stu-id="cf062-131">We also updated the code so that ObjectContext.Connection.State now keeps track of the state of the underlying connection correctly.</span></span>  
 
 ``` csharp
 using System;
