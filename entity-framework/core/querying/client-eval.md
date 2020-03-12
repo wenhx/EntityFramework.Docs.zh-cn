@@ -4,12 +4,12 @@ author: smitpatel
 ms.date: 10/03/2019
 ms.assetid: 8b6697cc-7067-4dc2-8007-85d80503d123
 uid: core/querying/client-eval
-ms.openlocfilehash: 5cfb05041f04246712fb699f58b407f70a75ce92
-ms.sourcegitcommit: 37d0e0fd1703467918665a64837dc54ad2ec7484
+ms.openlocfilehash: e01bd146c4dfe7a8d36b641cb52ae366fddd8239
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/16/2019
-ms.locfileid: "72445970"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78413785"
 ---
 # <a name="client-vs-server-evaluation"></a>客户端与服务器评估
 
@@ -19,7 +19,7 @@ ms.locfileid: "72445970"
 > 在 3.0 版之前，Entity Framework Core 支持在查询中的任何位置进行客户端评估。 有关详细信息，请参阅[历史版本部分](#previous-versions)。
 
 > [!TIP]
-> 可在 GitHub 上查看此文章的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying)。
+> 可在 GitHub 上查看此文章的[示例](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Querying)。
 
 ## <a name="client-evaluation-in-the-top-level-projection"></a>顶级投影中的客户端评估
 

@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: d617aed1-15f2-48a9-b187-186991c666e3
 ms.openlocfilehash: 018f480c1f0f1e74fc9f7a8950a6880e96f1facc
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182654"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78415783"
 ---
 # <a name="spatial---code-first"></a>空间 Code First
 > [!NOTE]
@@ -27,9 +27,9 @@ ms.locfileid: "72182654"
 ## <a name="watch-the-video"></a>观看视频
 此视频演示如何实体框架 Code First 映射空间类型。 它还演示了如何使用 LINQ 查询查找两个位置之间的距离。
 
-**提供者**： Julia Kornich
+**主讲人**：Julia Kornich
 
-**视频**：[WMV](https://download.microsoft.com/download/9/1/3/913EA17E-6F97-41D8-A4FE-805A0D83D26A/HDI-ITPro-MSDN-winvideo-spatialwithcodefirst.wmv) | [MP4](https://download.microsoft.com/download/9/1/3/913EA17E-6F97-41D8-A4FE-805A0D83D26A/HDI-ITPro-MSDN-mp4video-spatialwithcodefirst.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/9/1/3/913EA17E-6F97-41D8-A4FE-805A0D83D26A/HDI-ITPro-MSDN-winvideo-spatialwithcodefirst.zip)
+**视频**：WMV | [MP4](https://download.microsoft.com/download/9/1/3/913EA17E-6F97-41D8-A4FE-805A0D83D26A/HDI-ITPro-MSDN-mp4video-spatialwithcodefirst.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/9/1/3/913EA17E-6F97-41D8-A4FE-805A0D83D26A/HDI-ITPro-MSDN-winvideo-spatialwithcodefirst.zip)
 
 ## <a name="pre-requisites"></a>先决条件
 
@@ -76,7 +76,7 @@ DbContext 和 DbSet 类型是在 EntityFramework 程序集中定义的。 我们
 1.  在解决方案资源管理器中，右键单击项目名称。
 2.  选择 "**管理 NuGet 包 ...** "
 3.  在 "管理 NuGet 包" 对话框中，选择 "**联机**" 选项卡，然后选择 " **EntityFramework** " 包。
-4.  单击 "**安装**"
+4.  单击“安装”
 
 请注意，除 EntityFramework 程序集之外，还添加了对 System.componentmodel. DataAnnotations 程序集的引用。
 
@@ -150,6 +150,6 @@ The closest University to you is: School of Fine Art.
 4.  展开 "**数据库**" 文件夹，以查看新数据库并浏览到**大学**表
 5.  若要查看数据，请右键单击该表，然后选择 "**查看数据**"
 
-## <a name="summary"></a>摘要
+## <a name="summary"></a>Summary
 
 在本演练中，我们介绍了如何在实体框架 Code First 中使用空间类型。 

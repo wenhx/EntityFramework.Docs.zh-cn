@@ -1,11 +1,3 @@
----
-ms.openlocfilehash: 09f0b9e623e69ed8d6a66f00eb466d55bc8ad5e4
-ms.sourcegitcommit: f2a38c086291699422d8b28a72d9611d1b24ad0d
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 01/16/2020
-ms.locfileid: "76124341"
----
 ## <a name="entity-framework-docs"></a>实体框架文档
 
 此项目包含位于 [docs.microsoft.com/ef](https://docs.microsoft.com/ef/) 的 EF Core 和 EF6 文档的来源。 

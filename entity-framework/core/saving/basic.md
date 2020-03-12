@@ -4,19 +4,19 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 850d842e-3fad-4ef2-be17-053768e97b9e
 uid: core/saving/basic
-ms.openlocfilehash: 6f72458504a9dbe99038af7cfd23b6991258f6b8
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 066d67d6104316832a33f5a3648f1f2fa6cc9c50
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197785"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78413683"
 ---
 # <a name="basic-save"></a>基本保存
 
 了解如何使用上下文和实体类添加、修改和删除数据。
 
 > [!TIP]  
-> 可在 GitHub 上查看此文章的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Basics/)。
+> 可在 GitHub 上查看此文章的[示例](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Saving/Basics/)。
 
 ## <a name="adding-data"></a>添加数据
 

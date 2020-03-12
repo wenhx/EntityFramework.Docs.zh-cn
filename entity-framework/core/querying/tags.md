@@ -5,11 +5,11 @@ ms.date: 11/14/2018
 ms.assetid: 73C7A627-C8E9-452D-9CD5-AFCC8FEFE395
 uid: core/querying/tags
 ms.openlocfilehash: e8415b237df45ce652dcd152013f4f12a992aed7
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73654823"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78413827"
 ---
 # <a name="query-tags"></a>查询标记
 
@@ -69,7 +69,7 @@ ORDER BY [f].[Location].STDistance(@__myLocation_0) DESC
 ```
 
 也可以使用多线串作为查询标记。
-例如:
+例如：
 
 ``` csharp
 var results = Limit(GetNearestFriends(myLocation), 25).TagWith(

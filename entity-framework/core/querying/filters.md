@@ -3,12 +3,12 @@ title: 全局查询筛选器 - EF Core
 author: anpete
 ms.date: 11/03/2017
 uid: core/querying/filters
-ms.openlocfilehash: f4ee9b77411290249e763f9cb8492eea61803e91
-ms.sourcegitcommit: f2a38c086291699422d8b28a72d9611d1b24ad0d
+ms.openlocfilehash: 9262ff7970b0502945480c673315071cbc3f44b9
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/16/2020
-ms.locfileid: "76124387"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78413761"
 ---
 # <a name="global-query-filters"></a>全局查询筛选器
 
@@ -25,7 +25,7 @@ ms.locfileid: "76124387"
 下面的示例显示了如何使用全局查询筛选器在简单的博客模型中实现软删除和多租户查询行为。
 
 > [!TIP]
-> 可在 GitHub 上查看此文章的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/QueryFilters)。
+> 可在 GitHub 上查看此文章的[示例](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/QueryFilters)。
 
 首先，定义实体：
 

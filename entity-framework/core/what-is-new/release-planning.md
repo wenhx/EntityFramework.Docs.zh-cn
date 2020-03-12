@@ -4,11 +4,11 @@ author: ajcvickers
 ms.date: 01/28/2020
 uid: core/what-is-new/release_planning.md
 ms.openlocfilehash: 71045b8d49c319a73f74443612bedd84ee33ab8a
-ms.sourcegitcommit: b3cf5d2e3cb170b9916795d1d8c88678269639b1
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/30/2020
-ms.locfileid: "76888053"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78413539"
 ---
 # <a name="release-planning-process"></a>版本规划过程
 

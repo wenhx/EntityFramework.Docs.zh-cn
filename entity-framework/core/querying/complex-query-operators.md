@@ -4,19 +4,19 @@ author: smitpatel
 ms.date: 10/03/2019
 ms.assetid: 2e187a2a-4072-4198-9040-aaad68e424fd
 uid: core/querying/complex-query-operators
-ms.openlocfilehash: 350a7fa6a3ee1de16bad4b63e10842f9356a1b60
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: 44c2695ea003da043925740a52596fd27da638f8
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72186232"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78413773"
 ---
 # <a name="complex-query-operators"></a>复杂查询运算符
 
 语言集成查询 (LINQ) 包含许多用于组合多个数据源或执行复杂处理的复杂运算符。 并非所有 LINQ 运算符都会在服务器端进行适当转换。 有时，采用一种形式的查询会转换为服务器，但如果采用另一种形式，即使结果相同，也不会转换。 本页介绍部分复杂运算符及其支持的变体。 在将来的版本中，我们可能会认识更多的模式并添加其相应的转换。 另请牢记，转换支持在提供程序之间各所不同。 在 SqlServer 中转换的特定查询可能无法用于 SQLite 数据库。
 
 > [!TIP]
-> 可在 GitHub 上查看此文章的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying)。
+> 可在 GitHub 上查看此文章的[示例](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Querying)。
 
 ## <a name="join"></a>联接
 

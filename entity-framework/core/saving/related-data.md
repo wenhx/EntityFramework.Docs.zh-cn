@@ -4,19 +4,19 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 07b6680f-ffcf-412c-9857-f997486b386c
 uid: core/saving/related-data
-ms.openlocfilehash: 45c7b8e4bfa4ce7967ad76ef4a7d4818b0d3aebf
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 86d32b6172ee21c12a15e9ed4bb0142afc99c8bd
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197888"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78413611"
 ---
 # <a name="saving-related-data"></a>保存相关数据
 
 除了独立实体以外，还可以使用模型中定义的关系。
 
 > [!TIP]  
-> 可在 GitHub 上查看此文章的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/RelatedData/)。
+> 可在 GitHub 上查看此文章的[示例](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Saving/RelatedData/)。
 
 ## <a name="adding-a-graph-of-new-entities"></a>添加新实体的关系图
 

@@ -5,12 +5,12 @@ ms.author: avickers
 ms.date: 10/27/2016
 ms.assetid: 2533b195-d357-4056-b0e0-8698971bc3b0
 uid: core/saving/disconnected-entities
-ms.openlocfilehash: 88c3fa8ea5b8246a932f5cf21e674bc7cc71c0ea
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 421531e68ac98c0553938f1c24892701f22fef3c
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73656274"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78413653"
 ---
 # <a name="disconnected-entities"></a>断开连接的实体
 
@@ -20,7 +20,7 @@ DbContext 实例将自动跟踪从数据库返回的实体。 调用 SaveChanges
 
 <!-- markdownlint-disable MD028 -->
 > [!TIP]
-> 可在 GitHub 上查看此文章的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Disconnected/)。
+> 可在 GitHub 上查看此文章的[示例](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Saving/Disconnected/)。
 
 > [!TIP]
 > EF Core 只能跟踪具有给定主键值的任何实体的一个实例。 为避免这种情况成为一个问题，最好为每个工作单元使用短期上下文，使上下文一开始为空、向其附加实体、保存这些实体，然后释放并放弃该上下文。
@@ -77,7 +77,7 @@ Update 方法通常将实体标记为更新，而不是插入。 但是，如果
 > [!TIP]  
 > EF Core 2.0 中已引入此行为。 对于早期版本，始终需要显式选择 Add 或 Update。
 
-如果实体不使用自动生成的键，则应用程序必须确定是应插入实体还是更新实体：例如:
+如果实体不使用自动生成的键，则应用程序必须确定是应插入实体还是更新实体：例如：
 
 [!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertOrUpdateSingleEntityWithFind)]
 

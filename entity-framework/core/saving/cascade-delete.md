@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: ee8e14ec-2158-4c9c-96b5-118715e2ed9e
 uid: core/saving/cascade-delete
-ms.openlocfilehash: 51c8b6f4517a3f87821ed1e4e2d60549e06ed39d
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 6e92b869d691d0224abf1997d9eb7ea035489c5d
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73656058"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78413665"
 ---
 # <a name="cascade-delete"></a>级联删除
 
@@ -41,9 +41,9 @@ EF Core 实现多种不同的删除行为，并允许配置各个关系的删除
 | 行为名称               | 对内存中的依赖项/子项的影响    | 对数据库中的依赖项/子项的影响  |
 |:----------------------------|:---------------------------------------|:---------------------------------------|
 | **Cascade**                 | 删除实体                   | 删除实体                   |
-| **ClientSetNull**（默认） | 外键属性设置为 null | 无                                   |
+| **ClientSetNull**（默认） | 外键属性设置为 null | None                                   |
 | **SetNull**                 | 外键属性设置为 null | 外键属性设置为 null |
-| **Restrict**                | 无                                   | 无                                   |
+| **Restrict**                | None                                   | None                                   |
 
 ### <a name="required-relationships"></a>必选关系
 
@@ -52,9 +52,9 @@ EF Core 实现多种不同的删除行为，并允许配置各个关系的删除
 | 行为名称         | 对内存中的依赖项/子项的影响 | 对数据库中的依赖项/子项的影响 |
 |:----------------------|:------------------------------------|:--------------------------------------|
 | **Cascade**（默认） | 删除实体                | 删除实体                  |
-| **ClientSetNull**     | SaveChanges 引发异常                  | 无                                  |
-| **SetNull**           | 引发 SaveChanges                  | 引发 SaveChanges                    |
-| **Restrict**          | 无                                | 无                                  |
+| **ClientSetNull**     | SaveChanges 引发异常                  | None                                  |
+| **SetNull**           | 引发 SaveChanges                  | SaveChanges 引发异常                    |
+| **Restrict**          | None                                | None                                  |
 
 在上表中，“无”  可能会造成约束冲突。 例如，如果已删除主体/子实体，但不执行任何操作来更改依赖项/子项的外键，则由于发生外键约束冲突，数据库将可能会引发 SaveChanges。
 
@@ -75,7 +75,7 @@ EF Core 实现多种不同的删除行为，并允许配置各个关系的删除
 
 ## <a name="entity-deletion-examples"></a>实体删除示例
 
-以下代码是可下载并运行的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/CascadeDelete/)的一部分。 此示例显示了，当删除父实体时，可选关系和必选关系的每个删除行为会发生的情况。
+以下代码是可下载并运行的[示例](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Saving/CascadeDelete/)的一部分。 此示例显示了，当删除父实体时，可选关系和必选关系的每个删除行为会发生的情况。
 
 [!code-csharp[Main](../../../samples/core/Saving/CascadeDelete/Sample.cs#DeleteBehaviorVariations)]
 
@@ -186,7 +186,7 @@ EF Core 实现多种不同的删除行为，并允许配置各个关系的删除
 
 ## <a name="delete-orphans-examples"></a>删除孤立项示例
 
-以下代码是可下载并运行的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/CascadeDelete/)的一部分。 此示例显示了，当断开父项/主体及其子项/依赖项之间的关系时，可选关系和必选关系的每个删除行为会发生的情况。 在此示例中，通过从主体/父项（博客）上的集合导航属性中删除依赖项/子项（文章）来断开关系。 但是，如果将从依赖项/子项到主体/父项的引用变为 null，则行为相同。
+以下代码是可下载并运行的[示例](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Saving/CascadeDelete/)的一部分。 此示例显示了，当断开父项/主体及其子项/依赖项之间的关系时，可选关系和必选关系的每个删除行为会发生的情况。 在此示例中，通过从主体/父项（博客）上的集合导航属性中删除依赖项/子项（文章）来断开关系。 但是，如果将从依赖项/子项到主体/父项的引用变为 null，则行为相同。
 
 [!code-csharp[Main](../../../samples/core/Saving/CascadeDelete/Sample.cs#DeleteOrphansVariations)]
 

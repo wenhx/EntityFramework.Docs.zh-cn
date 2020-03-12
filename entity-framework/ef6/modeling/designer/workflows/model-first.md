@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: e1b9c319-bb8a-4417-ac94-7890f257e7f6
 ms.openlocfilehash: 1b37805beb3d33f0b6dad2577a8abb3ea8f7b1e4
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182445"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78414955"
 ---
 # <a name="model-first"></a>Model First
 此视频和分步演练提供使用实体框架 Model First 开发的简介。 Model First 允许使用 Entity Framework Designer 创建新模型，然后从该模型生成数据库架构。 模型存储在 EDMX 文件（.edmx 扩展名）中，可在 Entity Framework Designer 中查看和编辑。 在应用程序中与之交互的类将自动从 EDMX 文件生成。
@@ -18,7 +18,7 @@ ms.locfileid: "72182445"
 
 **主讲人**：[Rowan Miller](https://romiller.com/)
 
-**视频**：[WMV](https://download.microsoft.com/download/5/B/1/5B1C338C-AFA7-4F68-B304-48BB008146EF/HDI-ITPro-MSDN-winvideo-modelfirst.wmv) | [MP4](https://download.microsoft.com/download/5/B/1/5B1C338C-AFA7-4F68-B304-48BB008146EF/HDI-ITPro-MSDN-mp4video-modelfirst.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/5/B/1/5B1C338C-AFA7-4F68-B304-48BB008146EF/HDI-ITPro-MSDN-winvideo-modelfirst.zip)
+**视频**：WMV | [MP4](https://download.microsoft.com/download/5/B/1/5B1C338C-AFA7-4F68-B304-48BB008146EF/HDI-ITPro-MSDN-mp4video-modelfirst.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/5/B/1/5B1C338C-AFA7-4F68-B304-48BB008146EF/HDI-ITPro-MSDN-winvideo-modelfirst.zip)
 
 ## <a name="pre-requisites"></a>先决条件
 
@@ -26,7 +26,7 @@ ms.locfileid: "72182445"
 
 如果你使用的是 Visual Studio 2010，你还需要安装[NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) 。
 
-## <a name="1-create-the-application"></a>1. 创建应用程序
+## <a name="1-create-the-application"></a>1.创建应用程序
 
 为了简单起见，我们将构建一个使用 Model First 执行数据访问的基本控制台应用程序：
 
@@ -36,7 +36,7 @@ ms.locfileid: "72182445"
 -   输入**ModelFirstSample**作为名称
 -   选择“确定”
 
-## <a name="2-create-model"></a>2. 创建模型
+## <a name="2-create-model"></a>2.创建模型
 
 我们将使用在 Visual Studio 中包含的 Entity Framework Designer 来创建模型。
 
@@ -87,7 +87,7 @@ ms.locfileid: "72182445"
     *如果你没有 "**管理 nuget 包 ...** " 选项，则应安装[最新版本的 nuget](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) *
 -   选择 "**联机**" 选项卡
 -   选择**EntityFramework**包
--   单击 "**安装**"
+-   单击“安装”
 
 接下来，我们需要交换模型，以生成使用 DbContext API 的代码，这些代码是在实体框架的更高版本中引入的。
 
@@ -97,7 +97,7 @@ ms.locfileid: "72182445"
 
     ![DbContext 模板](~/ef6/media/dbcontexttemplate.png)
 
-## <a name="3-generating-the-database"></a>3. 生成数据库
+## <a name="3-generating-the-database"></a>3.正在生成数据库
 
 考虑到我们的模型，实体框架可以计算一个数据库架构，该架构将允许我们使用模型存储和检索数据。
 
@@ -120,7 +120,7 @@ ms.locfileid: "72182445"
 -   显示脚本后，单击 "**完成**"，脚本将添加到项目中并打开
 -   右键单击该脚本，然后选择 "**执行**"，系统将提示您指定要连接到的数据库，指定 LocalDB 或 SQL Server Express，具体取决于您使用的 Visual Studio 的版本
 
-## <a name="4-reading--writing-data"></a>4. 读取 & 写入数据
+## <a name="4-reading--writing-data"></a>4.读取 & 写入数据
 
 现在，我们有了一个模型，可以使用它来访问某些数据了。 要用于访问数据的类将根据 EDMX 文件自动生成。
 
@@ -172,7 +172,7 @@ ADO.NET Blog
 Press any key to exit...
 ```
 
-## <a name="5-dealing-with-model-changes"></a>5. 处理模型更改
+## <a name="5-dealing-with-model-changes"></a>5.处理模型更改
 
 现在，可以对模型进行一些更改，当我们进行这些更改时，我们还需要更新数据库架构。
 
@@ -189,12 +189,12 @@ Press any key to exit...
 现在，我们有了一个更新的模型，我们可以更新数据库以适应新的用户实体类型。
 
 -   右键单击设计图面，然后选择 "**从模型生成数据库 ...** "，实体框架将计算一个脚本以根据更新后的模型重新创建架构。
--   单击 "**完成**"
+-   单击“完成”
 -   你可能会收到有关覆盖模型的现有 DDL 脚本以及映射和存储部分的警告，请单击 **"是"** 以显示这两个警告
 -   将为您打开用于创建数据库的更新的 SQL 脚本  
     *生成的脚本将删除所有现有的表，然后从头开始重新创建该架构。这可能适用于本地开发，但并不适合将更改推送到已部署的数据库。如果需要将更改发布到已部署的数据库，则需要编辑该脚本或使用架构比较工具来计算迁移脚本。*
 -   右键单击该脚本，然后选择 "**执行**"，系统将提示您指定要连接到的数据库，指定 LocalDB 或 SQL Server Express，具体取决于您使用的 Visual Studio 的版本
 
-## <a name="summary"></a>摘要
+## <a name="summary"></a>Summary
 
 在本演练中，我们介绍 Model First 开发，这允许我们在 EF 设计器中创建模型，然后从该模型生成数据库。 然后，使用该模型从数据库中读取和写入一些数据。 最后，我们更新了模型，然后重新创建了数据库架构以匹配模型。

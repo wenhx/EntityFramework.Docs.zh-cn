@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 2df6cb0a-7d8b-4e28-9d05-e2b9a90125af
 ms.openlocfilehash: d540fc6e84049f345ae22998f94c309e0be73fc3
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182573"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78415543"
 ---
 # <a name="code-first-to-a-new-database"></a>Code First 到新数据库
 此视频和分步演练提供了面向新数据库的 Code First 开发的简介。 此方案包括针对不存在的数据库和 Code First 将创建的数据库，或者 Code First 将向其中添加新表的空数据库。 Code First 允许使用 C\# 或 VB.Net 类定义模型。 还可以选择使用类和属性上的属性或使用 Fluent API 来执行其他配置。
@@ -18,7 +18,7 @@ ms.locfileid: "72182573"
 
 **主讲人**：[Rowan Miller](https://romiller.com/)
 
-**视频**：[WMV](https://download.microsoft.com/download/B/A/5/BA57BADE-D558-4693-8F82-29E64E4084AB/HDI-ITPro-MSDN-winvideo-CodeFirstNewDatabase.wmv) | [MP4](https://download.microsoft.com/download/B/A/5/BA57BADE-D558-4693-8F82-29E64E4084AB/HDI-ITPro-MSDN-mp4Video-CodeFirstNewDatabase.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/B/A/5/BA57BADE-D558-4693-8F82-29E64E4084AB/HDI-ITPro-MSDN-winvideo-CodeFirstNewDatabase.zip)
+**视频**：[WMV](https://download.microsoft.com/download/B/A/5/BA57BADE-D558-4693-8F82-29E64E4084AB/HDI-ITPro-MSDN-winvideo-CodeFirstNewDatabase.wmv)[MP4](https://download.microsoft.com/download/B/A/5/BA57BADE-D558-4693-8F82-29E64E4084AB/HDI-ITPro-MSDN-mp4Video-CodeFirstNewDatabase.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/B/A/5/BA57BADE-D558-4693-8F82-29E64E4084AB/HDI-ITPro-MSDN-winvideo-CodeFirstNewDatabase.zip)
 
 ## <a name="pre-requisites"></a>先决条件
 
@@ -26,7 +26,7 @@ ms.locfileid: "72182573"
 
 如果你使用的是 Visual Studio 2010，你还需要安装[NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) 。
 
-## <a name="1-create-the-application"></a>1. 创建应用程序
+## <a name="1-create-the-application"></a>1.创建应用程序
 
 为了简单起见，我们将构建一个使用 Code First 执行数据访问的基本控制台应用程序。
 
@@ -36,7 +36,7 @@ ms.locfileid: "72182573"
 -   输入**CodeFirstNewDatabaseSample**作为名称
 -   选择“确定”
 
-## <a name="2-create-the-model"></a>2. 创建模型
+## <a name="2-create-the-model"></a>2.创建模型
 
 让我们使用类定义一个非常简单的模型。 我们只是在 Program.cs 文件中对其进行定义，但在实际应用程序中，您可以将类拆分为单独的文件，并可能是单独的项目。
 
@@ -64,17 +64,17 @@ public class Post
 
 你会注意到，我们正在建立两个导航属性（博客和博客）虚拟。 这将启用实体框架的延迟加载功能。 延迟加载是指在您尝试访问这些属性时，这些属性的内容将自动从数据库加载。
 
-## <a name="3-create-a-context"></a>3. 创建上下文
+## <a name="3-create-a-context"></a>3.创建上下文
 
 现在可以定义一个派生上下文，它表示与数据库的会话，从而使我们能够查询和保存数据。 我们定义了从 DbContext 派生的上下文，并为模型中的每个类公开了类型化的 DbSet&lt;TEntity&gt;。
 
 现在，我们开始使用实体框架中的类型，因此我们需要添加 EntityFramework NuGet 包。
 
 -   **项目–&gt; 管理 NuGet 程序包 。**
-    注意：如果你没有 "**管理 NuGet 包 ...** " 选项你应安装[最新版本的 NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c)
+    注意:如果你没有 "**管理 NuGet 包 ...** " 选项你应安装[最新版本的 NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c)
 -   选择 "**联机**" 选项卡
 -   选择**EntityFramework**包
--   单击 "**安装**"
+-   单击“安装”
 
 在 Program.cs 的顶部为 system.string 添加 using 语句。
 
@@ -139,7 +139,7 @@ namespace CodeFirstNewDatabaseSample
 
 这就是我们开始存储和检索数据所需的全部代码。 很显然，幕后会出现很多情况，接下来我们将对此进行介绍，但首先我们来看看这一点。
 
-## <a name="4-reading--writing-data"></a>4. 读取 & 写入数据
+## <a name="4-reading--writing-data"></a>4.读取 & 写入数据
 
 在 Program.cs 中实现 Main 方法，如下所示。 此代码创建一个新的上下文实例，然后使用它来插入新的博客。 然后，它使用 LINQ 查询从按标题字母顺序排序的数据库中检索所有博客。
 
@@ -209,7 +209,7 @@ Press any key to exit...
 
 DbContext 通过查看我们定义的 DbSet 属性来确定要包括在模型中的类。 然后，它使用默认的 Code First 约定集来确定表和列的名称、确定数据类型、查找主键等。 稍后在本演练中，我们将介绍如何覆盖这些约定。
 
-## <a name="5-dealing-with-model-changes"></a>5. 处理模型更改
+## <a name="5-dealing-with-model-changes"></a>5.处理模型更改
 
 现在，可以对模型进行一些更改，当我们进行这些更改时，我们还需要更新数据库架构。 为此，我们将使用一项称为 Code First 迁移的功能，或使用较短的迁移。
 
@@ -262,13 +262,13 @@ namespace CodeFirstNewDatabaseSample.Migrations
 ```
 
 -   在 Package Manager Console 中运行 "**更新数据库**" 命令。 此命令会将任何挂起的迁移应用到数据库。 已应用 InitialCreate 迁移，因此迁移只会应用新的 AddUrl 迁移。
-    提示：若要查看正在对数据库执行的 SQL，可以在调用 Update-Database 时使用 **-Verbose**开关。
+    提示：调用 "更新数据库" 时，可以使用 **-Verbose**开关来查看正在对数据库执行的 SQL。
 
 此时，新的 Url 列将添加到数据库的 "博客" 表中：
 
 ![带有 Url 的架构](~/ef6/media/schemawithurl.png)
 
-## <a name="6-data-annotations"></a>6. 数据批注
+## <a name="6-data-annotations"></a>6.数据注释
 
 到目前为止，我们只是让 EF 使用其默认约定来发现模型，但有时我们的类不遵循约定，我们需要能够进一步进行配置。 有两个选项可供选择：我们将在本节中查看数据批注，然后在下一部分中查看 Fluent API。
 
@@ -334,7 +334,7 @@ EF 支持的全部批注列表为：
 -   [DatabaseGeneratedAttribute](https://msdn.microsoft.com/library/system.componentmodel.dataannotations.schema.databasegeneratedattribute)
 -   [NotMappedAttribute](https://msdn.microsoft.com/library/system.componentmodel.dataannotations.schema.notmappedattribute)
 
-## <a name="7-fluent-api"></a>7. 熟知 API
+## <a name="7-fluent-api"></a>7.Fluent API
 
 在上一部分中，我们介绍了如何使用数据批注来补充或替代约定检测到的内容。 配置模型的另一种方法是通过 Code First Fluent API。
 
@@ -367,6 +367,6 @@ DisplayName 列现在已重命名为显示\_名称：
 
 ![重命名了显示名称的架构](~/ef6/media/schemawithdisplaynamerenamed.png)
 
-## <a name="summary"></a>摘要
+## <a name="summary"></a>Summary
 
 在本演练中，我们将使用新数据库查看 Code First 开发。 我们使用类定义了一个模型，然后使用该模型来创建数据库并存储和检索数据。 创建数据库后，我们使用 Code First 迁移来更改模型，因为模型已演化。 我们还了解了如何使用数据批注和熟知的 API 配置模型。
