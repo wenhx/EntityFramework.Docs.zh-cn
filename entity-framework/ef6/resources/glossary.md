@@ -5,11 +5,11 @@ ms.date: 10/23/2016
 ms.assetid: 3f05ffdd-49bc-499c-9732-4a368bf5d2d7
 uid: ef6/resources/glossary
 ms.openlocfilehash: df0da4a68b3d2c882d9673417ee5fe335eccae2b
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73656147"
+ms.lasthandoff: 03/15/2020
+ms.locfileid: "79402143"
 ---
 # <a name="entity-framework-glossary"></a>实体框架术语表
 ## <a name="code-first"></a>Code First

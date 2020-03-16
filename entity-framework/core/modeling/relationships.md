@@ -5,11 +5,11 @@ author: AndriySvyryd
 ms.date: 11/21/2019
 uid: core/modeling/relationships
 ms.openlocfilehash: 6d68e813cec6c989e8e4cb848f8740489645c65c
-ms.sourcegitcommit: 89567d08c9d8bf9c33bb55a62f17067094a4065a
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 02/06/2020
-ms.locfileid: "77051402"
+ms.lasthandoff: 03/15/2020
+ms.locfileid: "79402113"
 ---
 # <a name="relationships"></a>关系
 
@@ -118,13 +118,13 @@ ms.locfileid: "77051402"
 
 ## <a name="manual-configuration"></a>手动配置
 
-### <a name="fluent-apitabfluent-api"></a>[熟知 API](#tab/fluent-api)
+### <a name="fluent-api"></a>[熟知 API](#tab/fluent-api)
 
 若要在熟知的 API 中配置关系，请首先标识构成关系的导航属性。 `HasOne` 或 `HasMany` 标识正在开始配置的实体类型上的导航属性。 然后，将调用链接到 `WithOne` 或 `WithMany` 来标识反向导航。 `HasOne`/`WithOne` 用于引用导航属性，`HasMany`/用于集合导航属性。`WithMany`
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/NoForeignKey.cs?name=NoForeignKey&highlight=8-10)]
 
-### <a name="data-annotationstabdata-annotations"></a>[数据批注](#tab/data-annotations)
+### <a name="data-annotations"></a>[数据批注](#tab/data-annotations)
 
 您可以使用数据批注来配置依赖项和主体实体上的导航属性如何配对。 这通常在两个实体类型之间存在多个导航属性对时执行。
 
@@ -146,19 +146,19 @@ ms.locfileid: "77051402"
 
 ### <a name="foreign-key"></a>外键
 
-#### <a name="fluent-api-simple-keytabfluent-api-simple-key"></a>[熟知 API （简单密钥）](#tab/fluent-api-simple-key)
+#### <a name="fluent-api-simple-key"></a>[熟知 API （简单密钥）](#tab/fluent-api-simple-key)
 
 您可以使用熟知的 API 来配置应用作给定关系的外键属性的属性：
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ForeignKey.cs?name=ForeignKey&highlight=11)]
 
-#### <a name="fluent-api-composite-keytabfluent-api-composite-key"></a>[熟知 API （组合键）](#tab/fluent-api-composite-key)
+#### <a name="fluent-api-composite-key"></a>[熟知 API （组合键）](#tab/fluent-api-composite-key)
 
 您可以使用熟知的 API 来配置哪些属性应用作给定关系的复合外键属性：
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/CompositeForeignKey.cs?name=CompositeForeignKey&highlight=13)]
 
-#### <a name="data-annotations-simple-keytabdata-annotations-simple-key"></a>[数据批注（简单键）](#tab/data-annotations-simple-key)
+#### <a name="data-annotations-simple-key"></a>[数据批注（简单键）](#tab/data-annotations-simple-key)
 
 您可以使用数据批注来配置应用作给定关系的外键属性的属性。 通常，当不按约定发现外键属性时，会执行此操作：
 
@@ -196,11 +196,11 @@ ms.locfileid: "77051402"
 
 如果你希望外键引用主键之外的属性，则可以使用熟知的 API 来配置关系的主体键属性。 配置为主体密钥的属性将自动设置为[备用密钥](alternate-keys.md)。
 
-#### <a name="simple-keytabsimple-key"></a>[简单键](#tab/simple-key)
+#### <a name="simple-key"></a>[简单键](#tab/simple-key)
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/PrincipalKey.cs?name=PrincipalKey&highlight=11)]
 
-#### <a name="composite-keytabcomposite-key"></a>[组合键](#tab/composite-key)
+#### <a name="composite-key"></a>[组合键](#tab/composite-key)
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/CompositePrincipalKey.cs?name=CompositePrincipalKey&highlight=11)]
 
