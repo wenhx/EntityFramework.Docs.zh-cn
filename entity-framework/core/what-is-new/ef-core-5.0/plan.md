@@ -3,12 +3,12 @@ title: 针对 Entity Framework Core 5.0 的计划
 author: ajcvickers
 ms.date: 01/14/2020
 uid: core/what-is-new/ef-core-5.0/plan.md
-ms.openlocfilehash: 0472841fdcd105ec8ea38db062c6768510b8735d
-ms.sourcegitcommit: f2a38c086291699422d8b28a72d9611d1b24ad0d
+ms.openlocfilehash: c5b7300c61c2f668b6f9393ae51bf9ebddf330a7
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/16/2020
-ms.locfileid: "76125354"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78413821"
 ---
 # <a name="plan-for-entity-framework-core-50"></a>针对 Entity Framework Core 5.0 的计划
 
@@ -47,11 +47,13 @@ T 恤大小：L
 
 状态：正在进行
 
-多对多是 GitHub 积压工作 (backlog) 中请求最多的功能（大约 407 张投票）。 多对多关系的支持分为三个主要方面：
+多对多是 GitHub 积压工作 (backlog) 中[请求最多的功能](https://github.com/aspnet/EntityFrameworkCore/issues/1368)（大约 407 张投票）。
 
-* 跳过导航属性。 这些属性使模型可以用于查询等，而无需引用基础联接表实体。
-* 属性包实体类型。 这些类型使标准 CLR 类型（例如 `Dictionary`）可以用于实体实例，使得每种实体类型都不需要显式 CLR 类型。
-* Sugar 可用于轻松配置多对多关系。
+对所有多对多关系的支持通过 [#10508](https://github.com/aspnet/EntityFrameworkCore/issues/10508) 进行跟踪。 这可以划分为三个主要区域：
+
+* 跳过导航属性。 这些属性使模型可以用于查询等，而无需引用基础联接表实体。 ([#19003](https://github.com/aspnet/EntityFrameworkCore/issues/19003))
+* 属性包实体类型。 这些类型使标准 CLR 类型（例如 `Dictionary`）可以用于实体实例，使得每种实体类型都不需要显式 CLR 类型。 （5.0 版的延伸目标：[#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914)。）
+* Sugar 可用于轻松配置多对多关系。 （5.0 版的延伸目标。）
 
 我们认为，对于需要多对多支持的人员而言，最重要的阻止因素是无法在业务逻辑（如查询）中使用“自然”关系，而无需引用联接表。 联接表实体类型可能仍然存在，但不应妨碍业务逻辑。 这就是我们选择为 5.0 处理跳过导航属性的原因。
 
@@ -178,7 +180,7 @@ T 恤大小：L
 
 文档管理人员主管：@ajcvickers
 
-通过 [#1920](https://github.com/aspnet/EntityFramework.Docs/issues/1920) 进行跟踪
+通过 [#1920](https://github.com/dotnet/EntityFramework.Docs/issues/1920) 进行跟踪
 
 T 恤大小：L
 
@@ -194,7 +196,7 @@ T 恤大小：L
 
 文档管理人员主管：@bricelam
 
-通过 [#1675](https://github.com/aspnet/EntityFramework.Docs/issues/1675) 进行跟踪
+通过 [#1675](https://github.com/dotnet/EntityFramework.Docs/issues/1675) 进行跟踪
 
 T 恤大小：M
 
@@ -206,7 +208,7 @@ EF 团队还拥有 Microsoft.Data.Sqlite ADO.NET 提供程序。 我们计划在
 
 文档管理人员主管：@ajcvickers
 
-通过 [5.0 里程碑的文档存储库中的问题](https://github.com/aspnet/EntityFramework.Docs/issues?utf8=%E2%9C%93&q=is%3Aissue+milestone%3A5.0.0+)进行跟踪
+通过 [5.0 里程碑的文档存储库中的问题](https://github.com/dotnet/EntityFramework.Docs/issues?utf8=%E2%9C%93&q=is%3Aissue+milestone%3A5.0.0+)进行跟踪
 
 T 恤大小：L
 

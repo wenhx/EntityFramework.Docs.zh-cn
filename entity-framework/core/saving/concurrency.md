@@ -3,12 +3,12 @@ title: 处理并发冲突 - EF Core
 author: rowanmiller
 ms.date: 03/03/2018
 uid: core/saving/concurrency
-ms.openlocfilehash: b72fa472698e76e18f155cf96b738b0e193eee0f
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: a1d1a5a11d482f9104691aa3c072dbd1c548e9f1
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73654619"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78413647"
 ---
 # <a name="handling-concurrency-conflicts"></a>处理并发冲突
 
@@ -16,7 +16,7 @@ ms.locfileid: "73654619"
 > 此页面记录了并发在 EF Core 中的工作原理以及如何处理应用程序中的并发冲突。 有关如何配置模型中的并发令牌的详细信息，请参阅[并发令牌](xref:core/modeling/concurrency)。
 
 > [!TIP]
-> 可在 GitHub 上查看此文章的[示例](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Concurrency/)。
+> 可在 GitHub 上查看此文章的[示例](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Saving/Concurrency/)。
 
 _数据库并发_指多个进程或用户同时访问或更改数据库中的相同数据的情况。 _并发控制_指的是用于在发生并发更改时确保数据一致性的特定机制。
 
@@ -67,6 +67,6 @@ WHERE [PersonId] = @p0 AND [LastName] = @p2;
 3. 刷新并发令牌的原始值以反映数据库中的当前值。
 4. 重试该过程，直到不发生任何冲突。
 
-在下面的示例中，`Person.FirstName` 和 `Person.LastName` 设置为并发令牌。 在包括应用程序特定逻辑以选择要保存的值的位置处有一条 `// TODO:` 注释。
+在下面的示例中，将 `Person.FirstName` 和 `Person.LastName` 设置为并发令牌。 在包括应用程序特定逻辑以选择要保存的值的位置处有一条 `// TODO:` 注释。
 
 [!code-csharp[Main](../../../samples/core/Saving/Concurrency/Sample.cs?name=ConcurrencyHandlingCode&highlight=34-35)]

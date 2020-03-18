@@ -4,12 +4,12 @@ author: divega
 ms.date: 09/12/2019
 ms.assetid: 1060bb99-765f-4f32-aaeb-d6635d3dbd3e
 uid: ef6/what-is-new/past-releases
-ms.openlocfilehash: fada7740453cd9a55a1d0069236efcecbd9aa314
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: b7181334cd125c5cbf296d5b3674c0b5f087f438
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73656141"
+ms.lasthandoff: 03/15/2020
+ms.locfileid: "79402119"
 ---
 # <a name="past-releases-of-entity-framework"></a>实体框架的过去版本
 
@@ -19,7 +19,7 @@ ms.locfileid: "73656141"
 
 在版本4.1 和5.0 之间，EntityFramework NuGet 包扩展了作为 .NET Framework 一部分提供的 EF 库。
 
-从版本6开始，EF 变成了一个开源项目，并完全从带外移动了 .NET Framework。
+从版本6开始，EF 变成了一个开源项目，同时从 .NET Framework 完全移入。
 这意味着，当你将 EntityFramework 版本 6 NuGet 包添加到应用程序时，你将获得 EF 库的完整副本，该副本不依赖于 .NET Framework 附带的 EF 位。
 这有助于在一定程度上加快新功能的开发和交付速度。
 
@@ -80,7 +80,7 @@ EF 6.1.2 运行时已发布到2014年12月的 NuGet。
 ## <a name="ef-611"></a>EF 6.1。1
 EF 6.1.1 运行时已发布到2014年6月。
 此版本包含许多人遇到的问题的修补程序。 其他：
-- @在 EF6 设计器中打开具有十进制精度的 EF5 edmx 时出错
+- 设计器：在 EF6 设计器中打开具有十进制精度的 EF5 edmx 时出错
 - LocalDB 的默认实例检测逻辑不适用于 SQL Server 2014
 
 ## <a name="ef-610"></a>EF 6.1。0
@@ -89,12 +89,12 @@ EF 6.1.0 运行时发布到了2014年3月的 NuGet。
 
 - **工具合并**为创建新的 EF 模型提供了一种一致的方法。 此功能[扩展了 ADO.NET 实体数据模型向导以支持创建 Code First 模型](~/ef6/modeling/code-first/workflows/existing-database.md)，包括从现有数据库进行反向工程。 这些功能之前已在 EF Power Tools 中提供 Beta 版质量。
 - **[处理事务提交失败](~/ef6/fundamentals/connection-resiliency/commit-failures.md)** 会提供 CommitFailureHandler，它利用新引入的截取事务操作的能力。 CommitFailureHandler 允许在提交事务的同时从连接故障中自动恢复。
-- **[IndexAttribute](~/ef6/modeling/code-first/data-annotations.md)** 允许通过在 Code First 模型中的属性（或属性）上放置 `[Index]` 属性来指定索引。 然后 Code First 将在数据库中创建相应的索引。
+- **[IndexAttribute](~/ef6/modeling/code-first/data-annotations.md)** 允许通过在 Code First 模型中的属性（或属性）上放置 `[Index]` 特性来指定索引。 然后 Code First 将在数据库中创建相应的索引。
 - **公共映射 API**提供对信息 EF 的访问，以了解如何将属性和类型映射到数据库中的列和表。 在以前的版本中，此 API 是内部的。
 - **[通过 App/web.config 文件配置侦听器的能力](~/ef6/fundamentals/configuring/config-file.md)** 允许添加侦听器，而无需重新编译应用程序。
 - **DatabaseLogger**是一个新的侦听器，可让你轻松地将所有数据库操作记录到文件中。 与上一项功能结合使用，可以轻松地针对已[部署的应用程序的数据库操作进行日志记录](~/ef6/fundamentals/configuring/config-file.md)，而无需重新编译。
 - 改进了**迁移模型更改检测**，使基架迁移更准确;还增强了更改检测过程的性能。
-- **性能改进**，包括在初始化过程中减少数据库操作、在 LINQ 查询中优化 null 相等性比较、更快速地生成视图（创建模型）以及更高效地具体化具有多个关联的跟踪实体。
+- **性能改进**，包括在初始化期间降低数据库操作、在更多方案中优化 null 相等性比较、更快速地生成视图（创建模型）以及更有效地具体化具有多个关联的跟踪实体。
 
 ## <a name="ef-602"></a>EF 6.0。2
 EF 6.0.2 运行时已发布到2013年12月的 NuGet。
@@ -121,12 +121,12 @@ EF 6.0.0 运行时发布到了2013年10月的 NuGet。
 - **[依赖项解析](~/ef6/fundamentals/configuring/dependency-resolution.md)** 引入了对服务定位器模式的支持，并分解了某些功能，这些功能可以替换为自定义实现。
 - **[拦截/SQL 日志记录](~/ef6/fundamentals/logging-and-interception.md)** 提供低级别的构建基块，用于截获 EF 操作，同时构建简单的 SQL 日志记录。
 - [使用模拟 framework](~/ef6/fundamentals/testing/mocking.md)或[编写你自己的测试](~/ef6/fundamentals/testing/writing-test-doubles.md)时，可测试性**改进**可以更轻松地为 DbContext 和 DbSet 创建测试双精度。
-- **[现在可以使用已打开的 DbConnection 创建 DbContext，](~/ef6/fundamentals/connection-management.md)** 这会启用在创建上下文时可以打开连接的情况（例如共享组件之间的连接，你无法保证连接状态）。
+- **[现在可以使用已打开的 DbConnection 创建 DbContext，](~/ef6/fundamentals/connection-management.md)** 这会启用在创建上下文时可以打开连接的情况（例如，在不能保证连接状态的组件之间共享连接）的情况。
 - **[改进的事务支持](~/ef6/saving/transactions.md)** 为框架的外部事务提供支持，并改进了在框架中创建事务的方式。
 - **.Net 4.0 上的枚举、空间和更好的性能**-通过将已在 .NET Framework 中的核心组件移到 EF NuGet 包中，我们现在可以提供枚举支持、空间数据类型和 .net 4.0 上 EF5 的性能改进。
 - 可**枚举的性能得到改进。包含在 LINQ 查询中**。
 - **缩短了预热时间（视图生成）** ，尤其是对于大型模型。
-- 可**插入复数形式 &amp; Singularization 服务**。
+- 可**插接式复数形式 &amp; Singularization 服务**。
 - 现在支持实体类上**Equals 或 GetHashCode 的自定义实现**。
 - **DbSet. AddRange/RemoveRange**提供一种优化的方式来添加或删除集中的多个实体。
 - **DbChangeTracker HasChanges**提供一种简单有效的方法来查看是否有任何挂起的更改保存到数据库中。
@@ -234,7 +234,7 @@ EF 4.3.0 运行时已发布到2012年2月的 NuGet。
 ## <a name="ef-42"></a>EF 4。2
 EF 4.2.0 运行时已发布到2011年11月的 NuGet。
 此版本包含对 EF 4.1.1 版本的 bug 修复。
-由于此发行版只包含 bug 修复，因此它可能已成为 EF 4.1.2 修补程序版本，但我们选择迁移到4.2，以允许我们离开在4.1 版本中使用的基于日期的修补程序版本号，并为 s 使用[语义 Versionsing](https://semver.org)标准emantic 版本控制。
+由于此发行版只包含 bug 修复，因此，它可能已成为 EF 4.1.2 修补程序版本，但我们选择迁移到4.2，以允许我们从在4.1 版本中使用的基于日期的修补程序版本号开始，并采用[语义 Versionsing](https://semver.org)标准进行语义版本控制。
 
 下面是专为 EF 4.2 版本组合在一起的内容列表，为 EF 4.1 提供的内容也适用于 EF 4.2：
 

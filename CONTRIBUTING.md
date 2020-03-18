@@ -1,25 +1,17 @@
----
-ms.openlocfilehash: 79a2a10cae9f8a5541bca132e407d4abbe95e093
-ms.sourcegitcommit: 87fcaba46535aa351db4bdb1231bd14b40e459b9
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 04/22/2019
-ms.locfileid: "59929883"
----
 # <a name="contributing-to-the-entity-framework-documentation"></a>参与实体框架文档
 
 下面阐述了如何向实体框架文档贡献文章和代码示例。 贡献可简单到纠正错别字，也可复杂到撰写新的文章。
 
 ## <a name="how-to-make-a-simple-correction-or-suggestion"></a>如何提出简单的更正或建议
 
-文章以 Markdown 文件的形式保存在此存储库中。 要对 Markdown 文件的内容进行简单更改，请单击浏览器窗口右上角的“编辑”链接。 你可能需要展开“选项”栏才会看到“编辑”链接。 按照说明创建拉取请求 (PR)。 EF 团队将对拉取请求进行审核并接受相关请求或提出更改建议。
+文章以 Markdown 文件的形式保存在此存储库中。 要对 Markdown 文件的内容进行简单更改，请单击浏览器窗口右上角的“编辑”链接  。 你可能需要展开“选项”栏才会看到“编辑”链接   。 按照说明创建拉取请求 (PR)。 EF 团队将对拉取请求进行审核并接受相关请求或提出更改建议。
 
 ## <a name="how-to-make-a-more-complex-submission"></a>如何提出更复杂的提交
 
 需要对 [Git 和 GitHub.com](https://guides.github.com/activities/hello-world/) 有基本的理解。
 
-* 打开[问题](https://github.com/aspnet/EntityFramework.Docs/issues/new)，描述想要执行的操作，例如更改现有文章或创建一个新文章。 请等待 EF 团队批准后再投入时间参与进来。
-* 对 [aspnet/EntityFramework.Docs](https://github.com/aspnet/EntityFramework.Docs/) 存储库进行分叉，并为所作更改创建分支。
+* 打开[问题](https://github.com/dotnet/EntityFramework.Docs/issues/new)，描述想要执行的操作，例如更改现有文章或创建一个新文章。 请等待 EF 团队批准后再投入时间参与进来。
+* 为 [dotnet/EntityFramework.Docs](https://github.com/dotnet/EntityFramework.Docs/) 存储库创建分支，并为所做的更改创建分支。
 * 将拉取请求 (PR) 与更改一起提交到主干。
 * 对 PR 请求反馈进行响应。
 
@@ -73,9 +65,9 @@ DocFX 需要使用 .NET Framework（对于 Windows）或 Mono（对于 Linux 或
 
 ### <a name="windows-instructions"></a>Windows 说明
 
-* 从 [DocFX 发布](https://github.com/dotnet/docfx/releases)下载并解压缩 “docfx.zip”。
+* 从 [DocFX 发布](https://github.com/dotnet/docfx/releases)下载并解压缩 “docfx.zip”  。
 * 将 DocFX 添加到路径。
-* 在命令行窗口中，导航到克隆的存储库（它包含 docfx.json 文件），并运行以下命令：
+* 在命令行窗口中，导航到克隆的存储库（它包含 docfx.json 文件），并运行以下命令  ：
 
    ``` console
    docfx -t default --serve
@@ -88,7 +80,7 @@ DocFX 需要使用 .NET Framework（对于 Windows）或 Mono（对于 Linux 或
 * 使用 Homebrew 安装 Mono - `brew install mono`。
 * 下载 [DocFX 的最新版本](https://github.com/dotnet/docfx/releases/tag/v2.7.2)。
 * 提取到 `\bin\docfx`。
-* 为 “docfx” 创建一个别名：
+* 为 “docfx” 创建一个别名： 
 
   ``` console
   function docfx {
@@ -100,7 +92,7 @@ DocFX 需要使用 .NET Framework（对于 Windows）或 Mono（对于 Linux 或
   }
   ```
 
-* 在克隆存储库中运行“docfx”以生成站点，并在 `http://localhost:8080` 上运行“docfx-serve”以查看站点。
+* 在克隆存储库中运行“docfx”以生成站点，并在 `http://localhost:8080` 上运行“docfx-serve”以查看站点   。
 
 ## <a name="voice-and-tone"></a>语气和语调
 
