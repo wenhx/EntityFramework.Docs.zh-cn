@@ -3,12 +3,12 @@ title: 针对 Entity Framework Core 5.0 的计划
 author: ajcvickers
 ms.date: 01/14/2020
 uid: core/what-is-new/ef-core-5.0/plan.md
-ms.openlocfilehash: c5b7300c61c2f668b6f9393ae51bf9ebddf330a7
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.openlocfilehash: 8b4ca32524869019c04d5a4d4d55967f68181cd7
+ms.sourcegitcommit: c3b8386071d64953ee68788ef9d951144881a6ab
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78413821"
+ms.lasthandoff: 03/24/2020
+ms.locfileid: "80136224"
 ---
 # <a name="plan-for-entity-framework-core-50"></a>针对 Entity Framework Core 5.0 的计划
 
@@ -67,7 +67,7 @@ T 恤大小：L
 
 T 恤大小：XL
 
-状态：尚未开始
+状态：正在进行
 
 我们要实现 TPT 是因为它是经常请求的功能（大约 254 张投票；第三名），并且它需要一些低级更改，我们认为这些更改适合于总体 .NET 5 计划的基础性质。 我们预计这会形成数据库提供程序的重大更改，但与 3.0 所需的更改相比，这些更改的严重性要小得多。
 
@@ -79,7 +79,7 @@ T 恤大小：XL
 
 T 恤大小：M
 
-状态：尚未开始
+状态：正在进行
 
 经过筛选的包含是经常请求的功能（大约 317 张投票；第二名），其工作量不大，我们认为这会使当前需要模型级筛选器或更复杂查询的许多方案不受阻碍或更加容易。
 
@@ -91,7 +91,7 @@ T 恤大小：M
 
 T 恤大小：L
 
-状态：尚未开始
+状态：正在进行
 
 在以前的版本中，我们在支持原始 SQL、无键类型和相关领域方面取得了进展。 但是，在所有内容作为一个整体协同工作的方式上存在差距和不一致。 5\.0 的目标是修复这些问题，并为定义、迁移和使用不同类型的实体及其关联查询和数据库项目创造良好体验。 这也可能涉及到已编译查询 API 的更新。
 
@@ -184,7 +184,7 @@ T 恤大小：L
 
 T 恤大小：L
 
-状态：尚未开始
+状态：正在进行
 
 这里的思路是使人们更容易了解 EF Core 的内部情况。 这可能对于使用 EF Core 的任何人都十分有用，但主要动机是使外部人员更容易：
 
