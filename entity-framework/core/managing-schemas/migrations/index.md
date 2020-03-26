@@ -4,12 +4,12 @@ author: bricelam
 ms.author: bricelam
 ms.date: 10/05/2018
 uid: core/managing-schemas/migrations/index
-ms.openlocfilehash: dc0c1ae1a03c98c6f230557dc0bdd4d29ec191dd
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.openlocfilehash: 190057daed61c58c1f89ee8d775913458e413a50
+ms.sourcegitcommit: c3b8386071d64953ee68788ef9d951144881a6ab
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78412842"
+ms.lasthandoff: 03/24/2020
+ms.locfileid: "80136199"
 ---
 # <a name="migrations"></a>迁移
 
@@ -215,15 +215,43 @@ Update-Database LastGoodMigration
 
 ### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
 
+#### <a name="basic-usage"></a>基本用法
 ```dotnetcli
 dotnet ef migrations script
 ```
 
+#### <a name="with-from-to-implied"></a>使用 From（to 隐含）
+这将生成从此迁移到最新迁移的 SQL 脚本。
+```dotnetcli
+dotnet ef migrations script 20190725054716_Add_new_tables
+```
+
+#### <a name="with-from-and-to"></a>使用 From 和 To
+这将生成从 `from` 迁移到指定 `to` 迁移的 SQL 脚本。
+```dotnetcli
+dotnet ef migrations script 20190725054716_Add_new_tables 20190829031257_Add_audit_table
+```
+可以使用比 `to` 新的 `from` 来生成回退脚本。 请记下潜在的数据丢失方案。 
+
 ### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
 
+#### <a name="basic-usage"></a>基本用法
 ``` powershell
 Script-Migration
 ```
+
+#### <a name="with-from-to-implied"></a>使用 From（to 隐含）
+这将生成从此迁移到最新迁移的 SQL 脚本。
+```powershell
+Script-Migration 20190725054716_Add_new_tables
+```
+
+#### <a name="with-from-and-to"></a>使用 From 和 To
+这将生成从 `from` 迁移到指定 `to` 迁移的 SQL 脚本。
+```powershell
+Script-Migration 20190725054716_Add_new_tables 20190829031257_Add_audit_table
+```
+可以使用比 `to` 新的 `from` 来生成回退脚本。 请记下潜在的数据丢失方案。 
 
 ***
 

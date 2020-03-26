@@ -4,12 +4,12 @@ author: ajcvickers
 ms.date: 03/03/2020
 ms.assetid: C21F89EE-FB08-4ED9-A2A0-76CB7656E6E4
 uid: core/what-is-new/index
-ms.openlocfilehash: 2c41f65d1fead8430a39c6230a0f22506686504e
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.openlocfilehash: 7b58b4de0eb8d9575f77e0b147da017eabad1867
+ms.sourcegitcommit: c3b8386071d64953ee68788ef9d951144881a6ab
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78413202"
+ms.lasthandoff: 03/24/2020
+ms.locfileid: "80136213"
 ---
 # <a name="ef-core-releases-and-planning"></a>EF Core 版本和计划
 
@@ -57,10 +57,12 @@ EF Core 版本与 [.NET Core 发货计划](https://github.com/dotnet/core/blob/m
 
 ### <a name="get-it-now"></a>立即获取！
 
-EF Core 5.0 包现在以[每日生成](https://github.com/aspnet/AspNetCore/blob/master/docs/DailyBuilds.md)的形式提供  。 
+EF Core 5.0 包现在以 
 
-使用每日生成是一种查找问题并尽快提供反馈的绝佳方式。
+* [每日生成](https://github.com/dotnet/aspnetcore/blob/master/docs/DailyBuilds.md)的形式提供
+  * 所有最新功能和 bug 修复。 通常非常稳定；针对每个生成已运行 57,000 多次测试。
+* [用于 NuGet 的预览版](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore)
+  * 滞后于每日生成，但经过测试可用于相应的 ASP.NET Core 和 .NET Core 预览版。
+
+使用预览版或每日生成是一种查找问题并尽快提供反馈的绝佳方式。
 我们获取此类反馈的速度越快，就越有可能在发布下一个正式版本前实施该反馈。
-我们针对每个生成在每个平台上运行超过 56,000 个测试，致力于使每日生成保持良好状态。
-
-预览包将在今年晚些时候发送到 NuGet。
