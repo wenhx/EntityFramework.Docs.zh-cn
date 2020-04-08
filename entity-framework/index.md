@@ -6,10 +6,10 @@ ms.date: 10/27/2016
 ms.assetid: 6bb12583-c39a-454c-8d83-d2a2793ca9ef
 uid: index
 ms.openlocfilehash: 1643e3c9d1b8565155ebc1c04713a40883d03a07
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "78412912"
 ---
 <div id="main" class="v2">
@@ -24,7 +24,7 @@ ms.locfileid: "78412912"
                         <ul id="entityfmwk1" class="cardsC">
                             <li>
                                 <div class="container intro">
-                                    <p>Entity Framework 是一种支持 .NET 开发人员使用 .NET 对象处理数据库的对象关系映射程序 (O/RM)。 它不要求提供开发人员通常需要编写的大部分数据访问代码。</p>
+                                    <p>Entity Framework 是一种对象关系映射程序 (O/RM)，可方便 .NET 开发人员使用 .NET 对象处理数据库。 开发人员无需再像往常一样编写大部分数据访问代码。</p>
                                 </div>
                             </li>
                             <li>
@@ -258,7 +258,7 @@ ms.locfileid: "78412912"
                                                     </div>
                                                 </div>
                                                 <div class="cardText">
-                                                    <h3>开始操作</h3>
+                                                    <h3>入门</h3>
                                                     <p>了解如何使用 Entity Framework 6 访问数据。</p>
                                                 </div>
                                             </div>
