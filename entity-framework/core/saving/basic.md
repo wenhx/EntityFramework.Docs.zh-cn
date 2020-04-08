@@ -5,10 +5,10 @@ ms.date: 10/27/2016
 ms.assetid: 850d842e-3fad-4ef2-be17-053768e97b9e
 uid: core/saving/basic
 ms.openlocfilehash: 066d67d6104316832a33f5a3648f1f2fa6cc9c50
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "78413683"
 ---
 # <a name="basic-save"></a>基本保存
@@ -25,7 +25,7 @@ ms.locfileid: "78413683"
 [!code-csharp[Main](../../../samples/core/Saving/Basics/Sample.cs#Add)]
 
 > [!TIP]  
-> 添加、附加和更新方法全部呈现在传递给这些方法的实体的完整关系图上，如[相关数据](related-data.md)部分中所述。 此外，还可以使用 EntityEntry.State 属性仅设置单个实体的状态。 例如 `context.Entry(blog).State = EntityState.Modified`。
+> 添加、附加和更新方法全部呈现在传递给这些方法的实体的完整关系图上，如[相关数据](related-data.md)部分中所述。 此外，还可以使用 EntityEntry.State 属性仅设置单个实体的状态。 例如，`context.Entry(blog).State = EntityState.Modified` 。
 
 ## <a name="updating-data"></a>更新数据
 
@@ -48,6 +48,6 @@ EF 将自动检测对由上下文跟踪的现有实体所做的更改。 这包�
 可以将多个添加/更新/删除操作合并到对“SaveChanges”  的单个调用。
 
 > [!NOTE]  
-> 对于大多数数据库提供程序，“SaveChanges”  是事务性的。 这意味着所有操作将成功或失败，决不部分应用这些操作。
+> 对于大多数数据库提供程序，“SaveChanges”  是事务性的。 这意味着所有操作将一起成功或一起失败，绝不会部分的应用这些操作。
 
 [!code-csharp[Main](../../../samples/core/Saving/Basics/Sample.cs#MultipleOperations)]

@@ -5,10 +5,10 @@ ms.date: 10/27/2016
 ms.assetid: 20A25111-AEBE-4BC2-83A5-3F651952DF72
 uid: core/what-is-new/ef-core-1.0
 ms.openlocfilehash: 2cd2a54d75ed3f0caa8b674dfb56babcfcc13592
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "78413593"
 ---
 # <a name="features-included-in-ef-core-10"></a>EF Core 1.0 中包含的功能
@@ -61,7 +61,7 @@ ms.locfileid: "78413593"
 
 允许在模型中定义序列对象。
 
-### <a name="unique-constraints"></a>UNIQUE 约束
+### <a name="unique-constraints"></a>唯一约束
 
 允许定义备用键以及面向该键的关系的功能。
 
@@ -81,7 +81,7 @@ ms.locfileid: "78413593"
 
 检测模型中的无效模式并提供有用的错误消息。
 
-## <a name="change-tracking"></a>Change tracking
+## <a name="change-tracking"></a>更改跟踪
 
 ### <a name="snapshot-change-tracking"></a>快照更改跟踪
 
@@ -105,7 +105,7 @@ ms.locfileid: "78413593"
 
 允许将对实体实例的更改持久保存到数据库。
 
-### <a name="optimistic-concurrency"></a>开放式并发
+### <a name="optimistic-concurrency"></a>乐观并发
 
 防止由于从数据库中提取数据而覆盖其他用户所做的更改。
 

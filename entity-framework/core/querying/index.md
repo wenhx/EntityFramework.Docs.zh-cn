@@ -5,10 +5,10 @@ ms.date: 10/03/2019
 ms.assetid: 7c65ec3e-46c8-48f8-8232-9e31f96c277b
 uid: core/querying/index
 ms.openlocfilehash: 0e1e50d1a3f647d65301552d0a447f9fcae81438
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "78413112"
 ---
 # <a name="querying-data"></a>查询数据
@@ -28,7 +28,7 @@ Entity Framework Core 使用语言集成查询 (LINQ) 来查询数据库中的�
 
 [!code-csharp[Main](../../../samples/core/Querying/Basics/Sample.cs#LoadingSingleEntity)]
 
-## <a name="filtering"></a>筛选
+## <a name="filtering"></a>Filtering
 
 [!code-csharp[Main](../../../samples/core/Querying/Basics/Sample.cs#Filtering)]
 

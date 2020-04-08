@@ -4,10 +4,10 @@ author: anpete
 ms.date: 11/03/2017
 uid: core/querying/filters
 ms.openlocfilehash: 9262ff7970b0502945480c673315071cbc3f44b9
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "78413761"
 ---
 # <a name="global-query-filters"></a>全局查询筛选器
@@ -31,9 +31,9 @@ ms.locfileid: "78413761"
 
 [!code-csharp[Main](../../../samples/core/QueryFilters/Program.cs#Entities)]
 
-请注意 _Blog_ 实体上的 _tenantId_ 字段的声明。 这会用于将每个 _Blog_ 实例与特定租户相关联。 同时在 _Post_ 实体类型上定义了 _IsDeleted_ 属性。 这会用于跟踪一个 _Post_ 实例是否已“软删除”。 也就是说，实例只是被标记为已删除，而非真正删除了基础数据。
+请注意 _Blog_ 实体上的 _tenantId_ 字段的声明。 这会用于将每个 _Blog_ 实例与特定租户相关联。 还会定义_文章_实体类型上的 _IsDeleted_ 属性。 这会用于跟踪文章  实例是否已“软删除”。 也就是说，实例标记为已删除，而实际上不会删除基础数据。
 
-接下来，使用 `HasQueryFilter` API 在 _OnModelCreating_ 中配置查询筛选器。
+接下来，使用 _API 在_OnModelCreating`HasQueryFilter` 中配置查询筛选器。
 
 [!code-csharp[Main](../../../samples/core/QueryFilters/Program.cs#Configuration)]
 
@@ -55,4 +55,4 @@ ms.locfileid: "78413761"
 
 全局查询筛选器具有以下限制：
 
-* 仅可为继承层次结构的根实体类型定义筛选器。
+* 仅可为继承层次结构中的根实体类型定义筛选器。

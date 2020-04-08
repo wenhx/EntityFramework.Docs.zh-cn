@@ -5,10 +5,10 @@ ms.date: 10/03/2019
 ms.assetid: 2e187a2a-4072-4198-9040-aaad68e424fd
 uid: core/querying/complex-query-operators
 ms.openlocfilehash: 44c2695ea003da043925740a52596fd27da638f8
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "78413773"
 ---
 # <a name="complex-query-operators"></a>复杂查询运算符
@@ -18,7 +18,7 @@ ms.locfileid: "78413773"
 > [!TIP]
 > 可在 GitHub 上查看此文章的[示例](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Querying)。
 
-## <a name="join"></a>联接
+## <a name="join"></a>Join
 
 借助 LINQ Join 运算符，可根据每个源的键选择器连接两个数据源，并在键匹配时生成值的元组。 该运算符在关系数据库中自然而然地转换为 `INNER JOIN`。 虽然 LINQ Join 具有外部和内部键选择器，但数据库只需要一个联接条件。 因此 EF Core 通过比较外部键选择器和内部键选择器是否相等，来生成联接条件。 此外，如果键选择器是匿名类型，则 EF Core 会生成一个联接条件以用于比较组件是否相等。
 
@@ -56,7 +56,7 @@ CROSS JOIN [Posts] AS [p]
 
 ### <a name="collection-selector-references-outer-in-a-where-clause"></a>集合选择器引用 where 子句中的外部
 
-如果集合选择器具有引用外部元素的 where 子句，则 EF Core 会将其转换为数据库联接，并将谓词用作联接条件。 在对外部元素使用集合导航作为集合选择器时，通常会出现这种情况。 如果外部元素的集合为空，则不会为该外部元素生成任何结果。 但如果在集合选择器上应用 `DefaultIfEmpty`，则外部元素将与内部元素的默认值连接。 由于这种区别，应用 `DefaultIfEmpty` 时，如果缺少 `DefaultIfEmpty` 和 `LEFT JOIN`，此类查询会转换为 `INNER JOIN`。
+如果集合选择器具有引用外部元素的 where 子句，则 EF Core 会将其转换为数据库联接，并将谓词用作联接条件。 在对外部元素使用集合导航作为集合选择器时，通常会出现这种情况。 如果外部元素的集合为空，则不会为该外部元素生成任何结果。 但如果在集合选择器上应用 `DefaultIfEmpty`，则外部元素将与内部元素的默认值连接。 由于这种区别，应用 `INNER JOIN` 时，如果缺少 `DefaultIfEmpty` 和 `LEFT JOIN`，此类查询会转换为 `DefaultIfEmpty`。
 
 [!code-csharp[Main](../../../samples/core/Querying/ComplexQuery/Sample.cs#SelectManyConvertedToJoin)]
 
@@ -72,7 +72,7 @@ LEFT JOIN [Posts] AS [p] ON [b].[BlogId] = [p].[BlogId]
 
 ### <a name="collection-selector-references-outer-in-a-non-where-case"></a>集合选择器引用非 where 情况下的外部
 
-如果集合选择器引用的外部元素不在 where 子句中（如上所述），则它不会转换为数据库联接。 这就是我们需要为每个外部元素评估集合选择器的原因。 它在许多关系数据库中转换为 `APPLY` 操作。 如果外部元素的集合为空，则不会为该外部元素生成任何结果。 但如果在集合选择器上应用 `DefaultIfEmpty`，则外部元素将与内部元素的默认值连接。 由于这种区别，应用 `DefaultIfEmpty` 时，如果缺少 `DefaultIfEmpty` 和 `OUTER APPLY`，此类查询会转换为 `CROSS APPLY`。 像 SQLite 之类的某些数据库不支持 `APPLY` 运算符，因此此类查询可能不会进行转换。
+如果集合选择器引用的外部元素不在 where 子句中（如上所述），则它不会转换为数据库联接。 这就是我们需要为每个外部元素评估集合选择器的原因。 它在许多关系数据库中转换为 `APPLY` 操作。 如果外部元素的集合为空，则不会为该外部元素生成任何结果。 但如果在集合选择器上应用 `DefaultIfEmpty`，则外部元素将与内部元素的默认值连接。 由于这种区别，应用 `CROSS APPLY` 时，如果缺少 `DefaultIfEmpty` 和 `OUTER APPLY`，此类查询会转换为 `DefaultIfEmpty`。 像 SQLite 之类的某些数据库不支持 `APPLY` 运算符，因此此类查询可能不会进行转换。
 
 [!code-csharp[Main](../../../samples/core/Querying/ComplexQuery/Sample.cs#SelectManyConvertedToApply)]
 
@@ -113,11 +113,11 @@ ORDER BY [p].[AuthorId]
 EF Core 支持的聚合运算符如下所示
 
 - 平均值
-- 计数
+- Count
 - LongCount
-- 最大值
-- 最小值
-- Sum
+- Max
+- Min
+- SUM
 
 ## <a name="left-join"></a>Left Join
 

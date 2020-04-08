@@ -4,10 +4,10 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 5e60f5be-7bbb-4bf8-835e-0ac808d6c84a
 ms.openlocfilehash: 3bb9759d89fbd0c10b911625aa7d0afd7747de14
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "78413352"
 ---
 # <a name="self-tracking-entities"></a>自跟踪实体
@@ -21,10 +21,10 @@ ms.locfileid: "78413352"
 
 此模板项会生成两个 .tt（文本模板）文件：  
 
-- \<model name\>.tt 文件可生成实体类型、包含自跟踪实体使用的更改跟踪逻辑的 Helper 类以及允许设置自跟踪实体的状态的扩展方法  。  
-- \<model name\>.Context.tt 文件生成派生的上下文和扩展类，该类包含 ObjectContext 和 ObjectSet 类的 ApplyChanges 方法     。 这些方法检查自跟踪实体图中包含的更改跟踪信息，以推断在数据库中保存这些更改所必须执行的一组操作。  
+- **model name\<.tt 文件可生成实体类型、包含自跟踪实体使用的更改跟踪逻辑的 Helper 类以及允许设置自跟踪实体的状态的扩展方法\>** 。  
+- **model name\<.Context.tt 文件生成派生的上下文和扩展类，该类包含 ObjectContext 和 ObjectSet 类的 ApplyChanges 方法\>**    。 这些方法检查自跟踪实体图中包含的更改跟踪信息，以推断在数据库中保存这些更改所必须执行的一组操作。  
 
-## <a name="get-started"></a>开始操作  
+## <a name="get-started"></a>入门  
 
 若要开始操作，请访问[自跟踪实体演练](walkthrough.md)页。  
 

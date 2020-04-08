@@ -4,10 +4,10 @@ author: ajcvickers
 ms.date: 01/14/2020
 uid: core/what-is-new/ef-core-5.0/plan.md
 ms.openlocfilehash: 8b4ca32524869019c04d5a4d4d55967f68181cd7
-ms.sourcegitcommit: c3b8386071d64953ee68788ef9d951144881a6ab
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/24/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "80136224"
 ---
 # <a name="plan-for-entity-framework-core-50"></a>针对 Entity Framework Core 5.0 的计划

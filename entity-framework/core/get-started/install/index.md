@@ -5,15 +5,15 @@ ms.date: 08/06/2017
 ms.assetid: 608cc774-c570-4809-8a3e-cd2c8446b8b2
 uid: core/get-started/install/index
 ms.openlocfilehash: 6575b1ac028f8b67b49ca7f4e49d6f19500be98f
-ms.sourcegitcommit: c3b8386071d64953ee68788ef9d951144881a6ab
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/24/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "80136174"
 ---
 # <a name="installing-entity-framework-core"></a>安装 Entity Framework Core
 
-## <a name="prerequisites"></a>先决条件
+## <a name="prerequisites"></a>必备条件
 
 * EF Core 是一个 [.NET Standard 2.0](/dotnet/standard/net-standard) 库。 因此，EF Core 需要支持运行 .NET Standard 2.0 的实现。 其他 .NET Standard 2.0 库也可引用 EF Core。
 
@@ -41,7 +41,7 @@ ms.locfileid: "80136174"
   dotnet add package Microsoft.EntityFrameworkCore.SqlServer
   ```
 
-* 可以使用 `-v` 修饰符在 `dotnet add package` 命令中指明特定的版本。 例如，若要安装 EF Core 2.2.0 包，请将 `-v 2.2.0` 追加到命令中。
+* 可以使用 `dotnet add package` 修饰符在 `-v` 命令中指明特定的版本。 例如，若要安装 EF Core 2.2.0 包，请将 `-v 2.2.0` 追加到命令中。
 
 有关详细信息，请参阅 [.NET 命令行接口 (CLI) 工具](/dotnet/core/tools/)。
 

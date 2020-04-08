@@ -5,15 +5,15 @@ ms.date: 10/27/2016
 ms.assetid: 3f1993c2-cdf5-425b-bac2-a2665a20322b
 uid: core/saving/explicit-values-generated-properties
 ms.openlocfilehash: 43c4ab3c2a60645cdeff2a6cc40ce979f832f2fd
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "78413629"
 ---
 # <a name="setting-explicit-values-for-generated-properties"></a>设置已生成属性的显式值
 
-生成的属性是在添加和/或更新实体时生成其值（由 EF 或数据库生成）的属性。 有关详细信息，请参阅[生成的属性](../modeling/generated-properties.md)。
+生成的属性是在添加和/或更新实体时由 EF 或数据库生成其值的属性。 有关详细信息，请参阅[生成的属性](../modeling/generated-properties.md)。
 
 在某些情况下，可能希望为已生成属性设置显式值，而不是生成一个显式值。
 
@@ -34,8 +34,8 @@ ms.locfileid: "78413629"
 
 以下代码可将两个员工插入到数据库中。
 
-* 对于第一个员工，没有为 `Employee.EmploymentStarted` 属性分配任何值，因此仍将设置为 `DateTime` 的 CLR 默认值。
-* 对于第二个员工，已设置 `1-Jan-2000` 的显式值。
+* 对于第一个员工，没有为 `Employee.EmploymentStarted` 属性分配任何值，因此仍将其设置为 CLR 的 `DateTime` 默认值。
+* 对于第二个员工，已设置显式值 `1-Jan-2000`。
 
 [!code-csharp[Main](../../../samples/core/Saving/ExplicitValuesGenerateProperties/Sample.cs#EmploymentStarted)]
 
@@ -46,14 +46,14 @@ ms.locfileid: "78413629"
 2: Jane Doe, 1/1/2000 12:00:00 AM
 ```
 
-### <a name="explicit-values-into-sql-server-identity-columns"></a>显式值到 SQL Server IDENTITY 列
+### <a name="explicit-values-into-sql-server-identity-columns"></a>显式值插入 SQL Server IDENTITY 列
 
 按照约定，`Employee.EmployeeId` 属性是存储生成的 `IDENTITY` 列。
 
-对于大多数情况，上述方法将适用于键属性。 但是，若要将显式值插入到 SQL Server `IDENTITY` 列中，则必须在调用 `SaveChanges()` 之前手动启用 `IDENTITY_INSERT`。
+对于大多数情况，上述方法将适用于键属性。 但是，若要将显式值插入到 SQL Server `IDENTITY` 列中，则必须在调用 `IDENTITY_INSERT` 之前手动启用 `SaveChanges()`。
 
 > [!NOTE]  
-> 积压工作中有[功能请求](https://github.com/aspnet/EntityFramework/issues/703)，用来在 SQL Server 提供程序内自动执行此操作。
+> 对于积压工作存在一个[功能请求](https://github.com/aspnet/EntityFramework/issues/703)，请求在 SQL Server 提供程序内自动执行此操作。
 
 [!code-csharp[Main](../../../samples/core/Saving/ExplicitValuesGenerateProperties/Sample.cs#EmployeeId)]
 
@@ -76,14 +76,14 @@ ms.locfileid: "78413629"
 > [!NOTE]  
 > **EF Core 2.0 中的更改：** 在以前版本中，通过 `IsReadOnlyAfterSave` 标志控制保存后行为。 此标志已过时，将替换为 `AfterSaveBehavior`。
 
-数据库中还存在触发器，以便在执行 `UPDATE` 操作期间为 `LastPayRaise` 列生成值。
+数据库中还存在触发器，以便在执行 `LastPayRaise` 操作期间为 `UPDATE` 列生成值。
 
 [!code-sql[Main](../../../samples/core/Saving/ExplicitValuesGenerateProperties/employee_UPDATE.sql)]
 
 以下代码可增加数据库中两个员工的薪金。
 
 * 对于第一个员工，没有为 `Employee.LastPayRaise` 属性分配任何值，因此仍将设置为 null。
-* 对于第二个员工，已在一周前设置显式值（使加薪在较早的日期开始生效）。
+* 对于第二个员工，已将显式值设置为一周前（使加薪在较早的日期开始生效）。
 
 [!code-csharp[Main](../../../samples/core/Saving/ExplicitValuesGenerateProperties/Sample.cs#LastPayRaise)]
 

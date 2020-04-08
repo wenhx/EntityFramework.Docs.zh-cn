@@ -5,10 +5,10 @@ ms.date: 02/20/2018
 ms.assetid: 585F90A3-4D5A-4DD1-92D8-5243B14E0FEC
 uid: core/what-is-new/ef-core-2.1
 ms.openlocfilehash: ba3a26bcd76cd0b9615b13f32456e7280afe533a
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "78413563"
 ---
 # <a name="new-features-in-ef-core-21"></a>EF Core 2.1 中的新增功能
@@ -129,11 +129,11 @@ var query = context.Customers.Select(
     c => c.Orders.Where(o => o.Amount  > 100).Select(o => o.Amount).ToList());
 ```
 
-请注意，此查询将只转换为两个 SQL 查询：一个用于客户，另一个用于订单。
+请注意，此查询只会被转换为两个 SQL 查询：一个“客户”查询，一个“订单”查询。
 
 ## <a name="owned-attribute"></a>[Owned] 属性
 
-现只需使用 `[Owned]` 注释类型，并确保所有者实体添加到了模型中，即可配置[固有实体类型](xref:core/modeling/owned-entities)：
+现只需使用 [ 注释类型，并确保所有者实体添加到了模型中，即可配置](xref:core/modeling/owned-entities)固有实体类型`[Owned]`：
 
 ``` csharp
 [Owned]
@@ -162,7 +162,7 @@ dotnet-ef 命令现在是 .NET Core SDK 的一部分，因此无须在项目中�
 
 ## <a name="state-change-events"></a>状态更改事件
 
-`ChangeTracker` 中新增的 `Tracked` 和 `StateChanged` 事件可用于编写逻辑，以响应进入 DbContext 或状态更改的实体。
+`Tracked` 中新增的 `StateChanged` 和 `ChangeTracker` 事件可用于编写逻辑，以响应进入 DbContext 或状态更改的实体。
 
 ## <a name="raw-sql-parameter-analyzer"></a>原始 SQL 参数分析器
 

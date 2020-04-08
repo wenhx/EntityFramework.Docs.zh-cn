@@ -5,10 +5,10 @@ ms.date: 11/14/2018
 ms.assetid: 73C7A627-C8E9-452D-9CD5-AFCC8FEFE395
 uid: core/querying/tags
 ms.openlocfilehash: e8415b237df45ce652dcd152013f4f12a992aed7
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "78413827"
 ---
 # <a name="query-tags"></a>查询标记
@@ -92,7 +92,7 @@ FROM [Friends] AS [f]
 ORDER BY [f].[Location].STDistance(@__myLocation_0) DESC
 ```
 
-## <a name="known-limitations"></a>已知限制
+## <a name="known-limitations"></a>已知的限制
 
-查询标记不可参数化：  EF Core 始终将 LINQ 查询中的查询标记视为生成的 SQL 中包含的字符串文本。
+**查询标记不可参数化：** EF Core 始终将 LINQ 查询中的查询标记视为，已生成 SQL 中包含的字符串文本。
 禁止使用将查询标记用作参数的已编译查询。

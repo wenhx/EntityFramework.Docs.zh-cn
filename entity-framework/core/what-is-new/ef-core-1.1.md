@@ -5,10 +5,10 @@ ms.date: 10/27/2016
 ms.assetid: C7FE8C85-445A-4F0C-97EC-CC3F7F1D6F5E
 uid: core/what-is-new/ef-core-1.1
 ms.openlocfilehash: d582712ed62443318f4b9e209511fb2a557d667e
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "78413587"
 ---
 # <a name="new-features-in-ef-core-11"></a>EF Core 1.1 中的新增功能
@@ -23,7 +23,7 @@ ms.locfileid: "78413587"
 
 你可以指定实体映射到的表是内存优化表。 使用 EF Core 创建和维护基于模型的数据库时（使用迁移或 `Database.EnsureCreated()`），将为这些实体创建内存优化表。
 
-## <a name="change-tracking"></a>Change tracking
+## <a name="change-tracking"></a>更改跟踪
 
 ### <a name="additional-change-tracking-apis-from-ef6"></a>来自 EF6 的其他更改跟踪 API
 

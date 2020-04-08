@@ -6,10 +6,10 @@ ms.author: ansvyryd
 ms.date: 11/05/2019
 uid: core/providers/cosmos/index
 ms.openlocfilehash: 74284bf78f404e376436a1ef5d5933186c85ae49
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "78413052"
 ---
 # <a name="ef-core-azure-cosmos-db-provider"></a>EF Core Azure Cosmos DB Provider
@@ -65,7 +65,7 @@ Install-Package Microsoft.EntityFrameworkCore.Cosmos
 [!code-csharp[HelloCosmos](../../../../samples/core/Cosmos/ModelBuilding/Sample.cs?name=HelloCosmos)]
 
 > [!IMPORTANT]
-> 要创建所需的容器并插入[种子数据](../../modeling/data-seeding.md)（如果存在于模型中），则需要调用 [EnsureCreatedAsync](/dotnet/api/Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureCreatedAsync)。 但是只应在部署期间调用 `EnsureCreatedAsync`，而不应在正常操作中调用，否则可能会导致性能问题。
+> 要创建所需的容器并插入[种子数据](/dotnet/api/Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureCreatedAsync)（如果存在于模型中），则需要调用 [EnsureCreatedAsync](../../modeling/data-seeding.md)。 但是只应在部署期间调用 `EnsureCreatedAsync`，而不应在正常操作中调用，否则可能会导致性能问题。
 
 ## <a name="cosmos-specific-model-customization"></a>特定于 Cosmos 的模型自定义
 
@@ -122,7 +122,7 @@ Install-Package Microsoft.EntityFrameworkCore.Cosmos
 }
 ```
 
-还嵌入了从属实体的集合。 对于下一个示例，我们将使用具有 `StreetAddress` 集合的 `Distributor` 类：
+还嵌入了从属实体的集合。 对于下一个示例，我们将使用具有 `Distributor` 集合的 `StreetAddress` 类：
 
 [!code-csharp[Distributor](../../../../samples/core/Cosmos/ModelBuilding/Distributor.cs?name=Distributor)]
 

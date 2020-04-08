@@ -5,10 +5,10 @@ ms.date: 10/08/2019
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
 uid: core/querying/raw-sql
 ms.openlocfilehash: a54bb67c0fce9d621382f6372e70fe4cdca48a20
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "78413713"
 ---
 # <a name="raw-sql-queries"></a>原生 SQL 查询
@@ -28,7 +28,7 @@ ms.locfileid: "78413713"
 
 [!code-csharp[Main](../../../samples/core/Querying/RawSQL/Sample.cs#FromSqlRawStoredProcedure)]
 
-## <a name="passing-parameters"></a>快速参考
+## <a name="passing-parameters"></a>传递参数
 
 > [!WARNING]
 > **始终对原始 SQL 查询使用参数化**
@@ -83,9 +83,9 @@ ORDER BY [b].[Rating] DESC
 
 - 结尾分号
 - 在 SQL Server 上，结尾处的查询级提示（例如，`OPTION (HASH JOIN)`）
-- 在 SQL Server 上，`SELECT` 子句中不与 `OFFSET 0` 或 `TOP 100 PERCENT` 配合使用的 `ORDER BY` 子句
+- 在 SQL Server 上，`ORDER BY` 子句中不与 `OFFSET 0` 或 `TOP 100 PERCENT` 配合使用的 `SELECT` 子句
 
-SQL Server 不允许对存储过程调用进行组合，因此任何尝试向此类调用应用其他查询运算符的操作都将导致无效的 SQL。 请在 `FromSqlRaw` 或 `FromSqlInterpolated` 方法之后立即使用 `AsEnumerable` 或 `AsAsyncEnumerable` 方法，确保 EF Core 不会尝试对存储过程进行组合。
+SQL Server 不允许对存储过程调用进行组合，因此任何尝试向此类调用应用其他查询运算符的操作都将导致无效的 SQL。 请在 `AsEnumerable` 或 `AsAsyncEnumerable` 方法之后立即使用 `FromSqlRaw` 或 `FromSqlInterpolated` 方法，确保 EF Core 不会尝试对存储过程进行组合。
 
 ## <a name="change-tracking"></a>更改跟踪
 
@@ -100,9 +100,9 @@ SQL Server 不允许对存储过程调用进行组合，因此任何尝试向此
 使用原生 SQL 查询时需注意以下几个限制：
 
 - SQL 查询必须返回实体类型的所有属性的数据。
-- 结果集中的列名必须与属性映射到的列名称匹配。 请注意，此行为不同于 EF6。 EF6 中忽略了原始 SQL 查询的属性/列映射关系，结果集列名必须与属性名相匹配。
+- 结果集中的列名必须与属性映射到的列名匹配。 请注意，此行为不同于 EF6。 EF6 中忽略了原始 SQL 查询的属性/列映射关系，结果集列名必须与属性名相匹配。
 - SQL 查询不能包含关联数据。 但是，在许多情况下你可以在查询后面紧跟着使用 `Include` 方法以返回关联数据（请参阅[包含关联数据](#including-related-data)）。
 
-## <a name="previous-versions"></a>早期版本
+## <a name="previous-versions"></a>以前的版本
 
 EF Core 2.2 及更低版本具有两个名为 `FromSql` 的方法重载，它们的行为方式与较新的 `FromSqlRaw` 和 `FromSqlInterpolated` 的相同。 因此，在意图调用内插字符串方法时很容易意外调用原始字符串方法，反之亦然。 意外调用错误的重载会导致本该参数化的查询没有参数化。

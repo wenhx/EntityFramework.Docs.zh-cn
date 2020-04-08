@@ -6,10 +6,10 @@ ms.date: 10/27/2016
 ms.assetid: 2533b195-d357-4056-b0e0-8698971bc3b0
 uid: core/saving/disconnected-entities
 ms.openlocfilehash: 421531e68ac98c0553938f1c24892701f22fef3c
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "78413653"
 ---
 # <a name="disconnected-entities"></a>断开连接的实体
@@ -30,7 +30,7 @@ DbContext 实例将自动跟踪从数据库返回的实体。 调用 SaveChanges
 
 ### <a name="client-identifies-new-entities"></a>客户端标识新实体
 
-由客户端通知服务器实体是新实体还是现有实体，这是最简单的情况。 例如，通常插入新实体的请求与更新现有实体的请求不同。
+油客户端通知服务器实体是新实体还是现有实体，这是最简单的情况。 例如，通常插入新实体的请求与更新现有实体的请求不同。
 
 本节的其余部分介绍了需要以其他某种方式确定是插入还是更新的情况。
 
@@ -77,7 +77,7 @@ Update 方法通常将实体标记为更新，而不是插入。 但是，如果
 > [!TIP]  
 > EF Core 2.0 中已引入此行为。 对于早期版本，始终需要显式选择 Add 或 Update。
 
-如果实体不使用自动生成的键，则应用程序必须确定是应插入实体还是更新实体：例如：
+如果实体不使用自动生成的键，则应用程序必须确定是应插入实体还是应更新实体：例如：
 
 [!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertOrUpdateSingleEntityWithFind)]
 

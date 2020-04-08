@@ -5,15 +5,15 @@ ms.date: 10/27/2016
 ms.assetid: f9fb64e2-6699-4d70-a773-592918c04c19
 uid: core/querying/related-data
 ms.openlocfilehash: 915aaa41beb495a046f2d6260e9c3b174d5f3031
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "78413719"
 ---
 # <a name="loading-related-data"></a>加载相关数据
 
-Entity Framework Core 允许你在模型中使用导航属性来加载相关实体。 有三种常见的 O/RM 模式可用于加载关联数据。
+Entity Framework Core 允许在模型中使用导航属性来加载关联实体。 有三种常见的 O/RM 模式可用于加载关联数据。
 
 * **预先加载**表示从数据库中加载关联数据，作为初始查询的一部分。
 * **显式加载**表示稍后从数据库中显式加载关联数据。
@@ -49,7 +49,7 @@ Entity Framework Core 允许你在模型中使用导航属性来加载相关实�
 
 [!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#IncludeTree)]
 
-你可能希望将已包含的某个实体的多个关联实体都包含进来。 例如，当查询 `Blogs` 时，你会包含 `Posts`，然后希望同时包含 `Posts` 的 `Author` 和 `Tags`。 为此，需要从根级别开始指定每个包含路径。 例如，`Blog -> Posts -> Author` 和 `Blog -> Posts -> Tags`。 这并不意味着会获得冗余联接查询，在大多数情况下，EF 会在生成 SQL 时合并相应的联接查询。
+你可能希望将已包含的某个实体的多个关联实体都包含进来。 例如，当查询 `Blogs` 时，你会包含 `Posts`，然后希望同时包含 `Author` 的 `Tags` 和 `Posts`。 为此，需要从根级别开始指定每个包含路径。 例如，`Blog -> Posts -> Author` 和 `Blog -> Posts -> Tags`。 这并不意味着会获得冗余联接查询，在大多数情况下，EF 会在生成 SQL 时合并相应的联接查询。
 
 [!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#MultipleLeafIncludes)]
 
@@ -58,7 +58,7 @@ Entity Framework Core 允许你在模型中使用导航属性来加载相关实�
 
 ### <a name="include-on-derived-types"></a>派生类型上的包含
 
-可以使用 `Include` 和 `ThenInclude` 包括来自仅在派生类型上定义的导航的相关数据。
+可以使用 `Include` 和 `ThenInclude` 包含仅在派生类型上定义的导航的关联数据。
 
 给定以下模型：
 
@@ -94,7 +94,7 @@ public class School
 }
 ```
 
-所有人员（可以使用许多模式预先加载的学生）的 `School` 导航的内容：
+对于具有学生身份的所有人员，可使用多种方法来预先加载其 `School` 导航属性的内容：
 
 * 使用强制转换
 
@@ -122,11 +122,11 @@ public class School
 
 还可以通过执行返回关联实体的单独查询来显式加载导航属性。 如果已启用更改跟踪，则在加载实体时，EF Core 将自动设置新加载的实体的导航属性以引用任何已加载的实体，并设置已加载实体的导航属性以引用新加载的实体。
 
-### <a name="querying-related-entities"></a>查询相关实体
+### <a name="querying-related-entities"></a>查询关联实体
 
 还可以获得表示导航属性内容的 LINQ 查询。
 
-这样可以执行诸如通过相关实体运行聚合运算符而无需将其加载到内存中等操作。
+这样就能做到（譬如）无需将关联实体加载到内存中，就可以对关联实体执行聚合运算。
 
 [!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#NavQueryAggregate)]
 
@@ -231,7 +231,7 @@ public class Post
 }
 ```
 
-这不要求实体类型为可继承的类型，也不要求导航属性必须是虚拟的，且允许通过 `new` 创建的实体实例在附加到上下文后可进行延迟加载。 但它需要对 [Microsoft.EntityFrameworkCore.Abstractions](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Abstractions/) 包中定义的 `ILazyLoader` 服务的引用。 此包包含所允许的最少的一组类型，以便将依赖此包时所产生的影响降至最低。 不过，可以将 `ILazyLoader.Load` 方法以委托的形式注入，这样就可以完全避免依赖于实体类型的任何 EF Core 包。 例如：
+这不要求实体类型为可继承的类型，也不要求导航属性必须是虚拟的，且允许通过 `new` 创建的实体实例在附加到上下文后可进行延迟加载。 但它需要对 `ILazyLoader`Microsoft.EntityFrameworkCore.Abstractions[ 包中定义的 ](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Abstractions/) 服务的引用。 此包包含所允许的最少的一组类型，以便将依赖此包时所产生的影响降至最低。 不过，可以将 `ILazyLoader.Load` 方法以委托的形式注入，这样就可以完全避免依赖于实体类型的任何 EF Core 包。 例如：
 
 ```csharp
 public class Blog
@@ -316,7 +316,7 @@ public static class PocoLoadingExtensions
 
 > Newtonsoft.Json.JsonSerializationException：为“MyApplication.Models.Blog”类型的“Blog”属性检测到自引用循环。
 
-如果正在使用 ASP.NET Core，则可以将 Json.NET 配置为忽略在对象图中找到的循环引用。 这是在 `Startup.cs` 中通过 `ConfigureServices(...)` 方法实现的。
+如果正在使用 ASP.NET Core，则可以将 Json.NET 配置为忽略在对象图中找到的循环引用。 这是在 `ConfigureServices(...)` 中通过 `Startup.cs` 方法实现的。
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)

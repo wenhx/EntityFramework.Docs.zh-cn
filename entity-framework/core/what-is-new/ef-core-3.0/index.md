@@ -5,10 +5,10 @@ ms.date: 02/19/2019
 ms.assetid: 2EBE2CCC-E52D-483F-834C-8877F5EB0C0C
 uid: core/what-is-new/ef-core-3.0/index
 ms.openlocfilehash: ebc676930ffc396aa70bb8afb91cf5a0cd43e04d
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "78413192"
 ---
 # <a name="new-features-in-entity-framework-core-30"></a>Entity Framework Core 3.0 中的新功能
@@ -171,7 +171,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 自 EF Core 3.0 起，如果 `OrderDetails` 由 `Order` 拥有且显式映射到同一张表中，则它将可能添加 `Order` 而不添加 `OrderDetails`，并且除主键外的所有 `OrderDetails` 属性都将映射到不为 null 的列中。
 
-查询时，如果其任意所需属性均没有值，或者它在主键之外没有任何必需属性且所有属性均为 `null`，则 EF Core 会将 `OrderDetails` 设置为 `null`。
+查询时，如果其任意所需属性均没有值，或者它在主键之外没有任何必需属性且所有属性均为 `OrderDetails`，则 EF Core 会将 `null` 设置为 `null`。
 
 ``` csharp
 public class Order
