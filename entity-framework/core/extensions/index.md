@@ -4,12 +4,12 @@ author: ErikEJ
 ms.date: 12/17/2019
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 uid: core/extensions/index
-ms.openlocfilehash: 99f59153a452a2f4aad5811110ebc5b5da7717ef
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.openlocfilehash: e3806f7161fecfe66450d3e08f97caf3d2c84cf3
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78412992"
+ms.lasthandoff: 04/07/2020
+ms.locfileid: "80634243"
 ---
 # <a name="ef-core-tools--extensions"></a>EF Core 工具和扩展
 
@@ -175,3 +175,14 @@ Microsoft.EntityFrameworkCore 的一个插件，它支持存储库、工作模�
 添加了对在 linq lambda 中调用扩展方法的支持。 对于 EF Core：3.1
 
 [GitHub 存储库](https://github.com/ClaveConsulting/Expressionify)
+
+### <a name="xlinq"></a>XLinq
+
+适用于关系数据库的语言集成查询 (LINQ) 技术。 它允许你使用 C# 编写强类型查询。 对于 EF Core：3.1
+
+- 完全支持使用 C# 创建查询：可在 lambda 表达式内使用多个语句，还可使用变量、函数等。
+- 与 SQL 之间不存在语义缺口。 XLinq 将 SQL 语句（如 `SELECT`、`FROM`、`WHERE`）声明为第一类 C# 方法，将熟悉的语法与 intellisense、类型安全性和重构结合起来。
+
+因此，SQL 成为了“又一个”本地公开其 API 的类库，可以说是“集成了语言的 SQL”  。
+
+[网站](http://xlinq.live/)
