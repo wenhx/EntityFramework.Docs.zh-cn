@@ -1,14 +1,15 @@
 ---
 title: EF Core 5.0 中的新增功能
+description: EF Core 5.0 中的新功能概述
 author: ajcvickers
-ms.date: 03/15/2020
+ms.date: 03/30/2020
 uid: core/what-is-new/ef-core-5.0/whatsnew.md
-ms.openlocfilehash: 08a93555fd76d8a9f6d3011f59d9a34f76d0b22f
-ms.sourcegitcommit: c3b8386071d64953ee68788ef9d951144881a6ab
+ms.openlocfilehash: c047a308cadf44eea577dcab29b68b36942a50df
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/24/2020
-ms.locfileid: "80136257"
+ms.lasthandoff: 04/07/2020
+ms.locfileid: "80634277"
 ---
 # <a name="whats-new-in-ef-core-50"></a>EF Core 5.0 中的新增功能
 
@@ -19,6 +20,64 @@ EF Core 5.0 目前正在开发中。
 计划中介绍了 EF Core 5.0 的整体主题，其中包括我们在交付最终版本之前打算包含的所有内容。
 
 发布时，我们会将此处的链接添加到官方文档。
+
+## <a name="preview-2"></a>预览版 2
+
+### <a name="use-a-c-attribute-to-specify-a-property-backing-field"></a>使用 C# 特性指定属性支持字段
+
+现在，可以使用 C# 特性指定属性的支持字段。
+使用此特性，即使在不能自动找到支持字段时，EF Core 也能正常读写支持字段。
+例如：
+
+```CSharp
+public class Blog
+{
+    private string _mainTitle;
+
+    public int Id { get; set; }
+
+    [BackingField(nameof(_mainTitle))]
+    public string Title
+    {
+        get => _mainTitle;
+        set => _mainTitle = value;
+    }
+}
+```
+
+文档可通过问题 [#2230](https://github.com/dotnet/EntityFramework.Docs/issues/2230) 进行跟踪。
+
+### <a name="complete-discriminator-mapping"></a>完成鉴别器映射
+
+EF Core 使用鉴别器列进行 [继承层次结构的 TPH 映射](/ef/core/modeling/inheritance)。
+只要 EF Core 知道该鉴别器的所有可能的值，就可能实现某些性能改进。
+EF Core 5.0 现在可实现这些改进。
+
+例如，对于返回层次结构中所有类型的查询，旧版 EF Core 总是会生成以下 SQL：
+
+```sql
+SELECT [a].[Id], [a].[Discriminator], [a].[Name]
+FROM [Animal] AS [a]
+WHERE [a].[Discriminator] IN (N'Animal', N'Cat', N'Dog', N'Human')
+```
+
+配置完整的鉴别器映射后，EF Core 5.0 现在将生成以下内容：
+
+```sql
+SELECT [a].[Id], [a].[Discriminator], [a].[Name]
+FROM [Animal] AS [a]
+```
+
+从预览版 3 开始，这将成为默认行为。
+
+### <a name="performance-improvements-in-microsoftdatasqlite"></a>Microsoft.Data.Sqlite 中的性能改进
+
+我们对 SQLIte 进行了两项性能改进：
+
+* 现在，利用 SqliteBlob 和流，可以更高效地使用 GetBytes、GetChars 和 GetTextReader 检索二进制和字符串数据。
+* SqliteConnection 的初始化现在很慢。
+
+这些改进已实施到 ADO.NET Microsoft.Data.Sqlite 提供程序中，因此还可以在 EF Core 之外提升性能。
 
 ## <a name="preview-1"></a>预览版 1
 
@@ -60,7 +119,7 @@ public class Address
 
 现在可以更轻松地创建 DbContext 实例，而无需任何连接或连接字符串。
 而且，现在可以在上下文实例上更改连接或连接字符串。
-这使得同一个上下文实例能够动态地连接到不同的数据库。
+此功能使得同一个上下文实例能够动态地连接到不同的数据库。
 
 文档可通过问题 [#2075](https://github.com/dotnet/EntityFramework.Docs/issues/2075) 进行跟踪。
 
@@ -85,7 +144,7 @@ EF Core 现在可以生成自动实现 [INotifyPropertyChanging](https://docs.mi
 ### <a name="improved-handling-of-database-null-semantics"></a>改进了对数据库 null 语义的处理
 
 关系数据库通常将 NULL 视为未知值，因此它不等于任何其他 NULL 值。
-另一方面，C# 将 null 视为与其他任何 null 相比均相等的定义值。
+而 C# 将 null 视为与其他任何 null 相比均相等的定义值。
 默认情况下，EF Core 会转换查询，使查询使用 C# null 语义。
 EF Core 5.0 极大地提升了这些转换操作的效率。
 
@@ -94,7 +153,7 @@ EF Core 5.0 极大地提升了这些转换操作的效率。
 ### <a name="indexer-properties"></a>索引器属性
 
 EF Core 5.0 支持 C# 索引器属性的映射。
-这使得实体能够充当属性包，实体中的列被映射为包中的命名属性。
+这写属性使得实体能够充当属性包，实体中的列被映射为包中的命名属性。
 
 文档可通过问题 [#2018](https://github.com/dotnet/EntityFramework.Docs/issues/2018) 进行跟踪。
 
@@ -104,7 +163,7 @@ EF Core 5.0 迁移现可为枚举属性映射生成检查约束。
 例如：
 
 ```SQL
-MyEnumColumn VARCHAR(10) NOT NULL CHECK (MyEnumColumn IN('Useful', 'Useless', 'Unknown'))
+MyEnumColumn VARCHAR(10) NOT NULL CHECK (MyEnumColumn IN ('Useful', 'Useless', 'Unknown'))
 ```
 
 文档可通过问题 [#2082](https://github.com/dotnet/EntityFramework.Docs/issues/2082) 进行跟踪。
@@ -112,7 +171,7 @@ MyEnumColumn VARCHAR(10) NOT NULL CHECK (MyEnumColumn IN('Useful', 'Useless', 'U
 ### <a name="isrelational"></a>IsRelational
 
 除了现有 `IsSqlServer`、`IsSqlite` 和 `IsInMemory` 外，还添加了新的 `IsRelational` 方法。
-这可用于测试 DbContext 是否使用任何关系数据库提供程序。
+此方法可用于测试 DbContext 是否使用任何关系数据库提供程序。
 例如：
 
 ```CSharp
@@ -138,7 +197,6 @@ builder.Entity<Customer>().Property(c => c.ETag).IsEtagConcurrency();
 
 然后，SaveChanges 将在并发冲突上引发 `DbUpdateConcurrencyException`，[可以处理](https://docs.microsoft.com/ef/core/saving/concurrency)它来实现重试等。
 
-
 文档可通过问题 [#2099](https://github.com/dotnet/EntityFramework.Docs/issues/2099) 进行跟踪。
 
 ### <a name="query-translations-for-more-datetime-constructs"></a>查询转换以获取更多 DateTime 构造
@@ -146,6 +204,7 @@ builder.Entity<Customer>().Property(c => c.ETag).IsEtagConcurrency();
 现在，包含新 DataTime 构造的查询会被转换。
 
 此外，现在映射了以下 SQL Server 函数：
+
 * DateDiffWeek
 * DateFromParts
 
