@@ -1,5 +1,5 @@
-- name: 实体框架
-  href: index.md
+- name: Entity Framework
+  href: index.yml
   items:
     - name: EF Core 和 EF6
       items:
@@ -29,7 +29,7 @@
               items:
                 - name: 高级计划
                   href: core/what-is-new/ef-core-5.0/plan.md
-                - name: 新增功能？
+                - name: 新增功能
                   href: core/what-is-new/ef-core-5.0/whatsnew.md
             - name: EF Core 3.0
               items:
@@ -63,15 +63,15 @@
               href: core/get-started/install/index.md
             - name: ASP.NET Core 教程 >>
               href: /aspnet/core/data/ef-rp/intro
-        - name: 基本
+        - name: 基础知识
           items:
             - name: 连接字符串
               href: core/miscellaneous/connection-strings.md
-            - name: 日志记录
+            - name: Logging
               href: core/miscellaneous/logging.md
             - name: 连接复原
               href: core/miscellaneous/connection-resiliency.md
-            - name: 测试
+            - name: 正在测试
               items:
                 - name: 概述
                   href: core/miscellaneous/testing/index.md
@@ -91,7 +91,7 @@
               href: core/modeling/entity-types.md
             - name: 实体属性
               href: core/modeling/entity-properties.md
-            - name: 密钥
+            - name: 键
               href: core/modeling/keys.md
             - name: 生成的值
               href: core/modeling/generated-properties.md
@@ -256,7 +256,7 @@
               href: ef6/what-is-new/visual-studio.md
         - name: 入门
           href: ef6/get-started.md
-        - name: 基本
+        - name: 基础知识
           items:
             - name: 获取实体框架
               href: ef6/fundamentals/install.md
@@ -266,7 +266,7 @@
               href: ef6/fundamentals/relationships.md
             - name: 异步查询和保存
               href: ef6/fundamentals/async.md
-            - name: 配置
+            - name: Configuration
               items:
                 - name: 基于代码
                   href: ef6/fundamentals/configuring/code-based.md
@@ -444,7 +444,7 @@
                       href: ef6/modeling/designer/advanced/multiple-result-sets.md
                     - name: 表值函数
                       href: ef6/modeling/designer/advanced/tvfs.md
-                - name: 键盘快捷方式
+                - name: 键盘快捷键
                   href: ef6/modeling/designer/keyboard-shortcuts.md
         - name: 查询数据
           items:
@@ -464,7 +464,7 @@
           items:
             - name: 概述
               href: ef6/saving/index.md
-            - name: 更改跟踪
+            - name: Change tracking
               items:
                 - name: 自动检测更改
                   href: ef6/saving/change-tracking/auto-detect-changes.md
@@ -488,7 +488,7 @@
               href: ef6/resources/contribute.md
             - name: 获取帮助
               href: ef6/resources/get-help.md
-            - name: 术语表
+            - name: 词汇表
               href: ef6/resources/glossary.md
             - name: 学校示例数据库
               href: ef6/resources/school-database.md
@@ -514,7 +514,7 @@
                       href: ef6/resources/licenses/ef5/ita.md
                     - name: 日语
                       href: ef6/resources/licenses/ef5/jpn.md
-                    - name: 韩语
+                    - name: 朝鲜语
                       href: ef6/resources/licenses/ef5/kor.md
                     - name: 俄语
                       href: ef6/resources/licenses/ef5/rus.md
@@ -542,7 +542,7 @@
                       href: ef6/resources/licenses/ef6/ita.md
                     - name: 日语
                       href: ef6/resources/licenses/ef6/jpn.md
-                    - name: 韩语
+                    - name: 朝鲜语
                       href: ef6/resources/licenses/ef6/kor.md
                     - name: 俄语
                       href: ef6/resources/licenses/ef6/rus.md

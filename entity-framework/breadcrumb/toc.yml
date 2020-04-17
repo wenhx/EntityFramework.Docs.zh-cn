@@ -2,6 +2,6 @@
   tocHref: /
   topicHref: /
   items:
-    - name: 实体框架
+    - name: Entity Framework
       tocHref: /ef/
-      topicHref: /ef/index
+      topicHref: /ef/
