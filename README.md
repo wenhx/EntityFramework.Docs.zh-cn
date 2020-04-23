@@ -1,35 +1,29 @@
-## <a name="entity-framework-docs"></a><span data-ttu-id="8537c-101">实体框架文档</span><span class="sxs-lookup"><span data-stu-id="8537c-101">Entity Framework Docs</span></span>
+## <a name="entity-framework-docs"></a><span data-ttu-id="6090f-101">实体框架文档</span><span class="sxs-lookup"><span data-stu-id="6090f-101">Entity Framework Docs</span></span>
 
-<span data-ttu-id="8537c-102">此项目包含位于 [docs.microsoft.com/ef](https://docs.microsoft.com/ef/) 的 EF Core 和 EF6 文档的来源。</span><span class="sxs-lookup"><span data-stu-id="8537c-102">This project contains the source for EF Core and EF6 documentation located at [docs.microsoft.com/ef](https://docs.microsoft.com/ef/).</span></span> 
+<span data-ttu-id="6090f-102">此项目包含位于 [docs.microsoft.com/ef](https://docs.microsoft.com/ef/) 的 EF Core 和 EF6 文档的来源。</span><span class="sxs-lookup"><span data-stu-id="6090f-102">This project contains the source for EF Core and EF6 documentation located at [docs.microsoft.com/ef](https://docs.microsoft.com/ef/).</span></span> 
 
-<span data-ttu-id="8537c-103">有关 EF Core 和 EF6 的文档问题应在此存储库中存档。</span><span class="sxs-lookup"><span data-stu-id="8537c-103">Documentation issues for both EF Core and EF6 should be filed in this repo.</span></span> <span data-ttu-id="8537c-104">产品问题 (bug) 应酌情在 [EF Core 存储库](https://github.com/dotnet/efcore)或 [EF6 存储库](https://github.com/dotnet/ef6)中存档。</span><span class="sxs-lookup"><span data-stu-id="8537c-104">Product issues (bugs) should be filed in the [EF Core repo](https://github.com/dotnet/efcore) or the [EF6 repo](https://github.com/dotnet/ef6) as appropriate.</span></span>
+<span data-ttu-id="6090f-103">有关 EF Core 和 EF6 的文档问题应在此存储库中存档。</span><span class="sxs-lookup"><span data-stu-id="6090f-103">Documentation issues for both EF Core and EF6 should be filed in this repo.</span></span> <span data-ttu-id="6090f-104">产品问题 (bug) 应酌情在 [EF Core 存储库](https://github.com/dotnet/efcore)或 [EF6 存储库](https://github.com/dotnet/ef6)中存档。</span><span class="sxs-lookup"><span data-stu-id="6090f-104">Product issues (bugs) should be filed in the [EF Core repo](https://github.com/dotnet/efcore) or the [EF6 repo](https://github.com/dotnet/ef6) as appropriate.</span></span>
 
-<span data-ttu-id="8537c-105">接受拉取请求！ </span><span class="sxs-lookup"><span data-stu-id="8537c-105">**We accept pull requests!**</span></span>
+<span data-ttu-id="6090f-105">接受拉取请求！ </span><span class="sxs-lookup"><span data-stu-id="6090f-105">**We accept pull requests!**</span></span>
 
-## <a name="fixing-typosspellinggrammaretc"></a><span data-ttu-id="8537c-106">修复键入错误/拼写/语法/等。</span><span class="sxs-lookup"><span data-stu-id="8537c-106">Fixing typos/spelling/grammar/etc.</span></span>
+## <a name="fixing-typosspellinggrammaretc"></a><span data-ttu-id="6090f-106">修复键入错误/拼写/语法/等。</span><span class="sxs-lookup"><span data-stu-id="6090f-106">Fixing typos/spelling/grammar/etc.</span></span>
 
-<span data-ttu-id="8537c-107">考虑发送拉取请求，而不是存档问题。</span><span class="sxs-lookup"><span data-stu-id="8537c-107">Consider sending a pull request rather than filing an issue.</span></span> <span data-ttu-id="8537c-108">这可以完全通过 Web 完成：</span><span class="sxs-lookup"><span data-stu-id="8537c-108">This can be done entirely from the web:</span></span>
+<span data-ttu-id="6090f-107">考虑发送拉取请求，而不是存档问题。</span><span class="sxs-lookup"><span data-stu-id="6090f-107">Consider sending a pull request rather than filing an issue.</span></span> <span data-ttu-id="6090f-108">这可以完全通过 Web 完成：</span><span class="sxs-lookup"><span data-stu-id="6090f-108">This can be done entirely from the web:</span></span>
 
-* <span data-ttu-id="8537c-109">在此存储库中找到要更新的文件，然后单击它以打开</span><span class="sxs-lookup"><span data-stu-id="8537c-109">Find the file to update in this repo and click on it to open</span></span>
+* <span data-ttu-id="6090f-109">在此存储库中找到要更新的文件，然后单击它以打开</span><span class="sxs-lookup"><span data-stu-id="6090f-109">Find the file to update in this repo and click on it to open</span></span>
 
-![image](https://user-images.githubusercontent.com/1430078/64454137-10199400-d09f-11e9-9d1a-b7fdca2c518e.png)
+![图像](https://user-images.githubusercontent.com/1430078/64454137-10199400-d09f-11e9-9d1a-b7fdca2c518e.png)
 
-* <span data-ttu-id="8537c-111">单击编辑按钮 (✏️) 以在 Web 浏览器中编辑</span><span class="sxs-lookup"><span data-stu-id="8537c-111">Click on the edit button (✏️) to edit in your web browser</span></span>
+* <span data-ttu-id="6090f-111">单击编辑按钮 (✏️) 以在 Web 浏览器中编辑</span><span class="sxs-lookup"><span data-stu-id="6090f-111">Click on the edit button (✏️) to edit in your web browser</span></span>
 
-![image](https://user-images.githubusercontent.com/1430078/64454321-85856480-d09f-11e9-85a6-1c93bc6611e2.png)
+![图像](https://user-images.githubusercontent.com/1430078/64454321-85856480-d09f-11e9-85a6-1c93bc6611e2.png)
 
-* <span data-ttu-id="8537c-113">完成后，添加标题和说明，然后使用“创建新分支并启动拉取请求。”</span><span class="sxs-lookup"><span data-stu-id="8537c-113">When done, add a title and description, then use the "Create a new branch and start a pull request."</span></span> <span data-ttu-id="8537c-114">。</span><span class="sxs-lookup"><span data-stu-id="8537c-114">option.</span></span>
+* <span data-ttu-id="6090f-113">完成后，添加标题和说明，然后使用“创建新分支并启动拉取请求。”</span><span class="sxs-lookup"><span data-stu-id="6090f-113">When done, add a title and description, then use the "Create a new branch and start a pull request."</span></span> <span data-ttu-id="6090f-114">选项。</span><span class="sxs-lookup"><span data-stu-id="6090f-114">option.</span></span>
 
-![image](https://user-images.githubusercontent.com/1430078/64454455-dac17600-d09f-11e9-922b-0346117011f5.png)
+![图像](https://user-images.githubusercontent.com/1430078/64454455-dac17600-d09f-11e9-922b-0346117011f5.png)
 
-<span data-ttu-id="8537c-116">（请注意，还可以克隆此存储库，并以常规方式进行 GitHub PR。）</span><span class="sxs-lookup"><span data-stu-id="8537c-116">(Note that you can also clone this repo and do a GitHub PR in the normal way.)</span></span>
+<span data-ttu-id="6090f-116">（请注意，还可以克隆此存储库，并以常规方式进行 GitHub PR。）</span><span class="sxs-lookup"><span data-stu-id="6090f-116">(Note that you can also clone this repo and do a GitHub PR in the normal way.)</span></span>
 
-## <a name="making-more-substantial-changes"></a><span data-ttu-id="8537c-117">进行更多重大更改</span><span class="sxs-lookup"><span data-stu-id="8537c-117">Making more substantial changes</span></span>
+## <a name="making-more-substantial-changes"></a><span data-ttu-id="6090f-117">进行更多重大更改</span><span class="sxs-lookup"><span data-stu-id="6090f-117">Making more substantial changes</span></span>
 
-<span data-ttu-id="8537c-118">还鼓励拉取请求以进行更多重大更改。</span><span class="sxs-lookup"><span data-stu-id="8537c-118">Pull requests for more substantial changes are also encouraged.</span></span> <span data-ttu-id="8537c-119">但在提交拉取请求前，请[阅读参与指南](CONTRIBUTING.md)，其中包括如何在本地生成文档的相关信息，以及风格和结构指南。</span><span class="sxs-lookup"><span data-stu-id="8537c-119">However, before submitting a pull request, please [read the CONTRIBUTING guidelines](CONTRIBUTING.md), which include information on how to build the docs locally, as well as style and organizational guidance.</span></span>
-
-## <a name="microsoft-open-source-code-of-conduct"></a><span data-ttu-id="8537c-120">Microsoft 开放源代码行为准则</span><span class="sxs-lookup"><span data-stu-id="8537c-120">Microsoft Open Source Code of Conduct</span></span>
-
-<span data-ttu-id="8537c-121">此项目采用了 [Microsoft 开放源代码行为准则](https://opensource.microsoft.com/codeofconduct/)。</span><span class="sxs-lookup"><span data-stu-id="8537c-121">This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).</span></span>
-<span data-ttu-id="8537c-122">有关详细信息，请参阅[行为准则常见问题](https://opensource.microsoft.com/codeofconduct/faq/)，或如果有任何其他问题或意见，请与 [opencode@microsoft.com](mailto:opencode@microsoft.com) 联系。</span><span class="sxs-lookup"><span data-stu-id="8537c-122">For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.</span></span>
-
+<span data-ttu-id="6090f-118">还鼓励拉取请求以进行更多重大更改。</span><span class="sxs-lookup"><span data-stu-id="6090f-118">Pull requests for more substantial changes are also encouraged.</span></span> <span data-ttu-id="6090f-119">但在提交拉取请求前，请[阅读参与指南](CONTRIBUTING.md)，其中包括如何在本地生成文档的相关信息，以及风格和结构指南。</span><span class="sxs-lookup"><span data-stu-id="6090f-119">However, before submitting a pull request, please [read the CONTRIBUTING guidelines](CONTRIBUTING.md), which include information on how to build the docs locally, as well as style and organizational guidance.</span></span>
