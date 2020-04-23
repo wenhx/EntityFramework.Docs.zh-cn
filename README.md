@@ -12,24 +12,18 @@
 
 * 在此存储库中找到要更新的文件，然后单击它以打开
 
-![image](https://user-images.githubusercontent.com/1430078/64454137-10199400-d09f-11e9-9d1a-b7fdca2c518e.png)
+![图像](https://user-images.githubusercontent.com/1430078/64454137-10199400-d09f-11e9-9d1a-b7fdca2c518e.png)
 
 * 单击编辑按钮 (✏️) 以在 Web 浏览器中编辑
 
-![image](https://user-images.githubusercontent.com/1430078/64454321-85856480-d09f-11e9-85a6-1c93bc6611e2.png)
+![图像](https://user-images.githubusercontent.com/1430078/64454321-85856480-d09f-11e9-85a6-1c93bc6611e2.png)
 
-* 完成后，添加标题和说明，然后使用“创建新分支并启动拉取请求。” 。
+* 完成后，添加标题和说明，然后使用“创建新分支并启动拉取请求。” 选项。
 
-![image](https://user-images.githubusercontent.com/1430078/64454455-dac17600-d09f-11e9-922b-0346117011f5.png)
+![图像](https://user-images.githubusercontent.com/1430078/64454455-dac17600-d09f-11e9-922b-0346117011f5.png)
 
 （请注意，还可以克隆此存储库，并以常规方式进行 GitHub PR。）
 
 ## <a name="making-more-substantial-changes"></a>进行更多重大更改
 
 还鼓励拉取请求以进行更多重大更改。 但在提交拉取请求前，请[阅读参与指南](CONTRIBUTING.md)，其中包括如何在本地生成文档的相关信息，以及风格和结构指南。
-
-## <a name="microsoft-open-source-code-of-conduct"></a>Microsoft 开放源代码行为准则
-
-此项目采用了 [Microsoft 开放源代码行为准则](https://opensource.microsoft.com/codeofconduct/)。
-有关详细信息，请参阅[行为准则常见问题](https://opensource.microsoft.com/codeofconduct/faq/)，或如果有任何其他问题或意见，请与 [opencode@microsoft.com](mailto:opencode@microsoft.com) 联系。
-
