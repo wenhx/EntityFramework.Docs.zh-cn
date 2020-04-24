@@ -4,12 +4,12 @@ author: rick-anderson
 ms.date: 09/17/2019
 ms.assetid: 3c88427c-20c6-42ec-a736-22d3eccd5071
 uid: core/get-started/index
-ms.openlocfilehash: 0e7a1ee159cdf5b72448fe6d73c972975b1ab95b
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: 7ace80bf326395d3b68f3e745100cd45356d7973
+ms.sourcegitcommit: 144edccf9b29a7ffad119c235ac9808ec1a46193
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "78412862"
+ms.lasthandoff: 04/16/2020
+ms.locfileid: "81434092"
 ---
 # <a name="getting-started-with-ef-core"></a>EF Core 入门
 
@@ -95,7 +95,7 @@ dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 
 EF Core 还可以从现有数据库对模型进行[反向工程](../managing-schemas/scaffolding.md)。
 
-提示:在实际应用中，将每个类放在单独的文件中，并将[连接字符串](../miscellaneous/connection-strings.md)放在配置文件或环境变量中。 为简化本教程，所有内容均放在一个文件中。
+提示:为清楚起见，有意简化了此应用程序。 [连接字符串](../miscellaneous/connection-strings.md)不应存储在生产应用程序的代码中。 可能还需要将每个 C# 类拆分为其自己的文件。
 
 ## <a name="create-the-database"></a>创建数据库
 

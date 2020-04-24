@@ -3,12 +3,12 @@ title: 支持的 .NET 实现 - EF Core
 author: bricelam
 ms.date: 03/03/2020
 uid: core/platforms/index
-ms.openlocfilehash: 693d4cae85eddf86d01e17084415147c52a008c7
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: 2738645596a325a1a43fd5b2164e370dd8c5893e
+ms.sourcegitcommit: 144edccf9b29a7ffad119c235ac9808ec1a46193
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "78413062"
+ms.lasthandoff: 04/16/2020
+ms.locfileid: "81434118"
 ---
 # <a name="net-implementations-supported-by-ef-core"></a>EF Core 支持的 .NET 实现
 
@@ -73,4 +73,4 @@ ms.locfileid: "78413062"
 
 ## <a name="report-issues"></a>报告问题
 
-对于未按预期工作的任意组合，建议在 [EF Core 问题跟踪程序](https://github.com/aspnet/entityframeworkcore/issues/new)中创建新问题。 对于特定于 Xamarin 的问题，请使用 [Xamarin.Android](https://github.com/xamarin/xamarin-android/issues/new) 或 [Xamarin.iOS](https://github.com/xamarin/xamarin-macios/issues/new) 问题跟踪程序。
+对于未按预期工作的任意组合，我们建议在 [EF Core 问题跟踪程序](https://github.com/aspnet/entityframeworkcore/issues/new)中创建新问题。 对于特定于 Xamarin 的问题，请使用 [Xamarin.Android](https://github.com/xamarin/xamarin-android/issues/new) 或 [Xamarin.iOS](https://github.com/xamarin/xamarin-macios/issues/new) 问题跟踪程序。
