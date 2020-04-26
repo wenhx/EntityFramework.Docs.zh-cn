@@ -4,12 +4,12 @@ description: EF Core 5.0 中的新功能概述
 author: ajcvickers
 ms.date: 03/30/2020
 uid: core/what-is-new/ef-core-5.0/whatsnew.md
-ms.openlocfilehash: c047a308cadf44eea577dcab29b68b36942a50df
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: c902988920e3b1a6039808fe0658fc19dee2728a
+ms.sourcegitcommit: 387cbd8109c0fc5ce6bdc85d0dec1aed72ad4c33
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "80634277"
+ms.lasthandoff: 04/23/2020
+ms.locfileid: "82103069"
 ---
 # <a name="whats-new-in-ef-core-50"></a>EF Core 5.0 中的新增功能
 
@@ -20,6 +20,106 @@ EF Core 5.0 目前正在开发中。
 计划中介绍了 EF Core 5.0 的整体主题，其中包括我们在交付最终版本之前打算包含的所有内容。
 
 发布时，我们会将此处的链接添加到官方文档。
+
+## <a name="preview-3"></a>预览版 3
+
+### <a name="filtered-include"></a>经过筛选的包含
+
+Include 方法现在支持筛选包含的实体。
+例如：
+
+```CSharp
+var blogs = context.Blogs
+    .Include(e => e.Posts.Where(p => p.Title.Contains("Cheese")))
+    .ToList();
+```
+
+此查询将一并返回包含每个关联文章的博客（仅当文章标题包含“Cheese”时）。
+
+Skip 和 Take 也可用于减少包含的实体数量。
+例如：
+ 
+```CSharp
+var blogs = context.Blogs
+    .Include(e => e.Posts.OrderByDescending(post => post.Title).Take(5)))
+    .ToList();
+```
+此查询将返回博客，每个博客最多包含 5 篇文章。
+
+有关完整详细信息，请参阅 [Include 文档](xref:core/querying/related-data#filtered-include)。
+
+### <a name="new-modelbuilder-api-for-navigation-properties"></a>用于导航属性的新 ModelBuilder API
+
+导航属性主要在[定义关系](xref:core/modeling/relationships)时配置。
+但是，在导航属性需要额外配置的情况下，可以使用新的 `Navigation` 方法。
+例如，如需在根据约定找不到支持字段时设置导航的支持字段，请执行以下操作：
+
+```CSharp
+modelBuilder.Entity<Blog>().Navigation(e => e.Posts).HasField("_myposts");
+```
+
+请注意：`Navigation` API 不会替换关系配置。
+但是，它允许在已发现或定义的关系中进行其他导航属性配置。
+
+文档可通过问题 [#2302](https://github.com/dotnet/EntityFramework.Docs/issues/2302) 进行跟踪。
+
+### <a name="new-command-line-parameters-for-namespaces-and-connection-strings"></a>用于命名空间和连接字符串的新命令行参数 
+
+迁移和基架现在允许在命令行上指定命名空间。
+例如，如需对数据库进行反向工程，将上下文和模型类放在不同的命名空间中： 
+
+```
+dotnet ef dbcontext scaffold "connection string" Microsoft.EntityFrameworkCore.SqlServer --context-namespace "My.Context" --namespace "My.Model"
+```
+
+此外，连接字符串现在可以传递到 `database-update` 命令：
+
+```
+dotnet ef database update --connection "connection string"
+```
+
+等效参数已添加到 VS 程序包管理器控制台中使用的 PowerShell 命令中。
+
+文档可通过问题 [#2303](https://github.com/dotnet/EntityFramework.Docs/issues/2303) 进行跟踪。
+
+### <a name="enabledetailederrors-has-returned"></a>EnableDetailedErrors 已返回
+
+出于性能原因，在从数据库读取值时，EF 不会执行额外的 null 检查。
+当遇到意外的 null 时，这可能会导致难以查找根本原因的异常。
+
+使用 `EnableDetailedErrors` 会将额外的 null 检查添加到查询中，这样一来，对于较小的性能开销，这些错误就更容易追溯到根本原因。  
+
+例如：
+```CSharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder
+        .EnableDetailedErrors()
+        .EnableSensitiveDataLogging() // Often also useful with EnableDetailedErrors 
+        .UseSqlServer(Your.SqlServerConnectionString);
+```
+
+文档可通过问题 [#955](https://github.com/dotnet/EntityFramework.Docs/issues/955) 进行跟踪。
+
+### <a name="cosmos-partition-keys"></a>Cosmos 分区键
+
+现在可以在查询中指定用于给定查询的分区键。
+例如：
+
+```CSharp
+await context.Set<Customer>()
+             .WithPartitionKey(myPartitionKey)
+             .FirstAsync();
+```
+
+文档可通过问题 [#2199](https://github.com/dotnet/EntityFramework.Docs/issues/2199) 进行跟踪。
+
+### <a name="support-for-the-sql-server-datalength-function"></a>支持 SQL Server DATALENGTH 函数
+
+可以使用新的 `EF.Functions.DataLength` 方法访问它。
+例如：
+```CSharp
+var count = context.Orders.Count(c => 100 < EF.Functions.DataLength(c.OrderDate));
+``` 
 
 ## <a name="preview-2"></a>预览版 2
 
