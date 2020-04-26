@@ -1,15 +1,15 @@
 ---
 title: 工具和扩展 - EF Core
 author: ErikEJ
-ms.date: 12/17/2019
+ms.date: 04/11/2020
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 uid: core/extensions/index
-ms.openlocfilehash: e3806f7161fecfe66450d3e08f97caf3d2c84cf3
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: 3fa407ca36d32a33a6bc889cd54ff88537510e9c
+ms.sourcegitcommit: 387cbd8109c0fc5ce6bdc85d0dec1aed72ad4c33
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "80634243"
+ms.lasthandoff: 04/23/2020
+ms.locfileid: "82103108"
 ---
 # <a name="ef-core-tools--extensions"></a>EF Core 工具和扩展
 
@@ -22,7 +22,7 @@ ms.locfileid: "80634243"
 
 ### <a name="llblgen-pro"></a>LLBLGen Pro
 
-LLBLGen Pro 是一种实体建模解决方案，包含对 Entity Framework 和 Entity Framework Core 的支持。 借助它可轻松通过 Database First 或 Model First 定义实体模型并将其映射到数据库中，使你可以立即开始编写查询。 对于 EF Core：2.
+LLBLGen Pro 是一种实体建模解决方案，包含对 Entity Framework 和 Entity Framework Core 的支持。 借助它可轻松通过 Database First 或 Model First 定义实体模型并将其映射到数据库中，使你可以立即开始编写查询。 对于 EF Core：2、3
 
 [网站](https://www.llblgen.com/)
 
@@ -71,11 +71,11 @@ Entity Framework Core Generator (efg) 是一种 .NET Core CLI 工具，可基于
 
 [GitHub 存储库](https://github.com/Arch/AutoHistory/)
 
-### <a name="efsecondlevelcachecore"></a>EFSecondLevelCache.Core
+### <a name="efcoresecondlevelcacheinterceptor"></a>EFCoreSecondLevelCacheInterceptor
 
-一个扩展，它可将 EF Core 查询的结果存储到二级缓存中，使后续执行相同查询时无需访问数据库，而是直接从缓存中检索数据。 对于 EF Core：2.
+二级缓存是一个查询缓存。 EF 命令的结果将存储在该缓存中，这样相同的 EF 命令将从该缓存检索其数据，而不是再次针对数据库进行执行。 对于 EF Core：3.
 
-[GitHub 存储库](https://github.com/VahidN/EFSecondLevelCache.Core/)
+[GitHub 存储库](https://github.com/VahidN/EFCoreSecondLevelCacheInterceptor)
 
 ### <a name="geco"></a>Geco
 
@@ -172,13 +172,13 @@ Microsoft.EntityFrameworkCore 的一个插件，它支持存储库、工作模�
 
 ### <a name="expressionify"></a>Expressionify
 
-添加了对在 linq lambda 中调用扩展方法的支持。 对于 EF Core：3.1
+添加了对在 LINQ lambda 中调用扩展方法的支持。 对于 EF Core：3.
 
 [GitHub 存储库](https://github.com/ClaveConsulting/Expressionify)
 
 ### <a name="xlinq"></a>XLinq
 
-适用于关系数据库的语言集成查询 (LINQ) 技术。 它允许你使用 C# 编写强类型查询。 对于 EF Core：3.1
+适用于关系数据库的语言集成查询 (LINQ) 技术。 它允许你使用 C# 编写强类型查询。 对于 EF Core：3.
 
 - 完全支持使用 C# 创建查询：可在 lambda 表达式内使用多个语句，还可使用变量、函数等。
 - 与 SQL 之间不存在语义缺口。 XLinq 将 SQL 语句（如 `SELECT`、`FROM`、`WHERE`）声明为第一类 C# 方法，将熟悉的语法与 intellisense、类型安全性和重构结合起来。
@@ -186,3 +186,27 @@ Microsoft.EntityFrameworkCore 的一个插件，它支持存储库、工作模�
 因此，SQL 成为了“又一个”本地公开其 API 的类库，可以说是“集成了语言的 SQL”  。
 
 [网站](http://xlinq.live/)
+
+### <a name="ramses"></a>Ramses
+
+生命周期挂钩（用于 SaveChanges）。 对于 EF Core：2、3。
+
+[GitHub 存储库](https://github.com/JValck/Ramses)
+
+### <a name="efcorenamingconventions"></a>EFCore.NamingConventions
+
+这会自动使所有表和列的名称都有 snake_case、全部大写或全部小写命名。 对于 EF Core：3.
+
+[GitHub 存储库](https://github.com/efcore/EFCore.NamingConventions)
+
+### <a name="simplersoftwareentityframeworkcoresqlservernodatime"></a>SimplerSoftware.EntityFrameworkCore.SqlServer.NodaTime
+
+为 NodaTime 类型的 SQL Server 添加对 EntityFrameworkCore 的本机支持。 对于 EF Core：3.
+
+[GitHub 存储库](https://github.com/StevenRasmussen/EFCore.SqlServer.NodaTime)
+
+### <a name="dabbleentityframeworkcoretemporalquery"></a>Dabble.EntityFrameworkCore.Temporal.Query
+
+Entity Framework Core 3.1 的 LINQ 扩展，目的是支持 Microsoft SQL Server 临时表查询。 对于 EF Core：3.
+
+[GitHub 存储库](https://github.com/Adam-Langley/efcore-temporal-query)
