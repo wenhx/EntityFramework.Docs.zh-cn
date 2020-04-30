@@ -1,54 +1,46 @@
 ---
-title: 使用 SQLite 的 EF Core测试
-author: rowanmiller
-ms.date: 10/27/2016
-ms.assetid: 7a2b75e2-1875-4487-9877-feff0651b5a6
+title: 用 SQLite 测试 EF Core
+description: 使用 SQLite 测试 EF Core 应用程序
+author: ajcvickers
+ms.date: 04/24/2020
 uid: core/miscellaneous/testing/sqlite
-ms.openlocfilehash: f7f847d8c766c0d4d7577ea6760ee72a17f84933
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.openlocfilehash: 327fdc230df2a3b4094accf93fffa81f92e0a931
+ms.sourcegitcommit: 79e460f76b6664e1da5886d102bd97f651d2ffff
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78414631"
+ms.lasthandoff: 04/29/2020
+ms.locfileid: "82538286"
 ---
-# <a name="testing-with-sqlite"></a>使用 SQLite 进行测试
+# <a name="using-sqlite-to-test-an-ef-core-application"></a>使用 SQLite 测试 EF Core 应用程序
 
-SQLite 具有内存中模式，借此可使用 SQLite 针对关系数据库编写测试，而不会产生实际数据库操作的开销。
+> [!WARNING]
+> 使用 SQLite 可以有效地测试 EF Core 应用程序。
+> 但是，当 SQLite 的行为与其他数据库系统不同时，可能会出现问题。 有关问题和利弊权衡的讨论，请参阅[使用 EF Core 的测试代码](xref:core/miscellaneous/testing/index)。  
 
-> [!TIP]  
-> 你可以在 GitHub 上查看此文章的[示例](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Testing)
+本文档在示例中所述的概念上生成了[如何测试使用 EF Core 的应用程序](xref:core/miscellaneous/testing/testing-sample)。
+此处所示的代码示例来自于此示例。
 
-## <a name="example-testing-scenario"></a>示例测试方案
+## <a name="using-sqlite-in-memory-databases"></a>使用 SQLite 内存中数据库
 
-请考虑以下允许应用程序代码执行一些与博客相关的操作的服务。 在内部，它使用连接到 SQL Server 数据库的 `DbContext`。 交换此上下文可有效连接到内存中 SQLite 数据库，这样我们就可以为该服务编写高效的测试，而无需修改代码或执行大量的工作来创建上下文的测试副本。
+通常情况下，SQLite 以简单文件的形式创建数据库，并在应用程序中访问文件。
+这种速度非常快，尤其是在使用快速[SSD](https://en.wikipedia.org/wiki/Solid-state_drive)时。 
 
-[!code-csharp[Main](../../../../samples/core/Miscellaneous/Testing/BusinessLogic/BlogService.cs)]
+SQLite 还可以使用纯粹在内存中创建的数据库。
+只要了解内存中数据库生存期，就可以轻松地在 EF Core 中使用：
+* 当打开数据库的连接时，将创建该数据库
+* 当数据库的连接关闭时，将删除该数据库
 
-## <a name="get-your-context-ready"></a>准备您的上下文
+EF Core 将在给定连接时使用已打开的连接，并且不会尝试关闭该连接。
+因此，将 EF Core 用于内存中 SQLite 数据库的关键是在将连接传递给 EF 之前打开连接。  
 
-### <a name="avoid-configuring-two-database-providers"></a>避免配置两个数据库提供程序
+该[示例](xref:core/miscellaneous/testing/testing-sample)通过以下代码实现此操作：
 
-在测试中，从外部配置上下文以使用 InMemory 提供程序。 如果通过在上下文中重写 `OnConfiguring` 来配置数据库提供程序，则需要添加一些条件代码，以确保仅配置数据库提供程序（如果尚未配置）。
+[!code-csharp[SqliteInMemory](../../../../samples/core/Miscellaneous/Testing/ItemsWebApi/Tests/SqliteInMemoryItemsControllerTest.cs?name=SqliteInMemory)]
 
-> [!TIP]  
-> 如果使用的是 ASP.NET Core，则不需要此代码，因为数据库提供程序是在上下文之外（在 Startup.cs 中）配置的。
+通知
+* `CreateInMemoryDatabase`方法创建一个 SQLite 内存中数据库，并打开与该数据库的连接。
+* 创建`DbConnection`的从中提取`ContextOptions` ，并保存。
+* 当释放测试以便不泄漏资源时，将释放该连接。 
 
-[!code-csharp[Main](../../../../samples/core/Miscellaneous/Testing/BusinessLogic/BloggingContext.cs#OnConfiguring)]
-
-### <a name="add-a-constructor-for-testing"></a>添加用于测试的构造函数
-
-对不同数据库启用测试的最简单方法是修改上下文以公开接受 `DbContextOptions<TContext>`的构造函数。
-
-[!code-csharp[Main](../../../../samples/core/Miscellaneous/Testing/BusinessLogic/BloggingContext.cs#Constructors)]
-
-> [!TIP]  
-> `DbContextOptions<TContext>` 告知上下文所有设置，如要连接到的数据库。 这与在上下文中运行 OnConfiguring 方法所生成的对象相同。
-
-## <a name="writing-tests"></a>编写测试
-
-使用此提供程序进行测试的关键是，可告知上下文使用 SQLite 并控制内存中数据库的范围。 通过打开和关闭连接来控制数据库的范围。 数据库的范围限定为连接打开的持续时间。 通常，每个测试方法都需要一个干净的数据库。
-
->[!TIP]
-> 若要使用 `SqliteConnection()` 和 `.UseSqlite()` 扩展方法，请参考 NuGet 包[microsoft.entityframeworkcore](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite/)。
-
-[!code-csharp[Main](../../../../samples/core/Miscellaneous/Testing/TestProject/SQLite/BlogServiceTests.cs)]
+> [!NOTE]
+> [问题 #16103](https://github.com/dotnet/efcore/issues/16103)正在跟踪使此连接管理更容易的方法。 
