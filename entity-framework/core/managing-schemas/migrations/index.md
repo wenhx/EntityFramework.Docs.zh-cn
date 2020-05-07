@@ -4,12 +4,12 @@ author: bricelam
 ms.author: bricelam
 ms.date: 10/05/2018
 uid: core/managing-schemas/migrations/index
-ms.openlocfilehash: 190057daed61c58c1f89ee8d775913458e413a50
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: 99bb420d95cb86443b63ba05ce9e6b4ab838eff9
+ms.sourcegitcommit: 79e460f76b6664e1da5886d102bd97f651d2ffff
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "80136199"
+ms.lasthandoff: 04/29/2020
+ms.locfileid: "82538459"
 ---
 # <a name="migrations"></a>迁移
 
@@ -59,10 +59,23 @@ Add-Migration InitialCreate
 * XXXXXXXXXXXXXX_InitialCreate.Designer.cs - 迁移元数据文件  。 包含 EF 所用的信息。
 * **MyContextModelSnapshot.cs**--当前模型的快照。 用于确定添加下一迁移时的更改内容。
 
-文件名中的时间戳有助于保持文件按时间顺序排列，以便你可以查看更改进展。
+文件名中的时间戳有助于保证文件按时间顺序排列，以便你查看更改情况。
 
 > [!TIP]
-> 可以自由移动“Migrations”目录下的迁移文件并更改其命名空间。 新建的迁移和上个迁移同级。
+> 可以手动移动 Migrations 文件并更改其命名空间。 新建的迁移和上个迁移同级。
+> 
+> 此外，还可使用 `-Namespace`（包管理器控制台）或 `--namespace`（.NET Core CLI）来指定生成时的命名空间。
+> ### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
+> 
+> ```dotnetcli
+> dotnet ef migrations add InitialCreate --namespace Your.Namespace
+> ```
+> 
+> ### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
+> 
+> ``` powershell
+> Add-Migration InitialCreate -Namespace Your.Namespace
+> ```
 
 ## <a name="update-the-database"></a>更新数据库
 

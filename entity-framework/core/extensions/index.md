@@ -4,12 +4,12 @@ author: ErikEJ
 ms.date: 04/11/2020
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 uid: core/extensions/index
-ms.openlocfilehash: 3fa407ca36d32a33a6bc889cd54ff88537510e9c
-ms.sourcegitcommit: 387cbd8109c0fc5ce6bdc85d0dec1aed72ad4c33
+ms.openlocfilehash: 246cf687f2a087e9a9a569c875b27712ebe80c5c
+ms.sourcegitcommit: 79e460f76b6664e1da5886d102bd97f651d2ffff
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/23/2020
-ms.locfileid: "82103108"
+ms.lasthandoff: 04/29/2020
+ms.locfileid: "82538337"
 ---
 # <a name="ef-core-tools--extensions"></a>EF Core 工具和扩展
 
@@ -210,3 +210,9 @@ Microsoft.EntityFrameworkCore 的一个插件，它支持存储库、工作模�
 Entity Framework Core 3.1 的 LINQ 扩展，目的是支持 Microsoft SQL Server 临时表查询。 对于 EF Core：3.
 
 [GitHub 存储库](https://github.com/Adam-Langley/efcore-temporal-query)
+
+### <a name="entityframeworkcoresqlserverhierarchyid"></a>EntityFrameworkCore.SqlServer.HierarchyId
+
+向 SQL Server EF Core 提供程序添加 hierarchyid 支持。 对于 EF Core：3.
+
+[GitHub 存储库](https://github.com/efcore/EFCore.SqlServer.HierarchyId)
