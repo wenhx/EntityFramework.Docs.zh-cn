@@ -73,8 +73,12 @@
               href: core/miscellaneous/connection-resiliency.md
             - name: 正在测试
               items:
-                - name: 概述
+                - name: 测试使用 EF Core 的代码
                   href: core/miscellaneous/testing/index.md
+                - name: EF Core 测试示例
+                  href: core/miscellaneous/testing/testing-sample.md
+                - name: 在测试之间共享数据库
+                  href: core/miscellaneous/testing/sharing-databases.md
                 - name: 使用 SQLite 进行测试
                   href: core/miscellaneous/testing/sqlite.md
                 - name: 使用 InMemory 进行测试
@@ -111,6 +115,8 @@
               href: core/modeling/backing-field.md
             - name: 值转换
               href: core/modeling/value-conversions.md
+            - name: 值比较器
+              href: core/modeling/value-comparers.md
             - name: 数据种子设定
               href: core/modeling/data-seeding.md
             - name: 实体类型构造函数
