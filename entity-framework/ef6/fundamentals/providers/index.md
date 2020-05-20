@@ -69,7 +69,7 @@ ms.locfileid: "78413332"
 
 ### <a name="code-based-registration"></a>基于代码的注册
 
-从实体框架 6 开始，可在代码中指定整个应用程序的 EF 配置。 有关完整的详细信息，请参阅[实体框架基于代码的配置](https://msdn.microsoft.com/data/jj680699)  。 使用基于代码的配置注册 EF 提供程序的常规方法是，创建一个派生自 System.Data.Entity.DbConfiguration 的新类，并将其放置在与 DbContext 类相同的程序集中。 然后，DbConfiguration 类应在其构造函数中注册该提供程序。 例如，要注册 SQL Compact 提供程序，DbConfiguration 类如下所示：
+从实体框架 6 开始，可在代码中指定整个应用程序的 EF 配置。 有关完整的详细信息，请参阅[实体框架基于代码的配置](https://msdn.microsoft.com/data/jj680699)。 使用基于代码的配置注册 EF 提供程序的常规方法是，创建一个派生自 System.Data.Entity.DbConfiguration 的新类，并将其放置在与 DbContext 类相同的程序集中。 然后，DbConfiguration 类应在其构造函数中注册该提供程序。 例如，要注册 SQL Compact 提供程序，DbConfiguration 类如下所示：
 
 ``` csharp
     public class MyConfiguration : DbConfiguration
