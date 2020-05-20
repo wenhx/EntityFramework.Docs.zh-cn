@@ -33,11 +33,11 @@ EF Core 实现_了乐观并发控制_，这意味着它将允许多个进程或�
 
 数据库提供程序负责实现并发令牌值的比较。
 
-在关系数据库上，EF Core 会对任何 `WHERE` 或 `UPDATE` 语句的 `DELETE` 子句中的并发令牌值进行检查。 执行这些语句后，EF Core 会读取受影响的行数。
+在关系数据库上，EF Core 会对任何 `UPDATE` 或 `DELETE` 语句的 `WHERE` 子句中的并发令牌值进行检查。 执行这些语句后，EF Core 会读取受影响的行数。
 
 如果未影响任何行，将检测到并发冲突，并且 EF Core 会引发 `DbUpdateConcurrencyException`。
 
-例如，我们可能希望将 `LastName` 的 `Person` 配置为并发令牌。 这样，对 Person 的任何更新操作都将在 `WHERE` 子句中包括并发检查：
+例如，我们可能希望将 `Person` 上的 `LastName` 配置为并发令牌。 这样，对 Person 的任何更新操作都将在 `WHERE` 子句中包括并发检查：
 
 ``` sql
 UPDATE [Person] SET [FirstName] = @p1
@@ -62,7 +62,7 @@ WHERE [PersonId] = @p0 AND [LastName] = @p2;
 
 处理并发冲突的常规方法是：
 
-1. 在 `DbUpdateConcurrencyException` 期间捕获 `SaveChanges`。
+1. 在 `SaveChanges` 期间捕获 `DbUpdateConcurrencyException`。
 2. 使用 `DbUpdateConcurrencyException.Entries` 为受影响的实体准备一组新更改。
 3. 刷新并发令牌的原始值以反映数据库中的当前值。
 4. 重试该过程，直到不发生任何冲突。

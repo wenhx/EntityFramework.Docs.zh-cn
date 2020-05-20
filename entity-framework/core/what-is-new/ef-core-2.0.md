@@ -309,7 +309,7 @@ public class MyPluralizer : IPluralizer
 
 显著增强了提供程序与模型的交互方式，并简化了约定、注释和 Fluent API 用于不同提供程序的方法。
 
-EF Core 2.0 现将对所用的每个不同提供程序生成不同的 [IModel](https://github.com/aspnet/EntityFramework/blob/master/src/EFCore/Metadata/IModel.cs)。 这对应用程序而言通常是透明的。 这有助于简化较低级别的元数据 API，从而始终通过调用 *（而不是* 、`.Relational` 等）来访问常见关系元数据概念`.SqlServer``.Sqlite`。
+EF Core 2.0 现将对所用的每个不同提供程序生成不同的 [IModel](https://github.com/aspnet/EntityFramework/blob/master/src/EFCore/Metadata/IModel.cs)。 这对应用程序而言通常是透明的。 这有助于简化较低级别的元数据 API，从而始终通过调用 `.Relational`（而不是 `.SqlServer`、`.Sqlite` 等）来访问常见关系元数据概念。
 
 ### <a name="consolidated-logging-and-diagnostics"></a>增强的日志记录和诊断
 

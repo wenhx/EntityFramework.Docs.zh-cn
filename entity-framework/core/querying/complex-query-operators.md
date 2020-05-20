@@ -56,7 +56,7 @@ CROSS JOIN [Posts] AS [p]
 
 ### <a name="collection-selector-references-outer-in-a-where-clause"></a>集合选择器引用 where 子句中的外部
 
-如果集合选择器具有引用外部元素的 where 子句，则 EF Core 会将其转换为数据库联接，并将谓词用作联接条件。 在对外部元素使用集合导航作为集合选择器时，通常会出现这种情况。 如果外部元素的集合为空，则不会为该外部元素生成任何结果。 但如果在集合选择器上应用 `DefaultIfEmpty`，则外部元素将与内部元素的默认值连接。 由于这种区别，应用 `INNER JOIN` 时，如果缺少 `DefaultIfEmpty` 和 `LEFT JOIN`，此类查询会转换为 `DefaultIfEmpty`。
+如果集合选择器具有引用外部元素的 where 子句，则 EF Core 会将其转换为数据库联接，并将谓词用作联接条件。 在对外部元素使用集合导航作为集合选择器时，通常会出现这种情况。 如果外部元素的集合为空，则不会为该外部元素生成任何结果。 但如果在集合选择器上应用 `DefaultIfEmpty`，则外部元素将与内部元素的默认值连接。 由于这种区别，应用 `DefaultIfEmpty` 时，如果缺少 `DefaultIfEmpty` 和 `LEFT JOIN`，此类查询会转换为 `INNER JOIN`。
 
 [!code-csharp[Main](../../../samples/core/Querying/ComplexQuery/Sample.cs#SelectManyConvertedToJoin)]
 
@@ -72,7 +72,7 @@ LEFT JOIN [Posts] AS [p] ON [b].[BlogId] = [p].[BlogId]
 
 ### <a name="collection-selector-references-outer-in-a-non-where-case"></a>集合选择器引用非 where 情况下的外部
 
-如果集合选择器引用的外部元素不在 where 子句中（如上所述），则它不会转换为数据库联接。 这就是我们需要为每个外部元素评估集合选择器的原因。 它在许多关系数据库中转换为 `APPLY` 操作。 如果外部元素的集合为空，则不会为该外部元素生成任何结果。 但如果在集合选择器上应用 `DefaultIfEmpty`，则外部元素将与内部元素的默认值连接。 由于这种区别，应用 `CROSS APPLY` 时，如果缺少 `DefaultIfEmpty` 和 `OUTER APPLY`，此类查询会转换为 `DefaultIfEmpty`。 像 SQLite 之类的某些数据库不支持 `APPLY` 运算符，因此此类查询可能不会进行转换。
+如果集合选择器引用的外部元素不在 where 子句中（如上所述），则它不会转换为数据库联接。 这就是我们需要为每个外部元素评估集合选择器的原因。 它在许多关系数据库中转换为 `APPLY` 操作。 如果外部元素的集合为空，则不会为该外部元素生成任何结果。 但如果在集合选择器上应用 `DefaultIfEmpty`，则外部元素将与内部元素的默认值连接。 由于这种区别，应用 `DefaultIfEmpty` 时，如果缺少 `DefaultIfEmpty` 和 `OUTER APPLY`，此类查询会转换为 `CROSS APPLY`。 像 SQLite 之类的某些数据库不支持 `APPLY` 运算符，因此此类查询可能不会进行转换。
 
 [!code-csharp[Main](../../../samples/core/Querying/ComplexQuery/Sample.cs#SelectManyConvertedToApply)]
 

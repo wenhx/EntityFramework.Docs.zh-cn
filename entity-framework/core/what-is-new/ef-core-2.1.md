@@ -133,7 +133,7 @@ var query = context.Customers.Select(
 
 ## <a name="owned-attribute"></a>[Owned] 属性
 
-现只需使用 [ 注释类型，并确保所有者实体添加到了模型中，即可配置](xref:core/modeling/owned-entities)固有实体类型`[Owned]`：
+现只需使用 `[Owned]` 注释类型，并确保所有者实体添加到了模型中，即可配置[固有实体类型](xref:core/modeling/owned-entities)：
 
 ``` csharp
 [Owned]
@@ -162,7 +162,7 @@ dotnet-ef 命令现在是 .NET Core SDK 的一部分，因此无须在项目中�
 
 ## <a name="state-change-events"></a>状态更改事件
 
-`Tracked` 中新增的 `StateChanged` 和 `ChangeTracker` 事件可用于编写逻辑，以响应进入 DbContext 或状态更改的实体。
+`ChangeTracker` 中新增的 `Tracked` 和 `StateChanged` 事件可用于编写逻辑，以响应进入 DbContext 或状态更改的实体。
 
 ## <a name="raw-sql-parameter-analyzer"></a>原始 SQL 参数分析器
 

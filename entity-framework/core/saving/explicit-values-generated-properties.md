@@ -50,7 +50,7 @@ ms.locfileid: "78413629"
 
 按照约定，`Employee.EmployeeId` 属性是存储生成的 `IDENTITY` 列。
 
-对于大多数情况，上述方法将适用于键属性。 但是，若要将显式值插入到 SQL Server `IDENTITY` 列中，则必须在调用 `IDENTITY_INSERT` 之前手动启用 `SaveChanges()`。
+对于大多数情况，上述方法将适用于键属性。 但是，若要将显式值插入到 SQL Server `IDENTITY` 列中，则必须在调用 `SaveChanges()` 之前手动启用 `IDENTITY_INSERT`。
 
 > [!NOTE]  
 > 对于积压工作存在一个[功能请求](https://github.com/aspnet/EntityFramework/issues/703)，请求在 SQL Server 提供程序内自动执行此操作。
@@ -76,7 +76,7 @@ ms.locfileid: "78413629"
 > [!NOTE]  
 > **EF Core 2.0 中的更改：** 在以前版本中，通过 `IsReadOnlyAfterSave` 标志控制保存后行为。 此标志已过时，将替换为 `AfterSaveBehavior`。
 
-数据库中还存在触发器，以便在执行 `LastPayRaise` 操作期间为 `UPDATE` 列生成值。
+数据库中还存在触发器，以便在执行 `UPDATE` 操作期间为 `LastPayRaise` 列生成值。
 
 [!code-sql[Main](../../../samples/core/Saving/ExplicitValuesGenerateProperties/employee_UPDATE.sql)]
 

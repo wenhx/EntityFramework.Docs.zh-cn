@@ -83,9 +83,9 @@ ORDER BY [b].[Rating] DESC
 
 - 结尾分号
 - 在 SQL Server 上，结尾处的查询级提示（例如，`OPTION (HASH JOIN)`）
-- 在 SQL Server 上，`ORDER BY` 子句中不与 `OFFSET 0` 或 `TOP 100 PERCENT` 配合使用的 `SELECT` 子句
+- 在 SQL Server 上，`SELECT` 子句中不与 `OFFSET 0` 或 `TOP 100 PERCENT` 配合使用的 `ORDER BY` 子句
 
-SQL Server 不允许对存储过程调用进行组合，因此任何尝试向此类调用应用其他查询运算符的操作都将导致无效的 SQL。 请在 `AsEnumerable` 或 `AsAsyncEnumerable` 方法之后立即使用 `FromSqlRaw` 或 `FromSqlInterpolated` 方法，确保 EF Core 不会尝试对存储过程进行组合。
+SQL Server 不允许对存储过程调用进行组合，因此任何尝试向此类调用应用其他查询运算符的操作都将导致无效的 SQL。 请在 `FromSqlRaw` 或 `FromSqlInterpolated` 方法之后立即使用 `AsEnumerable` 或 `AsAsyncEnumerable` 方法，确保 EF Core 不会尝试对存储过程进行组合。
 
 ## <a name="change-tracking"></a>更改跟踪
 

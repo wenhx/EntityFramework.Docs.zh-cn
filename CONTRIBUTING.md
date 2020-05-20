@@ -65,7 +65,7 @@ DocFX 需要使用 .NET Framework（对于 Windows）或 Mono（对于 Linux 或
 
 ### <a name="windows-instructions"></a>Windows 说明
 
-* 从 [DocFX 发布](https://github.com/dotnet/docfx/releases)下载并解压缩 “docfx.zip”  。
+* 从 [DocFX 发布](https://github.com/dotnet/docfx/releases)下载并解压缩 “docfx.zip”。
 * 将 DocFX 添加到路径。
 * 在命令行窗口中，导航到克隆的存储库（它包含 docfx.json 文件），并运行以下命令  ：
 
@@ -92,7 +92,7 @@ DocFX 需要使用 .NET Framework（对于 Windows）或 Mono（对于 Linux 或
   }
   ```
 
-* 在克隆存储库中运行“docfx”以生成站点，并在 `http://localhost:8080` 上运行“docfx-serve”以查看站点   。
+* 在克隆存储库中运行“docfx”以生成站点，并在 `http://localhost:8080` 上运行“docfx-serve”以查看站点。
 
 ## <a name="voice-and-tone"></a>语气和语调
 

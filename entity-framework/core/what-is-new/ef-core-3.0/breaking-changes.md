@@ -259,11 +259,11 @@ context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").AsEnumerable(
 
 **新行为**
 
-从 EF Core 3.0 开始，只能在查询根上（即，直接在 `FromSqlRaw` 上）指定新的 `FromSqlInterpolated` 和 `FromSql` 方法（替换 `DbSet<>`）。 尝试在其他任何位置指定这些方法将导致编译错误。
+从 EF Core 3.0 开始，只能在查询根上（即，直接在 `DbSet<>` 上）指定新的 `FromSqlRaw` 和 `FromSqlInterpolated` 方法（替换 `FromSql`）。 尝试在其他任何位置指定这些方法将导致编译错误。
 
 **为什么**
 
-在除 `FromSql` 之外的任意位置指定 `DbSet` 没有附加含义或附加值，并且可能在某些情况下存在多义性。
+在除 `DbSet` 之外的任意位置指定 `FromSql` 没有附加含义或附加值，并且可能在某些情况下存在多义性。
 
 **缓解措施**
 
@@ -281,11 +281,11 @@ context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").AsEnumerable(
 ```csharp
 var results = context.Products.Include(e => e.Category).AsNoTracking().ToList();
 ```
-会为与给定类别关联的每个 `Category` 返回相同的 `Product` 实例。
+会为与给定类别关联的每个 `Product` 返回相同的 `Category` 实例。
 
 **新行为**
 
-从 EF Core 3.0 开始，当在返回的图中的不同位置遇到具有给定类型和 ID 的实体时，将创建不同的实体实例。 例如，上面的查询现在将为每个 `Category` 返回新的 `Product` 实例，即使两个产品与同一类别关联。
+从 EF Core 3.0 开始，当在返回的图中的不同位置遇到具有给定类型和 ID 的实体时，将创建不同的实体实例。 例如，上面的查询现在将为每个 `Product` 返回新的 `Category` 实例，即使两个产品与同一类别关联。
 
 **为什么**
 
@@ -335,7 +335,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 * 不使用存储生成的密钥。
 * 设置导航属性以形成关系，而不是设置外键值。
 * 从实体的跟踪信息中获取实际的临时键值。
-例如，即使 `context.Entry(blog).Property(e => e.Id).CurrentValue` 本身尚未设置，`blog.Id` 也将返回临时值。
+例如，即使 `blog.Id` 本身尚未设置，`context.Entry(blog).Property(e => e.Id).CurrentValue` 也将返回临时值。
 
 <a name="dc"></a>
 
@@ -556,13 +556,13 @@ public class OrderDetails
     public string ShippingAddress { get; set; }
 }
 ```
-在 EF Core 3.0 之前，如果 `OrderDetails` 由 `Order` 拥有且显式映射到同一张表，则在添加新的 `OrderDetails` 时，始终需要 `Order` 实例。
+在 EF Core 3.0 之前，如果 `OrderDetails` 由 `Order` 拥有且显式映射到同一张表，则在添加新的 `Order` 时，始终需要 `OrderDetails` 实例。
 
 
 **新行为**
 
 自 3.0 起，EF Core 允许添加 `Order` 而不添加 `OrderDetails`，并将主键之外的所有 `OrderDetails` 属性映射到不为 null 的列中。
-查询时，如果其任意所需属性均没有值，或者它在主键之外没有任何必需属性且所有属性均为 `OrderDetails`，则 EF Core 会将 `null` 设置为 `null`。
+查询时，如果其任意所需属性均没有值，或者它在主键之外没有任何必需属性且所有属性均为 `null`，则 EF Core 会将 `OrderDetails` 设置为 `null`。
 
 **缓解措施**
 
@@ -603,7 +603,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 **新行为**
 
-自 3.0 起，如果 新的 `Version` 值拥有 `Order`则 EF Core 会将该值传播给 `OrderDetails`。 否则，会在模型验证期间引发异常。
+自 3.0 起，如果 新的 `Version` 值拥有 `OrderDetails`则 EF Core 会将该值传播给 `Order`。 否则，会在模型验证期间引发异常。
 
 **为什么**
 
@@ -1001,7 +1001,7 @@ EF Core 3.0 不要求这些服务位于应用程序的 DI 容器中。 但是，
 
 **缓解措施**
 
-在大多数情况下，如果同时调用了 `AddEntityFramework*` 或 `AddDbContext`，则无需调用 `AddDbContextPool`。 因此，最好的缓解措施是删除 `AddEntityFramework*` 调用。
+在大多数情况下，如果同时调用了 `AddDbContext` 或 `AddDbContextPool`，则无需调用 `AddEntityFramework*`。 因此，最好的缓解措施是删除 `AddEntityFramework*` 调用。
 
 如果应用程序需要这些服务，则使用 [AddMemoryCache](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache) 预先向 DI 容器显式注册 IMemoryCache 实现。
 
@@ -1031,7 +1031,7 @@ EF Core 3.0 不要求这些服务位于应用程序的 DI 容器中。 但是，
 
 **缓解措施**
 
-在调用 `ChangeTracker.DetectChanges()` 之前显式调用 `Entry` 以确保 3.0 之前的行为。
+在调用 `Entry` 之前显式调用 `ChangeTracker.DetectChanges()` 以确保 3.0 之前的行为。
 
 ### <a name="string-and-byte-array-keys-are-not-client-generated-by-default"></a>默认情况下，字符串和字节数组键不是客户端生成的
 
@@ -1164,7 +1164,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 modelBuilder.Entity<Samurai>().HasOne("Entrance").WithOne();
 ```
 
-该代码看起来是使用 `Samurai` 导航属性（可能是私有属性）将 `Entrance` 与某些其他实体类型关联起来的。
+该代码看起来是使用 `Entrance` 导航属性（可能是私有属性）将 `Samurai` 与某些其他实体类型关联起来的。
 
 实际上，此代码试图创建与某个名为 `Entrance` 的实体类型的关系，该实体类型没有导航属性。
 
@@ -1214,7 +1214,7 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 **缓解措施**
 
 仅需重新编译只等待上述 API 的应用程序 -无需更改源。
-更复杂的用法（例如，将返回的 `Task` 传递到 `Task.WhenAny()`）通常需要通过对返回的 `ValueTask<T>` 调用 `Task<T>` 来将其转换为 `AsTask()`。
+更复杂的用法（例如，将返回的 `Task` 传递到 `Task.WhenAny()`）通常需要通过对返回的 `ValueTask<T>` 调用 `AsTask()` 来将其转换为 `Task<T>`。
 请注意，这会抵消此更改所带来的分配数减少优势。
 
 <a name="rtt"></a>
@@ -1533,7 +1533,7 @@ SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 
 
 **新行为**
 
-这些方法已迁移到从新 `DbContextOptionsExtensionInfo` 属性返回的新 `IDbContextOptionsExtension.Info` 抽象基类。
+这些方法已迁移到从新 `IDbContextOptionsExtension.Info` 属性返回的新 `DbContextOptionsExtensionInfo` 抽象基类。
 
 **为什么**
 

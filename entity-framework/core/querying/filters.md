@@ -33,7 +33,7 @@ ms.locfileid: "78413761"
 
 请注意 _Blog_ 实体上的 _tenantId_ 字段的声明。 这会用于将每个 _Blog_ 实例与特定租户相关联。 还会定义_文章_实体类型上的 _IsDeleted_ 属性。 这会用于跟踪文章  实例是否已“软删除”。 也就是说，实例标记为已删除，而实际上不会删除基础数据。
 
-接下来，使用 _API 在_OnModelCreating`HasQueryFilter` 中配置查询筛选器。
+接下来，使用 `HasQueryFilter` API 在 _OnModelCreating_ 中配置查询筛选器。
 
 [!code-csharp[Main](../../../samples/core/QueryFilters/Program.cs#Configuration)]
 

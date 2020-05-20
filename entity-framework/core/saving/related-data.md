@@ -33,7 +33,7 @@ ms.locfileid: "78413611"
 
 如果从已由上下文跟踪的实体的导航属性中引用新实体，则将发现该实体并将其插入到数据库中。
 
-在下面的示例中，插入 `post` 实体，因为该实体会添加到已从数据库中提取的 `Posts` 实体的 `blog` 属性。
+在下面的示例中，插入 `post` 实体，因为该实体会添加到已从数据库中提取的 `blog` 实体的 `Posts` 属性。
 
 [!code-csharp[Main](../../../samples/core/Saving/RelatedData/Sample.cs#AddingRelatedEntity)]
 

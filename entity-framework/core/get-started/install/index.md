@@ -41,7 +41,7 @@ ms.locfileid: "80136174"
   dotnet add package Microsoft.EntityFrameworkCore.SqlServer
   ```
 
-* 可以使用 `dotnet add package` 修饰符在 `-v` 命令中指明特定的版本。 例如，若要安装 EF Core 2.2.0 包，请将 `-v 2.2.0` 追加到命令中。
+* 可以使用 `-v` 修饰符在 `dotnet add package` 命令中指明特定的版本。 例如，若要安装 EF Core 2.2.0 包，请将 `-v 2.2.0` 追加到命令中。
 
 有关详细信息，请参阅 [.NET 命令行接口 (CLI) 工具](/dotnet/core/tools/)。
 

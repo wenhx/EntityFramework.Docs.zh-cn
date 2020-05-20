@@ -49,7 +49,7 @@ ms.locfileid: "78413617"
 
 [!code-csharp[Main](../../../samples/core/Saving/Transactions/SharingTransaction/Sample.cs?name=Context&highlight=3,4,5)]
 
-替代方法是继续使用 `DbContext.OnConfiguring`，但接受已保存并随后在 `DbConnection` 中使用的 `DbContext.OnConfiguring`。
+替代方法是继续使用 `DbContext.OnConfiguring`，但接受已保存并随后在 `DbContext.OnConfiguring` 中使用的 `DbConnection`。
 
 ``` csharp
 public class BloggingContext : DbContext

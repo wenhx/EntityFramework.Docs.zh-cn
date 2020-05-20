@@ -21,8 +21,8 @@ ms.locfileid: "78413352"
 
 此模板项会生成两个 .tt（文本模板）文件：  
 
-- **model name\<.tt 文件可生成实体类型、包含自跟踪实体使用的更改跟踪逻辑的 Helper 类以及允许设置自跟踪实体的状态的扩展方法\>** 。  
-- **model name\<.Context.tt 文件生成派生的上下文和扩展类，该类包含 ObjectContext 和 ObjectSet 类的 ApplyChanges 方法\>**    。 这些方法检查自跟踪实体图中包含的更改跟踪信息，以推断在数据库中保存这些更改所必须执行的一组操作。  
+- \<model name\>.tt 文件可生成实体类型、包含自跟踪实体使用的更改跟踪逻辑的 Helper 类以及允许设置自跟踪实体的状态的扩展方法。  
+- \<model name\>.Context.tt 文件生成派生的上下文和扩展类，该类包含 ObjectContext 和 ObjectSet 类的 ApplyChanges 方法。 这些方法检查自跟踪实体图中包含的更改跟踪信息，以推断在数据库中保存这些更改所必须执行的一组操作。  
 
 ## <a name="get-started"></a>入门  
 
