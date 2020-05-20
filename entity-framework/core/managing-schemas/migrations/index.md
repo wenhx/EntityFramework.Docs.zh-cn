@@ -4,12 +4,12 @@ author: bricelam
 ms.author: bricelam
 ms.date: 10/05/2018
 uid: core/managing-schemas/migrations/index
-ms.openlocfilehash: 99bb420d95cb86443b63ba05ce9e6b4ab838eff9
-ms.sourcegitcommit: 79e460f76b6664e1da5886d102bd97f651d2ffff
+ms.openlocfilehash: c87864b3430d3cd42729c13ddde33c0cd9de9308
+ms.sourcegitcommit: 59e3d5ce7dfb284457cf1c991091683b2d1afe9d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "82538459"
+ms.lasthandoff: 05/20/2020
+ms.locfileid: "83672985"
 ---
 # <a name="migrations"></a>迁移
 
@@ -55,27 +55,31 @@ Add-Migration InitialCreate
 
 向**Migrations**目录下的项目添加以下三个文件：
 
-* XXXXXXXXXXXXXX_InitialCreate.cs - 主迁移文件  。 包含应用迁移所需的操作（在 `Up()` 中）和还原迁移所需的操作（在 `Down()` 中）。
-* XXXXXXXXXXXXXX_InitialCreate.Designer.cs - 迁移元数据文件  。 包含 EF 所用的信息。
+* XXXXXXXXXXXXXX_InitialCreate.cs - 主迁移文件。 包含应用迁移所需的操作（在 `Up()` 中）和还原迁移所需的操作（在 `Down()` 中）。
+* XXXXXXXXXXXXXX_InitialCreate.Designer.cs - 迁移元数据文件。 包含 EF 所用的信息。
 * **MyContextModelSnapshot.cs**--当前模型的快照。 用于确定添加下一迁移时的更改内容。
 
 文件名中的时间戳有助于保证文件按时间顺序排列，以便你查看更改情况。
 
-> [!TIP]
-> 可以手动移动 Migrations 文件并更改其命名空间。 新建的迁移和上个迁移同级。
-> 
-> 此外，还可使用 `-Namespace`（包管理器控制台）或 `--namespace`（.NET Core CLI）来指定生成时的命名空间。
-> ### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
-> 
-> ```dotnetcli
-> dotnet ef migrations add InitialCreate --namespace Your.Namespace
-> ```
-> 
-> ### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
-> 
-> ``` powershell
-> Add-Migration InitialCreate -Namespace Your.Namespace
-> ```
+### <a name="namespaces"></a>命名空间
+
+可以手动移动 Migrations 文件并更改其命名空间。 新建的迁移和上个迁移同级。
+
+此外，还可使用 `-Namespace`（包管理器控制台）或 `--namespace`（.NET Core CLI）来指定生成时的命名空间。
+
+### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
+
+```dotnetcli
+dotnet ef migrations add InitialCreate --namespace Your.Namespace
+```
+
+### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
+
+``` powershell
+Add-Migration InitialCreate -Namespace Your.Namespace
+```
+
+***
 
 ## <a name="update-the-database"></a>更新数据库
 
@@ -97,7 +101,7 @@ Update-Database
 
 ## <a name="customize-migration-code"></a>自定义迁移代码
 
-更改 EF Core 模型后，数据库架构可能不同步。为使其保持最新，请再添加一个迁移。 迁移名称的用途与版本控制系统中的提交消息类似。 例如，如果更改对于评审是一个新的实体类，可以选择一个名称，如 AddProductReviews  。
+更改 EF Core 模型后，数据库架构可能不同步。为使其保持最新，请再添加一个迁移。 迁移名称的用途与版本控制系统中的提交消息类似。 例如，如果更改对于评审是一个新的实体类，可以选择一个名称，如 AddProductReviews。
 
 ### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
 
@@ -244,7 +248,7 @@ dotnet ef migrations script 20190725054716_Add_new_tables
 ```dotnetcli
 dotnet ef migrations script 20190725054716_Add_new_tables 20190829031257_Add_audit_table
 ```
-可以使用比 `to` 新的 `from` 来生成回退脚本。 请记下潜在的数据丢失方案。 
+可以使用比 `to` 新的 `from` 来生成回退脚本。 请记下潜在的数据丢失方案。
 
 ### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
 
@@ -264,17 +268,17 @@ Script-Migration 20190725054716_Add_new_tables
 ```powershell
 Script-Migration 20190725054716_Add_new_tables 20190829031257_Add_audit_table
 ```
-可以使用比 `to` 新的 `from` 来生成回退脚本。 请记下潜在的数据丢失方案。 
+可以使用比 `to` 新的 `from` 来生成回退脚本。 请记下潜在的数据丢失方案。
 
 ***
 
 此命令有几个选项。
 
-from 迁移应是运行该脚本前应用到数据库的最后一个迁移  。 如果未应用任何迁移，请指定 `0`（默认值）。
+from 迁移应是运行该脚本前应用到数据库的最后一个迁移。 如果未应用任何迁移，请指定 `0`（默认值）。
 
-to 迁移是运行该脚本后应用到数据库的最后一个迁移  。 它默认为项目中的最后一个迁移。
+to 迁移是运行该脚本后应用到数据库的最后一个迁移。 它默认为项目中的最后一个迁移。
 
-可以选择生成 idempotent 脚本  。 此脚本仅会应用尚未应用到数据库的迁移。 如果不确知应用到数据库的最后一个迁移或需要部署到多个可能分别处于不同迁移的数据库，此脚本非常有用。
+可以选择生成 idempotent 脚本。 此脚本仅会应用尚未应用到数据库的迁移。 如果不确知应用到数据库的最后一个迁移或需要部署到多个可能分别处于不同迁移的数据库，此脚本非常有用。
 
 ## <a name="apply-migrations-at-runtime"></a>在运行时应用迁移
 
