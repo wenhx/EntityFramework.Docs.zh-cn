@@ -4,12 +4,12 @@ description: 测试使用 EF Core 的应用程序的不同方法
 author: ajcvickers
 ms.date: 04/22/2020
 uid: core/miscellaneous/testing/index
-ms.openlocfilehash: 308128b0d51b9e0d1fc1ebb0ed00e803100efb52
-ms.sourcegitcommit: 79e460f76b6664e1da5886d102bd97f651d2ffff
+ms.openlocfilehash: 415769e9c3c664ce49c9308740d39a65a10807ba
+ms.sourcegitcommit: 59e3d5ce7dfb284457cf1c991091683b2d1afe9d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "82538365"
+ms.lasthandoff: 05/20/2020
+ms.locfileid: "83672898"
 ---
 # <a name="testing-code-that-uses-ef-core"></a>测试使用 EF Core 的代码
 
@@ -92,10 +92,10 @@ SQLite 是不错的选择，因为：
 ## <a name="approach-3-the-ef-core-in-memory-database"></a>方法 3：EF Core 内存中数据库
 
 EF Core 附带了内存中数据库，用于对 EF Core 本身进行内部测试。
-此数据库一般不适合用于测试使用 EF Core 的应用程序。  尤其是在下列情况下：
-* 它不是关系数据库
-* 它不支持事务
-* 它未针对性能进行优化
+此数据库一般不适合用于测试使用 EF Core 的应用程序。 尤其是在下列情况下：
+* 它不是关系数据库。
+* 它不支持事务。
+* 它未针对性能进行优化。
 
 在测试 EF Core 内部机制时，这些都不重要，因为我们只在数据库与测试不相关时才会使用它。
 另一方面，在测试使用 EF Core 的应用程序时，这些特性往往非常重要。
@@ -108,7 +108,7 @@ EF Core 附带了内存中数据库，用于对 EF Core 本身进行内部测试
 我们使用测试替身进行 EF Core 的内部测试。
 但是，我们不会尝试模拟 DbContext 或 IQueryable。
 这样做难度大、过程繁琐且结果不可靠。
-不要这样做。 
+不要这样做。
 
 改为使用 EF 内存中数据库对使用 DbContext 的应用进行单元测试。
 在这种情况下，使用 EF 内存中数据库是适当的，因为测试不依赖于数据库行为。
