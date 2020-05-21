@@ -3,12 +3,12 @@ title: 处理并发冲突-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 2318e4d3-f561-4720-bbc3-921556806476
-ms.openlocfilehash: 81ae186201fdfac331b1d4e7836b222545fe78b5
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.openlocfilehash: a99f824fe256a10b84f539a5339a09624315efa4
+ms.sourcegitcommit: 59e3d5ce7dfb284457cf1c991091683b2d1afe9d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78416245"
+ms.lasthandoff: 05/20/2020
+ms.locfileid: "83672707"
 ---
 # <a name="handling-concurrency-conflicts"></a>处理并发冲突
 乐观并发性涉及到乐观地尝试将实体保存到数据库，希望数据在加载实体后未发生更改。 如果事实证明数据已更改，则会引发异常，并且在尝试再次保存之前必须解决冲突。 本主题介绍如何在实体框架中处理此类异常。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  
@@ -52,7 +52,7 @@ using (var context = new BloggingContext())
 }
 ```  
 
-模拟并发异常的一种好方法是在 SaveChanges 调用上设置断点，然后使用其他工具（如 SQL Management Studio）修改要保存在数据库中的实体。 您还可以在 SaveChanges 之前插入一行，以便使用 SqlCommand 直接更新数据库。 例如：  
+模拟并发异常的一种好方法是在 SaveChanges 调用上设置断点，然后使用其他工具（如 SQL Server Management Studio）修改要保存在数据库中的实体。 您还可以在 SaveChanges 之前插入一行，以便使用 SqlCommand 直接更新数据库。 例如：  
 
 ``` csharp
 context.Database.SqlCommand(

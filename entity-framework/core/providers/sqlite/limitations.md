@@ -1,15 +1,15 @@
 ---
-title: SQLite 数据库提供程序的限制的 EF Core
+title: SQLite 数据库提供程序-限制-EF Core
 author: rowanmiller
 ms.date: 04/09/2017
 ms.assetid: 94ab4800-c460-4caa-a5e8-acdfee6e6ce2
 uid: core/providers/sqlite/limitations
-ms.openlocfilehash: 2f80dc195265787318ac4925dd937da45ffad011
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.openlocfilehash: 17e97da9dfffefeb507fde744b710e6936bff69b
+ms.sourcegitcommit: 59e3d5ce7dfb284457cf1c991091683b2d1afe9d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78414757"
+ms.lasthandoff: 05/20/2020
+ms.locfileid: "83672776"
 ---
 # <a name="sqlite-ef-core-database-provider-limitations"></a>SQLite EF Core 数据库提供程序限制
 
@@ -21,20 +21,19 @@ SQLite 提供程序有很多迁移限制。 其中的大多数限制是由基础
 
 * 架构
 * 序列
-* 计算列
 
 ## <a name="query-limitations"></a>查询限制
 
-SQLite 本身并不支持以下数据类型。 EF Core 可以读取和写入这些类型的值，也支持查询相等性（`where e.Property == value`）。 但其他操作（如比较和排序）将需要对客户端进行评估。
+SQLite 本身并不支持以下数据类型。 EF Core 可以读取和写入这些类型的值，也支持查询是否相等（ `where e.Property == value` ）。 但其他操作（如比较和排序）将需要对客户端进行评估。
 
 * DateTimeOffset
-* Decimal
+* 小数
 * TimeSpan
 * UInt64
 
-建议使用 DateTime 值，而不是 `DateTimeOffset`。 处理多个时区时，建议在保存之前将值转换为 UTC，然后将其转换回适当的时区。
+`DateTimeOffset`建议使用 DateTime 值，而不是。 处理多个时区时，建议在保存之前将值转换为 UTC，然后将其转换回适当的时区。
 
-`Decimal` 类型提供了较高的精度级别。 但是，如果不需要该级别的精度，则建议改为使用 double。 您可以使用[值转换器](../../modeling/value-conversions.md)在类中继续使用 decimal。
+`Decimal`类型提供了较高的精度。 但是，如果不需要该级别的精度，则建议改为使用 double。 您可以使用[值转换器](../../modeling/value-conversions.md)在类中继续使用 decimal。
 
 ``` csharp
 modelBuilder.Entity<MyEntity>()
@@ -44,9 +43,9 @@ modelBuilder.Entity<MyEntity>()
 
 ## <a name="migrations-limitations"></a>迁移限制
 
-SQLite 数据库引擎不支持许多其他关系数据库所支持的架构操作。 如果尝试将不受支持的操作之一应用于 SQLite 数据库，则会引发 `NotSupportedException`。
+SQLite 数据库引擎不支持许多其他关系数据库所支持的架构操作。 如果尝试将不受支持的操作之一应用于 SQLite 数据库，则 `NotSupportedException` 会引发。
 
-| 操作            | 是否支持？ | 需要版本 |
+| 操作            | 支持？ | 需要版本 |
 |:---------------------|:-----------|:-----------------|
 | AddColumn            | ✔          | 1.0              |
 | AddForeignKey        | ✗          |                  |
@@ -64,8 +63,8 @@ SQLite 数据库引擎不支持许多其他关系数据库所支持的架构操�
 | RenameColumn         | ✔          | 2.2.2            |
 | RenameIndex          | ✔          | 2.1              |
 | RenameTable          | ✔          | 1.0              |
-| EnsureSchema         | ✔ (no-op)  | 2.0              |
-| DropSchema           | ✔ (no-op)  | 2.0              |
+| EnsureSchema         | ✔（无操作）  | 2.0              |
+| DropSchema           | ✔（无操作）  | 2.0              |
 | 插入               | ✔          | 2.0              |
 | 更新               | ✔          | 2.0              |
 | 删除               | ✔          | 2.0              |

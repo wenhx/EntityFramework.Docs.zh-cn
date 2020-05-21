@@ -1,22 +1,20 @@
 ---
-title: EF Core 测试示例-EF Core
-description: 示例演示如何测试使用 EF Core 的应用程序
-author: ajcvickers
-ms.date: 04/22/2020
-uid: core/miscellaneous/testing/testing-sample
+title: ''
+description: ''
+author: ''
+ms.date: ''
+uid: ''
 no-loc:
 - Item
 - Tag
 - Items
 - Tags
-- items
-- tags
-ms.openlocfilehash: dda7191df7646aa06aab51d8d7891bd0ba155674
-ms.sourcegitcommit: 79e460f76b6664e1da5886d102bd97f651d2ffff
+ms.openlocfilehash: ae073fc0b3a99fb9de07a3e0a42c638fe0838a5a
+ms.sourcegitcommit: 59e3d5ce7dfb284457cf1c991091683b2d1afe9d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "82564258"
+ms.lasthandoff: 05/20/2020
+ms.locfileid: "83672814"
 ---
 # <a name="ef-core-testing-sample"></a>EF Core 测试示例
 
@@ -34,13 +32,13 @@ ms.locfileid: "82564258"
 
 ### <a name="the-model-and-business-rules"></a>模型和业务规则
 
-此 API 支持以下两种实体类型： Items和。 Tags
+此 API 支持以下两种实体类型： Items 和 Tags 。
 
-* Items具有区分大小写的名称和的Tags集合。
-* 每Tag个都有一个标签和一个计数，表示它应用到的Item次数。
-* 每Item个仅应有一个Tag具有给定标签的。
+* Items具有区分大小写的名称和的集合 Tags 。
+* 每个 Tag 都有一个标签和一个计数，表示它应用到的次数 Item 。
+* 每个 Item 仅应有一个 Tag 具有给定标签的。
   * 如果多次用相同标签标记项，则会增加带有该标签的现有标记的计数，而不会增加正在创建的新标记。 
-* 删除将Item删除所有关联Tags的。
+* 删除将 Item 删除所有关联的 Tags 。
 
 #### <a name="the-item-entity-type"></a>Item实体类型
 
@@ -48,22 +46,22 @@ ms.locfileid: "82564258"
 
 [!code-csharp[ItemEntityType](../../../../samples/core/Miscellaneous/Testing/ItemsWebApi/ItemsWebApi/Item.cs?name=ItemEntityType)]
 
-及其在中`DbContext.OnModelCreating`的配置：
+及其在中的配置 `DbContext.OnModelCreating` ：
 
 [!code-csharp[ConfigureItem](../../../../samples/core/Miscellaneous/Testing/ItemsWebApi/ItemsWebApi/ItemsContext.cs?name=ConfigureItem)]
 
 请注意，实体类型限制了它可用于反映域模型和业务规则的方式。 具体而言：
-- 主键直接映射到`_id`字段，而不公开公开
+- 主键直接映射到 `_id` 字段，而不公开公开
   - EF 检测并使用接受主键值和名称的私有构造函数。
-- 此`Name`属性是只读的，仅在构造函数中设置。 
-- Tags公开为`IReadOnlyList<Tag>`以防止任意修改。
-  - EF 通过匹配`Tags`属性的名称`_tags`将属性与支持字段相关联。 
+- 此 `Name` 属性是只读的，仅在构造函数中设置。 
+- Tags公开为 `IReadOnlyList<Tag>` 以防止任意修改。
+  - EF `Tags` 通过匹配属性的名称将属性与 `_tags` 支持字段相关联。 
   - `AddTag`方法采用标签标签，并实现上面所述的业务规则。
     也就是说，只为新标签添加了标记。
     否则，现有标签上的计数将增加。
-- 为`Tags`多对一关系配置导航属性
-  - 不需要从Tag到Item的导航属性，因此不包含。
-  - 此外， Tag不会定义外键属性。
+- 为 `Tags` 多对一关系配置导航属性
+  - 不需要从到的导航属性 Tag Item ，因此不包含。
+  - 此外，不 Tag 会定义外键属性。
     EF 将创建和管理卷影状态中的属性。
 
 #### <a name="the-tag-entity-type"></a>Tag实体类型
@@ -72,32 +70,32 @@ ms.locfileid: "82564258"
 
 [!code-csharp[TagEntityType](../../../../samples/core/Miscellaneous/Testing/ItemsWebApi/ItemsWebApi/Tag.cs?name=TagEntityType)]
 
-及其在中`DbContext.OnModelCreating`的配置：
+及其在中的配置 `DbContext.OnModelCreating` ：
 
 [!code-csharp[ConfigureTag](../../../../samples/core/Miscellaneous/Testing/ItemsWebApi/ItemsWebApi/ItemsContext.cs?name=ConfigureTag)]
 
-与Item类似， Tag隐藏其主键并使属性成为`Label`只读的。
+与类似 Item ， Tag 隐藏其主键并使属性成为 `Label` 只读的。
 
 ### <a name="the-itemscontroller"></a>ItemsController
 
 Web API 控制器非常基本。
-它通过构造`DbContext`函数注入从依赖关系注入容器中获取：
+它 `DbContext` 通过构造函数注入从依赖关系注入容器中获取：
 
 [!code-csharp[Constructor](../../../../samples/core/Miscellaneous/Testing/ItemsWebApi/ItemsWebApi/Controllers/ItemsController.cs?name=Constructor)]
 
-它具有获取所有Items或Item具有给定名称的方法：
+它具有获取所有 Items 或 Item 具有给定名称的方法：
 
 [!code-csharp[Get](../../../../samples/core/Miscellaneous/Testing/ItemsWebApi/ItemsWebApi/Controllers/ItemsController.cs?name=Get)]
 
-它有一个用于添加新Item的方法：
+它有一个用于添加新的方法 Item ：
 
 [!code-csharp[PostItem](../../../../samples/core/Miscellaneous/Testing/ItemsWebApi/ItemsWebApi/Controllers/ItemsController.cs?name=PostItem)]
 
-用标签标记的Item方法：
+用标签标记的方法 Item ：
 
 [!code-csharp[PostTag](../../../../samples/core/Miscellaneous/Testing/ItemsWebApi/ItemsWebApi/Controllers/ItemsController.cs?name=PostTag)]
 
-以及用于删除Item和全部关联Tags的方法：
+以及用于删除 Item 和全部关联的方法 Tags ：
 
 [!code-csharp[DeleteItem](../../../../samples/core/Miscellaneous/Testing/ItemsWebApi/ItemsWebApi/Controllers/ItemsController.cs?name=DeleteItem)]
 
@@ -132,7 +130,7 @@ Web API 控制器非常基本。
 
 > [!TIP]
 > 此示例将重新创建每个测试的数据库。
-> 这适用于 SQLite 和 EF 内存中数据库测试，但可能会导致与其他数据库系统（包括 SQL Server）的开销巨大。
+> 这适用于 SQLite 和 EF 内存中数据库测试，但会涉及到与其他数据库系统（包括 SQL Server）的巨大开销。
 > [跨测试共享数据库](xref:core/miscellaneous/testing/sharing-databases)中介绍了降低此开销的方法。
 
 运行每个测试时：
@@ -153,18 +151,18 @@ Web API 控制器非常基本。
 
 即使应用程序使用依赖关系注入，测试也不是这样。
 在此处使用依赖项注入会很好，但它需要的附加代码却没有什么价值。
-而是使用`new`创建 DbContext，然后直接作为依赖关系传递到控制器。
+而是使用创建 DbContext， `new` 然后直接作为依赖关系传递到控制器。
 
 然后，每个测试在控制器上执行受测方法，并断言结果与预期结果相同。
 例如：
 
 [!code-csharp[CanGetItems](../../../../samples/core/Miscellaneous/Testing/ItemsWebApi/Tests/ItemsControllerTest.cs?name=CanGetItems)]
 
-请注意，不同的 DbContext 实例用于对数据库进行种子设定并运行测试。 这可确保在进行种子设定时测试不会使用（或正在转移）上下文所跟踪的实体。
+请注意，不同的 DbContext 实例用于对数据库进行种子设定并运行测试。 这可确保在进行种子设定时测试不使用（或正在转移）上下文所跟踪的实体。
 它还更适合于 web 应用和服务中发生的情况。
 
 用于改变数据库的测试在测试中创建第二个 DbContext 实例，原因类似。
-也就是说，创建新的、干净的上下文，然后从数据库中读取该数据库，以确保所做的更改确实已保存到数据库中。 例如：
+也就是说，创建新的、干净的上下文，然后从数据库中读取该数据库，以确保将更改保存到数据库中。 例如：
 
 [!code-csharp[CanAddItem](../../../../samples/core/Miscellaneous/Testing/ItemsWebApi/Tests/ItemsControllerTest.cs?name=CanAddItem)]
 
@@ -180,9 +178,9 @@ Web API 控制器非常基本。
 它们在[测试使用 EF Core 的代码](xref:core/miscellaneous/testing/index)的概念级别中进行了介绍。  
 以下部分介绍了本示例中的测试演示的两个问题示例。
 
-### <a name="test-passes-when-application-is-broken"></a>应用程序中断时的测试通过
+### <a name="test-passes-when-the-application-is-broken"></a>应用程序中断时的测试通过
 
-应用程序的要求之一是 "Items具有区分大小写的名称和集合"。 Tags
+应用程序的要求之一是 " Items 具有区分大小写的名称和集合 Tags "。
 这非常简单，可以测试：
 
 [!code-csharp[CanAddItemCaseInsensitive](../../../../samples/core/Miscellaneous/Testing/ItemsWebApi/Tests/ItemsControllerTest.cs?name=CanAddItemCaseInsensitive)]
@@ -209,9 +207,9 @@ System.InvalidOperationException : Sequence contains more than one element
 知道这是一个问题，我们可以修复应用程序并在测试中进行补偿。
 但是，此处的要点是，如果仅通过 EF 内存中数据库或 SQLite 提供程序进行测试，则可能会丢失此 bug。
 
-### <a name="test-fails-when-application-is-correct"></a>当应用程序正确时测试失败 
+### <a name="test-fails-when-the-application-is-correct"></a>当应用程序正确时测试失败 
 
-对于我们的应用程序的另一个要求是，"删除Item应删除所有关联Tags的"。
+我们的应用程序的另一个要求是 "删除" Item 应删除所有关联的 Tags 。 "
 同样，易于测试：
 
 [!code-csharp[DeleteItem](../../../../samples/core/Miscellaneous/Testing/ItemsWebApi/Tests/ItemsControllerTest.cs?name=DeleteItem)]

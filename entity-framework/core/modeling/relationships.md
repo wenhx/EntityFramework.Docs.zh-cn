@@ -4,12 +4,12 @@ description: 如何在使用 Entity Framework Core 时配置实体类型之间�
 author: AndriySvyryd
 ms.date: 11/21/2019
 uid: core/modeling/relationships
-ms.openlocfilehash: 6d68e813cec6c989e8e4cb848f8740489645c65c
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.openlocfilehash: 8d3df109f34c2a77305db1e2be2eea1694d7ad6b
+ms.sourcegitcommit: 59e3d5ce7dfb284457cf1c991091683b2d1afe9d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/15/2020
-ms.locfileid: "79402113"
+ms.lasthandoff: 05/20/2020
+ms.locfileid: "83672763"
 ---
 # <a name="relationships"></a>关系
 
@@ -40,27 +40,27 @@ ms.locfileid: "79402113"
   
 * **自引用关系：** 依赖关系和主体实体类型相同的关系。
 
-下面的代码显示 `Blog` 与 `Post` 之间的一对多关系。
+下面的代码显示与之间的一对多关系 `Blog``Post`
 
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/Full.cs#Full)]
 
-* `Post` 是依赖实体
+* `Post`是依赖实体
 
-* `Blog` 是主体实体
+* `Blog`是主体实体
 
-* `Blog.BlogId` 是主体键（在本例中为主键而不是备用密钥）
+* `Blog.BlogId`是主体键（在本例中为主密钥，而不是备用密钥）
 
-* `Post.BlogId` 为外键
+* `Post.BlogId`为外键
 
-* `Post.Blog` 是一个引用导航属性
+* `Post.Blog`是一个引用导航属性
 
-* `Blog.Posts` 是集合导航属性
+* `Blog.Posts`是集合导航属性
 
-* `Post.Blog` 是 `Blog.Posts` 的反向导航属性（反之亦然）
+* `Post.Blog`是的反向导航属性 `Blog.Posts` （反之亦然）
 
 ## <a name="conventions"></a>约定
 
-默认情况下，当在某个类型上发现导航属性时，将创建一个关系。 如果属性指向的类型不能由当前的数据库提供程序映射为标量类型，则该属性视为一个导航属性。
+默认情况下，当在某个类型上发现导航属性时，将创建一个关系。 如果当前数据库提供程序无法将其指向的类型映射为标量类型，则该属性被视为导航属性。
 
 > [!NOTE]  
 > 按约定发现的关系将始终以主体实体的主键为目标。 若要以备用密钥为目标，则必须使用熟知的 API 执行其他配置。
@@ -89,11 +89,11 @@ ms.locfileid: "79402113"
 
 ### <a name="no-foreign-key-property"></a>无外键属性
 
-尽管建议在依赖实体类中定义外键属性，但这并不是必需的。 如果未找到外键属性，则会引入名称为 `<navigation property name><principal key property name>` 或 `<principal entity name><principal key property name>` 的[阴影外键属性](shadow-properties.md)（如果依赖类型上没有导航）。
+尽管建议在依赖实体类中定义外键属性，但这并不是必需的。 如果未找到外键属性，则会使用名称引入[阴影外键属性](shadow-properties.md)， `<navigation property name><principal key property name>` `<principal entity name><principal key property name>` 如果依赖类型上没有导航，则为。
 
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/NoForeignKey.cs?name=NoForeignKey&highlight=6,15)]
 
-在此示例中，隐藏外键是 `BlogId` 的，因为预先计算导航名称将是冗余的。
+在此示例中，阴影外键是 `BlogId` 因为预先计算导航名称将是冗余的。
 
 > [!NOTE]
 > 如果已存在具有相同名称的属性，则会以数字作为后缀的阴影属性名称。
@@ -118,13 +118,13 @@ ms.locfileid: "79402113"
 
 ## <a name="manual-configuration"></a>手动配置
 
-### <a name="fluent-api"></a>[熟知 API](#tab/fluent-api)
+### <a name="fluent-api"></a>[Fluent API](#tab/fluent-api)
 
-若要在熟知的 API 中配置关系，请首先标识构成关系的导航属性。 `HasOne` 或 `HasMany` 标识正在开始配置的实体类型上的导航属性。 然后，将调用链接到 `WithOne` 或 `WithMany` 来标识反向导航。 `HasOne`/`WithOne` 用于引用导航属性，`HasMany`/用于集合导航属性。`WithMany`
+若要在熟知的 API 中配置关系，请首先标识构成关系的导航属性。 `HasOne`或 `HasMany` 标识要开始配置的实体类型上的导航属性。 然后，将调用链接到 `WithOne` 或 `WithMany` 以标识反向导航。 `HasOne`/`WithOne`用于引用导航属性，用于 `HasMany` / `WithMany` 集合导航属性。
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/NoForeignKey.cs?name=NoForeignKey&highlight=8-10)]
 
-### <a name="data-annotations"></a>[数据批注](#tab/data-annotations)
+### <a name="data-annotations"></a>[数据注释](#tab/data-annotations)
 
 您可以使用数据批注来配置依赖项和主体实体上的导航属性如何配对。 这通常在两个实体类型之间存在多个导航属性对时执行。
 
@@ -134,15 +134,25 @@ ms.locfileid: "79402113"
 > 只能在依赖实体上的属性上使用 [Required] 来影响关系的 requiredness。 [必需] 在主体实体的导航中通常会忽略，但这可能会导致实体成为依赖实体。
 
 > [!NOTE]
-> 数据批注 `[ForeignKey]` 和 `[InverseProperty]` 在 `System.ComponentModel.DataAnnotations.Schema` 命名空间中可用。 `[Required]` 在 `System.ComponentModel.DataAnnotations` 命名空间中可用。
+> 数据批注 `[ForeignKey]` 和 `[InverseProperty]` 在命名空间中可用 `System.ComponentModel.DataAnnotations.Schema` 。 `[Required]`在 `System.ComponentModel.DataAnnotations` 命名空间中可用。
 
 ---
 
 ### <a name="single-navigation-property"></a>单个导航属性
 
-如果只有一个导航属性，则 `WithOne` 和 `WithMany`有无参数重载。 这表示在概念上，关系的另一端有一个引用或集合，但实体类中不包含导航属性。
+如果只有一个导航属性，则和的无参数重载 `WithOne` `WithMany` 。 这表示在概念上，关系的另一端有一个引用或集合，但实体类中不包含导航属性。
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/OneNavigation.cs?name=OneNavigation&highlight=8-10)]
+
+---
+
+### <a name="configuring-navigation-properties"></a>配置导航属性
+
+创建导航属性后，你可能需要对其进行进一步配置。 在 EFCore 5.0 中添加了新的流畅 API，以允许执行该配置。
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/NavigationConfiguration.cs?name=NavigationConfiguration&highlight=7-9)]
+
+[!NOTE] 此调用不能用于创建导航属性。 它仅用于配置导航属性，该属性以前是通过定义关系或从约定创建的。
 
 ### <a name="foreign-key"></a>外键
 
@@ -165,22 +175,22 @@ ms.locfileid: "79402113"
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Relationships/ForeignKey.cs?name=ForeignKey&highlight=17)]
 
 > [!TIP]  
-> 可以将 `[ForeignKey]` 批注放置在关系中的任一导航属性上。 它不需要在依赖实体类中定位导航属性。
+> `[ForeignKey]`批注可放置在关系中的任一导航属性上。 它不需要在依赖实体类中定位导航属性。
 
 > [!NOTE]
-> 使用导航属性 `[ForeignKey]` 指定的属性不需要存在于依赖类型中。 在这种情况下，将使用指定的名称创建阴影外键。
+> `[ForeignKey]`在导航属性上使用指定的属性不需要存在于依赖类型中。 在这种情况下，将使用指定的名称创建阴影外键。
 
 ---
 
 #### <a name="shadow-foreign-key"></a>影子外键
 
-您可以使用 `HasForeignKey(...)` 的字符串重载将影子属性配置为外键（有关详细信息，请参阅[影子属性](shadow-properties.md)）。 建议先将影子属性显式添加到模型，然后再将其用作外键（如下所示）。
+您可以使用的字符串重载将 `HasForeignKey(...)` 影子属性配置为外键（有关详细信息，请参阅[影子属性](shadow-properties.md)）。 建议先将影子属性显式添加到模型，然后再将其用作外键（如下所示）。
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ShadowForeignKey.cs?name=ShadowForeignKey&highlight=10,16)]
 
 #### <a name="foreign-key-constraint-name"></a>Foreign key 约束名称
 
-按照约定，以关系数据库为目标时，外键约束将命名 FK_<dependent type name> _<principal type name>_ <foreign key property name>。 对于复合外键 <foreign key property name> 成为外键属性名称的以下划线分隔的列表。
+按照约定，在面向关系数据库时，外键约束命名为 FK_ <dependent type name> _<principal type name>_ <foreign key property name> 。 对于复合外键， <foreign key property name> 将成为外键属性名称的下划线分隔列表。
 
 你还可以配置约束名称，如下所示：
 
@@ -216,7 +226,7 @@ ms.locfileid: "79402113"
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/Required.cs?name=Required&highlight=6)]
 
 > [!NOTE]
-> 调用 `IsRequired(false)` 还会使外键属性为可选，除非已对其进行配置。
+> `IsRequired(false)`如果未配置，则调用还会使外键属性为可选。
 
 ### <a name="cascade-delete"></a>级联删除
 
@@ -237,9 +247,9 @@ ms.locfileid: "79402113"
 > [!NOTE]  
 > EF 会根据其检测外键属性的能力，选择其中一个实体作为依赖项。 如果选择了错误的实体作为依赖项，则可以使用熟知的 API 来更正此问题。
 
-使用熟知 API 配置关系时，可使用 `HasOne` 和 `WithOne` 方法。
+使用 "流畅" API 配置关系时，请使用 `HasOne` 和 `WithOne` 方法。
 
-配置外键时，需要指定依赖实体类型-请注意以下列表中 `HasForeignKey` 提供的泛型参数。 在一对多关系中，可以清楚地表明具有引用导航的实体是依赖项，并且具有集合的实体是主体。 但这并不是一对一的关系，因此需要显式定义它。
+配置外键时，需要指定依赖实体类型-请注意以下列表中提供的泛型参数 `HasForeignKey` 。 在一对多关系中，可以清楚地表明具有引用导航的实体是依赖项，并且具有集合的实体是主体。 但这并不是一对一的关系，因此需要显式定义它。
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/OneToOne.cs?name=OneToOne&highlight=11)]
 
