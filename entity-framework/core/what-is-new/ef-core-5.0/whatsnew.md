@@ -2,14 +2,14 @@
 title: EF Core 5.0 中的新增功能
 description: EF Core 5.0 中的新功能概述
 author: ajcvickers
-ms.date: 03/30/2020
+ms.date: 05/11/2020
 uid: core/what-is-new/ef-core-5.0/whatsnew.md
-ms.openlocfilehash: c902988920e3b1a6039808fe0658fc19dee2728a
-ms.sourcegitcommit: 387cbd8109c0fc5ce6bdc85d0dec1aed72ad4c33
+ms.openlocfilehash: fcb2eb8df99a06eaf3459835347a4027a363b86b
+ms.sourcegitcommit: 59e3d5ce7dfb284457cf1c991091683b2d1afe9d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/23/2020
-ms.locfileid: "82103069"
+ms.lasthandoff: 05/20/2020
+ms.locfileid: "83672850"
 ---
 # <a name="whats-new-in-ef-core-50"></a>EF Core 5.0 中的新增功能
 
@@ -20,6 +20,38 @@ EF Core 5.0 目前正在开发中。
 计划中介绍了 EF Core 5.0 的整体主题，其中包括我们在交付最终版本之前打算包含的所有内容。
 
 发布时，我们会将此处的链接添加到官方文档。
+
+## <a name="preview-4"></a>预览版 4
+
+### <a name="configure-database-precisionscale-in-model"></a>在模型中配置数据库精度/小数位数
+
+现在，可以使用模型生成器指定属性的精度和小数位数。
+例如：
+
+```CSharp
+modelBuilder
+    .Entity<Blog>()
+    .Property(b => b.Numeric)
+    .HasPrecision(16, 4);
+```
+
+还可以通过完整的数据库类型（如“decimal(16,4)”）设置精度和小数位数。 
+
+文档可通过问题 [#527](https://github.com/dotnet/EntityFramework.Docs/issues/527) 进行跟踪。
+
+### <a name="specify-sql-server-index-fill-factor"></a>指定 SQL Server 索引填充因子
+
+现在可以在 SQL Server 上创建索引时指定填充因子。
+例如：
+
+```CSharp
+modelBuilder
+    .Entity<Customer>()
+    .HasIndex(e => e.Name)
+    .HasFillFactor(90);
+```
+
+文档可通过问题 [#2378](https://github.com/dotnet/EntityFramework.Docs/issues/2378) 进行跟踪。
 
 ## <a name="preview-3"></a>预览版 3
 
@@ -61,7 +93,7 @@ modelBuilder.Entity<Blog>().Navigation(e => e.Posts).HasField("_myposts");
 请注意：`Navigation` API 不会替换关系配置。
 但是，它允许在已发现或定义的关系中进行其他导航属性配置。
 
-文档可通过问题 [#2302](https://github.com/dotnet/EntityFramework.Docs/issues/2302) 进行跟踪。
+请参阅[配置导航属性文档](xref:core/modeling/relationships#configuring-navigation-properties)。
 
 ### <a name="new-command-line-parameters-for-namespaces-and-connection-strings"></a>用于命名空间和连接字符串的新命令行参数 
 
@@ -72,15 +104,18 @@ modelBuilder.Entity<Blog>().Navigation(e => e.Posts).HasField("_myposts");
 dotnet ef dbcontext scaffold "connection string" Microsoft.EntityFrameworkCore.SqlServer --context-namespace "My.Context" --namespace "My.Model"
 ```
 
+有关完整详细信息，请参阅[迁移](xref:core/managing-schemas/migrations/index#namespaces)和[反向工程](xref:core/managing-schemas/scaffolding#directories-and-namespaces)文档。
+
+---
 此外，连接字符串现在可以传递到 `database-update` 命令：
 
 ```
 dotnet ef database update --connection "connection string"
 ```
 
-等效参数已添加到 VS 程序包管理器控制台中使用的 PowerShell 命令中。
+有关完整的详细信息，请参阅[工具文档](xref:core/miscellaneous/cli/dotnet#dotnet-ef-database-update)。
 
-文档可通过问题 [#2303](https://github.com/dotnet/EntityFramework.Docs/issues/2303) 进行跟踪。
+等效参数已添加到 VS 程序包管理器控制台中使用的 PowerShell 命令中。
 
 ### <a name="enabledetailederrors-has-returned"></a>EnableDetailedErrors 已返回
 

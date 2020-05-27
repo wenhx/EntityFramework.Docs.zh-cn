@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/20/2018
 ms.assetid: 2CB5809E-0EFB-44F6-AF14-9D5BFFFBFF9D
 uid: core/what-is-new/ef-core-2.0
-ms.openlocfilehash: 83f6b819409d502dba17a678d44a0746a4a77f4b
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: a3e066056fc67031060920f5f7763007bdc1d2d3
+ms.sourcegitcommit: 59e3d5ce7dfb284457cf1c991091683b2d1afe9d
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "78413575"
+ms.lasthandoff: 05/20/2020
+ms.locfileid: "83672881"
 ---
 # <a name="new-features-in-ef-core-20"></a>EF Core 2.0 中的新增功能
 
@@ -133,7 +133,7 @@ var query =
     select p;
 ```
 
-需要注意的若干事项：
+需要注意以下事项：
 
 - 依照约定，方法名称在生成 SQL 时会用作函数（此情况下为用户定义的函数）名称，但是你可以在方法注册期间替代名称和架构。
 - 当前仅支持标量函数。
@@ -141,7 +141,7 @@ var query =
 
 ### <a name="self-contained-type-configuration-for-code-first"></a>Code First 的自包含类型配置
 
-在 EF6 中可以通过从 EntityTypeConfiguration 派生来封装特定实体类型的 Code First 配置  。 我们在 EF Core 2.0 中重新添加了此模式：
+在 EF6 中可以通过从 EntityTypeConfiguration 派生来封装特定实体类型的 Code First 配置。 我们在 EF Core 2.0 中重新添加了此模式：
 
 ``` csharp
 class CustomerConfiguration : IEntityTypeConfiguration<Customer>
@@ -225,7 +225,7 @@ EF Core 支持通过多种机制自动生成键值。 使用此功能时，如�
 
 C# 6 引入了字符串内插功能，此功能允许将 C# 表达式直接嵌入字符串文本，从而提供了一种很适合在运行时生成字符串的方法。 在 EF Core 2.0 中，我们为两个主要 API 添加了对内插字符串的特殊支持，这两个 API 用于接收原始 SQL 字符串：`FromSql` 和 `ExecuteSqlCommand`。 这项新支持允许以“安全”方式使用 C# 字符串内插。 即，采用此方式可防止在运行时动态构造 SQL 时可能发生的常见 SQL 注入错误。
 
-以下是示例：
+下面是一个示例：
 
 ``` csharp
 var city = "London";
@@ -272,7 +272,7 @@ var aCustomers =
 
 ### <a name="pluralization-hook-for-dbcontext-scaffolding"></a>DbContext 基架的复数化挂钩
 
-EF Core 2.0 引入了一种新的 IPluralizer 服务，用于单数化实体类型名称和复数化 DbSet 名称  。 默认实现为 no-op，因此这仅仅是开发人员可轻松插入自己的复数化程序的挂钩。
+EF Core 2.0 引入了一种新的 IPluralizer 服务，用于单数化实体类型名称和复数化 DbSet 名称。 默认实现为 no-op，因此这仅仅是开发人员可轻松插入自己的复数化程序的挂钩。
 
 下面是开发人员挂入自己的复数化程序的示例：
 
