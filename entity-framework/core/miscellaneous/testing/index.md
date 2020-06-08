@@ -4,12 +4,12 @@ description: 测试使用 EF Core 的应用程序的不同方法
 author: ajcvickers
 ms.date: 04/22/2020
 uid: core/miscellaneous/testing/index
-ms.openlocfilehash: 415769e9c3c664ce49c9308740d39a65a10807ba
-ms.sourcegitcommit: 59e3d5ce7dfb284457cf1c991091683b2d1afe9d
+ms.openlocfilehash: a5ff85a60af1f56a0924d6fa0646195146a6827e
+ms.sourcegitcommit: 1f0f93c66b2b50e03fcbed90260e94faa0279c46
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/20/2020
-ms.locfileid: "83672898"
+ms.lasthandoff: 06/04/2020
+ms.locfileid: "84418905"
 ---
 # <a name="testing-code-that-uses-ef-core"></a>测试使用 EF Core 的代码
 
@@ -93,8 +93,10 @@ SQLite 是不错的选择，因为：
 
 EF Core 附带了内存中数据库，用于对 EF Core 本身进行内部测试。
 此数据库一般不适合用于测试使用 EF Core 的应用程序。 尤其是在下列情况下：
+
 * 它不是关系数据库。
 * 它不支持事务。
+* 它无法运行原始 SQL 查询。
 * 它未针对性能进行优化。
 
 在测试 EF Core 内部机制时，这些都不重要，因为我们只在数据库与测试不相关时才会使用它。

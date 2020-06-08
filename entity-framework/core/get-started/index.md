@@ -4,12 +4,12 @@ author: rick-anderson
 ms.date: 09/17/2019
 ms.assetid: 3c88427c-20c6-42ec-a736-22d3eccd5071
 uid: core/get-started/index
-ms.openlocfilehash: 7ace80bf326395d3b68f3e745100cd45356d7973
-ms.sourcegitcommit: 144edccf9b29a7ffad119c235ac9808ec1a46193
+ms.openlocfilehash: b45a7e5010dd3ef37ea952aaf483847ae95ea4ef
+ms.sourcegitcommit: 1f0f93c66b2b50e03fcbed90260e94faa0279c46
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/16/2020
-ms.locfileid: "81434092"
+ms.lasthandoff: 06/04/2020
+ms.locfileid: "84418933"
 ---
 # <a name="getting-started-with-ef-core"></a>EF Core 入门
 
@@ -30,7 +30,7 @@ ms.locfileid: "81434092"
 ### <a name="visual-studio"></a>[Visual Studio](#tab/visual-studio)
 
 * 对于此工作负载，建议采用 [Visual Studio 2019 版本 16.3 或更高版本](https://www.visualstudio.com/downloads/)：
-  * “.NET Core 跨平台开发”  （位于“其他工具集”  下）
+  * “.NET Core 跨平台开发”（位于“其他工具集”下）
 
 ---
 
@@ -46,9 +46,9 @@ cd EFGetStarted
 ### <a name="visual-studio"></a>[Visual Studio](#tab/visual-studio)
 
 * 打开 Visual Studio
-* 单击“创建新项目” 
-* 选择带有 C# 标记的“控制台应用 (.NET Core)”   ，然后单击“下一步” 
-* 输入“EFGetStarted”  作为名称，然后单击“创建” 
+* 单击“创建新项目”
+* 选择带有 C# 标记的“控制台应用 (.NET Core)” ，然后单击“下一步”
+* 输入“EFGetStarted”作为名称，然后单击“创建”
 
 ---
 
@@ -64,14 +64,14 @@ dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 
 ### <a name="visual-studio"></a>[Visual Studio](#tab/visual-studio)
 
-*  “工具”>“NuGet 包管理器”>“包管理器控制台”
+* “工具”>“NuGet 包管理器”>“包管理器控制台”
 * 运行以下命令：
 
   ``` PowerShell
   Install-Package Microsoft.EntityFrameworkCore.Sqlite
   ```
 
-提示:还可以通过右键单击项目并选择“管理 NuGet 程序包”  来安装包
+提示:还可以通过右键单击项目并选择“管理 NuGet 程序包”来安装包
 
 ---
 
@@ -81,12 +81,12 @@ dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 
 ### <a name="net-core-cli"></a>[.NET Core CLI](#tab/netcore-cli)
 
-* 在项目文件夹中，使用以下代码创建 Model.cs 
+* 在项目文件夹中，使用以下代码创建 Model.cs
 
 ### <a name="visual-studio"></a>[Visual Studio](#tab/visual-studio)
 
-* 右键单击项目，然后选择“添加”>“类” 
-* 输入“Model.cs”  作为名称，然后单击“添加” 
+* 右键单击项目，然后选择“添加”>“类”
+* 输入“Model.cs”作为名称，然后单击“添加”
 * 将此文件的内容替换为以下代码
 
 ---
@@ -116,7 +116,7 @@ EF Core 还可以从现有数据库对模型进行[反向工程](../managing-sch
 
 ### <a name="visual-studio"></a>[Visual Studio](#tab/visual-studio)
 
-* 在“包管理器控制台”  中运行以下命令
+* 在“包管理器控制台”中运行以下命令
 
   ``` PowerShell
   Install-Package Microsoft.EntityFrameworkCore.Tools
@@ -130,7 +130,7 @@ EF Core 还可以从现有数据库对模型进行[反向工程](../managing-sch
 
 ## <a name="create-read-update--delete"></a>创建、读取、更新和删除
 
-* 打开 Program.cs  并将内容替换为以下代码：
+* 打开 Program.cs 并将内容替换为以下代码：
 
   [!code-csharp[Main](../../../samples/core/GetStarted/Program.cs)]
 
@@ -146,8 +146,8 @@ dotnet run
 
 运行 .NET Core 控制台应用时，Visual Studio 使用不一致的工作目录。 （请参阅 [dotnet/project-system#3619](https://github.com/dotnet/project-system/issues/3619)）这会导致引发异常：*无此类表格：博客*。 更新工作目录：
 
-* 右键单击项目，并选择“编辑项目文件” 
-* 在 TargetFramework  属性下方，添加以下内容：
+* 右键单击项目，并选择“编辑项目文件”
+* 在 TargetFramework 属性下方，添加以下内容：
 
   ``` XML
   <StartWorkingDirectory>$(MSBuildProjectDirectory)</StartWorkingDirectory>
@@ -157,7 +157,7 @@ dotnet run
 
 现在可以运行应用：
 
-* “调试”>“开始执行(不调试)” 
+* “调试”>“开始执行(不调试)”
 
 ---
 
