@@ -4,12 +4,12 @@ description: 使用值比较器来控制 EF Core 比较属性值的方式
 author: ajcvickers
 ms.date: 03/20/2020
 uid: core/modeling/value-comparers
-ms.openlocfilehash: 9dfed7b7ef8163f4f5c94a0c81c510807c53c13d
-ms.sourcegitcommit: c3b8386071d64953ee68788ef9d951144881a6ab
+ms.openlocfilehash: 9e33bfb840606b746626daa1da7331904b495ab4
+ms.sourcegitcommit: 92d54fe3702e0c92e198334da22bacb42e9842b1
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/24/2020
-ms.locfileid: "80148255"
+ms.lasthandoff: 06/10/2020
+ms.locfileid: "84664112"
 ---
 # <a name="value-comparers"></a>值比较器
 
@@ -94,7 +94,7 @@ EF Core 提供对结构属性的编译按成员比较的内置支持。
 
 [!code-csharp[ListProperty](../../../samples/core/Modeling/ValueConversions/MappingListProperty.cs?name=ListProperty)]
 
-[`List<T>` 类](/dotnet/api/system.collections.generic.list-1?view=netstandard-2.1)：
+[ `List<T>` 类](/dotnet/api/system.collections.generic.list-1?view=netstandard-2.1)：
 * 具有引用相等性;包含相同值的两个列表被视为不同的。
 * 可变;可以添加和删除列表中的值。
 
@@ -102,7 +102,7 @@ EF Core 提供对结构属性的编译按成员比较的内置支持。
 
 [!code-csharp[ConfigureListProperty](../../../samples/core/Modeling/ValueConversions/MappingListProperty.cs?name=ConfigureListProperty)]
 
-这需要对属性设置 `ValueComparer<T>`，以强制 EF Core 在此转换中使用正确的比较：
+这需要 `ValueComparer<T>` 在属性上设置，以强制 EF Core 在此转换中使用正确的比较：
 
 [!code-csharp[ConfigureListPropertyComparer](../../../samples/core/Modeling/ValueConversions/MappingListProperty.cs?name=ConfigureListPropertyComparer)]
 
@@ -110,8 +110,8 @@ EF Core 提供对结构属性的编译按成员比较的内置支持。
 > 用于设置值比较器的模型生成器（"熟知"） API 尚未实现。
 > 相反，上面的代码会对生成器作为 "Metadata" 公开的低级 IMutableProperty 调用 SetValueComparer。
 
-`ValueComparer<T>` 构造函数接受三个表达式：
-* 用于检查质量的表达式
+`ValueComparer<T>`构造函数接受三个表达式：
+* 用于检查相等性的表达式
 * 用于生成哈希代码的表达式
 * 用于对值进行快照的表达式  
 

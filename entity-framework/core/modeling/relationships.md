@@ -4,12 +4,12 @@ description: 如何在使用 Entity Framework Core 时配置实体类型之间�
 author: AndriySvyryd
 ms.date: 11/21/2019
 uid: core/modeling/relationships
-ms.openlocfilehash: 8d3df109f34c2a77305db1e2be2eea1694d7ad6b
-ms.sourcegitcommit: 59e3d5ce7dfb284457cf1c991091683b2d1afe9d
+ms.openlocfilehash: 3ed25b752970cf0f55d38f1ce5b8383f1c90edc3
+ms.sourcegitcommit: 92d54fe3702e0c92e198334da22bacb42e9842b1
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/20/2020
-ms.locfileid: "83672763"
+ms.lasthandoff: 06/10/2020
+ms.locfileid: "84664138"
 ---
 # <a name="relationships"></a>关系
 
@@ -152,7 +152,8 @@ ms.locfileid: "83672763"
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/NavigationConfiguration.cs?name=NavigationConfiguration&highlight=7-9)]
 
-[!NOTE] 此调用不能用于创建导航属性。 它仅用于配置导航属性，该属性以前是通过定义关系或从约定创建的。
+> [!NOTE]
+> 此调用不能用于创建导航属性。 它仅用于配置导航属性，该属性以前是通过定义关系或从约定创建的。
 
 ### <a name="foreign-key"></a>外键
 
@@ -178,7 +179,7 @@ ms.locfileid: "83672763"
 > `[ForeignKey]`批注可放置在关系中的任一导航属性上。 它不需要在依赖实体类中定位导航属性。
 
 > [!NOTE]
-> `[ForeignKey]`在导航属性上使用指定的属性不需要存在于依赖类型中。 在这种情况下，将使用指定的名称创建阴影外键。
+> `[ForeignKey]`在导航属性上使用指定的属性不需要存在于依赖类型上。 在这种情况下，将使用指定的名称创建阴影外键。
 
 ---
 
