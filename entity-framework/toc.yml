@@ -31,6 +31,8 @@
                   href: core/what-is-new/ef-core-5.0/plan.md
                 - name: 新增功能
                   href: core/what-is-new/ef-core-5.0/whatsnew.md
+                - name: 重大更改
+                  href: core/what-is-new/ef-core-5.0/breaking-changes.md
             - name: EF Core 3.0
               items:
                 - name: 新增功能
@@ -87,6 +89,8 @@
               href: core/miscellaneous/configuring-dbcontext.md
             - name: 可为空引用类型
               href: core/miscellaneous/nullable-reference-types.md
+            - name: 排序规则和区分大小写
+              href: core/miscellaneous/collations-and-case-sensitivity.md
         - name: 创建模型
           items:
             - name: 概述
