@@ -4,12 +4,12 @@ author: ErikEJ
 ms.date: 04/11/2020
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 uid: core/extensions/index
-ms.openlocfilehash: 246cf687f2a087e9a9a569c875b27712ebe80c5c
-ms.sourcegitcommit: 79e460f76b6664e1da5886d102bd97f651d2ffff
+ms.openlocfilehash: 41bc403b586c9e67033d6db0dc4418510bc7b061
+ms.sourcegitcommit: 92d54fe3702e0c92e198334da22bacb42e9842b1
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/29/2020
-ms.locfileid: "82538337"
+ms.lasthandoff: 06/10/2020
+ms.locfileid: "84664177"
 ---
 # <a name="ef-core-tools--extensions"></a>EF Core 工具和扩展
 
@@ -183,7 +183,7 @@ Microsoft.EntityFrameworkCore 的一个插件，它支持存储库、工作模�
 - 完全支持使用 C# 创建查询：可在 lambda 表达式内使用多个语句，还可使用变量、函数等。
 - 与 SQL 之间不存在语义缺口。 XLinq 将 SQL 语句（如 `SELECT`、`FROM`、`WHERE`）声明为第一类 C# 方法，将熟悉的语法与 intellisense、类型安全性和重构结合起来。
 
-因此，SQL 成为了“又一个”本地公开其 API 的类库，可以说是“集成了语言的 SQL”  。
+因此，SQL 成为了“又一个”本地公开其 API 的类库，可以说是“集成了语言的 SQL”。
 
 [网站](http://xlinq.live/)
 
@@ -216,3 +216,11 @@ Entity Framework Core 3.1 的 LINQ 扩展，目的是支持 Microsoft SQL Server
 向 SQL Server EF Core 提供程序添加 hierarchyid 支持。 对于 EF Core：3.
 
 [GitHub 存储库](https://github.com/efcore/EFCore.SqlServer.HierarchyId)
+
+### <a name="linq2dbentityframeworkcore"></a>linq2db.EntityFrameworkCore
+
+将 LINQ 查询转换为 SQL 表达式的替换转换器。 对于 EF Core：3.
+
+现已开始支持高级 SQL 功能，如 CTE、大容量复制、表提示、窗口函数、临时表和数据库端创建/更新/删除操作。
+
+[GitHub 存储库](https://github.com/linq2db/linq2db.EntityFrameworkCore)
