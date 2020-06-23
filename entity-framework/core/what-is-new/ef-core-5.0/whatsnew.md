@@ -2,14 +2,14 @@
 title: EF Core 5.0 中的新增功能
 description: EF Core 5.0 中的新功能概述
 author: ajcvickers
-ms.date: 05/11/2020
+ms.date: 06/02/2020
 uid: core/what-is-new/ef-core-5.0/whatsnew.md
-ms.openlocfilehash: fcb2eb8df99a06eaf3459835347a4027a363b86b
-ms.sourcegitcommit: 59e3d5ce7dfb284457cf1c991091683b2d1afe9d
+ms.openlocfilehash: 45d851a4b08a26dda0c24e20c79f42964fa4fae4
+ms.sourcegitcommit: 1f0f93c66b2b50e03fcbed90260e94faa0279c46
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/20/2020
-ms.locfileid: "83672850"
+ms.lasthandoff: 06/04/2020
+ms.locfileid: "84418932"
 ---
 # <a name="whats-new-in-ef-core-50"></a>EF Core 5.0 中的新增功能
 
@@ -20,6 +20,117 @@ EF Core 5.0 目前正在开发中。
 计划中介绍了 EF Core 5.0 的整体主题，其中包括我们在交付最终版本之前打算包含的所有内容。
 
 发布时，我们会将此处的链接添加到官方文档。
+
+## <a name="preview-5"></a>预览版 5
+
+### <a name="database-collations"></a>数据库排序规则
+
+现可在 EF 模式中指定数据库的默认排序规则。
+这将传输到生成的迁移，在创建数据库时设置排序规则。
+例如：
+
+```CSharp
+modelBuilder.UseCollation("German_PhoneBook_CI_AS");
+```
+
+然后，迁移会生成以下内容，在 SQL Server 上创建数据库：
+
+```sql
+CREATE DATABASE [Test]
+COLLATE German_PhoneBook_CI_AS;
+```
+
+可指定用于特定数据库列的排序规则。
+例如：
+
+```CSharp
+ modelBuilder
+     .Entity<User>()
+     .Property(e => e.Name)
+     .UseCollation("German_PhoneBook_CI_AS");
+```
+
+对于不使用迁移的列，可在创建 DbContext 基架时从数据库对排序规则进行反向工程处理。
+
+最后，可通过 `EF.Functions.Collate()` 使用不同的排序规则进行即席查询。
+例如：
+
+```CSharp
+context.Users.Single(e => EF.Functions.Collate(e.Name, "French_CI_AS") == "Jean-Michel Jarre");
+```
+
+这将为 SQL Server 生成以下查询：
+
+```sql
+SELECT TOP(2) [u].[Id], [u].[Name]
+FROM [Users] AS [u]
+WHERE [u].[Name] COLLATE French_CI_AS = N'Jean-Michel Jarre'
+```
+
+请注意，应谨慎使用即席排序规则，因为它们可能会对数据库性能造成不良影响。
+
+文档可通过问题 [#2273](https://github.com/dotnet/EntityFramework.Docs/issues/2273) 进行跟踪。
+
+### <a name="flow-arguments-into-idesigntimedbcontextfactory"></a>将参数传输到 IDesignTimeDbContextFactory
+
+参数现从命令行传输到 [IDesignTimeDbContextFactory](https://docs.microsoft.com/dotnet/api/microsoft.entityframeworkcore.design.idesigntimedbcontextfactory-1?view=efcore-3.1) 的 `CreateDbContext` 方法。 例如，若要指示这是一个开发生成，可在命令行上传递自定义参数（例如 `dev`）：
+
+```
+dotnet ef migrations add two --verbose --dev
+``` 
+
+然后，该参数将传输到工厂，它在这里可用于控制如何创建和初始化上下文。
+例如：
+
+```CSharp
+public class MyDbContextFactory : IDesignTimeDbContextFactory<SomeDbContext>
+{
+    public SomeDbContext CreateDbContext(string[] args) 
+        => new SomeDbContext(args.Contains("--dev"));
+}
+```
+
+文档可通过问题 [#2419](https://github.com/dotnet/EntityFramework.Docs/issues/2419) 进行跟踪。
+
+### <a name="no-tracking-queries-with-identity-resolution"></a>具有标识解析的非跟踪查询
+
+现可将非跟踪查询配置来执行标识解析。
+例如，以下查询将为每个 Post 创建一个新的 Blog 实例，即使每个 Blog 的主键相同也是如此。 
+
+```CSharp
+context.Posts.AsNoTracking().Include(e => e.Blog).ToList();
+```
+
+然而，可更改此查询来确保只创建一个 Blog 实例，代价通常是稍微拖慢一些速度和总是使用更多的内存：
+
+```CSharp
+context.Posts.AsNoTracking().PerformIdentityResolution().Include(e => e.Blog).ToList();
+```
+
+请注意，这仅适用于非跟踪查询，因为所有跟踪查询已显示此行为。 此外，在 API 评审后，将更改 `PerformIdentityResolution` 语法。
+请查看 [#19877](https://github.com/dotnet/efcore/issues/19877#issuecomment-637371073)。
+
+文档可通过问题 [#1895](https://github.com/dotnet/EntityFramework.Docs/issues/1895) 进行跟踪。
+
+### <a name="stored-persisted-computed-columns"></a>存储的（持久化）计算列
+
+大多数数据库都允许在计算后存储计算得到的列值。
+虽然这会占用磁盘空间，但仅在更新时对计算的列计算一次，而不是在每次检索它的值时都计算。
+这样也可对某些数据库编制列的索引。
+
+EF Core 5.0 允许将计算列配置为存储计算列。
+例如：
+ 
+```CSharp
+modelBuilder
+    .Entity<User>()
+    .Property(e => e.SomethingComputed)
+    .HasComputedColumnSql("my sql", stored: true);
+```
+
+### <a name="sqlite-computed-columns"></a>SQLite 计算列
+
+EF Core 现支持在 SQLite 数据库中使用计算列。
 
 ## <a name="preview-4"></a>预览版 4
 
@@ -50,8 +161,6 @@ modelBuilder
     .HasIndex(e => e.Name)
     .HasFillFactor(90);
 ```
-
-文档可通过问题 [#2378](https://github.com/dotnet/EntityFramework.Docs/issues/2378) 进行跟踪。
 
 ## <a name="preview-3"></a>预览版 3
 
