@@ -4,14 +4,14 @@ author: bricelam
 ms.author: bricelam
 ms.date: 07/11/2019
 uid: core/miscellaneous/cli/dotnet
-ms.openlocfilehash: 6eb8b817a809dedf999ccb98307f5d8e2e41c0fb
-ms.sourcegitcommit: 59e3d5ce7dfb284457cf1c991091683b2d1afe9d
+ms.openlocfilehash: fe378fc962c0d491703a3e77dca4415ad510d673
+ms.sourcegitcommit: ebfd3382fc583bc90f0da58e63d6e3382b30aa22
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/20/2020
-ms.locfileid: "83672940"
+ms.lasthandoff: 06/25/2020
+ms.locfileid: "85370618"
 ---
-# <a name="entity-framework-core-tools-reference---net-cli"></a>Entity Framework Core 工具参考 - .NET CLI
+# <a name="entity-framework-core-tools-reference---net-core-cli"></a>Entity Framework Core 工具参考-.NET Core CLI
 
 用于 Entity Framework Core 的命令行接口（CLI）工具执行设计时开发任务。 例如，他们基于现有数据库创建[迁移](/aspnet/core/data/ef-mvc/migrations?view=aspnetcore-2.0)、应用迁移和生成模型的代码。 命令是跨平台[dotnet](/dotnet/core/tools)命令的扩展，它是[.NET Core SDK](https://www.microsoft.com/net/core)的一部分。 这些工具适用于 .NET Core 项目。
 
@@ -69,7 +69,7 @@ ms.locfileid: "83672940"
 
 * 安装 .NET Core SDK 版本2.1.200。 更高版本与用于 EF Core 1.0 和1.1 的 CLI 工具不兼容。
 
-* 通过修改应用程序的[global.asax](/dotnet/core/tools/global-json)文件，将该应用程序配置为使用 2.1.200 SDK 版本。 此文件通常包含在解决方案目录中（项目上面的一个）。
+* 通过修改文件[global.js](/dotnet/core/tools/global-json) ，将应用程序配置为使用 2.1.200 SDK 版本。 此文件通常包含在解决方案目录中（项目上面的一个）。
 
 * 编辑项目文件，并添加 `Microsoft.EntityFrameworkCore.Tools.DotNet` 为 `DotNetCliToolReference` 项。 指定最新的1.x 版本，例如：1.1.6。 请参阅本部分末尾的项目文件示例。
 
@@ -228,7 +228,7 @@ dotnet ef database update 20180904195021_InitialCreate --connection your_connect
 
 | 参数       | 说明                                                                                                                                                                                                             |
 |:---------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `<CONNECTION>` | 用于连接到数据库的连接字符串。 对于 ASP.NET Core 2.x 项目，值可以是*name = \< 连接字符串>的名称*。 在这种情况下，该名称来自为项目设置的配置源。 |
+| `<CONNECTION>` | 用于连接到数据库的连接字符串。 对于 ASP.NET Core 2.x 项目，值可以是*name = \<name of connection string> *。 在这种情况下，该名称来自为项目设置的配置源。 |
 | `<PROVIDER>`   | 要使用的提供程序。 通常，这是 NuGet 包的名称，例如： `Microsoft.EntityFrameworkCore.SqlServer` 。                                                                                           |
 
 选项：
@@ -238,13 +238,14 @@ dotnet ef database update 20180904195021_InitialCreate --connection your_connect
 | <nobr>`-d`</nobr> | `--data-annotations`                   | 使用属性配置模型（如果可能）。 如果省略此选项，则只使用 Fluent API。                                                                |
 | `-c`            | `--context <NAME>`                       | `DbContext`要生成的类的名称。                                                                                                                                 |
 |                 | `--context-dir <PATH>`                   | 要放入 `DbContext` 类文件的目录。 路径相对于项目目录。 命名空间是从文件夹名称派生的。                                 |
-|                 | `--context-namespace <NAMESPACE>`        | 要用于生成的类的命名空间 `DbContext` 。 注意：重写 `--namespace` 。                                 |
+|                 | `--context-namespace <NAMESPACE>`        | 要用于生成的类的命名空间 `DbContext` 。 注意：重写 `--namespace` 。 （从 EFCore 5.0.0 开始提供。）        |
 | `-f`            | `--force`                                | 覆盖现有文件。                                                                                                                                                      |
 | `-o`            | `--output-dir <PATH>`                    | 要在其中放置实体类文件的目录。 路径相对于项目目录。                                                                                       |
-| `-n`            | `--namespace <NAMESPACE>`                | 要用于所有生成的类的命名空间。 默认值为从根命名空间和输出目录生成。                    |
+| `-n`            | `--namespace <NAMESPACE>`                | 要用于所有生成的类的命名空间。 默认值为从根命名空间和输出目录生成。 （从 EFCore 5.0.0 开始提供。）        |
 |                 | <nobr>`--schema <SCHEMA_NAME>...`</nobr> | 要为其生成实体类型的表的架构。 若要指定多个架构，请重复上述操作 `--schema` 。 如果省略此选项，则包括所有架构。          |
 | `-t`            | `--table <TABLE_NAME>`...                | 要为其生成实体类型的表。 若要指定多个表，请对 `-t` 每个表重复或 `--table` 。 如果省略此选项，则包括所有表。                |
 |                 | `--use-database-names`                   | 使用表和列的名称与数据库中显示的名称完全相同。 如果省略此选项，则更改数据库名称以更严格地符合 c # 名称样式约定。 |
+|                 | `--no-onconfiguring`                     | 禁止 `OnConfiguring` 在生成的类中生成方法 `DbContext` 。 （从 EFCore 5.0.0 开始提供。）        |
 
 下面的示例基架所有架构和表，并将新文件放在*模型*文件夹中。
 
@@ -273,7 +274,7 @@ dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Tr
 |                   | 选项                             | 说明                                                                                                      |
 |:------------------|:-----------------------------------|:-----------------------------------------------------------------------------------------------------------------|
 | <nobr>`-o`</nobr> | <nobr>`--output-dir <PATH>`</nobr> | 用于输出文件的目录。 路径相对于目标项目目录。 默认值为 "迁移"。 |
-| <nobr>`-n`</nobr> | <nobr>`--namespace <NAMESPACE>`</nobr> | 要用于生成的类的命名空间。 默认为从输出目录生成。 |
+| <nobr>`-n`</nobr> | <nobr>`--namespace <NAMESPACE>`</nobr> | 要用于生成的类的命名空间。 默认为从输出目录生成。 （从 EFCore 5.0.0 开始提供。） |
 
 ## <a name="dotnet-ef-migrations-list"></a>dotnet ef 迁移列表
 

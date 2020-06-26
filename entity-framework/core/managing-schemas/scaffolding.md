@@ -5,12 +5,12 @@ ms.author: bricelam
 ms.date: 11/13/2018
 ms.assetid: 6263EF7D-4989-42E6-BDEE-45DA770342FB
 uid: core/managing-schemas/scaffolding
-ms.openlocfilehash: cb20120154101a9b92b4bf2bc06d20b1dafe88c1
-ms.sourcegitcommit: 59e3d5ce7dfb284457cf1c991091683b2d1afe9d
+ms.openlocfilehash: 2422e7455dc4ef52f0a9d3bdaebfa02f62e6d50f
+ms.sourcegitcommit: ebfd3382fc583bc90f0da58e63d6e3382b30aa22
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/20/2020
-ms.locfileid: "83672968"
+ms.lasthandoff: 06/25/2020
+ms.locfileid: "85370587"
 ---
 # <a name="reverse-engineering"></a>反向工程
 
@@ -85,11 +85,11 @@ Scaffold-DbContext ... -Tables Artist, Album
 
 ## <a name="preserving-names"></a>保留名称
 
-默认情况下，表和列名已固定，以便更好地匹配类型和属性的 .NET 命名约定。 如果 `-UseDatabaseNames` 在 PMC 中指定开关或在 `--use-database-names` CLI 中指定选项，则将禁用此行为，从而尽可能保留原始数据库名称。 无效的 .NET 标识符仍然是固定的，而合成的名称（如导航属性）仍符合 .NET 命名约定。
+默认情况下，表和列名已固定，以便更好地匹配类型和属性的 .NET 命名约定。 如果 `-UseDatabaseNames` 在 PMC 中指定开关或 `--use-database-names` .NET Core CLI 中的选项，则将禁用此行为，从而尽可能保留原始数据库名称。 无效的 .NET 标识符仍然是固定的，而合成的名称（如导航属性）仍符合 .NET 命名约定。
 
 ## <a name="fluent-api-or-data-annotations"></a>熟知 API 或数据批注
 
-默认情况下，实体类型是使用熟知 API 配置的。 `-DataAnnotations`如果可能，请指定（PMC）或 `--data-annotations` （CLI）来改用数据批注。
+默认情况下，实体类型是使用熟知 API 配置的。 `-DataAnnotations`如果可能，请指定（PMC）或 `--data-annotations` （.NET Core CLI）来改为使用数据注释。
 
 例如，使用熟知的 API 将基架：
 
@@ -109,7 +109,7 @@ public string Title { get; set; }
 
 ## <a name="dbcontext-name"></a>DbContext 名称
 
-默认情况下，基架 DbContext 类名称将是以默认值作为*后缀的数据库*的名称。 若要指定其他帐户，请 `-Context` 在 PMC 和 `--context` CLI 中使用。
+默认情况下，基架 DbContext 类名称将是以默认值作为*后缀的数据库*的名称。 若要指定其他项，请 `-Context` 在 PMC 中使用， `--context` 在 .NET Core CLI 中使用。
 
 ## <a name="directories-and-namespaces"></a>目录和命名空间
 

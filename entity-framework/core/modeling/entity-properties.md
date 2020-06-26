@@ -1,16 +1,16 @@
 ---
 title: 实体属性-EF Core
 description: 如何使用 Entity Framework Core 配置和映射实体属性
-author: roji
-ms.date: 12/10/2019
+author: lajones
+ms.date: 05/27/2020
 ms.assetid: e9dff604-3469-4a05-8f9e-18ac281d82a9
 uid: core/modeling/entity-properties
-ms.openlocfilehash: e4a1867a90df1fb277e7dd44b93d6c2d47895030
-ms.sourcegitcommit: 92d54fe3702e0c92e198334da22bacb42e9842b1
+ms.openlocfilehash: fcf3b0f8480fde2f3ba6b5fd601db115f1d246b8
+ms.sourcegitcommit: ebfd3382fc583bc90f0da58e63d6e3382b30aa22
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/10/2020
-ms.locfileid: "84664151"
+ms.lasthandoff: 06/25/2020
+ms.locfileid: "85370508"
 ---
 # <a name="entity-properties"></a>实体属性
 
@@ -85,6 +85,26 @@ ms.locfileid: "84664151"
 
 ***
 
+### <a name="precision-and-scale"></a>精度和小数位数
+
+从 EFCore 5.0 开始，可以使用 Fluent API 来配置精度和小数位数。 它告知数据库提供程序所需的存储空间量。 它仅适用于数据类型，在这种情况下，提供程序允许精度和小数位数变化-通常仅限 `decimal` 和 `DateTime` 。
+
+对于 `decimal` 属性，精度定义表示列将包含的任何值所需的最大位数，而 scale 定义所需的最大小数位数。 对于 `DateTime` 属性，精度定义表示秒的小数部分所需的最大位数，并且不使用小数位数。
+
+> [!NOTE]
+> 在将数据传递给提供程序之前，实体框架不会进行任何精度验证或缩放。 根据需要验证提供程序或数据存储。 例如，如果以 SQL Server 为目标，则数据类型为的列 `datetime` 不允许设置精度，而一个列的 `datetime2` 精度介于0到7（含）之间。
+
+在下面的示例中， `Score` 将属性配置为具有精度14和小数位数2将导致 `decimal(14,2)` 在 SQL Server 上创建类型为的列，并且 `LastUpdated` 将属性配置为具有精度3将导致类型为的列 `datetime2(3)` ：
+
+#### <a name="fluent-api"></a>[Fluent API](#tab/fluent-api)
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/PrecisionAndScale.cs?name=PrecisionAndScale&highlight=3-9)]
+
+> [!NOTE]
+> 永远不会定义规模，无需先定义精度，因此用于定义刻度的流畅 API 是 `HasPrecision(precision, scale)` 。
+
+***
+
 ## <a name="required-and-optional-properties"></a>必需属性和可选属性
 
 如果属性对于包含有效，则将其视为可选 `null` 。 如果 `null` 不是要分配给属性的有效值，则将其视为必需属性。 映射到关系数据库架构时，必需的属性将创建为不可为 null 的列，而可选属性则创建为可以为 null 的列。
@@ -142,4 +162,4 @@ C # 8 引入了一个名[为 null 的引用类型](/dotnet/csharp/tutorials/null
 
 如果数据库中的所有列都需要使用特定的排序规则，请改为在数据库级别定义排序规则。
 
-有关排序规则 EF Core 支持的常规信息，请参阅[排序规则文档页](xref:core/miscellaneous/collations-and-case-sensitivity.md)。
+有关排序规则 EF Core 支持的常规信息，请参阅[排序规则文档页](xref:core/miscellaneous/collations-and-case-sensitivity)。

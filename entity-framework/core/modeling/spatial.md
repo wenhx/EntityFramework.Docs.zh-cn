@@ -5,12 +5,12 @@ ms.author: bricelam
 ms.date: 11/01/2018
 ms.assetid: 2BDE29FC-4161-41A0-841E-69F51CCD9341
 uid: core/modeling/spatial
-ms.openlocfilehash: 5b45f83ca7f02665f52ccfe16b5af506a6046a62
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.openlocfilehash: 2222df84be7bfde3f252766bef1cfab39b476efa
+ms.sourcegitcommit: ebfd3382fc583bc90f0da58e63d6e3382b30aa22
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78414703"
+ms.lasthandoff: 06/25/2020
+ms.locfileid: "85370443"
 ---
 # <a name="spatial-data"></a>空间数据
 
@@ -32,7 +32,7 @@ Npgsql.EntityFrameworkCore.PostgreSQL   | [Npgsql. Microsoft.entityframeworkcore
 
 ## <a name="reverse-engineering"></a>反向工程
 
-空间 NuGet 包还启用具有空间属性的[反向工程](../managing-schemas/scaffolding.md)模型，但需要在运行 `Scaffold-DbContext` 或 `dotnet ef dbcontext scaffold`***之前***安装包。 否则，你将收到有关找不到列的类型映射的警告，将跳过这些列。
+空间 NuGet 包还启用具有空间属性的[反向工程](../managing-schemas/scaffolding.md)模型，但需要在运行或***之前***安装包 `Scaffold-DbContext` `dotnet ef dbcontext scaffold` 。 否则，你将收到有关找不到列的类型映射的警告，将跳过这些列。
 
 ## <a name="nettopologysuite-nts"></a>NetTopologySuite （NTS）
 
@@ -46,7 +46,7 @@ optionsBuilder.UseSqlServer(
     x => x.UseNetTopologySuite());
 ```
 
-有几种空间数据类型。 使用哪种类型取决于您想要允许的形状的类型。 下面是可用于模型中的属性的 NTS 类型的层次结构。 它们位于 `NetTopologySuite.Geometries` 命名空间中。
+有几种空间数据类型。 使用哪种类型取决于您想要允许的形状的类型。 下面是可用于模型中的属性的 NTS 类型的层次结构。 它们位于 `NetTopologySuite.Geometries` 命名空间内。
 
 * Geometry
   * 点
@@ -89,11 +89,11 @@ class Country
 
 ### <a name="creating-values"></a>创建值
 
-您可以使用构造函数来创建 geometry 对象;但是，NTS 建议改为使用几何工厂。 这允许您指定默认 SRID （坐标使用的空间引用系统），并使您能够控制更高级的任务（例如，在计算过程中使用）和坐标序列（确定哪些坐标维度和度量值--可用）。
+您可以使用构造函数来创建 geometry 对象;但是，NTS 建议改为使用几何工厂。 这允许您指定默认的 SRID （坐标使用的空间引用系统），并使您能够控制更高级的任务（例如，在计算过程中使用）和坐标序列（确定可用的坐标-维度和度量值）。
 
 ``` csharp
 var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
-var currentLocation = geometryFactory.CreatePoint(-122.121512, 47.6739882);
+var currentLocation = geometryFactory.CreatePoint(new Coordinate(-122.121512, 47.6739882));
 ```
 
 > [!NOTE]
@@ -101,7 +101,7 @@ var currentLocation = geometryFactory.CreatePoint(-122.121512, 47.6739882);
 
 ### <a name="longitude-and-latitude"></a>经度和纬度
 
-NTS 中的坐标采用 X 和 Y 值。 若要表示经度和纬度，请将 X 用于经度，将 Y 用于纬度。 请注意，这是从通常会看到这些值的 `latitude, longitude` 格式**反向**进行的。
+NTS 中的坐标采用 X 和 Y 值。 若要表示经度和纬度，请将 X 用于经度，将 Y 用于纬度。 请注意，这**backwards**是从 `latitude, longitude` 通常会看到这些值的格式反向进行的。
 
 ### <a name="srid-ignored-during-client-operations"></a>在客户端操作过程中忽略 SRID
 
@@ -213,15 +213,15 @@ var currentCountry = db.Countries
 
 ### <a name="geography-or-geometry"></a>地理或几何图形
 
-默认情况下，空间属性映射到 SQL Server 中的 `geography` 列。 若要使用 `geometry`，请在模型中[配置列类型](xref:core/modeling/entity-properties#column-data-types)。
+默认情况下，空间属性映射到 `geography` SQL Server 中的列。 若要使用 `geometry` ，请在模型中[配置列类型](xref:core/modeling/entity-properties#column-data-types)。
 
 ### <a name="geography-polygon-rings"></a>地理多边形环
 
-使用 `geography` 列类型时，SQL Server 对外环（或外壳）和内部环（或孔）施加附加要求。 外部环必须逆时针旋转，并顺时针旋转内部环。 NTS 在将值发送到数据库之前对其进行验证。
+当使用 `geography` 列类型时，SQL Server 会对外部环（或外壳）和内部环（或孔）施加附加要求。 外部环必须逆时针旋转，并顺时针旋转内部环。 NTS 在将值发送到数据库之前对其进行验证。
 
 ### <a name="fullglobe"></a>FullGlobe
 
-使用 `geography` 列类型时，SQL Server 具有非标准几何类型来表示全地球。 它还提供了一种方法，用于根据全地球（无外部环）来表示多边形。 NTS 不支持这两种方法。
+在使用列类型时，SQL Server 具有非标准几何类型来表示全地球 `geography` 。 它还提供了一种方法，用于根据全地球（无外部环）来表示多边形。 NTS 不支持这两种方法。
 
 > [!WARNING]
 > NTS 不支持基于 FullGlobe 和多边形。
@@ -260,14 +260,14 @@ make install
 
 ### <a name="configuring-srid"></a>配置 SRID
 
-在 SpatiaLite 中，列需要为每个列指定一个 SRID。 默认的 SRID 是 `0`。 使用 ForSqliteHasSrid 方法指定其他 SRID。
+在 SpatiaLite 中，列需要为每个列指定一个 SRID。 默认的 SRID 为 `0` 。 使用 ForSqliteHasSrid 方法指定其他 SRID。
 
 ``` csharp
 modelBuilder.Entity<City>().Property(c => c.Location)
     .ForSqliteHasSrid(4326);
 ```
 
-### <a name="dimension"></a>Dimension
+### <a name="dimension"></a>维度
 
 类似于 SRID，列的维度（或坐标）也被指定为列的一部分。 默认坐标为 X 和 Y。使用 ForSqliteHasDimension 方法启用其他坐标（Z 和 M）。
 

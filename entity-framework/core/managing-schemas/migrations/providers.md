@@ -1,15 +1,15 @@
 ---
-title: 多个提供程序的 EF Core 的迁移
+title: 多个提供程序的迁移-EF Core
 author: bricelam
 ms.author: bricelam
 ms.date: 11/08/2017
 uid: core/managing-schemas/migrations/providers
-ms.openlocfilehash: efe95893f7dbfc8e5c4775e86d58abb32eee3c83
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.openlocfilehash: 388829992687e626648889a47130cc61df1c0d1f
+ms.sourcegitcommit: ebfd3382fc583bc90f0da58e63d6e3382b30aa22
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78414253"
+ms.lasthandoff: 06/25/2020
+ms.locfileid: "85370612"
 ---
 # <a name="migrations-with-multiple-providers"></a>迁移多个提供程序
 
@@ -68,7 +68,7 @@ Id = table.Column<int>(nullable: false)
     .Annotation("Sqlite:Autoincrement", true),
 ```
 
-如果只能在一个提供程序上应用操作（或在提供程序之间以不同方式进行操作），请使用 `ActiveProvider` 属性告诉哪个提供程序处于活动状态。
+如果只能对一个提供程序应用操作，或它们在提供程序之间不同，请使用 `ActiveProvider` 属性来确定哪个提供程序处于活动状态：
 
 ``` csharp
 if (migrationBuilder.ActiveProvider == "Microsoft.EntityFrameworkCore.SqlServer")
