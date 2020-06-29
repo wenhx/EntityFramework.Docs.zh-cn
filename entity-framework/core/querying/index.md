@@ -4,12 +4,12 @@ author: smitpatel
 ms.date: 10/03/2019
 ms.assetid: 7c65ec3e-46c8-48f8-8232-9e31f96c277b
 uid: core/querying/index
-ms.openlocfilehash: 0e1e50d1a3f647d65301552d0a447f9fcae81438
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: 82f8a2e8e78e9d82f46f2fc6ced6dd9141329a22
+ms.sourcegitcommit: ebfd3382fc583bc90f0da58e63d6e3382b30aa22
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "78413112"
+ms.lasthandoff: 06/25/2020
+ms.locfileid: "85370334"
 ---
 # <a name="querying-data"></a>查询数据
 
@@ -28,11 +28,11 @@ Entity Framework Core 使用语言集成查询 (LINQ) 来查询数据库中的�
 
 [!code-csharp[Main](../../../samples/core/Querying/Basics/Sample.cs#LoadingSingleEntity)]
 
-## <a name="filtering"></a>Filtering
+## <a name="filtering"></a>筛选
 
 [!code-csharp[Main](../../../samples/core/Querying/Basics/Sample.cs#Filtering)]
 
 ## <a name="further-readings"></a>延伸阅读
 
 - 了解有关 [LINQ 查询表达式](/dotnet/csharp/programming-guide/concepts/linq/basic-linq-query-operations)的详细信息
-- 要更详细地了解如何在 EF Core 中处理查询，请参阅[查询的工作原理](xref:core/querying/how-query-works)。
+- 若要更详细地了解 EF Core 中的查询处理方式，请参阅[查询的工作原理](xref:core/querying/how-query-works)。
