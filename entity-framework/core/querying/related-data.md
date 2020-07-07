@@ -4,12 +4,11 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: f9fb64e2-6699-4d70-a773-592918c04c19
 uid: core/querying/related-data
-ms.openlocfilehash: bfd6e161ed7f7bf96e61946f94c8eeadd24a72f5
-ms.sourcegitcommit: 144edccf9b29a7ffad119c235ac9808ec1a46193
-ms.translationtype: HT
+ms.openlocfilehash: 86b9d08377ea8295b746e5f0217a408edcfe1517
+ms.sourcegitcommit: ebfd3382fc583bc90f0da58e63d6e3382b30aa22
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/16/2020
-ms.locfileid: "81434183"
+ms.lasthandoff: 06/25/2020
+ms.locfileid: "85370468"
 ---
 # <a name="loading-related-data"></a>加载相关数据
 
@@ -76,6 +75,18 @@ Entity Framework Core 允许你在模型中使用导航属性来加载相关实�
 或者，可对多次包含的每个导航应用相同的操作：
 
 [!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#MultipleLeafIncludesFiltered2)]
+
+> [!CAUTION]
+> 在跟踪查询时，由于[导航修正](tracking.md)，Filtered Include 的结果可能不符合预期。 之前已查询且已存储在更改跟踪器的所有相关实体都将在 Filtered Include 查询的结果中显示，即使它们不符合筛选器的要求也是如此。 在这些情况下使用 Filtered Include 时，请考虑使用 `NoTracking` 查询或重新创建 DbContext。
+
+示例：
+
+```csharp
+var orders = context.Orders.Where(o => o.Id > 1000).ToList();
+
+// customer entities will have references to all orders where Id > 1000, rathat than > 5000
+var filtered = context.Customers.Include(c => c.Orders.Where(o => o.Id > 5000)).ToList();
+```
 
 ### <a name="include-on-derived-types"></a>派生类型上的包含
 

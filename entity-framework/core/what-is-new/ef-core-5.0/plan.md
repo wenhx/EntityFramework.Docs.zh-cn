@@ -1,18 +1,17 @@
 ---
 title: 针对 Entity Framework Core 5.0 的计划
 author: ajcvickers
-ms.date: 01/14/2020
-uid: core/what-is-new/ef-core-5.0/plan.md
-ms.openlocfilehash: 8b4ca32524869019c04d5a4d4d55967f68181cd7
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
-ms.translationtype: HT
+ms.date: 06/11/2020
+uid: core/what-is-new/ef-core-5.0/plan
+ms.openlocfilehash: 249560bc14f72fd524be91bb1670dbaf78ae6b60
+ms.sourcegitcommit: ebfd3382fc583bc90f0da58e63d6e3382b30aa22
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "80136224"
+ms.lasthandoff: 06/25/2020
+ms.locfileid: "85370573"
 ---
 # <a name="plan-for-entity-framework-core-50"></a>针对 Entity Framework Core 5.0 的计划
 
-如[计划过程](../release-planning.md)中所述，我们已来自利益干系人的输入收集到针对 EF Core 5.0 版的暂定计划中。
+如[计划过程](xref:core/what-is-new/release_planning)中所述，我们已来自利益干系人的输入收集到针对 EF Core 5.0 版的暂定计划中。
 
 > [!IMPORTANT] 
 > 此计划仍是半成品。 这里不进行任何承诺。 此计划是一个起点，会随着我们了解更多信息而发展。 当前未针对 5.0 进行计划的某些内容可能会被纳入。 当前已针对 5.0 进行计划的某些内容可能会被淘汰。
@@ -29,13 +28,33 @@ EF Core 5.0 不会在 .NET Framework 上运行。
 
 ### <a name="breaking-changes"></a>重大更改
 
-EF Core 5.0 将包含一些重大更改，但与 EF Core 3.0 的情况相比，这些更改的严重性要小得多。 我们的目标是允许大多数应用程序进行更新而不会中断。
+EF Core 5.0 将包含一些[中断性变更](xref:core/what-is-new/ef-core-5.0/breaking-changes)，但与 EF Core 3.0 的情况相比，这些更改的严重性要小得多。 我们的目标是允许大多数应用程序进行更新而不会中断。
 
 预计会对数据库提供程序进行一些重大更改，尤其是在 TPT 支持方面。 但是，我们预计为 5.0 更新提供程序的工作会少于为 3.0 更新所需的工作。
 
 ## <a name="themes"></a>主题
 
 我们提取了几个主要领域或主题，它们将构成对 EF Core 5.0 进行大量投入的基础。
+
+## <a name="fully-transparent-many-to-many-mapping-by-convention"></a>以完全透明的方式按约定进行多对多映射
+
+主要开发人员：@smitpatel、@AndriySvyryd 和 @lajones
+
+通过 [#10508](https://github.com/aspnet/EntityFrameworkCore/issues/10508) 进行跟踪
+
+T 恤大小：L
+
+状态：正在进行
+
+多对多是 GitHub 积压工作 (backlog) 中[请求最多的功能](https://github.com/aspnet/EntityFrameworkCore/issues/1368)（大约 506 张投票）。
+
+多对多关系的支持分为三个主要方面：
+
+* 跳过导航属性 - 将在下个主题中讲解它们。
+* 属性包实体类型。 这些类型使标准 CLR 类型（例如 `Dictionary`）可以用于实体实例，使得每种实体类型都不需要显式 CLR 类型。 通过 [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914) 进行跟踪。
+* Sugar 可用于轻松配置多对多关系。
+
+除了支持跳过导航，我们现还将多对多关系的这些其他方面引入到 EF Core 5.0 来提供完整的体验。
 
 ## <a name="many-to-many-navigation-properties-aka-skip-navigations"></a>多对多导航属性（即“跳过导航”）
 
@@ -47,17 +66,10 @@ T 恤大小：L
 
 状态：正在进行
 
-多对多是 GitHub 积压工作 (backlog) 中[请求最多的功能](https://github.com/aspnet/EntityFrameworkCore/issues/1368)（大约 407 张投票）。
-
-对所有多对多关系的支持通过 [#10508](https://github.com/aspnet/EntityFrameworkCore/issues/10508) 进行跟踪。 这可以划分为三个主要区域：
-
-* 跳过导航属性。 这些属性使模型可以用于查询等，而无需引用基础联接表实体。 ([#19003](https://github.com/aspnet/EntityFrameworkCore/issues/19003))
-* 属性包实体类型。 这些类型使标准 CLR 类型（例如 `Dictionary`）可以用于实体实例，使得每种实体类型都不需要显式 CLR 类型。 （5.0 版的延伸目标：[#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914)。）
-* Sugar 可用于轻松配置多对多关系。 （5.0 版的延伸目标。）
-
-我们认为，对于需要多对多支持的人员而言，最重要的阻止因素是无法在业务逻辑（如查询）中使用“自然”关系，而无需引用联接表。 联接表实体类型可能仍然存在，但不应妨碍业务逻辑。 这就是我们选择为 5.0 处理跳过导航属性的原因。
-
-此时，多对多的其他部分正在作为 EF Core 5.0 的延伸目标而进行从事。 这意味着它们当前不在针对 5.0 的计划中，但是如果一切顺利，我们希望将它们纳入。
+如第一个主题中所述，多对多支持具有多个方面。
+该主题专门跟踪对跳过导航功能的使用。
+我们认为，对于需要多对多支持的人员而言，最重要的阻止因素是无法在业务逻辑（如查询）中使用“自然”关系，而无需引用联接表。
+联接表实体类型可能仍然存在，但不应妨碍业务逻辑。
 
 ## <a name="table-per-type-tpt-inheritance-mapping"></a>每个类型一张表 (TPT) 继承映射
 
@@ -69,7 +81,7 @@ T 恤大小：XL
 
 状态：正在进行
 
-我们要实现 TPT 是因为它是经常请求的功能（大约 254 张投票；第三名），并且它需要一些低级更改，我们认为这些更改适合于总体 .NET 5 计划的基础性质。 我们预计这会形成数据库提供程序的重大更改，但与 3.0 所需的更改相比，这些更改的严重性要小得多。
+我们要实现 TPT 是因为它是经常请求的功能（大约 289 张投票；第三名），并且它需要一些低级更改，我们认为这些更改适合于总体 .NET 5 计划的基础性质。 我们预计这会形成数据库提供程序的重大更改，但与 3.0 所需的更改相比，这些更改的严重性要小得多。
 
 ## <a name="filtered-include"></a>经过筛选的包含
 
@@ -81,7 +93,23 @@ T 恤大小：M
 
 状态：正在进行
 
-经过筛选的包含是经常请求的功能（大约 317 张投票；第二名），其工作量不大，我们认为这会使当前需要模型级筛选器或更复杂查询的许多方案不受阻碍或更加容易。
+经过筛选的包含是经常请求的功能（大约 376 张投票；第二名），其工作量不大，我们认为这会使当前需要模型级筛选器或更复杂查询的许多方案不受阻碍或更加容易。
+
+## <a name="split-include"></a>拆分 Include
+
+主要开发人员：@smitpatel
+
+通过 [#20892](https://github.com/dotnet/efcore/issues/20892) 进行跟踪
+
+T 恤大小：L
+
+状态：正在进行
+
+EF Core 3.0 更改了默认行为，它为给定的 LINQ 查询创建一个 SQL 查询。
+对于使用 Include 来处理多个集合的查询来说，这导致性能大幅下降。
+
+在 EF Core 5.0 中，我们将保留新的默认行为。
+不过，EF Core 5.0 现允许为 Include 集合生成多个查询，而使用单个查询会导致性能不佳。 
 
 ## <a name="rationalize-totable-toquery-toview-fromsql-etc"></a>合理化 ToTable、ToQuery、ToView、FromSql 等。
 
@@ -184,13 +212,16 @@ T 恤大小：L
 
 T 恤大小：L
 
-状态：正在进行
+状态：剪切
 
 这里的思路是使人们更容易了解 EF Core 的内部情况。 这可能对于使用 EF Core 的任何人都十分有用，但主要动机是使外部人员更容易：
 
 * 为 EF Core 代码做出贡献
 * 创建数据库提供程序
 * 构建其他扩展
+
+更新：遗憾的是，该计划过于宏大。
+我们仍相信这很重要，但遗憾的是，EF Core 5.0 未包含它。
 
 ## <a name="microsoftdatasqlite-documentation"></a>Microsoft.Data.Sqlite 文档
 
@@ -230,7 +261,7 @@ T 恤大小：L
 
 状态：正在进行
 
-撰写本文时，我们已将 135 个 bug 会审为在 5.0 版本中进行修复（已修复了 62 个），但与上面的常规查询增强功能部分存在很大的重叠  。
+撰写本文时，我们已将 135 个 bug 会审为在 5.0 版本中进行修复（已修复了 62 个），但与上面的常规查询增强功能部分存在很大的重叠。
 
 在 3.0 版本期间，传入率（最终成为里程碑工作的问题）大约为每月 23 个问题。 并非所有这些问题都需要在 5.0 中进行修复。 作为大致估计，我们计划修复在 5.0 时间范围内修复其他 150 个问题。
 
@@ -250,10 +281,10 @@ T 恤大小：L
 
 通过[使用 `consider-for-next-release` 标记的问题](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+label%3Aconsider-for-next-release)进行跟踪
 
-这些是当前未针对 5.0 版本  计划的 bug 修复和增强功能，但我们将根据以上工作的进度将它们视为延伸目标。
+这些是当前未针对 5.0 版本计划的 bug 修复和增强功能，但我们将根据以上工作的进度将它们视为延伸目标。
 
 此外，我们始终会在计划时考虑[投票最多的问题](https://github.com/dotnet/efcore/issues?q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc)。 从版本中去除其中任何问题总是很痛苦的，但是我们确实需要针对所拥有的资源制定切合实际的计划。
 
 ## <a name="feedback"></a>反馈
 
-你对计划的反馈非常重要。 指示问题重要性的最佳方式是在 GitHub 上为该问题投票（竖起大拇指）。 然后，此数据将进入下一个版本的[计划过程](../release-planning.md)。
+你对计划的反馈非常重要。 指示问题重要性的最佳方式是在 GitHub 上为该问题投票（竖起大拇指）。 然后，此数据将进入下一个版本的[计划过程](xref:core/what-is-new/release_planning)。

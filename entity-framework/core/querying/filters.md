@@ -3,12 +3,11 @@ title: 全局查询筛选器 - EF Core
 author: anpete
 ms.date: 11/03/2017
 uid: core/querying/filters
-ms.openlocfilehash: f6c59bcbab31edcbed22079a1320c060ce08c6f7
-ms.sourcegitcommit: 92d54fe3702e0c92e198334da22bacb42e9842b1
-ms.translationtype: HT
+ms.openlocfilehash: 233289b0c50e15f4555b342bc654211ce04c24d3
+ms.sourcegitcommit: ebfd3382fc583bc90f0da58e63d6e3382b30aa22
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/10/2020
-ms.locfileid: "84664125"
+ms.lasthandoff: 06/25/2020
+ms.locfileid: "85370456"
 ---
 # <a name="global-query-filters"></a>全局查询筛选器
 
@@ -52,7 +51,7 @@ ms.locfileid: "84664125"
 > [!NOTE]
 > 目前，EF Core 不会检测全局查询筛选器定义中的循环，因此需在定义它们时小心谨慎。 如果指定错误，这可能在查询转换期间导致无限循环。
 
-## <a name="accessing-entity-with-query-filter-using-reqiured-navigation"></a>使用必需的导航访问具有查询筛选器的实体
+## <a name="accessing-entity-with-query-filter-using-required-navigation"></a>使用必需的导航访问具有查询筛选器的实体
 
 > [!CAUTION]
 > 如果使用必需的导航访问定义了全局查询筛选器的实体，则可能导致意外结果。 

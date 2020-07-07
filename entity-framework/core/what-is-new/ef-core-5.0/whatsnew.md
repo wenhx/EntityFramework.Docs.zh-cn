@@ -3,31 +3,320 @@ title: EF Core 5.0 中的新增功能
 description: EF Core 5.0 中的新功能概述
 author: ajcvickers
 ms.date: 06/02/2020
-uid: core/what-is-new/ef-core-5.0/whatsnew.md
-ms.openlocfilehash: 45d851a4b08a26dda0c24e20c79f42964fa4fae4
-ms.sourcegitcommit: 1f0f93c66b2b50e03fcbed90260e94faa0279c46
-ms.translationtype: HT
+uid: core/what-is-new/ef-core-5.0/whatsnew
+ms.openlocfilehash: 0a2ba5b804cc6636b321edcc48feeb76ad60560b
+ms.sourcegitcommit: ebfd3382fc583bc90f0da58e63d6e3382b30aa22
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/04/2020
-ms.locfileid: "84418932"
+ms.lasthandoff: 06/25/2020
+ms.locfileid: "85370365"
 ---
 # <a name="whats-new-in-ef-core-50"></a>EF Core 5.0 中的新增功能
 
-EF Core 5.0 目前正在开发中。
-此页面将包含每个预览版中引入的令人关注的更改的简要介绍。
+EF Core 5.0 目前正在开发中。 此页面将包含每个预览版中引入的令人关注的更改的简要介绍。
 
-此页面不会复制 [EF Core 5.0](plan.md) 的计划。
-计划中介绍了 EF Core 5.0 的整体主题，其中包括我们在交付最终版本之前打算包含的所有内容。
+此页面不会复制 [EF Core 5.0](xref:core/what-is-new/ef-core-5.0/plan) 的计划。 计划中介绍了 EF Core 5.0 的整体主题，其中包括我们在交付最终版本之前打算包含的所有内容。
 
 发布时，我们会将此处的链接添加到官方文档。
+
+## <a name="preview-6"></a>预览版 6
+
+### <a name="split-queries-for-related-collections"></a>适合相关集合的拆分查询
+
+从 EF Core 3.0 开始，EF Core 始终会为每个 LINQ 查询生成一个 SQL 查询。 这可确保在使用中的事务模式的约束内返回的数据保持一致。 但是，当查询使用 `Include` 或投影来返回多个相关集合时，速度可能会变得非常慢。
+
+EF Core 5.0 现允许将包含相关集合的一个 LINQ 查询拆分成多个 SQL 查询。 这可能明显提升性能，但如果在两次查询之间数据发生了变化，则可能导致返回的结果不一致。 你能使用可序列化的事务或快照事务来缓解这种情况并通过拆分查询实现一致性，但这可能会带来其他性能成本并导致行为差异。
+
+#### <a name="split-queries-with-include"></a>用 Include 拆分查询
+
+例如，请考虑使用 `Include` 提取两个级别的相关集合的查询：
+
+```CSharp
+var artists = context.Artists
+    .Include(e => e.Albums).ThenInclude(e => e.Tags)
+    .ToList();
+```
+
+默认情况下，EF Core 将使用 SQLite 提供程序生成以下 SQL：
+
+```sql
+SELECT "a"."Id", "a"."Name", "t0"."Id", "t0"."ArtistId", "t0"."Title", "t0"."Id0", "t0"."AlbumId", "t0"."Name"
+FROM "Artists" AS "a"
+LEFT JOIN (
+    SELECT "a0"."Id", "a0"."ArtistId", "a0"."Title", "t"."Id" AS "Id0", "t"."AlbumId", "t"."Name"
+    FROM "Album" AS "a0"
+    LEFT JOIN "Tag" AS "t" ON "a0"."Id" = "t"."AlbumId"
+) AS "t0" ON "a"."Id" = "t0"."ArtistId"
+ORDER BY "a"."Id", "t0"."Id", "t0"."Id0"
+```
+
+可使用新的 `AsSplitQuery` API 来更改此行为。 例如：
+
+```CSharp
+var artists = context.Artists
+    .AsSplitQuery()
+    .Include(e => e.Albums).ThenInclude(e => e.Tags)
+    .ToList();
+```
+
+AsSplitQuery 适用于所有关系数据库提供程序，且如同 AsNoTracking 一样，可在查询中的任何位置使用。 EF Core 现将生成以下 3 个 SQL 查询：
+
+```sql
+SELECT "a"."Id", "a"."Name"
+FROM "Artists" AS "a"
+ORDER BY "a"."Id"
+
+SELECT "a0"."Id", "a0"."ArtistId", "a0"."Title", "a"."Id"
+FROM "Artists" AS "a"
+INNER JOIN "Album" AS "a0" ON "a"."Id" = "a0"."ArtistId"
+ORDER BY "a"."Id", "a0"."Id"
+
+SELECT "t"."Id", "t"."AlbumId", "t"."Name", "a"."Id", "a0"."Id"
+FROM "Artists" AS "a"
+INNER JOIN "Album" AS "a0" ON "a"."Id" = "a0"."ArtistId"
+INNER JOIN "Tag" AS "t" ON "a0"."Id" = "t"."AlbumId"
+ORDER BY "a"."Id", "a0"."Id"
+```
+
+支持对查询根目录执行各种操作。 其中包括 OrderBy/Skip/Take、联接操作、FirstOrDefault 和类似的单结果选择操作。
+
+请注意，预览版 6 中不支持带 OrderBy/Skip/Take 的 Filtered Include，但它们可在日常版本中使用，且将包含在预览版 7 中。
+
+#### <a name="split-queries-with-collection-projections"></a>用集合投影来拆分查询
+
+在投影中加载集合时，也可使用 `AsSplitQuery`。 例如：
+
+```CSharp
+context.Artists
+    .AsSplitQuery()
+    .Select(e => new
+    {
+        Artist = e,
+        Albums = e.Albums,
+    }).ToList();
+```
+
+使用 SQLite 提供程序时，此 LINQ 查询会生成以下两个 SQL 查询：
+
+```sql
+SELECT "a"."Id", "a"."Name"
+FROM "Artists" AS "a"
+ORDER BY "a"."Id"
+
+SELECT "a0"."Id", "a0"."ArtistId", "a0"."Title", "a"."Id"
+FROM "Artists" AS "a"
+INNER JOIN "Album" AS "a0" ON "a"."Id" = "a0"."ArtistId"
+ORDER BY "a"."Id"
+```
+
+请注意，仅支持将集合具体化。 上例中 `e.Albums` 之后的任何组合都不会产生拆分查询。 这方面的改进由 [#21234](https://github.com/dotnet/efcore/issues/21234) 进行跟踪。
+
+### <a name="indexattribute"></a>IndexAttribute
+
+这个新的 IndexAttribute 可置于实体类型上来指定单列的索引。 例如：
+
+```CSharp
+[Index(nameof(FullName), IsUnique = true)]
+public class User
+{
+    public int Id { get; set; }
+    
+    [MaxLength(128)]
+    public string FullName { get; set; }
+}
+```
+
+对于 SQL Server，迁移随后将生成以下 SQL：
+
+```sql
+CREATE UNIQUE INDEX [IX_Users_FullName]
+    ON [Users] ([FullName])
+    WHERE [FullName] IS NOT NULL;
+```
+
+IndexAttribute 也可用于指定横跨多个列的索引。 例如：
+
+```CSharp
+[Index(nameof(FirstName), nameof(LastName), IsUnique = true)]
+public class User
+{
+    public int Id { get; set; }
+    
+    [MaxLength(64)]
+    public string FirstName { get; set; }
+
+    [MaxLength(64)]
+    public string LastName { get; set; }
+}
+```
+
+对于 SQL Server，这会导致：
+
+```sql
+CREATE UNIQUE INDEX [IX_Users_FirstName_LastName]
+    ON [Users] ([FirstName], [LastName])
+    WHERE [FirstName] IS NOT NULL AND [LastName] IS NOT NULL;
+```
+
+记录信息可通过问题 [#2407](https://github.com/dotnet/EntityFramework.Docs/issues/2407) 进行跟踪。
+
+### <a name="improved-query-translation-exceptions"></a>改进了查询转换异常时显示的消息
+
+我们将继续改进在查询转换失败时生成的异常消息。 例如，以下查询使用未映射的属性 `IsSigned`：
+
+```CSharp
+var artists = context.Artists.Where(e => e.IsSigned).ToList();
+```
+
+EF Core 将引发以下异常，指出由于 `IsSigned` 未映射而导致转换失败：
+
+> 未经处理的异常。 System.InvalidOperationException:无法转换 LINQ 表达式 "DbSet<Artist>() .Where(a => a.IsSigned)"。 其他信息:实体类型 "Artist" 上成员 "IsSigned" 的转换失败。 可能未映射指定的成员。 请用可转换的形式重新编写查询，或者插入对 AsEnumerable()、AsAsyncEnumerable()、ToList() 或 ToListAsync() 的调用来显式切换到客户端评估。 有关详细信息，请参阅 https://go.microsoft.com/fwlink/?linkid=2101038 。
+
+同样地，在尝试用依赖区域性的语义来转换字符串比较时，现将生成信息更丰富的异常消息。 例如，以下查询尝试使用 `StringComparison.CurrentCulture`：
+
+```CSharp
+var artists = context.Artists
+    .Where(e => e.Name.Equals("The Unicorns", StringComparison.CurrentCulture))
+    .ToList();
+```
+
+EF Core 现将引发以下异常：
+
+> 未经处理的异常。 System.InvalidOperationException:无法转换 LINQ 表达式 "DbSet<Artist>() .Where(a => a.Name.Equals( value:"The Unicorns", comparisonType:CurrentCulture))"。 其他信息:不支持采用 "StringComparison" 的 "string.Equals" 方法的转换。 有关更多信息，请参见 https://go.microsoft.com/fwlink/?linkid=2129535 。 请用可转换的形式重新编写查询，或者插入对 AsEnumerable()、AsAsyncEnumerable()、ToList() 或 ToListAsync() 的调用来显式切换到客户端评估。 有关详细信息，请参阅 https://go.microsoft.com/fwlink/?linkid=2101038 。
+
+### <a name="specify-transaction-id"></a>指定事务 ID
+
+此功能是 [@Marusyk](https://github.com/Marusyk) 在社区中贡献的。 非常感谢贡献此功能！
+
+EF Core 公开一个事务 ID 来跨调用关联事务。 此 ID 通常是在启动事务时由 EF Core 设置的。 如果转而由应用程序启动事务，则应用程序可使用此功能来显式设置事务 ID，使其在所用的每个位置都正确关联。 例如：
+
+```CSharp
+using (context.Database.UseTransaction(myTransaction, myId))
+{
+   ...
+}
+```
+
+### <a name="ipaddress-mapping"></a>IPAddress 映射
+
+此功能是 [@ralmsdeveloper](https://github.com/ralmsdeveloper) 在社区中贡献的。 非常感谢贡献此功能！
+
+标准 .NET [IPAddress 类](/dotnet/api/system.net.ipaddress) 现自动映射到尚不具备原生支持的数据库的字符串列中。 例如，请考虑映射以下实体类型：
+
+```CSharp
+public class Host
+{
+    public int Id { get; set; }
+    public IPAddress Address { get; set; }
+}
+```
+
+在 SQL Server 上，这将导致迁移创建以下表：
+
+```sql
+CREATE TABLE [Host] (
+    [Id] int NOT NULL,
+    [Address] nvarchar(45) NULL,
+    CONSTRAINT [PK_Host] PRIMARY KEY ([Id]));
+``` 
+
+之后，可按正常的方式添加实体：
+
+```CSharp
+context.AddRange(
+    new Host { Address = IPAddress.Parse("127.0.0.1")},
+    new Host { Address = IPAddress.Parse("0000:0000:0000:0000:0000:0000:0000:0001")});
+``` 
+
+所生成的 SQL 将插入规范化的 IPv4 或 IPv6 地址：
+
+```sql
+Executed DbCommand (14ms) [Parameters=[@p0='1', @p1='127.0.0.1' (Size = 45), @p2='2', @p3='::1' (Size = 45)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      INSERT INTO [Host] ([Id], [Address])
+      VALUES (@p0, @p1), (@p2, @p3);
+```
+
+### <a name="exclude-onconfiguring-when-scaffolding"></a>在创建基架时排除 OnConfiguring
+
+在基于现有数据库创建 DbContext 的基架时，EF Core 会默认创建一个 OnConfiguring 重载，该重载有一个连接字符串，以便上下文可立即供用户使用。 不过，如果你只有带 OnConfiguring 的分部类，或者你要用其他方式部署上下文，则此方法将不起作用。
+
+若要解决这种情况，现可指示基架命令不生成 OnConfiguring。 例如：
+
+```
+dotnet ef dbcontext scaffold "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook" Microsoft.EntityFrameworkCore.SqlServer --no-onconfiguring
+```
+
+或者在包管理器控制台中：
+
+```
+Scaffold-DbContext 'Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook' Microsoft.EntityFrameworkCore.SqlServer -NoOnConfiguring 
+``` 
+
+请注意，建议使用[命名的连接字符串和安全存储（如用户机密）](/core/managing-schemas/scaffolding?tabs=vs#configuration-and-user-secrets)。
+
+### <a name="translations-for-firstordefault-on-strings"></a>转换字符串中的 FirstOrDefault
+
+此功能是 [@dvoreckyaa](https://github.com/dvoreckyaa) 在社区中贡献的。 非常感谢贡献此功能！
+
+现将转换字符串中字符的 FirstOrDefault 和类似运算符。 例如，使用 SQL Server 时，以下 LINQ 查询：
+
+```CSharp
+context.Customers.Where(c => c.ContactName.FirstOrDefault() == 'A').ToList();
+```
+
+将转换为以下 SQL：
+
+```sql
+SELECT [c].[Id], [c].[ContactName]
+FROM [Customer] AS [c]
+WHERE SUBSTRING([c].[ContactName], 1, 1) = N'A'
+```
+
+### <a name="simplify-case-blocks"></a>简化 CASE 块
+
+EF Core 现使用 CASE 块生成效果更佳的查询。 例如，以下 LINQ 查询： 
+
+```CSharp
+context.Weapons
+    .OrderBy(w => w.Name.CompareTo("Marcus' Lancer") == 0)
+    .ThenBy(w => w.Id)
+```
+
+之前在 SQL Server 上正式转换为：
+
+```sql
+SELECT [w].[Id], [w].[AmmunitionType], [w].[IsAutomatic], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
+FROM [Weapons] AS [w]
+ORDER BY CASE
+    WHEN (CASE
+        WHEN [w].[Name] = N'Marcus'' Lancer' THEN 0
+        WHEN [w].[Name] > N'Marcus'' Lancer' THEN 1
+        WHEN [w].[Name] < N'Marcus'' Lancer' THEN -1
+    END = 0) AND CASE
+        WHEN [w].[Name] = N'Marcus'' Lancer' THEN 0
+        WHEN [w].[Name] > N'Marcus'' Lancer' THEN 1
+        WHEN [w].[Name] < N'Marcus'' Lancer' THEN -1
+    END IS NOT NULL THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END, [w].[Id]");
+``` 
+
+但它现在转换为：
+
+```sql
+SELECT [w].[Id], [w].[AmmunitionType], [w].[IsAutomatic], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
+FROM [Weapons] AS [w]
+ORDER BY CASE
+    WHEN ([w].[Name] = N'Marcus'' Lancer') AND [w].[Name] IS NOT NULL THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END, [w].[Id]");
+``` 
 
 ## <a name="preview-5"></a>预览版 5
 
 ### <a name="database-collations"></a>数据库排序规则
 
-现可在 EF 模式中指定数据库的默认排序规则。
-这将传输到生成的迁移，在创建数据库时设置排序规则。
-例如：
+现可在 EF 模式中指定数据库的默认排序规则。 这将传输到生成的迁移，在创建数据库时设置排序规则。 例如：
 
 ```CSharp
 modelBuilder.UseCollation("German_PhoneBook_CI_AS");
@@ -40,8 +329,7 @@ CREATE DATABASE [Test]
 COLLATE German_PhoneBook_CI_AS;
 ```
 
-可指定用于特定数据库列的排序规则。
-例如：
+可指定用于特定数据库列的排序规则。 例如：
 
 ```CSharp
  modelBuilder
@@ -52,8 +340,7 @@ COLLATE German_PhoneBook_CI_AS;
 
 对于不使用迁移的列，可在创建 DbContext 基架时从数据库对排序规则进行反向工程处理。
 
-最后，可通过 `EF.Functions.Collate()` 使用不同的排序规则进行即席查询。
-例如：
+最后，可通过 `EF.Functions.Collate()` 使用不同的排序规则进行即席查询。 例如：
 
 ```CSharp
 context.Users.Single(e => EF.Functions.Collate(e.Name, "French_CI_AS") == "Jean-Michel Jarre");
@@ -79,8 +366,7 @@ WHERE [u].[Name] COLLATE French_CI_AS = N'Jean-Michel Jarre'
 dotnet ef migrations add two --verbose --dev
 ``` 
 
-然后，该参数将传输到工厂，它在这里可用于控制如何创建和初始化上下文。
-例如：
+然后，该参数将传输到工厂，它在这里可用于控制如何创建和初始化上下文。 例如：
 
 ```CSharp
 public class MyDbContextFactory : IDesignTimeDbContextFactory<SomeDbContext>
@@ -94,8 +380,7 @@ public class MyDbContextFactory : IDesignTimeDbContextFactory<SomeDbContext>
 
 ### <a name="no-tracking-queries-with-identity-resolution"></a>具有标识解析的非跟踪查询
 
-现可将非跟踪查询配置来执行标识解析。
-例如，以下查询将为每个 Post 创建一个新的 Blog 实例，即使每个 Blog 的主键相同也是如此。 
+现可将非跟踪查询配置来执行标识解析。 例如，以下查询将为每个 Post 创建一个新的 Blog 实例，即使每个 Blog 的主键相同也是如此。 
 
 ```CSharp
 context.Posts.AsNoTracking().Include(e => e.Blog).ToList();
@@ -107,19 +392,15 @@ context.Posts.AsNoTracking().Include(e => e.Blog).ToList();
 context.Posts.AsNoTracking().PerformIdentityResolution().Include(e => e.Blog).ToList();
 ```
 
-请注意，这仅适用于非跟踪查询，因为所有跟踪查询已显示此行为。 此外，在 API 评审后，将更改 `PerformIdentityResolution` 语法。
-请查看 [#19877](https://github.com/dotnet/efcore/issues/19877#issuecomment-637371073)。
+请注意，这仅适用于非跟踪查询，因为所有跟踪查询已显示此行为。 此外，在 API 评审后，将更改 `PerformIdentityResolution` 语法。 请查看 [#19877](https://github.com/dotnet/efcore/issues/19877#issuecomment-637371073)。
 
 文档可通过问题 [#1895](https://github.com/dotnet/EntityFramework.Docs/issues/1895) 进行跟踪。
 
 ### <a name="stored-persisted-computed-columns"></a>存储的（持久化）计算列
 
-大多数数据库都允许在计算后存储计算得到的列值。
-虽然这会占用磁盘空间，但仅在更新时对计算的列计算一次，而不是在每次检索它的值时都计算。
-这样也可对某些数据库编制列的索引。
+大多数数据库都允许在计算后存储计算得到的列值。 虽然这会占用磁盘空间，但仅在更新时对计算的列计算一次，而不是在每次检索它的值时都计算。 这样也可对某些数据库编制列的索引。
 
-EF Core 5.0 允许将计算列配置为存储计算列。
-例如：
+EF Core 5.0 允许将计算列配置为存储计算列。 例如：
  
 ```CSharp
 modelBuilder
@@ -136,8 +417,7 @@ EF Core 现支持在 SQLite 数据库中使用计算列。
 
 ### <a name="configure-database-precisionscale-in-model"></a>在模型中配置数据库精度/小数位数
 
-现在，可以使用模型生成器指定属性的精度和小数位数。
-例如：
+现在，可以使用模型生成器指定属性的精度和小数位数。 例如：
 
 ```CSharp
 modelBuilder
@@ -152,8 +432,7 @@ modelBuilder
 
 ### <a name="specify-sql-server-index-fill-factor"></a>指定 SQL Server 索引填充因子
 
-现在可以在 SQL Server 上创建索引时指定填充因子。
-例如：
+现在可以在 SQL Server 上创建索引时指定填充因子。 例如：
 
 ```CSharp
 modelBuilder
@@ -166,8 +445,7 @@ modelBuilder
 
 ### <a name="filtered-include"></a>经过筛选的包含
 
-Include 方法现在支持筛选包含的实体。
-例如：
+Include 方法现在支持筛选包含的实体。 例如：
 
 ```CSharp
 var blogs = context.Blogs
@@ -177,8 +455,7 @@ var blogs = context.Blogs
 
 此查询将一并返回包含每个关联文章的博客（仅当文章标题包含“Cheese”时）。
 
-Skip 和 Take 也可用于减少包含的实体数量。
-例如：
+Skip 和 Take 也可用于减少包含的实体数量。 例如：
  
 ```CSharp
 var blogs = context.Blogs
@@ -191,23 +468,19 @@ var blogs = context.Blogs
 
 ### <a name="new-modelbuilder-api-for-navigation-properties"></a>用于导航属性的新 ModelBuilder API
 
-导航属性主要在[定义关系](xref:core/modeling/relationships)时配置。
-但是，在导航属性需要额外配置的情况下，可以使用新的 `Navigation` 方法。
-例如，如需在根据约定找不到支持字段时设置导航的支持字段，请执行以下操作：
+导航属性主要在[定义关系](xref:core/modeling/relationships)时配置。 但是，在导航属性需要额外配置的情况下，可以使用新的 `Navigation` 方法。 例如，如需在根据约定找不到支持字段时设置导航的支持字段，请执行以下操作：
 
 ```CSharp
 modelBuilder.Entity<Blog>().Navigation(e => e.Posts).HasField("_myposts");
 ```
 
-请注意：`Navigation` API 不会替换关系配置。
-但是，它允许在已发现或定义的关系中进行其他导航属性配置。
+请注意：`Navigation` API 不会替换关系配置。 但是，它允许在已发现或定义的关系中进行其他导航属性配置。
 
 请参阅[配置导航属性文档](xref:core/modeling/relationships#configuring-navigation-properties)。
 
 ### <a name="new-command-line-parameters-for-namespaces-and-connection-strings"></a>用于命名空间和连接字符串的新命令行参数 
 
-迁移和基架现在允许在命令行上指定命名空间。
-例如，如需对数据库进行反向工程，将上下文和模型类放在不同的命名空间中： 
+迁移和基架现在允许在命令行上指定命名空间。 例如，如需对数据库进行反向工程，将上下文和模型类放在不同的命名空间中： 
 
 ```
 dotnet ef dbcontext scaffold "connection string" Microsoft.EntityFrameworkCore.SqlServer --context-namespace "My.Context" --namespace "My.Model"
@@ -228,8 +501,7 @@ dotnet ef database update --connection "connection string"
 
 ### <a name="enabledetailederrors-has-returned"></a>EnableDetailedErrors 已返回
 
-出于性能原因，在从数据库读取值时，EF 不会执行额外的 null 检查。
-当遇到意外的 null 时，这可能会导致难以查找根本原因的异常。
+出于性能原因，在从数据库读取值时，EF 不会执行额外的 null 检查。 当遇到意外的 null 时，这可能会导致难以查找根本原因的异常。
 
 使用 `EnableDetailedErrors` 会将额外的 null 检查添加到查询中，这样一来，对于较小的性能开销，这些错误就更容易追溯到根本原因。  
 
@@ -246,8 +518,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 ### <a name="cosmos-partition-keys"></a>Cosmos 分区键
 
-现在可以在查询中指定用于给定查询的分区键。
-例如：
+现在可以在查询中指定用于给定查询的分区键。 例如：
 
 ```CSharp
 await context.Set<Customer>()
@@ -259,8 +530,7 @@ await context.Set<Customer>()
 
 ### <a name="support-for-the-sql-server-datalength-function"></a>支持 SQL Server DATALENGTH 函数
 
-可以使用新的 `EF.Functions.DataLength` 方法访问它。
-例如：
+可以使用新的 `EF.Functions.DataLength` 方法访问它。 例如：
 ```CSharp
 var count = context.Orders.Count(c => 100 < EF.Functions.DataLength(c.OrderDate));
 ``` 
@@ -269,9 +539,7 @@ var count = context.Orders.Count(c => 100 < EF.Functions.DataLength(c.OrderDate)
 
 ### <a name="use-a-c-attribute-to-specify-a-property-backing-field"></a>使用 C# 特性指定属性支持字段
 
-现在，可以使用 C# 特性指定属性的支持字段。
-使用此特性，即使在不能自动找到支持字段时，EF Core 也能正常读写支持字段。
-例如：
+现在，可以使用 C# 特性指定属性的支持字段。 使用此特性，即使在不能自动找到支持字段时，EF Core 也能正常读写支持字段。 例如：
 
 ```CSharp
 public class Blog
@@ -293,9 +561,7 @@ public class Blog
 
 ### <a name="complete-discriminator-mapping"></a>完成鉴别器映射
 
-EF Core 使用鉴别器列进行 [继承层次结构的 TPH 映射](/ef/core/modeling/inheritance)。
-只要 EF Core 知道该鉴别器的所有可能的值，就可能实现某些性能改进。
-EF Core 5.0 现在可实现这些改进。
+EF Core 使用鉴别器列进行 [继承层次结构的 TPH 映射](/ef/core/modeling/inheritance)。 只要 EF Core 知道该鉴别器的所有可能的值，就可能实现某些性能改进。 EF Core 5.0 现在可实现这些改进。
 
 例如，对于返回层次结构中所有类型的查询，旧版 EF Core 总是会生成以下 SQL：
 
@@ -327,8 +593,7 @@ FROM [Animal] AS [a]
 
 ### <a name="simple-logging"></a>简单的日志记录
 
-此特性会添加类似于 EF6 中 `Database.Log` 的功能。
-也就是说，它提供了一种从 EF Core 获取日志的简单方法，而不需要配置任何类型的外部日志记录框架。
+此特性会添加类似于 EF6 中 `Database.Log` 的功能。 也就是说，它提供了一种从 EF Core 获取日志的简单方法，而不需要配置任何类型的外部日志记录框架。
 
 初步文档包含在 [2019 年 12 月 5 日发布的 EF 每周状态](https://github.com/dotnet/efcore/issues/15403#issuecomment-562332863)中。
 
@@ -344,8 +609,7 @@ EF Core 5.0 引入了 `ToQueryString` 扩展方法，该方法会返回执行 LI
 
 ### <a name="use-a-c-attribute-to-indicate-that-an-entity-has-no-key"></a>使用 C# 特性指示实体没有键
 
-现在可以将实体类型配置为不使用新 `KeylessAttribute`的键。
-例如：
+现在可以将实体类型配置为不使用新 `KeylessAttribute`的键。 例如：
 
 ```CSharp
 [Keyless]
@@ -361,25 +625,19 @@ public class Address
 
 ### <a name="connection-or-connection-string-can-be-changed-on-initialized-dbcontext"></a>可在初始化的 DbContext 上更改连接或连接字符串
 
-现在可以更轻松地创建 DbContext 实例，而无需任何连接或连接字符串。
-而且，现在可以在上下文实例上更改连接或连接字符串。
-此功能使得同一个上下文实例能够动态地连接到不同的数据库。
+现在可以更轻松地创建 DbContext 实例，而无需任何连接或连接字符串。 而且，现在可以在上下文实例上更改连接或连接字符串。 此功能使得同一个上下文实例能够动态地连接到不同的数据库。
 
 文档可通过问题 [#2075](https://github.com/dotnet/EntityFramework.Docs/issues/2075) 进行跟踪。
 
 ### <a name="change-tracking-proxies"></a>更改跟踪代理
 
-EF Core 现在可以生成自动实现 [INotifyPropertyChanging](https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging?view=netcore-3.1) 和 [INotifyPropertyChanged](https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged?view=netcore-3.1) 的运行时代理。
-这些代理会将实体属性的值更改直接报告给 EF Core，从而无需扫描更改。
-不过，代理有其自身的一组限制，因此并不适合所有人使用。
+EF Core 现在可以生成自动实现 [INotifyPropertyChanging](https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging?view=netcore-3.1) 和 [INotifyPropertyChanged](https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged?view=netcore-3.1) 的运行时代理。 这些代理会将实体属性的值更改直接报告给 EF Core，从而无需扫描更改。 不过，代理有其自身的一组限制，因此并不适合所有人使用。
 
 文档可通过问题 [#2076](https://github.com/dotnet/EntityFramework.Docs/issues/2076) 进行跟踪。
 
 ### <a name="enhanced-debug-views"></a>增强的调试视图
 
-调试视图是调试问题时查看 EF Core 内部情况的一种简单方法。
-在一段时间之前，我们就已经实现了模型的调试视图。
-对于 EF Core 5.0，我们使模型视图更易于读取，并在状态管理器中为跟踪的实体添加了新的调试视图。
+调试视图是调试问题时查看 EF Core 内部情况的一种简单方法。 在一段时间之前，我们就已经实现了模型的调试视图。 对于 EF Core 5.0，我们使模型视图更易于读取，并在状态管理器中为跟踪的实体添加了新的调试视图。
 
 初步文档包含在 [2019 年 12 月 12 日发布的 EF 每周状态](https://github.com/dotnet/efcore/issues/15403#issuecomment-565196206)中。
 
@@ -387,24 +645,19 @@ EF Core 现在可以生成自动实现 [INotifyPropertyChanging](https://docs.mi
 
 ### <a name="improved-handling-of-database-null-semantics"></a>改进了对数据库 null 语义的处理
 
-关系数据库通常将 NULL 视为未知值，因此它不等于任何其他 NULL 值。
-而 C# 将 null 视为与其他任何 null 相比均相等的定义值。
-默认情况下，EF Core 会转换查询，使查询使用 C# null 语义。
-EF Core 5.0 极大地提升了这些转换操作的效率。
+关系数据库通常将 NULL 视为未知值，因此它不等于任何其他 NULL 值。 而 C# 将 null 视为与其他任何 null 相比均相等的定义值。 默认情况下，EF Core 会转换查询，使查询使用 C# null 语义。 EF Core 5.0 极大地提升了这些转换操作的效率。
 
 文档可通过问题 [#1612](https://github.com/dotnet/EntityFramework.Docs/issues/1612) 进行跟踪。
 
 ### <a name="indexer-properties"></a>索引器属性
 
-EF Core 5.0 支持 C# 索引器属性的映射。
-这写属性使得实体能够充当属性包，实体中的列被映射为包中的命名属性。
+EF Core 5.0 支持 C# 索引器属性的映射。 这写属性使得实体能够充当属性包，实体中的列被映射为包中的命名属性。
 
 文档可通过问题 [#2018](https://github.com/dotnet/EntityFramework.Docs/issues/2018) 进行跟踪。
 
 ### <a name="generation-of-check-constraints-for-enum-mappings"></a>为枚举映射生成检查约束
 
-EF Core 5.0 迁移现可为枚举属性映射生成检查约束。
-例如：
+EF Core 5.0 迁移现可为枚举属性映射生成检查约束。 例如：
 
 ```SQL
 MyEnumColumn VARCHAR(10) NOT NULL CHECK (MyEnumColumn IN ('Useful', 'Useless', 'Unknown'))
@@ -414,9 +667,7 @@ MyEnumColumn VARCHAR(10) NOT NULL CHECK (MyEnumColumn IN ('Useful', 'Useless', '
 
 ### <a name="isrelational"></a>IsRelational
 
-除了现有 `IsSqlServer`、`IsSqlite` 和 `IsInMemory` 外，还添加了新的 `IsRelational` 方法。
-此方法可用于测试 DbContext 是否使用任何关系数据库提供程序。
-例如：
+除了现有 `IsSqlServer`、`IsSqlite` 和 `IsInMemory` 外，还添加了新的 `IsRelational` 方法。 此方法可用于测试 DbContext 是否使用任何关系数据库提供程序。 例如：
 
 ```CSharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -432,8 +683,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ### <a name="cosmos-optimistic-concurrency-with-etags"></a>使用 ETag 的 Cosmos 开放式并发
 
-Azure Cosmos DB 数据库提供程序现在支持使用 ETag 的开放式并发。
-使用 OnModelCreating 中的模型生成器配置 ETag：
+Azure Cosmos DB 数据库提供程序现在支持使用 ETag 的开放式并发。 使用 OnModelCreating 中的模型生成器配置 ETag：
 
 ```CSharp
 builder.Entity<Customer>().Property(c => c.ETag).IsEtagConcurrency();
@@ -471,8 +721,7 @@ var count = context.Orders.Count(c => date > EF.Functions.DateFromParts(DateTime
 
 ### <a name="query-translation-for-reverse"></a>反向查询转换
 
-现在，使用 `Reverse` 的查询会被转换。
-例如：
+现在，使用 `Reverse` 的查询会被转换。 例如：
 
 ```CSharp
 context.Employees.OrderBy(e => e.EmployeeID).Reverse()
