@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: aeb0f5f8-b212-4f89-ae83-c642a5190ba0
 uid: core/miscellaneous/connection-strings
-ms.openlocfilehash: 062a7f292d16deb3840fd116f270edb11c6e0687
-ms.sourcegitcommit: 59e3d5ce7dfb284457cf1c991091683b2d1afe9d
+ms.openlocfilehash: e955e93723fc371170641b0b3209cca014ef1c26
+ms.sourcegitcommit: 31536e52b838a84680d2e93e5bb52fb16df72a97
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/20/2020
-ms.locfileid: "83672917"
+ms.lasthandoff: 07/10/2020
+ms.locfileid: "86238146"
 ---
 # <a name="connection-strings"></a>连接字符串
 
@@ -17,7 +17,7 @@ ms.locfileid: "83672917"
 
 ## <a name="winforms--wpf-applications"></a>WinForms & WPF 应用程序
 
-WinForms、WPF 和 ASP.NET 4 应用程序都有一个已尝试并经过测试的连接字符串模式。 如果你使用的是 ASP.NET，则应将连接字符串添加到应用程序的 app.config 文件（web.config）中。 如果您的连接字符串包含敏感信息（例如用户名和密码），则可以使用[机密管理器工具](/aspnet/core/security/app-secrets#secret-manager)来保护配置文件的内容。
+WinForms、WPF 和 ASP.NET 4 应用程序都有一个已尝试并经过测试的连接字符串模式。 如果使用 ASP.NET) ，则应将连接字符串添加到应用程序的 App.config 文件中 ( # A1。 如果您的连接字符串包含敏感信息（例如用户名和密码），则可以使用[机密管理器工具](/aspnet/core/security/app-secrets#secret-manager)来保护配置文件的内容。
 
 ``` xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -31,7 +31,7 @@ WinForms、WPF 和 ASP.NET 4 应用程序都有一个已尝试并经过测试的
 ```
 
 > [!TIP]  
-> `providerName`由于数据库提供程序是通过代码配置的，因此在 app.config 中存储的 EF Core 连接字符串上不需要此设置。
+> `providerName`由于数据库提供程序是通过代码配置的，因此在 App.config 中存储的 EF Core 连接字符串上不需要此设置。
 
 然后，你可以 `ConfigurationManager` 在上下文的方法中使用 API 来读取连接字符串 `OnConfiguring` 。 可能需要添加对 `System.Configuration` 框架程序集的引用才能使用此 API。
 
@@ -73,7 +73,7 @@ public class BloggingContext : DbContext
 
 ```dotnetcli
 dotnet user-secrets set ConnectionStrings.YourDatabaseAlias "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=YourDatabase"
-dotnet ef dbcontext scaffold Name=YourDatabaseAlias Microsoft.EntityFrameworkCore.SqlServer
+dotnet ef dbcontext scaffold Name=ConnectionStrings.YourDatabaseAlias Microsoft.EntityFrameworkCore.SqlServer
 ```
 
 下面的示例显示了中存储的连接字符串 `appsettings.json` 。
@@ -86,7 +86,7 @@ dotnet ef dbcontext scaffold Name=YourDatabaseAlias Microsoft.EntityFrameworkCor
 }
 ```
 
-然后，上下文通常在中配置为在 `Startup.cs` 从配置中读取的连接字符串中。 请注意， `GetConnectionString()` 方法查找其键为的配置值 `ConnectionStrings:<connection string name>` 。 需要导入 Microsoft extension [. 配置](/dotnet/api/microsoft.extensions.configuration)命名空间才能使用此扩展方法。
+然后，上下文通常在中配置为在 `Startup.cs` 从配置中读取的连接字符串中。 请注意， `GetConnectionString()` 方法查找其键为的配置值 `ConnectionStrings:<connection string name>` 。 需要导入[Microsoft.Extensions.Configu](/dotnet/api/microsoft.extensions.configuration)命名空间才能使用此扩展方法。
 
 ``` csharp
 public void ConfigureServices(IServiceCollection services)

@@ -4,12 +4,12 @@ author: AndriySvyryd
 ms.date: 01/03/2020
 ms.assetid: 75369266-d2b9-4416-b118-ed238f81f599
 uid: core/modeling/shadow-properties
-ms.openlocfilehash: 229cfd83f75b01dff9ac9ad30ee55c7cc727c19e
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.openlocfilehash: b24ff85d8f5910a5625910e7225a94112d769824
+ms.sourcegitcommit: 31536e52b838a84680d2e93e5bb52fb16df72a97
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78414709"
+ms.lasthandoff: 07/10/2020
+ms.locfileid: "86238276"
 ---
 # <a name="shadow-properties"></a>阴影属性
 
@@ -17,33 +17,35 @@ ms.locfileid: "78414709"
 
 ## <a name="foreign-key-shadow-properties"></a>外键阴影属性
 
-影子属性最常用于外键属性，其中两个实体之间的关系由数据库中的外键值表示，但使用实体之间的导航属性在实体类型上管理关系各种. 按照约定，当发现关系但在依赖实体类中找不到外键属性时，EF 会引入一个影子属性。
+影子属性最常用于外键属性，其中两个实体之间的关系由数据库中的外键值表示，但使用实体类型之间的导航属性在实体类型上管理关系。 按照约定，当发现关系但在依赖实体类中找不到外键属性时，EF 会引入一个影子属性。
 
-属性将命名为 `<navigation property name><principal key property name>` （指向主体实体的依赖实体上的导航用于命名）。 如果主体键属性名称包含导航属性的名称，则该名称将只 `<principal key property name>`。 如果依赖实体上没有导航属性，则会在其位置使用主体类型名称。
+该属性将被命名 `<navigation property name><principal key property name>` (在依赖实体上导航（指向主体实体）用于命名) 。 如果主体键属性名称包含导航属性的名称，则该名称将只是 `<principal key property name>` 。 如果依赖实体上没有导航属性，则会在其位置使用主体类型名称。
 
-例如，下面的代码列表将导致向 `Post` 实体引入 `BlogId` 影子属性：
+例如，下面的代码列表将导致将 `BlogId` 影子属性引入到 `Post` 实体：
 
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/ShadowForeignKey.cs?name=Conventions&highlight=21-23)]
 
 ## <a name="configuring-shadow-properties"></a>配置阴影属性
 
-你可以使用 "熟知 API" 配置阴影属性。 在您调用了 `Property`的字符串重载后，您可以将对其他属性的任何配置调用链接在一起。 在下面的示例中，由于 `Blog` 没有名为 `LastUpdated`的 CLR 属性，因此将创建一个影子属性：
+你可以使用 "熟知 API" 配置阴影属性。 调用的字符串重载后 `Property` ，可以链接到其他属性的任何配置调用。 在下面的示例中，由于 `Blog` 没有名为的 CLR 属性，因此将 `LastUpdated` 创建一个影子属性：
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ShadowProperty.cs?name=ShadowProperty&highlight=8)]
 
-如果提供给 `Property` 方法的名称与现有属性（在实体类中定义）的名称相匹配，则代码将配置该现有属性，而不是引入新的阴影属性。
+如果提供给方法的名称 `Property` 与现有属性的名称相匹配 (影子属性或在实体类) 上定义的属性，则代码将配置该现有属性，而不是引入新的阴影属性。
 
 ## <a name="accessing-shadow-properties"></a>访问阴影属性
 
-可以通过 `ChangeTracker` API 获取和更改影子属性值：
+可以通过 API 获取和更改影子属性值 `ChangeTracker` ：
 
 ``` csharp
 context.Entry(myBlog).Property("LastUpdated").CurrentValue = DateTime.Now;
 ```
 
-可以通过 `EF.Property` 静态方法在 LINQ 查询中引用阴影属性：
+可以通过静态方法在 LINQ 查询中引用影子属性 `EF.Property` ：
 
 ``` csharp
 var blogs = context.Blogs
     .OrderBy(b => EF.Property<DateTime>(b, "LastUpdated"));
 ```
+
+在无跟踪查询后，不能访问阴影属性，因为更改跟踪器不跟踪返回的实体。

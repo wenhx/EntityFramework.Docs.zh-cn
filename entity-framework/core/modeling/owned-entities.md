@@ -5,12 +5,12 @@ author: AndriySvyryd
 ms.author: ansvyryd
 ms.date: 11/06/2019
 uid: core/modeling/owned-entities
-ms.openlocfilehash: 69bdd5d5a64983d691b5967f3a64dedccbd7c07f
-ms.sourcegitcommit: 59e3d5ce7dfb284457cf1c991091683b2d1afe9d
+ms.openlocfilehash: 6ff98d005c0a868d420509571378756c56edc54a
+ms.sourcegitcommit: 31536e52b838a84680d2e93e5bb52fb16df72a97
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/20/2020
-ms.locfileid: "83672797"
+ms.lasthandoff: 07/10/2020
+ms.locfileid: "86238120"
 ---
 # <a name="owned-entity-types"></a>从属实体类型
 
@@ -20,7 +20,7 @@ EF Core 允许您为只能出现在其他实体类型的导航属性中的实体
 
 ## <a name="explicit-configuration"></a>显式配置
 
-所有实体类型永远不会通过约定 EF Core 在模型中。 您可以使用 `OwnsOne` 中的方法 `OnModelCreating` 或使用批注 `OwnedAttribute` （在 EF Core 2.1 中为 new）来将类型配置为拥有类型。
+所有实体类型永远不会通过约定 EF Core 在模型中。 您可以使用 `OwnsOne` 中的方法 `OnModelCreating` 或使用 `OwnedAttribute` EF Core 2.1) 中的新 (来批注该类型，以便将该类型配置为拥有的类型。
 
 在此示例中， `StreetAddress` 是一个无标识属性的类型。 它用作 Order 类型的属性来指定特定订单的发货地址。
 
@@ -57,8 +57,8 @@ EF Core 允许您为只能出现在其他实体类型的导航属性中的实体
 
 这两个最直接的解决方案是：
 
-- 在独立于指向所有者的外键的新属性上定义代理项主键。 所包含的值需要在所有所有者之间是唯一的（例如，如果父项 {1} 具有子级 {1} ，则父项 {2} 不能有子级 {1} ），因此，该值没有任何固有含义。 由于外键不是主键的一部分，因此可以更改其值，因此，您可以将子级从一个父级移到另一个父级，但这通常会针对聚合语义进行。
-- 使用外键和附加属性作为组合键。 现在，附加属性值只需对于给定父代是唯一的（因此，如果父项 {1} 具有子级， {1,1} 则父项 {2} 仍可以有子级 {2,1} ）。 通过创建主键的外键部分，所有者和拥有的实体之间的关系将变为不可变的，并且更好地反映了聚合语义。 这是 EF Core 默认情况下执行的操作。
+- 在独立于指向所有者的外键的新属性上定义代理项主键。 所有所有者都需要唯一的包含值 (例如，如果父项 {1} 具有子级 {1} ，则父项 {2} 不能具有子 {1}) ，因此，该值没有任何固有含义。 由于外键不是主键的一部分，因此可以更改其值，因此，您可以将子级从一个父级移到另一个父级，但这通常会针对聚合语义进行。
+- 使用外键和附加属性作为组合键。 现在，附加属性值只需对于给定父 (是唯一的，因此，如果 Parent {1} 具有子级， {1,1} 则父项 {2} 仍可以具有子 {2,1}) 。 通过创建主键的外键部分，所有者和拥有的实体之间的关系将变为不可变的，并且更好地反映了聚合语义。 这是 EF Core 默认情况下执行的操作。
 
 在此示例中，我们将使用 `Distributor` 类：
 
@@ -71,7 +71,7 @@ EF Core 允许您为只能出现在其他实体类型的导航属性中的实体
 [!code-csharp[OwnsMany](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsMany)]
 
 > [!NOTE]
-> 在 EF Core 3.0 `WithOwner()` 方法不存在之前，应删除此调用。 此外，不会自动发现主键，因此始终指定了它。
+> 在 EF Core 3.0 `WithOwner()` 方法不存在之前，应删除此调用。 此外，不会自动发现主键，因此始终必须指定它。
 
 ## <a name="mapping-owned-types-with-table-splitting"></a>将拥有的类型映射到表拆分
 
@@ -151,7 +151,7 @@ EF Core 允许您为只能出现在其他实体类型的导航属性中的实体
 
 - 拥有的实体类型不能具有继承层次结构
 - 引用导航到拥有的实体类型不能为 null，除非它们显式映射到与所有者不同的表
-- 拥有的实体类型的实例不能由多个所有者共享（这是一个已知的值对象方案，不能使用拥有的实体类型来实现）
+- 多个所有者不能共享拥有的实体类型的实例 (这是一个已知的值对象方案，不能使用拥有的实体类型实现) 
 
 ### <a name="shortcomings-in-previous-versions"></a>以前版本中的缺点
 

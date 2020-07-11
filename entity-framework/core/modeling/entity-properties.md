@@ -5,12 +5,12 @@ author: lajones
 ms.date: 05/27/2020
 ms.assetid: e9dff604-3469-4a05-8f9e-18ac281d82a9
 uid: core/modeling/entity-properties
-ms.openlocfilehash: fcf3b0f8480fde2f3ba6b5fd601db115f1d246b8
-ms.sourcegitcommit: ebfd3382fc583bc90f0da58e63d6e3382b30aa22
+ms.openlocfilehash: d4e4c50d8c7febf5e42e9aa39352c0bb6a6bd409
+ms.sourcegitcommit: 31536e52b838a84680d2e93e5bb52fb16df72a97
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/25/2020
-ms.locfileid: "85370508"
+ms.lasthandoff: 07/10/2020
+ms.locfileid: "86238211"
 ---
 # <a name="entity-properties"></a>实体属性
 
@@ -36,7 +36,7 @@ ms.locfileid: "85370508"
 
 按照约定，使用关系数据库时，实体属性映射到与属性同名的表列。
 
-如果希望使用不同的名称配置列，可以执行以下操作：
+如果希望使用不同的名称配置列，可以使用以下代码片段：
 
 ### <a name="data-annotations"></a>[数据批注](#tab/data-annotations)
 
@@ -52,7 +52,7 @@ ms.locfileid: "85370508"
 
 使用关系数据库时，数据库提供程序根据属性的 .NET 类型选择数据类型。 它还会考虑其他元数据，如配置的[最大长度](#maximum-length)、属性是否是主键的一部分等。
 
-例如，SQL Server 将属性映射到列，将属性映射到 `DateTime` `datetime2(7)` `string` `nvarchar(max)` 列（对于用作键的属性，则为 `nvarchar(450)` ）。
+例如，对于用作键) 的属性，SQL Server 将 `DateTime` 属性映射到 `datetime2(7)` 列，并将属性映射 `string` 到 `nvarchar(max)` 列 (或 `nvarchar(450)` 。
 
 您还可以配置列，以便为列指定精确的数据类型。 例如，以下代码将配置 `Url` 为一个非 unicode 字符串，其最大长度为 `200` ， `Rating` 小数位数为，小数 `5` 位数为，小数位数为 `2` ：
 
@@ -87,7 +87,7 @@ ms.locfileid: "85370508"
 
 ### <a name="precision-and-scale"></a>精度和小数位数
 
-从 EFCore 5.0 开始，可以使用 Fluent API 来配置精度和小数位数。 它告知数据库提供程序所需的存储空间量。 它仅适用于数据类型，在这种情况下，提供程序允许精度和小数位数变化-通常仅限 `decimal` 和 `DateTime` 。
+从 EFCore 5.0 开始，可以使用 Fluent API 来配置精度和小数位数。 它告知数据库提供程序所需的存储空间量。 它仅适用于提供程序允许精度和小数位数变化的数据类型，通常为 `decimal` 和 `DateTime` 。
 
 对于 `decimal` 属性，精度定义表示列将包含的任何值所需的最大位数，而 scale 定义所需的最大小数位数。 对于 `DateTime` 属性，精度定义表示秒的小数部分所需的最大位数，并且不使用小数位数。
 
@@ -95,6 +95,10 @@ ms.locfileid: "85370508"
 > 在将数据传递给提供程序之前，实体框架不会进行任何精度验证或缩放。 根据需要验证提供程序或数据存储。 例如，如果以 SQL Server 为目标，则数据类型为的列 `datetime` 不允许设置精度，而一个列的 `datetime2` 精度介于0到7（含）之间。
 
 在下面的示例中， `Score` 将属性配置为具有精度14和小数位数2将导致 `decimal(14,2)` 在 SQL Server 上创建类型为的列，并且 `LastUpdated` 将属性配置为具有精度3将导致类型为的列 `datetime2(3)` ：
+
+#### <a name="data-annotations"></a>[数据批注](#tab/data-annotations)
+
+当前无法使用数据批注来进行配置。
 
 #### <a name="fluent-api"></a>[Fluent API](#tab/fluent-api)
 
@@ -111,16 +115,16 @@ ms.locfileid: "85370508"
 
 ### <a name="conventions"></a>约定
 
-按照约定，.NET 类型可以包含 null 的属性将配置为可选，而 .NET 类型不能包含 null 的属性将根据需要进行配置。 例如，具有 .net 值类型（ `int` 、 `decimal` 、等）的所有属性 `bool` 都是必需的，并且具有可为 null 的 .net 值类型（、、等）的所有属性 `int?` `decimal?` `bool?` 都配置为可选。
+按照约定，.NET 类型可以包含 null 的属性将配置为可选，而 .NET 类型不能包含 null 的属性将根据需要进行配置。 例如，所有具有 .net 值类型的属性 (`int` 、 `decimal` ) 、等 `bool` 都是必需的，并且具有可为 null 的 .net 值类型 (、) 、等）的所有属性 `int?` `decimal?` `bool?` 都配置为可选。
 
 C # 8 引入了一个名[为 null 的引用类型](/dotnet/csharp/tutorials/nullable-reference-types)的新功能，该功能允许对引用类型进行批注，以指示它是否可用于包含空值。 此功能在默认情况下处于禁用状态，如果启用，它将按以下方式修改 EF Core 的行为：
 
-* 如果禁用可为 null 的引用类型（默认值），则所有具有 .NET 引用类型的属性都将按约定配置为可选（例如 `string` ）。
-* 如果启用了可以为 null 的引用类型，则将根据 .NET 类型的 c # 为空性配置属性： `string?` 将配置为可选，而 `string` 将配置为 "必需"。
+* 如果 (默认的) 中禁用了可以为 null 的引用类型，则所有具有 .NET 引用类型的属性都将按约定配置为可选的 (例如， `string`) 。
+* 如果启用了可以为 null 的引用类型，则将根据 .NET 类型的 c # 为空性配置属性： `string?` 将配置为可选，但 `string` 会根据需要进行配置。
 
-下面的示例显示了一个具有必需和可选属性的实体类型，禁用了可为 null 的引用功能（默认值），并启用了该功能：
+下面的示例显示了一个具有 required 和 optional 属性的实体类型， (默认) 并启用了 "可为 null 的引用" 功能：
 
-#### <a name="without-nullable-reference-types-default"></a>[没有可为 null 的引用类型（默认值）](#tab/without-nrt)
+#### <a name="without-nullable-reference-types-default"></a>[不能为 null 的引用类型 (默认值) ](#tab/without-nrt)
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/CustomerWithoutNullableReferenceTypes.cs?name=Customer&highlight=4-8)]
 
@@ -156,7 +160,7 @@ C # 8 引入了一个名[为 null 的引用类型](/dotnet/csharp/tutorials/null
 > [!NOTE]
 > EF Core 5.0 中已引入了此功能。
 
-可以在文本列上定义排序规则，以确定如何对它们进行比较和排序。 例如，以下示例将 SQL Server 列配置为不区分大小写：
+可以在文本列上定义排序规则，以确定如何对它们进行比较和排序。 例如，以下代码段将 SQL Server 列配置为不区分大小写：
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/Collations/Program.cs?range=42-43)]
 
