@@ -4,12 +4,12 @@ author: ErikEJ
 ms.date: 04/11/2020
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 uid: core/extensions/index
-ms.openlocfilehash: 47a5601e996afab9c0aa0538a2a2b47f204f7753
-ms.sourcegitcommit: ebfd3382fc583bc90f0da58e63d6e3382b30aa22
+ms.openlocfilehash: 5b7945bd24ac19a82b08f4d5709555cf53485f4c
+ms.sourcegitcommit: 31536e52b838a84680d2e93e5bb52fb16df72a97
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/25/2020
-ms.locfileid: "85370351"
+ms.lasthandoff: 07/10/2020
+ms.locfileid: "86238250"
 ---
 # <a name="ef-core-tools--extensions"></a>EF Core 工具和扩展
 
@@ -157,6 +157,12 @@ Microsoft.EntityFrameworkCore 的一个插件，它支持存储库、工作模�
 
 [GitHub 存储库](https://github.com/SteffenMangold/EntityFrameworkCore.Cacheable)
 
+### <a name="entityframeworkcorencache"></a>EntityFrameworkCore.NCache
+
+NCache Entity Framework Core 提供程序是一个分布式二级缓存提供程序，用于缓存查询结果。 分布式 NCache 体系结构使其更具伸缩性和高可用性。 适用于 EF Core 2。
+
+[网站](https://www.alachisoft.com/ncache/ef-core-cache.html)
+
 ### <a name="entity-framework-plus"></a>Entity Framework Plus
 
 扩展 DbContext 的功能，例如：包括筛选器、审核、缓存、查询未来、成批删除、批量更新等。 对于 EF Core：2、3。
@@ -224,3 +230,9 @@ Entity Framework Core 3.1 的 LINQ 扩展，目的是支持 Microsoft SQL Server
 现已开始支持高级 SQL 功能，如 CTE、大容量复制、表提示、窗口函数、临时表和数据库端创建/更新/删除操作。
 
 [GitHub 存储库](https://github.com/linq2db/linq2db.EntityFrameworkCore)
+
+### <a name="efcoresoftdelete"></a>EFCore.SoftDelete
+
+软删除实体的实现。 对于 EF Core：3.
+
+[NuGet](https://www.nuget.org/packages/EFCore.SoftDelete)

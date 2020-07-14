@@ -1,51 +1,59 @@
 ---
-title: 迁移 - EF Core
+title: 迁移概述 - EF Core
 author: bricelam
 ms.author: bricelam
-ms.date: 10/05/2018
+ms.date: 05/06/2020
 uid: core/managing-schemas/migrations/index
-ms.openlocfilehash: c87864b3430d3cd42729c13ddde33c0cd9de9308
-ms.sourcegitcommit: 59e3d5ce7dfb284457cf1c991091683b2d1afe9d
+ms.openlocfilehash: 8539a8da6f0051d3737efc583f0adfaf05fb2d3d
+ms.sourcegitcommit: 31536e52b838a84680d2e93e5bb52fb16df72a97
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/20/2020
-ms.locfileid: "83672985"
+ms.lasthandoff: 07/10/2020
+ms.locfileid: "86238224"
 ---
-# <a name="migrations"></a>迁移
+# <a name="migrations-overview"></a>迁移概述
 
-开发期间，数据模型将发生更改并与数据库不同步。 可以删除该数据库，让 EF 创建一个新的数据库来匹配该模型，但此过程会导致数据丢失。 EF Core 中的迁移功能能够以递增方式更新数据库架构，使其与应用程序的数据模型保持同步，同时保留数据库中的现有数据。
+在实际项目中，数据模型随着功能的实现而变化：添加和删除新的实体或属性，并且需要相应地更改数据库架构，使其与应用程序保持同步。 EF Core 中的迁移功能能够以递增方式更新数据库架构，使其与应用程序的数据模型保持同步，同时保留数据库中的现有数据。
 
-迁移包括命令行工具和 API，可帮助执行以下任务：
+简要地说，迁移的方式如下：
 
-* [创建迁移](#create-a-migration)。 生成可以更新数据库以使其与一系列模型更改同步的代码。
-* [更新数据库](#update-the-database)。 应用挂起的迁移更新数据库架构。
-* [自定义迁移代码](#customize-migration-code)。 有时，需要修改或补充生成的代码。
-* [删除迁移](#remove-a-migration)。 删除生成的代码。
-* [还原迁移](#revert-a-migration)。 撤消数据库更改。
-* [生成 SQL 脚本](#generate-sql-scripts)。 可能需要一个脚本来更新生产数据库，或者对迁移代码进行故障排除。
-* [在运行时应用迁移](#apply-migrations-at-runtime)。 当设计时更新和正在运行脚本不是最佳选项时，调用 `Migrate()` 方法。
+* 当引入数据模型更改时，开发人员使用 EF Core 工具添加相应的迁移，以描述使数据库架构保持同步所需的更新。EF Core 将当前模型与旧模型的快照进行比较，以确定差异，并生成迁移源文件；文件可在项目的源代码管理中进行跟踪，如任何其他源文件。
+* 生成新的迁移后，可通过多种方式将其应用于数据库。 EF Core 在一个特殊的历史记录表中记录所有应用的迁移，使其知道哪些迁移已应用，哪些迁移尚未应用。
 
-> [!TIP]
-> 如果 `DbContext` 与启动项目位于不同程序集中，可以在[包管理器控制台工具](xref:core/miscellaneous/cli/powershell#target-and-startup-project)或 [.NET Core CLI 工具](xref:core/miscellaneous/cli/dotnet#target-project-and-startup-project)中显式指定目标和启动项目。
+本页的其余部分是使用迁移的分步式入门指南。 有关更深入的信息，请参阅本节中的其他页面。
 
-## <a name="install-the-tools"></a>安装工具
+## <a name="getting-started"></a>入门
 
-安装[命令提示符工具](xref:core/miscellaneous/cli/index)：
+假设你刚刚完成了第一个 EF Core 应用程序，其中包含以下简单模型：
 
-* 对于 Visual Studio，建议使用 [包管理器控制台工具](xref:core/miscellaneous/cli/powershell)。
-* 对于其他开发环境，请选择 [.NET Core CLI 工具](xref:core/miscellaneous/cli/dotnet)。
+```c#
+public class Blog
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+}
+```
 
-## <a name="create-a-migration"></a>创建迁移
+在开发过程中，你可能已使用[创建和删除 API ](xref:core/managing-schemas/ensure-created)以快速迭代，并根据需要更改模型；但现在，你的应用程序将进入生产环境，你需要一种方法来安全地演化架构，而无需删除整个数据库。
 
-[定义初始模型](xref:core/modeling/index)后，即应创建数据库。 若要添加初始迁移，请运行以下命令。
+### <a name="install-the-tools"></a>安装工具
 
-### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
+首先，必须安装 [EF Core 命令行工具](xref:core/miscellaneous/cli/index)：
+
+* 我们通常建议使用 [.NET Core CLI 工具](xref:core/miscellaneous/cli/dotnet)，该工具适用于所有平台。
+* 如果你更喜欢在 Visual Studio 内工作或你具有 EF6 迁移经验，还可以使用[程序包管理器控制台工具](xref:core/miscellaneous/cli/powershell)。
+
+### <a name="create-your-first-migration"></a>创建第一个迁移
+
+你现在已准备好添加第一个迁移！ 指示 EF Core 创建名为 InitialCreate 的迁移：
+
+#### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef migrations add InitialCreate
 ```
 
-### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
+#### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
 
 ``` powershell
 Add-Migration InitialCreate
@@ -53,45 +61,18 @@ Add-Migration InitialCreate
 
 ***
 
-向**Migrations**目录下的项目添加以下三个文件：
+EF Core 将在项目中创建一个名为“Migrations”的目录，并生成一些文件。 最好检查 EF Core 生成的内容，并在可能的情况下修改它，但现在我们跳过此操作。
 
-* XXXXXXXXXXXXXX_InitialCreate.cs - 主迁移文件。 包含应用迁移所需的操作（在 `Up()` 中）和还原迁移所需的操作（在 `Down()` 中）。
-* XXXXXXXXXXXXXX_InitialCreate.Designer.cs - 迁移元数据文件。 包含 EF 所用的信息。
-* **MyContextModelSnapshot.cs**--当前模型的快照。 用于确定添加下一迁移时的更改内容。
+### <a name="create-your-database-and-schema"></a>创建数据库和架构
 
-文件名中的时间戳有助于保证文件按时间顺序排列，以便你查看更改情况。
+此时，可以让 EF 创建数据库并从迁移中创建架构。 可以通过以下操作实现这一点：
 
-### <a name="namespaces"></a>命名空间
-
-可以手动移动 Migrations 文件并更改其命名空间。 新建的迁移和上个迁移同级。
-
-此外，还可使用 `-Namespace`（包管理器控制台）或 `--namespace`（.NET Core CLI）来指定生成时的命名空间。
-
-### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
-
-```dotnetcli
-dotnet ef migrations add InitialCreate --namespace Your.Namespace
-```
-
-### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
-
-``` powershell
-Add-Migration InitialCreate -Namespace Your.Namespace
-```
-
-***
-
-## <a name="update-the-database"></a>更新数据库
-
-接下来，将迁移应用到数据库以创建架构。
-
-### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
+#### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef database update
 ```
-
-### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
+#### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
 
 ``` powershell
 Update-Database
@@ -99,78 +80,49 @@ Update-Database
 
 ***
 
-## <a name="customize-migration-code"></a>自定义迁移代码
+就是这么回事 - 你的应用程序已准备好在新数据库上运行，你无需编写任何 SQL 代码。 请注意，这种应用迁移的方法非常适合本地开发，但不太适用于生产环境 - 有关详细信息，请参阅[应用迁移页面](xref:core/managing-schemas/migrations/applying)。
 
-更改 EF Core 模型后，数据库架构可能不同步。为使其保持最新，请再添加一个迁移。 迁移名称的用途与版本控制系统中的提交消息类似。 例如，如果更改对于评审是一个新的实体类，可以选择一个名称，如 AddProductReviews。
+### <a name="evolving-your-model"></a>发展模型
 
-### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
+几天后，系统会要求你将创建时间戳添加到博客。 你已完成针对应用程序的必要更改，模型现在如下所示：
 
-```dotnetcli
-dotnet ef migrations add AddProductReviews
+```c#
+public class Blog
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public DateTime CreatedTimestamp { get; set; }
+}
 ```
 
-### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
+模型和生产数据库现在不同步，我们必须向数据库架构中添加一个新列。 让我们为此创建新迁移：
+
+#### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
+
+```dotnetcli
+dotnet ef migrations add AddBlogCreatedTimestamp
+```
+
+#### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
 
 ``` powershell
-Add-Migration AddProductReviews
+Add-Migration AddBlogCreatedTimestamp
 ```
 
 ***
 
-搭建迁移基架（为其生成代码）后，检查代码的准确性，并添加、删除或修改正确应用代码所需的任何操作。
+请注意，我们为迁移提供了一个描述性名称，以便以后更容易了解项目历史记录。
 
-例如，迁移可能包含以下操作：
+由于这不是项目的第一次迁移，EF Core 现在会在添加列之前将更新的模型与旧模型的快照进行比较；模型快照是 EF Core 在你添加迁移时生成的文件之一，并签入到源代码管理中。 基于该比较，EF Core 检测到已添加一列，并添加适当的迁移。
 
-``` csharp
-migrationBuilder.DropColumn(
-    name: "FirstName",
-    table: "Customer");
+现在，你可以像以前一样应用迁移：
 
-migrationBuilder.DropColumn(
-    name: "LastName",
-    table: "Customer");
-
-migrationBuilder.AddColumn<string>(
-    name: "Name",
-    table: "Customer",
-    nullable: true);
-```
-
-虽然这些操作可使数据库架构兼容，但是它们不会保留现有客户姓名。 如下所示，我们可以重写以改善这一情况。
-
-``` csharp
-migrationBuilder.AddColumn<string>(
-    name: "Name",
-    table: "Customer",
-    nullable: true);
-
-migrationBuilder.Sql(
-@"
-    UPDATE Customer
-    SET Name = FirstName + ' ' + LastName;
-");
-
-migrationBuilder.DropColumn(
-    name: "FirstName",
-    table: "Customer");
-
-migrationBuilder.DropColumn(
-    name: "LastName",
-    table: "Customer");
-```
-
-> [!TIP]
-> 当某个操作可能会导致数据丢失（例如删除某列），搭建迁移基架过程将对此发出警告。 如果看到此警告，务必检查迁移代码的准确性。
-
-使用相应命令将迁移应用到数据库。
-
-### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
+#### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef database update
 ```
-
-### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
+#### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
 
 ``` powershell
 Update-Database
@@ -178,123 +130,8 @@ Update-Database
 
 ***
 
-### <a name="empty-migrations"></a>空迁移
+请注意，这次 EF 检测到数据库已存在。 此外，在之前第一次应用迁移时，此事实记录在数据库中的特殊迁移历史记录表中；这允许 EF 自动仅应用新的迁移。
 
-有时模型未变更，直接添加迁移也很有用处。 在这种情况下，添加新迁移会创建一个带空类的代码文件。 可以自定义此迁移，执行与 EF Core 模型不直接相关的操作。 可能需要通过此方式管理的一些事项包括：
+### <a name="next-steps"></a>后续步骤
 
-* 全文搜索
-* 函数
-* 存储过程
-* 触发器
-* 视图
-
-## <a name="remove-a-migration"></a>删除迁移
-
-有时，你可能在添加迁移后意识到需要在应用迁移前对 EF Core 模型作出其他更改。 要删除上个迁移，请使用如下命令。
-
-### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
-
-```dotnetcli
-dotnet ef migrations remove
-```
-
-### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
-
-``` powershell
-Remove-Migration
-```
-
-***
-
-删除迁移后，可对模型作出其他更改，然后再次添加迁移。
-
-## <a name="revert-a-migration"></a>还原迁移
-
-如果已对数据库应用一个迁移（或多个迁移），但需将其复原，则可使用同一命令来应用迁移，并指定回退时的目标迁移名称。
-
-### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
-
-```dotnetcli
-dotnet ef database update LastGoodMigration
-```
-
-### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
-
-``` powershell
-Update-Database LastGoodMigration
-```
-
-***
-
-## <a name="generate-sql-scripts"></a>生成 SQL 脚本
-
-调试迁移或将其部署到生产数据库时，生成一个 SQL 脚本很有帮助。 之后可进一步检查该脚本的准确性，并对其作出调整以满足生产数据库的需求。 该脚本还可与部署技术结合使用。 基本命令如下。
-
-### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
-
-#### <a name="basic-usage"></a>基本用法
-```dotnetcli
-dotnet ef migrations script
-```
-
-#### <a name="with-from-to-implied"></a>使用 From（to 隐含）
-这将生成从此迁移到最新迁移的 SQL 脚本。
-```dotnetcli
-dotnet ef migrations script 20190725054716_Add_new_tables
-```
-
-#### <a name="with-from-and-to"></a>使用 From 和 To
-这将生成从 `from` 迁移到指定 `to` 迁移的 SQL 脚本。
-```dotnetcli
-dotnet ef migrations script 20190725054716_Add_new_tables 20190829031257_Add_audit_table
-```
-可以使用比 `to` 新的 `from` 来生成回退脚本。 请记下潜在的数据丢失方案。
-
-### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
-
-#### <a name="basic-usage"></a>基本用法
-``` powershell
-Script-Migration
-```
-
-#### <a name="with-from-to-implied"></a>使用 From（to 隐含）
-这将生成从此迁移到最新迁移的 SQL 脚本。
-```powershell
-Script-Migration 20190725054716_Add_new_tables
-```
-
-#### <a name="with-from-and-to"></a>使用 From 和 To
-这将生成从 `from` 迁移到指定 `to` 迁移的 SQL 脚本。
-```powershell
-Script-Migration 20190725054716_Add_new_tables 20190829031257_Add_audit_table
-```
-可以使用比 `to` 新的 `from` 来生成回退脚本。 请记下潜在的数据丢失方案。
-
-***
-
-此命令有几个选项。
-
-from 迁移应是运行该脚本前应用到数据库的最后一个迁移。 如果未应用任何迁移，请指定 `0`（默认值）。
-
-to 迁移是运行该脚本后应用到数据库的最后一个迁移。 它默认为项目中的最后一个迁移。
-
-可以选择生成 idempotent 脚本。 此脚本仅会应用尚未应用到数据库的迁移。 如果不确知应用到数据库的最后一个迁移或需要部署到多个可能分别处于不同迁移的数据库，此脚本非常有用。
-
-## <a name="apply-migrations-at-runtime"></a>在运行时应用迁移
-
-启动或首次运行期间，一些应用可能需要在运行时应用迁移。 为此，请使用 `Migrate()` 方法。
-
-此方法构建于 `IMigrator` 服务之上，该服务可用于更多高级方案。 请使用 `myDbContext.GetInfrastructure().GetService<IMigrator>()` 进行访问。
-
-``` csharp
-myDbContext.Database.Migrate();
-```
-
-> [!WARNING]
->
-> * 此方法并不适合所有人。 尽管此方法非常适合具有本地数据库的应用，但是大多数应用程序需要更可靠的部署策略，例如生成 SQL 脚本。
-> * 请勿在 `Migrate()` 前调用 `EnsureCreated()`。 `EnsureCreated()` 会绕过迁移创建架构，这会导致 `Migrate()` 失败。
-
-## <a name="next-steps"></a>后续步骤
-
-有关详细信息，请参阅 <xref:core/miscellaneous/cli/index>。
+以上只是迁移的简短简介。 请参阅其他文档页面，详细了解如何[管理迁移](xref:core/managing-schemas/migrations/managing)、[应用迁移](xref:core/managing-schemas/migrations/applying)等。 [.NET Core CLI 工具参考](xref:core/miscellaneous/cli/index)还包含有关不同命令的有用信息
