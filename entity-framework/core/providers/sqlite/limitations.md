@@ -1,15 +1,15 @@
 ---
 title: SQLite 数据库提供程序-限制-EF Core
-author: rowanmiller
-ms.date: 04/09/2017
+author: bricelam
+ms.date: 07/16/2020
 ms.assetid: 94ab4800-c460-4caa-a5e8-acdfee6e6ce2
 uid: core/providers/sqlite/limitations
-ms.openlocfilehash: 17e97da9dfffefeb507fde744b710e6936bff69b
-ms.sourcegitcommit: 59e3d5ce7dfb284457cf1c991091683b2d1afe9d
+ms.openlocfilehash: 393f5e80ce2e11dcb11c2048e06effa27e48dc13
+ms.sourcegitcommit: d85263b5d5d665dbaf94de8832e2917bce048b34
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/20/2020
-ms.locfileid: "83672776"
+ms.lasthandoff: 07/17/2020
+ms.locfileid: "86451224"
 ---
 # <a name="sqlite-ef-core-database-provider-limitations"></a>SQLite EF Core 数据库提供程序限制
 
@@ -45,34 +45,36 @@ modelBuilder.Entity<MyEntity>()
 
 SQLite 数据库引擎不支持许多其他关系数据库所支持的架构操作。 如果尝试将不受支持的操作之一应用于 SQLite 数据库，则 `NotSupportedException` 会引发。
 
-| 操作            | 支持？ | 需要版本 |
-|:---------------------|:-----------|:-----------------|
-| AddColumn            | ✔          | 1.0              |
-| AddForeignKey        | ✗          |                  |
-| AddPrimaryKey        | ✗          |                  |
-| AddUniqueConstraint  | ✗          |                  |
-| AlterColumn          | ✗          |                  |
-| CreateIndex          | ✔          | 1.0              |
-| CreateTable          | ✔          | 1.0              |
-| DropColumn           | ✗          |                  |
-| DropForeignKey       | ✗          |                  |
-| DropIndex            | ✔          | 1.0              |
-| DropPrimaryKey       | ✗          |                  |
-| DropTable            | ✔          | 1.0              |
-| DropUniqueConstraint | ✗          |                  |
-| RenameColumn         | ✔          | 2.2.2            |
-| RenameIndex          | ✔          | 2.1              |
-| RenameTable          | ✔          | 1.0              |
-| EnsureSchema         | ✔（无操作）  | 2.0              |
-| DropSchema           | ✔（无操作）  | 2.0              |
-| 插入               | ✔          | 2.0              |
-| 更新               | ✔          | 2.0              |
-| 删除               | ✔          | 2.0              |
+将尝试重新生成以执行特定操作。 重新生成仅可用于作为 EF Core 模型一部分的数据库项目。 如果数据库项目不是模型的一部分，例如，如果它是在迁移内手动创建的，则 `NotSupportedException` 仍会引发。
+
+| Operation            | 支持？  | 需要版本 |
+|:---------------------|:------------|:-----------------|
+| AddCheckConstraint   | ✔（重新生成） | 5.0              |
+| AddColumn            | ✔           | 1.0              |
+| AddForeignKey        | ✔（重新生成） | 5.0              |
+| AddPrimaryKey        | ✔（重新生成） | 5.0              |
+| AddUniqueConstraint  | ✔（重新生成） | 5.0              |
+| AlterColumn          | ✔（重新生成） | 5.0              |
+| CreateIndex          | ✔           | 1.0              |
+| CreateTable          | ✔           | 1.0              |
+| DropCheckConstraint  | ✔（重新生成） | 5.0              |
+| DropColumn           | ✔（重新生成） | 5.0              |
+| DropForeignKey       | ✔（重新生成） | 5.0              |
+| DropIndex            | ✔           | 1.0              |
+| DropPrimaryKey       | ✔（重新生成） | 5.0              |
+| DropTable            | ✔           | 1.0              |
+| DropUniqueConstraint | ✔（重新生成） | 5.0              |
+| RenameColumn         | ✔           | 2.2.2            |
+| RenameIndex          | ✔（重新生成） | 2.1              |
+| RenameTable          | ✔           | 1.0              |
+| EnsureSchema         | ✔（无操作）   | 2.0              |
+| DropSchema           | ✔（无操作）   | 2.0              |
+| 插入               | ✔           | 2.0              |
+| 更新               | ✔           | 2.0              |
+| 删除               | ✔           | 2.0              |
 
 ## <a name="migrations-limitations-workaround"></a>迁移限制解决方法
 
-通过在迁移中手动编写代码来执行表重新生成，可以解决其中一些限制。 表重新生成包括重命名现有表、创建新表、将数据复制到新表和删除旧表。 你将需要使用 `Sql(string)` 方法来执行其中一些步骤。
+通过在迁移中手动编写代码来执行重新生成，可以解决其中一些限制。 表重建涉及创建新表，将数据复制到新表，删除旧表，重命名新表。 你将需要使用 `Sql(string)` 方法来执行其中一些步骤。
 
 有关更多详细信息，请参阅在 SQLite 文档中[进行其他类型的表架构更改](https://sqlite.org/lang_altertable.html#otheralter)。
-
-将来，EF 可以通过使用表中的 "重新生成" 方法来支持这些操作。 你可以[在 GitHub 项目上跟踪此功能](https://github.com/aspnet/EntityFrameworkCore/issues/329)。

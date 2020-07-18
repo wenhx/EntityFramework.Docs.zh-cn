@@ -3,14 +3,15 @@ title: 处理并发冲突-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 2318e4d3-f561-4720-bbc3-921556806476
-ms.openlocfilehash: a99f824fe256a10b84f539a5339a09624315efa4
-ms.sourcegitcommit: 59e3d5ce7dfb284457cf1c991091683b2d1afe9d
+ms.openlocfilehash: 4d29fd7a4d9b6003f71bc8411cea2d863a4c5429
+ms.sourcegitcommit: d85263b5d5d665dbaf94de8832e2917bce048b34
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/20/2020
-ms.locfileid: "83672707"
+ms.lasthandoff: 07/17/2020
+ms.locfileid: "86451237"
 ---
-# <a name="handling-concurrency-conflicts"></a>处理并发冲突
+# <a name="handling-concurrency-conflicts-ef6"></a>处理并发冲突（EF6）
+
 乐观并发性涉及到乐观地尝试将实体保存到数据库，希望数据在加载实体后未发生更改。 如果事实证明数据已更改，则会引发异常，并且在尝试再次保存之前必须解决冲突。 本主题介绍如何在实体框架中处理此类异常。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  
 
 这篇文章并不适合完整讨论开放式并发。 以下各节介绍了并发解决方案的一些知识，并显示了常见任务的模式。  

@@ -3,14 +3,15 @@ title: 原始 SQL 查询-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 9e1ee76e-2499-408c-81e8-9b6c5d1945a0
-ms.openlocfilehash: 168aee67186535bf2a50705e86bfc5a88147e369
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.openlocfilehash: d336066b982e682e81067bbdac5b3781524cf6be
+ms.sourcegitcommit: d85263b5d5d665dbaf94de8832e2917bce048b34
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78414469"
+ms.lasthandoff: 07/17/2020
+ms.locfileid: "86451211"
 ---
-# <a name="raw-sql-queries"></a>原生 SQL 查询
+# <a name="raw-sql-queries-ef6"></a>原始 SQL 查询（EF6）
+
 实体框架允许使用 LINQ 和实体类进行查询。 但是，有时您可能想要对数据库直接使用原始 SQL 来运行查询。 这包括调用存储过程，这对于当前不支持映射到存储过程的 Code First 模型非常有用。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  
 
 ## <a name="writing-sql-queries-for-entities"></a>为实体编写 SQL 查询  
