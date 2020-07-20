@@ -4,11 +4,12 @@ description: EF Core 5.0 中的新功能概述
 author: ajcvickers
 ms.date: 06/02/2020
 uid: core/what-is-new/ef-core-5.0/whatsnew
-ms.openlocfilehash: 0a2ba5b804cc6636b321edcc48feeb76ad60560b
-ms.sourcegitcommit: ebfd3382fc583bc90f0da58e63d6e3382b30aa22
+ms.openlocfilehash: 304ed74fe344b43177525113c70b7be7bb0ac5ed
+ms.sourcegitcommit: 31536e52b838a84680d2e93e5bb52fb16df72a97
+ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/25/2020
-ms.locfileid: "85370365"
+ms.lasthandoff: 07/10/2020
+ms.locfileid: "86238328"
 ---
 # <a name="whats-new-in-ef-core-50"></a>EF Core 5.0 中的新增功能
 
@@ -169,7 +170,7 @@ var artists = context.Artists.Where(e => e.IsSigned).ToList();
 
 EF Core 将引发以下异常，指出由于 `IsSigned` 未映射而导致转换失败：
 
-> 未经处理的异常。 System.InvalidOperationException:无法转换 LINQ 表达式 "DbSet<Artist>() .Where(a => a.IsSigned)"。 其他信息:实体类型 "Artist" 上成员 "IsSigned" 的转换失败。 可能未映射指定的成员。 请用可转换的形式重新编写查询，或者插入对 AsEnumerable()、AsAsyncEnumerable()、ToList() 或 ToListAsync() 的调用来显式切换到客户端评估。 有关详细信息，请参阅 https://go.microsoft.com/fwlink/?linkid=2101038 。
+> 未经处理的异常。 System.InvalidOperationException：无法转换 LINQ 表达式 "DbSet<Artist>() .Where(a => a.IsSigned)"。 其他信息：实体类型 "Artist" 上成员 "IsSigned" 的转换失败。 可能未映射指定的成员。 请用可转换的形式重新编写查询，或者插入对 AsEnumerable()、AsAsyncEnumerable()、ToList() 或 ToListAsync() 的调用来显式切换到客户端评估。 有关更多信息，请参见 https://go.microsoft.com/fwlink/?linkid=2101038 。
 
 同样地，在尝试用依赖区域性的语义来转换字符串比较时，现将生成信息更丰富的异常消息。 例如，以下查询尝试使用 `StringComparison.CurrentCulture`：
 
@@ -181,7 +182,7 @@ var artists = context.Artists
 
 EF Core 现将引发以下异常：
 
-> 未经处理的异常。 System.InvalidOperationException:无法转换 LINQ 表达式 "DbSet<Artist>() .Where(a => a.Name.Equals( value:"The Unicorns", comparisonType:CurrentCulture))"。 其他信息:不支持采用 "StringComparison" 的 "string.Equals" 方法的转换。 有关更多信息，请参见 https://go.microsoft.com/fwlink/?linkid=2129535 。 请用可转换的形式重新编写查询，或者插入对 AsEnumerable()、AsAsyncEnumerable()、ToList() 或 ToListAsync() 的调用来显式切换到客户端评估。 有关详细信息，请参阅 https://go.microsoft.com/fwlink/?linkid=2101038 。
+> 未经处理的异常。 System.InvalidOperationException：无法转换 LINQ 表达式 "DbSet<Artist>() .Where(a => a.Name.Equals( value:"The Unicorns", comparisonType:CurrentCulture))"。 其他信息：不支持采用 "StringComparison" 的 "string.Equals" 方法的转换。 有关更多信息，请参见 https://go.microsoft.com/fwlink/?linkid=2129535 。 请用可转换的形式重新编写查询，或者插入对 AsEnumerable()、AsAsyncEnumerable()、ToList() 或 ToListAsync() 的调用来显式切换到客户端评估。 有关更多信息，请参见 https://go.microsoft.com/fwlink/?linkid=2101038 。
 
 ### <a name="specify-transaction-id"></a>指定事务 ID
 
@@ -360,7 +361,7 @@ WHERE [u].[Name] COLLATE French_CI_AS = N'Jean-Michel Jarre'
 
 ### <a name="flow-arguments-into-idesigntimedbcontextfactory"></a>将参数传输到 IDesignTimeDbContextFactory
 
-参数现从命令行传输到 [IDesignTimeDbContextFactory](https://docs.microsoft.com/dotnet/api/microsoft.entityframeworkcore.design.idesigntimedbcontextfactory-1?view=efcore-3.1) 的 `CreateDbContext` 方法。 例如，若要指示这是一个开发生成，可在命令行上传递自定义参数（例如 `dev`）：
+参数现从命令行传输到 [IDesignTimeDbContextFactory](https://docs.microsoft.com/dotnet/api/microsoft.entityframeworkcore.design.idesigntimedbcontextfactory-1?view=efcore-3.1) 的 `CreateDbContext` 方法。 例如，若要指明这是开发生成，可以在命令行上传递自定义参数（例如 `dev`）：
 
 ```
 dotnet ef migrations add two --verbose --dev

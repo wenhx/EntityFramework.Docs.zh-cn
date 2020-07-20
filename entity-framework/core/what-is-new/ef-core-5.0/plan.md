@@ -3,20 +3,23 @@ title: 针对 Entity Framework Core 5.0 的计划
 author: ajcvickers
 ms.date: 06/11/2020
 uid: core/what-is-new/ef-core-5.0/plan
-ms.openlocfilehash: 249560bc14f72fd524be91bb1670dbaf78ae6b60
-ms.sourcegitcommit: ebfd3382fc583bc90f0da58e63d6e3382b30aa22
+ms.openlocfilehash: a107f901b215e7abaa5905852f81c2d9ab094b98
+ms.sourcegitcommit: 31536e52b838a84680d2e93e5bb52fb16df72a97
+ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/25/2020
-ms.locfileid: "85370573"
+ms.lasthandoff: 07/10/2020
+ms.locfileid: "86238315"
 ---
 # <a name="plan-for-entity-framework-core-50"></a>针对 Entity Framework Core 5.0 的计划
 
 如[计划过程](xref:core/what-is-new/release_planning)中所述，我们已来自利益干系人的输入收集到针对 EF Core 5.0 版的暂定计划中。
 
-> [!IMPORTANT] 
+> [!IMPORTANT]
 > 此计划仍是半成品。 这里不进行任何承诺。 此计划是一个起点，会随着我们了解更多信息而发展。 当前未针对 5.0 进行计划的某些内容可能会被纳入。 当前已针对 5.0 进行计划的某些内容可能会被淘汰。
 
-### <a name="version-number-and-release-date"></a>版本号和发布日期。
+## <a name="general-information"></a>常规信息
+
+### <a name="version-number-and-release-date"></a>版本号和发布日期
 
 EF Core 5.0 当前计划[与 .NET 5.0 同时](https://devblogs.microsoft.com/dotnet/introducing-net-5/)发布。 已选择版本“5.0”，以便与 .NET 5.0 保持一致。
 
@@ -97,7 +100,7 @@ T 恤大小：M
 
 ## <a name="split-include"></a>拆分 Include
 
-主要开发人员：@smitpatel
+开发人员负责人：@smitpatel
 
 通过 [#20892](https://github.com/dotnet/efcore/issues/20892) 进行跟踪
 
@@ -109,9 +112,9 @@ EF Core 3.0 更改了默认行为，它为给定的 LINQ 查询创建一个 SQL 
 对于使用 Include 来处理多个集合的查询来说，这导致性能大幅下降。
 
 在 EF Core 5.0 中，我们将保留新的默认行为。
-不过，EF Core 5.0 现允许为 Include 集合生成多个查询，而使用单个查询会导致性能不佳。 
+不过，EF Core 5.0 现在允许为集合 Includes 生成多个查询，因为使用单个查询会导致性能不佳。
 
-## <a name="rationalize-totable-toquery-toview-fromsql-etc"></a>合理化 ToTable、ToQuery、ToView、FromSql 等。
+## <a name="rationalize-totable-toquery-toview-fromsql-etc"></a>合理化 ToTable、ToQuery、ToView、FromSql 等
 
 开发人员负责人：@maumar 和 @smitpatel
 
@@ -164,7 +167,7 @@ T 恤大小：L
 
 结果可能是在 EF Core 中进行许多小改进（例如，SQLite 上更好的迁移），并与其他团队一起进行指导和长期协作，以改进不仅限于 EF 的端到端体验。
 
-## <a name="ef-core-platforms-experience"></a>EF Core 平台体验 
+## <a name="ef-core-platforms-experience"></a>EF Core 平台体验
 
 开发人员负责人：@roji 和 @bricelam
 
@@ -246,10 +249,11 @@ T 恤大小：L
 状态：正在进行
 
 我们已在针对 3.0 和 3.1 版本更新文档。 我们还在致力于：
-  * 全面修改入门文档，使它们更易于理解/更易于遵循
-  * 重新组织文档，使内容更易于查找并添加交叉引用
-  * 向现有文档添加更多详细信息和说明
-  * 更新示例并添加更多示例
+
+* 全面修改入门文档，使它们更易于理解/更易于遵循
+* 重新组织文档，使内容更易于查找并添加交叉引用
+* 向现有文档添加更多详细信息和说明
+* 更新示例并添加更多示例
 
 ## <a name="fixing-bugs"></a>修复 bug
 
@@ -285,6 +289,6 @@ T 恤大小：L
 
 此外，我们始终会在计划时考虑[投票最多的问题](https://github.com/dotnet/efcore/issues?q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc)。 从版本中去除其中任何问题总是很痛苦的，但是我们确实需要针对所拥有的资源制定切合实际的计划。
 
-## <a name="feedback"></a>反馈
+## <a name="suggestions"></a>建议
 
 你对计划的反馈非常重要。 指示问题重要性的最佳方式是在 GitHub 上为该问题投票（竖起大拇指）。 然后，此数据将进入下一个版本的[计划过程](xref:core/what-is-new/release_planning)。
