@@ -2,14 +2,14 @@
 title: EF Core 5.0 中的新增功能
 description: EF Core 5.0 中的新功能概述
 author: ajcvickers
-ms.date: 06/02/2020
+ms.date: 07/20/2020
 uid: core/what-is-new/ef-core-5.0/whatsnew
-ms.openlocfilehash: 304ed74fe344b43177525113c70b7be7bb0ac5ed
-ms.sourcegitcommit: 31536e52b838a84680d2e93e5bb52fb16df72a97
+ms.openlocfilehash: d42b2811d07516e9febedbc51fcb206000d38371
+ms.sourcegitcommit: 51148929e3889c48227d96c95c4e310d53a3d2c9
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/10/2020
-ms.locfileid: "86238328"
+ms.lasthandoff: 07/21/2020
+ms.locfileid: "86873378"
 ---
 # <a name="whats-new-in-ef-core-50"></a>EF Core 5.0 中的新增功能
 
@@ -18,6 +18,148 @@ EF Core 5.0 目前正在开发中。 此页面将包含每个预览版中引入�
 此页面不会复制 [EF Core 5.0](xref:core/what-is-new/ef-core-5.0/plan) 的计划。 计划中介绍了 EF Core 5.0 的整体主题，其中包括我们在交付最终版本之前打算包含的所有内容。
 
 发布时，我们会将此处的链接添加到官方文档。
+
+## <a name="preview-7"></a>预览版 7
+
+### <a name="dbcontextfactory"></a>DbContextFactory
+
+EF Core 5.0 引入了 `AddDbContextFactory` 和 `AddPooledDbContextFactory`，可用于在应用程序的依赖关系注入 (D.I.) 容器中注册工厂来创建 DbContext 实例。 例如：
+
+```csharp
+services.AddDbContextFactory<SomeDbContext>(b =>
+    b.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Test"));
+```
+
+应用程序服务（例如 ASP.NET Core 控制器）之后可依赖于服务构造函数中的 `IDbContextFactory<TContext>`。 例如：
+
+```csharp
+public class MyController
+{
+    private readonly IDbContextFactory<SomeDbContext> _contextFactory;
+
+    public MyController(IDbContextFactory<SomeDbContext> contextFactory)
+    {
+        _contextFactory = contextFactory;
+    }
+}
+```
+
+之后可根据需要创建和使用 DbContext 实例。 例如：
+
+```csharp
+public void DoSomehing()
+{
+    using (var context = _contextFactory.CreateDbContext())
+    {
+        // ...            
+    }
+}
+```
+
+请注意，以这种方式创建的 DbContext 实例并非由应用程序的服务提供程序进行管理，因此必须由应用程序释放。 此类分离对于 Blazor 应用程序非常有用（此情况下建议使用 `IDbContextFactory`），但在其他方案中也很有用。
+
+你可通过调用 `AddPooledDbContextFactory` 来共用 DbContext 实例。 此类共用的原理与 `AddDbContextPool` 相同，且限制也相同。
+
+记录信息可通过问题 [#2523](https://github.com/dotnet/EntityFramework.Docs/issues/2523) 进行跟踪。
+
+### <a name="reset-dbcontext-state"></a>重置 DbContext 状态
+
+EF Core 5.0 引入了 `ChangeTracker.Clear()`，它可清除所有被跟踪实体的 DbContext。 当使用为每个工作单元创建生存期较短的新上下文实例的最佳做法时，通常不需要这样做。 但如果需要重置 DbContext 实例的状态，则使用新的 `Clear()` 方法比大量分离所有实体的性能和可靠性更强。  
+
+记录信息可通过问题 [#2524](https://github.com/dotnet/EntityFramework.Docs/issues/2524) 进行跟踪。
+
+### <a name="new-pattern-for-store-generated-defaults"></a>存储生成的默认值的新模式
+
+EF Core 允许为可能还有默认值约束的列设置显式值。 EF Core 使用 type 属性类型的 CLR 默认值作为此项的 sentinel；如果该值不是 CLR 默认值，则会将其插入，否则将使用数据库默认值。
+
+这会使 CLR 默认值不是良好的 sentinel（最值得注意的是 `bool` 属性）的类型出现问题。 EF Core 5.0 现允许支持字段在此类情况下可为 null。 例如：
+
+```csharp
+public class Blog
+{
+    private bool? _isValid;
+
+    public bool IsValid
+    {
+        get => _isValid ?? false;
+        set => _isValid = value;
+    }
+}
+```
+
+请注意，支持字段可为 null，但公开属性不可为 null。 这允许 sentinel 值为 `null`，而不影响实体类型的公开内容。 在本例中，如果绝不设置 `IsValid`，则将使用数据库默认值，因为支持字段仍为 null。 如果设置 `true` 或 `false`，则此值将显式保存到数据库中。
+
+记录信息可通过问题 [#2525](https://github.com/dotnet/EntityFramework.Docs/issues/2525) 进行跟踪。
+
+### <a name="cosmos-partition-keys"></a>Cosmos 分区键
+
+EF Core 允许将 Cosmos 分区键包含在 EF 模型中。 例如：
+
+```csharp
+modelBuilder.Entity<Customer>().HasPartitionKey(b => b.AlternateKey)
+```
+
+从预览版 7 开始，分区键将包含在实体类型的 PK 中，用于改进某些查询的性能。
+
+记录信息可通过问题 [#2471](https://github.com/dotnet/EntityFramework.Docs/issues/2471) 进行跟踪。
+
+### <a name="cosmos-configuration"></a>Cosmos 配置
+
+EF Core 5.0 改进了 Cosmos 和 Cosmos 连接的配置。
+
+之前，EF Core 需要在连接到 Cosmos 数据库时显式指定终结点和密钥。 而 EF Core 5.0 允许使用连接字符串。 此外，EF Core 5.0 还允许显式设置 WebProxy 实例。 例如：
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder
+        .UseCosmos("my-cosmos-connection-string", "MyDb",
+            cosmosOptionsBuilder =>
+            {
+                cosmosOptionsBuilder.WebProxy(myProxyInstance);
+            });
+```
+
+现在还可配置许多其他超时值、限制等。 例如：
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder
+        .UseCosmos("my-cosmos-connection-string", "MyDb",
+            cosmosOptionsBuilder =>
+            {
+                cosmosOptionsBuilder.LimitToEndpoint();
+                cosmosOptionsBuilder.RequestTimeout(requestTimeout);
+                cosmosOptionsBuilder.OpenTcpConnectionTimeout(timeout);
+                cosmosOptionsBuilder.IdleTcpConnectionTimeout(timeout);
+                cosmosOptionsBuilder.GatewayModeMaxConnectionLimit(connectionLimit);
+                cosmosOptionsBuilder.MaxTcpConnectionsPerEndpoint(connectionLimit);
+                cosmosOptionsBuilder.MaxRequestsPerTcpConnection(requestLimit);
+            });
+```
+
+最后，默认的连接模式现为 `ConnectionMode.Gateway`，兼容性通常更好。
+
+记录信息可通过问题 [#2471](https://github.com/dotnet/EntityFramework.Docs/issues/2471) 进行跟踪。
+
+### <a name="scaffold-dbcontext-now-singularizes"></a>Scaffold-DbContext 现为单数形式
+
+此前，当从现有数据库搭建 DbContext 时，EF Core 将创建与数据库中的表名称匹配的实体类型名称。 例如，表 `People` 和 `Addresses` 对应的实体类型名称为 `People` 和 `Addresses`。
+
+在之前的版本中，此行为是通过注册复数化服务来配置的。 现在，在 EF Core 5.0 中，[Humanizer](https://www.nuget.org/packages/Humanizer.Core/) 包用作默认复数化服务。 这意味着 `People` 和 `Addresses` 现将被反向工程处理为名叫 `Person` 和 `Address` 的实体类型。
+
+### <a name="savepoints"></a>保存点
+
+EF Core 现支持[保存点](/SQL/t-sql/language-elements/save-transaction-transact-sql?view=sql-server-ver15#remarks)，它们可更好地控制执行多个操作的事务。
+
+你可手动创建、发布和回滚保存点。 例如：
+
+```csharp
+context.Database.CreateSavepoint("MySavePoint"); 
+```
+
+此外，在执行 `SaveChanges` 失败时，EF Core 现在会回滚到上一个保存点。 因此，可重试 SaveChanges，而不用重试整个事务。
+
+记录信息可通过问题 [#2429](https://github.com/dotnet/EntityFramework.Docs/issues/2429) 进行跟踪。
 
 ## <a name="preview-6"></a>预览版 6
 
