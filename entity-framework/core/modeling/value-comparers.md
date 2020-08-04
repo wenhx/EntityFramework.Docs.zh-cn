@@ -4,12 +4,12 @@ description: 使用值比较器来控制 EF Core 比较属性值的方式
 author: ajcvickers
 ms.date: 03/20/2020
 uid: core/modeling/value-comparers
-ms.openlocfilehash: 9e33bfb840606b746626daa1da7331904b495ab4
-ms.sourcegitcommit: 92d54fe3702e0c92e198334da22bacb42e9842b1
+ms.openlocfilehash: fa5352129977d858d54d4aede746b320c91b0ad3
+ms.sourcegitcommit: 949faaba02e07e44359e77d7935f540af5c32093
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/10/2020
-ms.locfileid: "84664112"
+ms.lasthandoff: 08/03/2020
+ms.locfileid: "87526779"
 ---
 # <a name="value-comparers"></a>值比较器
 
@@ -59,7 +59,7 @@ FK 属性不太可能设置为与需要进行比较的 PK 属性_相同的实例
 
 ### <a name="simple-immutable-classes"></a>简单的不可变类
 
-请考虑使用值转换器映射简单的不可变类的属性。
+考虑使用值转换器映射简单的不可变类的属性。
 
 [!code-csharp[SimpleImmutableClass](../../../samples/core/Modeling/ValueConversions/MappingImmutableClassProperty.cs?name=SimpleImmutableClass)]
 

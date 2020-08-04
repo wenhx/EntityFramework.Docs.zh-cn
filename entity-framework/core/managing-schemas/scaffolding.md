@@ -5,20 +5,20 @@ ms.author: bricelam
 ms.date: 11/13/2018
 ms.assetid: 6263EF7D-4989-42E6-BDEE-45DA770342FB
 uid: core/managing-schemas/scaffolding
-ms.openlocfilehash: 19945ef2eb99ac423cc50510edc85439964024b8
-ms.sourcegitcommit: 31536e52b838a84680d2e93e5bb52fb16df72a97
+ms.openlocfilehash: 423e0502a53f2d99dba6938198fffba9cf0f9ade
+ms.sourcegitcommit: 949faaba02e07e44359e77d7935f540af5c32093
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/10/2020
-ms.locfileid: "86238185"
+ms.lasthandoff: 08/03/2020
+ms.locfileid: "87526467"
 ---
 # <a name="reverse-engineering"></a>反向工程
 
-反向工程是基架实体类型类的过程，以及基于数据库架构的 DbContext 类。 可以使用 `Scaffold-DbContext` EF Core 程序包管理器控制台的命令来执行该命令 (PMC) 工具或 `dotnet ef dbcontext scaffold` .net 命令行界面的命令 (CLI) 工具。
+反向工程是基架实体类型类的过程，以及基于数据库架构的 DbContext 类。 可以使用 `Scaffold-DbContext` EF Core 包管理器控制台（PMC）工具的命令或 `dotnet ef dbcontext scaffold` .net 命令行接口（CLI）工具的命令来执行该命令。
 
 ## <a name="installing"></a>安装
 
-在进行反向工程之前，你需要 (仅) 或[CLI 工具](xref:core/miscellaneous/cli/dotnet)将[PMC 工具](xref:core/miscellaneous/cli/powershell)安装在 Visual Studio 中。 有关详细信息，请参阅链接。
+在进行反向工程之前，你需要安装[PMC 工具](xref:core/miscellaneous/cli/powershell)（仅适用于 Visual Studio）或[CLI 工具](xref:core/miscellaneous/cli/dotnet)。 有关详细信息，请参阅链接。
 
 还需要为要进行反向工程的数据库架构安装适当的[数据库提供程序](xref:core/providers/index)。
 
@@ -46,7 +46,7 @@ Scaffold-DbContext 'Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook' 
 
 如果有 ASP.NET Core 项目，则可以使用 `Name=<connection-string>` 语法从配置中读取连接字符串。
 
-这很适合用于[机密管理器工具](https://docs.microsoft.com/aspnet/core/security/app-secrets#secret-manager)，使数据库密码与代码库保持分离。
+这很适合用于[机密管理器工具](/aspnet/core/security/app-secrets#secret-manager)，使数据库密码与代码库保持分离。
 
 ```dotnetcli
 dotnet user-secrets set ConnectionStrings.Chinook "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook"
@@ -89,7 +89,7 @@ Scaffold-DbContext ... -Tables Artist, Album
 
 ## <a name="fluent-api-or-data-annotations"></a>熟知 API 或数据批注
 
-默认情况下，实体类型是使用熟知 API 配置的。 指定 `-DataAnnotations` (PMC) 或 `--data-annotations` ( .NET Core CLI) 改为使用数据批注（如果可能）。
+默认情况下，实体类型是使用熟知 API 配置的。 `-DataAnnotations`如果可能，请指定（PMC）或 `--data-annotations` （.NET Core CLI）来改为使用数据注释。
 
 例如，使用熟知的 API 将基架：
 
@@ -157,7 +157,7 @@ Scaffold-DbContext ... -Namespace Your.Namespace -ContextNamespace Your.DbContex
 
 * 不是有关模型的所有内容都可以使用数据库架构来表示。 例如，有关[**继承层次结构**](../modeling/inheritance.md)、[**附属类型**](../modeling/owned-entities.md)和[**表拆分**](../modeling/table-splitting.md)的信息在数据库架构中不存在。 因此，这些构造永远不会经过反向工程。
 * 此外，EF Core 提供程序可能不支持**某些列类型**。 这些列不会包含在模型中。
-* 可以在 EF Core 模型中定义[**并发标记**](../modeling/concurrency.md)，以防止两个用户同时更新同一实体。 某些数据库具有特殊类型来表示此类型的列 (例如，SQL Server 中的 rowversion) ，在这种情况下，我们可以对此信息进行反向工程;但是，其他并发令牌不会进行反向工程。
+* 可以在 EF Core 模型中定义[**并发标记**](../modeling/concurrency.md)，以防止两个用户同时更新同一实体。 某些数据库有一种特殊类型的类型来表示此类型的列（例如 SQL Server 中的 rowversion），在这种情况下，我们可以对此信息进行反向工程。但是，其他并发令牌不会进行反向工程。
 * 反向工程当前不支持[c # 8 可为 Null 的引用类型功能](/dotnet/csharp/tutorials/nullable-reference-types)： EF Core 始终会生成假定禁用该功能的 c # 代码。 例如，可以将可为 null 的文本列基架为类型为的属性 `string` ，而不是 `string?` 用于配置是否需要属性的熟知 API 或数据批注。 您可以编辑基架代码并将其替换为 c # 为空批注。 [#15520](https://github.com/aspnet/EntityFrameworkCore/issues/15520)的问题跟踪了可为 null 的引用类型的基架支持。
 
 ## <a name="customizing-the-model"></a>自定义模型
@@ -172,7 +172,7 @@ EF Core 生成的代码是您的代码。 随意更改。 仅当您再次对同�
 
 更改数据库后，可能需要更新 EF Core 模型以反映这些更改。 如果数据库更改很简单，只需手动对 EF Core 模型进行更改即可。 例如，对表或列进行重命名、删除列或更新列的类型是在代码中进行的一些简单的更改。
 
-但是，更重要的更改并不容易手动完成。 一个常见的工作流是通过使用 `-Force` (PMC) 或 `--force` (CLI) ，使用已更新的模型覆盖现有模型，从数据库反向对模型进行反向工程。
+但是，更重要的更改并不容易手动完成。 一个常见的工作流是使用 `-Force` （PMC）或 `--force` （CLI）通过数据库重写现有模型，从而将模型从数据库反向工程。
 
 另一个常请求的功能是能够从数据库更新模型，同时保留自定义项（如重命名、类型层次结构等）。使用问题[#831](https://github.com/aspnet/EntityFrameworkCore/issues/831)跟踪此功能的进度。
 

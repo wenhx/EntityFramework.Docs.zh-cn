@@ -4,12 +4,12 @@ author: bricelam
 ms.author: bricelam
 ms.date: 05/06/2020
 uid: core/managing-schemas/migrations/managing
-ms.openlocfilehash: e52d3680360a1e83e05f04650c735c5a67680094
-ms.sourcegitcommit: 31536e52b838a84680d2e93e5bb52fb16df72a97
+ms.openlocfilehash: 2097d3cc9232d448191dbebbe3d14d86e80b91fe
+ms.sourcegitcommit: 949faaba02e07e44359e77d7935f540af5c32093
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/10/2020
-ms.locfileid: "86238722"
+ms.lasthandoff: 08/03/2020
+ms.locfileid: "87526428"
 ---
 # <a name="managing-migrations"></a>管理迁移
 
@@ -83,7 +83,7 @@ migrationBuilder.AddColumn<string>(
     nullable: true);
 ```
 
-EF Core 通常无法知道何时要删除某一列，并创建一个新的 (两个不同的更改) ，以及应重命名列。 如果以上迁移按原样应用，则所有客户名称都将丢失。 若要重命名列，请将上面生成的迁移替换为以下内容：
+EF Core 通常无法知道何时要删除某一列并创建一个新列（两个不同的更改）以及何时应重命名列。 如果以上迁移按原样应用，则所有客户名称都将丢失。 若要重命名列，请将上面生成的迁移替换为以下内容：
 
 ```c#
 migrationBuilder.RenameColumn(
@@ -97,7 +97,7 @@ migrationBuilder.RenameColumn(
 
 ### <a name="adding-raw-sql"></a>添加原始 SQL
 
-重命名列时，可以通过内置 API 来实现，在许多情况下，这是不可能的。 例如，我们可能希望将现有的 `FirstName` 和属性替换为 `LastColumn` 一个新的 `FullName` 属性。 EF Core 生成的迁移如下：
+重命名列时，可以通过内置 API 来实现，在许多情况下，这是不可能的。 例如，我们可能希望将现有的 `FirstName` 和属性替换为 `LastName` 一个新的 `FullName` 属性。 EF Core 生成的迁移如下：
 
 ``` csharp
 migrationBuilder.DropColumn(
@@ -109,7 +109,7 @@ migrationBuilder.DropColumn(
     table: "Customer");
 
 migrationBuilder.AddColumn<string>(
-    name: "Name",
+    name: "FullName",
     table: "Customer",
     nullable: true);
 ```
@@ -118,14 +118,14 @@ migrationBuilder.AddColumn<string>(
 
 ``` csharp
 migrationBuilder.AddColumn<string>(
-    name: "Name",
+    name: "FullName",
     table: "Customer",
     nullable: true);
 
 migrationBuilder.Sql(
 @"
     UPDATE Customer
-    SET Name = FirstName + ' ' + LastName;
+    SET FullName = FirstName + ' ' + LastName;
 ");
 
 migrationBuilder.DropColumn(

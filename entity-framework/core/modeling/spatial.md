@@ -5,12 +5,12 @@ ms.author: bricelam
 ms.date: 11/01/2018
 ms.assetid: 2BDE29FC-4161-41A0-841E-69F51CCD9341
 uid: core/modeling/spatial
-ms.openlocfilehash: 2222df84be7bfde3f252766bef1cfab39b476efa
-ms.sourcegitcommit: ebfd3382fc583bc90f0da58e63d6e3382b30aa22
+ms.openlocfilehash: 85124b7e252797ccd952d0d332e7309eff97ba56
+ms.sourcegitcommit: 949faaba02e07e44359e77d7935f540af5c32093
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/25/2020
-ms.locfileid: "85370443"
+ms.lasthandoff: 08/03/2020
+ms.locfileid: "87526662"
 ---
 # <a name="spatial-data"></a>空间数据
 
@@ -48,7 +48,7 @@ optionsBuilder.UseSqlServer(
 
 有几种空间数据类型。 使用哪种类型取决于您想要允许的形状的类型。 下面是可用于模型中的属性的 NTS 类型的层次结构。 它们位于 `NetTopologySuite.Geometries` 命名空间内。
 
-* Geometry
+* 几何图形
   * 点
   * LineString
   * Polygon
@@ -345,7 +345,7 @@ GetInteriorRingN （int） | ✔ | ✔ | ✔ | ✔
 
 ## <a name="additional-resources"></a>其他资源
 
-* [SQL Server 中的空间数据](https://docs.microsoft.com/sql/relational-databases/spatial/spatial-data-sql-server)
+* [SQL Server 中的空间数据](/sql/relational-databases/spatial/spatial-data-sql-server)
 * [SpatiaLite 主页](https://www.gaia-gis.it/fossil/libspatialite)
 * [Npgsql 空间文档](https://www.npgsql.org/efcore/mapping/nts.html)
 * [PostGIS 文档](https://postgis.net/documentation/)

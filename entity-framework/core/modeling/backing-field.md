@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: a628795e-64df-4f24-a5e8-76bc261e7ed8
 uid: core/modeling/backing-field
-ms.openlocfilehash: 5c1b2e8036a8556d69cac2ec22722fc72d6da4aa
-ms.sourcegitcommit: 387cbd8109c0fc5ce6bdc85d0dec1aed72ad4c33
+ms.openlocfilehash: e015c4f3fca767d25bee179c027813bd9fcf4c07
+ms.sourcegitcommit: 949faaba02e07e44359e77d7935f540af5c32093
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/23/2020
-ms.locfileid: "82103147"
+ms.lasthandoff: 08/03/2020
+ms.locfileid: "87526753"
 ---
 # <a name="backing-fields"></a>支持字段
 
@@ -24,7 +24,7 @@ ms.locfileid: "82103147"
 * `m_<camel-cased property name>`
 * `m_<property name>`
 
-在下面的示例中， `Url`将属性配置为具有`_url`其支持字段：
+在下面的示例中，将 `Url` 属性配置为具有 `_url` 其支持字段：
 
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/BackingField.cs#Sample)]
 
@@ -46,22 +46,22 @@ ms.locfileid: "82103147"
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingFieldAccessMode.cs?name=BackingFieldAccessMode&highlight=6)]
 
-有关完整的支持选项集，请参阅[PropertyAccessMode 枚举](https://docs.microsoft.com/dotnet/api/microsoft.entityframeworkcore.propertyaccessmode)。
+有关完整的支持选项集，请参阅[PropertyAccessMode 枚举](/dotnet/api/microsoft.entityframeworkcore.propertyaccessmode)。
 
 > [!NOTE]
-> 使用 EF Core 3.0，默认属性访问模式从`PreferFieldDuringConstruction`更改为。 `PreferField`
+> 使用 EF Core 3.0，默认属性访问模式从更改 `PreferFieldDuringConstruction` 为 `PreferField` 。
 
 ## <a name="field-only-properties"></a>仅限字段的属性
 
 您还可以在您的模型中创建一个概念属性，该属性在实体类中不具有相应的 CLR 属性，而是使用字段来存储实体中的数据。 这不同于[阴影属性](shadow-properties.md)，其中的数据存储在更改跟踪器中，而不是存储在实体的 CLR 类型中。 仅字段属性在实体类使用方法而不是属性来获取/设置值时使用，或者在字段不应在域模型中公开（例如主键）的情况下使用。
 
-可以通过在`Property(...)` API 中提供名称来配置仅限字段的属性：
+可以通过在 API 中提供名称来配置仅限字段的属性 `Property(...)` ：
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingFieldNoProperty.cs#Sample)]
 
 EF 将尝试查找具有给定名称的 CLR 属性，如果找不到属性，则尝试查找一个字段。 如果属性和字段均未找到，则将改为设置影子属性。
 
-您可能需要从 LINQ 查询中引用仅限字段的属性，但此类字段通常是私有的。 可以在 LINQ 查询`EF.Property(...)`中使用方法来引用字段：
+您可能需要从 LINQ 查询中引用仅限字段的属性，但此类字段通常是私有的。 可以 `EF.Property(...)` 在 LINQ 查询中使用方法来引用字段：
 
 ``` csharp
 var blogs = db.blogs.OrderBy(b => EF.Property<string>(b, "_validatedUrl"));

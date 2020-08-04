@@ -3,19 +3,19 @@ title: 用 WPF 进行数据绑定-EF6
 author: divega
 ms.date: 05/19/2020
 ms.assetid: e90d48e6-bea7785-47ef-b756-7b89cce4daf0
-ms.openlocfilehash: c8e9e9a0810d8192e5184abbc7df2e74e4ee7edb
-ms.sourcegitcommit: 59e3d5ce7dfb284457cf1c991091683b2d1afe9d
+ms.openlocfilehash: baeb75b1ee386ca58013048bcc31ea4074604673
+ms.sourcegitcommit: 949faaba02e07e44359e77d7935f540af5c32093
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/20/2020
-ms.locfileid: "83672908"
+ms.lasthandoff: 08/03/2020
+ms.locfileid: "87526844"
 ---
 # <a name="databinding-with-wpf"></a>使用 WPF 进行数据绑定
 
 > [!IMPORTANT]
 > **此文档仅对 .NET Framework 上的 WPF 有效**
 >
-> 本文档介绍 .NET Framework 上的 WPF 的数据绑定。 对于新的 .NET Core 项目，建议使用[EF Core](/ef/core)而不是实体框架6。 EF Core 中的数据绑定的文档将在[#778 问题](https://github.com/dotnet/EntityFramework.Docs/issues/778)中进行跟踪。
+> 本文档介绍 .NET Framework 上的 WPF 的数据绑定。 对于新的 .NET Core 项目，建议使用[EF Core](/ef/core)而不是实体框架6。 下面是有关 EF Core 中的数据绑定的文档：[与 WPF 入门](/ef/core/get-started/wpf)。
 
 此分步演练演示如何将 POCO 类型绑定到 "主/详细信息" 窗体中的 WPF 控件。 应用程序使用实体框架 Api 使用数据库中的数据填充对象、跟踪更改并将数据保存到数据库。
 
@@ -202,7 +202,7 @@ DbContext 派生类型的实例在运行时管理实体对象，这包括使用�
 
     ![选择对象](~/ef6/media/chooseyourobjects.png)
 
-反向工程过程完成后，会将新模型添加到项目中，并打开，以便在 Entity Framework Designer 中查看。 App.config 文件也已添加到您的项目中，其中包含数据库的连接详细信息。
+反向工程过程完成后，会将新模型添加到项目中，并打开，以便在 Entity Framework Designer 中查看。 还使用数据库的连接详细信息将 App.config 文件添加到项目。
 
 #### <a name="additional-steps-in-visual-studio-2010"></a>Visual Studio 2010 中的其他步骤
 

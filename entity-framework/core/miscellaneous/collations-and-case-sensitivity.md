@@ -5,12 +5,12 @@ author: roji
 ms.date: 04/27/2020
 ms.assetid: bde4e0ee-fba3-4813-a849-27049323d301
 uid: core/miscellaneous/collations-and-case-sensitivity
-ms.openlocfilehash: b3874847922cb39aa57d50813e6e50ff7db72eb9
-ms.sourcegitcommit: ebfd3382fc583bc90f0da58e63d6e3382b30aa22
+ms.openlocfilehash: 46a13d341c1b721bb243ee2b205bdc2f4d7e7aee
+ms.sourcegitcommit: 949faaba02e07e44359e77d7935f540af5c32093
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/25/2020
-ms.locfileid: "85370560"
+ms.lasthandoff: 08/03/2020
+ms.locfileid: "87526441"
 ---
 # <a name="collations-and-case-sensitivity"></a>排序规则和区分大小写
 
@@ -68,11 +68,11 @@ WHERE [c].[Name] COLLATE SQL_Latin1_General_CP1_CS_AS = N'John'
 
 在 .NET 中，string 相等性默认情况下区分大小写： `s1 == s2` 执行要求字符串相同的序号比较。 因为数据库的默认排序规则会变化，并且因为需要简单的相等性来使用索引，所以 EF Core 不会尝试将简单的相等转换为区分大小写的数据库操作： c # 相等性会直接转换为 SQL 相等性，这可能会也可能不区分大小写，具体取决于所使用的特定数据库及其排序规则配置。
 
-此外，.NET 还提供了 [`string.Equals`](https://docs.microsoft.com/dotnet/api/system.string.equals#System_String_Equals_System_String_System_StringComparison_) 接受枚举的重载 [`StringComparison`](https://docs.microsoft.com/dotnet/api/system.stringcomparison) ，这允许为比较指定区分大小写和文化。 按照设计，EF Core refrains 将这些重载转换为 SQL，尝试使用它们将导致异常。 一方面，EF Core 知道不应使用不区分大小写的排序规则或不区分大小写的排序规则。 更重要的是，在大多数情况下，应用排序规则会阻止索引的使用，对非常基本的常用 .NET 构造的性能产生显著影响。 若要强制查询使用区分大小写或不区分大小写的比较，请通过 `EF.Functions.Collate` [上面详细](#explicit-collations-and-indexes)说明显式指定排序规则。
+此外，.NET 还提供了 [`string.Equals`](/dotnet/api/system.string.equals#System_String_Equals_System_String_System_StringComparison_) 接受枚举的重载 [`StringComparison`](/dotnet/api/system.stringcomparison) ，这允许为比较指定区分大小写和文化。 按照设计，EF Core refrains 将这些重载转换为 SQL，尝试使用它们将导致异常。 一方面，EF Core 知道不应使用不区分大小写的排序规则或不区分大小写的排序规则。 更重要的是，在大多数情况下，应用排序规则会阻止索引的使用，对非常基本的常用 .NET 构造的性能产生显著影响。 若要强制查询使用区分大小写或不区分大小写的比较，请通过 `EF.Functions.Collate` [上面详细](#explicit-collations-and-indexes)说明显式指定排序规则。
 
 ## <a name="database-specific-information"></a>数据库特定的信息
 
-* [SQL Server 有关排序规则的文档](https://docs.microsoft.com/sql/relational-databases/collations/collation-and-unicode-support)。
-* [有关排序规则的数据表](https://docs.microsoft.com/dotnet/standard/data/sqlite/collation)。
+* [SQL Server 有关排序规则的文档](/sql/relational-databases/collations/collation-and-unicode-support)。
+* [有关排序规则的数据表](/dotnet/standard/data/sqlite/collation)。
 * [有关排序规则的 PostgreSQL 文档](https://www.postgresql.org/docs/current/collation.html)。
 * [有关排序规则的 MySQL 文档](https://dev.mysql.com/doc/refman/en/charset-general.html)。
