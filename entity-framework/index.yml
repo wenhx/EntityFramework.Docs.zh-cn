@@ -10,12 +10,12 @@ metadata:
   author: WadePickett
   ms.author: wpickett
   ms.date: 04/15/2020
-  ms.openlocfilehash: 1411737453563ac5377dbda2804dd0bd058133a7
-  ms.sourcegitcommit: 92d54fe3702e0c92e198334da22bacb42e9842b1
+  ms.openlocfilehash: 3b8d9979b559dcac71da64634260c93fa7b3dde2
+  ms.sourcegitcommit: c94a356ab03f2031c4b86aa4e4b6271928b7f4c8
   ms.translationtype: HT
   ms.contentlocale: zh-CN
-  ms.lasthandoff: 06/10/2020
-  ms.locfileid: "84664164"
+  ms.lasthandoff: 08/03/2020
+  ms.locfileid: "87538691"
 highlightedContent:
   items:
   - title: Entity Framework Core
@@ -48,6 +48,10 @@ additionalContent:
         text: 使用 EF Core 访问 SQL Server LocalDB 或 SQLite 的 ASP.NET Core Razor 网页应用
       - url: /aspnet/core/data/ef-mvc/
         text: 使用 EF Core 访问 SQL Server 的 ASP.NET Core MVC web 应用
+      - url: core/get-started/wpf.md
+        text: 通过 EF Core 访问 SQLite 的 WPF .NET Core 应用
+      - url: core/get-started/xamarin.md
+        text: 通过 EF Core 访问 SQLite 的 Xamarin 移动应用
     - title: 支持的数据库
       links:
       - url: core/providers/sql-server/index.md
@@ -74,12 +78,12 @@ additionalContent:
         text: ASP.NET Core MVC
       - url: https://docs.microsoft.com/aspnet/core/blazor/dependency-injection?#use-of-entity-framework-dbcontext-from-di
         text: Blazor 服务器
-      - url: https://docs.microsoft.com/ef/ef6/fundamentals/databinding/wpf
+      - url: core/get-started/wpf.md
         text: Windows Presentation Foundation (WPF)
-      - url: https://docs.microsoft.com/ef/ef6/fundamentals/databinding/winforms
+      - url: https://docs.microsoft.com/ef/ef6/fundamentals/databinding/winforms/
         text: Windows 窗体 (WinForms)
-      - url: https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-xamarin
-        text: Xamarin（部分支持）
+      - url: core/get-started/xamarin.md
+        text: Xamarin
     - title: 基础知识
       links:
       - url: core/miscellaneous/connection-strings.md
