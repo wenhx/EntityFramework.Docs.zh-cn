@@ -4,12 +4,12 @@ description: 测试使用 EF Core 的应用程序的不同方法
 author: ajcvickers
 ms.date: 04/22/2020
 uid: core/miscellaneous/testing/index
-ms.openlocfilehash: 71222f17ac4cc1b71052a2e7e916ebcedd2ae0f4
-ms.sourcegitcommit: ebfd3382fc583bc90f0da58e63d6e3382b30aa22
+ms.openlocfilehash: 7929c284c2794b2fcc95235ae413d56895ebb6e2
+ms.sourcegitcommit: 949faaba02e07e44359e77d7935f540af5c32093
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/25/2020
-ms.locfileid: "85370534"
+ms.lasthandoff: 08/03/2020
+ms.locfileid: "87526805"
 ---
 # <a name="testing-code-that-uses-ef-core"></a>测试使用 EF Core 的代码
 
@@ -63,7 +63,7 @@ LocalDB 也不是没有问题：
 就个人而言，我从来不觉得在开发计算机上运行数据库服务有什么问题，所以一般建议使用 Developer Edition。
 但是，LocalDB 对某些人而言可能适用，尤其是在处理能力不够强的开发计算机上。
 
-在 Docker 容器（或类似容器）中运行 SQL Server （或任何其他数据库系统）是避免直接在开发计算机上运行数据库系统的另一种方法。  
+在 Docker 容器（或类似容器）中[运行 SQL Server](/sql/linux/quickstart-install-connect-docker?view=sql-server-ver15)（或任何其他数据库系统）是避免直接在开发计算机上运行数据库系统的另一种方法。  
 
 ## <a name="approach-2-sqlite"></a>方法 2：SQLite
 
