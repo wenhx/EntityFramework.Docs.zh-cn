@@ -4,12 +4,12 @@ description: EF Core 5.0 中的新功能概述
 author: ajcvickers
 ms.date: 07/20/2020
 uid: core/what-is-new/ef-core-5.0/whatsnew
-ms.openlocfilehash: d42b2811d07516e9febedbc51fcb206000d38371
-ms.sourcegitcommit: 51148929e3889c48227d96c95c4e310d53a3d2c9
+ms.openlocfilehash: d7f5863e657e243ce733eda5dc8b40c1b92818ce
+ms.sourcegitcommit: 949faaba02e07e44359e77d7935f540af5c32093
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/21/2020
-ms.locfileid: "86873378"
+ms.lasthandoff: 08/03/2020
+ms.locfileid: "87526870"
 ---
 # <a name="whats-new-in-ef-core-50"></a>EF Core 5.0 中的新增功能
 
@@ -47,7 +47,7 @@ public class MyController
 之后可根据需要创建和使用 DbContext 实例。 例如：
 
 ```csharp
-public void DoSomehing()
+public void DoSomeThing()
 {
     using (var context = _contextFactory.CreateDbContext())
     {
@@ -503,7 +503,7 @@ WHERE [u].[Name] COLLATE French_CI_AS = N'Jean-Michel Jarre'
 
 ### <a name="flow-arguments-into-idesigntimedbcontextfactory"></a>将参数传输到 IDesignTimeDbContextFactory
 
-参数现从命令行传输到 [IDesignTimeDbContextFactory](https://docs.microsoft.com/dotnet/api/microsoft.entityframeworkcore.design.idesigntimedbcontextfactory-1?view=efcore-3.1) 的 `CreateDbContext` 方法。 例如，若要指明这是开发生成，可以在命令行上传递自定义参数（例如 `dev`）：
+参数现从命令行传输到 [IDesignTimeDbContextFactory](/dotnet/api/microsoft.entityframeworkcore.design.idesigntimedbcontextfactory-1?view=efcore-3.1) 的 `CreateDbContext` 方法。 例如，若要指明这是开发生成，可以在命令行上传递自定义参数（例如 `dev`）：
 
 ```
 dotnet ef migrations add two --verbose --dev
@@ -774,7 +774,7 @@ public class Address
 
 ### <a name="change-tracking-proxies"></a>更改跟踪代理
 
-EF Core 现在可以生成自动实现 [INotifyPropertyChanging](https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging?view=netcore-3.1) 和 [INotifyPropertyChanged](https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged?view=netcore-3.1) 的运行时代理。 这些代理会将实体属性的值更改直接报告给 EF Core，从而无需扫描更改。 不过，代理有其自身的一组限制，因此并不适合所有人使用。
+EF Core 现在可以生成自动实现 [INotifyPropertyChanging](/dotnet/api/system.componentmodel.inotifypropertychanging?view=netcore-3.1) 和 [INotifyPropertyChanged](/dotnet/api/system.componentmodel.inotifypropertychanged?view=netcore-3.1) 的运行时代理。 这些代理会将实体属性的值更改直接报告给 EF Core，从而无需扫描更改。 不过，代理有其自身的一组限制，因此并不适合所有人使用。
 
 文档可通过问题 [#2076](https://github.com/dotnet/EntityFramework.Docs/issues/2076) 进行跟踪。
 
@@ -832,7 +832,7 @@ Azure Cosmos DB 数据库提供程序现在支持使用 ETag 的开放式并发�
 builder.Entity<Customer>().Property(c => c.ETag).IsEtagConcurrency();
 ```
 
-然后，SaveChanges 将在并发冲突上引发 `DbUpdateConcurrencyException`，[可以处理](https://docs.microsoft.com/ef/core/saving/concurrency)它来实现重试等。
+然后，SaveChanges 将在并发冲突上引发 `DbUpdateConcurrencyException`，[可以处理](/ef/core/saving/concurrency)它来实现重试等。
 
 文档可通过问题 [#2099](https://github.com/dotnet/EntityFramework.Docs/issues/2099) 进行跟踪。
 

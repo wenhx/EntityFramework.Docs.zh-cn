@@ -3,12 +3,12 @@ title: 针对 Entity Framework Core 5.0 的计划
 author: ajcvickers
 ms.date: 06/11/2020
 uid: core/what-is-new/ef-core-5.0/plan
-ms.openlocfilehash: a107f901b215e7abaa5905852f81c2d9ab094b98
-ms.sourcegitcommit: 31536e52b838a84680d2e93e5bb52fb16df72a97
+ms.openlocfilehash: 4abb6f500dce320dd0c32f8f3bf5c529b59fb28b
+ms.sourcegitcommit: 949faaba02e07e44359e77d7935f540af5c32093
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/10/2020
-ms.locfileid: "86238315"
+ms.lasthandoff: 08/03/2020
+ms.locfileid: "87526883"
 ---
 # <a name="plan-for-entity-framework-core-50"></a>针对 Entity Framework Core 5.0 的计划
 
@@ -234,7 +234,7 @@ T 恤大小：L
 
 T 恤大小：M
 
-状态：已完成。 新文档在 [Microsoft 文档站点上提供](https://docs.microsoft.com/dotnet/standard/data/sqlite/?tabs=netcore-cli)。
+状态：已完成。 新文档在 [Microsoft 文档站点上提供](/dotnet/standard/data/sqlite/?tabs=netcore-cli)。
 
 EF 团队还拥有 Microsoft.Data.Sqlite ADO.NET 提供程序。 我们计划在 5.0 版本中完整记录此提供程序。
 
