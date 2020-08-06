@@ -3,21 +3,21 @@ title: EF Core 3.0 中的中断性变更 - EF Core
 author: ajcvickers
 ms.date: 12/03/2019
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: 6e0c17a22b56b206f18e47f678e3e237d5c42375
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: a5e8b46fae63e45282342964a631ca2f830e601b
+ms.sourcegitcommit: 949faaba02e07e44359e77d7935f540af5c32093
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "78413557"
+ms.lasthandoff: 08/03/2020
+ms.locfileid: "87526857"
 ---
 # <a name="breaking-changes-included-in-ef-core-30"></a>EF Core 3.0 中包含的中断性变更
 
 以下 API 和行为更改有可能使现有应用程序在升级到 3.0.0 时中断。
 我们将仅影响数据库提供程序的更改记录在[提供程序更改](xref:core/providers/provider-log)下。
 
-## <a name="summary"></a>总结
+## <a name="summary"></a>摘要
 
-| **重大更改**                                                                                               | **影响** |
+| **中断性变更**                                                                                               | **影响** |
 |:------------------------------------------------------------------------------------------------------------------|------------|
 | [不再在客户端上计算 LINQ 查询](#linq-queries-are-no-longer-evaluated-on-the-client)         | 高       |
 | [EF Core 3.0 面向 .NET Standard 2.1，而不是 .NET Standard 2.0](#netstandard21) | 高      |
@@ -131,7 +131,7 @@ ms.locfileid: "78413557"
 <a name="no-longer"></a>
 ### <a name="entity-framework-core-is-no-longer-part-of-the-aspnet-core-shared-framework"></a>Entity Framework Core 不再是 ASP.NET Core 共享框架的一部分
 
-[跟踪问题公告 #325](https://github.com/aspnet/Announcements/issues/325)
+[跟踪问题公告#325](https://github.com/aspnet/Announcements/issues/325)
 
 **旧行为**
 
@@ -239,9 +239,9 @@ context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").FirstOrDefaul
 
 EF Core 3.0 不支持自动客户端评估，因为容易出错，如[此处](#linq-queries-are-no-longer-evaluated-on-the-client)所述。
 
-**缓解**
+**缓解操作**
 
-如果在 FromSqlRaw/FromSqlInterpolated 中使用存储过程，你了解无法对其进行组合，因此可以紧随 FromSql 方法调用添加 AsEnumerable/AsAsyncEnumerable，以避免在服务器端上进行任何组合  。
+如果在 FromSqlRaw/FromSqlInterpolated 中使用存储过程，你了解无法对其进行组合，因此可以紧随 FromSql 方法调用添加 AsEnumerable/AsAsyncEnumerable，以避免在服务器端上进行任何组合。
 
 ```csharp
 context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").AsEnumerable().FirstOrDefault();
@@ -276,7 +276,7 @@ context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").AsEnumerable(
 
 **旧行为**
 
-在 EF Core 3.0 之前，将对具有给定类型和 ID 的实体的每个匹配项使用同一个实体实例。 这与跟踪查询的行为匹配。 例如，以下查询：
+在 EF Core 3.0 之前，将对具有给定类型和 ID 的实体的每个匹配项使用同一个实体实例。 这与跟踪查询的行为匹配。 例如下面的查询：
 
 ```csharp
 var results = context.Products.Include(e => e.Category).AsNoTracking().ToList();
@@ -392,7 +392,7 @@ public string Id { get; set; }
 
 **为什么**
 
-此更改是为了改善数据绑定和审核方案的体验；在相关体验中，有必要了解在调用  _之前会删除哪些实体_`SaveChanges`。
+此更改是为了改善数据绑定和审核方案的体验；在相关体验中，有必要了解在调用 `SaveChanges` 之前会删除哪些实体。
 
 **缓解措施**
 
@@ -969,7 +969,7 @@ modelBuilder
 
 **旧行为**
 
-在 EF Core 3.0 之前，调用 `AddDbContext` 或 `AddDbContextPool` 的操作也会通过调用 [AddLogging](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.loggingservicecollectionextensions.addlogging) 和 [AddMemoryCache](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache) 向 DI 注册日志记录和内存缓存服务。
+在 EF Core 3.0 之前，调用 `AddDbContext` 或 `AddDbContextPool` 的操作也会通过调用 [AddLogging](/dotnet/api/microsoft.extensions.dependencyinjection.loggingservicecollectionextensions.addlogging) 和 [AddMemoryCache](/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache) 向 DI 注册日志记录和内存缓存服务。
 
 **新行为**
 
@@ -981,7 +981,7 @@ EF Core 3.0 不要求这些服务位于应用程序的 DI 容器中。 但是，
 
 **缓解措施**
 
-如果应用程序需要这些服务，则使用 [AddLogging](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.loggingservicecollectionextensions.addlogging) 或 [AddMemoryCache](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache) 将它们显式注册到 DI 容器中。
+如果应用程序需要这些服务，则使用 [AddLogging](/dotnet/api/microsoft.extensions.dependencyinjection.loggingservicecollectionextensions.addlogging) 或 [AddMemoryCache](/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache) 将它们显式注册到 DI 容器中。
 
 ### <a name="addentityframework-adds-imemorycache-with-a-size-limit"></a>AddEntityFramework* 添加具有大小限制的 IMemoryCache
 
@@ -1003,7 +1003,7 @@ EF Core 3.0 不要求这些服务位于应用程序的 DI 容器中。 但是，
 
 在大多数情况下，如果同时调用了 `AddDbContext` 或 `AddDbContextPool`，则无需调用 `AddEntityFramework*`。 因此，最好的缓解措施是删除 `AddEntityFramework*` 调用。
 
-如果应用程序需要这些服务，则使用 [AddMemoryCache](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache) 预先向 DI 容器显式注册 IMemoryCache 实现。
+如果应用程序需要这些服务，则使用 [AddMemoryCache](/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache) 预先向 DI 容器显式注册 IMemoryCache 实现。
 
 <a name="dbe"></a>
 
@@ -1272,7 +1272,7 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 **新行为**
 
 从 EF Core 3.0 开始，现在支持在关系级别上对索引使用 `Include`。
-改用 `HasIndex().ForSqlServerInclude()`
+请使用 `HasIndex().ForSqlServerInclude()`。
 
 **为什么**
 
@@ -1427,7 +1427,7 @@ Microsoft.Data.Sqlite 仍然能够从“BLOB”和“文本”列读取 GUID 值
 
 **旧行为**
 
-Char 值之前以整数值形式存储在 SQLite 上。 例如，A 的 char 值存储为整数值 65  。
+Char 值之前以整数值形式存储在 SQLite 上。 例如，A 的 char 值存储为整数值 65。
 
 **新行为**
 
