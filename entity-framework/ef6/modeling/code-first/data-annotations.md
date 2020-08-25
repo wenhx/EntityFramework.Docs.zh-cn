@@ -3,29 +3,29 @@ title: Code First 数据批注-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 80abefbd-23c9-4fce-9cd3-520e5df9856e
-ms.openlocfilehash: 9fac2a90c46d78ff5fd632800cc0050276467773
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.openlocfilehash: 17370b83aee9974161b1771e8a1dc99c2de27f0f
+ms.sourcegitcommit: 6f7af3f138bf7c724cbdda261f97e5cf7035e8d7
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78415855"
+ms.lasthandoff: 08/25/2020
+ms.locfileid: "88847613"
 ---
-# <a name="code-first-data-annotations"></a><span data-ttu-id="43964-102">Code First 数据批注</span><span class="sxs-lookup"><span data-stu-id="43964-102">Code First Data Annotations</span></span>
+# <a name="code-first-data-annotations"></a><span data-ttu-id="d44ac-102">Code First 数据批注</span><span class="sxs-lookup"><span data-stu-id="d44ac-102">Code First Data Annotations</span></span>
 > [!NOTE]
-> <span data-ttu-id="43964-103">**仅限 ef 4.1** -在实体框架4.1 中引入了本页中所述的功能、api 等。</span><span class="sxs-lookup"><span data-stu-id="43964-103">**EF4.1 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 4.1.</span></span> <span data-ttu-id="43964-104">如果你使用的是早期版本，则不会应用此信息中的部分或全部。</span><span class="sxs-lookup"><span data-stu-id="43964-104">If you are using an earlier version, some or all of this information does not apply.</span></span>
+> <span data-ttu-id="d44ac-103">**仅限 ef 4.1** -在实体框架4.1 中引入了本页中所述的功能、api 等。</span><span class="sxs-lookup"><span data-stu-id="d44ac-103">**EF4.1 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 4.1.</span></span> <span data-ttu-id="d44ac-104">如果你使用的是早期版本，则不会应用此信息中的部分或全部。</span><span class="sxs-lookup"><span data-stu-id="d44ac-104">If you are using an earlier version, some or all of this information does not apply.</span></span>
 
-<span data-ttu-id="43964-105">此页面上的内容适用于最初由 Julie Lerman （\<http://thedatafarm.com>)编写的文章。</span><span class="sxs-lookup"><span data-stu-id="43964-105">The content on this page is adapted from an article originally written by Julie Lerman (\<http://thedatafarm.com>).</span></span>
+<span data-ttu-id="d44ac-105">此页面上的内容适用于最初由 Julie Lerman () 编写的文章 \<http://thedatafarm.com> 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-105">The content on this page is adapted from an article originally written by Julie Lerman (\<http://thedatafarm.com>).</span></span>
 
-<span data-ttu-id="43964-106">利用实体框架 Code First，你可以使用自己的域类来表示 EF 依赖来执行查询、更改跟踪和更新功能的模型。</span><span class="sxs-lookup"><span data-stu-id="43964-106">Entity Framework Code First allows you to use your own domain classes to represent the model that EF relies on to perform querying, change tracking, and updating functions.</span></span> <span data-ttu-id="43964-107">Code First 利用称为 "约定 over 配置" 的编程模式。</span><span class="sxs-lookup"><span data-stu-id="43964-107">Code First leverages a programming pattern referred to as 'convention over configuration.'</span></span> <span data-ttu-id="43964-108">Code First 将假设你的类遵循实体框架的约定，在这种情况下，将自动处理如何执行其作业。</span><span class="sxs-lookup"><span data-stu-id="43964-108">Code First will assume that your classes follow the conventions of Entity Framework, and in that case, will automatically work out how to perform its job.</span></span> <span data-ttu-id="43964-109">但是，如果你的类不遵循这些约定，则可以将配置添加到你的类，以便为 EF 提供必需的信息。</span><span class="sxs-lookup"><span data-stu-id="43964-109">However, if your classes do not follow those conventions, you have the ability to add configurations to your classes to provide EF with the requisite information.</span></span>
+<span data-ttu-id="d44ac-106">利用实体框架 Code First，你可以使用自己的域类来表示 EF 依赖来执行查询、更改跟踪和更新功能的模型。</span><span class="sxs-lookup"><span data-stu-id="d44ac-106">Entity Framework Code First allows you to use your own domain classes to represent the model that EF relies on to perform querying, change tracking, and updating functions.</span></span> <span data-ttu-id="d44ac-107">Code First 利用称为 "约定 over 配置" 的编程模式。</span><span class="sxs-lookup"><span data-stu-id="d44ac-107">Code First leverages a programming pattern referred to as 'convention over configuration.'</span></span> <span data-ttu-id="d44ac-108">Code First 将假设你的类遵循实体框架的约定，在这种情况下，将自动处理如何执行其作业。</span><span class="sxs-lookup"><span data-stu-id="d44ac-108">Code First will assume that your classes follow the conventions of Entity Framework, and in that case, will automatically work out how to perform its job.</span></span> <span data-ttu-id="d44ac-109">但是，如果你的类不遵循这些约定，则可以将配置添加到你的类，以便为 EF 提供必需的信息。</span><span class="sxs-lookup"><span data-stu-id="d44ac-109">However, if your classes do not follow those conventions, you have the ability to add configurations to your classes to provide EF with the requisite information.</span></span>
 
-<span data-ttu-id="43964-110">Code First 提供了向你的类添加这些配置的两种方法。</span><span class="sxs-lookup"><span data-stu-id="43964-110">Code First gives you two ways to add these configurations to your classes.</span></span> <span data-ttu-id="43964-111">其中一种方法是使用名为 DataAnnotations 的简单特性，第二种方法是使用 Code First 的流畅 API，这为你提供了一种在代码中以强制方式描述配置的方式。</span><span class="sxs-lookup"><span data-stu-id="43964-111">One is using simple attributes called DataAnnotations, and the second is using Code First’s Fluent API, which provides you with a way to describe configurations imperatively, in code.</span></span>
+<span data-ttu-id="d44ac-110">Code First 提供了向你的类添加这些配置的两种方法。</span><span class="sxs-lookup"><span data-stu-id="d44ac-110">Code First gives you two ways to add these configurations to your classes.</span></span> <span data-ttu-id="d44ac-111">其中一种方法是使用名为 DataAnnotations 的简单特性，第二种方法是使用 Code First 的流畅 API，这为你提供了一种在代码中以强制方式描述配置的方式。</span><span class="sxs-lookup"><span data-stu-id="d44ac-111">One is using simple attributes called DataAnnotations, and the second is using Code First’s Fluent API, which provides you with a way to describe configurations imperatively, in code.</span></span>
 
-<span data-ttu-id="43964-112">本文重点介绍如何使用 DataAnnotations （DataAnnotations 命名空间中的 System.componentmodel）来配置类-突出显示最常用的配置。</span><span class="sxs-lookup"><span data-stu-id="43964-112">This article will focus on using DataAnnotations (in the System.ComponentModel.DataAnnotations namespace) to configure your classes – highlighting the most commonly needed configurations.</span></span> <span data-ttu-id="43964-113">DataAnnotations 也可由许多 .NET 应用程序（如 ASP.NET MVC）理解，这允许这些应用程序利用相同的注释进行客户端验证。</span><span class="sxs-lookup"><span data-stu-id="43964-113">DataAnnotations are also understood by a number of .NET applications, such as ASP.NET MVC which allows these applications to leverage the same annotations for client-side validations.</span></span>
+<span data-ttu-id="d44ac-112">本文重点介绍如何使用 DataAnnotations 命名空间) 中的 DataAnnotations (来配置类-突出显示最常用的配置。</span><span class="sxs-lookup"><span data-stu-id="d44ac-112">This article will focus on using DataAnnotations (in the System.ComponentModel.DataAnnotations namespace) to configure your classes – highlighting the most commonly needed configurations.</span></span> <span data-ttu-id="d44ac-113">DataAnnotations 也可由许多 .NET 应用程序（如 ASP.NET MVC）理解，这允许这些应用程序利用相同的注释进行客户端验证。</span><span class="sxs-lookup"><span data-stu-id="d44ac-113">DataAnnotations are also understood by a number of .NET applications, such as ASP.NET MVC which allows these applications to leverage the same annotations for client-side validations.</span></span>
 
 
-## <a name="the-model"></a><span data-ttu-id="43964-114">模型</span><span class="sxs-lookup"><span data-stu-id="43964-114">The model</span></span>
+## <a name="the-model"></a><span data-ttu-id="d44ac-114">模型</span><span class="sxs-lookup"><span data-stu-id="d44ac-114">The model</span></span>
 
-<span data-ttu-id="43964-115">我将使用简单的类对 Code First DataAnnotations 进行演示：博客和文章。</span><span class="sxs-lookup"><span data-stu-id="43964-115">I’ll demonstrate Code First DataAnnotations with a simple pair of classes: Blog and Post.</span></span>
+<span data-ttu-id="d44ac-115">我将使用简单的类对 Code First DataAnnotations 进行演示：博客和文章。</span><span class="sxs-lookup"><span data-stu-id="d44ac-115">I’ll demonstrate Code First DataAnnotations with a simple pair of classes: Blog and Post.</span></span>
 
 ``` csharp
     public class Blog
@@ -47,15 +47,15 @@ ms.locfileid: "78415855"
     }
 ```
 
-<span data-ttu-id="43964-116">正如他们一样，博客和文章类可以方便地遵循 code first 约定，无需进行调整即可启用 EF 兼容性。</span><span class="sxs-lookup"><span data-stu-id="43964-116">As they are, the Blog and Post classes conveniently follow code first convention and require no tweaks to enable EF compatability.</span></span> <span data-ttu-id="43964-117">但是，您还可以使用批注向 EF 提供有关它们所映射到的类和数据库的详细信息。</span><span class="sxs-lookup"><span data-stu-id="43964-117">However, you can also use the annotations to provide more information to EF about the classes and the database to which they map.</span></span>
+<span data-ttu-id="d44ac-116">正如他们一样，博客和文章类可以方便地遵循 code first 约定，无需进行调整即可启用 EF 兼容性。</span><span class="sxs-lookup"><span data-stu-id="d44ac-116">As they are, the Blog and Post classes conveniently follow code first convention and require no tweaks to enable EF compatability.</span></span> <span data-ttu-id="d44ac-117">但是，您还可以使用批注向 EF 提供有关它们所映射到的类和数据库的详细信息。</span><span class="sxs-lookup"><span data-stu-id="d44ac-117">However, you can also use the annotations to provide more information to EF about the classes and the database to which they map.</span></span>
 
  
 
-## <a name="key"></a><span data-ttu-id="43964-118">Key</span><span class="sxs-lookup"><span data-stu-id="43964-118">Key</span></span>
+## <a name="key"></a><span data-ttu-id="d44ac-118">密钥</span><span class="sxs-lookup"><span data-stu-id="d44ac-118">Key</span></span>
 
-<span data-ttu-id="43964-119">实体框架依赖于每个实体，每个实体都有一个用于实体跟踪的键值。</span><span class="sxs-lookup"><span data-stu-id="43964-119">Entity Framework relies on every entity having a key value that is used for entity tracking.</span></span> <span data-ttu-id="43964-120">Code First 的一种约定是隐式键属性;Code First 将查找名为 "Id" 的属性，或者查找类名称和 "Id" （如 "BlogId"）的组合。</span><span class="sxs-lookup"><span data-stu-id="43964-120">One convention of Code First is implicit key properties; Code First will look for a property named “Id”, or a combination of class name and “Id”, such as “BlogId”.</span></span> <span data-ttu-id="43964-121">此属性将映射到数据库中的主键列。</span><span class="sxs-lookup"><span data-stu-id="43964-121">This property will map to a primary key column in the database.</span></span>
+<span data-ttu-id="d44ac-119">实体框架依赖于每个实体，每个实体都有一个用于实体跟踪的键值。</span><span class="sxs-lookup"><span data-stu-id="d44ac-119">Entity Framework relies on every entity having a key value that is used for entity tracking.</span></span> <span data-ttu-id="d44ac-120">Code First 的一种约定是隐式键属性;Code First 将查找名为 "Id" 的属性，或者查找类名称和 "Id" （如 "BlogId"）的组合。</span><span class="sxs-lookup"><span data-stu-id="d44ac-120">One convention of Code First is implicit key properties; Code First will look for a property named “Id”, or a combination of class name and “Id”, such as “BlogId”.</span></span> <span data-ttu-id="d44ac-121">此属性将映射到数据库中的主键列。</span><span class="sxs-lookup"><span data-stu-id="d44ac-121">This property will map to a primary key column in the database.</span></span>
 
-<span data-ttu-id="43964-122">博客和帖子类都遵循此约定。</span><span class="sxs-lookup"><span data-stu-id="43964-122">The Blog and Post classes both follow this convention.</span></span> <span data-ttu-id="43964-123">如果不是，怎么办？</span><span class="sxs-lookup"><span data-stu-id="43964-123">What if they didn’t?</span></span> <span data-ttu-id="43964-124">如果博客使用的是名称*PrimaryTrackingKey* （甚至是*foo*），该怎么办？</span><span class="sxs-lookup"><span data-stu-id="43964-124">What if Blog used the name *PrimaryTrackingKey* instead, or even *foo*?</span></span> <span data-ttu-id="43964-125">如果代码优先找不到与此约定相匹配的属性，则会引发异常，因为实体框架要求必须有一个键属性。</span><span class="sxs-lookup"><span data-stu-id="43964-125">If code first does not find a property that matches this convention it will throw an exception because of Entity Framework’s requirement that you must have a key property.</span></span> <span data-ttu-id="43964-126">你可以使用密钥批注来指定要用作 EntityKey 的属性。</span><span class="sxs-lookup"><span data-stu-id="43964-126">You can use the key annotation to specify which property is to be used as the EntityKey.</span></span>
+<span data-ttu-id="d44ac-122">博客和帖子类都遵循此约定。</span><span class="sxs-lookup"><span data-stu-id="d44ac-122">The Blog and Post classes both follow this convention.</span></span> <span data-ttu-id="d44ac-123">如果不是，怎么办？</span><span class="sxs-lookup"><span data-stu-id="d44ac-123">What if they didn’t?</span></span> <span data-ttu-id="d44ac-124">如果博客使用的是名称 *PrimaryTrackingKey* （甚至是 *foo*），该怎么办？</span><span class="sxs-lookup"><span data-stu-id="d44ac-124">What if Blog used the name *PrimaryTrackingKey* instead, or even *foo*?</span></span> <span data-ttu-id="d44ac-125">如果代码优先找不到与此约定相匹配的属性，则会引发异常，因为实体框架要求必须有一个键属性。</span><span class="sxs-lookup"><span data-stu-id="d44ac-125">If code first does not find a property that matches this convention it will throw an exception because of Entity Framework’s requirement that you must have a key property.</span></span> <span data-ttu-id="d44ac-126">你可以使用密钥批注来指定要用作 EntityKey 的属性。</span><span class="sxs-lookup"><span data-stu-id="d44ac-126">You can use the key annotation to specify which property is to be used as the EntityKey.</span></span>
 
 ``` csharp
     public class Blog
@@ -68,13 +68,13 @@ ms.locfileid: "78415855"
     }
 ```
 
-<span data-ttu-id="43964-127">如果使用代码优先的数据库生成功能，博客表将具有名为 PrimaryTrackingKey 的主键列，默认情况下，此列也定义为标识。</span><span class="sxs-lookup"><span data-stu-id="43964-127">If you are using code first’s database generation feature, the Blog table will have a primary key column named PrimaryTrackingKey, which is also defined as Identity by default.</span></span>
+<span data-ttu-id="d44ac-127">如果使用代码优先的数据库生成功能，博客表将具有名为 PrimaryTrackingKey 的主键列，默认情况下，此列也定义为标识。</span><span class="sxs-lookup"><span data-stu-id="d44ac-127">If you are using code first’s database generation feature, the Blog table will have a primary key column named PrimaryTrackingKey, which is also defined as Identity by default.</span></span>
 
 ![带主键的博客表](~/ef6/media/jj591583-figure01.png)
 
-### <a name="composite-keys"></a><span data-ttu-id="43964-129">组合键</span><span class="sxs-lookup"><span data-stu-id="43964-129">Composite keys</span></span>
+### <a name="composite-keys"></a><span data-ttu-id="d44ac-129">组合键</span><span class="sxs-lookup"><span data-stu-id="d44ac-129">Composite keys</span></span>
 
-<span data-ttu-id="43964-130">实体框架支持组合键-由多个属性组成的主键。</span><span class="sxs-lookup"><span data-stu-id="43964-130">Entity Framework supports composite keys - primary keys that consist of more than one property.</span></span> <span data-ttu-id="43964-131">例如，你可以有一个 Passport 类，其 primary key 是 PassportNumber 和 IssuingCountry 的组合。</span><span class="sxs-lookup"><span data-stu-id="43964-131">For example, you could have a Passport class whose primary key is a combination of PassportNumber and IssuingCountry.</span></span>
+<span data-ttu-id="d44ac-130">实体框架支持组合键-由多个属性组成的主键。</span><span class="sxs-lookup"><span data-stu-id="d44ac-130">Entity Framework supports composite keys - primary keys that consist of more than one property.</span></span> <span data-ttu-id="d44ac-131">例如，你可以有一个 Passport 类，其 primary key 是 PassportNumber 和 IssuingCountry 的组合。</span><span class="sxs-lookup"><span data-stu-id="d44ac-131">For example, you could have a Passport class whose primary key is a combination of PassportNumber and IssuingCountry.</span></span>
 
 ``` csharp
     public class Passport
@@ -88,14 +88,14 @@ ms.locfileid: "78415855"
     }
 ```
 
-<span data-ttu-id="43964-132">尝试在 EF 模型中使用以上类将导致 `InvalidOperationException`：</span><span class="sxs-lookup"><span data-stu-id="43964-132">Attempting to use the above class in your EF model would result in an `InvalidOperationException`:</span></span>
+<span data-ttu-id="d44ac-132">尝试在 EF 模型中使用以上类将导致 `InvalidOperationException` ：</span><span class="sxs-lookup"><span data-stu-id="d44ac-132">Attempting to use the above class in your EF model would result in an `InvalidOperationException`:</span></span>
 
-<span data-ttu-id="43964-133">*无法确定类型 "Passport" 的组合键。使用 ColumnAttribute 或 HasKey 方法为组合主键指定顺序。*</span><span class="sxs-lookup"><span data-stu-id="43964-133">*Unable to determine composite primary key ordering for type 'Passport'. Use the ColumnAttribute or the HasKey method to specify an order for composite primary keys.*</span></span>
+<span data-ttu-id="d44ac-133">*无法确定类型 "Passport" 的组合键。使用 ColumnAttribute 或 HasKey 方法为组合主键指定顺序。*</span><span class="sxs-lookup"><span data-stu-id="d44ac-133">*Unable to determine composite primary key ordering for type 'Passport'. Use the ColumnAttribute or the HasKey method to specify an order for composite primary keys.*</span></span>
 
-<span data-ttu-id="43964-134">若要使用组合键，实体框架要求您定义键属性的顺序。</span><span class="sxs-lookup"><span data-stu-id="43964-134">In order to use composite keys, Entity Framework requires you to define an order for the key properties.</span></span> <span data-ttu-id="43964-135">为此，可以使用列批注指定顺序。</span><span class="sxs-lookup"><span data-stu-id="43964-135">You can do this by using the Column annotation to specify an order.</span></span>
+<span data-ttu-id="d44ac-134">若要使用组合键，实体框架要求您定义键属性的顺序。</span><span class="sxs-lookup"><span data-stu-id="d44ac-134">In order to use composite keys, Entity Framework requires you to define an order for the key properties.</span></span> <span data-ttu-id="d44ac-135">为此，可以使用列批注指定顺序。</span><span class="sxs-lookup"><span data-stu-id="d44ac-135">You can do this by using the Column annotation to specify an order.</span></span>
 
 >[!NOTE]
-> <span data-ttu-id="43964-136">顺序值是相对的（而不是基于索引的），因此可以使用任何值。</span><span class="sxs-lookup"><span data-stu-id="43964-136">The order value is relative (rather than index based) so any values can be used.</span></span> <span data-ttu-id="43964-137">例如，100和200可接受而不是1和2。</span><span class="sxs-lookup"><span data-stu-id="43964-137">For example, 100 and 200 would be acceptable in place of 1 and 2.</span></span>
+> <span data-ttu-id="d44ac-136">顺序值是相对 (，而不是基于索引) 因此可以使用任何值。</span><span class="sxs-lookup"><span data-stu-id="d44ac-136">The order value is relative (rather than index based) so any values can be used.</span></span> <span data-ttu-id="d44ac-137">例如，100和200可接受而不是1和2。</span><span class="sxs-lookup"><span data-stu-id="d44ac-137">For example, 100 and 200 would be acceptable in place of 1 and 2.</span></span>
 
 ``` csharp
     public class Passport
@@ -111,9 +111,9 @@ ms.locfileid: "78415855"
     }
 ```
 
-<span data-ttu-id="43964-138">如果有包含复合外键的实体，则必须指定用于相应主键属性的相同列排序。</span><span class="sxs-lookup"><span data-stu-id="43964-138">If you have entities with composite foreign keys, then you must specify the same column ordering that you used for the corresponding primary key properties.</span></span>
+<span data-ttu-id="d44ac-138">如果有包含复合外键的实体，则必须指定用于相应主键属性的相同列排序。</span><span class="sxs-lookup"><span data-stu-id="d44ac-138">If you have entities with composite foreign keys, then you must specify the same column ordering that you used for the corresponding primary key properties.</span></span>
 
-<span data-ttu-id="43964-139">只有外键属性中的相对顺序需要相同，分配给**Order**的确切值不需要匹配。</span><span class="sxs-lookup"><span data-stu-id="43964-139">Only the relative ordering within the foreign key properties needs to be the same, the exact values assigned to **Order** do not need to match.</span></span> <span data-ttu-id="43964-140">例如，在下面的类中，可以使用3和4代替1和2。</span><span class="sxs-lookup"><span data-stu-id="43964-140">For example, in the following class, 3 and 4 could be used in place of 1 and 2.</span></span>
+<span data-ttu-id="d44ac-139">只有外键属性中的相对顺序需要相同，分配给 **Order** 的确切值不需要匹配。</span><span class="sxs-lookup"><span data-stu-id="d44ac-139">Only the relative ordering within the foreign key properties needs to be the same, the exact values assigned to **Order** do not need to match.</span></span> <span data-ttu-id="d44ac-140">例如，在下面的类中，可以使用3和4代替1和2。</span><span class="sxs-lookup"><span data-stu-id="d44ac-140">For example, in the following class, 3 and 4 could be used in place of 1 and 2.</span></span>
 
 ``` csharp
     public class PassportStamp
@@ -135,25 +135,25 @@ ms.locfileid: "78415855"
     }
 ```
 
-## <a name="required"></a><span data-ttu-id="43964-141">必需</span><span class="sxs-lookup"><span data-stu-id="43964-141">Required</span></span>
+## <a name="required"></a><span data-ttu-id="d44ac-141">必选</span><span class="sxs-lookup"><span data-stu-id="d44ac-141">Required</span></span>
 
-<span data-ttu-id="43964-142">必需的批注告诉 EF 需要特定属性。</span><span class="sxs-lookup"><span data-stu-id="43964-142">The Required annotation tells EF that a particular property is required.</span></span>
+<span data-ttu-id="d44ac-142">`Required`批注告知 EF 需要特定属性。</span><span class="sxs-lookup"><span data-stu-id="d44ac-142">The `Required` annotation tells EF that a particular property is required.</span></span>
 
-<span data-ttu-id="43964-143">向 Title 属性添加所需的将强制 EF （和 MVC）确保属性中包含数据。</span><span class="sxs-lookup"><span data-stu-id="43964-143">Adding Required to the Title property will force EF (and MVC) to ensure that the property has data in it.</span></span>
+<span data-ttu-id="d44ac-143">向 Title 属性添加所需的将强制 EF (和 MVC) ，以确保属性中包含数据。</span><span class="sxs-lookup"><span data-stu-id="d44ac-143">Adding Required to the Title property will force EF (and MVC) to ensure that the property has data in it.</span></span>
 
 ``` csharp
     [Required]
     public string Title { get; set; }
 ```
 
-<span data-ttu-id="43964-144">如果应用程序中没有额外的代码或标记更改，MVC 应用程序将执行客户端验证，甚至使用属性和批注名称动态生成消息。</span><span class="sxs-lookup"><span data-stu-id="43964-144">With no additional code or markup changes in the application, an MVC application will perform client side validation, even dynamically building a message using the property and annotation names.</span></span>
+<span data-ttu-id="d44ac-144">如果应用程序中没有额外的代码或标记更改，MVC 应用程序将执行客户端验证，甚至使用属性和批注名称动态生成消息。</span><span class="sxs-lookup"><span data-stu-id="d44ac-144">With no additional code or markup changes in the application, an MVC application will perform client side validation, even dynamically building a message using the property and annotation names.</span></span>
 
 ![需要标题的 "创建页面" 错误](~/ef6/media/jj591583-figure02.png)
 
-<span data-ttu-id="43964-146">必需的属性还会影响生成的数据库，方法是将映射的属性设为不可为 null。</span><span class="sxs-lookup"><span data-stu-id="43964-146">The Required attribute will also affect the generated database by making the mapped property non-nullable.</span></span> <span data-ttu-id="43964-147">请注意，Title 字段已更改为 "not null"。</span><span class="sxs-lookup"><span data-stu-id="43964-147">Notice that the Title field has changed to “not null”.</span></span>
+<span data-ttu-id="d44ac-146">必需的属性还会影响生成的数据库，方法是将映射的属性设为不可为 null。</span><span class="sxs-lookup"><span data-stu-id="d44ac-146">The Required attribute will also affect the generated database by making the mapped property non-nullable.</span></span> <span data-ttu-id="d44ac-147">请注意，Title 字段已更改为 "not null"。</span><span class="sxs-lookup"><span data-stu-id="d44ac-147">Notice that the Title field has changed to “not null”.</span></span>
 
 >[!NOTE]
-> <span data-ttu-id="43964-148">在某些情况下，即使属性是必需的，也无法使数据库中的列不可为 null。</span><span class="sxs-lookup"><span data-stu-id="43964-148">In some cases it may not be possible for the column in the database to be non-nullable even though the property is required.</span></span> <span data-ttu-id="43964-149">例如，对多个类型使用 TPH 继承战略数据时，会将其存储在一个表中。</span><span class="sxs-lookup"><span data-stu-id="43964-149">For example, when using a TPH inheritance strategy data for multiple types is stored in a single table.</span></span> <span data-ttu-id="43964-150">如果派生的类型包含所需的属性，则列不能为 null，因为并不是层次结构中的所有类型都具有此属性。</span><span class="sxs-lookup"><span data-stu-id="43964-150">If a derived type includes a required property the column cannot be made non-nullable since not all types in the hierarchy will have this property.</span></span>
+> <span data-ttu-id="d44ac-148">在某些情况下，即使属性是必需的，也无法使数据库中的列不可为 null。</span><span class="sxs-lookup"><span data-stu-id="d44ac-148">In some cases it may not be possible for the column in the database to be non-nullable even though the property is required.</span></span> <span data-ttu-id="d44ac-149">例如，对多个类型使用 TPH 继承战略数据时，会将其存储在一个表中。</span><span class="sxs-lookup"><span data-stu-id="d44ac-149">For example, when using a TPH inheritance strategy data for multiple types is stored in a single table.</span></span> <span data-ttu-id="d44ac-150">如果派生的类型包含所需的属性，则列不能为 null，因为并不是层次结构中的所有类型都具有此属性。</span><span class="sxs-lookup"><span data-stu-id="d44ac-150">If a derived type includes a required property the column cannot be made non-nullable since not all types in the hierarchy will have this property.</span></span>
 
  
 
@@ -161,37 +161,37 @@ ms.locfileid: "78415855"
 
  
 
-## <a name="maxlength-and-minlength"></a><span data-ttu-id="43964-152">MaxLength 和 MinLength</span><span class="sxs-lookup"><span data-stu-id="43964-152">MaxLength and MinLength</span></span>
+## <a name="maxlength-and-minlength"></a><span data-ttu-id="d44ac-152">MaxLength 和 MinLength</span><span class="sxs-lookup"><span data-stu-id="d44ac-152">MaxLength and MinLength</span></span>
 
-<span data-ttu-id="43964-153">MaxLength 和 MinLength 属性允许您指定附加的属性验证，就像您在需要时所做的那样。</span><span class="sxs-lookup"><span data-stu-id="43964-153">The MaxLength and MinLength attributes allow you to specify additional property validations, just as you did with Required.</span></span>
+<span data-ttu-id="d44ac-153">`MaxLength`和 `MinLength` 特性使你可以指定其他属性验证，就像对执行的操作一样 `Required` 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-153">The `MaxLength` and `MinLength` attributes allow you to specify additional property validations, just as you did with `Required`.</span></span>
 
-<span data-ttu-id="43964-154">下面是具有长度要求的 BloggerName。</span><span class="sxs-lookup"><span data-stu-id="43964-154">Here is the BloggerName with length requirements.</span></span> <span data-ttu-id="43964-155">该示例还演示了如何合并特性。</span><span class="sxs-lookup"><span data-stu-id="43964-155">The example also demonstrates how to combine attributes.</span></span>
+<span data-ttu-id="d44ac-154">下面是具有长度要求的 BloggerName。</span><span class="sxs-lookup"><span data-stu-id="d44ac-154">Here is the BloggerName with length requirements.</span></span> <span data-ttu-id="d44ac-155">该示例还演示了如何合并特性。</span><span class="sxs-lookup"><span data-stu-id="d44ac-155">The example also demonstrates how to combine attributes.</span></span>
 
 ``` csharp
     [MaxLength(10),MinLength(5)]
     public string BloggerName { get; set; }
 ```
 
-<span data-ttu-id="43964-156">MaxLength 批注将属性的长度设置为10，将影响数据库。</span><span class="sxs-lookup"><span data-stu-id="43964-156">The MaxLength annotation will impact the database by setting the property’s length to 10.</span></span>
+<span data-ttu-id="d44ac-156">MaxLength 批注将属性的长度设置为10，将影响数据库。</span><span class="sxs-lookup"><span data-stu-id="d44ac-156">The MaxLength annotation will impact the database by setting the property’s length to 10.</span></span>
 
 ![显示 BloggerName 列的最大长度的博客表格](~/ef6/media/jj591583-figure04.png)
 
-<span data-ttu-id="43964-158">MVC 客户端批注和 EF 4.1 服务器端批注都将接受此验证，并再次动态生成错误消息： "字段 BloggerName 必须是最大长度为" 10 "的字符串或数组类型。"该消息只需很长时间。</span><span class="sxs-lookup"><span data-stu-id="43964-158">MVC client-side annotation and EF 4.1 server-side annotation will both honor this validation, again dynamically building an error message: “The field BloggerName must be a string or array type with a maximum length of '10'.” That message is a little long.</span></span> <span data-ttu-id="43964-159">许多批注允许您使用 ErrorMessage 特性指定错误消息。</span><span class="sxs-lookup"><span data-stu-id="43964-159">Many annotations let you specify an error message with the ErrorMessage attribute.</span></span>
+<span data-ttu-id="d44ac-158">MVC 客户端批注和 EF 4.1 服务器端批注都将接受此验证，并再次动态生成错误消息： "字段 BloggerName 必须是最大长度为" 10 "的字符串或数组类型。"该消息只需很长时间。</span><span class="sxs-lookup"><span data-stu-id="d44ac-158">MVC client-side annotation and EF 4.1 server-side annotation will both honor this validation, again dynamically building an error message: “The field BloggerName must be a string or array type with a maximum length of '10'.” That message is a little long.</span></span> <span data-ttu-id="d44ac-159">许多批注允许您使用 ErrorMessage 特性指定错误消息。</span><span class="sxs-lookup"><span data-stu-id="d44ac-159">Many annotations let you specify an error message with the ErrorMessage attribute.</span></span>
 
 ``` csharp
     [MaxLength(10, ErrorMessage="BloggerName must be 10 characters or less"),MinLength(5)]
     public string BloggerName { get; set; }
 ```
 
-<span data-ttu-id="43964-160">您还可以在所需的批注中指定 ErrorMessage。</span><span class="sxs-lookup"><span data-stu-id="43964-160">You can also specify ErrorMessage in the Required annotation.</span></span>
+<span data-ttu-id="d44ac-160">您还可以在所需的批注中指定 ErrorMessage。</span><span class="sxs-lookup"><span data-stu-id="d44ac-160">You can also specify ErrorMessage in the Required annotation.</span></span>
 
 ![创建具有自定义错误消息的页面](~/ef6/media/jj591583-figure05.png)
 
  
 
-## <a name="notmapped"></a><span data-ttu-id="43964-162">NotMapped</span><span class="sxs-lookup"><span data-stu-id="43964-162">NotMapped</span></span>
+## <a name="notmapped"></a><span data-ttu-id="d44ac-162">NotMapped</span><span class="sxs-lookup"><span data-stu-id="d44ac-162">NotMapped</span></span>
 
-<span data-ttu-id="43964-163">Code first 约定规定每个属于受支持数据类型的属性都在数据库中表示。</span><span class="sxs-lookup"><span data-stu-id="43964-163">Code first convention dictates that every property that is of a supported data type is represented in the database.</span></span> <span data-ttu-id="43964-164">但在应用程序中并不总是如此。</span><span class="sxs-lookup"><span data-stu-id="43964-164">But this isn’t always the case in your applications.</span></span> <span data-ttu-id="43964-165">例如，你可能在博客类中有一个属性，该属性基于 "标题" 和 "BloggerName" 字段创建代码。</span><span class="sxs-lookup"><span data-stu-id="43964-165">For example you might have a property in the Blog class that creates a code based on the Title and BloggerName fields.</span></span> <span data-ttu-id="43964-166">该属性可以动态创建，不需要存储。</span><span class="sxs-lookup"><span data-stu-id="43964-166">That property can be created dynamically and does not need to be stored.</span></span> <span data-ttu-id="43964-167">可以用 NotMapped 批注（如此 BlogCode 属性）来标记不映射到数据库的任何属性。</span><span class="sxs-lookup"><span data-stu-id="43964-167">You can mark any properties that do not map to the database with the NotMapped annotation such as this BlogCode property.</span></span>
+<span data-ttu-id="d44ac-163">Code first 约定规定每个属于受支持数据类型的属性都在数据库中表示。</span><span class="sxs-lookup"><span data-stu-id="d44ac-163">Code first convention dictates that every property that is of a supported data type is represented in the database.</span></span> <span data-ttu-id="d44ac-164">但在应用程序中并不总是如此。</span><span class="sxs-lookup"><span data-stu-id="d44ac-164">But this isn’t always the case in your applications.</span></span> <span data-ttu-id="d44ac-165">例如，你可能在博客类中有一个属性，该属性基于 "标题" 和 "BloggerName" 字段创建代码。</span><span class="sxs-lookup"><span data-stu-id="d44ac-165">For example you might have a property in the Blog class that creates a code based on the Title and BloggerName fields.</span></span> <span data-ttu-id="d44ac-166">该属性可以动态创建，不需要存储。</span><span class="sxs-lookup"><span data-stu-id="d44ac-166">That property can be created dynamically and does not need to be stored.</span></span> <span data-ttu-id="d44ac-167">可以用 NotMapped 批注（如此 BlogCode 属性）来标记不映射到数据库的任何属性。</span><span class="sxs-lookup"><span data-stu-id="d44ac-167">You can mark any properties that do not map to the database with the NotMapped annotation such as this BlogCode property.</span></span>
 
 ``` csharp
     [NotMapped]
@@ -206,9 +206,9 @@ ms.locfileid: "78415855"
 
  
 
-## <a name="complextype"></a><span data-ttu-id="43964-168">ComplexType</span><span class="sxs-lookup"><span data-stu-id="43964-168">ComplexType</span></span>
+## <a name="complextype"></a><span data-ttu-id="d44ac-168">ComplexType</span><span class="sxs-lookup"><span data-stu-id="d44ac-168">ComplexType</span></span>
 
-<span data-ttu-id="43964-169">请不要在一组类中描述域实体，然后将这些类分层以描述完整的实体。</span><span class="sxs-lookup"><span data-stu-id="43964-169">It’s not uncommon to describe your domain entities across a set of classes and then layer those classes to describe a complete entity.</span></span> <span data-ttu-id="43964-170">例如，可以将名为 BlogDetails 的类添加到模型。</span><span class="sxs-lookup"><span data-stu-id="43964-170">For example, you may add a class called BlogDetails to your model.</span></span>
+<span data-ttu-id="d44ac-169">请不要在一组类中描述域实体，然后将这些类分层以描述完整的实体。</span><span class="sxs-lookup"><span data-stu-id="d44ac-169">It’s not uncommon to describe your domain entities across a set of classes and then layer those classes to describe a complete entity.</span></span> <span data-ttu-id="d44ac-170">例如，可以将名为 BlogDetails 的类添加到模型。</span><span class="sxs-lookup"><span data-stu-id="d44ac-170">For example, you may add a class called BlogDetails to your model.</span></span>
 
 ``` csharp
     public class BlogDetails
@@ -220,9 +220,9 @@ ms.locfileid: "78415855"
     }
 ```
 
-<span data-ttu-id="43964-171">请注意，BlogDetails 没有任何类型的键属性。</span><span class="sxs-lookup"><span data-stu-id="43964-171">Notice that BlogDetails does not have any type of key property.</span></span> <span data-ttu-id="43964-172">在域驱动设计中，BlogDetails 称为值对象。</span><span class="sxs-lookup"><span data-stu-id="43964-172">In domain driven design, BlogDetails is referred to as a value object.</span></span> <span data-ttu-id="43964-173">实体框架将值对象引用为复杂类型。</span><span class="sxs-lookup"><span data-stu-id="43964-173">Entity Framework refers to value objects as complex types.</span></span><span data-ttu-id="43964-174">  不能自行跟踪复杂类型。</span><span class="sxs-lookup"><span data-stu-id="43964-174">  Complex types cannot be tracked on their own.</span></span>
+<span data-ttu-id="d44ac-171">请注意，没有 `BlogDetails` 任何类型的键属性。</span><span class="sxs-lookup"><span data-stu-id="d44ac-171">Notice that `BlogDetails` does not have any type of key property.</span></span> <span data-ttu-id="d44ac-172">在域驱动设计中， `BlogDetails` 称为值对象。</span><span class="sxs-lookup"><span data-stu-id="d44ac-172">In domain driven design, `BlogDetails` is referred to as a value object.</span></span> <span data-ttu-id="d44ac-173">实体框架将值对象引用为复杂类型。</span><span class="sxs-lookup"><span data-stu-id="d44ac-173">Entity Framework refers to value objects as complex types.</span></span><span data-ttu-id="d44ac-174">不能自行跟踪复杂类型。</span><span class="sxs-lookup"><span data-stu-id="d44ac-174">  Complex types cannot be tracked on their own.</span></span>
 
-<span data-ttu-id="43964-175">但作为博客类中的属性，BlogDetails 将作为博客对象的一部分进行跟踪。</span><span class="sxs-lookup"><span data-stu-id="43964-175">However as a property in the Blog class, BlogDetails it will be tracked as part of a Blog object.</span></span> <span data-ttu-id="43964-176">为了使代码优先识别这一点，必须将 BlogDetails 类标记为 ComplexType。</span><span class="sxs-lookup"><span data-stu-id="43964-176">In order for code first to recognize this, you must mark the BlogDetails class as a ComplexType.</span></span>
+<span data-ttu-id="d44ac-175">但作为类中的属性 `Blog` ， `BlogDetails` 将作为对象的一部分进行跟踪 `Blog` 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-175">However as a property in the `Blog` class, `BlogDetails` will be tracked as part of a `Blog` object.</span></span> <span data-ttu-id="d44ac-176">为了使代码优先识别此项，必须将 `BlogDetails` 类标记为 `ComplexType` 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-176">In order for code first to recognize this, you must mark the `BlogDetails` class as a `ComplexType`.</span></span>
 
 ``` csharp
     [ComplexType]
@@ -235,105 +235,105 @@ ms.locfileid: "78415855"
     }
 ```
 
-<span data-ttu-id="43964-177">现在，可以在博客类中添加一个属性，用于表示该博客的 BlogDetails。</span><span class="sxs-lookup"><span data-stu-id="43964-177">Now you can add a property in the Blog class to represent the BlogDetails for that blog.</span></span>
+<span data-ttu-id="d44ac-177">现在，你可以在类中添加一个属性 `Blog` ，用于表示 `BlogDetails` 该博客的。</span><span class="sxs-lookup"><span data-stu-id="d44ac-177">Now you can add a property in the `Blog` class to represent the `BlogDetails` for that blog.</span></span>
 
 ``` csharp
         public BlogDetails BlogDetail { get; set; }
 ```
 
-<span data-ttu-id="43964-178">在数据库中，博客表将包含博客的所有属性，包括其 BlogDetail 属性中包含的属性。</span><span class="sxs-lookup"><span data-stu-id="43964-178">In the database, the Blog table will contain all of the properties of the blog including the properties contained in its BlogDetail property.</span></span> <span data-ttu-id="43964-179">默认情况下，每个名称的前面都有复杂类型 BlogDetail 的名称。</span><span class="sxs-lookup"><span data-stu-id="43964-179">By default, each one is preceded with the name of the complex type, BlogDetail.</span></span>
+<span data-ttu-id="d44ac-178">在数据库中， `Blog` 表将包含博客的所有属性，包括其属性中包含的属性 `BlogDetail` 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-178">In the database, the `Blog` table will contain all of the properties of the blog including the properties contained in its `BlogDetail` property.</span></span> <span data-ttu-id="d44ac-179">默认情况下，每个名称前面都带有复杂类型 "BlogDetail" 的名称。</span><span class="sxs-lookup"><span data-stu-id="d44ac-179">By default, each one is preceded with the name of the complex type, "BlogDetail".</span></span>
 
 ![包含复杂类型的博客表](~/ef6/media/jj591583-figure06.png)
 
 
-## <a name="concurrencycheck"></a><span data-ttu-id="43964-181">ConcurrencyCheck</span><span class="sxs-lookup"><span data-stu-id="43964-181">ConcurrencyCheck</span></span>
+## <a name="concurrencycheck"></a><span data-ttu-id="d44ac-181">ConcurrencyCheck</span><span class="sxs-lookup"><span data-stu-id="d44ac-181">ConcurrencyCheck</span></span>
 
-<span data-ttu-id="43964-182">ConcurrencyCheck 批注允许标记一个或多个属性，用户在编辑或删除实体时，此属性将用于数据库中的并发检查。</span><span class="sxs-lookup"><span data-stu-id="43964-182">The ConcurrencyCheck annotation allows you to flag one or more properties to be used for concurrency checking in the database when a user edits or deletes an entity.</span></span> <span data-ttu-id="43964-183">如果你使用的是 EF 设计器，则会将属性的 ConcurrencyMode 设置为 Fixed。</span><span class="sxs-lookup"><span data-stu-id="43964-183">If you've been working with the EF Designer, this aligns with setting a property's ConcurrencyMode to Fixed.</span></span>
+<span data-ttu-id="d44ac-182">`ConcurrencyCheck`使用批注，可以标记一个或多个属性，以便在用户编辑或删除实体时，将该属性用于数据库中的并发检查。</span><span class="sxs-lookup"><span data-stu-id="d44ac-182">The `ConcurrencyCheck` annotation allows you to flag one or more properties to be used for concurrency checking in the database when a user edits or deletes an entity.</span></span> <span data-ttu-id="d44ac-183">如果你使用的是 EF 设计器，则这与将属性设置为对齐 `ConcurrencyMode` `Fixed` 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-183">If you've been working with the EF Designer, this aligns with setting a property's `ConcurrencyMode` to `Fixed`.</span></span>
 
-<span data-ttu-id="43964-184">让我们通过将其添加到 BloggerName 属性来了解 ConcurrencyCheck 的工作原理。</span><span class="sxs-lookup"><span data-stu-id="43964-184">Let’s see how ConcurrencyCheck works by adding it to the BloggerName property.</span></span>
+<span data-ttu-id="d44ac-184">让我们 `ConcurrencyCheck` 通过将其添加到属性来了解其工作原理 `BloggerName` 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-184">Let’s see how `ConcurrencyCheck` works by adding it to the `BloggerName` property.</span></span>
 
 ``` csharp
     [ConcurrencyCheck, MaxLength(10, ErrorMessage="BloggerName must be 10 characters or less"),MinLength(5)]
     public string BloggerName { get; set; }
 ```
 
-<span data-ttu-id="43964-185">当调用 SaveChanges 时，由于 BloggerName 字段上的 ConcurrencyCheck 批注，将在更新中使用该属性的原始值。</span><span class="sxs-lookup"><span data-stu-id="43964-185">When SaveChanges is called, because of the ConcurrencyCheck annotation on the BloggerName field, the original value of that property will be used in the update.</span></span> <span data-ttu-id="43964-186">此命令将尝试通过筛选键值而不是 BloggerName 的原始值来查找正确的行。</span><span class="sxs-lookup"><span data-stu-id="43964-186">The command will attempt to locate the correct row by filtering not only on the key value but also on the original value of BloggerName.</span></span><span data-ttu-id="43964-187">  下面是发送到数据库的 UPDATE 命令的关键部分，您可以在其中看到命令将更新 PrimaryTrackingKey 为1的行，BloggerName 为 "Julie"，这是从数据库中检索到该博客时的原始值。</span><span class="sxs-lookup"><span data-stu-id="43964-187">  Here are the critical parts of the UPDATE command sent to the database, where you can see the command will update the row that has a PrimaryTrackingKey is 1 and a BloggerName of “Julie” which was the original value when that blog was retrieved from the database.</span></span>
+<span data-ttu-id="d44ac-185">当 `SaveChanges` 调用时，由于 `ConcurrencyCheck` 字段上的批注 `BloggerName` ，将在更新中使用该属性的原始值。</span><span class="sxs-lookup"><span data-stu-id="d44ac-185">When `SaveChanges` is called, because of the `ConcurrencyCheck` annotation on the `BloggerName` field, the original value of that property will be used in the update.</span></span> <span data-ttu-id="d44ac-186">命令不仅通过筛选键值，还会尝试查找正确的行，而是对的原始值进行筛选 `BloggerName` 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-186">The command will attempt to locate the correct row by filtering not only on the key value but also on the original value of `BloggerName`.</span></span><span data-ttu-id="d44ac-187">下面是发送到数据库的 UPDATE 命令的关键部分，您可以在其中看到命令将更新包含1的行 `PrimaryTrackingKey` 和 "Julie" 的行， `BloggerName` 这是从数据库中检索到该博客时的原始值。</span><span class="sxs-lookup"><span data-stu-id="d44ac-187">  Here are the critical parts of the UPDATE command sent to the database, where you can see the command will update the row that has a `PrimaryTrackingKey` is 1 and a `BloggerName` of “Julie” which was the original value when that blog was retrieved from the database.</span></span>
 
 ``` SQL
     where (([PrimaryTrackingKey] = @4) and ([BloggerName] = @5))
     @4=1,@5=N'Julie'
 ```
 
-<span data-ttu-id="43964-188">如果用户同时更改了博客的博客名称，则此更新将会失败，并且你将收到需要处理的 DbUpdateConcurrencyException。</span><span class="sxs-lookup"><span data-stu-id="43964-188">If someone has changed the blogger name for that blog in the meantime, this update will fail and you’ll get a DbUpdateConcurrencyException that you'll need to handle.</span></span>
+<span data-ttu-id="d44ac-188">如果用户同时更改了博客的博客名称，则此更新将会失败，并且你将收到需要处理的 **DbUpdateConcurrencyException** 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-188">If someone has changed the blogger name for that blog in the meantime, this update will fail and you’ll get a **DbUpdateConcurrencyException** that you'll need to handle.</span></span>
 
  
 
-## <a name="timestamp"></a><span data-ttu-id="43964-189">TimeStamp</span><span class="sxs-lookup"><span data-stu-id="43964-189">TimeStamp</span></span>
+## <a name="timestamp"></a><span data-ttu-id="d44ac-189">时间戳</span><span class="sxs-lookup"><span data-stu-id="d44ac-189">TimeStamp</span></span>
 
-<span data-ttu-id="43964-190">更常见的情况是使用 rowversion 或时间戳字段进行并发检查。</span><span class="sxs-lookup"><span data-stu-id="43964-190">It's more common to use rowversion or timestamp fields for concurrency checking.</span></span> <span data-ttu-id="43964-191">而不是使用 ConcurrencyCheck 批注，只要属性的类型是字节数组，就可以使用更具体的时间戳注释。</span><span class="sxs-lookup"><span data-stu-id="43964-191">But rather than using the ConcurrencyCheck annotation, you can use the more specific TimeStamp annotation as long as the type of the property is byte array.</span></span> <span data-ttu-id="43964-192">Code first 会将 Timestamp 属性视为与 ConcurrencyCheck 属性相同，但它还将确保代码第一次生成的数据库字段不可为 null。</span><span class="sxs-lookup"><span data-stu-id="43964-192">Code first will treat Timestamp properties the same as ConcurrencyCheck properties, but it will also ensure that the database field that code first generates is non-nullable.</span></span> <span data-ttu-id="43964-193">给定的类中只能有一个时间戳属性。</span><span class="sxs-lookup"><span data-stu-id="43964-193">You can only have one timestamp property in a given class.</span></span>
+<span data-ttu-id="d44ac-190">更常见的情况是使用 rowversion 或时间戳字段进行并发检查。</span><span class="sxs-lookup"><span data-stu-id="d44ac-190">It's more common to use rowversion or timestamp fields for concurrency checking.</span></span> <span data-ttu-id="d44ac-191">但不使用 `ConcurrencyCheck` 批注， `TimeStamp` 只要属性的类型是字节数组，就可以使用更具体的批注。</span><span class="sxs-lookup"><span data-stu-id="d44ac-191">But rather than using the `ConcurrencyCheck` annotation, you can use the more specific `TimeStamp` annotation as long as the type of the property is byte array.</span></span> <span data-ttu-id="d44ac-192">代码优先会将 `Timestamp` 属性视为与 `ConcurrencyCheck` 属性相同，但它还将确保代码第一个生成的数据库字段不可为 null。</span><span class="sxs-lookup"><span data-stu-id="d44ac-192">Code first will treat `Timestamp` properties the same as `ConcurrencyCheck` properties, but it will also ensure that the database field that code first generates is non-nullable.</span></span> <span data-ttu-id="d44ac-193">给定的类中只能有一个时间戳属性。</span><span class="sxs-lookup"><span data-stu-id="d44ac-193">You can only have one timestamp property in a given class.</span></span>
 
-<span data-ttu-id="43964-194">将以下属性添加到博客类：</span><span class="sxs-lookup"><span data-stu-id="43964-194">Adding the following property to the Blog class:</span></span>
+<span data-ttu-id="d44ac-194">将以下属性添加到博客类：</span><span class="sxs-lookup"><span data-stu-id="d44ac-194">Adding the following property to the Blog class:</span></span>
 
 ``` csharp
     [Timestamp]
     public Byte[] TimeStamp { get; set; }
 ```
 
-<span data-ttu-id="43964-195">在数据库表中生成一个不可以为 null 的时间戳列的代码。</span><span class="sxs-lookup"><span data-stu-id="43964-195">results in code first creating a non-nullable timestamp column in the database table.</span></span>
+<span data-ttu-id="d44ac-195">在数据库表中生成一个不可以为 null 的时间戳列的代码。</span><span class="sxs-lookup"><span data-stu-id="d44ac-195">results in code first creating a non-nullable timestamp column in the database table.</span></span>
 
 ![带有时间戳列的博客表](~/ef6/media/jj591583-figure07.png)
 
  
 
-## <a name="table-and-column"></a><span data-ttu-id="43964-197">表和列</span><span class="sxs-lookup"><span data-stu-id="43964-197">Table and Column</span></span>
+## <a name="table-and-column"></a><span data-ttu-id="d44ac-197">表和列</span><span class="sxs-lookup"><span data-stu-id="d44ac-197">Table and Column</span></span>
 
-<span data-ttu-id="43964-198">如果允许 Code First 创建数据库，则可能需要更改要创建的表和列的名称。</span><span class="sxs-lookup"><span data-stu-id="43964-198">If you are letting Code First create the database, you may want to change the name of the tables and columns it is creating.</span></span> <span data-ttu-id="43964-199">您还可以将 Code First 与现有数据库一起使用。</span><span class="sxs-lookup"><span data-stu-id="43964-199">You can also use Code First with an existing database.</span></span> <span data-ttu-id="43964-200">但并非总是域中类和属性的名称与数据库中的表和列的名称相匹配。</span><span class="sxs-lookup"><span data-stu-id="43964-200">But it's not always the case that the names of the classes and properties in your domain match the names of the tables and columns in your database.</span></span>
+<span data-ttu-id="d44ac-198">如果允许 Code First 创建数据库，则可能需要更改要创建的表和列的名称。</span><span class="sxs-lookup"><span data-stu-id="d44ac-198">If you are letting Code First create the database, you may want to change the name of the tables and columns it is creating.</span></span> <span data-ttu-id="d44ac-199">您还可以将 Code First 与现有数据库一起使用。</span><span class="sxs-lookup"><span data-stu-id="d44ac-199">You can also use Code First with an existing database.</span></span> <span data-ttu-id="d44ac-200">但并非总是域中类和属性的名称与数据库中的表和列的名称相匹配。</span><span class="sxs-lookup"><span data-stu-id="d44ac-200">But it's not always the case that the names of the classes and properties in your domain match the names of the tables and columns in your database.</span></span>
 
-<span data-ttu-id="43964-201">我的类称为博客和惯例，代码优先假设这将映射到名为 Blog 的表。</span><span class="sxs-lookup"><span data-stu-id="43964-201">My class is named Blog and by convention, code first presumes this will map to a table named Blogs.</span></span> <span data-ttu-id="43964-202">如果不是这种情况，则可以指定具有表属性的表的名称。</span><span class="sxs-lookup"><span data-stu-id="43964-202">If that's not the case you can specify the name of the table with the Table attribute.</span></span> <span data-ttu-id="43964-203">例如，批注正在将表名指定为 InternalBlogs。</span><span class="sxs-lookup"><span data-stu-id="43964-203">Here for example, the annotation is specifying that the table name is InternalBlogs.</span></span>
+<span data-ttu-id="d44ac-201">我 `Blog` 的类按约定命名，代码优先假设这将映射到名为的表 `Blogs` 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-201">My class is named `Blog` and by convention, code first presumes this will map to a table named `Blogs`.</span></span> <span data-ttu-id="d44ac-202">如果不是这种情况，则可以指定具有属性的表的名称 `Table` 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-202">If that's not the case you can specify the name of the table with the `Table` attribute.</span></span> <span data-ttu-id="d44ac-203">例如，批注正在将表名指定为 **InternalBlogs**。</span><span class="sxs-lookup"><span data-stu-id="d44ac-203">Here for example, the annotation is specifying that the table name is **InternalBlogs**.</span></span>
 
 ``` csharp
     [Table("InternalBlogs")]
     public class Blog
 ```
 
-<span data-ttu-id="43964-204">在指定映射列的特性时，列批注更熟练地使用。</span><span class="sxs-lookup"><span data-stu-id="43964-204">The Column annotation is a more adept in specifying the attributes of a mapped column.</span></span> <span data-ttu-id="43964-205">您可以规定名称、数据类型，甚至是列在表中的显示顺序。</span><span class="sxs-lookup"><span data-stu-id="43964-205">You can stipulate a name, data type or even the order in which a column appears in the table.</span></span> <span data-ttu-id="43964-206">下面是列属性的示例。</span><span class="sxs-lookup"><span data-stu-id="43964-206">Here is an example of the Column attribute.</span></span>
+<span data-ttu-id="d44ac-204">`Column`在指定映射列的属性的同时，批注更加熟练。</span><span class="sxs-lookup"><span data-stu-id="d44ac-204">The `Column` annotation is a more adept in specifying the attributes of a mapped column.</span></span> <span data-ttu-id="d44ac-205">您可以规定名称、数据类型，甚至是列在表中的显示顺序。</span><span class="sxs-lookup"><span data-stu-id="d44ac-205">You can stipulate a name, data type or even the order in which a column appears in the table.</span></span> <span data-ttu-id="d44ac-206">下面是属性的示例 `Column` 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-206">Here is an example of the `Column` attribute.</span></span>
 
 ``` csharp
     [Column("BlogDescription", TypeName="ntext")]
     public String Description {get;set;}
 ```
 
-<span data-ttu-id="43964-207">不要将列的 TypeName 特性与 DataType DataAnnotation 混淆。</span><span class="sxs-lookup"><span data-stu-id="43964-207">Don’t confuse Column’s TypeName attribute with the DataType DataAnnotation.</span></span> <span data-ttu-id="43964-208">数据类型是一种用于 UI 的批注，Code First 会将其忽略。</span><span class="sxs-lookup"><span data-stu-id="43964-208">DataType is an annotation used for the UI and is ignored by Code First.</span></span>
+<span data-ttu-id="d44ac-207">不要将列的 `TypeName` 属性与 DataType DataAnnotation 混淆。</span><span class="sxs-lookup"><span data-stu-id="d44ac-207">Don’t confuse Column’s `TypeName` attribute with the DataType DataAnnotation.</span></span> <span data-ttu-id="d44ac-208">数据类型是一种用于 UI 的批注，Code First 会将其忽略。</span><span class="sxs-lookup"><span data-stu-id="d44ac-208">DataType is an annotation used for the UI and is ignored by Code First.</span></span>
 
-<span data-ttu-id="43964-209">下面是重新生成表后的表。</span><span class="sxs-lookup"><span data-stu-id="43964-209">Here is the table after it’s been regenerated.</span></span> <span data-ttu-id="43964-210">表名称已更改为 InternalBlogs，并且来自复杂类型的说明列现在为 BlogDescription。</span><span class="sxs-lookup"><span data-stu-id="43964-210">The table name has changed to InternalBlogs and Description column from the complex type is now BlogDescription.</span></span> <span data-ttu-id="43964-211">由于在注释中指定了名称，因此 code first 将不会使用以复杂类型名称开头的列名称。</span><span class="sxs-lookup"><span data-stu-id="43964-211">Because the name was specified in the annotation, code first will not use the convention of starting the column name with the name of the complex type.</span></span>
+<span data-ttu-id="d44ac-209">下面是重新生成表后的表。</span><span class="sxs-lookup"><span data-stu-id="d44ac-209">Here is the table after it’s been regenerated.</span></span> <span data-ttu-id="d44ac-210">表名称已更改为 **InternalBlogs** ，并且 `Description` 复杂类型中的列现在是 `BlogDescription` 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-210">The table name has changed to **InternalBlogs** and `Description` column from the complex type is now `BlogDescription`.</span></span> <span data-ttu-id="d44ac-211">由于在注释中指定了名称，因此 code first 将不会使用以复杂类型名称开头的列名称。</span><span class="sxs-lookup"><span data-stu-id="d44ac-211">Because the name was specified in the annotation, code first will not use the convention of starting the column name with the name of the complex type.</span></span>
 
 ![博客表和列已重命名](~/ef6/media/jj591583-figure08.png)
 
  
 
-## <a name="databasegenerated"></a><span data-ttu-id="43964-213">DatabaseGenerated</span><span class="sxs-lookup"><span data-stu-id="43964-213">DatabaseGenerated</span></span>
+## <a name="databasegenerated"></a><span data-ttu-id="d44ac-213">DatabaseGenerated</span><span class="sxs-lookup"><span data-stu-id="d44ac-213">DatabaseGenerated</span></span>
 
-<span data-ttu-id="43964-214">重要的数据库功能是具有计算属性的能力。</span><span class="sxs-lookup"><span data-stu-id="43964-214">An important database features is the ability to have computed properties.</span></span> <span data-ttu-id="43964-215">如果要将 Code First 类映射到包含计算列的表，则不希望实体框架尝试更新这些列。</span><span class="sxs-lookup"><span data-stu-id="43964-215">If you're mapping your Code First classes to tables that contain computed columns, you don't want Entity Framework to try to update those columns.</span></span> <span data-ttu-id="43964-216">但是，在插入或更新数据后，您确实需要 EF 从数据库返回这些值。</span><span class="sxs-lookup"><span data-stu-id="43964-216">But you do want EF to return those values from the database after you've inserted or updated data.</span></span> <span data-ttu-id="43964-217">可以使用 DatabaseGenerated 批注来标记类中的这些属性以及计算所得的枚举。</span><span class="sxs-lookup"><span data-stu-id="43964-217">You can use the DatabaseGenerated annotation to flag those properties in your class along with the Computed enum.</span></span> <span data-ttu-id="43964-218">其他枚举为 None 和 Identity。</span><span class="sxs-lookup"><span data-stu-id="43964-218">Other enums are None and Identity.</span></span>
+<span data-ttu-id="d44ac-214">重要的数据库功能是具有计算属性的能力。</span><span class="sxs-lookup"><span data-stu-id="d44ac-214">An important database features is the ability to have computed properties.</span></span> <span data-ttu-id="d44ac-215">如果要将 Code First 类映射到包含计算列的表，则不希望实体框架尝试更新这些列。</span><span class="sxs-lookup"><span data-stu-id="d44ac-215">If you're mapping your Code First classes to tables that contain computed columns, you don't want Entity Framework to try to update those columns.</span></span> <span data-ttu-id="d44ac-216">但是，在插入或更新数据后，您确实需要 EF 从数据库返回这些值。</span><span class="sxs-lookup"><span data-stu-id="d44ac-216">But you do want EF to return those values from the database after you've inserted or updated data.</span></span> <span data-ttu-id="d44ac-217">你可以使用 `DatabaseGenerated` 批注来标记类中的这些属性以及 `Computed` 枚举。</span><span class="sxs-lookup"><span data-stu-id="d44ac-217">You can use the `DatabaseGenerated` annotation to flag those properties in your class along with the `Computed` enum.</span></span> <span data-ttu-id="d44ac-218">其他枚举为 `None` 和 `Identity` 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-218">Other enums are `None` and `Identity`.</span></span>
 
 ``` csharp
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public DateTime DateCreated { get; set; }
 ```
 
-<span data-ttu-id="43964-219">当代码优先生成数据库时，可以使用在字节或时间戳列上生成的数据库，否则，只应在指向现有数据库时使用此数据库，因为 code first 无法确定计算列的公式。</span><span class="sxs-lookup"><span data-stu-id="43964-219">You can use database generated on byte or timestamp columns when code first is generating the database, otherwise you should only use this when pointing to existing databases because code first won't be able to determine the formula for the computed column.</span></span>
+<span data-ttu-id="d44ac-219">当代码优先生成数据库时，可以使用在字节或时间戳列上生成的数据库，否则，只应在指向现有数据库时使用此数据库，因为 code first 无法确定计算列的公式。</span><span class="sxs-lookup"><span data-stu-id="d44ac-219">You can use database generated on byte or timestamp columns when code first is generating the database, otherwise you should only use this when pointing to existing databases because code first won't be able to determine the formula for the computed column.</span></span>
 
-<span data-ttu-id="43964-220">如上所述，在默认情况下，作为整数的键属性将成为数据库中的标识键。</span><span class="sxs-lookup"><span data-stu-id="43964-220">You read above that by default, a key property that is an integer will become an identity key in the database.</span></span> <span data-ttu-id="43964-221">这与将 DatabaseGenerated 设置为 DatabaseGeneratedOption 相同。</span><span class="sxs-lookup"><span data-stu-id="43964-221">That would be the same as setting DatabaseGenerated to DatabaseGeneratedOption.Identity.</span></span> <span data-ttu-id="43964-222">如果您不希望它是标识密钥，则可以将该值设置为 DatabaseGeneratedOption。</span><span class="sxs-lookup"><span data-stu-id="43964-222">If you do not want it to be an identity key, you can set the value to DatabaseGeneratedOption.None.</span></span>
+<span data-ttu-id="d44ac-220">如上所述，在默认情况下，作为整数的键属性将成为数据库中的标识键。</span><span class="sxs-lookup"><span data-stu-id="d44ac-220">You read above that by default, a key property that is an integer will become an identity key in the database.</span></span> <span data-ttu-id="d44ac-221">这与将设置 `DatabaseGenerated` 为相同 `DatabaseGeneratedOption.Identity` 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-221">That would be the same as setting `DatabaseGenerated` to `DatabaseGeneratedOption.Identity`.</span></span> <span data-ttu-id="d44ac-222">如果你不希望它是标识密钥，则可以将值设置为 `DatabaseGeneratedOption.None` 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-222">If you do not want it to be an identity key, you can set the value to `DatabaseGeneratedOption.None`.</span></span>
 
  
 
-## <a name="index"></a><span data-ttu-id="43964-223">Index</span><span class="sxs-lookup"><span data-stu-id="43964-223">Index</span></span>
+## <a name="index"></a><span data-ttu-id="d44ac-223">索引</span><span class="sxs-lookup"><span data-stu-id="d44ac-223">Index</span></span>
 
 > [!NOTE]
-> <span data-ttu-id="43964-224">**Ef 6.1 仅**往上-索引属性是在实体框架6.1 中引入的。</span><span class="sxs-lookup"><span data-stu-id="43964-224">**EF6.1 Onwards Only** - The Index attribute was introduced in Entity Framework 6.1.</span></span> <span data-ttu-id="43964-225">如果你使用的是早期版本，则本部分中的信息不适用。</span><span class="sxs-lookup"><span data-stu-id="43964-225">If you are using an earlier version the information in this section does not apply.</span></span>
+> <span data-ttu-id="d44ac-224">**Ef 6.1 仅** 往上- `Index` 实体框架6.1 中引入了属性。</span><span class="sxs-lookup"><span data-stu-id="d44ac-224">**EF6.1 Onwards Only** - The `Index` attribute was introduced in Entity Framework 6.1.</span></span> <span data-ttu-id="d44ac-225">如果你使用的是早期版本，则本部分中的信息不适用。</span><span class="sxs-lookup"><span data-stu-id="d44ac-225">If you are using an earlier version the information in this section does not apply.</span></span>
 
-<span data-ttu-id="43964-226">您可以使用**IndexAttribute**对一个或多个列创建索引。</span><span class="sxs-lookup"><span data-stu-id="43964-226">You can create an index on one or more columns using the **IndexAttribute**.</span></span> <span data-ttu-id="43964-227">将属性添加到一个或多个属性时，将导致 EF 在创建数据库时在数据库中创建相应的索引，或者如果使用 Code First 迁移，则为相应的**CreateIndex**调用基架。</span><span class="sxs-lookup"><span data-stu-id="43964-227">Adding the attribute to one or more properties will cause EF to create the corresponding index in the database when it creates the database, or scaffold the corresponding **CreateIndex** calls if you are using Code First Migrations.</span></span>
+<span data-ttu-id="d44ac-226">您可以使用 **IndexAttribute**对一个或多个列创建索引。</span><span class="sxs-lookup"><span data-stu-id="d44ac-226">You can create an index on one or more columns using the **IndexAttribute**.</span></span> <span data-ttu-id="d44ac-227">将属性添加到一个或多个属性时，将导致 EF 在创建数据库时在数据库中创建相应的索引，或者如果使用 Code First 迁移，则为相应的 **CreateIndex** 调用基架。</span><span class="sxs-lookup"><span data-stu-id="d44ac-227">Adding the attribute to one or more properties will cause EF to create the corresponding index in the database when it creates the database, or scaffold the corresponding **CreateIndex** calls if you are using Code First Migrations.</span></span>
 
-<span data-ttu-id="43964-228">例如，下面的代码将生成一个索引，该索引是在数据库的 "**发布**" 表的 "**分级**" 列上创建的。</span><span class="sxs-lookup"><span data-stu-id="43964-228">For example, the following code will result in an index being created on the **Rating** column of the **Posts** table in the database.</span></span>
+<span data-ttu-id="d44ac-228">例如，下面的代码将生成在数据库的表的列上创建的索引 `Rating` `Posts` 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-228">For example, the following code will result in an index being created on the `Rating` column of the `Posts` table in the database.</span></span>
 
 ``` csharp
     public class Post
@@ -347,14 +347,14 @@ ms.locfileid: "78415855"
     }
 ```
 
-<span data-ttu-id="43964-229">默认情况下，索引将命名为**IX\_&lt;属性名称&gt;** （在上面的示例中为 Ix\_评级）。</span><span class="sxs-lookup"><span data-stu-id="43964-229">By default, the index will be named **IX\_&lt;property name&gt;** (IX\_Rating in the above example).</span></span> <span data-ttu-id="43964-230">您还可以指定索引的名称。</span><span class="sxs-lookup"><span data-stu-id="43964-230">You can also specify a name for the index though.</span></span> <span data-ttu-id="43964-231">下面的示例指定索引应命名为**PostRatingIndex**。</span><span class="sxs-lookup"><span data-stu-id="43964-231">The following example specifies that the index should be named **PostRatingIndex**.</span></span>
+<span data-ttu-id="d44ac-229">默认情况下，上述示例中的索引将命名为**ix \_ &lt; &gt; 属性名称** (ix \_ 分级) 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-229">By default, the index will be named **IX\_&lt;property name&gt;** (IX\_Rating in the above example).</span></span> <span data-ttu-id="d44ac-230">您还可以指定索引的名称。</span><span class="sxs-lookup"><span data-stu-id="d44ac-230">You can also specify a name for the index though.</span></span> <span data-ttu-id="d44ac-231">下面的示例指定索引应命名为 `PostRatingIndex` 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-231">The following example specifies that the index should be named `PostRatingIndex`.</span></span>
 
 ``` csharp
     [Index("PostRatingIndex")]
     public int Rating { get; set; }
 ```
 
-<span data-ttu-id="43964-232">默认情况下，索引是不唯一的，但您可以使用**IsUnique**命名参数指定索引应是唯一的。</span><span class="sxs-lookup"><span data-stu-id="43964-232">By default, indexes are non-unique, but you can use the **IsUnique** named parameter to specify that an index should be unique.</span></span> <span data-ttu-id="43964-233">下面的示例对**用户**的登录名引入唯一索引。</span><span class="sxs-lookup"><span data-stu-id="43964-233">The following example introduces a unique index on a **User**'s login name.</span></span>
+<span data-ttu-id="d44ac-232">默认情况下，索引是不唯一的，但您可以使用 `IsUnique` 命名参数指定索引应是唯一的。</span><span class="sxs-lookup"><span data-stu-id="d44ac-232">By default, indexes are non-unique, but you can use the `IsUnique` named parameter to specify that an index should be unique.</span></span> <span data-ttu-id="d44ac-233">下面的示例对 `User` 的登录名引入唯一索引。</span><span class="sxs-lookup"><span data-stu-id="d44ac-233">The following example introduces a unique index on a `User`'s login name.</span></span>
 
 ``` csharp
     public class User
@@ -369,9 +369,9 @@ ms.locfileid: "78415855"
     }
 ```
 
-### <a name="multiple-column-indexes"></a><span data-ttu-id="43964-234">多列索引</span><span class="sxs-lookup"><span data-stu-id="43964-234">Multiple-Column Indexes</span></span>
+### <a name="multiple-column-indexes"></a><span data-ttu-id="d44ac-234">多列索引</span><span class="sxs-lookup"><span data-stu-id="d44ac-234">Multiple-Column Indexes</span></span>
 
-<span data-ttu-id="43964-235">跨多个列的索引通过在给定表的多个索引批注中使用相同的名称来指定。</span><span class="sxs-lookup"><span data-stu-id="43964-235">Indexes that span multiple columns are specified by using the same name in multiple Index annotations for a given table.</span></span> <span data-ttu-id="43964-236">创建多列索引时，需要指定索引中列的顺序。</span><span class="sxs-lookup"><span data-stu-id="43964-236">When you create multi-column indexes, you need to specify an order for the columns in the index.</span></span> <span data-ttu-id="43964-237">例如，下面的代码创建一个名为**IX\_BlogIdAndRating**的**分级**和**BlogId**的多列索引。</span><span class="sxs-lookup"><span data-stu-id="43964-237">For example, the following code creates a multi-column index on **Rating** and **BlogId** called **IX\_BlogIdAndRating**.</span></span> <span data-ttu-id="43964-238">**BlogId**是索引中的第一列，而**评级**是第二列。</span><span class="sxs-lookup"><span data-stu-id="43964-238">**BlogId** is the first column in the index and **Rating** is the second.</span></span>
+<span data-ttu-id="d44ac-235">跨多个列的索引通过在给定表的多个索引批注中使用相同的名称来指定。</span><span class="sxs-lookup"><span data-stu-id="d44ac-235">Indexes that span multiple columns are specified by using the same name in multiple Index annotations for a given table.</span></span> <span data-ttu-id="d44ac-236">创建多列索引时，需要指定索引中列的顺序。</span><span class="sxs-lookup"><span data-stu-id="d44ac-236">When you create multi-column indexes, you need to specify an order for the columns in the index.</span></span> <span data-ttu-id="d44ac-237">例如，下面的代码在上创建一个多列索引 `Rating` ，并将其 `BlogId` 称为 **IX \_ BlogIdAndRating**。</span><span class="sxs-lookup"><span data-stu-id="d44ac-237">For example, the following code creates a multi-column index on `Rating` and `BlogId` called **IX\_BlogIdAndRating**.</span></span> <span data-ttu-id="d44ac-238">`BlogId` 是索引中的第一列， `Rating` 是第二列。</span><span class="sxs-lookup"><span data-stu-id="d44ac-238">`BlogId` is the first column in the index and `Rating` is the second.</span></span>
 
 ``` csharp
     public class Post
@@ -388,16 +388,16 @@ ms.locfileid: "78415855"
 
  
 
-## <a name="relationship-attributes-inverseproperty-and-foreignkey"></a><span data-ttu-id="43964-239">关系属性： InverseProperty 和 ForeignKey</span><span class="sxs-lookup"><span data-stu-id="43964-239">Relationship Attributes: InverseProperty and ForeignKey</span></span>
+## <a name="relationship-attributes-inverseproperty-and-foreignkey"></a><span data-ttu-id="d44ac-239">关系属性： InverseProperty 和 ForeignKey</span><span class="sxs-lookup"><span data-stu-id="d44ac-239">Relationship Attributes: InverseProperty and ForeignKey</span></span>
 
 > [!NOTE]
-> <span data-ttu-id="43964-240">本页提供有关使用数据批注设置 Code First 模型中的关系的信息。</span><span class="sxs-lookup"><span data-stu-id="43964-240">This page provides information about setting up relationships in your Code First model using Data Annotations.</span></span> <span data-ttu-id="43964-241">有关 EF 中的关系以及如何使用关系访问和操作数据的一般信息，请参阅[关系 & 导航属性](~/ef6/fundamentals/relationships.md)。 \*</span><span class="sxs-lookup"><span data-stu-id="43964-241">For general information about relationships in EF and how to access and manipulate data using relationships, see [Relationships & Navigation Properties](~/ef6/fundamentals/relationships.md).\*</span></span>
+> <span data-ttu-id="d44ac-240">本页提供有关使用数据批注设置 Code First 模型中的关系的信息。</span><span class="sxs-lookup"><span data-stu-id="d44ac-240">This page provides information about setting up relationships in your Code First model using Data Annotations.</span></span> <span data-ttu-id="d44ac-241">有关 EF 中的关系以及如何使用关系访问和操作数据的一般信息，请参阅 [关系 & 导航属性](~/ef6/fundamentals/relationships.md)。 \*</span><span class="sxs-lookup"><span data-stu-id="d44ac-241">For general information about relationships in EF and how to access and manipulate data using relationships, see [Relationships & Navigation Properties](~/ef6/fundamentals/relationships.md).\*</span></span>
 
-<span data-ttu-id="43964-242">Code first 约定将负责您的模型中最常见的关系，但在某些情况下，需要帮助。</span><span class="sxs-lookup"><span data-stu-id="43964-242">Code first convention will take care of the most common relationships in your model, but there are some cases where it needs help.</span></span>
+<span data-ttu-id="d44ac-242">Code first 约定将负责您的模型中最常见的关系，但在某些情况下，需要帮助。</span><span class="sxs-lookup"><span data-stu-id="d44ac-242">Code first convention will take care of the most common relationships in your model, but there are some cases where it needs help.</span></span>
 
-<span data-ttu-id="43964-243">更改博客类中键属性的名称时，会创建一个与发布的关系相关的问题。</span><span class="sxs-lookup"><span data-stu-id="43964-243">Changing the name of the key property in the Blog class created a problem with its relationship to Post.</span></span> 
+<span data-ttu-id="d44ac-243">更改类中的键属性的名称会 `Blog` 创建一个与的关系相关的问题 `Post` 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-243">Changing the name of the key property in the `Blog` class created a problem with its relationship to `Post`.</span></span> 
 
-<span data-ttu-id="43964-244">生成数据库时，代码优先会在 Post 类中看到 BlogId 属性，并将其识别为与博客类的外键匹配的类名和 "Id"。</span><span class="sxs-lookup"><span data-stu-id="43964-244">When generating the database, code first sees the BlogId property in the Post class and recognizes it, by the convention that it matches a class name plus “Id”, as a foreign key to the Blog class.</span></span> <span data-ttu-id="43964-245">但博客类中没有 BlogId 属性。</span><span class="sxs-lookup"><span data-stu-id="43964-245">But there is no BlogId property in the blog class.</span></span> <span data-ttu-id="43964-246">此解决方案的作用是在 Post 中创建一个导航属性，并使用外 DataAnnotation 帮助代码首先了解如何使用 BlogId 属性构建这两个类之间的关系，以及如何在数据.</span><span class="sxs-lookup"><span data-stu-id="43964-246">The solution for this is to create a navigation property in the Post and use the Foreign DataAnnotation to help code first understand how to build the relationship between the two classes —using the Post.BlogId property — as well as how to specify constraints in the database.</span></span>
+<span data-ttu-id="d44ac-244">生成数据库时，代码优先会在 `BlogId` Post 类中看到该属性，并将其识别为与类名称和 **Id**相匹配的约定，作为类的外键 `Blog` 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-244">When generating the database, code first sees the `BlogId` property in the Post class and recognizes it, by the convention that it matches a class name plus **Id**, as a foreign key to the `Blog` class.</span></span> <span data-ttu-id="d44ac-245">但 `BlogId` 博客类中没有属性。</span><span class="sxs-lookup"><span data-stu-id="d44ac-245">But there is no `BlogId` property in the blog class.</span></span> <span data-ttu-id="d44ac-246">此操作的解决方案是在中创建导航属性 `Post` ，并使用 `ForeignKey` DataAnnotation 帮助代码首先了解如何使用属性) 在两个 (类之间建立关系，以及 `Post.BlogId` 如何在数据库中指定约束。</span><span class="sxs-lookup"><span data-stu-id="d44ac-246">The solution for this is to create a navigation property in the `Post` and use the `ForeignKey` DataAnnotation to help code first understand how to build the relationship between the two classes (using the `Post.BlogId` property) as well as how to specify constraints in the database.</span></span>
 
 ``` csharp
     public class Post
@@ -413,20 +413,20 @@ ms.locfileid: "78415855"
     }
 ```
 
-<span data-ttu-id="43964-247">数据库中的约束显示 InternalBlogs 和 BlogId 之间的关系。</span><span class="sxs-lookup"><span data-stu-id="43964-247">The constraint in the database shows a relationship between InternalBlogs.PrimaryTrackingKey and Posts.BlogId.</span></span> 
+<span data-ttu-id="d44ac-247">数据库中的约束显示与之间的关系 `InternalBlogs.PrimaryTrackingKey` `Posts.BlogId` 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-247">The constraint in the database shows a relationship between `InternalBlogs.PrimaryTrackingKey` and `Posts.BlogId`.</span></span> 
 
 ![InternalBlogs 和 PrimaryTrackingKey 之间的关系。 BlogId](~/ef6/media/jj591583-figure09.png)
 
-<span data-ttu-id="43964-249">当类之间存在多个关系时，将使用 InverseProperty。</span><span class="sxs-lookup"><span data-stu-id="43964-249">The InverseProperty is used when you have multiple relationships between classes.</span></span>
+<span data-ttu-id="d44ac-249">`InverseProperty`当类之间存在多个关系时，将使用。</span><span class="sxs-lookup"><span data-stu-id="d44ac-249">The `InverseProperty` is used when you have multiple relationships between classes.</span></span>
 
-<span data-ttu-id="43964-250">在 Post 类中，你可能需要跟踪博客文章的作者，以及编辑者。</span><span class="sxs-lookup"><span data-stu-id="43964-250">In the Post class, you may want to keep track of who wrote a blog post as well as who edited it.</span></span> <span data-ttu-id="43964-251">下面是 Post 类的两个新导航属性。</span><span class="sxs-lookup"><span data-stu-id="43964-251">Here are two new navigation properties for the Post class.</span></span>
+<span data-ttu-id="d44ac-250">在 `Post` 类中，你可能需要跟踪博客文章的作者，以及编辑者。</span><span class="sxs-lookup"><span data-stu-id="d44ac-250">In the `Post` class, you may want to keep track of who wrote a blog post as well as who edited it.</span></span> <span data-ttu-id="d44ac-251">下面是 Post 类的两个新导航属性。</span><span class="sxs-lookup"><span data-stu-id="d44ac-251">Here are two new navigation properties for the Post class.</span></span>
 
 ``` csharp
     public Person CreatedBy { get; set; }
     public Person UpdatedBy { get; set; }
 ```
 
-<span data-ttu-id="43964-252">还需要添加到这些属性引用的 Person 类中。</span><span class="sxs-lookup"><span data-stu-id="43964-252">You’ll also need to add in the Person class referenced by these properties.</span></span> <span data-ttu-id="43964-253">Person 类将导航属性返回到张贴内容，一个用于该用户撰写的所有帖子，另一个用于该人员所更新的所有帖子。</span><span class="sxs-lookup"><span data-stu-id="43964-253">The Person class has navigation properties back to the Post, one for all of the posts written by the person and one for all of the posts updated by that person.</span></span>
+<span data-ttu-id="d44ac-252">还需要添加到 `Person` 这些属性引用的类中。</span><span class="sxs-lookup"><span data-stu-id="d44ac-252">You’ll also need to add in the `Person` class referenced by these properties.</span></span> <span data-ttu-id="d44ac-253">`Person`类具有返回到的导航属性 `Post` ，一个用于用户编写的所有张贴内容，一个用于由该用户更新的所有发布。</span><span class="sxs-lookup"><span data-stu-id="d44ac-253">The `Person` class has navigation properties back to the `Post`, one for all of the posts written by the person and one for all of the posts updated by that person.</span></span>
 
 ``` csharp
     public class Person
@@ -438,11 +438,11 @@ ms.locfileid: "78415855"
     }
 ```
 
-<span data-ttu-id="43964-254">Code first 不能自行匹配两个类中的属性。</span><span class="sxs-lookup"><span data-stu-id="43964-254">Code first is not able to match up the properties in the two classes on its own.</span></span> <span data-ttu-id="43964-255">用于发布的数据库表应具有 System.createdby 人员的一个外键，另一个用于 UpdatedBy 人员，而 code first 将创建四个外键属性： Person\_Id、Person\_Id1、System.createdby\_Id 和 UpdatedBy\_Id。</span><span class="sxs-lookup"><span data-stu-id="43964-255">The database table for Posts should have one foreign key for the CreatedBy person and one for the UpdatedBy person but code first will create four foreign key properties: Person\_Id, Person\_Id1, CreatedBy\_Id and UpdatedBy\_Id.</span></span>
+<span data-ttu-id="d44ac-254">Code first 不能自行匹配两个类中的属性。</span><span class="sxs-lookup"><span data-stu-id="d44ac-254">Code first is not able to match up the properties in the two classes on its own.</span></span> <span data-ttu-id="d44ac-255">的数据库表 `Posts` 应有一个外键 `CreatedBy` ，而另一个用于用户，另一个用于 `UpdatedBy` 用户，但 code first 将创建四个外键属性： **person \_ id**、 **person \_ Id1**、 **system.createdby \_ id** 和 **UpdatedBy \_ id**。</span><span class="sxs-lookup"><span data-stu-id="d44ac-255">The database table for `Posts` should have one foreign key for the `CreatedBy` person and one for the `UpdatedBy` person but code first will create four foreign key properties: **Person\_Id**, **Person\_Id1**, **CreatedBy\_Id** and **UpdatedBy\_Id**.</span></span>
 
 ![带有额外外键的 post 表](~/ef6/media/jj591583-figure10.png)
 
-<span data-ttu-id="43964-257">若要解决这些问题，可以使用 InverseProperty 批注来指定属性的对齐方式。</span><span class="sxs-lookup"><span data-stu-id="43964-257">To fix these problems, you can use the InverseProperty annotation to specify the alignment of the properties.</span></span>
+<span data-ttu-id="d44ac-257">若要解决这些问题，可以使用 `InverseProperty` 批注来指定属性的对齐方式。</span><span class="sxs-lookup"><span data-stu-id="d44ac-257">To fix these problems, you can use the `InverseProperty` annotation to specify the alignment of the properties.</span></span>
 
 ``` csharp
     [InverseProperty("CreatedBy")]
@@ -452,14 +452,14 @@ ms.locfileid: "78415855"
     public List<Post> PostsUpdated { get; set; }
 ```
 
-<span data-ttu-id="43964-258">因为 Person 中的 PostsWritten 属性知道这指的是 Post 类型，它将生成与 System.createdby 的关系。</span><span class="sxs-lookup"><span data-stu-id="43964-258">Because the PostsWritten property in Person knows that this refers to the Post type, it will build the relationship to Post.CreatedBy.</span></span> <span data-ttu-id="43964-259">同样，PostsUpdated 将连接到 UpdatedBy。</span><span class="sxs-lookup"><span data-stu-id="43964-259">Similarly, PostsUpdated will be connected to Post.UpdatedBy.</span></span> <span data-ttu-id="43964-260">和 code first 不会创建额外的外键。</span><span class="sxs-lookup"><span data-stu-id="43964-260">And code first will not create the extra foreign keys.</span></span>
+<span data-ttu-id="d44ac-258">因为 `PostsWritten` Person 中的属性知道这是指该 `Post` 类型，所以它将与建立关系 `Post.CreatedBy` 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-258">Because the `PostsWritten` property in Person knows that this refers to the `Post` type, it will build the relationship to `Post.CreatedBy`.</span></span> <span data-ttu-id="d44ac-259">同样， `PostsUpdated` 将连接到 `Post.UpdatedBy` 。</span><span class="sxs-lookup"><span data-stu-id="d44ac-259">Similarly, `PostsUpdated` will be connected to `Post.UpdatedBy`.</span></span> <span data-ttu-id="d44ac-260">和 code first 不会创建额外的外键。</span><span class="sxs-lookup"><span data-stu-id="d44ac-260">And code first will not create the extra foreign keys.</span></span>
 
 ![发送无额外外键的表](~/ef6/media/jj591583-figure11.png)
 
  
 
-## <a name="summary"></a><span data-ttu-id="43964-262">摘要</span><span class="sxs-lookup"><span data-stu-id="43964-262">Summary</span></span>
+## <a name="summary"></a><span data-ttu-id="d44ac-262">摘要</span><span class="sxs-lookup"><span data-stu-id="d44ac-262">Summary</span></span>
 
-<span data-ttu-id="43964-263">DataAnnotations 不仅使你能够在代码优先类中描述客户端和服务器端验证，还允许你增强，甚至更正代码优先根据其约定对类进行的假设。</span><span class="sxs-lookup"><span data-stu-id="43964-263">DataAnnotations not only let you describe client and server side validation in your code first classes, but they also allow you to enhance and even correct the assumptions that code first will make about your classes based on its conventions.</span></span> <span data-ttu-id="43964-264">使用 DataAnnotations，不仅可以驱动数据库架构生成，还可以将代码的第一类映射到预先存在的数据库。</span><span class="sxs-lookup"><span data-stu-id="43964-264">With DataAnnotations you can not only drive database schema generation, but you can also map your code first classes to a pre-existing database.</span></span>
+<span data-ttu-id="d44ac-263">DataAnnotations 不仅使你能够在代码优先类中描述客户端和服务器端验证，还允许你增强，甚至更正代码优先根据其约定对类进行的假设。</span><span class="sxs-lookup"><span data-stu-id="d44ac-263">DataAnnotations not only let you describe client and server side validation in your code first classes, but they also allow you to enhance and even correct the assumptions that code first will make about your classes based on its conventions.</span></span> <span data-ttu-id="d44ac-264">使用 DataAnnotations，不仅可以驱动数据库架构生成，还可以将代码的第一类映射到预先存在的数据库。</span><span class="sxs-lookup"><span data-stu-id="d44ac-264">With DataAnnotations you can not only drive database schema generation, but you can also map your code first classes to a pre-existing database.</span></span>
 
-<span data-ttu-id="43964-265">尽管它们非常灵活，但请记住，DataAnnotations 仅提供您可以在代码优先类上进行的最常见的配置更改。</span><span class="sxs-lookup"><span data-stu-id="43964-265">While they are very flexible, keep in mind that DataAnnotations provide only the most commonly needed configuration changes you can make on your code first classes.</span></span> <span data-ttu-id="43964-266">若要为某些边缘事例配置类，应查看备用配置机制，Code First 的 "流畅" API。</span><span class="sxs-lookup"><span data-stu-id="43964-266">To configure your classes for some of the edge cases, you should look to the alternate configuration mechanism, Code First’s Fluent API .</span></span>
+<span data-ttu-id="d44ac-265">尽管它们非常灵活，但请记住，DataAnnotations 仅提供您可以在代码优先类上进行的最常见的配置更改。</span><span class="sxs-lookup"><span data-stu-id="d44ac-265">While they are very flexible, keep in mind that DataAnnotations provide only the most commonly needed configuration changes you can make on your code first classes.</span></span> <span data-ttu-id="d44ac-266">若要为某些边缘事例配置类，应查看备用配置机制，Code First 的 "流畅" API。</span><span class="sxs-lookup"><span data-stu-id="d44ac-266">To configure your classes for some of the edge cases, you should look to the alternate configuration mechanism, Code First’s Fluent API .</span></span>
