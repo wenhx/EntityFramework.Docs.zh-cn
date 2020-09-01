@@ -4,12 +4,12 @@ description: EF Core 5.0 中的新功能概述
 author: ajcvickers
 ms.date: 07/20/2020
 uid: core/what-is-new/ef-core-5.0/whatsnew
-ms.openlocfilehash: d7f5863e657e243ce733eda5dc8b40c1b92818ce
-ms.sourcegitcommit: 949faaba02e07e44359e77d7935f540af5c32093
+ms.openlocfilehash: 3a1f5c7d44ad0e4d648492c4edcf14678c73538e
+ms.sourcegitcommit: 6f7af3f138bf7c724cbdda261f97e5cf7035e8d7
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/03/2020
-ms.locfileid: "87526870"
+ms.lasthandoff: 08/25/2020
+ms.locfileid: "88847587"
 ---
 # <a name="whats-new-in-ef-core-50"></a>EF Core 5.0 中的新增功能
 
@@ -18,6 +18,349 @@ EF Core 5.0 目前正在开发中。 此页面将包含每个预览版中引入�
 此页面不会复制 [EF Core 5.0](xref:core/what-is-new/ef-core-5.0/plan) 的计划。 计划中介绍了 EF Core 5.0 的整体主题，其中包括我们在交付最终版本之前打算包含的所有内容。
 
 发布时，我们会将此处的链接添加到官方文档。
+
+## <a name="preview-8"></a>预览版 8
+
+## <a name="table-per-type-tpt-mapping"></a>每个类型一张表 (TPT) 映射
+
+默认情况下，EF Core 会将 .NET 类型的继承层次结构映射到单个数据库表。 这称为每个层次结构一张表 (TPH) 映射。 EF Core 5.0 还允许将继承层次结构中的每个 .NET 类型映射到另一个数据库表，这称为每个类型一张表 (TPT) 映射。
+
+例如，请考虑具有映射的层次结构的此模型：
+
+```c#
+public class Animal
+{
+    public int Id { get; set; }
+    public string Species { get; set; }
+}
+
+public class Pet : Animal
+{
+    public string Name { get; set; }
+}
+
+public class Cat : Pet
+{
+    public string EdcuationLevel { get; set; }
+}
+
+public class Dog : Pet
+{
+    public string FavoriteToy { get; set; }
+}
+```
+
+默认情况下，EF Core 会将此模型映射到单个表：
+
+```sql
+CREATE TABLE [Animals] (
+    [Id] int NOT NULL IDENTITY,
+    [Species] nvarchar(max) NULL,
+    [Discriminator] nvarchar(max) NOT NULL,
+    [Name] nvarchar(max) NULL,
+    [EdcuationLevel] nvarchar(max) NULL,
+    [FavoriteToy] nvarchar(max) NULL,
+    CONSTRAINT [PK_Animals] PRIMARY KEY ([Id])
+);
+```
+
+但是，将每个实体类型映射到不同的表，会得到每个类型一张表的结果：
+
+```sql
+CREATE TABLE [Animals] (
+    [Id] int NOT NULL IDENTITY,
+    [Species] nvarchar(max) NULL,
+    CONSTRAINT [PK_Animals] PRIMARY KEY ([Id])
+);
+
+CREATE TABLE [Pets] (
+    [Id] int NOT NULL,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_Pets] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Pets_Animals_Id] FOREIGN KEY ([Id]) REFERENCES [Animals] ([Id]) ON DELETE NO ACTION
+);
+
+CREATE TABLE [Cats] (
+    [Id] int NOT NULL,
+    [EdcuationLevel] nvarchar(max) NULL,
+    CONSTRAINT [PK_Cats] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Cats_Animals_Id] FOREIGN KEY ([Id]) REFERENCES [Animals] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Cats_Pets_Id] FOREIGN KEY ([Id]) REFERENCES [Pets] ([Id]) ON DELETE NO ACTION
+);
+
+CREATE TABLE [Dogs] (
+    [Id] int NOT NULL,
+    [FavoriteToy] nvarchar(max) NULL,
+    CONSTRAINT [PK_Dogs] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Dogs_Animals_Id] FOREIGN KEY ([Id]) REFERENCES [Animals] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Dogs_Pets_Id] FOREIGN KEY ([Id]) REFERENCES [Pets] ([Id]) ON DELETE NO ACTION
+);
+```
+
+请注意，上述外键约束的创建是在对预览版 8 的代码创建分支后添加的。
+
+可使用映射特性将实体类型映射到不同的表：
+
+```c#
+[Table("Animals")]
+public class Animal
+{
+    public int Id { get; set; }
+    public string Species { get; set; }
+}
+
+[Table("Pets")]
+public class Pet : Animal
+{
+    public string Name { get; set; }
+}
+
+[Table("Cats")]
+public class Cat : Pet
+{
+    public string EdcuationLevel { get; set; }
+}
+
+[Table("Dogs")]
+public class Dog : Pet
+{
+    public string FavoriteToy { get; set; }
+}
+```
+
+或使用 `ModelBuilder` 配置：
+
+```c#
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Animal>().ToTable("Animals");
+    modelBuilder.Entity<Pet>().ToTable("Pets");
+    modelBuilder.Entity<Cat>().ToTable("Cats");
+    modelBuilder.Entity<Dog>().ToTable("Dogs");
+}
+```
+
+记录信息可通过问题 [#1979](https://github.com/dotnet/EntityFramework.Docs/issues/1979) 进行跟踪。
+
+### <a name="migrations-rebuild-sqlite-tables"></a>迁移：重新生成 SQLite 表
+
+与其他数据库相比，SQLite 的架构操作功能相对有限。 例如，从现有表中删除列需要删除并重新创建整个表。 EF Core 5.0 迁移现在支持自动重新生成表，以便实现所需的架构更改。
+
+例如，假设为 `Unicorn` 实体类型创建了 `Unicorns` 表：
+
+```c#
+public class Unicorn
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public int Age { get; set; }
+}
+```
+
+```sql
+CREATE TABLE "Unicorns" (
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Unicorns" PRIMARY KEY AUTOINCREMENT,
+    "Name" TEXT NULL,
+    "Age" INTEGER NOT NULL
+);
+```
+
+然后我们了解到，存储独角兽的年龄被认为非常不礼貌，因此让我们删除该属性，添加新的迁移，并更新数据库。 使用 EF Core 3.1 时，此更新将失败，因为无法删除该列。 在 EF Core 5.0 中，迁移将改为重新生成表：
+
+```sql
+CREATE TABLE "ef_temp_Unicorns" (
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Unicorns" PRIMARY KEY AUTOINCREMENT,
+    "Name" TEXT NULL
+);
+
+INSERT INTO "ef_temp_Unicorns" ("Id", "Name")
+SELECT "Id", "Name"
+FROM Unicorns;
+
+PRAGMA foreign_keys = 0;
+
+DROP TABLE "Unicorns";
+
+ALTER TABLE "ef_temp_Unicorns" RENAME TO "Unicorns";
+
+PRAGMA foreign_keys = 1;
+```
+
+请注意：
+* 创建一个临时表，其中包含新表所需的架构
+* 将数据从当前表复制到临时表中
+* 关闭外键强制执行
+* 删除当前表
+* 将临时表重命名为新表
+
+记录信息可通过问题 [#2583](https://github.com/dotnet/EntityFramework.Docs/issues/2583) 进行跟踪。
+
+### <a name="table-valued-functions"></a>表值函数
+
+此功能是 [@pmiddleton](https://github.com/pmiddleton) 在社区中贡献的。 非常感谢贡献此功能！
+
+EF Core 5.0 为 .NET 方法到表值函数 (TVF) 的映射提供一流支持。 然后可在 LINQ 查询中使用这些函数，在此类查询中，函数结果上的其他组合也将转换为 SQL。
+
+例如，请考虑在 SQL Server 数据库中定义的以下 TVF：
+
+```sql
+CREATE FUNCTION GetReports(@employeeId int)
+RETURNS @reports TABLE
+(
+    Name nvarchar(50) NOT NULL,
+    IsDeveloper bit NOT NULL
+)
+AS
+BEGIN
+    WITH cteEmployees AS
+    (
+        SELECT Id, Name, ManagerId, IsDeveloper
+        FROM Employees
+        WHERE Id = @employeeId
+        UNION ALL
+        SELECT e.Id, e.Name, e.ManagerId, e.IsDeveloper
+        FROM Employees e
+        INNER JOIN cteEmployees cteEmp ON cteEmp.Id = e.ManagerId
+    )
+    INSERT INTO @reports
+    SELECT Name, IsDeveloper
+    FROM cteEmployees
+    WHERE Id != @employeeId
+
+    RETURN
+END
+```
+
+EF Core 模型需要两种实体类型才能使用此 TVF：
+* 以正常方式映射到 Employees 表的 `Employee` 类型
+* 与 TVF 返回的形状相匹配的 `Report` 类型
+
+```c#
+public class Employee
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public bool IsDeveloper { get; set; }
+
+    public int? ManagerId { get; set; }
+    public virtual Employee Manager { get; set; }
+}
+```
+
+```c#
+public class Report
+{
+    public string Name { get; set; }
+    public bool IsDeveloper { get; set; }
+}
+```
+
+这些类型必须包含在 EF Core 模型中：
+
+```c#
+modelBuilder.Entity<Employee>();
+modelBuilder.Entity(typeof(Report)).HasNoKey();
+```
+
+请注意，`Report` 没有主键，因此必须这样配置。
+
+最后，必须将 .NET 方法映射到数据库中的 TVF。 可以使用新的 `FromExpression` 方法在 DbContext 上定义此方法：
+
+```c#
+public IQueryable<Report> GetReports(int managerId)
+    => FromExpression(() => GetReports(managerId));
+```
+
+此方法使用与上面定义的 TVF 匹配的参数和返回类型。 然后在 OnModelCreating 中将该方法添加到 EF Core 模型：
+
+```c#
+modelBuilder.HasDbFunction(() => GetReports(default));
+```
+
+（在此处使用 lambda 可轻松将 `MethodInfo` 传递到 EF Core。 将忽略传递给该方法的参数。）
+
+现在可以编写查询，以调用 `GetReports` 并对结果进行组合。 例如：
+
+```c#
+from e in context.Employees
+from rc in context.GetReports(e.Id)
+where rc.IsDeveloper == true
+select new
+{
+  ManagerName = e.Name,
+  EmployeeName = rc.Name,
+})
+```
+
+在 SQL Server 上，这将转换为：
+
+```sql
+SELECT [e].[Name] AS [ManagerName], [g].[Name] AS [EmployeeName]
+FROM [Employees] AS [e]
+CROSS APPLY [dbo].[GetReports]([e].[Id]) AS [g]
+WHERE [g].[IsDeveloper] = CAST(1 AS bit)
+```
+
+请注意，SQL 以 `Employees` 表为根，调用 `GetReports`，然后在函数的结果上添加一个额外的 WHERE 子句。
+
+### <a name="flexible-queryupdate-mapping"></a>灵活查询/更新映射
+
+EF Core 5.0 允许将同一实体类型映射到不同的数据库对象。 这些对象可以是表、视图或函数。
+
+例如，可将一个实体类型同时映射到数据库视图和数据库表：
+
+```c#
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder
+        .Entity<Blog>()
+        .ToTable("Blogs")
+        .ToView("BlogsView");
+}
+```
+
+默认情况下，EF Core 随后将从视图进行查询，将更新发送到表。 例如，执行以下代码：
+
+```c#
+var blog = context.Set<Blog>().Single(e => e.Name == "One Unicorn");
+
+blog.Name = "1unicorn2";
+
+context.SaveChanges();
+```
+
+生成针对视图的查询，然后对表进行更新：
+
+```sql
+SELECT TOP(2) [b].[Id], [b].[Name], [b].[Url]
+FROM [BlogsView] AS [b]
+WHERE [b].[Name] = N'One Unicorn'
+
+SET NOCOUNT ON;
+UPDATE [Blogs] SET [Name] = @p0
+WHERE [Id] = @p1;
+SELECT @@ROWCOUNT;
+```
+
+### <a name="context-wide-split-query-configuration"></a>上下文范围的拆分查询配置
+
+现在可以将拆分查询（见下文）配置为 DbContext 执行的任何查询的默认值。 此配置仅适用于关系提供程序，因此必须将其指定为 `UseProvider` 配置的一部分。 例如：
+
+```c#
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder
+        .UseSqlServer(
+            Your.SqlServerConnectionString,
+            b => b.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
+```
+
+记录信息可通过问题 [#2407](https://github.com/dotnet/EntityFramework.Docs/issues/2407) 进行跟踪。
+
+### <a name="physicaladdress-mapping"></a>PhysicalAddress 映射
+
+此功能是 [@ralmsdeveloper](https://github.com/ralmsdeveloper) 在社区中贡献的。 非常感谢贡献此功能！
+
+标准 .NET [PhysicalAddress 类](/dotnet/api/system.net.networkinformation.physicaladdress)现自动映射到尚不具备原生支持的数据库的字符串列中。 有关详细信息，请参阅下面的 `IPAddress` 示例。
 
 ## <a name="preview-7"></a>预览版 7
 
@@ -51,7 +394,7 @@ public void DoSomeThing()
 {
     using (var context = _contextFactory.CreateDbContext())
     {
-        // ...            
+        // ...
     }
 }
 ```
@@ -64,7 +407,7 @@ public void DoSomeThing()
 
 ### <a name="reset-dbcontext-state"></a>重置 DbContext 状态
 
-EF Core 5.0 引入了 `ChangeTracker.Clear()`，它可清除所有被跟踪实体的 DbContext。 当使用为每个工作单元创建生存期较短的新上下文实例的最佳做法时，通常不需要这样做。 但如果需要重置 DbContext 实例的状态，则使用新的 `Clear()` 方法比大量分离所有实体的性能和可靠性更强。  
+EF Core 5.0 引入了 `ChangeTracker.Clear()`，它可清除所有被跟踪实体的 DbContext。 当使用为每个工作单元创建生存期较短的新上下文实例的最佳做法时，通常不需要这样做。 但如果需要重置 DbContext 实例的状态，则使用新的 `Clear()` 方法比大量分离所有实体的性能和可靠性更强。
 
 记录信息可通过问题 [#2524](https://github.com/dotnet/EntityFramework.Docs/issues/2524) 进行跟踪。
 
@@ -154,7 +497,7 @@ EF Core 现支持[保存点](/SQL/t-sql/language-elements/save-transaction-trans
 你可手动创建、发布和回滚保存点。 例如：
 
 ```csharp
-context.Database.CreateSavepoint("MySavePoint"); 
+context.Database.CreateSavepoint("MySavePoint");
 ```
 
 此外，在执行 `SaveChanges` 失败时，EF Core 现在会回滚到上一个保存点。 因此，可重试 SaveChanges，而不用重试整个事务。
@@ -262,7 +605,7 @@ ORDER BY "a"."Id"
 public class User
 {
     public int Id { get; set; }
-    
+
     [MaxLength(128)]
     public string FullName { get; set; }
 }
@@ -283,7 +626,7 @@ IndexAttribute 也可用于指定横跨多个列的索引。 例如：
 public class User
 {
     public int Id { get; set; }
-    
+
     [MaxLength(64)]
     public string FirstName { get; set; }
 
@@ -360,7 +703,7 @@ CREATE TABLE [Host] (
     [Id] int NOT NULL,
     [Address] nvarchar(45) NULL,
     CONSTRAINT [PK_Host] PRIMARY KEY ([Id]));
-``` 
+```
 
 之后，可按正常的方式添加实体：
 
@@ -368,7 +711,7 @@ CREATE TABLE [Host] (
 context.AddRange(
     new Host { Address = IPAddress.Parse("127.0.0.1")},
     new Host { Address = IPAddress.Parse("0000:0000:0000:0000:0000:0000:0000:0001")});
-``` 
+```
 
 所生成的 SQL 将插入规范化的 IPv4 或 IPv6 地址：
 
@@ -392,8 +735,8 @@ dotnet ef dbcontext scaffold "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog
 或者在包管理器控制台中：
 
 ```
-Scaffold-DbContext 'Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook' Microsoft.EntityFrameworkCore.SqlServer -NoOnConfiguring 
-``` 
+Scaffold-DbContext 'Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook' Microsoft.EntityFrameworkCore.SqlServer -NoOnConfiguring
+```
 
 请注意，建议使用[命名的连接字符串和安全存储（如用户机密）](/core/managing-schemas/scaffolding?tabs=vs#configuration-and-user-secrets)。
 
@@ -417,7 +760,7 @@ WHERE SUBSTRING([c].[ContactName], 1, 1) = N'A'
 
 ### <a name="simplify-case-blocks"></a>简化 CASE 块
 
-EF Core 现使用 CASE 块生成效果更佳的查询。 例如，以下 LINQ 查询： 
+EF Core 现使用 CASE 块生成效果更佳的查询。 例如，以下 LINQ 查询：
 
 ```CSharp
 context.Weapons
@@ -442,7 +785,7 @@ ORDER BY CASE
     END IS NOT NULL THEN CAST(1 AS bit)
     ELSE CAST(0 AS bit)
 END, [w].[Id]");
-``` 
+```
 
 但它现在转换为：
 
@@ -453,7 +796,7 @@ ORDER BY CASE
     WHEN ([w].[Name] = N'Marcus'' Lancer') AND [w].[Name] IS NOT NULL THEN CAST(1 AS bit)
     ELSE CAST(0 AS bit)
 END, [w].[Id]");
-``` 
+```
 
 ## <a name="preview-5"></a>预览版 5
 
@@ -507,14 +850,14 @@ WHERE [u].[Name] COLLATE French_CI_AS = N'Jean-Michel Jarre'
 
 ```
 dotnet ef migrations add two --verbose --dev
-``` 
+```
 
 然后，该参数将传输到工厂，它在这里可用于控制如何创建和初始化上下文。 例如：
 
 ```CSharp
 public class MyDbContextFactory : IDesignTimeDbContextFactory<SomeDbContext>
 {
-    public SomeDbContext CreateDbContext(string[] args) 
+    public SomeDbContext CreateDbContext(string[] args)
         => new SomeDbContext(args.Contains("--dev"));
 }
 ```
@@ -523,7 +866,7 @@ public class MyDbContextFactory : IDesignTimeDbContextFactory<SomeDbContext>
 
 ### <a name="no-tracking-queries-with-identity-resolution"></a>具有标识解析的非跟踪查询
 
-现可将非跟踪查询配置来执行标识解析。 例如，以下查询将为每个 Post 创建一个新的 Blog 实例，即使每个 Blog 的主键相同也是如此。 
+现可将非跟踪查询配置来执行标识解析。 例如，以下查询将为每个 Post 创建一个新的 Blog 实例，即使每个 Blog 的主键相同也是如此。
 
 ```CSharp
 context.Posts.AsNoTracking().Include(e => e.Blog).ToList();
@@ -544,7 +887,7 @@ context.Posts.AsNoTracking().PerformIdentityResolution().Include(e => e.Blog).To
 大多数数据库都允许在计算后存储计算得到的列值。 虽然这会占用磁盘空间，但仅在更新时对计算的列计算一次，而不是在每次检索它的值时都计算。 这样也可对某些数据库编制列的索引。
 
 EF Core 5.0 允许将计算列配置为存储计算列。 例如：
- 
+
 ```CSharp
 modelBuilder
     .Entity<User>()
@@ -569,7 +912,7 @@ modelBuilder
     .HasPrecision(16, 4);
 ```
 
-还可以通过完整的数据库类型（如“decimal(16,4)”）设置精度和小数位数。 
+还可以通过完整的数据库类型（如“decimal(16,4)”）设置精度和小数位数。
 
 文档可通过问题 [#527](https://github.com/dotnet/EntityFramework.Docs/issues/527) 进行跟踪。
 
@@ -599,7 +942,7 @@ var blogs = context.Blogs
 此查询将一并返回包含每个关联文章的博客（仅当文章标题包含“Cheese”时）。
 
 Skip 和 Take 也可用于减少包含的实体数量。 例如：
- 
+
 ```CSharp
 var blogs = context.Blogs
     .Include(e => e.Posts.OrderByDescending(post => post.Title).Take(5)))
@@ -621,9 +964,9 @@ modelBuilder.Entity<Blog>().Navigation(e => e.Posts).HasField("_myposts");
 
 请参阅[配置导航属性文档](xref:core/modeling/relationships#configuring-navigation-properties)。
 
-### <a name="new-command-line-parameters-for-namespaces-and-connection-strings"></a>用于命名空间和连接字符串的新命令行参数 
+### <a name="new-command-line-parameters-for-namespaces-and-connection-strings"></a>用于命名空间和连接字符串的新命令行参数
 
-迁移和基架现在允许在命令行上指定命名空间。 例如，如需对数据库进行反向工程，将上下文和模型类放在不同的命名空间中： 
+迁移和基架现在允许在命令行上指定命名空间。 例如，如需对数据库进行反向工程，将上下文和模型类放在不同的命名空间中：
 
 ```
 dotnet ef dbcontext scaffold "connection string" Microsoft.EntityFrameworkCore.SqlServer --context-namespace "My.Context" --namespace "My.Model"
@@ -646,14 +989,14 @@ dotnet ef database update --connection "connection string"
 
 出于性能原因，在从数据库读取值时，EF 不会执行额外的 null 检查。 当遇到意外的 null 时，这可能会导致难以查找根本原因的异常。
 
-使用 `EnableDetailedErrors` 会将额外的 null 检查添加到查询中，这样一来，对于较小的性能开销，这些错误就更容易追溯到根本原因。  
+使用 `EnableDetailedErrors` 会将额外的 null 检查添加到查询中，这样一来，对于较小的性能开销，这些错误就更容易追溯到根本原因。
 
 例如：
 ```CSharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder
         .EnableDetailedErrors()
-        .EnableSensitiveDataLogging() // Often also useful with EnableDetailedErrors 
+        .EnableSensitiveDataLogging() // Often also useful with EnableDetailedErrors
         .UseSqlServer(Your.SqlServerConnectionString);
 ```
 
@@ -676,7 +1019,7 @@ await context.Set<Customer>()
 可以使用新的 `EF.Functions.DataLength` 方法访问它。 例如：
 ```CSharp
 var count = context.Orders.Count(c => 100 < EF.Functions.DataLength(c.OrderDate));
-``` 
+```
 
 ## <a name="preview-2"></a>预览版 2
 

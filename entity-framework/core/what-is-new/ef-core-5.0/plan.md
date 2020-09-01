@@ -1,14 +1,14 @@
 ---
 title: 针对 Entity Framework Core 5.0 的计划
 author: ajcvickers
-ms.date: 06/11/2020
+ms.date: 08/22/2020
 uid: core/what-is-new/ef-core-5.0/plan
-ms.openlocfilehash: 4abb6f500dce320dd0c32f8f3bf5c529b59fb28b
-ms.sourcegitcommit: 949faaba02e07e44359e77d7935f540af5c32093
+ms.openlocfilehash: a0d41d6df844c9ca2c8a2dc8ba50ca669e23dced
+ms.sourcegitcommit: 6f7af3f138bf7c724cbdda261f97e5cf7035e8d7
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/03/2020
-ms.locfileid: "87526883"
+ms.lasthandoff: 08/25/2020
+ms.locfileid: "88847574"
 ---
 # <a name="plan-for-entity-framework-core-50"></a>针对 Entity Framework Core 5.0 的计划
 
@@ -25,7 +25,7 @@ EF Core 5.0 当前计划[与 .NET 5.0 同时](https://devblogs.microsoft.com/dot
 
 ### <a name="supported-platforms"></a>受支持的平台
 
-EF Core 5.0 计划可在任何 .NET 5.0 平台上运行（基于[这些平台与 .NET Core 的融合](https://devblogs.microsoft.com/dotnet/introducing-net-5/)）。 就 .NET Standard 和使用的实际 TFM 而言，这意味着仍然是 TBD。
+EF Core 5.0 计划在任何 .NET Standard 2.1 平台（包括 .NET 5.0）上运行。 这是更常见的 .NET 范围[平台与 .NET Core 的聚合](https://devblogs.microsoft.com/dotnet/introducing-net-5/)的一部分。
 
 EF Core 5.0 不会在 .NET Framework 上运行。
 
@@ -47,7 +47,7 @@ EF Core 5.0 将包含一些[中断性变更](xref:core/what-is-new/ef-core-5.0/b
 
 T 恤大小：L
 
-状态：正在进行
+状态：完成
 
 多对多是 GitHub 积压工作 (backlog) 中[请求最多的功能](https://github.com/aspnet/EntityFrameworkCore/issues/1368)（大约 506 张投票）。
 
@@ -67,7 +67,7 @@ T 恤大小：L
 
 T 恤大小：L
 
-状态：正在进行
+状态：完成
 
 如第一个主题中所述，多对多支持具有多个方面。
 该主题专门跟踪对跳过导航功能的使用。
@@ -76,13 +76,13 @@ T 恤大小：L
 
 ## <a name="table-per-type-tpt-inheritance-mapping"></a>每个类型一张表 (TPT) 继承映射
 
-开发人员负责人：@AndriySvyryd
+开发人员主管：@AndriySvyryd 和 @smitpatel
 
 通过 [#2266](https://github.com/aspnet/EntityFrameworkCore/issues/2266) 进行跟踪
 
 T 恤大小：XL
 
-状态：正在进行
+状态：完成
 
 我们要实现 TPT 是因为它是经常请求的功能（大约 289 张投票；第三名），并且它需要一些低级更改，我们认为这些更改适合于总体 .NET 5 计划的基础性质。 我们预计这会形成数据库提供程序的重大更改，但与 3.0 所需的更改相比，这些更改的严重性要小得多。
 
@@ -94,7 +94,7 @@ T 恤大小：XL
 
 T 恤大小：M
 
-状态：正在进行
+状态：完成
 
 经过筛选的包含是经常请求的功能（大约 376 张投票；第二名），其工作量不大，我们认为这会使当前需要模型级筛选器或更复杂查询的许多方案不受阻碍或更加容易。
 
@@ -106,7 +106,7 @@ T 恤大小：M
 
 T 恤大小：L
 
-状态：正在进行
+状态：完成
 
 EF Core 3.0 更改了默认行为，它为给定的 LINQ 查询创建一个 SQL 查询。
 对于使用 Include 来处理多个集合的查询来说，这导致性能大幅下降。
@@ -114,15 +114,27 @@ EF Core 3.0 更改了默认行为，它为给定的 LINQ 查询创建一个 SQL 
 在 EF Core 5.0 中，我们将保留新的默认行为。
 不过，EF Core 5.0 现在允许为集合 Includes 生成多个查询，因为使用单个查询会导致性能不佳。
 
+## <a name="required-one-to-one-dependents"></a>需要一对一依赖项
+
+开发人员负责人：@AndriySvyryd 和 @smitpatel
+
+通过 [#12100](https://github.com/dotnet/efcore/issues/12100) 进行跟踪
+
+T 恤大小：M
+
+状态：完成
+
+在 EF Core 3.0 中，所有依赖项（包括所拥有的类型）都是可选的（例如 Person.Address 可为 null）。 在 EF Core 5.0 中，可根据需要配置依赖项。
+
 ## <a name="rationalize-totable-toquery-toview-fromsql-etc"></a>合理化 ToTable、ToQuery、ToView、FromSql 等
 
-开发人员负责人：@maumar 和 @smitpatel
+开发人员负责人：@AndriySvyryd 和 @smitpatel
 
 通过 [#17270](https://github.com/aspnet/EntityFrameworkCore/issues/17270) 进行跟踪
 
 T 恤大小：L
 
-状态：正在进行
+状态：完成
 
 在以前的版本中，我们在支持原始 SQL、无键类型和相关领域方面取得了进展。 但是，在所有内容作为一个整体协同工作的方式上存在差距和不一致。 5\.0 的目标是修复这些问题，并为定义、迁移和使用不同类型的实体及其关联查询和数据库项目创造良好体验。 这也可能涉及到已编译查询 API 的更新。
 
@@ -136,7 +148,7 @@ T 恤大小：L
 
 T 恤大小：XL
 
-状态：正在进行
+状态：完成
 
 查询转换代码已针对 EF Core 3.0 进行了广泛重写。 因此，查询代码一般处于更可靠的状态。 对于 5.0，在支持 TPT 和 skip 导航属性所需的更改范围之外，我们未计划进行重大查询更改。 但是，仍然需要大量工作来修复 3.0 全面修改中遗留的一些技术债务。 我们还计划修复许多 bug 并实现少量的增强功能，以进一步改进总体查询体验。
 
@@ -148,7 +160,9 @@ T 恤大小：XL
 
 T 恤大小：L
 
-状态：正在进行
+状态：作用域/完成
+
+范围问题：[迁移捆绑功能](https://github.com/dotnet/efcore/issues/19693)已推迟到 EF Core 5.0 发布之后。 但是，EF Core 5.0 中将包含[与迁移相关的一些其他目标改进](https://github.com/dotnet/efcore/issues/19587#issuecomment-668794460)
 
 当前，许多开发人员在应用程序启动时迁移其数据库。 这十分简单，但不建议这样做，因为：
 
@@ -175,7 +189,9 @@ T 恤大小：L
 
 T 恤大小：L
 
-状态：尚未开始
+状态：作用域/完成
+
+范围问题：为 Blazor、Xamarin、WinForms 和 WPF 发布了平台指南和示例。 现已计划为 EF Core 6.0 的发行进行 Xamarin 和其他 AOT/链接器工作。
 
 我们提供了有关在类似传统 MVC 的 Web 应用程序中使用 EF Core 的良好指导。 适用于其他平台和应用程序模型的指导缺失或过期。 对于 EF Core 5.0，我们计划调查、改进和记录在以下方面使用 EF Core 的体验：
 
@@ -201,7 +217,9 @@ T 恤大小：L
 
 T 恤大小：L
 
-状态：正在进行
+状态：作用域/完成
+
+范围问题：Npgsql 提供程序的主要性能改进已完成。 现已计划为 EF Core 6.0 的发行进行其他性能工作。
 
 对于 EF Core，我们计划改进性能基准套件，并对运行时进行定向性能改进。 此外，我们计划完成在 3.0 发布周期内进行原型设计的新 ADO.NET 批处理 API。 同样在 ADO.NET 层，我们计划对 Npgsql 提供程序进行其他性能改进。
 
@@ -277,7 +295,7 @@ T 恤大小：L
 
 T 恤大小：L
 
-状态：正在进行
+状态：完成
 
 除了上面概述的较大功能之外，我们还计划对 5.0 进行许多较小的改进，以修复“小问题”。 请注意，上面概述的更一般主题也涵盖了其中许多增强功能。
 
