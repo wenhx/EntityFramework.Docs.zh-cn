@@ -4,12 +4,12 @@ description: EF Core 5.0 中的新功能概述
 author: ajcvickers
 ms.date: 07/20/2020
 uid: core/what-is-new/ef-core-5.0/whatsnew
-ms.openlocfilehash: 3a1f5c7d44ad0e4d648492c4edcf14678c73538e
-ms.sourcegitcommit: 6f7af3f138bf7c724cbdda261f97e5cf7035e8d7
+ms.openlocfilehash: f822e3ae776778749a654377cbd9d9814ca40972
+ms.sourcegitcommit: 12d257db4786487a0c28e9ddd79f176f7cf6edb1
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88847587"
+ms.lasthandoff: 08/28/2020
+ms.locfileid: "89043592"
 ---
 # <a name="whats-new-in-ef-core-50"></a>EF Core 5.0 中的新增功能
 
@@ -21,7 +21,7 @@ EF Core 5.0 目前正在开发中。 此页面将包含每个预览版中引入�
 
 ## <a name="preview-8"></a>预览版 8
 
-## <a name="table-per-type-tpt-mapping"></a>每个类型一张表 (TPT) 映射
+### <a name="table-per-type-tpt-mapping"></a>每个类型一张表 (TPT) 映射
 
 默认情况下，EF Core 会将 .NET 类型的继承层次结构映射到单个数据库表。 这称为每个层次结构一张表 (TPH) 映射。 EF Core 5.0 还允许将继承层次结构中的每个 .NET 类型映射到另一个数据库表，这称为每个类型一张表 (TPT) 映射。
 
