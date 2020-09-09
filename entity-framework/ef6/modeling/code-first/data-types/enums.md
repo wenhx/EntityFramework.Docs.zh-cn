@@ -1,33 +1,35 @@
 ---
 title: 枚举支持-Code First-EF6
+description: 枚举支持-实体框架6中的 Code First
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 77a42501-27c9-4f4b-96df-26c128021467
-ms.openlocfilehash: 1cecbf7065367deb3d202977fe39187bd907d824
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/modeling/code-first/data-types/enums
+ms.openlocfilehash: 2ed5cd73f8477469d3651ef4bf9f79ce80598ee7
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78415789"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89617166"
 ---
 # <a name="enum-support---code-first"></a>枚举支持-Code First
 > [!NOTE]
-> **EF5 仅向前**-实体框架5中引入了本页中所述的功能、api 等。 如果使用的是早期版本，则部分或全部信息不适用。
+> **EF5 仅向前** -实体框架5中引入了本页中所述的功能、api 等。 如果使用的是早期版本，则部分或全部信息不适用。
 
 此视频和分步演练演示了如何使用实体框架 Code First 的枚举类型。 它还演示了如何在 LINQ 查询中使用枚举。
 
-本演练将使用 Code First 创建新数据库，但也可以使用[Code First 映射到现有数据库](~/ef6/modeling/code-first/workflows/existing-database.md)。
+本演练将使用 Code First 创建新数据库，但也可以使用 [Code First 映射到现有数据库](xref:ef6/modeling/code-first/workflows/existing-database)。
 
 实体框架5中引入了枚举支持。 若要使用枚举、空间数据类型和表值函数等新功能，则必须以 .NET Framework 4.5 为目标。 默认情况下，Visual Studio 2012 面向 .NET 4.5。
 
-在实体框架中，枚举可以具有以下基础类型：**Byte**、 **Int16**、 **Int32**、 **Int64**或**SByte**。
+在实体框架中，枚举可以具有以下基础类型： **Byte**、 **Int16**、 **Int32**、 **Int64** 或 **SByte**。
 
 ## <a name="watch-the-video"></a>观看视频
 此视频演示如何使用实体框架 Code First 的枚举类型。 它还演示了如何在 LINQ 查询中使用枚举。
 
-**主讲人**：Julia Kornich
+**提供者**： Julia Kornich
 
-**视频**：WMV | [MP4](https://download.microsoft.com/download/A/5/8/A583DEE8-FD5C-47EE-A4E1-966DDF39D1DA/HDI-ITPro-MSDN-mp4video-enumwithcodefirst.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/A/5/8/A583DEE8-FD5C-47EE-A4E1-966DDF39D1DA/HDI-ITPro-MSDN-winvideo-enumwithcodefirst.zip)
+**视频**： [wmv](https://download.microsoft.com/download/A/5/8/A583DEE8-FD5C-47EE-A4E1-966DDF39D1DA/HDI-ITPro-MSDN-winvideo-enumwithcodefirst.wmv)  |  [.wmv](https://download.microsoft.com/download/A/5/8/A583DEE8-FD5C-47EE-A4E1-966DDF39D1DA/HDI-ITPro-MSDN-mp4video-enumwithcodefirst.m4v)  |  [wmv (ZIP) ](https://download.microsoft.com/download/A/5/8/A583DEE8-FD5C-47EE-A4E1-966DDF39D1DA/HDI-ITPro-MSDN-winvideo-enumwithcodefirst.zip)
 
 ## <a name="pre-requisites"></a>先决条件
 
@@ -39,14 +41,14 @@ ms.locfileid: "78415789"
 
 1.  打开 Visual Studio 2012
 2.  在 "**文件**" 菜单上，指向 "**新建**"，然后单击 "**项目**"
-3.  在左窗格中，单击 " **Visual C\#** "，然后选择**控制台**模板
-4.  输入**EnumCodeFirst**作为项目名称，然后单击 **"确定"**
+3.  在左窗格中，单击 " **Visual \# C**"，然后选择**控制台**模板
+4.  输入 **EnumCodeFirst** 作为项目名称，然后单击 **"确定"**
 
 ## <a name="define-a-new-model-using-code-first"></a>使用 Code First 定义新模型
 
-使用 Code First 开发时，通常首先编写定义概念（域）模型 .NET Framework 类。 下面的代码定义了部门类。
+使用 Code First 开发时，通常首先编写 .NET Framework 类来定义概念 (域) 模型。 下面的代码定义了部门类。
 
-该代码还定义了 DepartmentNames 枚举。 默认情况下，枚举的类型为**int** 。 部门类的 Name 属性为 DepartmentNames 类型。
+该代码还定义了 DepartmentNames 枚举。 默认情况下，枚举的类型为 **int** 。 部门类的 Name 属性为 DepartmentNames 类型。
 
 打开 Program.cs 文件并粘贴以下类定义。
 
@@ -69,16 +71,16 @@ public partial class Department
 
 ## <a name="define-the-dbcontext-derived-type"></a>定义 DbContext 派生类型
 
-除了定义实体外，还需要定义派生自 DbContext 的类，并公开 DbSet&lt;TEntity&gt; 属性。 DbSet&lt;TEntity&gt; 属性使上下文知道要包括在模型中的类型。
+除了定义实体外，还需要定义派生自 DbContext 并公开 DbSet&lt;TEntity&gt; 属性的类。 DbSet&lt;TEntity&gt; 属性让上下文知道要包括在模型中的类型。
 
-DbContext 派生类型的实例在运行时管理实体对象，这包括使用数据库中的数据填充对象、更改跟踪以及将数据保存到数据库。
+DbContext 派生类型的实例在运行时管理实体对象，其中包括使用数据库中的数据填充对象、更改跟踪以及将数据保存到数据库。
 
 DbContext 和 DbSet 类型是在 EntityFramework 程序集中定义的。 我们将使用 EntityFramework NuGet 包添加对此 DLL 的引用。
 
 1.  在解决方案资源管理器中，右键单击项目名称。
 2.  选择 "**管理 NuGet 包 ...** "
-3.  在 "管理 NuGet 包" 对话框中，选择 "**联机**" 选项卡，然后选择 " **EntityFramework** " 包。
-4.  单击“安装”
+3.  在 "管理 NuGet 包" 对话框中，选择 " **联机** " 选项卡，然后选择 " **EntityFramework** " 包。
+4.  单击“安装” 
 
 请注意，除 EntityFramework 程序集之外，还添加了对 System.componentmodel 和 DataAnnotations 程序集的引用。
 
@@ -129,18 +131,18 @@ DepartmentID: 1 Name: English
 
 ## <a name="view-the-generated-database"></a>查看生成的数据库
 
-首次运行应用程序时，实体框架会为您创建一个数据库。 由于我们安装了 Visual Studio 2012，因此将在 LocalDB 实例上创建数据库。 默认情况下，实体框架在派生上下文的完全限定名称后命名数据库（在此示例中为**EnumTestContext**）。 随后将使用现有数据库的时间。  
+首次运行应用程序时，实体框架会为您创建一个数据库。 由于我们安装了 Visual Studio 2012，因此将在 LocalDB 实例上创建数据库。 默认情况下，实体框架在派生上下文的完全限定名称后命名该数据库 (此示例的 **EnumCodeFirst. EnumTestContext**) 。 随后将使用现有数据库的时间。  
 
-请注意，如果在创建数据库后对模型进行了任何更改，则应使用 Code First 迁移来更新数据库架构。 有关使用迁移的示例，请参阅[Code First 到新的数据库](~/ef6/modeling/code-first/workflows/new-database.md)。
+请注意，如果在创建数据库后对模型进行了任何更改，则应使用 Code First 迁移来更新数据库架构。 有关使用迁移的示例，请参阅 [Code First 到新的数据库](xref:ef6/modeling/code-first/workflows/new-database) 。
 
 若要查看数据库和数据，请执行以下操作：
 
-1.  在 Visual Studio 2012 主菜单中，选择 "**查看** -&gt; **SQL Server 对象资源管理器**"。
-2.  如果 LocalDB 不在服务器列表中，请在**SQL Server**上单击鼠标右键按钮，然后选择 "**添加 SQL Server**使用默认**Windows 身份验证**连接到 LocalDB 实例
+1.  在 Visual Studio 2012 主菜单中，选择 "**查看**  - &gt; **SQL Server 对象资源管理器**"。
+2.  如果 LocalDB 不在服务器列表中，请在 **SQL Server** 上单击鼠标右键按钮，然后选择 " **添加 SQL Server** 使用默认 **Windows 身份验证** 连接到 LocalDB 实例
 3.  展开 LocalDB 节点
-4.  展开 "**数据库**" 文件夹以查看新数据库并浏览到 "**部门**" 表，该 Code First 不会创建映射到枚举类型的表
+4.  展开 " **数据库** " 文件夹以查看新数据库并浏览到 " **部门** " 表，该 Code First 不会创建映射到枚举类型的表
 5.  若要查看数据，请右键单击该表，然后选择 "**查看数据**"
 
-## <a name="summary"></a>Summary
+## <a name="summary"></a>总结
 
 在本演练中，我们介绍了如何使用实体框架 Code First 的枚举类型。 

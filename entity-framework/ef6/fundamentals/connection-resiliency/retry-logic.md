@@ -1,14 +1,16 @@
 ---
 title: 连接复原和重试逻辑-EF6
+description: 实体框架6中的连接复原和重试逻辑
 author: AndriySvyryd
 ms.date: 11/20/2019
 ms.assetid: 47d68ac1-927e-4842-ab8c-ed8c8698dff2
-ms.openlocfilehash: 50e65bed32d0cfcf42746da0d632f9e990424b97
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/fundamentals/connection-resiliency/retry-logic
+ms.openlocfilehash: 7d05c924f309e410bc457b7e46b0618d38c95569
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/15/2020
-ms.locfileid: "79402107"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89616111"
 ---
 # <a name="connection-resiliency-and-retry-logic"></a>连接复原和重试逻辑
 > [!NOTE]
@@ -32,7 +34,7 @@ ms.locfileid: "79402107"
 
 ## <a name="enabling-an-execution-strategy"></a>启用执行策略  
 
-告诉 EF 使用执行策略的最简单方法是使用[DbConfiguration](~/ef6/fundamentals/configuring/code-based.md)类的 SetExecutionStrategy 方法：  
+告诉 EF 使用执行策略的最简单方法是使用 [DbConfiguration](xref:ef6/fundamentals/configuring/code-based) 类的 SetExecutionStrategy 方法：  
 
 ``` csharp
 public class MyConfiguration : DbConfiguration
@@ -66,7 +68,7 @@ public class MyConfiguration : DbConfiguration
 
 第一次发生暂时性故障时，SqlAzureExecutionStrategy 会立即重试，但会在每次重试之间延迟更长的时间，直到超过最大重试限制或总时间达到最大延迟。  
 
-执行策略只会重试有限数量的异常，这些异常通常是暂时性的，你仍需要处理其他错误，并捕获 RetryLimitExceeded 异常，以防错误不是暂时性的，或者需要太长时间才能解决自动.  
+执行策略只会重试有限数量的异常，这些异常通常是暂时性的，你仍需要处理其他错误，并捕获 RetryLimitExceeded 异常，以防错误不是暂时性的，或者因错误而无法处理。  
 
 使用重试执行策略时，有一些已知的限制：  
 
@@ -84,7 +86,7 @@ using (var db = new BloggingContext())
 }
 ```  
 
-注册重试执行策略时，不支持流式处理。 存在此限制的原因是，连接可能会在返回的结果中下降。 出现这种情况时，EF 需要重新运行整个查询，但无法可靠地了解已返回的结果（数据自初始查询发送以来可能已更改，结果可能会以不同的顺序返回，结果可能不具有唯一标识符，等等）。  
+注册重试执行策略时，不支持流式处理。 存在此限制的原因是，连接可能会在返回的结果中下降。 发生这种情况时，EF 需要重新运行整个查询，但不能通过可靠的方式知道哪些结果已返回 (数据自初始查询发送以来可能已更改，结果可能会以不同的顺序返回，结果可能不具有唯一标识符，等等 ) 。  
 
 ## <a name="user-initiated-transactions-are-not-supported"></a>不支持用户启动的事务  
 

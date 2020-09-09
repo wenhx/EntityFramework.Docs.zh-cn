@@ -1,15 +1,16 @@
 ---
 title: SQLite 数据库提供程序-限制-EF Core
+description: 与其他提供程序相比 Entity Framework Core SQLite 数据库提供程序的限制
 author: bricelam
 ms.date: 07/16/2020
 ms.assetid: 94ab4800-c460-4caa-a5e8-acdfee6e6ce2
 uid: core/providers/sqlite/limitations
-ms.openlocfilehash: 393f5e80ce2e11dcb11c2048e06effa27e48dc13
-ms.sourcegitcommit: d85263b5d5d665dbaf94de8832e2917bce048b34
+ms.openlocfilehash: 2657bf03bc5cd0d5fb45c57e7f7605824deb44d2
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/17/2020
-ms.locfileid: "86451224"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89616529"
 ---
 # <a name="sqlite-ef-core-database-provider-limitations"></a>SQLite EF Core 数据库提供程序限制
 
@@ -17,23 +18,23 @@ SQLite 提供程序有很多迁移限制。 其中的大多数限制是由基础
 
 ## <a name="modeling-limitations"></a>建模限制
 
-公共关系库（由实体框架关系数据库提供程序共享）定义了用于建模大多数关系数据库引擎所共有的概念的 Api。 SQLite 提供程序不支持其中几个概念。
+公共关系库 (实体框架关系数据库提供程序共享，) 定义 Api，用于建模大多数关系数据库引擎所共有的概念。 SQLite 提供程序不支持其中几个概念。
 
 * 架构
 * 序列
 
 ## <a name="query-limitations"></a>查询限制
 
-SQLite 本身并不支持以下数据类型。 EF Core 可以读取和写入这些类型的值，也支持查询是否相等（ `where e.Property == value` ）。 但其他操作（如比较和排序）将需要对客户端进行评估。
+SQLite 本身并不支持以下数据类型。 EF Core 可以读取和写入这些类型的值，并且还支持) 的相等性 (查询 `where e.Property == value` 。 但其他操作（如比较和排序）将需要对客户端进行评估。
 
 * DateTimeOffset
-* 小数
+* Decimal
 * TimeSpan
 * UInt64
 
 `DateTimeOffset`建议使用 DateTime 值，而不是。 处理多个时区时，建议在保存之前将值转换为 UTC，然后将其转换回适当的时区。
 
-`Decimal`类型提供了较高的精度。 但是，如果不需要该级别的精度，则建议改为使用 double。 您可以使用[值转换器](../../modeling/value-conversions.md)在类中继续使用 decimal。
+`Decimal`类型提供了较高的精度。 但是，如果不需要该级别的精度，则建议改为使用 double。 您可以使用 [值转换器](xref:core/modeling/value-conversions) 在类中继续使用 decimal。
 
 ``` csharp
 modelBuilder.Entity<MyEntity>()
@@ -49,27 +50,27 @@ SQLite 数据库引擎不支持许多其他关系数据库所支持的架构操�
 
 | Operation            | 支持？  | 需要版本 |
 |:---------------------|:------------|:-----------------|
-| AddCheckConstraint   | ✔（重新生成） | 5.0              |
+| AddCheckConstraint   | 重新生成 (✔)  | 5.0              |
 | AddColumn            | ✔           | 1.0              |
-| AddForeignKey        | ✔（重新生成） | 5.0              |
-| AddPrimaryKey        | ✔（重新生成） | 5.0              |
-| AddUniqueConstraint  | ✔（重新生成） | 5.0              |
-| AlterColumn          | ✔（重新生成） | 5.0              |
+| AddForeignKey        | 重新生成 (✔)  | 5.0              |
+| AddPrimaryKey        | 重新生成 (✔)  | 5.0              |
+| AddUniqueConstraint  | 重新生成 (✔)  | 5.0              |
+| AlterColumn          | 重新生成 (✔)  | 5.0              |
 | CreateIndex          | ✔           | 1.0              |
 | CreateTable          | ✔           | 1.0              |
-| DropCheckConstraint  | ✔（重新生成） | 5.0              |
-| DropColumn           | ✔（重新生成） | 5.0              |
-| DropForeignKey       | ✔（重新生成） | 5.0              |
+| DropCheckConstraint  | 重新生成 (✔)  | 5.0              |
+| DropColumn           | 重新生成 (✔)  | 5.0              |
+| DropForeignKey       | 重新生成 (✔)  | 5.0              |
 | DropIndex            | ✔           | 1.0              |
-| DropPrimaryKey       | ✔（重新生成） | 5.0              |
+| DropPrimaryKey       | 重新生成 (✔)  | 5.0              |
 | DropTable            | ✔           | 1.0              |
-| DropUniqueConstraint | ✔（重新生成） | 5.0              |
+| DropUniqueConstraint | 重新生成 (✔)  | 5.0              |
 | RenameColumn         | ✔           | 2.2.2            |
-| RenameIndex          | ✔（重新生成） | 2.1              |
+| RenameIndex          | 重新生成 (✔)  | 2.1              |
 | RenameTable          | ✔           | 1.0              |
-| EnsureSchema         | ✔（无操作）   | 2.0              |
-| DropSchema           | ✔（无操作）   | 2.0              |
-| 插入               | ✔           | 2.0              |
+| EnsureSchema         | ✔ (的)    | 2.0              |
+| DropSchema           | ✔ (的)    | 2.0              |
+| Insert               | ✔           | 2.0              |
 | 更新               | ✔           | 2.0              |
 | 删除               | ✔           | 2.0              |
 
@@ -77,4 +78,4 @@ SQLite 数据库引擎不支持许多其他关系数据库所支持的架构操�
 
 通过在迁移中手动编写代码来执行重新生成，可以解决其中一些限制。 表重建涉及创建新表，将数据复制到新表，删除旧表，重命名新表。 你将需要使用 `Sql(string)` 方法来执行其中一些步骤。
 
-有关更多详细信息，请参阅在 SQLite 文档中[进行其他类型的表架构更改](https://sqlite.org/lang_altertable.html#otheralter)。
+有关更多详细信息，请参阅在 SQLite 文档中 [进行其他类型的表架构更改](https://sqlite.org/lang_altertable.html#otheralter) 。

@@ -1,15 +1,16 @@
 ---
 title: 配置 DbContext-EF Core
+description: 用于配置 Dbcontext 与 Entity Framework Core 的策略
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: d7a22b5a-4c5b-4e3b-9897-4d7320fcd13f
 uid: core/miscellaneous/configuring-dbcontext
-ms.openlocfilehash: 9614449f6ead393b514f42b718b4cae5f97dfc98
-ms.sourcegitcommit: 949faaba02e07e44359e77d7935f540af5c32093
+ms.openlocfilehash: 3e45199e6fc0c8c105ccb0bb03175b4b08716b3f
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/03/2020
-ms.locfileid: "87526415"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89617795"
 ---
 # <a name="configuring-a-dbcontext"></a>配置 DbContext
 
@@ -17,13 +18,13 @@ ms.locfileid: "87526415"
 
 ## <a name="design-time-dbcontext-configuration"></a>设计时 DbContext 配置
 
-EF Core 的设计时[工具需要能够](xref:core/managing-schemas/migrations/index)发现和创建类型的工作实例，以便 `DbContext` 收集有关应用程序实体类型的详细信息以及如何映射到数据库架构。 此过程可以是自动的，只要该工具可以轻松地创建，这样就可以 `DbContext` 将其配置为类似于运行时的配置方式。
+EF Core 的设计时 [工具需要能够](xref:core/managing-schemas/migrations/index) 发现和创建类型的工作实例，以便 `DbContext` 收集有关应用程序实体类型的详细信息以及如何映射到数据库架构。 此过程可以是自动的，只要该工具可以轻松地创建，这样就可以 `DbContext` 将其配置为类似于运行时的配置方式。
 
 尽管提供所需的配置信息的任何模式 `DbContext` 可在运行时工作，但在设计时需要使用的工具 `DbContext` 只能处理有限数量的模式。 [设计时上下文创建](xref:core/miscellaneous/cli/dbcontext-creation)部分更详细地介绍了这些内容。
 
 ## <a name="configuring-dbcontextoptions"></a>配置 DbContextOptions
 
-`DbContext`必须具有的实例 `DbContextOptions` ，才能执行任何工作。 `DbContextOptions`实例携带如下配置信息：
+`DbContext` 必须具有的实例 `DbContextOptions` ，才能执行任何工作。 `DbContextOptions`实例携带如下配置信息：
 
 - 要使用的数据库提供程序，通常通过调用方法（如或）进行选择 `UseSqlServer` `UseSqlite` 。 这些扩展方法需要相应的提供程序包，如 `Microsoft.EntityFrameworkCore.SqlServer` 或 `Microsoft.EntityFrameworkCore.Sqlite` 。 方法在命名空间中定义 `Microsoft.EntityFrameworkCore` 。
 - 任何必需的数据库实例的连接字符串或标识符，通常作为参数传递给上面提到的提供者选择方法
@@ -39,7 +40,7 @@ optionsBuilder
 ```
 
 > [!NOTE]  
-> 提供程序选择器方法和上面提到的其他行为选择器方法是 `DbContextOptions` 或特定于提供程序的选项类的扩展方法。 若要访问这些扩展方法，你可能需要在范围内具有命名空间（通常为 `Microsoft.EntityFrameworkCore` ），并在项目中包含附加包依赖项。
+> 提供程序选择器方法和上面提到的其他行为选择器方法是 `DbContextOptions` 或特定于提供程序的选项类的扩展方法。 若要访问这些扩展方法，你可能需要在范围内 (通常) 命名空间 `Microsoft.EntityFrameworkCore` ，并在项目中包含附加包依赖项。
 
 `DbContextOptions` `DbContext` 通过使用 `OnConfiguring` 构造函数参数重写方法或外部，可以向提供。
 
@@ -109,9 +110,9 @@ using (var context = new BloggingContext())
 
 EF Core 支持 `DbContext` 将与依赖关系注入容器一起使用。 可以使用方法将 DbContext 类型添加到服务容器中 `AddDbContext<TContext>` 。
 
-`AddDbContext<TContext>`会将 DbContext 类型、 `TContext` 和对应的 `DbContextOptions<TContext>` 可用于从服务容器中注入。
+`AddDbContext<TContext>` 会将 DbContext 类型、 `TContext` 和对应的 `DbContextOptions<TContext>` 可用于从服务容器中注入。
 
-有关依赖关系注入的其他信息[，请参阅](#more-reading)下文。
+有关依赖关系注入的其他信息 [，请参阅](#more-reading) 下文。
 
 将添加 `DbContext` 到依赖关系注入：
 
@@ -122,7 +123,7 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-这要求向接受的 DbContext 类型添加[构造函数参数](#constructor-argument) `DbContextOptions<TContext>` 。
+这要求向接受的 DbContext 类型添加 [构造函数参数](#constructor-argument) `DbContextOptions<TContext>` 。
 
 上下文代码：
 
@@ -137,7 +138,7 @@ public class BloggingContext : DbContext
 }
 ```
 
-应用程序代码（在 ASP.NET Core 中）：
+ASP.NET Core) 中的应用程序代码 (：
 
 ``` csharp
 public class MyController
@@ -153,7 +154,7 @@ public class MyController
 }
 ```
 
-应用程序代码（直接使用 ServiceProvider，不太常见）：
+应用程序代码 (直接使用 ServiceProvider，不太常见) ：
 
 ``` csharp
 using (var context = serviceProvider.GetService<BloggingContext>())
@@ -178,7 +179,7 @@ Entity Framework Core 不支持在同一实例上运行多个并行操作 `DbCon
 
 ### <a name="forgetting-to-await-the-completion-of-an-asynchronous-operation-before-starting-any-other-operation-on-the-same-dbcontext"></a>在对同一 DbContext 启动任何其他操作之前，忘记等待异步操作完成
 
-使用异步方法，EF Core 可以启动以非阻止方式访问数据库的操作。 但是，如果调用方不等待其中一种方法完成，并继续在上执行其他操作， `DbContext` 则的状态 `DbContext` 可能会损坏。
+使用异步方法，EF Core 可以启动以非阻止方式访问数据库的操作。 但是，如果调用方不等待其中一种方法完成，并继续对执行其他操作，则的 `DbContext` 状态 `DbContext` 可以为， (并且很可能会) 损坏。
 
 始终等待立即 EF Core 异步方法。  
 
@@ -186,13 +187,13 @@ Entity Framework Core 不支持在同一实例上运行多个并行操作 `DbCon
 
 [`AddDbContext`](/dotnet/api/microsoft.extensions.dependencyinjection.entityframeworkservicecollectionextensions.adddbcontext) `DbContext` 默认情况下，扩展方法使用[范围生存期](/aspnet/core/fundamentals/dependency-injection#service-lifetimes)注册类型。
 
-这对于大多数 ASP.NET Core 应用程序中的并发访问问题是安全的，因为在给定的时间只有一个线程在执行每个客户端请求，因为每个请求都会获得一个单独的依赖项注入范围（因而是一个单独的 `DbContext` 实例）。 对于 Blazor 服务器托管模型，使用一个逻辑请求来维护 Blazor 用户线路，因此，如果使用默认注入作用域，则每个用户线路只能提供一个作用域内 DbContext 实例。
+这对于大多数 ASP.NET Core 应用程序中的并发访问问题是安全的，因为在给定的时间只有一个线程在执行每个客户端请求，因此，每个请求都将获取单独的依赖项注入范围 (，因而) 单独的 `DbContext` 实例。 对于 Blazor 服务器托管模型，使用一个逻辑请求来维护 Blazor 用户线路，因此，如果使用默认注入作用域，则每个用户线路只能提供一个作用域内 DbContext 实例。
 
 任何并行执行多个线程的代码都应确保 `DbContext` 不会同时访问实例。
 
-使用依赖关系注入，这可以通过以下方式实现：将上下文注册为作用域，并为每个线程创建作用域（使用 `IServiceScopeFactory` ），或将注册 `DbContext` 为暂时性（使用采用参数的的重载 `AddDbContext` `ServiceLifetime` ）。
+使用依赖关系注入，可以通过以下方式实现此目的：将上下文注册为作用域，并使用每个线程的) 创建作用域 (`IServiceScopeFactory` ，或者 `DbContext` 使用的重载将 `AddDbContext` 参数) 注册为暂时性 (`ServiceLifetime` 。
 
 ## <a name="more-reading"></a>阅读更多
 
-- 有关使用 DI 的详细信息，请参阅[依赖关系注入](/aspnet/core/fundamentals/dependency-injection)。
-- 有关详细信息，请参阅[测试](testing/index.md)。
+- 有关使用 DI 的详细信息，请参阅 [依赖关系注入](/aspnet/core/fundamentals/dependency-injection) 。
+- 有关详细信息，请参阅 [测试](xref:core/miscellaneous/testing/index) 。

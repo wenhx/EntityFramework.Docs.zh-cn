@@ -1,14 +1,16 @@
 ---
 title: Code First 数据批注-EF6
+description: 实体框架6中的 Code First 数据批注
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 80abefbd-23c9-4fce-9cd3-520e5df9856e
-ms.openlocfilehash: 17370b83aee9974161b1771e8a1dc99c2de27f0f
-ms.sourcegitcommit: 6f7af3f138bf7c724cbdda261f97e5cf7035e8d7
+uid: ef6/modeling/code-first/data-annotations
+ms.openlocfilehash: 37b2872b5fb40cf0dc346554b2cbb9e3fffd6bdc
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88847613"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89617352"
 ---
 # <a name="code-first-data-annotations"></a>Code First 数据批注
 > [!NOTE]
@@ -135,7 +137,7 @@ Code First 提供了向你的类添加这些配置的两种方法。 其中一�
     }
 ```
 
-## <a name="required"></a>必选
+## <a name="required"></a>必需
 
 `Required`批注告知 EF 需要特定属性。
 
@@ -391,7 +393,7 @@ Code first 约定规定每个属于受支持数据类型的属性都在数据库
 ## <a name="relationship-attributes-inverseproperty-and-foreignkey"></a>关系属性： InverseProperty 和 ForeignKey
 
 > [!NOTE]
-> 本页提供有关使用数据批注设置 Code First 模型中的关系的信息。 有关 EF 中的关系以及如何使用关系访问和操作数据的一般信息，请参阅 [关系 & 导航属性](~/ef6/fundamentals/relationships.md)。 *
+> 本页提供有关使用数据批注设置 Code First 模型中的关系的信息。 有关 EF 中的关系以及如何使用关系访问和操作数据的一般信息，请参阅 [关系 & 导航属性](xref:ef6/fundamentals/relationships)。 *
 
 Code first 约定将负责您的模型中最常见的关系，但在某些情况下，需要帮助。
 
@@ -458,7 +460,7 @@ Code first 不能自行匹配两个类中的属性。 的数据库表 `Posts` �
 
  
 
-## <a name="summary"></a>摘要
+## <a name="summary"></a>总结
 
 DataAnnotations 不仅使你能够在代码优先类中描述客户端和服务器端验证，还允许你增强，甚至更正代码优先根据其约定对类进行的假设。 使用 DataAnnotations，不仅可以驱动数据库架构生成，还可以将代码的第一类映射到预先存在的数据库。
 

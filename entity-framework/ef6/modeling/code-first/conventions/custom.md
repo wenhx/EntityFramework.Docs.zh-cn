@@ -1,27 +1,29 @@
 ---
 title: 自定义 Code First 约定-EF6
+description: 实体框架6中的自定义 Code First 约定
 author: divega
 ms.date: 10/23/2016
 ms.assetid: dd2bdbd9-ae9e-470a-aeb8-d0ba160499b7
-ms.openlocfilehash: cfd7f7cad532dca5227793c04d7d91e977ea5e4e
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/modeling/code-first/conventions/custom
+ms.openlocfilehash: 69e4b0111394e83195f5c0a81624c7b9e45bda52
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78415891"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89617263"
 ---
 # <a name="custom-code-first-conventions"></a>自定义 Code First 约定
 > [!NOTE]
 > **仅限 EF6 及更高版本** - 此页面中讨论的功能、API 等已引入实体框架 6。 如果使用的是早期版本，则部分或全部信息不适用。
 
-使用时 Code First 模型将使用一组约定从类进行计算。 默认[Code First 约定](~/ef6/modeling/code-first/conventions/built-in.md)确定哪些属性将成为实体的主键、实体映射到的表的名称，以及在默认情况下，小数列的精度和小数位数。
+使用时 Code First 模型将使用一组约定从类进行计算。 默认 [Code First 约定](xref:ef6/modeling/code-first/conventions/built-in) 确定哪些属性将成为实体的主键、实体映射到的表的名称，以及在默认情况下，小数列的精度和小数位数。
 
 有时，这些默认约定并不适用于您的模型，并且您必须通过使用数据注释或流畅的 API 来配置多个单独的实体来解决它们。 自定义 Code First 约定允许您定义自己的约定，为模型提供配置默认值。 在本演练中，我们将探讨不同类型的自定义约定以及如何创建它们。
 
 
 ## <a name="model-based-conventions"></a>基于模型的约定
 
-本页介绍用于自定义约定的 DbModelBuilder API。 此 API 应该足以用于创作大多数自定义约定。 但是，还可以创作基于模型的约定-在创建最终模型后对其进行操作的约定-用于处理高级方案。 有关详细信息，请参阅[基于模型的约定](~/ef6/modeling/code-first/conventions/model.md)。
+本页介绍用于自定义约定的 DbModelBuilder API。 此 API 应该足以用于创作大多数自定义约定。 但是，还可以创作基于模型的约定-在创建最终模型后对其进行操作的约定-用于处理高级方案。 有关详细信息，请参阅 [基于模型的约定](xref:ef6/modeling/code-first/conventions/model)。
 
  
 
@@ -208,7 +210,7 @@ IsKey 方法的一个有趣功能是它是附加的。 这意味着，如果在�
                 .Configure(c => c.IsUnicode(c.ClrPropertyInfo.GetCustomAttribute<IsUnicode>().Unicode));
 ```
 
-这非常简单，但通过使用约定 API 的 Having 方法，可以更简洁地实现此方法。 Having 方法具有类型为 Func&lt;PropertyInfo，T&gt; 的参数，该参数接受与 Where 方法相同的 PropertyInfo，但预期返回对象。 如果返回的对象为 null，则不会配置属性，这意味着，你可以像在中那样筛选 out 属性，但不同之处在于它还将捕获返回的对象并将其传递给 Configure 方法。 这类似于以下内容：
+这非常简单，但通过使用约定 API 的 Having 方法，可以更简洁地实现此方法。 Having 方法具有类型为 Func &lt; PropertyInfo、T 的参数，该参数 &gt; 接受与 Where 方法相同的 PropertyInfo，但预期返回对象。 如果返回的对象为 null，则不会配置属性，这意味着，你可以像在中那样筛选 out 属性，但不同之处在于它还将捕获返回的对象并将其传递给 Configure 方法。 这类似于以下内容：
 
 ``` csharp
     modelBuilder.Properties()
@@ -235,7 +237,7 @@ IsKey 方法的一个有趣功能是它是附加的。 这意味着，如果在�
     }
 ```
 
-此方法采用类型并返回一个字符串，该字符串使用带下划线的小写形式而不是 CamelCase。 在我们的模型中，这意味着 ProductCategory 类将映射到名为 product\_category 的表，而不是 ProductCategories。
+此方法采用类型并返回一个字符串，该字符串使用带下划线的小写形式而不是 CamelCase。 在我们的模型中，这意味着 ProductCategory 类将映射到称为 product \_ category 的表，而不是 ProductCategories。
 
 获得该方法后，我们可以在此类约定中调用它：
 
@@ -246,9 +248,9 @@ IsKey 方法的一个有趣功能是它是附加的。 这意味着，如果在�
 
 此约定将模型中的每个类型配置为映射到 GetTableName 方法返回的表名。 此约定等效于使用熟知 API 为模型中的每个实体调用 ToTable 方法。
 
-需要注意的一点是，当你调用 ToTable EF 时，将采用你提供的字符串作为确切的表名称，而不是在确定表名称时通常会执行的任何复数形式。 这就是我们约定中的表名是 product\_类别而不是产品\_类别的原因。 我们可以通过调用复数形式服务自己的约定来解决这一问题。
+需要注意的一点是，当你调用 ToTable EF 时，将采用你提供的字符串作为确切的表名称，而不是在确定表名称时通常会执行的任何复数形式。 这就是我们的约定中的表名是产品 \_ 类别而不是产品类别的原因 \_ 。 我们可以通过调用复数形式服务自己的约定来解决这一问题。
 
-在下面的代码中，我们将使用 EF6 中添加的[依赖项解析](~/ef6/fundamentals/configuring/dependency-resolution.md)功能检索 EF 使用的复数形式服务并复数形式我们的表名。
+在下面的代码中，我们将使用 EF6 中添加的 [依赖项解析](xref:ef6/fundamentals/configuring/dependency-resolution) 功能检索 EF 使用的复数形式服务并复数形式我们的表名。
 
 ``` csharp
     private string GetTableName(Type type)
@@ -268,7 +270,7 @@ IsKey 方法的一个有趣功能是它是附加的。 这意味着，如果在�
 
 ### <a name="totable-and-inheritance"></a>ToTable 和继承
 
-ToTable 的另一个重要方面是，如果您将某一类型显式映射到给定的表，则可以更改 EF 将使用的映射策略。 如果为继承层次结构中的每个类型调用 ToTable，并将类型名称作为表的名称传递，则会将默认的每个层次结构一个表（TPH）映射策略更改为每种类型一个表（TPT）。 描述这一点的最佳方式是 whith 一个具体的示例：
+ToTable 的另一个重要方面是，如果您将某一类型显式映射到给定的表，则可以更改 EF 将使用的映射策略。 如果为继承层次结构中的每个类型调用 ToTable，并将类型名称作为表的名称传递，则会将默认的每个层次结构一个表 (TPH) 映射策略更改为每种类型一个表 (TPT) 。 描述这一点的最佳方式是 whith 一个具体的示例：
 
 ``` csharp
     public class Employee
@@ -283,7 +285,7 @@ ToTable 的另一个重要方面是，如果您将某一类型显式映射到给
     }
 ```
 
-默认情况下，员工和经理都映射到数据库中的同一表（员工）。 该表将包含具有鉴别器列的员工和经理，该列将告诉您每一行中存储的实例类型。 这是 TPH 映射，因为层次结构中有一个表。 但是，如果在这两个类上调用 ToTable，则每个类型都将映射到其自己的表，也称为 TPT，因为每个类型都有其自己的表。
+默认情况下，员工和经理都映射到数据库中 (员工) 的同一个表。 该表将包含具有鉴别器列的员工和经理，该列将告诉您每一行中存储的实例类型。 这是 TPH 映射，因为层次结构中有一个表。 但是，如果在这两个类上调用 ToTable，则每个类型都将映射到其自己的表，也称为 TPT，因为每个类型都有其自己的表。
 
 ``` csharp
     modelBuilder.Types()

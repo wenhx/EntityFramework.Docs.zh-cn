@@ -1,14 +1,16 @@
 ---
 title: 记录和截取数据库操作-EF6
+description: 日志记录和截取实体框架6中的数据库操作
 author: divega
 ms.date: 10/23/2016
 ms.assetid: b5ee7eb1-88cc-456e-b53c-c67e24c3f8ca
-ms.openlocfilehash: 35b0284a5ad8b2b732f074589bd458d243312575
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/fundamentals/logging-and-interception
+ms.openlocfilehash: bb5c3392b4f2e1f291d7ac373d07724f56d0eb30
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78416101"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89616200"
 ---
 # <a name="logging-and-intercepting-database-operations"></a>记录和截取数据库操作
 > [!NOTE]
@@ -94,7 +96,7 @@ WHERE @@ROWCOUNT > 0 AND [Id] = scope_identity()
 -- Completed in 2 ms with result: SqlDataReader
 ```  
 
-（请注意，这是假设已发生任何数据库初始化的输出。 如果尚未发生数据库初始化，则会有更多的输出，显示所有工作迁移在这些情况下执行的操作，以检查或创建新数据库。）  
+ (请注意，这是假设已发生任何数据库初始化的输出。 如果尚未发生数据库初始化，则会有更多的输出，显示所有工作迁移在这些涵盖下执行的操作，以检查或创建新数据库。 )   
 
 ## <a name="what-gets-logged"></a>记录了哪些内容？  
 
@@ -124,9 +126,9 @@ WHERE @@ROWCOUNT > 0 AND [Id] = scope_identity()
 
 ## <a name="logging-to-different-places"></a>记录到不同的位置  
 
-如上所示，记录到控制台非常简单。 通过使用不同[类型的类型](https://msdn.microsoft.com/library/system.io.textwriter.aspx)，也可以很容易地记录到内存、文件等。  
+如上所示，记录到控制台非常简单。 通过使用不同 [类型的类型](https://msdn.microsoft.com/library/system.io.textwriter.aspx)，也可以很容易地记录到内存、文件等。  
 
-如果你熟悉 LINQ to SQL 你可能会注意到，在 LINQ to SQL 日志属性设置为实际的 "设置" 对象（例如，在 "控制台" 中），而在 EF 中，Log 属性被设置为接受字符串的方法（例如，Console. Write 或 Console。 这种情况的原因是，通过接受可充当字符串接收器的任何委托，将 EF 从无效中分离。 例如，假设已有一些日志记录框架，并定义如下所示的日志记录方法：  
+如果你熟悉 LINQ to SQL 你可能会注意到，在 LINQ to SQL 日志属性设置为实际的 "设置" 对象时 (例如，Console。 Out) 而在 EF 中，Log 属性被设置为接受字符串 (的方法，例如，Console 或。 这种情况的原因是，通过接受可充当字符串接收器的任何委托，将 EF 从无效中分离。 例如，假设已有一些日志记录框架，并定义如下所示的日志记录方法：  
 
 ``` csharp
 public class MyLogger
@@ -147,7 +149,7 @@ context.Database.Log = s => logger.Log("EFApp", s);
 
 ## <a name="result-logging"></a>结果日志记录  
 
-默认情况下，在将命令发送到数据库之前，将使用时间戳来记录命令文本（SQL）、参数和 "执行" 行。 执行命令后，将记录包含运行时间的 "已完成" 行。  
+默认记录器在将命令发送到数据库之前， (SQL) 、参数和 "执行" 行记录命令文本。 执行命令后，将记录包含运行时间的 "已完成" 行。  
 
 请注意，对于异步命令，在异步任务实际完成、失败或取消之前，不会记录 "已完成" 行。  
 
@@ -155,7 +157,7 @@ context.Database.Log = s => logger.Log("EFApp", s);
 
 ### <a name="successful-execution"></a>成功执行  
 
-对于成功完成的命令，输出为 "在 x 毫秒内完成，结果为："，后跟一些对结果的指示。 对于返回数据读取器的命令，结果指示是返回的[DbDataReader](https://msdn.microsoft.com/library/system.data.common.dbdatareader.aspx)的类型。 对于返回整数值的命令，如显示的结果上方显示的 update 命令，则为该整数。  
+对于成功完成的命令，输出为 "在 x 毫秒内完成，结果为："，后跟一些对结果的指示。 对于返回数据读取器的命令，结果指示是返回的 [DbDataReader](https://msdn.microsoft.com/library/system.data.common.dbdatareader.aspx) 的类型。 对于返回整数值的命令，如显示的结果上方显示的 update 命令，则为该整数。  
 
 ### <a name="failed-execution"></a>执行失败  
 
@@ -179,7 +181,7 @@ update Blogs set Title = 'No' where Id = -1
 
 ## <a name="changing-log-content-and-formatting"></a>更改日志内容和格式  
 
-在 "数据库概述" 下，使用 DatabaseLogFormatter 对象。 此对象有效地将 IDbCommandInterceptor 实现（见下文）绑定到接受字符串和 DbContext 的委托。 这意味着，DatabaseLogFormatter 上的方法是在执行命令之前和之后调用的。 这些 DatabaseLogFormatter 方法收集并格式化日志输出，并将其发送到委托。  
+在 "数据库概述" 下，使用 DatabaseLogFormatter 对象。 此对象将有效地绑定 IDbCommandInterceptor 实现 (参见下面的) 到接受字符串和 DbContext 的委托。 这意味着，DatabaseLogFormatter 上的方法是在执行命令之前和之后调用的。 这些 DatabaseLogFormatter 方法收集并格式化日志输出，并将其发送到委托。  
 
 ### <a name="customizing-databaselogformatter"></a>自定义 DatabaseLogFormatter  
 
@@ -194,7 +196,7 @@ update Blogs set Title = 'No' where Id = -1
 - 重写 LogCommand 以格式化和写入单一的 SQL 行  
 - 重写 LogResult 不执行任何操作。  
 
-代码如下所示：
+代码将如下所示：
 
 ``` csharp
 public class OneLineFormatter : DatabaseLogFormatter
@@ -223,7 +225,7 @@ public class OneLineFormatter : DatabaseLogFormatter
 
 若要日志输出，只需调用写入方法，该方法会将输出发送到配置的写入委托。  
 
-（请注意，此代码只是为了举例地删除换行符。 它在查看复杂的 SQL 时可能无法正常工作。）  
+ (请注意，此代码只是为了举例地删除换行符。 它在查看复杂的 SQL 时可能无法正常运行。 )   
 
 ### <a name="setting-the-databaselogformatter"></a>设置 DatabaseLogFormatter  
 
@@ -261,15 +263,15 @@ Context 'BlogContext' is executing command 'insert [dbo].[Posts]([Title], [BlogI
 
 ### <a name="the-interception-context"></a>截获上下文  
 
-查看在任何侦听器接口上定义的方法很明显，就是每个调用都给定 DbInterceptionContext 类型的对象或派生的某种类型，如 DbCommandInterceptionContext\<\>。 此对象包含有关 EF 正在采取的操作的上下文信息。 例如，如果该操作是代表 DbContext 执行的，则 DbContext 将包含在 DbInterceptionContext 中。 同样，对于异步执行的命令，将在 DbCommandInterceptionContext 上设置 IsAsync 标志。  
+查看在任何侦听器接口上定义的方法很明显，就是每个调用都给定一个类型为 DbInterceptionContext 的对象，或是派生的某种类型的对象（如 DbCommandInterceptionContext） \<\> 。 此对象包含有关 EF 正在采取的操作的上下文信息。 例如，如果该操作是代表 DbContext 执行的，则 DbContext 将包含在 DbInterceptionContext 中。 同样，对于异步执行的命令，将在 DbCommandInterceptionContext 上设置 IsAsync 标志。  
 
 ### <a name="result-handling"></a>结果处理  
 
-DbCommandInterceptionContext\<\> 类包含一个名为 Result、OriginalResult、Exception 和 OriginalException 的属性。 对于对在执行操作之前调用的截取方法的调用，这些属性将设置为 null/零（即，对于 。正在执行方法。 如果执行并成功执行该操作，则结果和 OriginalResult 将设置为操作的结果。 然后，可以在执行操作后调用的截取方法中观察这些值，即 。已执行方法。 同样，如果操作引发，则会设置 Exception 和 OriginalException 属性。  
+DbCommandInterceptionContext \<\> 类包含一个名为 Result、OriginalResult、Exception 和 OriginalException 的属性。 对于对在执行操作之前调用的截取方法的调用，这些属性将设置为 null/零（即，对于 .。。正在执行方法。 如果执行并成功执行该操作，则结果和 OriginalResult 将设置为操作的结果。 然后，可以在执行操作后调用的截取方法中观察这些值，即 .。。已执行方法。 同样，如果操作引发，则会设置 Exception 和 OriginalException 属性。  
 
 #### <a name="suppressing-execution"></a>禁止执行  
 
-如果侦听器在执行命令之前设置 Result 属性（在其中一个 。执行方法）后，EF 不会尝试实际执行该命令，而只是使用结果集。 换句话说，侦听器可以取消命令的执行，但会继续执行 EF，就像执行命令一样。  
+如果侦听器在执行命令之前设置 Result 属性，则 (执行方法) ，EF 不会尝试实际执行该命令，而只是使用结果集。 换句话说，侦听器可以取消命令的执行，但会继续执行 EF，就像执行命令一样。  
 
 通常使用包装提供程序执行的命令批处理就是使用此方法的示例。 侦听器将以批处理的形式存储命令以供以后执行，但会 "假设" 命令已正常执行。 请注意，它需要超过此数目才能实现批处理，但这是如何使用更改截取结果的示例。  
 
@@ -277,7 +279,7 @@ DbCommandInterceptionContext\<\> 类包含一个名为 Result、OriginalResult�
 
 #### <a name="changing-the-result-after-execution"></a>在执行后更改结果  
 
-如果侦听器在执行命令后设置 Result 属性（在其中一个 。执行方法）后，EF 将使用更改后的结果，而不是实际从操作返回的结果。 同样，如果侦听器在执行命令后设置了 Exception 属性，则 EF 将引发设置异常，就好像操作引发了异常一样。  
+如果侦听器在执行命令后设置 Result 属性 (则在其中一个 .。。如果执行方法) 则 EF 将使用更改后的结果，而不是实际从操作返回的结果。 同样，如果侦听器在执行命令后设置了 Exception 属性，则 EF 将引发设置异常，就好像操作引发了异常一样。  
 
 侦听器还可以将 Exception 属性设置为 null，以指示不应引发异常。 如果执行操作失败，则此方法会很有用，但侦听器希望 EF 继续操作，就像操作已成功一样。 这通常还涉及到设置结果，以便 EF 有一些结果值在继续时使用。  
 
@@ -299,7 +301,7 @@ DbInterception.Add(new NLogCommandInterceptor());
 
 ### <a name="example-logging-to-nlog"></a>示例：记录到 NLog  
 
-让我们将这一切结合起来，使用 IDbCommandInterceptor 和[NLog](https://nlog-project.org/)来执行以下操作：  
+让我们将这一切结合起来，使用 IDbCommandInterceptor 和 [NLog](https://nlog-project.org/) 来执行以下操作：  
 
 - 为非异步执行的任何命令记录警告  
 - 为执行时引发的任何命令记录错误  

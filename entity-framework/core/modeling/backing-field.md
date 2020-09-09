@@ -1,15 +1,16 @@
 ---
 title: 支持字段-EF Core
+description: 为 Entity Framework Core 模型中的属性配置支持字段
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: a628795e-64df-4f24-a5e8-76bc261e7ed8
 uid: core/modeling/backing-field
-ms.openlocfilehash: e015c4f3fca767d25bee179c027813bd9fcf4c07
-ms.sourcegitcommit: 949faaba02e07e44359e77d7935f540af5c32093
+ms.openlocfilehash: 36fc64efa08f2cdeb7005e3fc6335298f2426bde
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/03/2020
-ms.locfileid: "87526753"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89617583"
 ---
 # <a name="backing-fields"></a>支持字段
 
@@ -17,7 +18,7 @@ ms.locfileid: "87526753"
 
 ## <a name="basic-configuration"></a>基本配置
 
-按照约定，将发现以下字段作为给定属性的支持字段（按优先级顺序列出）。 
+按照约定，将发现以下字段作为给定属性的支持字段 (按优先级顺序) 列出。 
 
 * `_<camel-cased property name>`
 * `_<property name>`
@@ -28,9 +29,9 @@ ms.locfileid: "87526753"
 
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/BackingField.cs#Sample)]
 
-请注意，仅为模型中包含的属性发现支持字段。 有关模型中包含哪些属性的详细信息，请参阅[包括 & 排除属性](included-properties.md)。
+请注意，仅为模型中包含的属性发现支持字段。 有关模型中包含哪些属性的详细信息，请参阅 [包括 & 排除属性](xref:core/modeling/entity-properties)。
 
-你还可以使用数据批注（在 EFCore 5.0 中提供）或流畅的 API （例如，如果该字段名称与上述约定不对应）来配置支持字段：
+你还可以通过使用 EFCore 5.0) 或流畅 API 中可用的数据批注 (来配置支持字段，例如，如果该字段名称与上述约定不对应：
 
 ### <a name="data-annotations"></a>[数据批注](#tab/data-annotations)
 
@@ -46,14 +47,14 @@ ms.locfileid: "87526753"
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingFieldAccessMode.cs?name=BackingFieldAccessMode&highlight=6)]
 
-有关完整的支持选项集，请参阅[PropertyAccessMode 枚举](/dotnet/api/microsoft.entityframeworkcore.propertyaccessmode)。
+有关完整的支持选项集，请参阅 [PropertyAccessMode 枚举](/dotnet/api/microsoft.entityframeworkcore.propertyaccessmode) 。
 
 > [!NOTE]
 > 使用 EF Core 3.0，默认属性访问模式从更改 `PreferFieldDuringConstruction` 为 `PreferField` 。
 
 ## <a name="field-only-properties"></a>仅限字段的属性
 
-您还可以在您的模型中创建一个概念属性，该属性在实体类中不具有相应的 CLR 属性，而是使用字段来存储实体中的数据。 这不同于[阴影属性](shadow-properties.md)，其中的数据存储在更改跟踪器中，而不是存储在实体的 CLR 类型中。 仅字段属性在实体类使用方法而不是属性来获取/设置值时使用，或者在字段不应在域模型中公开（例如主键）的情况下使用。
+您还可以在您的模型中创建一个概念属性，该属性在实体类中不具有相应的 CLR 属性，而是使用字段来存储实体中的数据。 这不同于 [阴影属性](xref:core/modeling/shadow-properties)，其中的数据存储在更改跟踪器中，而不是存储在实体的 CLR 类型中。 仅字段属性在实体类使用方法而不是属性来获取/设置值时使用，或者在字段不应在域 (模型中公开的情况下使用，例如主键) 。
 
 可以通过在 API 中提供名称来配置仅限字段的属性 `Property(...)` ：
 

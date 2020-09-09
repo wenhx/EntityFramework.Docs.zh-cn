@@ -1,24 +1,26 @@
 ---
 title: 预生成的映射视图-EF6
+description: 实体框架6中预生成的映射视图
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 917ba9c8-6ddf-4631-ab8c-c4fb378c2fcd
-ms.openlocfilehash: 1fda9fe9638adce9b24a6b81aa081effeb0def81
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/fundamentals/performance/pre-generated-views
+ms.openlocfilehash: 8318030603339c45c5c8459db580b7a8de5febda
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78416029"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89615865"
 ---
 # <a name="pre-generated-mapping-views"></a>预生成的映射视图
-在实体框架可以执行查询或将更改保存到数据源之前，它必须生成一组用于访问数据库的映射视图。 这些映射视图是一组实体 SQL 语句，它们以抽象的方式表示数据库，是每个应用程序域缓存的元数据的一部分。 如果在同一个应用程序域中创建同一个上下文的多个实例，则它们将重用缓存的元数据中的映射视图，而不是重新生成它们。 由于映射视图生成是执行第一个查询的总体成本的重要部分，因此实体框架允许您预先生成映射视图，并将它们包含在已编译的项目中。 有关详细信息，请参阅  [性能注意事项（实体框架）](~/ef6/fundamentals/performance/perf-whitepaper.md)。
+在实体框架可以执行查询或将更改保存到数据源之前，它必须生成一组用于访问数据库的映射视图。 这些映射视图是一组实体 SQL 语句，它们以抽象的方式表示数据库，是每个应用程序域缓存的元数据的一部分。 如果在同一个应用程序域中创建同一个上下文的多个实例，则它们将重用缓存的元数据中的映射视图，而不是重新生成它们。 由于映射视图生成是执行第一个查询的总体成本的重要部分，因此实体框架允许您预先生成映射视图，并将它们包含在已编译的项目中。有关详细信息，请参阅  [性能注意事项 (实体框架) ](xref:ef6/fundamentals/performance/perf-whitepaper)。
 
 ## <a name="generating-mapping-views-with-the-ef-power-tools-community-edition"></a>用 EF Power Tools 社区版生成映射视图
 
-预生成视图的最简单方法是使用[EF Power Tools 社区版](https://marketplace.visualstudio.com/items?itemName=ErikEJ.EntityFramework6PowerToolsCommunityEdition)。 安装了 Power Tools 后，将有一个用于生成视图的菜单选项，如下所示。
+预生成视图的最简单方法是使用 [EF Power Tools 社区版](https://marketplace.visualstudio.com/items?itemName=ErikEJ.EntityFramework6PowerToolsCommunityEdition)。 安装了 Power Tools 后，将有一个用于生成视图的菜单选项，如下所示。
 
--   对于**Code First**模型，右键单击包含 DbContext 类的代码文件。
--   对于**EF 设计器**模型，右键单击 EDMX 文件。
+-   对于 **Code First** 模型，右键单击包含 DbContext 类的代码文件。
+-   对于 **EF 设计器** 模型，右键单击 EDMX 文件。
 
 ![生成视图](~/ef6/media/generateviews.png)
 
@@ -33,7 +35,7 @@ ms.locfileid: "78416029"
 生成视图的另一种方法是使用 EF 提供的 Api。 使用此方法时，您可以自由地序列化视图，但您也需要自行加载视图。
 
 > [!NOTE]
-> **EF6 仅向前**-本部分中所示的 api 在实体框架6中引入。 如果你使用的是早期版本，则不会应用此信息。
+> **EF6 仅向前** -本部分中所示的 api 在实体框架6中引入。 如果你使用的是早期版本，则不会应用此信息。
 
 ### <a name="generating-views"></a>生成视图
 

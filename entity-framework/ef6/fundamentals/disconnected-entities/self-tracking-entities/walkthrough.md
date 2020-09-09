@@ -1,22 +1,24 @@
 ---
 title: 自跟踪实体演练-EF6
+description: 实体框架6的自我跟踪实体演练
 author: divega
 ms.date: 10/23/2016
 ms.assetid: b21207c9-1d95-4aa3-ae05-bc5fe300dab0
-ms.openlocfilehash: 9bd644461f50a7eff1006cb8866ca9a3b08b6b8d
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/fundamentals/disconnected-entities/self-tracking-entities/walkthrough
+ms.openlocfilehash: 942baae158d89acec98e70c391f677349148068c
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78416143"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89616149"
 ---
 # <a name="self-tracking-entities-walkthrough"></a>自跟踪实体演练
 > [!IMPORTANT]
 > 我们不再建议使用自跟踪实体模板。 它将仅继续用于支持现有应用程序。 如果应用程序需要使用断开连接的实体图，请考虑其他替代方案，例如[可跟踪实体](https://trackableentities.github.io/)，它与自跟踪实体类似，社区在更积极地开发这种技术，或使用低级别更改跟踪 API 编写自定义代码。
 
-本演练演示了 Windows Communication Foundation （WCF）服务公开返回实体关系图的操作的情况。 接下来，客户端应用程序操作该图并将修改提交给使用实体框架验证和保存数据库更新的服务操作。
+本演练演示了 Windows Communication Foundation (WCF) 服务公开返回实体关系图的操作的情况。 接下来，客户端应用程序操作该图并将修改提交给使用实体框架验证和保存数据库更新的服务操作。
 
-在完成本演练之前，请务必阅读 "[自跟踪实体](index.md)" 页。
+在完成本演练之前，请务必阅读 " [自跟踪实体](xref:ef6/fundamentals/disconnected-entities/self-tracking-entities/index) " 页。
 
 此演练完成以下操作：
 
@@ -25,7 +27,7 @@ ms.locfileid: "78416143"
 -   交换到 "自跟踪实体生成器" 模板。
 -   将实体类移到单独的项目中。
 -   创建一个 WCF 服务，该服务公开用于查询和保存实体的操作。
--   创建使用服务的客户端应用程序（控制台和 WPF）。
+-    (控制台和 WPF) 创建使用该服务的客户端应用程序。
 
 我们将在本演练中使用 Database First，但相同的技术同样适用于 Model First。
 
@@ -43,19 +45,19 @@ ms.locfileid: "78416143"
 接下来，生成数据库。
 
 -   打开 Visual Studio
--   **视图-&gt; 服务器资源管理器**
--   右键单击 "**数据连接-&gt; 添加连接 ...** "
--   如果尚未从服务器资源管理器连接到数据库，则需要选择**Microsoft SQL Server**作为数据源
+-   **视图- &gt; 服务器资源管理器**
+-   右键单击 "**数据连接- &gt; 添加连接 ...** "
+-   如果尚未从服务器资源管理器连接到数据库，则需要选择 **Microsoft SQL Server** 作为数据源
 -   连接到 LocalDB 或 SQL Express，具体取决于你安装的是哪个
--   输入**STESample**作为数据库名称
+-   输入 **STESample** 作为数据库名称
 -   选择 **"确定"** ，系统会询问您是否要创建新数据库，请选择 **"是"**
 -   新数据库现在将出现在服务器资源管理器
 -   如果使用的是 Visual Studio 2012
-    -   在服务器资源管理器中右键单击该数据库，然后选择 "**新建查询**"
+    -   右键单击“服务器资源管理器”中的数据库，然后选择“新建查询”****
     -   将以下 SQL 复制到新的查询中，然后右键单击该查询，然后选择 "**执行**"
 -   如果使用的是 Visual Studio 2010
-    -   选择**数据&gt; Transact-sql 编辑器-&gt; 新建查询连接 ...**
-    -   输入 **。\\SQLEXPRESS**作为服务器名称，然后单击 **"确定"**
+    -   选择 **数据 &gt; Transact-sql SQL 编辑器- &gt; 新建查询连接 ...**
+    -   输入 **。 \\SQLEXPRESS** 作为服务器名称，然后单击 **"确定"**
     -   从 "查询编辑器" 顶部的下拉菜单中选择 " **STESample** " 数据库
     -   将以下 SQL 复制到新的查询中，然后右键单击该查询，然后选择 "**执行 SQL** "。
 
@@ -87,15 +89,15 @@ ms.locfileid: "78416143"
 
 首先，我们需要一个项目来放置模型。
 
--   **文件-&gt;&gt; 项目 .。。**
--   从左窗格中选择 " **Visual C\#** ，**然后选择" 类库 "**
--   输入**STESample**作为名称，然后单击 **"确定"**
+-   **文件- &gt; 新建- &gt; 项目 .。。**
+-   从左窗格中选择 " **Visual C \# ** " **，然后选择 "类库"**
+-   输入 **STESample** 作为名称，然后单击 **"确定"**
 
 现在，我们将在 EF 设计器中创建一个简单的模型来访问数据库：
 
--   **项目-&gt; "添加新项 ..."**
--   从左窗格中选择 "**数据**"，然后**ADO.NET 实体数据模型**
--   输入**BloggingModel**作为名称，然后单击 **"确定"**
+-   **项目- &gt; 添加新项 .。。**
+-   从左窗格中选择 " **数据** "，然后 **ADO.NET 实体数据模型**
+-   输入 **BloggingModel** 作为名称，然后单击 **"确定"**
 -   选择 "**从数据库生成**"，然后单击 "**下一步**"
 -   输入在上一部分中创建的数据库的连接信息
 -   输入 **"bloggingcontext"** 作为连接字符串的名称，然后单击 "**下一步**"
@@ -107,17 +109,17 @@ ms.locfileid: "78416143"
 
 ### <a name="if-you-are-using-visual-studio-2012"></a>如果使用的是 Visual Studio 2012
 
--   展开**解决方案资源管理器**中的**BloggingModel** ，删除**BloggingModel.tt**和**BloggingModel.Context.tt**
-    *这将禁用默认代码生成*
+-   展开**解决方案资源管理器**中的**BloggingModel** ，删除**BloggingModel.tt**和**BloggingModel.Context.tt** 
+     *这将禁用默认代码生成*
 -   右键单击 EF 设计器图面上的空白区域，然后选择 "**添加代码生成项 ...** "
--   从左窗格中选择 "**联机**"，然后搜索**粘贴生成器**
--   选择**粘贴生成器 For C\#** 模板，输入**STETemplate**作为名称，然后单击 "**添加**"
+-   从左窗格中选择 " **联机** "，然后搜索 **粘贴生成器**
+-   选择**用于 C \# 的粘贴生成器**模板，输入**STETemplate**作为名称，然后单击 "**添加**"
 -   **STETemplate.tt**和**STETemplate.Context.tt**文件添加到了 BloggingModel 文件下
 
 ### <a name="if-you-are-using-visual-studio-2010"></a>如果使用的是 Visual Studio 2010
 
 -   右键单击 EF 设计器图面上的空白区域，然后选择 "**添加代码生成项 ...** "
--   从左窗格中选择 "**代码**"，然后**ADO.NET 自跟踪实体生成器**
+-   从左窗格中选择 " **代码** "，然后 **ADO.NET 自跟踪实体生成器**
 -   输入**STETemplate**作为名称，然后单击 "**添加**"
 -   **STETemplate.tt**和**STETemplate.Context.tt**文件会直接添加到你的项目
 
@@ -133,13 +135,13 @@ ms.locfileid: "78416143"
 
 接下来，我们将添加一个新项目，并在其中生成实体类
 
--   **文件-&gt; 添加&gt; 项目 .。。**
--   从左窗格中选择 " **Visual C\#** ，**然后选择" 类库 "**
--   输入**STESample**作为名称，然后单击 **"确定"**
--   **项目-&gt; 添加现有项 .。。**
--   导航到**STESample**项目文件夹
--   选择查看**所有文件（\*\*）**
--   选择**STETemplate.tt**文件
+-   **文件- &gt; 添加 &gt; 项目 .。。**
+-   从左窗格中选择 " **Visual C \# ** " **，然后选择 "类库"**
+-   输入 **STESample** 作为名称，然后单击 **"确定"**
+-   **项目- &gt; 添加现有项 .。。**
+-   导航到 **STESample** 项目文件夹
+-   选择 (查看 **所有文件 \* 。 \*) **
+-   选择 **STETemplate.tt** 文件
 -   单击 "**添加**" 按钮旁边的下拉箭头，然后选择 "**添加为链接**"。
 
     ![添加链接模板](~/ef6/media/addlinkedtemplate.png)
@@ -147,9 +149,9 @@ ms.locfileid: "78416143"
 我们还将确保在上下文相同的命名空间中生成实体类。 这只是减少了我们需要在应用程序中添加的 using 语句的数量。
 
 -   在**解决方案资源管理器**中右键单击链接的**STETemplate.tt** ，然后选择 "**属性**"
--   在 "**属性**" 窗口中，将**自定义工具命名空间**设置为**STESample**
+-   在 " **属性** " 窗口中，将 **自定义工具命名空间** 设置为 **STESample**
 
-粘贴模板生成的代码将需要引用 system.exception**才能进行编译**。 在可序列化实体类型上使用的 WCF **DataContract**和**DataMember**特性需要此库。
+粘贴模板生成的代码将需要引用 system.exception **才能进行编译** 。 在可序列化实体类型上使用的 WCF **DataContract** 和 **DataMember** 特性需要此库。
 
 -   右键单击**解决方案资源管理器**中的**STESample**项目，然后选择 "**添加引用 ...** "
     -   在 Visual Studio 2012 中，选中 " **system.web** " 旁边的框，然后单击 **"确定"**
@@ -158,30 +160,30 @@ ms.locfileid: "78416143"
 最后，具有中的上下文的项目将需要对实体类型的引用。
 
 -   在**解决方案资源管理器**中右键单击 " **STESample** " 项目，然后选择 "**添加引用 ...** "
-    -   在 Visual Studio 2012 中，从左窗格中选择 "**解决方案**"，选中 " **STESample** " 旁边的框，然后单击 **"确定"**
-    -   在 Visual Studio 2010 中，选择 "**项目**" 选项卡，选择 " **STESample** "，然后单击 **"确定"**
+    -   在 Visual Studio 2012 中，从左窗格中选择 " **解决方案** "，选中 " **STESample** " 旁边的框，然后单击 **"确定"**
+    -   在 Visual Studio 2010 中，选择 " **项目** " 选项卡，选择 " **STESample** "，然后单击 **"确定"**
 
 >[!NOTE]
-> 将实体类型移动到单独的项目的另一种方法是移动模板文件，而不是将其链接到其默认位置。 如果执行此操作，则需要更新模板中的**inputFile**变量，以提供 edmx 文件的相对路径（在本示例中，为 **..\\BloggingModel**）。
+> 将实体类型移动到单独的项目的另一种方法是移动模板文件，而不是将其链接到其默认位置。 如果执行此操作，则需要更新模板中的 **inputFile** 变量，以提供此示例中的 edmx 文件 (相对路径，该路径为 **。 \\BloggingModel**) 。
 
 ## <a name="create-a-wcf-service"></a>创建 WCF 服务
 
 现在是时候添加 WCF 服务来公开数据，接下来我们将创建该项目。
 
--   **文件-&gt; 添加&gt; 项目 .。。**
--   从左窗格中选择 " **Visual C\#** ，然后选择" **WCF 服务应用程序**"
--   输入**STESample**作为名称，然后单击 **"确定"**
--   添加对**system.web**程序集的引用
--   添加对**STESample**和**STESample**项目的引用
+-   **文件- &gt; 添加 &gt; 项目 .。。**
+-   从左窗格中选择 " **Visual C \# ** "，然后选择 " **WCF 服务应用程序**"
+-   输入 **STESample** 作为名称，然后单击 **"确定"**
+-   添加对 **system.web** 程序集的引用
+-   添加对 **STESample** 和 **STESample** 项目的引用
 
 需要将 EF 连接字符串复制到此项目中，以便在运行时找到它。
 
--   打开 **STESample **项目的**app.config**文件并复制**connectionStrings**元素
--   在**STESample**项目中，将**connectionStrings**元素粘贴为**web.config**文件的**configuration**元素的子元素
+-   打开 **STESample **项目的**App.Config**文件，并复制**connectionStrings**元素
+-   将**connectionStrings**元素粘贴为**STESample**项目中**Web.Config**文件的**configuration**元素的子元素
 
 现在是时候实现实际服务了。
 
--   打开**IService1.cs**并将内容替换为以下代码
+-   打开 **IService1.cs** 并将内容替换为以下代码
 
 ``` csharp
     using System.Collections.Generic;
@@ -201,7 +203,7 @@ ms.locfileid: "78416143"
     }
 ```
 
--   打开**Service1**并将内容替换为以下代码
+-   打开 **Service1** 并将内容替换为以下代码
 
 ``` csharp
     using System;
@@ -258,20 +260,20 @@ ms.locfileid: "78416143"
 
 让我们创建一个使用我们的服务的控制台应用程序。
 
--   **文件-&gt;&gt; 项目 .。。**
--   从左窗格中选择 " **Visual C\#** ，然后选择"**控制台应用程序**"
--   输入**STESample**作为名称，然后单击 **"确定"**
--   添加对**STESample**项目的引用
+-   **文件- &gt; 新建- &gt; 项目 .。。**
+-   从左窗格中选择 " **Visual C \# ** "，然后选择 "**控制台应用程序**"
+-   输入 **STESample** 作为名称，然后单击 **"确定"**
+-   添加对 **STESample** 项目的引用
 
 我们需要对 WCF 服务的服务引用
 
 -   在**解决方案资源管理器**中右键单击 " **ConsoleTest** " 项目，然后选择 "**添加服务引用 ...**
--   单击**发现**
--   输入**BloggingService**作为命名空间，然后单击 **"确定"**
+-   单击 **发现**
+-   输入 **BloggingService** 作为命名空间，然后单击 **"确定"**
 
 现在，我们可以编写一些代码来使用该服务。
 
--   打开**Program.cs**并将内容替换为以下代码。
+-   打开 **Program.cs** 并将内容替换为以下代码。
 
 ``` csharp
     using STESample.ConsoleTest.BloggingService;
@@ -400,7 +402,7 @@ ms.locfileid: "78416143"
 
 现在可以运行应用程序来查看其实际运行情况。
 
--   在**解决方案资源管理器**中右键单击 " **ConsoleTest** " 项目，然后选择 "**调试-&gt; 启动新实例**"
+-   在**解决方案资源管理器**中右键单击 " **ConsoleTest** " 项目，然后选择 "调试" **-" &gt; 启动新实例**"
 
 当应用程序执行时，将看到以下输出。
 
@@ -438,20 +440,20 @@ Press any key to exit...
 
 让我们创建一个使用我们的服务的 WPF 应用程序。
 
--   **文件-&gt;&gt; 项目 .。。**
--   从左窗格中选择 " **Visual C\#** ，然后选择" **WPF 应用程序**"
--   输入**STESample**作为名称，然后单击 **"确定"**
--   添加对**STESample**项目的引用
+-   **文件- &gt; 新建- &gt; 项目 .。。**
+-   从左窗格中选择 " **Visual C \# ** "，然后选择 " **WPF 应用程序**"
+-   输入 **STESample** 作为名称，然后单击 **"确定"**
+-   添加对 **STESample** 项目的引用
 
 我们需要对 WCF 服务的服务引用
 
 -   在**解决方案资源管理器**中右键单击 " **WPFTest** " 项目，然后选择 "**添加服务引用 ...**
--   单击**发现**
--   输入**BloggingService**作为命名空间，然后单击 **"确定"**
+-   单击 **发现**
+-   输入 **BloggingService** 作为命名空间，然后单击 **"确定"**
 
 现在，我们可以编写一些代码来使用该服务。
 
--   打开**mainwindow.xaml**并将内容替换为以下代码。
+-   打开 **mainwindow.xaml** 并将内容替换为以下代码。
 
 ``` xaml
     <Window
@@ -495,7 +497,7 @@ Press any key to exit...
     </Window>
 ```
 
--   打开 Mainwindow.xaml （**MainWindow.xaml.cs**）的隐藏代码，并将内容替换为以下代码
+-   打开 Mainwindow.xaml () **MainWindow.xaml.cs** 的隐藏代码，并将内容替换为以下代码
 
 ``` csharp
     using STESample.WPFTest.BloggingService;
@@ -549,7 +551,7 @@ Press any key to exit...
 
 现在可以运行应用程序来查看其实际运行情况。
 
--   在**解决方案资源管理器**中右键单击 " **WPFTest** " 项目，然后选择 "**调试-&gt; 启动新实例**"
--   你可以使用屏幕操作数据，并使用 "**保存**" 按钮通过服务保存数据
+-   在**解决方案资源管理器**中右键单击 " **WPFTest** " 项目，然后选择 "调试" **-" &gt; 启动新实例**"
+-   你可以使用屏幕操作数据，并使用 " **保存** " 按钮通过服务保存数据
 
 ![WPF 主窗口](~/ef6/media/wpf.png)

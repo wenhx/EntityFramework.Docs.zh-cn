@@ -1,22 +1,24 @@
 ---
 title: 提供程序对空间类型的支持-EF6
+description: 提供程序支持实体框架6中的空间类型
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 1097cb00-15f5-453d-90ed-bff9403d23e3
-ms.openlocfilehash: 863f1b4551bd62160915eba90fee7ba6c49c169c
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/fundamentals/providers/spatial-support
+ms.openlocfilehash: 060d662aa8f03ea3510bd6b1fb7bdf904585efab
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78413893"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89615794"
 ---
 # <a name="provider-support-for-spatial-types"></a>提供程序对空间类型的支持
 实体框架支持通过 DbGeography 或 DbGeometry 类处理空间数据。 这些类依赖于由实体框架提供程序提供的数据库特定功能。 并非所有提供程序都支持空间数据，其中可能有其他先决条件，如安装空间类型程序集。 下面提供了有关为空间类型提供程序支持的详细信息。  
 
 有关如何在应用程序中使用空间类型的其他信息，请参阅两个演练，一个用于 Code First，另一个用于 Database First 或 Model First：  
 
-- [Code First 中的空间数据类型](~/ef6/modeling/code-first/data-types/spatial.md)  
-- [EF 设计器中的空间数据类型](~/ef6/modeling/designer/data-types/spatial.md)  
+- [Code First 中的空间数据类型](xref:ef6/modeling/code-first/data-types/spatial)  
+- [EF 设计器中的空间数据类型](xref:ef6/modeling/designer/data-types/spatial)  
 
 ## <a name="ef-releases-that-support-spatial-types"></a>支持空间类型的 EF 版本  
 
@@ -52,8 +54,8 @@ EF5 中引入了对空间类型的支持。 但是，仅当应用程序在 .NET 
 
 ## <a name="prerequisites-for-spatial-types-with-microsoft-sql-server"></a>具有 Microsoft SQL Server 的空间类型的先决条件  
 
-SQL Server 空间支持取决于低级别、SQL Server 特定类型 SqlGeography 和 SqlGeometry。 这些类型存在于 mscorlib.dll 程序集中，并且此程序集不作为 EF 的一部分或作为 .NET Framework 的一部分。  
+SQL Server 空间支持取决于低级别、SQL Server 特定类型 SqlGeography 和 SqlGeometry。 这些类型存在于 Microsoft.SqlServer.Types.dll 程序集中，并且此程序集不作为 EF 的一部分或作为 .NET Framework 的一部分。  
 
-安装 Visual Studio 时，它通常还会安装 SQL Server 的版本，这将包括安装 Microsoft。  
+安装 Visual Studio 时，它通常还会安装 SQL Server 的版本，这将包括 Microsoft.SqlServer.Types.dll 的安装。  
 
-如果 SQL Server 未安装在要使用空间类型的计算机上，或者如果从 SQL Server 安装中排除了空间类型，则需要手动安装它们。 可以使用 `SQLSysClrTypes.msi`（这是 Microsoft SQL Server 功能包的一部分）安装类型。 空间类型 SQL Server 特定于版本，因此我们建议在 Microsoft 下载中心[搜索 "SQL Server 功能包"](https://www.microsoft.com/search/result.aspx?q=sql+server+feature+pack) ，然后选择和下载与将使用的 SQL Server 版本相对应的选项。
+如果 SQL Server 未安装在要使用空间类型的计算机上，或者如果从 SQL Server 安装中排除了空间类型，则需要手动安装它们。 类型可以使用安装 `SQLSysClrTypes.msi` ，这是 Microsoft SQL Server 功能包的一部分。 空间类型 SQL Server 特定于版本，因此我们建议在 Microsoft 下载中心 [搜索 "SQL Server 功能包"](https://www.microsoft.com/search/result.aspx?q=sql+server+feature+pack) ，然后选择和下载与将使用的 SQL Server 版本相对应的选项。

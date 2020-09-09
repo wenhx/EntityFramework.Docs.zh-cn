@@ -1,15 +1,16 @@
 ---
 title: 在具有相同 DbContext 类型的多个模型之间交替-EF Core
+description: 使用 Entity Framework Core 在具有相同 DbContext 类型的多个模型之间交替
 author: AndriySvyryd
 ms.date: 01/03/2020
 ms.assetid: 3154BF3C-1749-4C60-8D51-AE86773AA116
 uid: core/modeling/dynamic-model
-ms.openlocfilehash: 35743b5ba87bb4239d7f758320f9facccc74330f
-ms.sourcegitcommit: 92d54fe3702e0c92e198334da22bacb42e9842b1
+ms.openlocfilehash: 436cb46e002438f391c654b64efdfacf494d580d
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/10/2020
-ms.locfileid: "84664216"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89617528"
 ---
 # <a name="alternating-between-multiple-models-with-the-same-dbcontext-type"></a>在具有相同 DbContext 类型的多个模型之间交替
 
@@ -31,4 +32,4 @@ EF 使用 `IModelCacheKeyFactory` 来生成模型的缓存键; 默认情况下�
 
 [!code-csharp[Main](../../../samples/core/Modeling/DynamicModel/DynamicContext.cs?name=OnConfiguring)]
 
-有关更多上下文，请参阅[完整的示例项目](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Modeling/DynamicModel)。
+有关更多上下文，请参阅 [完整的示例项目](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Modeling/DynamicModel) 。
