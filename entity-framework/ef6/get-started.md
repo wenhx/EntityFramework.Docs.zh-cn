@@ -1,15 +1,16 @@
 ---
 title: 开始使用 Entity Framework 6 - EF6
+description: 开始使用 Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 66ce9113-81d2-480f-8c16-d00ec405b2f7
 uid: ef6/get-started
-ms.openlocfilehash: 729dea2c474c35f638ccaf6673550f76e88e2667
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: a03fa403bedc260def3f8110a028e972824cb756
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "80136271"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89618204"
 ---
 # <a name="get-started-with-entity-framework-6"></a>开始使用 Entity Framework 6
 
@@ -17,22 +18,22 @@ ms.locfileid: "80136271"
 
 ## <a name="fundamentals"></a>基础知识
 
-* [获取 Entity Framework](~/ef6/fundamentals/install.md)
+* [获取实体框架](xref:ef6/fundamentals/install)
 
   此处可学习如何将 Entity Framework 添加到应用程序。如果要使用 EF 设计器，请确保在 Visual Studio 中安装它。
 
-* [创建模型：Code First、EF 设计器和 EF 工作流](~/ef6/modeling/index.md)
+* [创建模型：Code First、EF 设计器和 EF 工作流](xref:ef6/modeling/index)
 
   是否希望指定 EF 模型编写代码或绘制方框和线条？
 是否要使用 EF 来将对象映射到现有数据库，或希望 EF 创建为对象量身打造的数据库？
 本文介绍了使用 EF6 的两种不同方法：EF 设计器和 Code First。
 请确保关注讨论内容并查看有关不同之处的视频。
 
-* [使用 DbContext](~/ef6/fundamentals/working-with-dbcontext.md)
+* [使用 DbContext](xref:ef6/fundamentals/working-with-dbcontext)
 
   DbContext 是需要学习其使用方法的第一个也是最重要的一个 EF 类型。 它可用作数据库查询的启动板，并可跟踪对对象作出的更改，以便持续存回数据库。
 
-* [提出问题](~/ef6/resources/get-help.md)
+* [提出问题](xref:ef6/resources/get-help)
 
   了解如何获取专家的帮助，并向社区贡献自己的答案。
 
@@ -42,32 +43,32 @@ ms.locfileid: "80136271"
 
 ## <a name="code-first-resources"></a>Code First 资源
 
-  - [对现有数据库工作流采用 Code First](~/ef6/modeling/code-first/workflows/existing-database.md)
-  - [对新的数据库工作流采用 Code First](~/ef6/modeling/code-first/workflows/new-database.md)
-  - [使用 Code First 映射枚举](~/ef6/modeling/code-first/data-types/enums.md)
-  - [使用 Code First 映射空间类型](~/ef6/modeling/code-first/data-types/spatial.md)
-  - [编写自定义 Code First 约定](~/ef6/modeling/code-first/conventions/custom.md)
-  - [将 Code First Fluent 配置与 Visual Basic 配合使用](~/ef6/modeling/code-first/fluent/vb.md)
-  - [Code First 迁移](~/ef6/modeling/code-first/migrations/index.md)
-  - [团队环境中的 Code First 迁移](~/ef6/modeling/code-first/migrations/teams.md)
-  - [自动 Code First 迁移](~/ef6/modeling/code-first/migrations/automatic.md)（不再推荐）
+  - [对现有数据库工作流采用 Code First](xref:ef6/modeling/code-first/workflows/existing-database)
+  - [对新的数据库工作流采用 Code First](xref:ef6/modeling/code-first/workflows/new-database)
+  - [使用 Code First 映射枚举](xref:ef6/modeling/code-first/data-types/enums)
+  - [使用 Code First 映射空间类型](xref:ef6/modeling/code-first/data-types/spatial)
+  - [编写自定义 Code First 约定](xref:ef6/modeling/code-first/conventions/custom)
+  - [将 Code First Fluent 配置与 Visual Basic 配合使用](xref:ef6/modeling/code-first/fluent/vb)
+  - [Code First 迁移](xref:ef6/modeling/code-first/migrations/index)
+  - [团队环境中的 Code First 迁移](xref:ef6/modeling/code-first/migrations/teams)
+  - [自动 Code First 迁移](xref:ef6/modeling/code-first/migrations/automatic)（不再推荐）
 
 ## <a name="ef-designer-resources"></a>EF 设计器资源
-  - [Database First 工作流](~/ef6/modeling/designer/workflows/database-first.md)
-  - [Model First 工作流](~/ef6/modeling/designer/workflows/model-first.md)
-  - [映射枚举](~/ef6/modeling/designer/data-types/enums.md)
-  - [映射空间类型](~/ef6/modeling/designer/data-types/spatial.md)
-  - [每个层次结构一张表继承映射](~/ef6/modeling/designer/inheritance/tph.md)
-  - [每个类型一张表继承映射](~/ef6/modeling/designer/inheritance/tpt.md)
-  - [用于更新的存储过程映射](~/ef6/modeling/designer/stored-procedures/cud.md)
-  - [用于查询的存储过程映射](~/ef6/modeling/designer/stored-procedures/query.md)
-  - [实体拆分](~/ef6/modeling/designer/entity-splitting.md)
-  - [表拆分](~/ef6/modeling/designer/table-splitting.md)
-  - [定义查询](~/ef6/modeling/designer/advanced/defining-query.md)（高级）
-  - [表值函数](~/ef6/modeling/designer/advanced/tvfs.md)（高级）
+  - [Database First 工作流](xref:ef6/modeling/designer/workflows/database-first)
+  - [Model First 工作流](xref:ef6/modeling/designer/workflows/model-first)
+  - [映射枚举](xref:ef6/modeling/designer/data-types/enums)
+  - [映射空间类型](xref:ef6/modeling/designer/data-types/spatial)
+  - [每个层次结构一张表继承映射](xref:ef6/modeling/designer/inheritance/tph)
+  - [每个类型一张表继承映射](xref:ef6/modeling/designer/inheritance/tpt)
+  - [用于更新的存储过程映射](xref:ef6/modeling/designer/stored-procedures/cud)
+  - [用于查询的存储过程映射](xref:ef6/modeling/designer/stored-procedures/query)
+  - [实体拆分](xref:ef6/modeling/designer/entity-splitting)
+  - [表拆分](xref:ef6/modeling/designer/table-splitting)
+  - [定义查询](xref:ef6/modeling/designer/advanced/defining-query)（高级）
+  - [表值函数](xref:ef6/modeling/designer/advanced/tvfs)（高级）
 
 ## <a name="other-resources"></a>其他资源
-  - [异步查询和保存](~/ef6/fundamentals/async.md)
-  - [使用 WinForms 进行数据绑定](~/ef6/fundamentals/databinding/winforms.md)
-  - [使用 WPF 进行数据绑定](~/ef6/fundamentals/databinding/wpf.md)
-  - [使用自跟踪实体的断开连接的方案](~/ef6/fundamentals/disconnected-entities/self-tracking-entities/walkthrough.md)（不再推荐）
+  - [异步查询和保存](xref:ef6/fundamentals/async)
+  - [使用 WinForms 进行数据绑定](xref:ef6/fundamentals/databinding/winforms)
+  - [使用 WPF 进行数据绑定](xref:ef6/fundamentals/databinding/wpf)
+  - [使用自跟踪实体的断开连接的方案](xref:ef6/fundamentals/disconnected-entities/self-tracking-entities/walkthrough)（不再推荐）

@@ -4,12 +4,12 @@ description: EF Core 5.0 中的新功能概述
 author: ajcvickers
 ms.date: 07/20/2020
 uid: core/what-is-new/ef-core-5.0/whatsnew
-ms.openlocfilehash: f822e3ae776778749a654377cbd9d9814ca40972
-ms.sourcegitcommit: 12d257db4786487a0c28e9ddd79f176f7cf6edb1
+ms.openlocfilehash: b4551a3c593694b104a750d500d81eb170a83dc0
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/28/2020
-ms.locfileid: "89043592"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89618596"
 ---
 # <a name="whats-new-in-ef-core-50"></a>EF Core 5.0 中的新增功能
 
@@ -41,7 +41,7 @@ public class Pet : Animal
 
 public class Cat : Pet
 {
-    public string EdcuationLevel { get; set; }
+    public string EducationLevel { get; set; }
 }
 
 public class Dog : Pet
@@ -492,7 +492,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 ### <a name="savepoints"></a>保存点
 
-EF Core 现支持[保存点](/SQL/t-sql/language-elements/save-transaction-transact-sql?view=sql-server-ver15#remarks)，它们可更好地控制执行多个操作的事务。
+EF Core 现支持[保存点](/sql/t-sql/language-elements/save-transaction-transact-sql#remarks)，它们可更好地控制执行多个操作的事务。
 
 你可手动创建、发布和回滚保存点。 例如：
 
@@ -738,7 +738,7 @@ dotnet ef dbcontext scaffold "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog
 Scaffold-DbContext 'Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook' Microsoft.EntityFrameworkCore.SqlServer -NoOnConfiguring
 ```
 
-请注意，建议使用[命名的连接字符串和安全存储（如用户机密）](/core/managing-schemas/scaffolding?tabs=vs#configuration-and-user-secrets)。
+请注意，建议使用[命名的连接字符串和安全存储（如用户机密）](xref:core/managing-schemas/scaffolding#configuration-and-user-secrets)。
 
 ### <a name="translations-for-firstordefault-on-strings"></a>转换字符串中的 FirstOrDefault
 
@@ -846,7 +846,7 @@ WHERE [u].[Name] COLLATE French_CI_AS = N'Jean-Michel Jarre'
 
 ### <a name="flow-arguments-into-idesigntimedbcontextfactory"></a>将参数传输到 IDesignTimeDbContextFactory
 
-参数现从命令行传输到 [IDesignTimeDbContextFactory](/dotnet/api/microsoft.entityframeworkcore.design.idesigntimedbcontextfactory-1?view=efcore-3.1) 的 `CreateDbContext` 方法。 例如，若要指明这是开发生成，可以在命令行上传递自定义参数（例如 `dev`）：
+参数现从命令行传输到 [IDesignTimeDbContextFactory](/dotnet/api/microsoft.entityframeworkcore.design.idesigntimedbcontextfactory-1) 的 `CreateDbContext` 方法。 例如，若要指明这是开发生成，可以在命令行上传递自定义参数（例如 `dev`）：
 
 ```
 dotnet ef migrations add two --verbose --dev
@@ -968,7 +968,7 @@ modelBuilder.Entity<Blog>().Navigation(e => e.Posts).HasField("_myposts");
 
 迁移和基架现在允许在命令行上指定命名空间。 例如，如需对数据库进行反向工程，将上下文和模型类放在不同的命名空间中：
 
-```
+```dotnetcli
 dotnet ef dbcontext scaffold "connection string" Microsoft.EntityFrameworkCore.SqlServer --context-namespace "My.Context" --namespace "My.Model"
 ```
 
@@ -977,7 +977,7 @@ dotnet ef dbcontext scaffold "connection string" Microsoft.EntityFrameworkCore.S
 ---
 此外，连接字符串现在可以传递到 `database-update` 命令：
 
-```
+```dotnetcli
 dotnet ef database update --connection "connection string"
 ```
 
@@ -992,6 +992,7 @@ dotnet ef database update --connection "connection string"
 使用 `EnableDetailedErrors` 会将额外的 null 检查添加到查询中，这样一来，对于较小的性能开销，这些错误就更容易追溯到根本原因。
 
 例如：
+
 ```CSharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder
@@ -1017,6 +1018,7 @@ await context.Set<Customer>()
 ### <a name="support-for-the-sql-server-datalength-function"></a>支持 SQL Server DATALENGTH 函数
 
 可以使用新的 `EF.Functions.DataLength` 方法访问它。 例如：
+
 ```CSharp
 var count = context.Orders.Count(c => 100 < EF.Functions.DataLength(c.OrderDate));
 ```
@@ -1047,7 +1049,7 @@ public class Blog
 
 ### <a name="complete-discriminator-mapping"></a>完成鉴别器映射
 
-EF Core 使用鉴别器列进行 [继承层次结构的 TPH 映射](/ef/core/modeling/inheritance)。 只要 EF Core 知道该鉴别器的所有可能的值，就可能实现某些性能改进。 EF Core 5.0 现在可实现这些改进。
+EF Core 使用鉴别器列进行 [继承层次结构的 TPH 映射](xref:core/modeling/inheritance)。 只要 EF Core 知道该鉴别器的所有可能的值，就可能实现某些性能改进。 EF Core 5.0 现在可实现这些改进。
 
 例如，对于返回层次结构中所有类型的查询，旧版 EF Core 总是会生成以下 SQL：
 
@@ -1117,7 +1119,7 @@ public class Address
 
 ### <a name="change-tracking-proxies"></a>更改跟踪代理
 
-EF Core 现在可以生成自动实现 [INotifyPropertyChanging](/dotnet/api/system.componentmodel.inotifypropertychanging?view=netcore-3.1) 和 [INotifyPropertyChanged](/dotnet/api/system.componentmodel.inotifypropertychanged?view=netcore-3.1) 的运行时代理。 这些代理会将实体属性的值更改直接报告给 EF Core，从而无需扫描更改。 不过，代理有其自身的一组限制，因此并不适合所有人使用。
+EF Core 现在可以生成自动实现 [INotifyPropertyChanging](/dotnet/api/system.componentmodel.inotifypropertychanging) 和 [INotifyPropertyChanged](/dotnet/api/system.componentmodel.inotifypropertychanged) 的运行时代理。 这些代理会将实体属性的值更改直接报告给 EF Core，从而无需扫描更改。 不过，代理有其自身的一组限制，因此并不适合所有人使用。
 
 文档可通过问题 [#2076](https://github.com/dotnet/EntityFramework.Docs/issues/2076) 进行跟踪。
 
@@ -1175,7 +1177,7 @@ Azure Cosmos DB 数据库提供程序现在支持使用 ETag 的开放式并发�
 builder.Entity<Customer>().Property(c => c.ETag).IsEtagConcurrency();
 ```
 
-然后，SaveChanges 将在并发冲突上引发 `DbUpdateConcurrencyException`，[可以处理](/ef/core/saving/concurrency)它来实现重试等。
+然后，SaveChanges 将在并发冲突上引发 `DbUpdateConcurrencyException`，[可以处理](xref:core/saving/concurrency)它来实现重试等。
 
 文档可通过问题 [#2099](https://github.com/dotnet/EntityFramework.Docs/issues/2099) 进行跟踪。
 
