@@ -5,12 +5,12 @@ author: AndriySvyryd
 ms.author: ansvyryd
 ms.date: 11/05/2019
 uid: core/providers/cosmos/index
-ms.openlocfilehash: 74284bf78f404e376436a1ef5d5933186c85ae49
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: 0d88e0a4876755656626621fd9a4ca01d18b5b64
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "78413052"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89619312"
 ---
 # <a name="ef-core-azure-cosmos-db-provider"></a>EF Core Azure Cosmos DB Provider
 
@@ -54,7 +54,7 @@ Install-Package Microsoft.EntityFrameworkCore.Cosmos
 > [!WARNING]
 > 为了简单起见，此处对终结点和密钥进行了硬编码，但在生产应用中，应[安全地存储](/aspnet/core/security/app-secrets#secret-manager)这些终结点和密钥。
 
-在本例中，`Order` 是一个简单实体，其中包含对[从属类型](../../modeling/owned-entities.md) `StreetAddress` 的引用。
+在此示例中，`Order` 是一个简单实体，其中包含对[从属类型](xref:core/modeling/owned-entities) `StreetAddress` 的引用。
 
 [!code-csharp[Order](../../../../samples/core/Cosmos/ModelBuilding/Order.cs?name=Order)]
 
@@ -65,7 +65,7 @@ Install-Package Microsoft.EntityFrameworkCore.Cosmos
 [!code-csharp[HelloCosmos](../../../../samples/core/Cosmos/ModelBuilding/Sample.cs?name=HelloCosmos)]
 
 > [!IMPORTANT]
-> 要创建所需的容器并插入[种子数据](../../modeling/data-seeding.md)（如果存在于模型中），则需要调用 [EnsureCreatedAsync](/dotnet/api/Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureCreatedAsync)。 但是只应在部署期间调用 `EnsureCreatedAsync`，而不应在正常操作中调用，否则可能会导致性能问题。
+> 要创建所需的容器并插入[种子数据](xref:core/modeling/data-seeding)（如果存在于模型中），则需要调用 [EnsureCreatedAsync](/dotnet/api/Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureCreatedAsync)。 但是只应在部署期间调用 `EnsureCreatedAsync`，而不应在正常操作中调用，否则可能会导致性能问题。
 
 ## <a name="cosmos-specific-model-customization"></a>特定于 Cosmos 的模型自定义
 
@@ -77,7 +77,7 @@ Install-Package Microsoft.EntityFrameworkCore.Cosmos
 
 [!code-csharp[Container](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=Container)]
 
-为了标识给定项表示的实体类型，EF Core 添加鉴别器值（即使没有派生实体类型）。 [可以更改](../../modeling/inheritance.md)鉴别器的名称和值。
+为了标识给定项表示的实体类型，EF Core 添加鉴别器值（即使没有派生实体类型）。 [可以更改](xref:core/modeling/inheritance)鉴别器的名称和值。
 
 如果其他实体类型永远不会存储在同一个容器中，则可以通过调用 [HasNoDiscriminator](/dotnet/api/Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder.HasNoDiscriminator) 删除鉴别器：
 
@@ -164,7 +164,7 @@ Install-Package Microsoft.EntityFrameworkCore.Cosmos
 
 ## <a name="working-with-disconnected-entities"></a>使用断开连接的实体
 
-每个项都需要具有一个对于给定分区键唯一的 `id` 值。 默认情况下 EF Core 通过使用 '|' 作为分隔符串联鉴别器和主键值来生成值。 仅当实体进入 `Added` 状态时才生成键值。 如果[附加实体](../../saving/disconnected-entities.md)在 .NET 类型上没有用于存储值的 `id` 属性，则这可能会导致问题。
+每个项都需要具有一个对于给定分区键唯一的 `id` 值。 默认情况下 EF Core 通过使用 '|' 作为分隔符串联鉴别器和主键值来生成值。 仅当实体进入 `Added` 状态时才生成键值。 如果[附加实体](xref:core/saving/disconnected-entities)在 .NET 类型上没有用于存储值的 `id` 属性，则这可能会导致问题。
 
 要解决此限制，可以手动创建并设置 `id` 值，或者先将实体标记为已添加，然后将其更改为所需状态：
 
