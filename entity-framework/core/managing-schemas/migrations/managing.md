@@ -1,19 +1,20 @@
 ---
 title: 管理迁移-EF Core
+description: 添加、删除和管理 Entity Framework Core 的数据库架构迁移
 author: bricelam
 ms.author: bricelam
 ms.date: 05/06/2020
 uid: core/managing-schemas/migrations/managing
-ms.openlocfilehash: 2097d3cc9232d448191dbebbe3d14d86e80b91fe
-ms.sourcegitcommit: 949faaba02e07e44359e77d7935f540af5c32093
+ms.openlocfilehash: 366824cecab57a0f1744fa58cc12e5d3f6675723
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/03/2020
-ms.locfileid: "87526428"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89617963"
 ---
 # <a name="managing-migrations"></a>管理迁移
 
-当模型发生更改时，将在正常开发过程中添加和删除迁移，并将迁移文件签入项目的源代码管理。 若要管理迁移，必须首先安装[EF Core 命令行工具](xref:core/miscellaneous/cli/index)。
+当模型发生更改时，将在正常开发过程中添加和删除迁移，并将迁移文件签入项目的源代码管理。 若要管理迁移，必须首先安装 [EF Core 命令行工具](xref:core/miscellaneous/cli/index)。
 
 > [!TIP]
 > 如果 `DbContext` 与启动项目位于不同程序集中，可以在[包管理器控制台工具](xref:core/miscellaneous/cli/powershell#target-and-startup-project)或 [.NET Core CLI 工具](xref:core/miscellaneous/cli/dotnet#target-project-and-startup-project)中显式指定目标和启动项目。
@@ -36,7 +37,7 @@ Add-Migration AddBlogCreatedTimestamp
 
 ***
 
-迁移名称的用途与版本控制系统中的提交消息类似。 例如，如果更改是实体上的新属性，则可以选择名称（如*AddBlogCreatedTimestamp* ） `CreatedTimestamp` `Blog` 。
+迁移名称的用途与版本控制系统中的提交消息类似。 例如，如果更改是实体上的新属性，则可以选择名称（如 *AddBlogCreatedTimestamp* ） `CreatedTimestamp` `Blog` 。
 
 向**Migrations**目录下的项目添加以下三个文件：
 
@@ -83,7 +84,7 @@ migrationBuilder.AddColumn<string>(
     nullable: true);
 ```
 
-EF Core 通常无法知道何时要删除某一列并创建一个新列（两个不同的更改）以及何时应重命名列。 如果以上迁移按原样应用，则所有客户名称都将丢失。 若要重命名列，请将上面生成的迁移替换为以下内容：
+EF Core 通常无法知道何时要删除某一列，并创建一个新的 (两个不同的更改) ，以及应重命名列。 如果以上迁移按原样应用，则所有客户名称都将丢失。 若要重命名列，请将上面生成的迁移替换为以下内容：
 
 ```c#
 migrationBuilder.RenameColumn(
@@ -198,11 +199,11 @@ dotnet ef migrations list
 
 ## <a name="resetting-all-migrations"></a>正在重置所有迁移
 
-在某些极端情况下，可能需要删除所有迁移并重新开始。 这可以通过删除**迁移**文件夹并删除数据库来轻松完成;此时，你可以创建新的初始迁移，其中将包含整个当前架构。
+在某些极端情况下，可能需要删除所有迁移并重新开始。 这可以通过删除 **迁移** 文件夹并删除数据库来轻松完成;此时，你可以创建新的初始迁移，其中将包含整个当前架构。
 
 还可以重置所有迁移并创建单个迁移，而不会丢失数据。 这有时称为 "squashing"，包括一些手动工作：
 
-* 删除**迁移**文件夹
+* 删除 **迁移** 文件夹
 * 创建新迁移并为其生成 SQL 脚本
 * 在数据库中，删除迁移历史记录表中的所有行
 * 将单个行插入到迁移历史记录中，记录已应用的第一个迁移，因为表已经存在。 Insert SEQL 是上面生成的 SQL 脚本中的最后一个操作。

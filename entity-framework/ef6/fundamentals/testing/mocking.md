@@ -1,14 +1,16 @@
 ---
 title: 使用模拟框架进行测试-EF6
+description: 使用实体框架6中的模拟框架进行测试
 author: divega
 ms.date: 10/23/2016
 ms.assetid: bd66a638-d245-44d4-8e71-b9c6cb335cc7
-ms.openlocfilehash: 790e077c5b30c4a68a96b3c1a99b40893b2bbe55
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/fundamentals/testing/mocking
+ms.openlocfilehash: 01890ab3bb8dbf0caa7b3eff797e53b06bc8ec9b
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78415993"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89618300"
 ---
 # <a name="testing-with-a-mocking-framework"></a>使用模拟框架进行测试
 > [!NOTE]
@@ -20,28 +22,28 @@ ms.locfileid: "78415993"
 
 可使用两种不同的方法创建上下文的内存中版本。  
 
-- **创建自己的测试双精度**型–此方法涉及编写您自己的上下文和 dbset 的内存中实现。 这使你可以很好地控制类的行为，但可能涉及到编写和拥有合理的代码量。  
-- **使用模拟框架创建测试双精度**型–使用模拟框架（如 Moq），可以在运行时为你的上下文提供内存中实现并在运行时动态创建。  
+- **创建自己的测试双精度** 型–此方法涉及编写您自己的上下文和 dbset 的内存中实现。 这使你可以很好地控制类的行为，但可能涉及到编写和拥有合理的代码量。  
+- **使用模拟框架创建测试双精度** 数–使用模拟 framework (例如 Moq) 你可以在运行时实现上下文的内存中实现并在运行时动态创建。  
 
-本文将介绍如何使用模拟框架。 若要创建自己的测试，请参阅[采用自己的测试进行测试双精度](writing-test-doubles.md)。  
+本文将介绍如何使用模拟框架。 若要创建自己的测试，请参阅 [采用自己的测试进行测试双精度](xref:ef6/fundamentals/testing/writing-test-doubles)。  
 
-为了演示如何将 EF 与模拟框架结合使用，我们将使用 Moq。 获取 Moq 的最简单方法是[从 NuGet 安装 Moq 包](https://nuget.org/packages/Moq/)。  
+为了演示如何将 EF 与模拟框架结合使用，我们将使用 Moq。 获取 Moq 的最简单方法是 [从 NuGet 安装 Moq 包](https://nuget.org/packages/Moq/)。  
 
 ## <a name="testing-with-pre-ef6-versions"></a>用预 EF6 版本测试  
 
-本文中所述的方案取决于我们对 EF6 中的 DbSet 进行的一些更改。 若要使用 EF5 和更早的版本进行测试，请参阅[使用虚设上下文进行测试](https://romiller.com/2012/02/14/testing-with-a-fake-dbcontext/)。  
+本文中所述的方案取决于我们对 EF6 中的 DbSet 进行的一些更改。 若要使用 EF5 和更早的版本进行测试，请参阅 [使用虚设上下文进行测试](https://romiller.com/2012/02/14/testing-with-a-fake-dbcontext/)。  
 
 ## <a name="limitations-of-ef-in-memory-test-doubles"></a>EF 内存中测试的限制双精度  
 
-内存中测试双精度型可以是一种提供使用 EF 的应用程序的单元测试级别的好方法。 但是，在执行此操作时，将使用 LINQ to Objects 对内存中数据执行查询。 这可能会导致不同的行为，而不是使用 EF 的 LINQ 提供程序（LINQ to Entities）将查询转换为对数据库运行的 SQL。  
+内存中测试双精度型可以是一种提供使用 EF 的应用程序的单元测试级别的好方法。 但是，在执行此操作时，将使用 LINQ to Objects 对内存中数据执行查询。 这可能会导致不同的行为，而不是使用 EF 的 LINQ 提供程序 (LINQ to Entities) 将查询转换为对数据库运行的 SQL。  
 
 这种差异的一个示例就是加载相关数据。 如果创建一系列博客，其中每个博客都有相关的文章，则在使用内存中数据时，将始终为每个博客加载相关文章。 但是，在对数据库运行时，仅当使用 Include 方法时才会加载数据。  
 
-出于此原因，建议始终包括某个级别的端到端测试（除了单元测试），以确保应用程序能够对数据库正常运行。  
+出于此原因，建议始终包含某些级别的端到端测试 (除了单元测试) ，以确保应用程序可针对数据库正常运行。  
 
 ## <a name="following-along-with-this-article"></a>与本文一起介绍  
 
-本文提供了完整的代码清单，你可以将其复制到 Visual Studio 中，以根据你的需要进行。 最简单的方法是创建一个**单元测试项目**，并需要将 **.NET Framework 4.5**作为目标来完成使用 async 的部分。  
+本文提供了完整的代码清单，你可以将其复制到 Visual Studio 中，以根据你的需要进行。 最简单的方法是创建一个 **单元测试项目** ，并需要将 **.NET Framework 4.5** 作为目标来完成使用 async 的部分。  
 
 ## <a name="the-ef-model"></a>EF 模型  
 
@@ -84,7 +86,7 @@ namespace TestingDemo
 
 请注意，上下文中的 DbSet 属性标记为虚拟。 这将允许模拟框架从我们的上下文派生，并使用模拟实现覆盖这些属性。  
 
-如果使用 Code First，则可以直接编辑类。 如果使用的是 EF 设计器，则需要编辑生成上下文的 T4 模板。 打开\>\<model_name。Context.tt 文件嵌套在 edmx 文件下，查找以下代码片段，并将其添加到 virtual 关键字中，如下所示。  
+如果使用 Code First，则可以直接编辑类。 如果使用的是 EF 设计器，则需要编辑生成上下文的 T4 模板。 打开 \<model_name\> 。Context.tt 文件嵌套在 edmx 文件下，查找以下代码片段，并将其添加到 virtual 关键字中，如下所示。  
 
 ``` csharp
 public string DbSet(EntitySet entitySet)
@@ -100,7 +102,7 @@ public string DbSet(EntitySet entitySet)
 
 ## <a name="service-to-be-tested"></a>要测试的服务  
 
-为了演示使用内存中测试的测试，我们将为 BlogService 编写一些测试。 该服务可以创建新的博客（AddBlog）并返回按名称排序的所有博客（GetAllBlogs）。 除了 GetAllBlogs 之外，我们还提供了一个方法，该方法将异步获取按名称（GetAllBlogsAsync）排序的所有博客。  
+为了演示使用内存中测试的测试，我们将为 BlogService 编写一些测试。 该服务可以创建新的博客 (AddBlog) 并返回按名称 (GetAllBlogs) 排序的所有博客。 除了 GetAllBlogs 之外，我们还提供了一个方法，该方法以异步方式获取按名称 (GetAllBlogsAsync) 排序的所有博客。  
 
 ``` csharp
 using System.Collections.Generic;
@@ -150,7 +152,7 @@ namespace TestingDemo
 
 ## <a name="testing-non-query-scenarios"></a>测试非查询方案  
 
-这就是开始测试非查询方法所需的所有操作。 以下测试使用 Moq 创建上下文。 然后，它将创建一个 DbSet\<博客\> 并向其线路，使其从上下文的博客属性返回。 接下来，使用上下文创建新的 BlogService，然后使用 AddBlog 方法创建新的博客。 最后，测试将验证该服务是否在上下文中添加了新的博客并调用了 SaveChanges。  
+这就是开始测试非查询方法所需的所有操作。 以下测试使用 Moq 创建上下文。 然后，它将创建一个 DbSet \<Blog\> ，并将其与上下文的 "博客" 属性一起返回。 接下来，使用上下文创建新的 BlogService，然后使用 AddBlog 方法创建新的博客。 最后，测试将验证该服务是否在上下文中添加了新的博客并调用了 SaveChanges。  
 
 ``` csharp
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -182,7 +184,7 @@ namespace TestingDemo
 
 ## <a name="testing-query-scenarios"></a>测试查询方案  
 
-为了能够对 DbSet 测试执行查询，我们需要设置 IQueryable 的实现。 第一步是创建一些内存中数据，我们使用的是博客\>\<列表。 接下来，我们将创建一个上下文和 DBSet\<博客\> 然后将 DbSet 的 IQueryable 实现连接在一起–它们只是委托给适用于 List\<T\>的 LINQ to Objects 提供程序。  
+为了能够对 DbSet 测试执行查询，我们需要设置 IQueryable 的实现。 第一步是创建一些内存中数据–我们使用的是列表 \<Blog\> 。 接下来，我们将创建一个上下文，然后 DBSet， \<Blog\> 然后将 DBSet 的 IQueryable 实现向上绑定–它们只是委托给适用于列表的 LINQ to Objects 提供程序 \<T\> 。  
 
 然后，可以根据我们的测试来创建 BlogService，并确保从 GetAllBlogs 返回的数据按名称排序。  
 
@@ -235,7 +237,7 @@ namespace TestingDemo
 
 由于实体框架查询使用 LINQ，因此扩展方法是在 IQueryable 和 IEnumerable 上定义的。 但是，因为它们仅设计为与实体框架一起使用，所以如果尝试在不是实体框架查询的 LINQ 查询中使用它们，则可能会收到以下错误：
 
-> 源 IQueryable 不实现 IDbAsyncEnumerable{0}。 仅实现 IDbAsyncEnumerable 的源可用于实体框架异步操作。 有关详细信息，请参阅[http://go.microsoft.com/fwlink/?LinkId=287068](https://go.microsoft.com/fwlink/?LinkId=287068)。  
+> 源 IQueryable 不实现 IDbAsyncEnumerable {0} 。 仅实现 IDbAsyncEnumerable 的源可用于实体框架异步操作。 有关更多详细信息，请参阅 [http://go.microsoft.com/fwlink/?LinkId=287068](https://go.microsoft.com/fwlink/?LinkId=287068) 。  
 
 尽管异步方法仅在针对 EF 查询运行时受支持，但在对 DbSet 的内存中测试双精度运行时，您可能需要在单元测试中使用它们。  
 

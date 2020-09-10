@@ -1,28 +1,30 @@
 ---
 title: 熟知的 API 关系-EF6
+description: 熟知 API-实体框架6中的关系
 author: divega
 ms.date: 10/23/2016
 ms.assetid: fd73b4f8-16d5-40f1-9640-885ceafe67a1
-ms.openlocfilehash: 05f282c02699f8bf3c71197ac5e01000f1855917
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/modeling/code-first/fluent/relationships
+ms.openlocfilehash: 8cc56f7341df6da7f60f649308ea7042ef23b537
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78415759"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89617002"
 ---
 # <a name="fluent-api---relationships"></a>熟知 API-关系
 > [!NOTE]
-> 本页提供有关使用 Fluent API 设置 Code First 模型中的关系的信息。 有关 EF 中的关系以及如何使用关系访问和操作数据的一般信息，请参阅[关系 & 导航属性](~/ef6/fundamentals/relationships.md)。  
+> 本页提供有关使用 Fluent API 设置 Code First 模型中的关系的信息。 有关 EF 中的关系以及如何使用关系访问和操作数据的一般信息，请参阅 [关系 & 导航属性](xref:ef6/fundamentals/relationships)。  
 
 使用 Code First 时，可通过定义域 CLR 类定义模型。 默认情况下，实体框架使用 Code First 约定将类映射到数据库架构。 如果你使用 Code First 命名约定，则在大多数情况下，你可以依赖于 Code First 根据你在类上定义的外键和导航属性来设置表之间的关系。 如果在定义类时不遵循约定，或者若要更改约定的工作方式，可以使用 Fluent API 或数据批注来配置类，以便 Code First 可以映射表之间的关系。  
 
-## <a name="introduction"></a>介绍  
+## <a name="introduction"></a>简介  
 
 在配置与 Fluent API 的关系时，请从 EntityTypeConfiguration 实例开始，然后使用 HasRequired、HasOptional 或 HasMany 方法来指定此实体参与的关系的类型。 HasRequired 和 HasOptional 方法采用表示引用导航属性的 lambda 表达式。 HasMany 方法采用表示集合导航属性的 lambda 表达式。 然后，可以通过使用 WithRequired、WithOptional 和 WithMany 方法配置反向导航属性。 这些方法具有不带参数的重载，可用于通过单向导航指定基数。  
 
 然后，可以使用 HasForeignKey 方法配置外键属性。 此方法采用一个表示要用作外键的属性的 lambda 表达式。  
 
-## <a name="configuring-a-required-to-optional-relationship-one-tozero-or-one"></a>配置所需的可选关系（一对零或一）  
+## <a name="configuring-a-required-to-optional-relationship-one-tozero-or-one"></a>将必需的可选关系配置 (一对零或一)   
 
 下面的示例将配置一对零或一关系。 OfficeAssignment 具有 InstructorID 属性，该属性是主键和外键，因为属性的名称不遵循该约定。 HasKey 方法用于配置主键。  
 
@@ -37,7 +39,7 @@ modelBuilder.Entity<OfficeAssignment>()
     .WithOptional(t => t.OfficeAssignment);
 ```  
 
-## <a name="configuring-a-relationship-where-both-ends-are-required-one-to-one"></a>配置两个端都需要的关系（一对一）  
+## <a name="configuring-a-relationship-where-both-ends-are-required-one-to-one"></a>配置一种关系，在这种情况下，这两个端都需要 (一对一)   
 
 在大多数情况下实体框架可以推断哪个类型是依赖项并且是关系中的主体。 但是，如果需要关系的两端，或者两个两侧都是可选的，则实体框架无法识别依赖项和主体。 如果关系的两端都是必需的，请在 HasRequired 方法后面使用 WithRequiredPrincipal 或 WithRequiredDependent。 如果关系两端都是可选的，请在 HasOptional 方法后面使用 WithOptionalPrincipal 或 WithOptionalDependent。  
 
@@ -77,7 +79,7 @@ modelBuilder.Entity<Course>()
 
 ## <a name="configuring-a-relationship-with-one-navigation-property"></a>使用一个导航属性配置关系  
 
-单向（也称为单向）关系是指仅在一个关系端上定义导航属性，而不是在两者上定义。 按照约定，Code First 始终将单向关系解释为一对多。 例如，如果你想要在讲师与 OfficeAssignment 之间进行一对一关系，其中仅有指导员类型的导航属性，则需要使用 Fluent API 来配置此关系。  
+一种单向 (也称为单向) 关系，只是在一个关系端上定义导航属性，而不是在两者上定义。 按照约定，Code First 始终将单向关系解释为一对多。 例如，如果你想要在讲师与 OfficeAssignment 之间进行一对一关系，其中仅有指导员类型的导航属性，则需要使用 Fluent API 来配置此关系。  
 
 ``` csharp
 // Configure the primary Key for the OfficeAssignment
@@ -95,8 +97,8 @@ modelBuilder.Entity<Instructor>()
 
 您可以使用以下方法删除这些级联删除约定：  
 
-modelBuilder\<OneToManyCascadeDeleteConvention\>（）  
-modelBuilder\<ManyToManyCascadeDeleteConvention\>（）  
+modelBuilder \<OneToManyCascadeDeleteConvention\> ( # A1  
+modelBuilder \<ManyToManyCascadeDeleteConvention\> ( # A1  
 
 下面的代码将关系配置为 "必需"，然后禁用级联删除。  
 

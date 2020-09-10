@@ -1,20 +1,22 @@
 ---
 title: 使用 DbContext-EF6
+description: 使用实体框架6中的 DbContext
 author: divega
 ms.date: 10/23/2016
 ms.assetid: b0e6bddc-8a87-4d51-b1cb-7756df938c23
-ms.openlocfilehash: d961ffd8bed7f5b2f82dcfa30fc0241b7437be50
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/fundamentals/working-with-dbcontext
+ms.openlocfilehash: 7845d401cb0b8910cbfbba80eca2fd098c051b7d
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78413881"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89618223"
 ---
 # <a name="working-with-dbcontext"></a>使用 DbContext
 
-若要使用实体框架来使用 .NET 对象查询、插入、更新和删除数据，您首先需要[创建一个模型](~/ef6/modeling/index.md)，该模型将模型中定义的实体和关系映射到数据库中的表。
+若要使用实体框架来使用 .NET 对象查询、插入、更新和删除数据，您首先需要 [创建一个模型](xref:ef6/modeling/index) ，该模型将模型中定义的实体和关系映射到数据库中的表。
 
-有了模型后，应用程序与之交互的主类就 `System.Data.Entity.DbContext` （通常称为上下文类）。 您可以使用与模型关联的 DbContext 来执行以下操作：
+有了模型后，应用程序与之交互的主类 `System.Data.Entity.DbContext` (通常称为上下文类) 。 您可以使用与模型关联的 DbContext 来执行以下操作：
 - 编写和执行查询   
 - 将查询结果具体化为实体对象
 - 跟踪对这些对象进行的更改
@@ -35,12 +37,12 @@ public class ProductContext : DbContext
 }
 ```  
 
-拥有上下文后，可以通过这些属性查询、添加（使用 `Add` 或 `Attach` 方法）或在上下文中删除（使用 `Remove`）实体。 访问上下文对象上的 `DbSet` 属性表示一个启动查询，该查询返回指定类型的所有实体。 请注意，仅访问属性不会执行查询。 执行以下操作时执行查询：  
+有了上下文后，您就可以使用或方法来查询、添加 (， `Add` `Attach` ) 或) 使用 `Remove` 这些属性在上下文中删除 (。 访问 `DbSet` 上下文对象上的属性表示一个启动查询，该查询返回指定类型的所有实体。 请注意，仅访问属性不会执行查询。 执行以下操作时执行查询：  
 
 - `foreach` (C#) 或 `For Each` (Visual Basic) 语句枚举对象。  
-- 它通过集合操作（如 `ToArray`、`ToDictionary`或 `ToList`）进行枚举。  
-- 在查询的最外面部分指定 LINQ 运算符，例如 `First` 或 `Any`。  
-- 如果在上下文中未找到具有指定键的实体，则调用以下方法之一： `Load` 扩展方法 `DbEntityEntry.Reload`、`Database.ExecuteSqlCommand`和 `DbSet<T>.Find`。  
+- 它通过集合操作（如、或）进行枚举 `ToArray` `ToDictionary` `ToList` 。  
+- `First` `Any` 在查询的最外面部分指定 LINQ 运算符（如或）。  
+- `Load` `DbEntityEntry.Reload` `Database.ExecuteSqlCommand` 如果在 `DbSet<T>.Find` 上下文中未找到具有指定键的实体，则调用以下方法之一：扩展方法、、和。  
 
 ## <a name="lifetime"></a>生存期  
 
@@ -59,7 +61,7 @@ public void UseProducts()
 下面是决定上下文生存期时的一些一般指导原则：  
 
 - 使用 Web 应用程序时，请为每个请求使用上下文实例。  
-- 使用 Windows Presentation Foundation （WPF）或 Windows 窗体时，请使用每个窗体的上下文实例。 这使你可以使用上下文提供的更改跟踪功能。  
+- 使用 Windows Presentation Foundation (WPF) 或 Windows 窗体时，请在每个窗体中使用上下文实例。 这使你可以使用上下文提供的更改跟踪功能。  
 - 如果上下文实例是由依赖关系注入容器创建的，则该容器通常负责释放上下文。
 - 如果上下文是在应用程序代码中创建的，请记得在不再需要时释放上下文。  
 - 使用长时间运行的上下文时，请考虑以下事项：  

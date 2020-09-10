@@ -5,18 +5,18 @@ author: AndriySvyryd
 ms.author: ansvyryd
 ms.date: 11/06/2019
 uid: core/modeling/owned-entities
-ms.openlocfilehash: 6ff98d005c0a868d420509571378756c56edc54a
-ms.sourcegitcommit: 31536e52b838a84680d2e93e5bb52fb16df72a97
+ms.openlocfilehash: f65c07c79daf38e733c76f328843c90466c657f5
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/10/2020
-ms.locfileid: "86238120"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89619327"
 ---
 # <a name="owned-entity-types"></a>从属实体类型
 
-EF Core 允许您为只能出现在其他实体类型的导航属性中的实体类型建模。 它们称为_拥有的实体类型_。 包含拥有的实体类型的实体是其_所有者_。
+EF Core 允许您为只能出现在其他实体类型的导航属性中的实体类型建模。 它们称为 _拥有的实体类型_。 包含拥有的实体类型的实体是其 _所有者_。
 
-拥有的实体实质上是所有者的一部分，并且在没有它的情况下不存在，它们在概念上类似于[聚合](https://martinfowler.com/bliki/DDD_Aggregate.html)。 这意味着，拥有的实体由与所有者的关系的从属方定义。
+拥有的实体实质上是所有者的一部分，并且在没有它的情况下不存在，它们在概念上类似于 [聚合](https://martinfowler.com/bliki/DDD_Aggregate.html)。 这意味着，拥有的实体由与所有者的关系的从属方定义。
 
 ## <a name="explicit-configuration"></a>显式配置
 
@@ -38,13 +38,13 @@ EF Core 允许您为只能出现在其他实体类型的导航属性中的实体
 
 [!code-csharp[OwnsOneString](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsOneString)]
 
-有关更多上下文，请参阅[完整的示例项目](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Modeling/OwnedEntities)。
+有关更多上下文，请参阅 [完整的示例项目](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Modeling/OwnedEntities) 。
 
 ## <a name="implicit-keys"></a>隐式键
 
 `OwnsOne`通过引用导航配置的或通过引用导航发现的拥有的类型与所有者始终具有一对一的关系，因此，它们不需要其自己的键值，因为外键值是唯一的。 在上面的示例中， `StreetAddress` 类型不需要定义键属性。  
 
-为了理解 EF Core 如何跟踪这些对象，知道主键是作为所属类型的[影子属性](xref:core/modeling/shadow-properties)创建的，这会很有用。 所拥有类型的实例的键值将与所有者实例的键的值相同。
+为了理解 EF Core 如何跟踪这些对象，知道主键是作为所属类型的 [影子属性](xref:core/modeling/shadow-properties) 创建的，这会很有用。 所拥有类型的实例的键值将与所有者实例的键的值相同。
 
 ## <a name="collections-of-owned-types"></a>拥有的类型的集合
 
@@ -75,22 +75,22 @@ EF Core 允许您为只能出现在其他实体类型的导航属性中的实体
 
 ## <a name="mapping-owned-types-with-table-splitting"></a>将拥有的类型映射到表拆分
 
-使用关系数据库时，默认情况下，引用拥有的类型将映射到与所有者相同的表。 这需要将表拆分为两个：某些列将用于存储所有者的数据，某些列将用于存储拥有实体的数据。 这是一种称为[表拆分](table-splitting.md)的常见功能。
+使用关系数据库时，默认情况下，引用拥有的类型将映射到与所有者相同的表。 这需要将表拆分为两个：某些列将用于存储所有者的数据，某些列将用于存储拥有实体的数据。 这是一种称为 [表拆分](xref:core/modeling/table-splitting)的常见功能。
 
-默认情况下，EF Core 会按照模式_Navigation_OwnedEntityProperty_为拥有的实体类型的属性命名数据库列。 因此，这些 `StreetAddress` 属性将显示在 "Orders" 表中，名称为 "ShippingAddress_Street" 和 "ShippingAddress_City"。
+默认情况下，EF Core 会按照模式 _Navigation_OwnedEntityProperty_为拥有的实体类型的属性命名数据库列。 因此，这些 `StreetAddress` 属性将显示在 "Orders" 表中，名称为 "ShippingAddress_Street" 和 "ShippingAddress_City"。
 
 您可以使用 `HasColumnName` 方法重命名这些列：
 
 [!code-csharp[ColumnNames](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=ColumnNames)]
 
 > [!NOTE]
-> 大多数正常的实体类型配置方法（如[Ignore](/dotnet/api/microsoft.entityframeworkcore.metadata.builders.ownednavigationbuilder.ignore) ）都可以通过相同的方式进行调用。
+> 大多数正常的实体类型配置方法（如 [Ignore](/dotnet/api/microsoft.entityframeworkcore.metadata.builders.ownednavigationbuilder.ignore) ）都可以通过相同的方式进行调用。
 
 ## <a name="sharing-the-same-net-type-among-multiple-owned-types"></a>在多个所拥有的类型之间共享相同的 .NET 类型
 
 一个拥有的实体类型可以是与另一个拥有的实体类型相同的 .NET 类型，因此，.NET 类型可能不足以标识某个所有者的类型。
 
-在这些情况下，从所有者指向拥有的实体的属性将成为所拥有实体类型的_定义导航_。 从 EF Core 的角度来看，定义导航是类型标识与 .NET 类型的一部分。
+在这些情况下，从所有者指向拥有的实体的属性将成为所拥有实体类型的 _定义导航_ 。 从 EF Core 的角度来看，定义导航是类型标识与 .NET 类型的一部分。
 
 例如，在下面的类中， `ShippingAddress` 和 `BillingAddress` 都是相同的 .net 类型 `StreetAddress` ：
 
@@ -122,7 +122,7 @@ EF Core 允许您为只能出现在其他实体类型的导航属性中的实体
 
 还可以在和上使用来实现此结果 `OwnedAttribute` `OrderDetails` `StreetAddress` 。
 
-此外，请注意 `Navigation` 调用。 在 EFCore 5.0 中，可以将导航属性进一步配置为[非拥有的导航属性](relationships.md#configuring-navigation-properties)。
+此外，请注意 `Navigation` 调用。 在 EFCore 5.0 中，可以将导航属性进一步配置为 [非拥有的导航属性](xref:core/modeling/relationships#configuring-navigation-properties)。
 
 ## <a name="storing-owned-types-in-separate-tables"></a>将拥有的类型存储在单独的表中
 
@@ -145,7 +145,7 @@ EF Core 允许您为只能出现在其他实体类型的导航属性中的实体
 ### <a name="by-design-restrictions"></a>按设计限制
 
 - 不能 `DbSet<T>` 为拥有的类型创建
-- 不能 `Entity<T>()` 对拥有的类型调用`ModelBuilder`
+- 不能 `Entity<T>()` 对拥有的类型调用 `ModelBuilder`
 
 ### <a name="current-shortcomings"></a>当前缺陷
 

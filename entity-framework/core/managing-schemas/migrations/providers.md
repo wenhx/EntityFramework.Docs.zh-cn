@@ -1,25 +1,26 @@
 ---
 title: 多个提供程序的迁移-EF Core
+description: 在将多个数据库提供程序定位到 Entity Framework Core 时使用迁移来管理数据库架构
 author: bricelam
 ms.author: bricelam
 ms.date: 11/08/2017
 uid: core/managing-schemas/migrations/providers
-ms.openlocfilehash: 388829992687e626648889a47130cc61df1c0d1f
-ms.sourcegitcommit: ebfd3382fc583bc90f0da58e63d6e3382b30aa22
+ms.openlocfilehash: df38af6ac700a530894b98e1f29bbe804831bad5
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/25/2020
-ms.locfileid: "85370612"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89619187"
 ---
 # <a name="migrations-with-multiple-providers"></a>迁移多个提供程序
 
-[EF Core 工具][1]仅基架活动提供程序的迁移。 但有时，您可能想要将多个提供程序（例如 Microsoft SQL Server 和 SQLite）用于 DbContext。 可以通过两种方式来处理迁移。 您可以维护两组迁移-每个提供程序一个，或将它们合并到可以同时使用的单个集。
+[EF Core 工具][1]仅基架活动提供程序的迁移。 但有时，您可能希望使用多个提供程序 (例如 Microsoft SQL Server 和 SQLite) DbContext。 可以通过两种方式来处理迁移。 您可以维护两组迁移-每个提供程序一个，或将它们合并到可以同时使用的单个集。
 
 ## <a name="two-migration-sets"></a>两个迁移集
 
 第一种方法是为每个模型更改生成两个迁移。
 
-实现此目的的一种方法是将每个迁移集放[在单独的程序集中][2]，并在添加两个迁移之间手动切换活动提供程序（和迁移程序集）。
+实现此目的的一种方法是将每个迁移集放 [在单独的程序集中][2] ，并在添加两个迁移之间手动切换活动提供程序 (和迁移程序集) 。
 
 更轻松地使用工具的另一种方法是创建一个从 DbContext 派生的新类型并重写活动提供程序。 此类型在设计时用于添加或应用迁移。
 
@@ -78,5 +79,5 @@ if (migrationBuilder.ActiveProvider == "Microsoft.EntityFrameworkCore.SqlServer"
 }
 ```
 
-  [1]: ../../miscellaneous/cli/index.md
-  [2]: projects.md
+  [1]: xref:core/miscellaneous/cli/index
+  [2]: xref:core/managing-schemas/migrations/projects

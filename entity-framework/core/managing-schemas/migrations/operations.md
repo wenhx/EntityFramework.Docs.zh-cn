@@ -1,19 +1,20 @@
 ---
 title: 自定义迁移操作-EF Core
+description: 通过 Entity Framework Core 管理数据库架构管理的自定义和原始 SQL 迁移
 author: bricelam
 ms.author: bricelam
 ms.date: 11/07/2017
 uid: core/managing-schemas/migrations/operations
-ms.openlocfilehash: bd2bfdc24977a47eaf7a6756a88b758b563d818a
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.openlocfilehash: 708894d8d567a4644be3a4ace98cc837465710e0
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78414325"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89617952"
 ---
 # <a name="custom-migrations-operations"></a>自定义迁移操作
 
-借助 MigrationBuilder API，你可以在迁移过程中执行多种不同的操作，但远远超出了这一过程。 不过，API 也可通过扩展来定义自己的操作。 可以通过两种方法来扩展 API：使用 `Sql()` 方法，或者通过定义自定义 `MigrationOperation` 对象。
+借助 MigrationBuilder API，你可以在迁移过程中执行多种不同的操作，但远远超出了这一过程。 不过，API 也可通过扩展来定义自己的操作。 可以通过两种方法来扩展 API：使用 `Sql()` 方法，或通过定义自定义 `MigrationOperation` 对象。
 
 为了说明这一点，让我们看一下如何实现使用每种方法创建数据库用户的操作。 在我们的迁移中，我们希望能够编写以下代码：
 
@@ -21,9 +22,9 @@ ms.locfileid: "78414325"
 migrationBuilder.CreateUser("SQLUser1", "Password");
 ```
 
-## <a name="using-migrationbuildersql"></a>使用 MigrationBuilder （）
+## <a name="using-migrationbuildersql"></a>使用 MigrationBuilder ( # A1
 
-实现自定义操作的最简单方法是定义调用 `MigrationBuilder.Sql()`的扩展方法。 下面是生成相应 Transact-sql 的示例。
+实现自定义操作的最简单方法是定义调用的扩展方法 `MigrationBuilder.Sql()` 。 下面是生成相应 Transact-sql 的示例。
 
 ``` csharp
 static MigrationBuilder CreateUser(
@@ -33,7 +34,7 @@ static MigrationBuilder CreateUser(
     => migrationBuilder.Sql($"CREATE USER {name} WITH PASSWORD '{password}';");
 ```
 
-如果迁移需要支持多个数据库提供程序，则可以使用 "`MigrationBuilder.ActiveProvider`" 属性。 下面是同时支持 Microsoft SQL Server 和 PostgreSQL 的示例。
+如果你的迁移需要支持多个数据库提供程序，则可以使用 `MigrationBuilder.ActiveProvider` 属性。 下面是同时支持 Microsoft SQL Server 和 PostgreSQL 的示例。
 
 ``` csharp
 static MigrationBuilder CreateUser(
@@ -70,7 +71,7 @@ class CreateUserOperation : MigrationOperation
 }
 ```
 
-利用此方法，扩展方法只需将其中一个操作添加到 `MigrationBuilder.Operations`。
+利用此方法，扩展方法只需将其中一个操作添加到 `MigrationBuilder.Operations` 。
 
 ``` csharp
 static MigrationBuilder CreateUser(
@@ -89,7 +90,7 @@ static MigrationBuilder CreateUser(
 }
 ```
 
-此方法要求每个提供程序都知道如何在 `IMigrationsSqlGenerator` 服务中为此操作生成 SQL。 下面是一个示例，用于重写 SQL Server 的生成器来处理新操作。
+此方法要求每个提供程序知道如何在其服务中为此操作生成 SQL `IMigrationsSqlGenerator` 。 下面是一个示例，用于重写 SQL Server 的生成器来处理新操作。
 
 ``` csharp
 class MyMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator

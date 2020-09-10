@@ -1,14 +1,16 @@
 ---
 title: Code First 插入、更新和删除存储过程-EF6
+description: Code First 在实体框架6中插入、更新和删除存储过程
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 9a7ae7f9-4072-4843-877d-506dd7eef576
-ms.openlocfilehash: bfc56671814aec1965ac054ff901297e5cdbbecb
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/modeling/code-first/fluent/cud-stored-procedures
+ms.openlocfilehash: 4db54d7199baa408017159e25ce79a9d70707c59
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78415771"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89618115"
 ---
 # <a name="code-first-insert-update-and-delete-stored-procedures"></a>Code First 插入、更新和删除存储过程
 > [!NOTE]
@@ -28,13 +30,13 @@ modelBuilder
 
 这样做将导致 Code First 使用一些约定来生成数据库中的存储过程的预期形状。  
 
-- 三个名为 **\<type_name\>_Insert**\<**type_name\>_Update**\<type_name\>_Delete **Blog_Insert Blog_Update Blog_Delete**的存储过程。  
+- 名为** \<type_name\> _Insert**、 ** \<type_name\> _Update**和** \<type_name\> _Delete** (的三个存储过程，例如 Blog_Insert、Blog_Update 和 Blog_Delete) 。  
 - 参数名称对应于属性名称。  
   > [!NOTE]
-  > 如果使用 HasColumnName （）或 Column 特性重命名给定属性的列，则此名称用于参数而不是属性名称。  
-- **Insert 存储过程**将为每个属性提供一个参数，但标记为 "生成的存储" 的属性除外（标识或计算）。 存储过程应该返回一个结果集，其中包含每个商店生成的属性的列。  
-- **Update 存储过程**的每个属性都有一个参数，但使用存储生成模式 "计算" 的标记除外。 某些并发令牌需要原始值的参数，有关详细信息，请参阅下面的*并发标记*部分。 存储过程应该返回一个结果集，其中包含每个计算属性的列。  
-- **Delete 存储过程**应具有实体的键值的参数（如果该实体具有组合键，则为多个参数）。 此外，删除过程还应包含目标表上的任何独立关联外键的参数（实体中没有声明的相应外键属性的关系）。 某些并发令牌需要原始值的参数，有关详细信息，请参阅下面的*并发标记*部分。  
+  > 如果使用 HasColumnName ( # A1 或 Column 特性重命名给定属性的列，则此名称用于参数而不是属性名称。  
+- **Insert 存储过程** 的每个属性都有一个参数，但标记为存储 (标识或计算) 中除外。 存储过程应该返回一个结果集，其中包含每个商店生成的属性的列。  
+- **Update 存储过程** 的每个属性都有一个参数，但使用存储生成模式 "计算" 的标记除外。 某些并发令牌需要原始值的参数，有关详细信息，请参阅下面的 *并发标记* 部分。 存储过程应该返回一个结果集，其中包含每个计算属性的列。  
+- **Delete 存储过程** 应具有实体的键值的参数 (或多个参数（如果该实体具有复合键) 。 此外，删除过程还应具有针对目标表上的任何独立关联外键的参数 (不具有实体) 中声明的相应外键属性的关系。 某些并发令牌需要原始值的参数，有关详细信息，请参阅下面的 *并发标记* 部分。  
 
 使用以下类作为示例：  
 
@@ -160,9 +162,9 @@ BEGIN
 END
 ```  
 
-## <a name="relationships-without-a-foreign-key-in-the-class-independent-associations"></a>类中没有外键的关系（独立关联）  
+## <a name="relationships-without-a-foreign-key-in-the-class-independent-associations"></a>类中没有外键的关系 (独立关联)   
 
-在类定义中包括外键属性时，可以使用与任何其他属性相同的方式重命名相应的参数。 如果存在类中没有外键属性的关系，则默认参数名称为 **\<navigation_property_name\>_\<primary_key_name\>** 。  
+在类定义中包括外键属性时，可以使用与任何其他属性相同的方式重命名相应的参数。 如果存在类中没有外键属性的关系，则默认参数名称为** \<navigation_property_name\> _ \<primary_key_name\> **。  
 
 例如，以下类定义将导致在要插入和更新发布的存储过程中出现 Blog_BlogId 参数。  
 
@@ -197,7 +199,7 @@ modelBuilder
     s.Insert(i => i.Parameter(p => p.Blog.BlogId, "blog_id")));
 ```  
 
-如果依赖实体上没有导航属性（即 不是 Post。博客属性）然后，可以使用 Association 方法标识关系的另一端，然后配置与每个键属性对应的参数。  
+如果依赖实体上没有导航属性 (即 没有 Post。博客属性) 然后可以使用 Association 方法标识关系的另一端，然后配置与)  (的每个键属性对应的参数。  
 
 ``` csharp
 modelBuilder
@@ -212,11 +214,11 @@ modelBuilder
 
 更新和删除存储过程可能还需要处理并发：  
 
-- 如果实体包含并发标记，则存储过程可以有选择性地包含一个 output 参数，该参数返回更新/删除的行数（受影响的行数）。 必须使用 RowsAffectedParameter 方法配置此类参数。  
-默认情况下，EF 使用 ExecuteNonQuery 的返回值来确定受影响的行数。 如果在过程中执行的任何逻辑会导致在执行结束时 ExecuteNonQuery 的返回值不正确（从 EF 的角度），则指定 rows 受影响的输出参数将很有用。  
-- 对于每个并发标记，都将有一个名为 **\<property_name\>_Original**的参数（例如 Timestamp_Original）。 这会传递到此属性的原始值–从数据库查询时的值。  
+- 如果该实体包含并发标记，则该存储过程可以有选择性地包含一个 output 参数，该参数可返回受影响)  (行更新/删除的行数。 必须使用 RowsAffectedParameter 方法配置此类参数。  
+默认情况下，EF 使用 ExecuteNonQuery 的返回值来确定受影响的行数。 如果在过程中执行任何逻辑，则指定 rows 受影响的 output 参数非常有用，这会导致 ExecuteNonQuery 的返回值在执行结束时从 EF 的角度) 不正确 (。  
+- 对于每个并发标记，都将有一个名为** \<property_name\> _Original**的参数 (例如，Timestamp_Original ) 。 这会传递到此属性的原始值–从数据库查询时的值。  
     - 数据库计算的并发性标记（如时间戳）将只有原始值参数。  
-    - 设置为并发令牌的非计算属性也会在更新过程中为新值提供一个参数。 这会对新值使用已讨论的命名约定。 此类标记的一个示例将使用博客的 URL 作为并发标记，新值是必需的，因为你的代码可以将此值更新为新值（与仅由数据库更新的时间戳标记不同）。  
+    - 设置为并发令牌的非计算属性也会在更新过程中为新值提供一个参数。 这会对新值使用已讨论的命名约定。 此类标记的一个示例将使用博客的 URL 作为并发标记，这是必需的，因为你的代码可以将此值更新为新值 (与仅由数据库) 更新的时间戳标记不同。  
 
 这是一个示例类，并用时间戳并发标记更新存储过程。  
 
@@ -330,8 +332,8 @@ modelBuilder
 
 如果未提供其他配置，则默认情况下使用以下存储过程形状。  
 
-- 两个名为 **\<type_one\>\<type_two**\>_Insert\<**type_one\>** \<type_two\>_Delete PostTag_Insert PostTag_Delete 和的存储过程。  
-- 参数将是每个类型的键值。 要\<的每个参数的名称**type_name\>_\<property_name**\>（例如 Post_PostId 和 Tag_TagId）。
+- 名为** \<type_one\> \<type_two\> _Insert**和** \<type_one\> \<type_two\> _Delete**的两个存储过程 (例如，PostTag_Insert 和 PostTag_Delete) 。  
+- 对于每种类型，参数将是 (s) 的键值。 每个参数的名称为** \<type_name\> _ \<property_name\> ** (例如，Post_PostId 和 Tag_TagId) 。
 
 下面是 insert 和 update 存储过程的示例。  
 

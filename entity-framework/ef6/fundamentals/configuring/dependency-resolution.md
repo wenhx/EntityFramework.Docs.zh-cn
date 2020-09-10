@@ -1,14 +1,16 @@
 ---
 title: 依赖项解析-EF6
+description: 实体框架6中的依赖项解析
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 32d19ac6-9186-4ae1-8655-64ee49da55d0
-ms.openlocfilehash: 6082124481f5795bbcb62fff2bb6a58ecdcb48e4
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/fundamentals/configuring/dependency-resolution
+ms.openlocfilehash: c23253dc5a413077e3980fcfa18ea83b5fc3970e
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78414793"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89618426"
 ---
 # <a name="dependency-resolution"></a>依赖项解析
 > [!NOTE]
@@ -27,9 +29,9 @@ GetService 方法通常由 EF 调用，由 EF 或应用程序提供的 IDbDepend
 
 除非另有说明，否则返回的任何对象都必须是线程安全的，因为它可用作单一实例。 在许多情况下，返回的对象是一个工厂，在这种情况下，工厂本身必须是线程安全的，但从工厂返回的对象不需要是线程安全的，因为每次使用都从工厂请求了一个新实例。
 
-本文不包含有关如何实现 IDbDependencyResolver 的完整详细信息，而是充当 EF 为其调用 GetService 的服务类型（即接口和基类类型）的参考和其中每个对象的密钥对象的语义拨号.
+本文不包含有关如何实现 IDbDependencyResolver 的完整详细信息，而是充当服务类型的参考 (也就是说，) 的接口和基类类型，EF 将为这些调用调用 GetService 和密钥对象的语义。
 
-## <a name="systemdataentityidatabaseinitializertcontext"></a>IDatabaseInitializer < TContext\>  
+## <a name="systemdataentityidatabaseinitializertcontext"></a>IDatabaseInitializer<TContext （）\>  
 
 **引入的版本**： ef 6.0。0  
 
@@ -37,7 +39,7 @@ GetService 方法通常由 EF 调用，由 EF 或应用程序提供的 IDbDepend
 
 **键**：未使用;将为 null  
 
-## <a name="funcsystemdataentitymigrationssqlmigrationsqlgenerator"></a>MigrationSqlGenerator\> 的函数的 Func <  
+## <a name="funcsystemdataentitymigrationssqlmigrationsqlgenerator"></a>函数函数的 Func<MigrationSqlGenerator\>  
 
 **引入的版本**： ef 6.0。0
 
@@ -46,7 +48,7 @@ GetService 方法通常由 EF 调用，由 EF 或应用程序提供的 IDbDepend
 **Key**：包含 ADO.NET 提供程序固定名称的字符串，该名称指定要为其生成 SQL 的数据库的类型。 例如，对于密钥 "SqlClient"，将返回 SQL Server SQL 生成器。  
 
 >[!NOTE]
-> 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
+> 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅 [EF6 提供程序模型](xref:ef6/fundamentals/providers/provider-model) 部分。  
 
 ## <a name="systemdataentitycorecommondbproviderservices"></a>Dbproviderservices.createdatabase 的数据的实体。  
 
@@ -57,18 +59,18 @@ GetService 方法通常由 EF 调用，由 EF 或应用程序提供的 IDbDepend
 **Key**：包含 ADO.NET 提供程序固定名称的字符串，用于指定需要提供程序的数据库类型。 例如，对于密钥 "SqlClient"，将返回 SQL Server 提供程序。  
 
 >[!NOTE]
-> 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
+> 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅 [EF6 提供程序模型](xref:ef6/fundamentals/providers/provider-model) 部分。  
 
 ## <a name="systemdataentityinfrastructureidbconnectionfactory"></a>"IDbConnectionFactory"。  
 
 **引入的版本**： ef 6.0。0  
 
-**返回的对象**：当 EF 按约定创建数据库连接时将使用的连接工厂。 也就是说，如果不向 EF 提供连接或连接字符串，并且在 app.config 或 web.config 中找不到连接字符串，则将使用此服务按约定创建连接。 默认情况下，更改连接工厂可以允许 EF 使用其他类型的数据库（例如，SQL Server Compact Edition）。  
+**返回的对象**：当 EF 按约定创建数据库连接时将使用的连接工厂。 也就是说，如果不向 EF 提供连接或连接字符串，并且在 app.config 或 web.config 中找不到连接字符串，则使用此服务按约定创建连接。 默认情况下，更改连接工厂可以允许 EF 使用不同类型的数据库 (例如，SQL Server Compact Edition) 。  
 
 **键**：未使用;将为 null  
 
 >[!NOTE]
-> 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
+> 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅 [EF6 提供程序模型](xref:ef6/fundamentals/providers/provider-model) 部分。  
 
 ## <a name="systemdataentityinfrastructureimanifesttokenservice"></a>"IManifestTokenService"。  
 
@@ -88,7 +90,7 @@ GetService 方法通常由 EF 调用，由 EF 或应用程序提供的 IDbDepend
 
 **键**：未使用;将为 null  
 
-## <a name="funcdbcontext-systemdataentityinfrastructureidbmodelcachekey"></a>Func < DbContext，IDbModelCacheKey 的\>  
+## <a name="funcdbcontext-systemdataentityinfrastructureidbmodelcachekey"></a>Func<DbContext，IDbModelCacheKey。\>  
 
 **引入的版本**： ef 6.0。0  
 
@@ -102,12 +104,12 @@ GetService 方法通常由 EF 调用，由 EF 或应用程序提供的 IDbDepend
 
 **返回的对象**：一个 EF 空间提供程序，它添加对 geography 和 geometry 空间类型的基本 EF 提供程序的支持。  
 
-**键**：以两种方式请求 DbSptialServices。 首先，使用 DbProviderInfo 对象（其中包含固定名称和清单标记）来请求特定于提供程序的空间服务作为密钥。 其次，无关键字就可以要求 DbSpatialServices。 这用于解析在创建独立的 DbGeography 或 DbGeometry 类型时使用的 "全局空间提供程序"。  
+**键**：以两种方式请求 DbSptialServices。 首先，使用 DbProviderInfo 对象请求特定于提供程序的空间服务 (该对象包含固定名称和清单标记) 为密钥。 其次，无关键字就可以要求 DbSpatialServices。 这用于解析在创建独立的 DbGeography 或 DbGeometry 类型时使用的 "全局空间提供程序"。  
 
 >[!NOTE]
-> 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
+> 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅 [EF6 提供程序模型](xref:ef6/fundamentals/providers/provider-model) 部分。  
 
-## <a name="funcsystemdataentityinfrastructureidbexecutionstrategy"></a>函数函数的 Func <\> IDbExecutionStrategy  
+## <a name="funcsystemdataentityinfrastructureidbexecutionstrategy"></a>函数函数的 Func<IDbExecutionStrategy\>  
 
 **引入的版本**： ef 6.0。0  
 
@@ -116,18 +118,18 @@ GetService 方法通常由 EF 调用，由 EF 或应用程序提供的 IDbDepend
 **Key**：包含提供程序固定名称的 ExecutionStrategyKey 对象，还可以选择要对其使用执行策略的服务器名称。  
 
 >[!NOTE]
-> 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
+> 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅 [EF6 提供程序模型](xref:ef6/fundamentals/providers/provider-model) 部分。  
 
-## <a name="funcdbconnection-string-systemdataentitymigrationshistoryhistorycontext"></a>Func < DbConnection，string，HistoryContext，\>  
+## <a name="funcdbconnection-string-systemdataentitymigrationshistoryhistorycontext"></a>Func<DbConnection，string，HistoryContext。\>  
 
 **引入的版本**： ef 6.0。0  
 
-**返回的对象**：允许提供程序配置 HISTORYCONTEXT 与 EF 迁移使用的 `__MigrationHistory` 表的映射的工厂。 HistoryContext 是一个 Code First DbContext，可以使用普通 Fluent API 进行配置，以更改表名称和列映射规范等项。  
+**返回的对象**：允许提供程序配置 HISTORYCONTEXT 与 EF 迁移使用的表的映射的工厂 `__MigrationHistory` 。 HistoryContext 是一个 Code First DbContext，可以使用普通 Fluent API 进行配置，以更改表名称和列映射规范等项。  
 
 **键**：未使用;将为 null  
 
 >[!NOTE]
-> 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
+> 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅 [EF6 提供程序模型](xref:ef6/fundamentals/providers/provider-model) 部分。  
 
 ## <a name="systemdatacommondbproviderfactory"></a>DbProviderFactory。  
 
@@ -138,7 +140,7 @@ GetService 方法通常由 EF 调用，由 EF 或应用程序提供的 IDbDepend
 **Key**：包含 ADO.NET 提供程序固定名称的字符串  
 
 >[!NOTE]
-> 此服务通常不会直接更改，因为默认实现使用普通的 ADO.NET 提供程序注册。 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
+> 此服务通常不会直接更改，因为默认实现使用普通的 ADO.NET 提供程序注册。 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅 [EF6 提供程序模型](xref:ef6/fundamentals/providers/provider-model) 部分。  
 
 ## <a name="systemdataentityinfrastructureiproviderinvariantname"></a>"IProviderInvariantName"。  
 
@@ -149,7 +151,7 @@ GetService 方法通常由 EF 调用，由 EF 或应用程序提供的 IDbDepend
 **Key**：需要固定名称的 DbProviderFactory 实例。  
 
 >[!NOTE]
-> 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅[EF6 提供程序模型](~/ef6/fundamentals/providers/provider-model.md)部分。  
+> 有关 EF6 中与提供程序相关的服务的更多详细信息，请参阅 [EF6 提供程序模型](xref:ef6/fundamentals/providers/provider-model) 部分。  
 
 ## <a name="systemdataentitycoremappingviewgenerationiviewassemblycache"></a>ViewGeneration. IViewAssemblyCache 的数据。  
 
@@ -175,7 +177,7 @@ GetService 方法通常由 EF 调用，由 EF 或应用程序提供的 IDbDepend
 
 **键**：未使用;将为 null。  
 
-## <a name="funcsystemdataentitydbcontext-actionstring-systemdataentityinfrastructureinterceptiondatabaselogformatter"></a>Func < DbContext，Action < string\>，DatabaseLogFormatter\> 的操作中执行的操作  
+## <a name="funcsystemdataentitydbcontext-actionstring-systemdataentityinfrastructureinterceptiondatabaselogformatter"></a>Func<DbContext，Action<string，DatabaseLogFormatter 的字符串，该字符串 \> 的数据\>  
 
 **引入的版本**： ef 6.0。0  
 
@@ -183,7 +185,7 @@ GetService 方法通常由 EF 调用，由 EF 或应用程序提供的 IDbDepend
 
 **键**：未使用;将为 null。  
 
-## <a name="funcsystemdataentitydbcontext"></a>Func < DbContext\>  
+## <a name="funcsystemdataentitydbcontext"></a>函数 Func<DbContext\>  
 
 **引入的版本**： ef 6.1。0  
 
@@ -191,7 +193,7 @@ GetService 方法通常由 EF 调用，由 EF 或应用程序提供的 IDbDepend
 
 **Key**：需要工厂的派生 DbContext 的类型的类型对象。  
 
-## <a name="funcsystemdataentitycoremetadataedmimetadataannotationserializer"></a>函数函数 IMetadataAnnotationSerializer\> 的 < 函数（）  
+## <a name="funcsystemdataentitycoremetadataedmimetadataannotationserializer"></a>函数 IMetadataAnnotationSerializer 的函数函数的<函数。\>  
 
 **引入的版本**： ef 6.1。0  
 
@@ -199,7 +201,7 @@ GetService 方法通常由 EF 调用，由 EF 或应用程序提供的 IDbDepend
 
 **键**：要序列化或反序列化的批注的名称。  
 
-## <a name="funcsystemdataentityinfrastructuretransactionhandler"></a>函数函数的 Func <\> TransactionHandler  
+## <a name="funcsystemdataentityinfrastructuretransactionhandler"></a>函数函数的 Func<TransactionHandler\>  
 
 **引入的版本**： ef 6.1。0  
 

@@ -1,26 +1,28 @@
 ---
 title: Code First 现有数据库-EF6
+description: Code First 到实体框架6中的现有数据库
 author: divega
 ms.date: 10/23/2016
 ms.assetid: a7e60b74-973d-4480-868f-500a3899932e
-ms.openlocfilehash: 0a51f826422d7e2bff33b968605eace1e754c425
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/modeling/code-first/workflows/existing-database
+ms.openlocfilehash: 7cb58495ea287c59f46e804882cdc089d0f09e7b
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78415597"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89616929"
 ---
 # <a name="code-first-to-an-existing-database"></a>Code First 到现有数据库
-此视频和分步演练提供了面向现有数据库 Code First 开发的简介。 Code First 允许使用 C\# 或 VB.Net 类定义模型。 另外，还可以使用类和属性上的属性或使用 Fluent API 来执行其他配置。
+此视频和分步演练提供了面向现有数据库 Code First 开发的简介。 Code First 允许使用 C \# 或 VB.Net 类定义模型。 另外，还可以使用类和属性上的属性或使用 Fluent API 来执行其他配置。
 
 ## <a name="watch-the-video"></a>观看视频
-此视频[现在适用于第9频道](https://channel9.msdn.com/blogs/ef/code-first-to-existing-database-ef6-1-onwards-)。
+此视频 [现在适用于第9频道](https://channel9.msdn.com/blogs/ef/code-first-to-existing-database-ef6-1-onwards-)。
 
 ## <a name="pre-requisites"></a>先决条件
 
-你将需要安装**Visual Studio 2012**或**Visual Studio 2013**才能完成此演练。
+你将需要安装 **Visual Studio 2012** 或 **Visual Studio 2013** 才能完成此演练。
 
-还需要安装**适用于 Visual Studio 的 Entity Framework Tools** **6.1** （或更高版本）。 有关安装最新版本的 Entity Framework Tools 的信息，请参阅[获取实体框架](~/ef6/fundamentals/install.md)。
+你还需要安装版本 **6.1** (或更高版本的 **Visual Studio Entity Framework Tools**) 。 有关安装最新版本的 Entity Framework Tools 的信息，请参阅 [获取实体框架](xref:ef6/fundamentals/install) 。
 
 ## <a name="1-create-an-existing-database"></a>1. 创建现有数据库
 
@@ -29,13 +31,13 @@ ms.locfileid: "78415597"
 接下来，生成数据库。
 
 -   打开 Visual Studio
--   **视图-&gt; 服务器资源管理器**
--   右键单击 "**数据连接-&gt; 添加连接 ...** "
--   如果尚未从**服务器资源管理器**连接到数据库，则需要选择**Microsoft SQL Server**作为数据源
+-   **视图- &gt; 服务器资源管理器**
+-   右键单击 "**数据连接- &gt; 添加连接 ...** "
+-   如果尚未从 **服务器资源管理器** 连接到数据库，则需要选择 **Microsoft SQL Server** 作为数据源
 
     ![选择数据源](~/ef6/media/selectdatasource.png)
 
--   连接到 LocalDB 实例，并输入**博客**作为数据库名称
+-   连接到 LocalDB 实例，并输入 **博客** 作为数据库名称
 
     ![LocalDB 连接](~/ef6/media/localdbconnection.png)
 
@@ -75,9 +77,9 @@ VALUES ('.NET Framework Blog', 'http://blogs.msdn.com/dotnet/')
 为简单起见，我们将构建一个使用 Code First 进行数据访问的基本控制台应用程序：
 
 -   打开 Visual Studio
--   **文件-&gt;&gt; 项目 。**
+-   **文件- &gt; 新建- &gt; 项目 .。。**
 -   从左侧菜单和**控制台应用程序**选择**Windows**
--   输入**CodeFirstExistingDatabaseSample**作为名称
+-   输入 **CodeFirstExistingDatabaseSample** 作为名称
 -   选择“确定”
 
  
@@ -86,10 +88,10 @@ VALUES ('.NET Framework Blog', 'http://blogs.msdn.com/dotnet/')
 
 我们将使用适用于 Visual Studio 的 Entity Framework Tools 帮助我们生成一些用于映射到数据库的初始代码。 这些工具只是生成代码，你也可以根据需要手动键入代码。
 
--   **项目-&gt; "添加新项 ..."**
--   从左侧菜单中选择 "**数据**"，然后**ADO.NET 实体数据模型**
+-   **项目- &gt; 添加新项 .。。**
+-   从左侧菜单中选择 " **数据** "，然后 **ADO.NET 实体数据模型**
 -   输入 **"bloggingcontext"** 作为名称，然后单击 **"确定"**
--   这将启动**实体数据模型向导**
+-   这将启动 **实体数据模型向导**
 -   选择 "**从数据库 Code First** "，然后单击 "**下一步**"
 
     ![向导 One CFE](~/ef6/media/wizardonecfe.png)
@@ -122,7 +124,7 @@ VALUES ('.NET Framework Blog', 'http://blogs.msdn.com/dotnet/')
 ### <a name="derived-context"></a>派生上下文
 
 已将 **"bloggingcontext"** 类添加到项目。 上下文表示与数据库的会话，从而使我们能够查询并保存数据。
-上下文公开模型中每个类型的**DbSet&lt;TEntity&gt;** 。 你还会注意到，默认构造函数使用**名称 =** 语法调用基构造函数。 这会告知 Code First 应从配置文件加载要用于此上下文的连接字符串。
+上下文公开模型中每个类型的**DbSet &lt; TEntity &gt; ** 。 你还会注意到，默认构造函数使用 **名称 =** 语法调用基构造函数。 这会告知 Code First 应从配置文件加载要用于此上下文的连接字符串。
 
 ``` csharp
 public partial class BloggingContext : DbContext
@@ -141,11 +143,11 @@ public partial class BloggingContext : DbContext
     }
 ```
 
-*使用配置文件中的连接字符串时，应始终使用**name =** 语法。这可以确保在连接字符串不存在时，实体框架将引发，而不是按约定创建新数据库。*
+*使用配置文件中的连接字符串时，应始终使用 **name =** 语法。这可以确保在连接字符串不存在时，实体框架将引发，而不是按约定创建新数据库。*
 
 ### <a name="model-classes"></a>模型类
 
-最后，还将**博客**和**Post**类添加到了项目中。 这些是构成模型的域类。 你将看到应用于类的数据批注，用于指定 Code First 约定不与现有数据库的结构一致的配置。 例如，你将在**Blog.Name**和**Blog**上看到**StringLength**批注，因为它们在数据库中的最大长度为**200** （Code First 默认值是使用 SQL Server）中的数据库提供程序（ **nvarchar （max））** 支持的多长度。
+最后，还将 **博客** 和 **Post** 类添加到了项目中。 这些是构成模型的域类。 你将看到应用于类的数据批注，用于指定 Code First 约定不与现有数据库的结构一致的配置。 例如，你将在**Blog.Name**和**Blog**上看到**StringLength**批注，因为它们在数据库中的最大长度为**200** (Code First 默认值为使用数据库提供程序支持的多长度-nvarchar (SQL Server) 中的**最大) ** 。
 
 ``` csharp
 public partial class Blog
@@ -169,7 +171,7 @@ public partial class Blog
 
 ## <a name="4-reading--writing-data"></a>4. 读取 & 写入数据
 
-现在，我们有了一个模型，可以使用它来访问某些数据了。 在**Program.cs**中实现**Main**方法，如下所示。 此代码创建一个新的上下文实例，然后使用它来插入新的**博客**。 然后，它使用 LINQ 查询从按**标题**字母顺序排序的数据库中检索所有**博客**。
+现在，我们有了一个模型，可以使用它来访问某些数据了。 在**Program.cs**中实现**Main**方法，如下所示。 此代码创建一个新的上下文实例，然后使用它来插入新的 **博客**。 然后，它使用 LINQ 查询从按**标题**字母顺序排序的数据库中检索所有**博客**。
 
 ``` csharp
 class Program
@@ -221,8 +223,8 @@ Press any key to exit...
 
 ## <a name="using-code-first-migrations-to-an-existing-database"></a>使用现有数据库的 Code First 迁移
 
-如果要对现有数据库使用 Code First 迁移，请参阅[Code First 迁移到现有数据库](~/ef6/modeling/code-first/migrations/existing-database.md)。
+如果要对现有数据库使用 Code First 迁移，请参阅 [Code First 迁移到现有数据库](xref:ef6/modeling/code-first/migrations/existing-database)。
 
-## <a name="summary"></a>摘要
+## <a name="summary"></a>总结
 
 在本演练中，我们使用现有数据库查看 Code First 开发。 我们使用了 Visual Studio Entity Framework Tools 来反向工程映射到数据库并可用于存储和检索数据的一组类。

@@ -1,14 +1,16 @@
 ---
 title: 使用代理-EF6
+description: 使用实体框架6中的代理
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 869ee4dc-06f1-471d-8e0e-0a1a2bc59c30
-ms.openlocfilehash: 8f7d2e8b41ece28efe8d1df3b0679e6e4510d64a
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/fundamentals/proxies
+ms.openlocfilehash: 26493ecf1a894a1cd421f574de38678661f324a0
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78415987"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89618369"
 ---
 # <a name="working-with-proxies"></a>使用代理
 创建 POCO 实体类型实例时，实体框架通常会创建动态生成的派生类型的实例，该类型充当实体的代理。 此代理会重写实体的某些虚拟属性，以插入挂钩，以便在访问属性时自动执行操作。 例如，此机制用于支持关系的延迟加载。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  
@@ -34,7 +36,7 @@ public class BloggingContext : DbContext
 
 ## <a name="explicitly-creating-an-instance-of-a-proxy"></a>显式创建代理的实例  
 
-如果使用 new 运算符创建实体的实例，则不会创建代理实例。 这可能不是问题，但如果需要创建代理实例（例如，使延迟加载或代理更改跟踪有效），则可以使用 DbSet 的 Create 方法来执行此操作。 例如：  
+如果使用 new 运算符创建实体的实例，则不会创建代理实例。 这可能不是问题，但如果你需要创建代理实例 (例如，因此延迟加载或代理更改跟踪将起作用) 则可以使用 DbSet 的 Create 方法执行此操作。 例如：  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -60,7 +62,7 @@ using (var context = new BloggingContext())
 
 代理类型的名称如下所示：  
 
-DynamicProxies. Blog_5E43C6C196972BF0754973E48C9C941092D86818CD94005E9A759B70BF6E48E6  
+DynamicProxies.. Blog_5E43C6C196972BF0754973E48C9C941092D86818CD94005E9A759B70BF6E48E6  
 
 可以使用 ObjectContext 中的 GetObjectType 方法查找此代理类型的实体类型。 例如：  
 

@@ -1,22 +1,24 @@
 ---
 title: 具有 VB.NET 的流畅 API-EF6
+description: 实体框架6中的 VB.NET 的流畅 API
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 763dc6a2-764a-4600-896c-f6f13abf56ec
-ms.openlocfilehash: 1c889877b827408919c6170cf997e8805cc607cf
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/modeling/code-first/fluent/vb
+ms.openlocfilehash: d6430ee254c6f0d5f093961d25902326022226cd
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78415747"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89616975"
 ---
 # <a name="fluent-api-with-vbnet"></a>通过 VB.NET 的流畅 API
-Code First 允许使用 C\# 或 VB.NET 类定义模型。 还可以选择使用类和属性上的属性或使用 Fluent API 来执行其他配置。 本演练演示如何使用 VB.NET 执行 Fluent API 配置。
+Code First 允许使用 C \# 或 VB.NET 类定义模型。 还可以选择使用类和属性上的属性或使用 Fluent API 来执行其他配置。 本演练演示如何使用 VB.NET 执行 Fluent API 配置。
 
 本页假设您基本了解 Code First。 有关 Code First 的详细信息，请参阅以下演练：
 
--   [对新数据库使用 Code First](~/ef6/modeling/code-first/workflows/new-database.md)
--   [Code First 到现有数据库](~/ef6/modeling/code-first/workflows/existing-database.md)
+-   [对新数据库使用 Code First](xref:ef6/modeling/code-first/workflows/new-database)
+-   [Code First 到现有数据库](xref:ef6/modeling/code-first/workflows/existing-database)
 
 ## <a name="pre-requisites"></a>先决条件
 
@@ -29,9 +31,9 @@ Code First 允许使用 C\# 或 VB.NET 类定义模型。 还可以选择使用�
 为了简单起见，我们将构建一个使用 Code First 执行数据访问的基本控制台应用程序。
 
 -   打开 Visual Studio
--   **文件-&gt;&gt; 项目 。**
+-   **文件- &gt; 新建- &gt; 项目 .。。**
 -   从左侧菜单和**控制台应用程序**选择**Windows**
--   输入**CodeFirstVBSample**作为名称
+-   输入 **CodeFirstVBSample** 作为名称
 -   选择“确定”
 
 ## <a name="define-the-model"></a>定义模型
@@ -137,14 +139,14 @@ End Class
 
 我们即将开始使用实体框架中的类型，因此我们需要添加 EntityFramework NuGet 包。
 
--   \* * 项目–&gt;**管理 NuGet 程序包 ...**
+-   * * 项目– &gt; **管理 NuGet 程序包 ...**
 > [!NOTE]
-> 如果你没有 "**管理 NuGet 包 ...** " 选项你应安装[最新版本的 NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c)
--   选择 "**联机**" 选项卡
--   选择**EntityFramework**包
--   单击“安装”
+> 如果你没有 "**管理 NuGet 包 ...** " 选项你应安装 [最新版本的 NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c)
+-   选择 " **联机** " 选项卡
+-   选择 **EntityFramework** 包
+-   单击“安装” 
 
-现在可以定义一个派生上下文，它表示与数据库的会话，从而使我们能够查询和保存数据。 我们定义了从 DbContext 派生的上下文，并为模型中的每个类公开了类型化的 DbSet&lt;TEntity&gt;。
+现在可以定义一个派生上下文，它表示与数据库的会话，从而使我们能够查询和保存数据。 我们定义了从 DbContext 派生的上下文，并 &lt; &gt; 为模型中的每个类公开了类型化的 DbSet TEntity。
 
 -   向项目中添加一个新类，为类名输入**SchoolContext**
 -   将新类的内容替换为以下代码
@@ -171,7 +173,7 @@ End Class
 
 ## <a name="configuring-with-the-fluent-api"></a>用熟知 API 配置
 
-本部分演示如何使用熟知的 Api 将类型配置为表映射、属性到列的映射，以及模型中\\类型的表之间的关系。 Fluent API 通过**DbModelBuilder**类型公开，最常用的方法是重写**DbContext**上的**OnModelCreating**方法。
+本部分演示如何使用熟知的 Api 将类型配置为表映射、属性到列的映射，以及模型中各表之间的关系 \\ 。 Fluent API 通过**DbModelBuilder**类型公开，最常用的方法是重写**DbContext**上的**OnModelCreating**方法。
 
 -   复制以下代码并将其添加到**SchoolContext**类中定义的**OnModelCreating**方法中。注释说明了每个映射的作用
 
@@ -365,7 +367,7 @@ modelBuilder.Entity(Of Course)().
 
 ## <a name="using-the-model"></a>使用模型
 
-让我们使用**SchoolContext**执行一些数据访问，以查看操作中的模型。
+让我们使用 **SchoolContext** 执行一些数据访问，以查看操作中的模型。
 
 -   打开定义了 Main 函数的 Module1 文件
 -   复制并粘贴以下 Module1 定义

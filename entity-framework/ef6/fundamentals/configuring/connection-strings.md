@@ -1,14 +1,16 @@
 ---
 title: 连接字符串和模型-EF6
+description: 实体框架6中的连接字符串和模型
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 294bb138-978f-4fe2-8491-fdf3cd3c60c4
-ms.openlocfilehash: 2c9f084107e4de7f5439bf0082b46a3b538496e0
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/fundamentals/configuring/connection-strings
+ms.openlocfilehash: 2203d7f2168dc9d4ae5a6b1914742c7c2b6fbf77
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78415951"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89618430"
 ---
 # <a name="connection-strings-and-models"></a>连接字符串和模型
 本主题介绍实体框架如何发现要使用的数据库连接，以及如何对其进行更改。 本主题介绍了 Code First 和 EF 设计器创建的模型。  
@@ -44,7 +46,7 @@ Visual Studio 2010 默认情况下包括 SQL Express 和 Visual Studio 2012 及�
 
 ## <a name="use-code-first-with-connection-by-convention-and-specified-database-name"></a>使用具有按约定和指定数据库名称连接的 Code First  
 
-如果你未在应用程序中进行任何其他配置，则使用你要使用的数据库名称在 DbContext 上调用字符串构造函数将导致 DbContext 在 Code First 模式下运行，并将数据库连接通过约定创建到数据库该名称。 例如：  
+如果你未在应用程序中执行任何其他配置，则使用你要使用的数据库名称在 DbContext 上调用字符串构造函数将导致 DbContext 在 Code First 模式下运行，并使用约定创建的数据库连接到该名称的数据库。 例如：  
 
 ``` csharp  
 public class BloggingContext : DbContext
@@ -56,11 +58,11 @@ public class BloggingContext : DbContext
 }
 ```  
 
-在此示例中，DbContext 使用 "BloggingDatabase" 作为数据库名称，并使用 SQL Express （与 Visual Studio 2010 一起安装）或 LocalDB （随 Visual Studio 2012 一起安装）为此数据库创建连接字符串。 如果两者都已安装，将使用 SQL Express。  
+在此示例中，DbContext 使用 "BloggingDatabase" 作为数据库名称，并使用随 visual studio 2010) 或与 Visual Studio 2012) 一起安装的 LocalDB (一起安装的 SQL Express (为此数据库创建连接字符串。 如果两者都已安装，将使用 SQL Express。  
 
-## <a name="use-code-first-with-connection-string-in-appconfigwebconfig-file"></a>结合 app.config/web.config 文件中的连接字符串使用 Code First  
+## <a name="use-code-first-with-connection-string-in-appconfigwebconfig-file"></a>将 Code First 与 app.config/web.config 文件中的连接字符串一起使用  
 
-你可以选择将连接字符串放在 app.config 或 web.config 文件中。 例如：  
+您可以选择将连接字符串放在 app.config 或 web.config 文件中。 例如：  
 
 ``` xml  
 <configuration>
@@ -74,7 +76,7 @@ public class BloggingContext : DbContext
 
 这是一种简单的方法来告诉 DbContext 使用 SQL Express 或 LocalDB 之外的数据库服务器-上面的示例指定了一个 SQL Server Compact 版本的数据库。  
 
-如果连接字符串的名称与你的上下文名称匹配（无论是否具有命名空间限定），都将在使用无参数构造函数时通过 DbContext 找到该名称。 如果连接字符串名称不同于上下文的名称，则可以通过将连接字符串名称传递给 DbContext 构造函数，告诉 DbContext 在 Code First 模式下使用此连接。 例如：  
+如果连接字符串的名称与上下文的名称相匹配 (无论是否) 命名空间限定，都将在使用无参数构造函数时通过 DbContext 找到该名称。 如果连接字符串名称不同于上下文的名称，则可以通过将连接字符串名称传递给 DbContext 构造函数，告诉 DbContext 在 Code First 模式下使用此连接。 例如：  
 
 ``` csharp  
 public class BloggingContext : DbContext
@@ -86,7 +88,7 @@ public class BloggingContext : DbContext
 }
 ```  
 
-或者，您可以为传递到 DbContext 构造函数的字符串使用窗体 "name =\<连接字符串名称\>"。 例如：  
+或者，您可以 \<connection string name\> 对传递给 DbContext 构造函数的字符串使用窗体 "name ="。 例如：  
 
 ``` csharp  
 public class BloggingContext : DbContext
@@ -100,11 +102,11 @@ public class BloggingContext : DbContext
 
 此窗体使你希望在配置文件中找到连接字符串。 如果找不到具有给定名称的连接字符串，则会引发异常。  
 
-## <a name="databasemodel-first-with-connection-string-in-appconfigwebconfig-file"></a>App.config/web.config 文件中包含连接字符串的数据库/Model First  
+## <a name="databasemodel-first-with-connection-string-in-appconfigwebconfig-file"></a>包含 app.config/web.config 文件中的连接字符串的数据库/Model First  
 
 用 EF 设计器创建的模型与 Code First 不同，因为模型已存在，并且不是在应用程序运行时从代码生成的。 模型通常作为 EDMX 文件存在于你的项目中。  
 
-设计器会将 EF 连接字符串添加到 app.config 或 web.config 文件。 此连接字符串非常特殊，其中包含了有关如何查找 EDMX 文件中的信息的信息。 例如：  
+设计器会将 EF 连接字符串添加到 app.config 或 web.config 文件中。 此连接字符串非常特殊，其中包含了有关如何查找 EDMX 文件中的信息的信息。 例如：  
 
 ``` xml  
 <configuration>  
@@ -136,7 +138,7 @@ public class NorthwindContext : DbContext
 }
 ```  
 
-DbContext 知道要加载现有模型（而不是使用 Code First 从代码中计算），因为连接字符串是一个 EF 连接字符串，其中包含要使用的模型的详细信息。  
+DbContext 知道要加载现有模型 (而不是使用 Code First 从代码) 计算它，因为连接字符串是一个 EF 连接字符串，其中包含要使用的模型的详细信息。  
 
 ## <a name="other-dbcontext-constructor-options"></a>其他 DbContext 构造函数选项  
 

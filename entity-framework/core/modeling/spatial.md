@@ -1,23 +1,24 @@
 ---
 title: 空间数据-EF Core
+description: 在 Entity Framework Core 模型中使用空间数据
 author: bricelam
 ms.author: bricelam
 ms.date: 11/01/2018
 ms.assetid: 2BDE29FC-4161-41A0-841E-69F51CCD9341
 uid: core/modeling/spatial
-ms.openlocfilehash: 85124b7e252797ccd952d0d332e7309eff97ba56
-ms.sourcegitcommit: 949faaba02e07e44359e77d7935f540af5c32093
+ms.openlocfilehash: 42386fb132f135d725a2068d91dc49c7f613e277
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/03/2020
-ms.locfileid: "87526662"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89616695"
 ---
 # <a name="spatial-data"></a>空间数据
 
 > [!NOTE]
 > 此功能是在 EF Core 2.2 中添加的。
 
-空间数据表示对象的物理位置和形状。 许多数据库提供对此类数据的支持，以便能够与其他数据一起进行索引和查询。 常见方案包括从位置在给定距离内查询对象，或选择其边框包含给定位置的对象。 EF Core 支持使用[NetTopologySuite](https://github.com/NetTopologySuite/NetTopologySuite)空间库映射到空间数据类型。
+空间数据表示对象的物理位置和形状。 许多数据库提供对此类数据的支持，以便能够与其他数据一起进行索引和查询。 常见方案包括从位置在给定距离内查询对象，或选择其边框包含给定位置的对象。 EF Core 支持使用 [NetTopologySuite](https://github.com/NetTopologySuite/NetTopologySuite) 空间库映射到空间数据类型。
 
 ## <a name="installing"></a>安装
 
@@ -32,9 +33,9 @@ Npgsql.EntityFrameworkCore.PostgreSQL   | [Npgsql. Microsoft.entityframeworkcore
 
 ## <a name="reverse-engineering"></a>反向工程
 
-空间 NuGet 包还启用具有空间属性的[反向工程](../managing-schemas/scaffolding.md)模型，但需要在运行或***之前***安装包 `Scaffold-DbContext` `dotnet ef dbcontext scaffold` 。 否则，你将收到有关找不到列的类型映射的警告，将跳过这些列。
+空间 NuGet 包还启用具有空间属性的 [反向工程](xref:core/managing-schemas/scaffolding) 模型，但需要在运行或 ***之前*** 安装包 `Scaffold-DbContext` `dotnet ef dbcontext scaffold` 。 否则，你将收到有关找不到列的类型映射的警告，将跳过这些列。
 
-## <a name="nettopologysuite-nts"></a>NetTopologySuite （NTS）
+## <a name="nettopologysuite-nts"></a>NetTopologySuite (NTS) 
 
 NetTopologySuite 是用于 .NET 的空间库。 EF Core 使用模型中的 NTS 类型启用映射到数据库中的空间数据类型。
 
@@ -48,7 +49,7 @@ optionsBuilder.UseSqlServer(
 
 有几种空间数据类型。 使用哪种类型取决于您想要允许的形状的类型。 下面是可用于模型中的属性的 NTS 类型的层次结构。 它们位于 `NetTopologySuite.Geometries` 命名空间内。
 
-* 几何图形
+* 几何结构
   * 点
   * LineString
   * Polygon
@@ -62,7 +63,7 @@ optionsBuilder.UseSqlServer(
 
 使用基本几何图形类型允许属性指定任意类型的形状。
 
-以下实体类可用于映射到[广角导入示例数据库](https://go.microsoft.com/fwlink/?LinkID=800630)中的表。
+以下实体类可用于映射到 [广角导入示例数据库](https://go.microsoft.com/fwlink/?LinkID=800630)中的表。
 
 ``` csharp
 [Table("Cities", Schema = "Application"))]
@@ -89,7 +90,7 @@ class Country
 
 ### <a name="creating-values"></a>创建值
 
-您可以使用构造函数来创建 geometry 对象;但是，NTS 建议改为使用几何工厂。 这允许您指定默认的 SRID （坐标使用的空间引用系统），并使您能够控制更高级的任务（例如，在计算过程中使用）和坐标序列（确定可用的坐标-维度和度量值）。
+您可以使用构造函数来创建 geometry 对象;但是，NTS 建议改为使用几何工厂。 这使你可以指定默认的 SRID (坐标使用的空间引用系统) 并使你能够控制更高级的功能，如) 计算期间使用的精度模型 (，并且坐标序列 (确定哪些坐标维度和度量值可用。
 
 ``` csharp
 var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
@@ -105,7 +106,7 @@ NTS 中的坐标采用 X 和 Y 值。 若要表示经度和纬度，请将 X 用
 
 ### <a name="srid-ignored-during-client-operations"></a>在客户端操作过程中忽略 SRID
 
-NTS 在操作过程中忽略 SRID 值。 它假定为平面坐标系统。 这意味着，如果在经度和纬度方面指定了坐标，则某些客户端计算的值（例如，距离、长度和区域）将为度数，而不是计量。 若要获得更有意义的值，首先需要使用库（如[ProjNet4GeoAPI](https://github.com/NetTopologySuite/ProjNet4GeoAPI) ）在计算这些值之前投影到另一个坐标系统的坐标。
+NTS 在操作过程中忽略 SRID 值。 它假定为平面坐标系统。 这意味着，如果在经度和纬度方面指定了坐标，则某些客户端计算的值（例如，距离、长度和区域）将为度数，而不是计量。 若要获得更有意义的值，首先需要使用库（如 [ProjNet4GeoAPI](https://github.com/NetTopologySuite/ProjNet4GeoAPI) ）在计算这些值之前投影到另一个坐标系统的坐标。
 
 如果通过 EF Core 通过 SQL 对操作进行服务器计算，则该结果的单元将由数据库确定。
 
@@ -213,15 +214,15 @@ var currentCountry = db.Countries
 
 ### <a name="geography-or-geometry"></a>地理或几何图形
 
-默认情况下，空间属性映射到 `geography` SQL Server 中的列。 若要使用 `geometry` ，请在模型中[配置列类型](xref:core/modeling/entity-properties#column-data-types)。
+默认情况下，空间属性映射到 `geography` SQL Server 中的列。 若要使用 `geometry` ，请在模型中 [配置列类型](xref:core/modeling/entity-properties#column-data-types) 。
 
 ### <a name="geography-polygon-rings"></a>地理多边形环
 
-当使用 `geography` 列类型时，SQL Server 会对外部环（或外壳）和内部环（或孔）施加附加要求。 外部环必须逆时针旋转，并顺时针旋转内部环。 NTS 在将值发送到数据库之前对其进行验证。
+当使用 `geography` 列类型时，SQL Server 对外环 (或 shell) 和内部环 (或孔) 施加附加要求。 外部环必须逆时针旋转，并顺时针旋转内部环。 NTS 在将值发送到数据库之前对其进行验证。
 
 ### <a name="fullglobe"></a>FullGlobe
 
-在使用列类型时，SQL Server 具有非标准几何类型来表示全地球 `geography` 。 它还提供了一种方法，用于根据全地球（无外部环）来表示多边形。 NTS 不支持这两种方法。
+在使用列类型时，SQL Server 具有非标准几何类型来表示全地球 `geography` 。 它还可以基于全地球 (来表示多边形，而无需外环) 。 NTS 不支持这两种方法。
 
 > [!WARNING]
 > NTS 不支持基于 FullGlobe 和多边形。
@@ -242,7 +243,7 @@ apt-get install libsqlite3-mod-spatialite
 brew install libspatialite
 ```
 
-遗憾的是，较新版本的 PROJ （SpatiaLite 的依赖项）与 EF 的默认[SQLitePCLRaw 绑定](/dotnet/standard/data/sqlite/custom-versions#bundles)不兼容。 若要解决此情况，可以创建使用系统 SQLite 库的自定义[SQLitePCLRaw 提供程序](/dotnet/standard/data/sqlite/custom-versions#sqlitepclraw-providers)，也可以安装 SPATIALITE 禁用 PROJ 支持的自定义生成。
+遗憾的是，较新版本的 PROJ (SpatiaLite) 的依赖项与 EF 的默认 [SQLitePCLRaw 绑定](/dotnet/standard/data/sqlite/custom-versions#bundles)不兼容。 若要解决此情况，可以创建使用系统 SQLite 库的自定义 [SQLitePCLRaw 提供程序](/dotnet/standard/data/sqlite/custom-versions#sqlitepclraw-providers) ，也可以安装 SPATIALITE 禁用 PROJ 支持的自定义生成。
 
 ``` sh
 curl https://www.gaia-gis.it/gaia-sins/libspatialite-4.3.0a.tar.gz | tar -xz
@@ -269,7 +270,7 @@ modelBuilder.Entity<City>().Property(c => c.Location)
 
 ### <a name="dimension"></a>维度
 
-类似于 SRID，列的维度（或坐标）也被指定为列的一部分。 默认坐标为 X 和 Y。使用 ForSqliteHasDimension 方法启用其他坐标（Z 和 M）。
+类似于 SRID，列的维度 (或坐标) 也被指定为列的一部分。 默认坐标为 X 和 Y。使用 ForSqliteHasDimension 方法启用其他坐标 (Z 和 M) 。
 
 ``` csharp
 modelBuilder.Entity<City>().Property(c => c.Location)
@@ -280,57 +281,57 @@ modelBuilder.Entity<City>().Property(c => c.Location)
 
 此表显示每个 EF Core 提供程序将哪些 NTS 成员转换为 SQL。
 
-NetTopologySuite | SQL Server （geometry） | SQL Server （geography） | SQLite | Npgsql
+NetTopologySuite | SQL Server (几何)  | SQL Server (地域)  | SQLite | Npgsql
 --- |:---:|:---:|:---:|:---:
 Geometry | ✔ | ✔ | ✔ | ✔
-AsBinary （） | ✔ | ✔ | ✔ | ✔
-AsText （） | ✔ | ✔ | ✔ | ✔
+AsBinary ( # A1 | ✔ | ✔ | ✔ | ✔
+AsText ( # A1 | ✔ | ✔ | ✔ | ✔
 Geometry | ✔ | | ✔ | ✔
-Geometry （双精度型） | ✔ | ✔ | ✔ | ✔
-Geometry （double，int） | | | ✔ | ✔
+Geometry (双)  | ✔ | ✔ | ✔ | ✔
+ (double、int) 的 Geometry | | | ✔ | ✔
 质心 | ✔ | | ✔ | ✔
-Geometry。 Contains （Geometry） | ✔ | ✔ | ✔ | ✔
-ConvexHull （） | ✔ | ✔ | ✔ | ✔
-CoveredBy （Geometry） | | | ✔ | ✔
-Geometry （Geometry） | | | ✔ | ✔
-几何。交叉（几何） | ✔ | | ✔ | ✔
-几何差（几何） | ✔ | ✔ | ✔ | ✔
+Geometry：包含 (几何)  | ✔ | ✔ | ✔ | ✔
+ConvexHull ( # A1 | ✔ | ✔ | ✔ | ✔
+CoveredBy (几何)  | | | ✔ | ✔
+几何。覆盖 (几何)  | | | ✔ | ✔
+Geometry (几何交叉)  | ✔ | | ✔ | ✔
+Geometry (几何) 的差异 | ✔ | ✔ | ✔ | ✔
 Geometry。维度 | ✔ | ✔ | ✔ | ✔
-不连续（Geometry） | ✔ | ✔ | ✔ | ✔
-Geometry （Geometry） | ✔ | ✔ | ✔ | ✔
+不连续的 (几何)  | ✔ | ✔ | ✔ | ✔
+Geometry (几何)  | ✔ | ✔ | ✔ | ✔
 Geometry 信封 | ✔ | | ✔ | ✔
-EqualsExact （Geometry） | | | | ✔
-EqualsTopologically （Geometry） | ✔ | ✔ | ✔ | ✔
+EqualsExact (几何)  | | | | ✔
+EqualsTopologically (几何)  | ✔ | ✔ | ✔ | ✔
 GeometryType | ✔ | ✔ | ✔ | ✔
-GetGeometryN （int） | ✔ | | ✔ | ✔
+GetGeometryN (int)  | ✔ | | ✔ | ✔
 InteriorPoint | ✔ | | ✔ | ✔
-几何交集（Geometry） | ✔ | ✔ | ✔ | ✔
-几何和交集（Geometry） | ✔ | ✔ | ✔ | ✔
+几何图形 (几何)  | ✔ | ✔ | ✔ | ✔
+Geometry (几何的交集)  | ✔ | ✔ | ✔ | ✔
 IsEmpty | ✔ | ✔ | ✔ | ✔
 IsSimple | ✔ | | ✔ | ✔
 Geometry | ✔ | ✔ | ✔ | ✔
-IsWithinDistance （Geometry，double） | ✔ | | ✔ | ✔
+IsWithinDistance (Geometry、double)  | ✔ | | ✔ | ✔
 Geometry。长度 | ✔ | ✔ | ✔ | ✔
 NumGeometries | ✔ | ✔ | ✔ | ✔
 X.numpoints | ✔ | ✔ | ✔ | ✔
 OgcGeometryType | ✔ | ✔ | ✔ | ✔
-Geometry 重叠（Geometry） | ✔ | ✔ | ✔ | ✔
+Geometry (几何重叠)  | ✔ | ✔ | ✔ | ✔
 PointOnSurface | ✔ | | ✔ | ✔
-Geometry （Geometry，string） | ✔ | | ✔ | ✔
-Geometry 反向（） | | | ✔ | ✔
+Geometry (Geometry、string) 相关 | ✔ | | ✔ | ✔
+Geometry ( # A1 | | | ✔ | ✔
 SRID | ✔ | ✔ | ✔ | ✔
-SymmetricDifference （Geometry） | ✔ | ✔ | ✔ | ✔
-ToBinary （） | ✔ | ✔ | ✔ | ✔
-ToText （） | ✔ | ✔ | ✔ | ✔
-几何图形（几何） | ✔ | | ✔ | ✔
-Geometry （） | | | ✔ | ✔
-Geometry （Geometry） | ✔ | ✔ | ✔ | ✔
-几何图形。内（Geometry） | ✔ | ✔ | ✔ | ✔
+SymmetricDifference (几何)  | ✔ | ✔ | ✔ | ✔
+ToBinary ( # A1 | ✔ | ✔ | ✔ | ✔
+ToText ( # A1 | ✔ | ✔ | ✔ | ✔
+几何图形 (几何)  | ✔ | | ✔ | ✔
+Geometry ( # A1 | | | ✔ | ✔
+Geometry (几何)  | ✔ | ✔ | ✔ | ✔
+Geometry (几何)  | ✔ | ✔ | ✔ | ✔
 GeometryCollection | ✔ | ✔ | ✔ | ✔
 GeometryCollection [int] | ✔ | ✔ | ✔ | ✔
 LineString | ✔ | ✔ | ✔ | ✔
 LineString 终结点 | ✔ | ✔ | ✔ | ✔
-LineString. GetPointN （int） | ✔ | ✔ | ✔ | ✔
+LineString. GetPointN (int)  | ✔ | ✔ | ✔ | ✔
 LineString. IsClosed | ✔ | ✔ | ✔ | ✔
 LineString. IsRing | ✔ | | ✔ | ✔
 LineString. StartPoint | ✔ | ✔ | ✔ | ✔
@@ -340,7 +341,7 @@ MultiLineString. IsClosed | ✔ | ✔ | ✔ | ✔
 Point。 Y | ✔ | ✔ | ✔ | ✔
 点 Z | ✔ | ✔ | ✔ | ✔
 多边形。 ExteriorRing | ✔ | ✔ | ✔ | ✔
-GetInteriorRingN （int） | ✔ | ✔ | ✔ | ✔
+GetInteriorRingN (int)  | ✔ | ✔ | ✔ | ✔
 多边形。 NumInteriorRings | ✔ | ✔ | ✔ | ✔
 
 ## <a name="additional-resources"></a>其他资源

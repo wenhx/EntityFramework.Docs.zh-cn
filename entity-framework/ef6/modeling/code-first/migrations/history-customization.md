@@ -1,33 +1,35 @@
 ---
 title: 自定义迁移历史记录表-EF6
+description: 自定义实体框架6中的迁移历史记录表
 author: divega
 ms.date: 10/23/2016
 ms.assetid: ed5518f0-a9a6-454e-9e98-a4fa7748c8d0
-ms.openlocfilehash: eb19f367611a86f685557a6741a5f2f0bad6b718
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/modeling/code-first/migrations/history-customization
+ms.openlocfilehash: a6cd27f39c648d35d2e0238a10f8a6b351cc1220
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78415681"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89618065"
 ---
 # <a name="customizing-the-migrations-history-table"></a>自定义迁移历史记录表
 > [!NOTE]
 > **仅限 EF6 及更高版本** - 此页面中讨论的功能、API 等已引入实体框架 6。 如果使用的是早期版本，则部分或全部信息不适用。
 
 > [!NOTE]
-> 本文假设你知道如何在基本方案中使用 Code First 迁移。 如果没有，则需要先阅读[Code First 迁移](~/ef6/modeling/code-first/migrations/index.md)，然后再继续。
+> 本文假设你知道如何在基本方案中使用 Code First 迁移。 如果没有，则需要先阅读 [Code First 迁移](xref:ef6/modeling/code-first/migrations/index) ，然后再继续。
 
 ## <a name="what-is-migrations-history-table"></a>什么是迁移历史记录表？
 
-迁移历史记录表是 Code First 迁移用来存储应用于数据库的迁移的详细信息的表。 默认情况下，数据库中的表名称 \_\_MigrationHistory，并在应用首次迁移到数据库时创建。 在实体框架5中，如果应用程序使用 Microsoft Sql Server 数据库，则此表为系统表。 这在实体框架6中已更改，并且迁移历史记录表不再标记为系统表。
+迁移历史记录表是 Code First 迁移用来存储应用于数据库的迁移的详细信息的表。 默认情况下，数据库中的表的名称为 \_ \_ MigrationHistory，并且在应用第一次迁移到数据库时创建该名称。 在实体框架5中，如果应用程序使用 Microsoft Sql Server 数据库，则此表为系统表。 这在实体框架6中已更改，并且迁移历史记录表不再标记为系统表。
 
 ## <a name="why-customize-migrations-history-table"></a>为什么自定义迁移历史记录表？
 
 迁移历史记录表应仅由 Code First 迁移使用，并可以手动更改，从而中断迁移。 但有时，默认配置不合适，需要对表进行自定义，例如：
 
--   需要更改列的名称和/或 facet，以启用3个<sup>rd</sup>方迁移提供程序
+-   需要更改列的名称和/或 facet，以启用3个<sup>rd</sup> 方迁移提供程序
 -   要更改表的名称
--   需要为 \_\_MigrationHistory 表使用非默认架构
+-   需要对 \_ MigrationHistory 表使用非默认架构 \_
 -   需要为特定版本的上下文存储其他数据，因此需要向表中添加其他列
 
 ## <a name="words-of-precaution"></a>预防词
@@ -41,9 +43,9 @@ ms.locfileid: "78415681"
 首先，你将需要创建一个派生自 HistoryContext 类的类，。 HistoryContext 类派生自 DbContext 类，因此配置迁移历史记录表非常类似于配置 EF 模型与 Fluent API。 只需重写 OnModelCreating 方法并使用 Fluent API 来配置该表。
 
 >[!NOTE]
-> 通常，在配置 EF 模型时，无需调用 base。OnModelCreating （）来自重写的 OnModelCreating 方法，因为 OnModelCreating （）的主体为空。 配置迁移历史记录表时不会出现这种情况。 在这种情况下，首先要在 OnModelCreating （）重写中执行此操作。OnModelCreating （）。 这会将迁移历史记录表配置为默认方法，然后在重写方法中进行调整。
+> 通常，在配置 EF 模型时，无需调用 base。OnModelCreating 从重写的 OnModelCreating 方法 ( # A1，因为 OnModelCreating ( # A3 包含空正文。 配置迁移历史记录表时不会出现这种情况。 在这种情况下，需要在 OnModelCreating 中执行的第一件事 ( # A1 替代是实际调用 base。OnModelCreating ( # A3。 这会将迁移历史记录表配置为默认方法，然后在重写方法中进行调整。
 
-假设你想要重命名迁移历史记录表，并将其放入名为 "admin" 的自定义架构。 此外，DBA 需要将 MigrationId 列重命名为\_ID 的迁移。  可以通过创建以下派生自 HistoryContext 的类来实现此目的：
+假设你想要重命名迁移历史记录表，并将其放入名为 "admin" 的自定义架构。 此外，DBA 需要将 MigrationId 列重命名为 "迁移 ID" \_ 。 可以通过创建以下派生自 HistoryContext 的类来实现此目的：
 
 ``` csharp
     using System.Data.Common;
@@ -69,7 +71,7 @@ ms.locfileid: "78415681"
     }
 ```
 
-自定义 HistoryContext 准备就绪后，你需要通过[基于代码的配置](https://msdn.com/data/jj680699)注册 EF 来了解它：
+自定义 HistoryContext 准备就绪后，你需要通过 [基于代码的配置](https://msdn.com/data/jj680699)注册 EF 来了解它：
 
 ``` csharp
     using System.Data.Entity;
@@ -89,4 +91,4 @@ ms.locfileid: "78415681"
 
 就这么多了。 现在，你可以开始使用包管理器控制台，启用-迁移，添加-迁移，最后更新-数据库。 这会导致将迁移历史记录表添加到数据库，并根据你在 HistoryContext 派生类中指定的详细信息进行配置。
 
-![数据库](~/ef6/media/database.png)
+![迁移历史记录表](~/ef6/media/database.png)

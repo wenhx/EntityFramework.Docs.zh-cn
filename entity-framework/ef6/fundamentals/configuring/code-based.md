@@ -1,29 +1,31 @@
 ---
 title: 基于代码的配置-EF6
+description: 实体框架6中基于代码的配置
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 13886d24-2c74-4a00-89eb-aa0dee328d83
-ms.openlocfilehash: 079a4ab30af74eac8b1f51ece5801ff40a867a29
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/fundamentals/configuring/code-based
+ms.openlocfilehash: 643aefff1d8a143e7df8251eff4e5051e2c6bd08
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78414799"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89618493"
 ---
 # <a name="code-based-configuration"></a>基于代码的配置
 > [!NOTE]
 > **仅限 EF6 及更高版本** - 此页面中讨论的功能、API 等已引入实体框架 6。 如果使用的是早期版本，则部分或全部信息不适用。  
 
-可以在配置文件（app.config/web.config）或代码中指定实体框架应用程序的配置。 后者称为基于代码的配置。  
+实体框架应用程序的配置可以在配置文件中指定 ( # A0/web.config) 或代码。 后者称为基于代码的配置。  
 
-在[单独的文章](config-file.md)中介绍了配置文件中的配置。 配置文件优先于基于代码的配置。 换句话说，如果在代码和配置文件中都设置了配置选项，则使用配置文件中的设置。  
+在 [单独的文章](xref:ef6/fundamentals/configuring/config-file)中介绍了配置文件中的配置。 配置文件优先于基于代码的配置。 换句话说，如果在代码和配置文件中都设置了配置选项，则使用配置文件中的设置。  
 
 ## <a name="using-dbconfiguration"></a>使用 DbConfiguration  
 
-EF6 和更高版本中基于代码的配置是通过创建 DbConfiguration 的子类来实现的。 在对 DbConfiguration 进行子类化时，应遵循以下准则：  
+EF6 和更高版本中基于代码的配置是通过创建 System.Data.Entity.Config 的子类来实现的。DbConfiguration. 在对 DbConfiguration 进行子类化时，应遵循以下准则：  
 
 - 只为应用程序创建一个 DbConfiguration 类。 此类指定应用域范围内的设置。  
-- 将 DbConfiguration 类放在与 DbContext 类相同的程序集中。 （若要更改此内容，请参阅*移动 DbConfiguration*部分。）  
+- 将 DbConfiguration 类放在与 DbContext 类相同的程序集中。  (如果要更改此内容，请参阅 *移动 DbConfiguration* 部分。 )   
 - 为 DbConfiguration 类指定一个公共的无参数构造函数。  
 - 通过在此构造函数中调用受保护的 DbConfiguration 方法来设置配置选项。  
 
@@ -94,7 +96,7 @@ public class MyContextContext : DbContext
 
 在这种情况下，EF 无法自动发现配置，而必须执行以下操作之一：  
 
-- 设置配置文件中的 DbConfiguration 类型，如上面的*移动 DbConfiguration*部分中所述
+- 设置配置文件中的 DbConfiguration 类型，如上面的 *移动 DbConfiguration* 部分中所述
 - 在应用程序启动过程中调用静态 DbConfiguration SetConfiguration 方法  
 
 ## <a name="overriding-dbconfiguration"></a>重写 DbConfiguration  
@@ -103,7 +105,7 @@ public class MyContextContext : DbContext
 
 为此，EntityFramework 允许注册事件处理程序，该事件处理程序可以在锁定之前修改现有配置。  它还提供专门用于替换 EF 服务定位器返回的任何服务的一个糖方法。 这就是如何使用它：  
 
-- 在应用启动时（使用 EF 之前）插件或提供程序应为此事件注册事件处理程序方法。 （请注意，此操作必须在应用程序使用 EF 之前发生。）  
+- 在应用启动 (在使用 EF 之前) 插件或提供程序应为此事件注册事件处理程序方法。  (注意，此操作必须在应用程序使用 EF 之前发生。 )   
 - 对于需要替换的每个服务，事件处理程序都会调用 ReplaceService。  
 
 例如，若要替换 IDbConnectionFactory 和 DbProviderService，需注册一个类似于以下内容的处理程序：  

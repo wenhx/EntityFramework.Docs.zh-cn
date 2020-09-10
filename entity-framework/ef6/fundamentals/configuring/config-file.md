@@ -1,27 +1,29 @@
 ---
 title: 配置文件设置-EF6
+description: 实体框架6中的配置文件设置
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 000044c6-1d32-4cf7-ae1f-ea21d86ebf8f
-ms.openlocfilehash: 86389e4a3a3bac46e2a4cf2da648a4b19e29f3c3
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/fundamentals/configuring/config-file
+ms.openlocfilehash: ac257c0da8da4dff852ec24f7de91c62c68f92d8
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78414853"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89618487"
 ---
 # <a name="configuration-file-settings"></a>配置文件设置
 实体框架允许在配置文件中指定多个设置。 在常规 EF 中，遵循 "约定 over 配置" 原则：在此文章中讨论的所有设置都有默认行为，你只需考虑在默认不再满足你的要求时更改设置。  
 
 ## <a name="a-code-based-alternative"></a>基于代码的替代项  
 
-还可以使用代码应用所有这些设置。 从 EF6 开始，我们引入了[基于代码的配置](code-based.md)，它提供了一种从代码应用配置的集中方式。 在 EF6 之前，仍可以从代码应用配置，但需要使用各种 Api 来配置不同的区域。 配置文件选项允许在部署期间轻松地更改这些设置，而无需更新代码。
+还可以使用代码应用所有这些设置。 从 EF6 开始，我们引入了 [基于代码的配置](xref:ef6/fundamentals/configuring/code-based)，它提供了一种从代码应用配置的集中方式。 在 EF6 之前，仍可以从代码应用配置，但需要使用各种 Api 来配置不同的区域。 配置文件选项允许在部署期间轻松地更改这些设置，而无需更新代码。
 
 ## <a name="the-entity-framework-configuration-section"></a>"实体框架配置" 部分  
 
-从 EF 4.1 开始，你可以使用配置文件的**appSettings**节为上下文设置数据库初始值设定项。 在 EF 4.3 中，我们引入了自定义**entityFramework**部分来处理新设置。 实体框架仍将识别使用旧格式设置的数据库初始值设定项，但建议在可能的情况下移动到新的格式。
+从 EF 4.1 开始，你可以使用配置文件的 **appSettings** 节为上下文设置数据库初始值设定项。 在 EF 4.3 中，我们引入了自定义 **entityFramework** 部分来处理新设置。 实体框架仍将识别使用旧格式设置的数据库初始值设定项，但建议在可能的情况下移动到新的格式。
 
-安装 EntityFramework NuGet 包时， **entityFramework**节会自动添加到项目的配置文件中。  
+安装 EntityFramework NuGet 包时， **entityFramework** 节会自动添加到项目的配置文件中。  
 
 ``` xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -36,9 +38,9 @@ ms.locfileid: "78414853"
 
 ## <a name="connection-strings"></a>连接字符串  
 
-[本页提供了](~/ef6/fundamentals/configuring/connection-strings.md)有关实体框架如何确定要使用的数据库的更多详细信息，包括配置文件中的连接字符串。  
+[本页提供了](xref:ef6/fundamentals/configuring/connection-strings) 有关实体框架如何确定要使用的数据库的更多详细信息，包括配置文件中的连接字符串。  
 
-连接字符串位于标准**connectionStrings**元素中，不需要**entityFramework**部分。  
+连接字符串位于标准 **connectionStrings** 元素中，不需要 **entityFramework** 部分。  
 
 基于 Code First 的模型使用常规 ADO.NET 连接字符串。 例如：  
 
@@ -70,11 +72,11 @@ ms.locfileid: "78414853"
 </connectionStrings>
 ```
 
-## <a name="code-based-configuration-type-ef6-onwards"></a>基于代码的配置类型（EF6）  
+## <a name="code-based-configuration-type-ef6-onwards"></a>基于代码的配置类型 (EF6 向前)   
 
-从 EF6 开始，可以指定 EF 的 DbConfiguration，以便在应用程序中使用[基于代码的配置](code-based.md)。 在大多数情况下，无需指定此设置，因为 EF 会自动发现你的 DbConfiguration。 有关可能需要在配置文件中指定 DbConfiguration 的详细信息，请参阅[基于代码的配置](code-based.md)的**移动 DbConfiguration**部分。  
+从 EF6 开始，可以指定 EF 的 DbConfiguration，以便在应用程序中使用 [基于代码的配置](xref:ef6/fundamentals/configuring/code-based) 。 在大多数情况下，无需指定此设置，因为 EF 会自动发现你的 DbConfiguration。 有关可能需要在配置文件中指定 DbConfiguration 的详细信息，请参阅[基于代码的配置](xref:ef6/fundamentals/configuring/code-based)的**移动 DbConfiguration**部分。  
 
-若要设置 DbConfiguration 类型，请在**codeConfigurationType**元素中指定程序集限定的类型名称。  
+若要设置 DbConfiguration 类型，请在 **codeConfigurationType** 元素中指定程序集限定的类型名称。  
 
 > [!NOTE]
 > 程序集限定名称是命名空间限定名称，后跟一个逗号，然后是该类型所在的程序集。 还可以选择指定程序集版本、区域性和公钥标记。  
@@ -84,7 +86,7 @@ ms.locfileid: "78414853"
 </entityFramework>
 ```  
 
-## <a name="ef-database-providers-ef6-onwards"></a>EF 数据库提供程序（EF6）  
+## <a name="ef-database-providers-ef6-onwards"></a>EF 数据库提供程序 (EF6 向前)   
 
 在 EF6 之前，数据库提供程序实体框架特定部分必须作为核心 ADO.NET 提供程序的一部分包括在内。 从 EF6 开始，EF 特定部分现在被管理和注册。  
 
@@ -92,8 +94,8 @@ ms.locfileid: "78414853"
 
 提供程序是通过在**entityFramework** **节的 provider 子节**下包含**提供程序**元素来注册的。 提供程序条目有两个必需的属性：  
 
-- **invariantName**标识此 EF 提供程序针对的核心 ADO.NET 提供程序  
-- **类型**是 EF 提供程序实现的程序集限定类型名称  
+- **invariantName** 标识此 EF 提供程序针对的核心 ADO.NET 提供程序  
+- **类型** 是 EF 提供程序实现的程序集限定类型名称  
 
 > [!NOTE]
 > 程序集限定名称是命名空间限定名称，后跟一个逗号，然后是该类型所在的程序集。 还可以选择指定程序集版本、区域性和公钥标记。  
@@ -106,11 +108,11 @@ ms.locfileid: "78414853"
 </providers>
 ```  
 
-## <a name="interceptors-ef61-onwards"></a>拦截（EF 6.1 以上版本）  
+## <a name="interceptors-ef61-onwards"></a>拦截 (EF 6.1)   
 
 从 EF 6.1 开始，可以在配置文件中注册侦听器。 当 EF 执行某些操作（例如执行数据库查询、打开连接等）时，拦截允许您运行其他逻辑。  
 
-通过在**entityFramework**部分的**拦截**程序子部分下包含一个**侦听器**元素来注册拦截程序。 例如，下面的配置将注册将所有数据库操作记录到控制台的内置**DatabaseLogger**侦听器。  
+通过在**entityFramework**部分的**拦截**程序子部分下包含一个**侦听器**元素来注册拦截程序。 例如，下面的配置将注册将所有数据库操作记录到控制台的内置 **DatabaseLogger** 侦听器。  
 
 ``` xml  
 <interceptors>
@@ -118,9 +120,9 @@ ms.locfileid: "78414853"
 </interceptors>
 ```  
 
-### <a name="logging-database-operations-to-a-file-ef61-onwards"></a>将数据库操作记录到文件中（EF 6.1 以上版本）  
+### <a name="logging-database-operations-to-a-file-ef61-onwards"></a>将数据库操作记录到文件 (EF 6.1 之前)   
 
-如果要将日志记录添加到现有的应用程序以帮助调试问题，则通过配置文件注册侦听器特别有用。 **DatabaseLogger**支持通过将文件名作为构造函数参数提供来记录文件。  
+如果要将日志记录添加到现有的应用程序以帮助调试问题，则通过配置文件注册侦听器特别有用。 **DatabaseLogger** 支持通过将文件名作为构造函数参数提供来记录文件。  
 
 ``` xml  
 <interceptors>
@@ -145,7 +147,7 @@ ms.locfileid: "78414853"
 </interceptors>
 ```  
 
-有关**DatabaseLogger**和注册侦听器的其他信息，请参阅博客文章[EF 6.1：在不重新编译的情况下启用日志记录](https://blog.oneunicorn.com/2014/02/09/ef-6-1-turning-on-logging-without-recompiling/)。  
+有关 **DatabaseLogger** 和注册侦听器的其他信息，请参阅博客文章 [EF 6.1：在不重新编译的情况下启用日志记录](https://blog.oneunicorn.com/2014/02/09/ef-6-1-turning-on-logging-without-recompiling/)。  
 
 ## <a name="code-first-default-connection-factory"></a>Code First 默认连接工厂  
 
@@ -153,7 +155,7 @@ ms.locfileid: "78414853"
 
 当你安装 EF NuGet 包时，将根据你安装的是 SQL Express 或 LocalDB 来注册一个默认连接工厂。  
 
-若要设置连接工厂，请在**defaultConnectionFactory**元素中指定程序集限定的类型名称。  
+若要设置连接工厂，请在 **defaultConnectionFactory** 元素中指定程序集限定的类型名称。  
 
 > [!NOTE]
 > 程序集限定名称是命名空间限定名称，后跟一个逗号，然后是该类型所在的程序集。 还可以选择指定程序集版本、区域性和公钥标记。  
@@ -166,7 +168,7 @@ ms.locfileid: "78414853"
 </entityFramework>
 ```  
 
-上面的示例要求自定义工厂具有无参数的构造函数。 如果需要，可以使用**parameters**元素指定构造函数参数。  
+上面的示例要求自定义工厂具有无参数的构造函数。 如果需要，可以使用 **parameters** 元素指定构造函数参数。  
 
 例如，SqlCeConnectionFactory 包含在实体框架中，需要你向构造函数提供提供程序固定名称。 提供程序固定名称用于标识要使用的 SQL Compact 的版本。 默认情况下，下面的配置将导致上下文使用 SQL Compact 4.0 版。  
 
@@ -180,9 +182,9 @@ ms.locfileid: "78414853"
 </entityFramework>
 ```  
 
-如果未设置默认的连接工厂，则 Code First 使用 SqlConnectionFactory，指向 `.\SQLEXPRESS`。 SqlConnectionFactory 还具有一个构造函数，该构造函数允许你重写连接字符串的各个部分。 如果要使用 `.\SQLEXPRESS` 之外的 SQL Server 实例，则可以使用此构造函数来设置服务器。  
+如果未设置默认的连接工厂，Code First 将使用指向的 SqlConnectionFactory `.\SQLEXPRESS` 。 SqlConnectionFactory 还具有一个构造函数，该构造函数允许你重写连接字符串的各个部分。 如果要使用以外的 SQL Server 实例， `.\SQLEXPRESS` 则可以使用此构造函数来设置服务器。  
 
-以下配置将导致 Code First 为未设置显式连接字符串的上下文使用**MyDatabaseServer** 。  
+以下配置将导致 Code First 为未设置显式连接字符串的上下文使用 **MyDatabaseServer** 。  
 
 ``` xml  
 <entityFramework>
@@ -202,11 +204,11 @@ ms.locfileid: "78414853"
 
 ## <a name="database-initializers"></a>数据库初始值设定项  
 
-数据库初始值设定项在每个上下文基础上进行配置。 可以使用**上下文**元素在配置文件中设置它们。 此元素使用程序集限定名称标识要配置的上下文。  
+数据库初始值设定项在每个上下文基础上进行配置。 可以使用 **上下文** 元素在配置文件中设置它们。 此元素使用程序集限定名称标识要配置的上下文。  
 
 默认情况下，Code First 上下文配置为使用 CreateDatabaseIfNotExists 初始值设定项。 **上下文**元素上有一个可用于禁用数据库初始化的**disableDatabaseInitialization**属性。  
 
-例如，下面的配置将禁用在 MyAssembly 中定义的 BlogContext 上下文的数据库初始化。  
+例如，下面的配置禁用 MyAssembly.dll 中定义的 BlogContext 上下文的数据库初始化。  
 
 ``` xml  
 <contexts>
@@ -214,7 +216,7 @@ ms.locfileid: "78414853"
 </contexts>
 ```  
 
-可以使用**databaseInitializer**元素设置自定义初始值设定项。  
+可以使用 **databaseInitializer** 元素设置自定义初始值设定项。  
 
 ``` xml
 <contexts>

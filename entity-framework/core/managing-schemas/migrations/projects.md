@@ -1,21 +1,22 @@
 ---
 title: 使用单独的迁移项目-EF Core
+description: 使用单独的迁移项目来管理具有 Entity Framework Core 的数据库架构
 author: bricelam
 ms.author: bricelam
 ms.date: 10/30/2017
 uid: core/managing-schemas/migrations/projects
-ms.openlocfilehash: 89b7f50fe750c2953aa75efcdffcb1a5199ce90c
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.openlocfilehash: a3f0ed96c6a8e3e8629d9a4bb1610fcbfe6ca043
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78414277"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89617919"
 ---
 # <a name="using-a-separate-migrations-project"></a>使用单独的迁移项目
 
-你可能想要将迁移存储在与包含你的 `DbContext`的程序集不同的程序集中。 你还可以使用此策略来维护多个迁移集，例如，一个用于开发，另一个用于发布到发布升级。
+你可能想要将迁移存储在与包含你的不同的程序集中 `DbContext` 。 你还可以使用此策略来维护多个迁移集，例如，一个用于开发，另一个用于发布到发布升级。
 
-为此，请执行以下操作...
+若要执行此操作...
 
 1. 创建一个新的类库。
 

@@ -1,14 +1,16 @@
 ---
 title: 用自己的测试进行测试双 EF6
+description: 在实体框架6中，用自己的测试进行测试翻倍
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 16a8b7c0-2d23-47f4-9cc0-e2eb2e738ca3
-ms.openlocfilehash: 3d8933fb5e17f8c01f3971495a1fcdb5b8cfab57
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/fundamentals/testing/writing-test-doubles
+ms.openlocfilehash: 5c8e50247c0e6ed4081e2403ba60e0738051312b
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78413887"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89618241"
 ---
 # <a name="testing-with-your-own-test-doubles"></a>用自己的测试进行测试双精度
 > [!NOTE]
@@ -20,30 +22,30 @@ ms.locfileid: "78413887"
 
 可使用两种不同的方法创建上下文的内存中版本。  
 
-- **创建自己的测试双精度**型–此方法涉及编写您自己的上下文和 dbset 的内存中实现。 这使你可以很好地控制类的行为，但可能涉及到编写和拥有合理的代码量。  
-- **使用模拟框架创建测试双精度**型–使用模拟框架（如 Moq），可以在运行时动态创建上下文和集。  
+- **创建自己的测试双精度** 型–此方法涉及编写您自己的上下文和 dbset 的内存中实现。 这使你可以很好地控制类的行为，但可能涉及到编写和拥有合理的代码量。  
+- **使用模拟框架创建测试双精度** 数–使用模拟 framework (例如 Moq) 你可以在运行时为你提供上下文的内存中实现并在运行时动态创建。  
 
-本文将介绍如何创建自己的测试 double。 有关使用模拟框架的信息，请参阅使用[模拟框架进行测试](mocking.md)。  
+本文将介绍如何创建自己的测试 double。 有关使用模拟框架的信息，请参阅使用 [模拟框架进行测试](xref:ef6/fundamentals/testing/mocking)。  
 
 ## <a name="testing-with-pre-ef6-versions"></a>用预 EF6 版本测试  
 
-本文中所示的代码与 EF6 兼容。 若要使用 EF5 和更早的版本进行测试，请参阅[使用虚设上下文进行测试](https://romiller.com/2012/02/14/testing-with-a-fake-dbcontext/)。  
+本文中所示的代码与 EF6 兼容。 若要使用 EF5 和更早的版本进行测试，请参阅 [使用虚设上下文进行测试](https://romiller.com/2012/02/14/testing-with-a-fake-dbcontext/)。  
 
 ## <a name="limitations-of-ef-in-memory-test-doubles"></a>EF 内存中测试的限制双精度  
 
-内存中测试双精度型可以是一种提供使用 EF 的应用程序的单元测试级别的好方法。 但是，在执行此操作时，将使用 LINQ to Objects 对内存中数据执行查询。 这可能会导致不同的行为，而不是使用 EF 的 LINQ 提供程序（LINQ to Entities）将查询转换为对数据库运行的 SQL。  
+内存中测试双精度型可以是一种提供使用 EF 的应用程序的单元测试级别的好方法。 但是，在执行此操作时，将使用 LINQ to Objects 对内存中数据执行查询。 这可能会导致不同的行为，而不是使用 EF 的 LINQ 提供程序 (LINQ to Entities) 将查询转换为对数据库运行的 SQL。  
 
 这种差异的一个示例就是加载相关数据。 如果创建一系列博客，其中每个博客都有相关的文章，则在使用内存中数据时，将始终为每个博客加载相关文章。 但是，在对数据库运行时，仅当使用 Include 方法时才会加载数据。  
 
-出于此原因，建议始终包括某个级别的端到端测试（除了单元测试），以确保应用程序能够对数据库正常运行。  
+出于此原因，建议始终包含某些级别的端到端测试 (除了单元测试) ，以确保应用程序可针对数据库正常运行。  
 
 ## <a name="following-along-with-this-article"></a>与本文一起介绍  
 
-本文提供了完整的代码清单，你可以将其复制到 Visual Studio 中，以根据你的需要进行。 最简单的方法是创建一个**单元测试项目**，并需要将 **.NET Framework 4.5**作为目标来完成使用 async 的部分。  
+本文提供了完整的代码清单，你可以将其复制到 Visual Studio 中，以根据你的需要进行。 最简单的方法是创建一个 **单元测试项目** ，并需要将 **.NET Framework 4.5** 作为目标来完成使用 async 的部分。  
 
 ## <a name="creating-a-context-interface"></a>创建上下文接口  
 
-我们将介绍如何测试使用 EF 模型的服务。 为了能够将 EF 上下文替换为内存中用于测试的版本，我们将定义 EF 上下文（和内存中双精度）将实现的接口。
+我们将介绍如何测试使用 EF 模型的服务。 为了能够将 EF 上下文替换为内存中用于测试的版本，我们将定义 EF 上下文 (的接口，并且它的内存中双精度) 将实现。
 
 我们将要测试的服务将使用上下文的 DbSet 属性来查询和修改数据，还会调用 SaveChanges 将更改推送到数据库。 我们将这些成员包括在接口上。  
 
@@ -102,7 +104,7 @@ namespace TestingDemo
 
 请注意，我们的上下文实现了 IBloggingContext 接口。  
 
-如果使用 Code First，则可以直接编辑上下文来实现接口。 如果使用的是 EF 设计器，则需要编辑生成上下文的 T4 模板。 打开\>\<model_name。Context.tt 文件嵌套在 edmx 文件下，查找以下代码片段，并将其添加到接口中，如下所示。  
+如果使用 Code First，则可以直接编辑上下文来实现接口。 如果使用的是 EF 设计器，则需要编辑生成上下文的 T4 模板。 打开 \<model_name\> 。Context.tt 文件嵌套在 edmx 文件下，查找以下代码片段，并将其添加到接口中，如下所示。  
 
 ``` csharp  
 <#=Accessibility.ForType(container)#> partial class <#=code.Escape(container)#> : DbContext, IBloggingContext
@@ -110,7 +112,7 @@ namespace TestingDemo
 
 ## <a name="service-to-be-tested"></a>要测试的服务  
 
-为了演示使用内存中测试的测试，我们将为 BlogService 编写一些测试。 该服务可以创建新的博客（AddBlog）并返回按名称排序的所有博客（GetAllBlogs）。 除了 GetAllBlogs 之外，我们还提供了一个方法，该方法将异步获取按名称（GetAllBlogsAsync）排序的所有博客。  
+为了演示使用内存中测试的测试，我们将为 BlogService 编写一些测试。 该服务可以创建新的博客 (AddBlog) 并返回按名称 (GetAllBlogs) 排序的所有博客。 除了 GetAllBlogs 之外，我们还提供了一个方法，该方法以异步方式获取按名称 (GetAllBlogsAsync) 排序的所有博客。  
 
 ``` csharp
 using System.Collections.Generic;
@@ -163,7 +165,7 @@ namespace TestingDemo
 
 现在，我们已经有了真正的 EF 模型和可使用该模型的服务，接下来可以创建可用于测试的内存中测试双精度。 我们为上下文创建了 TestContext 测试 double。 在测试中，我们会选择所需的行为，以便支持我们将要运行的测试。 在此示例中，我们只是捕获调用 SaveChanges 的次数，但你可以包括验证所测试方案所需的任何逻辑。  
 
-我们还创建了 TestDbSet 来提供 DbSet 的内存中实现。 我们为 DbSet 上的所有方法提供了一个完整的实现（Find 除外），但你只需实现测试方案将使用的成员。  
+我们还创建了 TestDbSet 来提供 DbSet 的内存中实现。 我们为 DbSet (上的所有方法提供了一个完整的实现，但 Find) 除外，但你只需实现测试方案将使用的成员。  
 
 TestDbSet 利用我们提供的其他一些基础结构类，以确保可以处理异步查询。  
 
@@ -454,7 +456,7 @@ namespace TestingDemo
 }
 ```  
 
-最后，我们将编写一个使用异步方法的测试，以确保[TestDbSet](#creating-the-in-memory-test-doubles)中包含的异步基础结构工作正常。  
+最后，我们将编写一个使用异步方法的测试，以确保 [TestDbSet](#creating-the-in-memory-test-doubles) 中包含的异步基础结构工作正常。  
 
 ``` csharp
 using Microsoft.VisualStudio.TestTools.UnitTesting;
