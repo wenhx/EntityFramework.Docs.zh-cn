@@ -1,21 +1,22 @@
 ---
 title: 实体框架的过去版本-EF6
+description: 实体框架的过去版本
 author: divega
 ms.date: 09/12/2019
 ms.assetid: 1060bb99-765f-4f32-aaeb-d6635d3dbd3e
 uid: ef6/what-is-new/past-releases
-ms.openlocfilehash: b7181334cd125c5cbf296d5b3674c0b5f087f438
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.openlocfilehash: e9dce5c545027658a98b375e7ffa15ebbb77369c
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/15/2020
-ms.locfileid: "79402119"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89619739"
 ---
 # <a name="past-releases-of-entity-framework"></a>实体框架的过去版本
 
 第一版实体框架在2008中发布，作为 .NET Framework 3.5 SP1 和 Visual Studio 2008 SP1 的一部分。
 
-从 EF 4.1 版本开始，该版本已作为[EntityFramework NuGet 包](https://www.nuget.org/packages/EntityFramework/)提供-当前 NuGet.org 上最热门的包之一。
+从 EF 4.1 版本开始，该版本已作为 [EntityFramework NuGet 包](https://www.nuget.org/packages/EntityFramework/) 提供-当前 NuGet.org 上最热门的包之一。
 
 在版本4.1 和5.0 之间，EntityFramework NuGet 包扩展了作为 .NET Framework 一部分提供的 EF 库。
 
@@ -59,23 +60,23 @@ EF ef6.1.3 运行时发布到了2015年10月的 NuGet。
 此版本仅包含对6.1.2 版本报告的高优先级缺陷和回归的修补程序。
 修复包括：
 
-- 查询：EF 6.1.2 中的回归：OUTER 适用于1:1 关系和 "let" 子句的已引入和更复杂的查询
+- 查询： EF 6.1.2 中的回归： OUTER 适用于1:1 关系和 "let" 子句的引入和更复杂的查询
 - 继承类中隐藏基类属性的 TPT 问题
 - 当文本中包含单词 "DbMigration" 时，Sql 失败
 - 创建供 unionall 和交集平展支持的兼容性标志
-- 具有多个包含的查询在6.1.2 中不起作用（在6.1.1 中工作）
+- 具有多个包含的查询无法在6.1.2 中工作 (在6.1.1 中工作) 
 - 从 EF 6.1.1 升级到6.1.2 后，出现 SQL 语法错误
 
 ## <a name="ef-612"></a>EF 6.1。2
 EF 6.1.2 运行时已发布到2014年12月的 NuGet。
 此版本主要涉及 bug 修复。 我们还接受了社区成员的几个值得注意的更改：
-- **可以从应用程序/web.config 文件配置查询缓存参数**
+- **可以从应用/web.configu 文件配置查询缓存参数**
     ``` xml
     <entityFramework>
       <queryCache size='1000' cleaningIntervalInSeconds='-1'/>
     </entityFramework>
     ```
-- **DbMigration 上的 SqlFile 和 SqlResource 方法**允许您运行存储为文件或嵌入资源的 SQL 脚本。
+- **DbMigration 上的 SqlFile 和 SqlResource 方法** 允许您运行存储为文件或嵌入资源的 SQL 脚本。
 
 ## <a name="ef-611"></a>EF 6.1。1
 EF 6.1.1 运行时已发布到2014年6月。
@@ -87,60 +88,60 @@ EF 6.1.1 运行时已发布到2014年6月。
 EF 6.1.0 运行时发布到了2014年3月的 NuGet。
 此次要更新包含大量新功能：
 
-- **工具合并**为创建新的 EF 模型提供了一种一致的方法。 此功能[扩展了 ADO.NET 实体数据模型向导以支持创建 Code First 模型](~/ef6/modeling/code-first/workflows/existing-database.md)，包括从现有数据库进行反向工程。 这些功能之前已在 EF Power Tools 中提供 Beta 版质量。
-- **[处理事务提交失败](~/ef6/fundamentals/connection-resiliency/commit-failures.md)** 会提供 CommitFailureHandler，它利用新引入的截取事务操作的能力。 CommitFailureHandler 允许在提交事务的同时从连接故障中自动恢复。
-- **[IndexAttribute](~/ef6/modeling/code-first/data-annotations.md)** 允许通过在 Code First 模型中的属性（或属性）上放置 `[Index]` 特性来指定索引。 然后 Code First 将在数据库中创建相应的索引。
-- **公共映射 API**提供对信息 EF 的访问，以了解如何将属性和类型映射到数据库中的列和表。 在以前的版本中，此 API 是内部的。
-- **[通过 App/web.config 文件配置侦听器的能力](~/ef6/fundamentals/configuring/config-file.md)** 允许添加侦听器，而无需重新编译应用程序。
-- **DatabaseLogger**是一个新的侦听器，可让你轻松地将所有数据库操作记录到文件中。 与上一项功能结合使用，可以轻松地针对已[部署的应用程序的数据库操作进行日志记录](~/ef6/fundamentals/configuring/config-file.md)，而无需重新编译。
+- **工具合并** 为创建新的 EF 模型提供了一种一致的方法。 此功能 [扩展了 ADO.NET 实体数据模型向导以支持创建 Code First 模型](xref:ef6/modeling/code-first/workflows/existing-database)，包括从现有数据库进行反向工程。 这些功能之前已在 EF Power Tools 中提供 Beta 版质量。
+- **[处理事务提交失败](xref:ef6/fundamentals/connection-resiliency/commit-failures)** 会提供 CommitFailureHandler，它利用新引入的截取事务操作的能力。 CommitFailureHandler 允许在提交事务的同时从连接故障中自动恢复。
+- **[IndexAttribute](xref:ef6/modeling/code-first/data-annotations)** 允许通过 `[Index]`) Code First 模型中的属性 (或属性来指定索引。 然后 Code First 将在数据库中创建相应的索引。
+- **公共映射 API** 提供对信息 EF 的访问，以了解如何将属性和类型映射到数据库中的列和表。 在以前的版本中，此 API 是内部的。
+- **[通过应用/Web.config 文件配置侦听器的能力](xref:ef6/fundamentals/configuring/config-file)** 允许添加侦听器，而无需重新编译应用程序。
+- **DatabaseLogger**是一个新的侦听器，可让你轻松地将所有数据库操作记录到文件中。 与上一项功能结合使用，可以轻松地针对已 [部署的应用程序的数据库操作进行日志记录](xref:ef6/fundamentals/configuring/config-file)，而无需重新编译。
 - 改进了**迁移模型更改检测**，使基架迁移更准确;还增强了更改检测过程的性能。
-- **性能改进**，包括在初始化期间降低数据库操作、在更多方案中优化 null 相等性比较、更快速地生成视图（创建模型）以及更有效地具体化具有多个关联的跟踪实体。
+- **性能改进** ，包括在初始化期间减少数据库操作、在 LINQ 查询中优化 null 相等比较、更快速地 (模型创建) 在更多情况下，以及更高效地具体化具有多个关联的跟踪实体。
 
 ## <a name="ef-602"></a>EF 6.0。2
 EF 6.0.2 运行时已发布到2013年12月的 NuGet。
-此修补程序版本仅限于修复在 EF6 版本中引入的问题（自 EF5 以来性能/行为的回归）。
+此修补程序版本限制为修复 EF6 版本中引入的问题， (性能/行为中的回归，因为 EF5) 。
 
 ## <a name="ef-601"></a>EF 6.0。1
 EF 6.0.1 运行时已发布到2013年10月的 NuGet，因为后者嵌入到了几个月之前的 Visual Studio 版本中。
-此修补程序版本仅限于修复在 EF6 版本中引入的问题（自 EF5 以来性能/行为的回归）。
+此修补程序版本限制为修复 EF6 版本中引入的问题， (性能/行为中的回归，因为 EF5) 。
 最值得注意的更改是解决 EF 模型的预热过程中的某些性能问题。
 这一点非常重要，因为预热性能是 EF6 的一个重点领域，而这些问题取消 EF6 的一些其他性能。
 
 ## <a name="ef-60"></a>EF 6。0
 EF 6.0.0 运行时发布到了2013年10月的 NuGet。
-这是[EntityFramework NuGet 包](https://www.nuget.org/packages/EntityFramework/)中的第一个版本，在该版本中，不依赖于 .NET Framework 中的 EF 位。
+这是 [EntityFramework NuGet 包](https://www.nuget.org/packages/EntityFramework/) 中的第一个版本，在该版本中，不依赖于 .NET Framework 中的 EF 位。
 将运行时的剩余部分移到 NuGet 包需要对现有代码进行大量的重大更改。
-有关升级所需的手动步骤的详细信息，请参阅[升级到实体框架 6](upgrading-to-ef6.md)部分。
+有关升级所需的手动步骤的详细信息，请参阅 [升级到实体框架 6](xref:ef6/what-is-new/upgrading-to-ef6) 部分。
 
 此版本包含许多新功能。
 以下功能适用于使用 Code First 或 EF 设计器创建的模型：
 
-- **[异步查询和保存](~/ef6/fundamentals/async.md)** 增加了对 .net 4.5 中引入的基于任务的异步模式的支持。
-- **[连接复原](~/ef6/fundamentals/connection-resiliency/retry-logic.md)** 允许从暂时性连接故障中自动恢复。
-- **[基于代码的配置](~/ef6/fundamentals/configuring/code-based.md)** 使你能够在代码中执行配置（传统上在配置文件中执行）。
-- **[依赖项解析](~/ef6/fundamentals/configuring/dependency-resolution.md)** 引入了对服务定位器模式的支持，并分解了某些功能，这些功能可以替换为自定义实现。
-- **[拦截/SQL 日志记录](~/ef6/fundamentals/logging-and-interception.md)** 提供低级别的构建基块，用于截获 EF 操作，同时构建简单的 SQL 日志记录。
-- [使用模拟 framework](~/ef6/fundamentals/testing/mocking.md)或[编写你自己的测试](~/ef6/fundamentals/testing/writing-test-doubles.md)时，可测试性**改进**可以更轻松地为 DbContext 和 DbSet 创建测试双精度。
-- **[现在可以使用已打开的 DbConnection 创建 DbContext，](~/ef6/fundamentals/connection-management.md)** 这会启用在创建上下文时可以打开连接的情况（例如，在不能保证连接状态的组件之间共享连接）的情况。
-- **[改进的事务支持](~/ef6/saving/transactions.md)** 为框架的外部事务提供支持，并改进了在框架中创建事务的方式。
-- **.Net 4.0 上的枚举、空间和更好的性能**-通过将已在 .NET Framework 中的核心组件移到 EF NuGet 包中，我们现在可以提供枚举支持、空间数据类型和 .net 4.0 上 EF5 的性能改进。
+- **[异步查询和保存](xref:ef6/fundamentals/async)** 增加了对 .net 4.5 中引入的基于任务的异步模式的支持。
+- **[连接复原](xref:ef6/fundamentals/connection-resiliency/retry-logic)** 允许从暂时性连接故障中自动恢复。
+- **[基于代码的配置](xref:ef6/fundamentals/configuring/code-based)** 使你能够在代码中执行配置（传统上在配置文件中执行）。
+- **[依赖项解析](xref:ef6/fundamentals/configuring/dependency-resolution)** 引入了对服务定位器模式的支持，并分解了某些功能，这些功能可以替换为自定义实现。
+- **[拦截/SQL 日志记录](xref:ef6/fundamentals/logging-and-interception)** 提供低级别的构建基块，用于截获 EF 操作，同时构建简单的 SQL 日志记录。
+- [使用模拟 framework](xref:ef6/fundamentals/testing/mocking)或[编写你自己的测试](xref:ef6/fundamentals/testing/writing-test-doubles)时，可测试性**改进**可以更轻松地为 DbContext 和 DbSet 创建测试双精度。
+- **[现在可以使用已打开的 DbConnection 创建 DbContext，](xref:ef6/fundamentals/connection-management)** 这会启用在创建上下文时可以打开连接的方案 (例如，在无法保证连接状态的组件之间共享连接) 。
+- **[改进的事务支持](xref:ef6/saving/transactions)** 为框架的外部事务提供支持，并改进了在框架中创建事务的方式。
+- **.Net 4.0 上的枚举、空间和更好的性能** -通过将已在 .NET Framework 中的核心组件移到 EF NuGet 包中，我们现在可以提供枚举支持、空间数据类型和 .net 4.0 上 EF5 的性能改进。
 - 可**枚举的性能得到改进。包含在 LINQ 查询中**。
-- **缩短了预热时间（视图生成）** ，尤其是对于大型模型。
-- 可**插接式复数形式 &amp; Singularization 服务**。
+- **改善了 (视图生成) 的预热时间 **，尤其是对于大型模型。
+- 可**插入复数形式 &amp;Singularization 服务**。
 - 现在支持实体类上**Equals 或 GetHashCode 的自定义实现**。
-- **DbSet. AddRange/RemoveRange**提供一种优化的方式来添加或删除集中的多个实体。
-- **DbChangeTracker HasChanges**提供一种简单有效的方法来查看是否有任何挂起的更改保存到数据库中。
-- **SqlCeFunctions**提供与 SqlFunctions 等效的 SQL Compact。
+- **DbSet. AddRange/RemoveRange** 提供一种优化的方式来添加或删除集中的多个实体。
+- **DbChangeTracker HasChanges** 提供一种简单有效的方法来查看是否有任何挂起的更改保存到数据库中。
+- **SqlCeFunctions** 提供与 SqlFunctions 等效的 SQL Compact。
 
 以下功能仅适用于 Code First：
 
-- **[自定义 Code First 约定](~/ef6/modeling/code-first/conventions/custom.md)** 允许编写自己的约定，以帮助避免重复配置。 我们提供了一个简单的轻型约定 API 以及一些更复杂的构建基块，使你能够创作更复杂的约定。
-- 现在支持 **[Code First 映射到插入/更新/删除存储过程](~/ef6/modeling/code-first/fluent/cud-stored-procedures.md)** 。
-- **[幂等迁移脚本](~/ef6/modeling/code-first/migrations/index.md)** 允许生成一个 SQL 脚本，该脚本可以将任何版本的数据库升级到最新版本。
-- 可 **[配置的迁移历史记录表](~/ef6/modeling/code-first/migrations/history-customization.md)** 允许自定义迁移历史记录表的定义。 这对于需要适当的数据类型等的数据库提供程序特别有用，因为需要为迁移历史记录表指定这些数据类型才能正常工作。
+- **[自定义 Code First 约定](xref:ef6/modeling/code-first/conventions/custom)** 允许编写自己的约定，以帮助避免重复配置。 我们提供了一个简单的轻型约定 API 以及一些更复杂的构建基块，使你能够创作更复杂的约定。
+- 现在支持**[Code First 映射到插入/更新/删除存储过程](xref:ef6/modeling/code-first/fluent/cud-stored-procedures)**。
+- **[幂等迁移脚本](xref:ef6/modeling/code-first/migrations/index)** 允许生成一个 SQL 脚本，该脚本可以将任何版本的数据库升级到最新版本。
+- 可**[配置的迁移历史记录表](xref:ef6/modeling/code-first/migrations/history-customization)** 允许自定义迁移历史记录表的定义。 这对于需要适当的数据类型等的数据库提供程序特别有用，因为需要为迁移历史记录表指定这些数据类型才能正常工作。
 - 当使用迁移时，或 Code First 自动为您创建数据库时，**每个数据库的多个上下文**将删除每个数据库的一个 Code First 模型的以前限制。
-- **[DbModelBuilder](~/ef6/modeling/code-first/fluent/types-and-properties.md)** 是一个新的 Code First API，它允许在一个位置配置 Code First 模型的默认数据库架构。 以前 Code First 的默认架构已硬编码为 &quot;dbo&quot;，以及通过 ToTable API 配置表所属架构的唯一方法。
-- 在将配置类与 Code First 熟知 API 一起使用时， **AddFromAssembly 方法**可让你轻松地添加在程序集中定义的所有配置类。
+- **[DbModelBuilder](xref:ef6/modeling/code-first/fluent/types-and-properties)** 是一个新的 Code First API，它允许在一个位置配置 Code First 模型的默认数据库架构。 以前 Code First 的默认架构已硬编码为 &quot; dbo &quot; ，而唯一的方法是通过 ToTable API 配置表所属的架构。
+- **DbModelBuilder.Configurations。Code First 使用 AddFromAssembly 方法** 时，可以轻松地添加程序集中定义的所有配置类。
 - **[自定义迁移操作](https://romiller.com/2013/02/27/ef6-writing-your-own-code-first-migration-operations/)** 使您能够添加要在基于代码的迁移中使用的其他操作。
 - 对于使用 Code First 创建的数据库，**默认事务隔离级别将更改为 READ_COMMITTED_SNAPSHOT** ，从而实现更高的可伸缩性和更少的死锁。
 - **实体和复杂类型现在可以是 nestedinside 类**。
@@ -155,64 +156,64 @@ Visual Studio 2012 中的 Entity Framework Designer 还引入了对每个模型�
 
 -   [EF 5 Release Post](https://blogs.msdn.com/b/adonet/archive/2012/08/15/ef5-released.aspx)
 -   EF5 中的新增功能
-    -   [Code First 中的枚举支持](~/ef6/modeling/code-first/data-types/enums.md)
-    -   [EF 设计器中的枚举支持](~/ef6/modeling/designer/data-types/enums.md)
-    -   [Code First 中的空间数据类型](~/ef6/modeling/code-first/data-types/spatial.md)
-    -   [EF 设计器中的空间数据类型](~/ef6/modeling/designer/data-types/spatial.md)
-    -   [提供程序对空间类型的支持](~/ef6/fundamentals/providers/spatial-support.md)
-    -   [表值函数](~/ef6/modeling/designer/advanced/tvfs.md)
-    -   [每个模型多个关系图](~/ef6/modeling/designer/multiple-diagrams.md)
+    -   [Code First 中的枚举支持](xref:ef6/modeling/code-first/data-types/enums)
+    -   [EF 设计器中的枚举支持](xref:ef6/modeling/designer/data-types/enums)
+    -   [Code First 中的空间数据类型](xref:ef6/modeling/code-first/data-types/spatial)
+    -   [EF 设计器中的空间数据类型](xref:ef6/modeling/designer/data-types/spatial)
+    -   [提供程序对空间类型的支持](xref:ef6/fundamentals/providers/spatial-support)
+    -   [表值函数](xref:ef6/modeling/designer/advanced/tvfs)
+    -   [每个模型多个关系图](xref:ef6/modeling/designer/multiple-diagrams)
 -   设置模型
-    -   [创建模型](~/ef6/modeling/index.md)
-    -   [连接和模型](~/ef6/fundamentals/configuring/connection-strings.md)
-    -   [性能注意事项](~/ef6/fundamentals/performance/perf-whitepaper.md)
-    -   [使用 Microsoft SQL Azure](~/ef6/fundamentals/connection-resiliency/retry-logic.md)
-    -   [配置文件设置](~/ef6/fundamentals/configuring/config-file.md)
-    -   [术语表](~/ef6/resources/glossary.md)
+    -   [创建模型](xref:ef6/modeling/index)
+    -   [连接和模型](xref:ef6/fundamentals/configuring/connection-strings)
+    -   [性能注意事项](xref:ef6/fundamentals/performance/perf-whitepaper)
+    -   [使用 Microsoft SQL Azure](xref:ef6/fundamentals/connection-resiliency/retry-logic)
+    -   [配置文件设置](xref:ef6/fundamentals/configuring/config-file)
+    -   [术语表](xref:ef6/resources/glossary)
     -   Code First
-        -   [Code First 到新数据库（演练和视频）](~/ef6/modeling/code-first/workflows/new-database.md)
-        -   [Code First 现有数据库（演练和视频）](~/ef6/modeling/code-first/workflows/existing-database.md)
-        -   [约定](~/ef6/modeling/code-first/conventions/built-in.md)
-        -   [数据注释](~/ef6/modeling/code-first/data-annotations.md)
-        -   [熟知 API-配置/映射属性 & 类型](~/ef6/modeling/code-first/fluent/types-and-properties.md)
-        -   [熟知 API 配置关系](~/ef6/modeling/code-first/fluent/relationships.md)
-        -   [通过 VB.NET 的流畅 API](~/ef6/modeling/code-first/fluent/vb.md)
-        -   [Code First 迁移](~/ef6/modeling/code-first/migrations/index.md)
-        -   [自动 Code First 迁移](~/ef6/modeling/code-first/migrations/automatic.md)
-        -   [Debug.exe](~/ef6/modeling/code-first/migrations/migrate-exe.md)
-        -   [定义 Dbset](~/ef6/modeling/code-first/dbsets.md)
+        -   [Code First 新数据库 (演练和视频) ](xref:ef6/modeling/code-first/workflows/new-database)
+        -   [Code First 现有数据库 (演练和视频) ](xref:ef6/modeling/code-first/workflows/existing-database)
+        -   [约定](xref:ef6/modeling/code-first/conventions/built-in)
+        -   [数据批注](xref:ef6/modeling/code-first/data-annotations)
+        -   [熟知 API-配置/映射属性 & 类型](xref:ef6/modeling/code-first/fluent/types-and-properties)
+        -   [熟知 API 配置关系](xref:ef6/modeling/code-first/fluent/relationships)
+        -   [通过 VB.NET 的流畅 API](xref:ef6/modeling/code-first/fluent/vb)
+        -   [Code First 迁移](xref:ef6/modeling/code-first/migrations/index)
+        -   [自动 Code First 迁移](xref:ef6/modeling/code-first/migrations/automatic)
+        -   [Migrate.exe](xref:ef6/modeling/code-first/migrations/migrate-exe)
+        -   [定义 Dbset](xref:ef6/modeling/code-first/dbsets)
     -   EF 设计器
-        -   [Model First （演练和视频）](~/ef6/modeling/designer/workflows/model-first.md)
-        -   [Database First （演练和视频）](~/ef6/modeling/designer/workflows/database-first.md)
-        -   [复杂类型](~/ef6/modeling/designer/data-types/complex-types.md)
-        -   [关联/关系](~/ef6/modeling/designer/relationships.md)
-        -   [TPT 继承模式](~/ef6/modeling/designer/inheritance/tpt.md)
-        -   [TPH 继承模式](~/ef6/modeling/designer/inheritance/tph.md)
-        -   [带有存储过程的查询](~/ef6/modeling/designer/stored-procedures/query.md)
-        -   [包含多个结果集的存储过程](~/ef6/modeling/designer/advanced/multiple-result-sets.md)
-        -   [插入、更新 & 删除与存储过程](~/ef6/modeling/designer/stored-procedures/cud.md)
-        -   [将实体映射到多个表（实体拆分）](~/ef6/modeling/designer/entity-splitting.md)
-        -   [将多个实体映射到一个表（表拆分）](~/ef6/modeling/designer/table-splitting.md)
-        -   [定义查询](~/ef6/modeling/designer/advanced/defining-query.md)
-        -   [代码生成模板](~/ef6/modeling/designer/codegen/index.md)
-        -   [恢复到 ObjectContext](~/ef6/modeling/designer/codegen/legacy-objectcontext.md)
+        -   [Model First (演练和视频) ](xref:ef6/modeling/designer/workflows/model-first)
+        -   [Database First (演练和视频) ](xref:ef6/modeling/designer/workflows/database-first)
+        -   [复杂类型](xref:ef6/modeling/designer/data-types/complex-types)
+        -   [关联/关系](xref:ef6/modeling/designer/relationships)
+        -   [TPT 继承模式](xref:ef6/modeling/designer/inheritance/tpt)
+        -   [TPH 继承模式](xref:ef6/modeling/designer/inheritance/tph)
+        -   [带有存储过程的查询](xref:ef6/modeling/designer/stored-procedures/query)
+        -   [包含多个结果集的存储过程](xref:ef6/modeling/designer/advanced/multiple-result-sets)
+        -   [插入、更新 & 删除与存储过程](xref:ef6/modeling/designer/stored-procedures/cud)
+        -   [将实体映射到多个表 (实体拆分) ](xref:ef6/modeling/designer/entity-splitting)
+        -   [将多个实体映射到一个表 (表拆分) ](xref:ef6/modeling/designer/table-splitting)
+        -   [定义查询](xref:ef6/modeling/designer/advanced/defining-query)
+        -   [代码生成模板](xref:ef6/modeling/designer/codegen/index)
+        -   [恢复到 ObjectContext](xref:ef6/modeling/designer/codegen/legacy-objectcontext)
 -   使用模型
-    -   [使用 DbContext](~/ef6/fundamentals/working-with-dbcontext.md)
-    -   [查询/查找实体](~/ef6/querying/index.md)
-    -   [使用关系](~/ef6/fundamentals/relationships.md)
-    -   [正在加载相关实体](~/ef6/querying/related-data.md)
-    -   [使用本地数据](~/ef6/querying/local-data.md)
-    -   [N 层应用程序](~/ef6/fundamentals/disconnected-entities/index.md)
-    -   [原始 SQL 查询](~/ef6/querying/raw-sql.md)
-    -   [开放式并发模式](~/ef6/saving/concurrency.md)
-    -   [使用代理](~/ef6/fundamentals/proxies.md)
-    -   [自动检测更改](~/ef6/saving/change-tracking/auto-detect-changes.md)
-    -   [无跟踪查询](~/ef6/querying/no-tracking.md)
-    -   [加载方法](~/ef6/querying/load-method.md)
-    -   [添加/附加和实体状态](~/ef6/saving/change-tracking/entity-state.md)
-    -   [使用属性值](~/ef6/saving/change-tracking/property-values.md)
-    -   [与 WPF 的数据绑定（Windows Presentation Foundation）](~/ef6/fundamentals/databinding/wpf.md)
-    -   [用 WinForms （Windows 窗体）进行数据绑定](~/ef6/fundamentals/databinding/winforms.md)
+    -   [使用 DbContext](xref:ef6/fundamentals/working-with-dbcontext)
+    -   [查询/查找实体](xref:ef6/querying/index)
+    -   [使用关系](xref:ef6/fundamentals/relationships)
+    -   [正在加载相关实体](xref:ef6/querying/related-data)
+    -   [使用本地数据](xref:ef6/querying/local-data)
+    -   [N 层应用程序](xref:ef6/fundamentals/disconnected-entities/index)
+    -   [原始 SQL 查询](xref:ef6/querying/raw-sql)
+    -   [开放式并发模式](xref:ef6/saving/concurrency)
+    -   [使用代理](xref:ef6/fundamentals/proxies)
+    -   [自动检测更改](xref:ef6/saving/change-tracking/auto-detect-changes)
+    -   [无跟踪查询](xref:ef6/querying/no-tracking)
+    -   [加载方法](xref:ef6/querying/load-method)
+    -   [添加/附加和实体状态](xref:ef6/saving/change-tracking/entity-state)
+    -   [使用属性值](xref:ef6/saving/change-tracking/property-values)
+    -   [与 WPF (Windows Presentation Foundation 的数据绑定) ](xref:ef6/fundamentals/databinding/wpf)
+    -   [WinForms (Windows 窗体的数据绑定) ](xref:ef6/fundamentals/databinding/winforms)
 
 ## <a name="ef-431"></a>EF 4.3。1
 Ef 4.3.1 运行时在 EF 4.3.0 之后不久发布到 2012 NuGet。
@@ -234,7 +235,7 @@ EF 4.3.0 运行时已发布到2012年2月的 NuGet。
 ## <a name="ef-42"></a>EF 4。2
 EF 4.2.0 运行时已发布到2011年11月的 NuGet。
 此版本包含对 EF 4.1.1 版本的 bug 修复。
-由于此发行版只包含 bug 修复，因此，它可能已成为 EF 4.1.2 修补程序版本，但我们选择迁移到4.2，以允许我们从在4.1 版本中使用的基于日期的修补程序版本号开始，并采用[语义 Versionsing](https://semver.org)标准进行语义版本控制。
+由于此发行版只包含 bug 修复，因此，它可能已成为 EF 4.1.2 修补程序版本，但我们选择迁移到4.2，以允许我们从在4.1 版本中使用的基于日期的修补程序版本号开始，并采用 [语义 Versionsing](https://semver.org) 标准进行语义版本控制。
 
 下面是专为 EF 4.2 版本组合在一起的内容列表，为 EF 4.1 提供的内容也适用于 EF 4.2：
 
@@ -245,11 +246,11 @@ EF 4.2.0 运行时已发布到2011年11月的 NuGet。
 ## <a name="ef-411"></a>EF 4.1。1
 EF 4.1.10715 运行时已发布到2011年7月的 NuGet。
 除了 bug 修复外，此修补程序版本还引入了一些组件，使设计时工具可以更轻松地处理 Code First 模型。
-这些组件由 Code First 迁移（包括在 EF 4.3 中）和 EF Power Tools 使用。
+这些组件由 EF 4.3) 中包含的 Code First 迁移 (和 EF 功能工具使用。
 
 你会注意到，包的异常版本号4.1.10715。
-我们在决定采用[语义版本控制](https://semver.org)之前，使用基于日期的修补程序版本。
-将此版本视为 EF 4.1 修补程序1（或 EF 4.1.1）。
+我们在决定采用 [语义版本控制](https://semver.org)之前，使用基于日期的修补程序版本。
+将此版本视为 EF 4.1 修补程序 1 (或 EF 4.1.1) 。
 
 下面是我们将4.1.1 版本组合在一起的内容列表：
 
@@ -259,8 +260,8 @@ EF 4.1.10715 运行时已发布到2011年7月的 NuGet。
 EF 4.1.10331 运行时是第一次在 NuGet 上发布，2011年4月。
 此版本包括简化的 DbContext API 和 Code First 的工作流。
 
-你会注意到奇怪的版本号，4.1.10331，其实际为4.1。 此外，还会有一个4.1.10311 版本，该版本应为4.1.0 （"rc" 代表 "候选发布"）。
-我们在决定采用[语义版本控制](https://semver.org)之前，使用基于日期的修补程序版本。
+你会注意到奇怪的版本号，4.1.10331，其实际为4.1。 此外，还有一个4.1.10311 版本，该版本应为 4.1.0-rc ("rc" 代表 "候选候选" ) 。
+我们在决定采用 [语义版本控制](https://semver.org)之前，使用基于日期的修补程序版本。
 
 下面是我们为4.1 版本组合在一起的内容列表。 很多情况仍适用于实体框架的更高版本：
 
@@ -278,7 +279,7 @@ EF 4.1.10331 运行时是第一次在 NuGet 上发布，2011年4月。
 
 请注意，某些后续版本的 .NET Framework 附带了包含 EF 位的重大更新。
 事实上，EF 5.0 的许多新功能已实现为这些位的改进。
-但是，为了合理化 EF 的版本控制情景，我们将继续引用作为 EF 4.0 运行时的一部分 .NET Framework 的 EF 位，而所有更新版本都包含[EntityFramework NuGet 包](https://www.nuget.org/packages/EntityFramework/)。
+但是，为了合理化 EF 的版本控制情景，我们将继续引用作为 EF 4.0 运行时的一部分 .NET Framework 的 EF 位，而所有更新版本都包含 [EntityFramework NuGet 包](https://www.nuget.org/packages/EntityFramework/)。
 
 ## <a name="ef-35"></a>EF 3。5
 实体框架的初始版本包含在3.5 年 8 2008 月发布的 .NET Service Pack 1 和 Visual Studio 2008 SP1 中。

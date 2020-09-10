@@ -1,14 +1,16 @@
 ---
 title: 本地数据-EF6
+description: 实体框架6中的本地数据
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 2eda668b-1e5d-487d-9a8c-0e3beef03fcb
-ms.openlocfilehash: efd646348d8a18bbeed2d0a0e708d4d36eb26eac
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/querying/local-data
+ms.openlocfilehash: f7c4c8904a2985901491e423f655d4aea79f666d
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78414481"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89620308"
 ---
 # <a name="local-data"></a>本地数据
 直接对 DbSet 运行 LINQ 查询将始终向数据库发送查询，但你可以使用 DbSet 属性访问当前在内存中的数据。 使用 DbContext 和 DbContext 方法，还可以访问额外的信息 EF 正在跟踪实体。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  
@@ -69,11 +71,11 @@ Found 2: The Visual Studio Blog with state Unchanged
 
 - 新博客的 "我的新博客" 包含在本地集合中，即使尚未将其保存到数据库中。 此博客的主键为零，因为数据库尚未生成实体的实际密钥。  
 - 即使上下文仍在跟踪 "ADO.NET Blog"，也不会将其包含在本地集合中。 这是因为我们从 DbSet 中删除了它，从而将其标记为已删除。  
-- 当使用 DbSet 来执行查询时，将在结果中包含标记为删除的博客（ADO.NET 博客），并且未保存到数据库中的新博客（我的新博客）不会包含在结果中。 这是因为，DbSet 正在对数据库执行查询，并且返回的结果始终反映了数据库中的内容。  
+- 当使用 DbSet 来执行查询时，将在结果中包含标记为删除 (ADO.NET 博客) 的博客，而新的博客 (尚未保存到数据库中的新博客) 将不包含在结果中。 这是因为，DbSet 正在对数据库执行查询，并且返回的结果始终反映了数据库中的内容。  
 
 ## <a name="using-local-to-add-and-remove-entities-from-the-context"></a>使用本地来添加和删除上下文中的实体  
 
-DbSet 上的本地属性返回一个[ObservableCollection](https://msdn.microsoft.com/library/ms668604.aspx) ，其中包含与该上下文的内容保持同步的事件。 这意味着可以在本地集合或 DbSet 中添加或移除实体。 这也意味着，将新实体引入上下文的查询将导致用这些实体更新本地集合。 例如：  
+DbSet 上的本地属性返回一个 [ObservableCollection](https://msdn.microsoft.com/library/ms668604.aspx) ，其中包含与该上下文的内容保持同步的事件。 这意味着可以在本地集合或 DbSet 中添加或移除实体。 这也意味着，将新实体引入上下文的查询将导致用这些实体更新本地集合。 例如：  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -138,8 +140,8 @@ Found 4: ASP.NET Beginners Guide with state Unchanged
 这说明了三个要点：  
 
 - 添加到本地集合中的新 post "EF 新增功能" 将由上下文在已添加状态中进行跟踪。 因此，当调用 SaveChanges 时，它将被插入到数据库中。  
-- 从本地集合中删除的 post （EF 初学者指南）现在已在上下文中标记为 "已删除"。 因此，当调用 SaveChanges 时，将从数据库中删除该方法。  
-- 将第二个查询加载到上下文中的附加 post （ASP.NET 初学者指南）自动添加到本地集合中。  
+- 从本地集合中删除的 post (EF 初学者指南) 现在在上下文中标记为已删除。 因此，当调用 SaveChanges 时，将从数据库中删除该方法。  
+- 额外的 post (ASP.NET 初学者指南) 加载到上下文中，第二个查询会自动添加到本地集合中。  
 
 关于本地需要注意的最后一点是，因为这是一个 ObservableCollection 的性能，不适用于大量实体。 因此，如果你在上下文中处理数千个实体，则可能不建议使用本地。  
 
@@ -196,12 +198,12 @@ public override int SaveChanges()
 
 ## <a name="using-local-and-tobindinglist-for-windows-forms-data-binding"></a>为 Windows 窗体数据绑定使用本地和对 tobindinglist 获得  
 
-Windows 窗体不支持直接使用 ObservableCollection 的完全保真数据绑定。 不过，你仍然可以使用 DbSet 本地属性进行数据绑定，以获得前面几节中所述的全部权益。 这是通过对 tobindinglist 获得扩展方法实现的，该方法创建由本地 ObservableCollection 支持的[IBindingList](https://msdn.microsoft.com/library/system.componentmodel.ibindinglist.aspx)实现。  
+Windows 窗体不支持直接使用 ObservableCollection 的完全保真数据绑定。 不过，你仍然可以使用 DbSet 本地属性进行数据绑定，以获得前面几节中所述的全部权益。 这是通过对 tobindinglist 获得扩展方法实现的，该方法创建由本地 ObservableCollection 支持的 [IBindingList](https://msdn.microsoft.com/library/system.componentmodel.ibindinglist.aspx) 实现。  
 
 此位置不适合完全 Windows 窗体的数据绑定示例，但关键元素是：  
 
 - 设置对象绑定源  
-- 使用对 tobindinglist 获得（）将其绑定到集的本地属性  
+- 使用对 tobindinglist 获得将其绑定到集的本地属性 ( # A1  
 - 使用数据库的查询填充本地  
 
 ## <a name="getting-detailed-information-about-tracked-entities"></a>获取有关被跟踪实体的详细信息  

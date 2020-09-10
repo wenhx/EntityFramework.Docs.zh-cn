@@ -1,14 +1,16 @@
 ---
 title: 加载相关实体-EF6
+description: 在实体框架6中加载相关实体
 author: divega
 ms.date: 10/23/2016
 ms.assetid: c8417e18-a2ee-499c-9ce9-2a48cc5b468a
-ms.openlocfilehash: c359d8d32a88049213fd5e98e99fe49d7e3121a3
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/querying/related-data
+ms.openlocfilehash: 9b4e8ecda618e11e87cd595502210234b1f3e27d
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78414463"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89620265"
 ---
 # <a name="loading-related-entities"></a>正在加载相关实体
 
@@ -120,7 +122,7 @@ public class Blog
 }
 ```
 
-仍可使用预先加载（请参阅上面的*积极加载*）或 Load 方法（请参阅下面的*显式加载*）来加载发布集合。
+仍可通过使用预先加载来加载 Post 集合 (请参阅上面的 *积极加载*) 或 Load 方法 (参阅下面的) *显式加载* 。
 
 ### <a name="turn-off-lazy-loading-for-all-entities"></a>关闭所有实体的延迟加载
 
@@ -136,7 +138,7 @@ public class BloggingContext : DbContext
 }
 ```
 
-仍可使用预先加载（请参阅上面的*积极加载*）或 Load 方法（请参阅下面的*显式加载*）来加载相关实体。
+仍可通过使用预先加载来加载相关实体 (请参阅上面的 *积极加载*) 或 Load 方法 (参阅下面的) *显式加载* 。
 
 ## <a name="explicitly-loading"></a>显式加载
 

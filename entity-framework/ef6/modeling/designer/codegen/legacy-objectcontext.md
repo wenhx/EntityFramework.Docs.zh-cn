@@ -1,14 +1,16 @@
 ---
 title: 恢复到 Entity Framework Designer 中的 ObjectContext EF6
+description: 恢复到实体框架6的 Entity Framework Designer 中的 ObjectContext
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 36550569-a1de-47cb-ba6d-544794ffd500
-ms.openlocfilehash: 3e436f0d9cf94720be9c424b327816438d571ae8
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/modeling/designer/codegen/legacy-objectcontext
+ms.openlocfilehash: e09cdfe994033bc8dea26bb09c4560788dd746f8
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78415429"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89620536"
 ---
 # <a name="reverting-to-objectcontext-in-entity-framework-designer"></a>恢复到 Entity Framework Designer 中的 ObjectContext
 使用早期版本的实体框架使用 EF 设计器创建的模型将生成派生自 EntityObject 的 ObjectContext 和实体类的上下文。
@@ -25,14 +27,14 @@ ms.locfileid: "78415429"
 
 ![代码生成文件](~/ef6/media/codegenfiles.png)
 
-如果你使用的是 VB.NET，则需要选择 "**显示所有文件**" 按钮以查看嵌套的文件。
+如果你使用的是 VB.NET，则需要选择 " **显示所有文件** " 按钮以查看嵌套的文件。
 
 ![显示所有文件](~/ef6/media/showallfiles.png)
 
 ### <a name="2-re-enable-objectcontext-code-generation"></a>2. 重新启用 ObjectContext 代码生成
 
-在 EF 设计器中打开模型，右键单击设计图面的空白部分，然后选择 "**属性**"。
+在 EF 设计器中打开模型，右键单击设计图面的空白部分，然后选择 " **属性**"。
 
-在属性窗口将**代码生成策略**从**None**更改为**默认值**。
+在属性窗口将 **代码生成策略** 从 **None** 更改为 **默认值**。
 
 ![代码生成策略](~/ef6/media/codegenstrategy.png)

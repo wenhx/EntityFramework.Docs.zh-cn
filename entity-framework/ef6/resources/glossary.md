@@ -1,15 +1,16 @@
 ---
 title: 实体框架术语表-EF6
+description: 实体框架6术语表
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 3f05ffdd-49bc-499c-9732-4a368bf5d2d7
 uid: ef6/resources/glossary
-ms.openlocfilehash: df0da4a68b3d2c882d9673417ee5fe335eccae2b
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.openlocfilehash: 19d5e9e3a480337c2bcb93be5f989cc622b67dad
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/15/2020
-ms.locfileid: "79402143"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89620200"
 ---
 # <a name="entity-framework-glossary"></a>实体框架术语表
 ## <a name="code-first"></a>Code First
@@ -18,7 +19,7 @@ ms.locfileid: "79402143"
 ## <a name="context"></a>上下文
 一个类，它表示与数据库的会话，使您能够查询和保存数据。 上下文派生自 DbContext 或 ObjectContext 类。
 
-## <a name="convention-code-first"></a>约定（Code First）
+## <a name="convention-code-first"></a>约定 (Code First) 
 实体框架使用来从类推断模型形状的规则。
 
 ## <a name="database-first"></a>Database First
@@ -69,13 +70,13 @@ Visual Studio 中的可视化设计器，可用于使用框和线条创建实体
 ## <a name="self-tracking-entity"></a>自跟踪实体
 从代码生成模板生成的实体，可帮助进行 N 层开发。
 
-## <a name="table-per-concrete-type-tpc"></a>每个具体的表类型（TPC）
+## <a name="table-per-concrete-type-tpc"></a>每个具体的表类型 (TPC) 
 一种映射继承的方法，其中层次结构中的每个非抽象类型都映射到数据库中的单独表。
 
-## <a name="table-per-hierarchy-tph"></a>每个层次结构一个表（TPH）
-一种映射继承的方法，其中，层次结构中的所有类型都映射到数据库中的同一表。 鉴别器列用于标识与每行关联的类型。
+## <a name="table-per-hierarchy-tph"></a>每个层次结构一个表 (TPH) 
+一种映射继承的方法，其中，层次结构中的所有类型都映射到数据库中的同一表。 鉴别器列 (s) 用于标识与每行关联的类型。
 
-## <a name="table-per-type-tpt"></a>每种类型一个表（TPT）
+## <a name="table-per-type-tpt"></a>每种类型一个表 (TPT) 
 一种映射继承的方法，其中层次结构中所有类型的公共属性都映射到数据库中的同一个表，但每个类型独有的属性将映射到一个单独的表。
 
 ## <a name="type-discovery"></a>类型发现

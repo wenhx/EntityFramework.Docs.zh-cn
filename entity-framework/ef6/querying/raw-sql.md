@@ -1,16 +1,18 @@
 ---
 title: 原始 SQL 查询-EF6
+description: 实体框架6中的原始 SQL 查询
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 9e1ee76e-2499-408c-81e8-9b6c5d1945a0
-ms.openlocfilehash: d336066b982e682e81067bbdac5b3781524cf6be
-ms.sourcegitcommit: d85263b5d5d665dbaf94de8832e2917bce048b34
+uid: ef6/querying/raw-sql
+ms.openlocfilehash: 0db5069b23ff9aa65ced2dbe48694e4f20c98e51
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/17/2020
-ms.locfileid: "86451211"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89620277"
 ---
-# <a name="raw-sql-queries-ef6"></a>原始 SQL 查询（EF6）
+# <a name="raw-sql-queries-ef6"></a> (EF6) 的原始 SQL 查询
 
 实体框架允许使用 LINQ 和实体类进行查询。 但是，有时您可能想要对数据库直接使用原始 SQL 来运行查询。 这包括调用存储过程，这对于当前不支持映射到存储过程的 Code First 模型非常有用。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  
 
@@ -83,4 +85,4 @@ using (var context = new BloggingContext())
 
 ### <a name="output-parameters"></a>输出参数  
 
-如果使用了 output 参数，则在完全读取结果之前，它们的值将不可用。 这是因为 DbDataReader 的基础行为，有关详细信息，请参阅[使用 DataReader 检索数据](https://go.microsoft.com/fwlink/?LinkID=398589)。  
+如果使用了 output 参数，则在完全读取结果之前，它们的值将不可用。 这是因为 DbDataReader 的基础行为，有关详细信息，请参阅 [使用 DataReader 检索数据](https://go.microsoft.com/fwlink/?LinkID=398589) 。  

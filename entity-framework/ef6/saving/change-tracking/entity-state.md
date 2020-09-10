@@ -1,14 +1,16 @@
 ---
 title: 使用实体状态-EF6
+description: 使用实体框架6中的实体状态
 author: divega
 ms.date: 10/23/2016
 ms.assetid: acb27f46-3f3a-4179-874a-d6bea5d7120c
-ms.openlocfilehash: ef0e8d5a5a9d66adab7046088c49d8cd472edc8a
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/saving/change-tracking/entity-state
+ms.openlocfilehash: 981bdbca982403338f3f65a41f601641d59d74d8
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78416251"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89619978"
 ---
 # <a name="working-with-entity-states"></a>使用实体状态
 本主题将介绍如何添加实体并将其附加到上下文，以及实体框架如何在 SaveChanges 期间处理这些实体。
@@ -17,7 +19,7 @@ ms.locfileid: "78416251"
 
 ## <a name="entity-states-and-savechanges"></a>实体状态和 SaveChanges
 
-实体可以是 EntityState 枚举定义的五种状态之一。 这些状态是：  
+实体可以是 EntityState 枚举定义的五种状态之一。 这些状态包括：  
 
 - 已添加：上下文正在跟踪实体，但数据库中尚不存在该实体  
 - 保持不变：上下文正在跟踪实体，该实体存在于数据库中，并且其属性值未更改为数据库中的值  
@@ -160,7 +162,7 @@ using (var context = new BloggingContext())
 
 ## <a name="insert-or-update-pattern"></a>插入或更新模式  
 
-某些应用程序的一种常见模式是将实体添加为新实体（生成数据库插入），或将实体附加到现有实体并将其标记为已修改（生成数据库更新），具体取决于主键的值。
+某些应用程序的一种常见模式是将实体添加为新 (导致数据库插入) 或将实体附加为现有，并将其标记为已修改 (导致数据库更新) ，具体取决于主键的值。
 例如，在使用数据库生成的整数主键时，通常将包含零键的实体作为新的和具有非零键的实体视为现有的。
 可以通过基于主键值的检查设置实体状态来实现此模式。 例如：  
 

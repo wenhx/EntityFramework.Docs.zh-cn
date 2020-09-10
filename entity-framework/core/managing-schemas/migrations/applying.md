@@ -1,15 +1,16 @@
 ---
 title: 应用迁移-EF Core
+description: 使用 Entity Framework Core 将架构迁移应用到生产和开发数据库的策略
 author: bricelam
 ms.author: bricelam
 ms.date: 05/06/2020
 uid: core/managing-schemas/migrations/applying
-ms.openlocfilehash: f83a014651fdf2262a603fb91da7984672690197
-ms.sourcegitcommit: 31536e52b838a84680d2e93e5bb52fb16df72a97
+ms.openlocfilehash: c83194057d58f8278bfbb5264623858e6c022d8f
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/10/2020
-ms.locfileid: "86238721"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89619458"
 ---
 # <a name="applying-migrations"></a>应用迁移
 
@@ -94,7 +95,7 @@ Script-Migration AddNewTables AddAuditTable
 
 ## <a name="idempotent-sql-scripts"></a>幂等 SQL 脚本
 
-上面生成的 SQL 脚本只能应用于将架构从一个迁移更改到另一个迁移;你需要负责适当地应用脚本，并且仅适用于处于正确迁移状态的数据库。 EF Core 还支持生成**幂等**脚本，这些脚本在内部检查是否已通过迁移历史记录表) 应用了哪些迁移 (并仅应用缺少的迁移。 如果您不知道最后一次应用到数据库的迁移，或者要部署到多个数据库（每个数据库都在不同的迁移上），这会很有用。
+上面生成的 SQL 脚本只能应用于将架构从一个迁移更改到另一个迁移;你需要负责适当地应用脚本，并且仅适用于处于正确迁移状态的数据库。 EF Core 还支持生成 **幂等** 脚本，这些脚本在内部检查是否已通过迁移历史记录表) 应用了哪些迁移 (并仅应用缺少的迁移。 如果您不知道最后一次应用到数据库的迁移，或者要部署到多个数据库（每个数据库都在不同的迁移上），这会很有用。
 
 以下生成幂等迁移：
 
@@ -159,7 +160,7 @@ Update-Database AddNewTables
 
 ***
 
-有关通过命令行工具应用迁移的详细信息，请参阅[EF Core 工具参考](xref:core/miscellaneous/cli/index)。
+有关通过命令行工具应用迁移的详细信息，请参阅 [EF Core 工具参考](xref:core/miscellaneous/cli/index)。
 
 ## <a name="apply-migrations-at-runtime"></a>在运行时应用迁移
 

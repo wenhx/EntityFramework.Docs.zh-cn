@@ -1,37 +1,39 @@
 ---
 title: School 示例数据库-EF6
+description: 实体框架6的 School 示例数据库
 author: divega
 ms.date: 10/23/2016
 ms.assetid: e83a6a06-e63b-4530-8656-614bf609b12b
-ms.openlocfilehash: 1e9dc98edb8590021bbf3393e9edda1929d505e0
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/resources/school-database
+ms.openlocfilehash: c1576bdeaa3247c7c5c8fd5547c8402b4e301402
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78414391"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89620002"
 ---
 # <a name="school-sample-database"></a>School 示例数据库
 本主题包含 School 数据库的架构和数据。 示例 School 数据库在整个实体框架文档的不同位置使用。  
 
 > [!NOTE]
-> 随 Visual Studio 一起安装的数据库服务器取决于你使用的 Visual Studio 版本。 有关使用内容的详细信息，请参阅[Visual Studio 版本](~/ef6/what-is-new/visual-studio.md)。  
+> 随 Visual Studio 一起安装的数据库服务器取决于你使用的 Visual Studio 版本。 有关使用内容的详细信息，请参阅 [Visual Studio 版本](xref:ef6/what-is-new/visual-studio) 。  
 
 下面是创建数据库的步骤：
 
 - 打开 Visual Studio  
-- **查看** -> **服务器资源管理器**  
-- 右键单击 "**数据连接**" -> "**添加连接 ...** "  
-- 如果尚未从服务器资源管理器连接到数据库，则需要选择**Microsoft SQL Server**作为数据源  
+- **视图**  -> **服务器资源管理器**  
+- 右键单击 "**数据连接**" "  ->  **添加连接 ...** "  
+- 如果尚未从服务器资源管理器连接到数据库，则需要选择 **Microsoft SQL Server** 作为数据源  
 - 连接到 LocalDB 或 SQL Express，具体取决于你安装的是哪个  
-- 输入**School**作为数据库名称  
+- 输入 **School** 作为数据库名称  
 - 选择 **"确定"** ，系统会询问您是否要创建新数据库，请选择 **"是"**  
 - 新数据库现在将出现在服务器资源管理器  
 - 如果使用的是 Visual Studio 2012 或更高版本
-    - 在服务器资源管理器中右键单击该数据库，然后选择 "**新建查询**"  
+    - 右键单击“服务器资源管理器”中的数据库，然后选择“新建查询”****  
     - 将以下 SQL 复制到新的查询中，然后右键单击该查询，然后选择 "**执行**"  
 - 如果使用的是 Visual Studio 2010  
-    - 选择**数据** -> **Transact-sql 编辑器** -> **新建查询连接 ...**  
-    - 输入 **.\SQLEXPRESS**作为服务器名称，然后单击 **"确定"**  
+    - 选择**数据**  ->  **transact-sql 编辑器**  ->  **新建查询连接 ...**  
+    - 输入 **.\SQLEXPRESS** 作为服务器名称，然后单击 **"确定"**  
     - 从 "查询编辑器" 顶部的下拉菜单中选择 " **STESample** " 数据库  
     - 将以下 SQL 复制到新的查询中，然后右键单击该查询，然后选择 "**执行 SQL** "。  
 

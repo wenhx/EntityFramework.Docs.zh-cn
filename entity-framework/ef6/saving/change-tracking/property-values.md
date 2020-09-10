@@ -1,14 +1,16 @@
 ---
 title: 使用属性值-EF6
+description: 使用实体框架6中的属性值
 author: divega
 ms.date: 10/23/2016
 ms.assetid: e3278b4b-9378-4fdb-923d-f64d80aaae70
-ms.openlocfilehash: d8a18182754980d79b71df3f227b30c4ce40366f
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/saving/change-tracking/property-values
+ms.openlocfilehash: 53c0829920c77768eae26d23c3da7d0553f44b62
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78414373"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89619962"
 ---
 # <a name="working-with-property-values"></a>使用属性值
 大多数情况下实体框架将负责跟踪实体实例的属性的状态、原始值和当前值。 但是，在某些情况下（例如，已断开连接的情况下），你希望查看或操作有关属性的信息 EF。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  
@@ -18,7 +20,7 @@ ms.locfileid: "78414373"
 使用属性值的一般机制有两种：  
 
 - 单个属性的值可以使用属性方法以强类型方式获取。  
-- 实体的所有属性的值都可以读取到 DbPropertyValues 对象中。 然后，DbPropertyValues 充当类似字典的对象，以允许读取和设置属性值。 DbPropertyValues 对象中的值可以从其他 DbPropertyValues 对象中的值或其他某个对象的值进行设置，如实体的另一个副本或简单的数据传输对象（DTO）。  
+- 实体的所有属性的值都可以读取到 DbPropertyValues 对象中。 然后，DbPropertyValues 充当类似字典的对象，以允许读取和设置属性值。 DbPropertyValues 对象中的值可以从其他 DbPropertyValues 对象中的值或其他某个对象的值进行设置，如实体的另一个副本或简单的数据传输对象 (DTO) 。  
 
 以下部分显示了使用上述两种机制的示例。  
 

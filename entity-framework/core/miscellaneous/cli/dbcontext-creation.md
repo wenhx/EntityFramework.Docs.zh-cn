@@ -1,25 +1,26 @@
 ---
 title: 设计时 DbContext 创建-EF Core
+description: 使用 Entity Framework Core 创建设计时 DbContext 的策略
 author: bricelam
 ms.author: bricelam
 ms.date: 09/16/2019
 uid: core/miscellaneous/cli/dbcontext-creation
-ms.openlocfilehash: 0b0271dcabea63a2529c091cc14cb9059d56ac8d
-ms.sourcegitcommit: 59e3d5ce7dfb284457cf1c991091683b2d1afe9d
+ms.openlocfilehash: ef2eba93827e04a9731ba960c40e9a50168ca8ff
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/20/2020
-ms.locfileid: "83672959"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89619449"
 ---
 # <a name="design-time-dbcontext-creation"></a>设计时 DbContext 创建
 
-某些 EF Core 工具命令（例如，[迁移][1]命令）需要在 `DbContext` 设计时创建一个派生实例，以便收集有关该应用程序的实体类型及其如何映射到数据库架构的详细信息。 在大多数情况下，最好 `DbContext` 按照类似的方式配置创建，使其在[运行时配置][2]。
+某些 EF Core 工具命令 (例如，) [迁移][1] 命令需要在 `DbContext` 设计时创建一个派生实例，以便收集有关该应用程序的实体类型及其如何映射到数据库架构的详细信息。 在大多数情况下，最好 `DbContext` 按照类似的方式配置创建，使其在 [运行时配置][2]。
 
 工具可通过多种方式来创建 `DbContext` ：
 
 ## <a name="from-application-services"></a>从应用程序服务
 
-如果启动项目使用[ASP.NET Core Web 主机][3]或[.Net Core 泛型主机][4]，则这些工具将尝试从应用程序的服务提供程序获取 DbContext 对象。
+如果启动项目使用 [ASP.NET Core Web 主机][3] 或 [.Net Core 泛型主机][4]，则这些工具将尝试从应用程序的服务提供程序获取 DbContext 对象。
 
 工具首先尝试通过调用 `Program.CreateHostBuilder()` 、调用 `Build()` ，然后访问属性来获取服务提供程序 `Services` 。
 
@@ -41,7 +42,7 @@ ms.locfileid: "83672959"
 [!code-csharp[Main](../../../../samples/core/Miscellaneous/CommandLine/BloggingContextFactory.cs)]
 
 > [!NOTE]
-> 在 EFCore 5.0 之前， `args` 未使用参数（请参阅[此问题][8]）。
+> 在 EFCore 5.0 之前， `args` 未使用参数 () ，请参阅 [此问题][8] 。
 > 这在 EFCore 5.0 中是固定的，任何其他设计时参数都将通过该参数传递到应用程序。
 
 如果需要以不同于运行时的方式配置 DbContext 的设计时，则设计时工厂特别有用 `DbContext` 。如果构造函数采用其他参数，但未在 di 中注册，如果根本不使用 di，或者出于某种原因而不是使用 `BuildWebHost` ASP.NET Core 应用程序的类中的方法 `Main` 。

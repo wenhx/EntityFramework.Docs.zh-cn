@@ -1,28 +1,30 @@
 ---
 title: 处理并发冲突-EF6
+description: 处理实体框架6中的并发冲突
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 2318e4d3-f561-4720-bbc3-921556806476
-ms.openlocfilehash: 4d29fd7a4d9b6003f71bc8411cea2d863a4c5429
-ms.sourcegitcommit: d85263b5d5d665dbaf94de8832e2917bce048b34
+uid: ef6/saving/concurrency
+ms.openlocfilehash: 1cec47ce346e8a6c86338747c01fba4d030e7388
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/17/2020
-ms.locfileid: "86451237"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89619871"
 ---
-# <a name="handling-concurrency-conflicts-ef6"></a>处理并发冲突（EF6）
+# <a name="handling-concurrency-conflicts-ef6"></a>处理并发冲突 (EF6) 
 
 乐观并发性涉及到乐观地尝试将实体保存到数据库，希望数据在加载实体后未发生更改。 如果事实证明数据已更改，则会引发异常，并且在尝试再次保存之前必须解决冲突。 本主题介绍如何在实体框架中处理此类异常。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  
 
 这篇文章并不适合完整讨论开放式并发。 以下各节介绍了并发解决方案的一些知识，并显示了常见任务的模式。  
 
-其中的许多模式使用[属性值](~/ef6/saving/change-tracking/property-values.md)中讨论的主题。  
+其中的许多模式使用 [属性值](xref:ef6/saving/change-tracking/property-values)中讨论的主题。  
 
-在使用独立关联（其中外键未映射到实体中的属性）时解决并发性问题比使用外键关联更难。 因此，如果你要在应用程序中执行并发解析，则建议你始终将外键映射到你的实体中。 以下所有示例假设你使用的是外键关联。  
+当你使用独立关联 (（其中外键未映射到) 实体中的属性）时解决并发问题，比使用外键关联更难。 因此，如果你要在应用程序中执行并发解析，则建议你始终将外键映射到你的实体中。 以下所有示例假设你使用的是外键关联。  
 
 当尝试保存使用外键关联的实体时，如果检测到乐观并发异常，则 SaveChanges 将引发 DbUpdateConcurrencyException。  
 
-## <a name="resolving-optimistic-concurrency-exceptions-with-reload-database-wins"></a>通过重载解决开放式并发异常（数据库入选）  
+## <a name="resolving-optimistic-concurrency-exceptions-with-reload-database-wins"></a>通过重载 (数据库入选) 解决开放式并发异常  
 
 可以使用 Reload.sql 方法，用数据库中的值覆盖当前实体的值。 然后，通常以某种形式向用户返回该实体，并且这些实体必须重试更改，然后重新保存。 例如：  
 
@@ -60,11 +62,11 @@ context.Database.SqlCommand(
     "UPDATE dbo.Blogs SET Name = 'Another Name' WHERE BlogId = 1");
 ```  
 
-DbUpdateConcurrencyException 上的条目方法返回未能更新的实体的 DbEntityEntry 实例。 （此属性当前总是返回并发问题的单个值。 对于常规更新异常，它可能会返回多个值。）在某些情况下，另一种方法可能是从数据库中获取可能需要重新加载的所有实体的条目，并为每个实体调用 "重新加载"。  
+DbUpdateConcurrencyException 上的条目方法返回未能更新的实体的 DbEntityEntry 实例。  (此属性当前总是返回并发问题的单个值。 此方法可能会返回多个值以用于一般更新异常 ) 。在某些情况下，可能需要为可能需要从数据库重新加载的所有实体获取条目，并为每个实体调用 reload.sql。  
 
 ## <a name="resolving-optimistic-concurrency-exceptions-as-client-wins"></a>将开放式并发异常解析为客户端入选  
 
-以上使用重载的示例有时被称为数据库入选或存储入选，因为该实体中的值由数据库中的值覆盖。 有时，您可能希望执行相反的操作，并用实体中当前的值覆盖数据库中的值。 这有时称为客户端入选，可以通过获取当前数据库值并将其设置为实体的原始值来完成。 （有关当前值和原始值的信息，请参阅使用[属性值](~/ef6/saving/change-tracking/property-values.md)。）例如：  
+以上使用重载的示例有时被称为数据库入选或存储入选，因为该实体中的值由数据库中的值覆盖。 有时，您可能希望执行相反的操作，并用实体中当前的值覆盖数据库中的值。 这有时称为客户端入选，可以通过获取当前数据库值并将其设置为实体的原始值来完成。  (参阅使用 [属性值](xref:ef6/saving/change-tracking/property-values) 获取有关当前值和原始值的信息。 ) 例如：  
 
 ``` csharp
 using (var context = new BloggingContext())

@@ -1,14 +1,16 @@
 ---
 title: 无跟踪查询-EF6
+description: 实体框架6中的无跟踪查询
 author: divega
 ms.date: 10/23/2016
 ms.assetid: f80ac260-c2dc-484d-94a3-3424fd862f8b
-ms.openlocfilehash: 44d58e14a2550bd08a8edd68b467237f6f5b5978
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/querying/no-tracking
+ms.openlocfilehash: eb9e29c219e0cdf1e379cf8bb925f4226b1434a9
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78414475"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89620294"
 ---
 # <a name="no-tracking-queries"></a>非跟踪查询
 有时，可能需要从查询中获取实体，但不能通过上下文跟踪这些实体。 在只读方案中查询大量实体时，这可能会导致更好的性能。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  

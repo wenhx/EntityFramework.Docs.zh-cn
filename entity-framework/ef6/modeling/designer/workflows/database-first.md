@@ -1,54 +1,56 @@
 ---
 title: Database First-EF6
+description: 实体框架6中的 Database First
 author: divega
 ms.date: 10/23/2016
 ms.assetid: cc6ffdb3-388d-4e79-a201-01ec2577c949
-ms.openlocfilehash: d40cff4ddccf43a394ef4f244653372a5a89b05a
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+uid: ef6/modeling/designer/workflows/database-first
+ms.openlocfilehash: 095fc6d6882df306816e65995ff314f1a0e7178a
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78415171"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89620446"
 ---
 # <a name="database-first"></a>Database First
-此视频和分步演练提供使用实体框架 Database First 开发的简介。 Database First 允许从现有数据库对模型进行反向工程。 模型存储在 EDMX 文件（.edmx 扩展名）中，可在 Entity Framework Designer 中查看和编辑。 在应用程序中与之交互的类将自动从 EDMX 文件生成。
+此视频和分步演练提供使用实体框架 Database First 开发的简介。 Database First 允许从现有数据库对模型进行反向工程。 模型存储在 EDMX 文件中 ( .edmx 扩展名) 并且可以在 Entity Framework Designer 中查看和编辑。 在应用程序中与之交互的类将自动从 EDMX 文件生成。
 
 ## <a name="watch-the-video"></a>观看视频
-此视频介绍了使用实体框架进行 Database First 开发的简介。 Database First 允许从现有数据库对模型进行反向工程。 模型存储在 EDMX 文件（.edmx 扩展名）中，可在 Entity Framework Designer 中查看和编辑。 在应用程序中与之交互的类将自动从 EDMX 文件生成。
+此视频介绍了使用实体框架进行 Database First 开发的简介。 Database First 允许从现有数据库对模型进行反向工程。 模型存储在 EDMX 文件中 ( .edmx 扩展名) 并且可以在 Entity Framework Designer 中查看和编辑。 在应用程序中与之交互的类将自动从 EDMX 文件生成。
 
 **主讲人**：[Rowan Miller](https://romiller.com/)
 
-**视频**：WMV | [MP4](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-mp4video-databasefirst.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-winvideo-databasefirst.zip)
+**视频**： [wmv](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-winvideo-databasefirst.wmv)  |  [.wmv](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-mp4video-databasefirst.m4v)  |  [wmv (ZIP) ](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-winvideo-databasefirst.zip)
 
 ## <a name="pre-requisites"></a>先决条件
 
 需要至少安装 Visual Studio 2010 或 Visual Studio 2012 才能完成此演练。
 
-如果你使用的是 Visual Studio 2010，你还需要安装[NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) 。
+如果你使用的是 Visual Studio 2010，你还需要安装 [NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) 。
 
  
 
-## <a name="1-create-an-existing-database"></a>1.创建现有数据库
+## <a name="1-create-an-existing-database"></a>1. 创建现有数据库
 
 通常，当目标为现有数据库时，它将被创建，但在本演练中，我们需要创建一个要访问的数据库。
 
 随 Visual Studio 一起安装的数据库服务器因安装的 Visual Studio 版本而异：
 
 -   如果使用的是 Visual Studio 2010，则将创建 SQL Express 数据库。
--   如果使用的是 Visual Studio 2012，则将创建一个[LocalDB](https://msdn.microsoft.com/library/hh510202(v=sql.110).aspx)数据库。
+-   如果使用的是 Visual Studio 2012，则将创建一个 [LocalDB](https://msdn.microsoft.com/library/hh510202(v=sql.110).aspx) 数据库。
 
  
 
 接下来，生成数据库。
 
 -   打开 Visual Studio
--   **视图-&gt; 服务器资源管理器**
--   右键单击 "**数据连接-&gt; 添加连接 ...** "
+-   **视图- &gt; 服务器资源管理器**
+-   右键单击 "**数据连接- &gt; 添加连接 ...** "
 -   如果尚未从服务器资源管理器连接到数据库，则需要选择 Microsoft SQL Server 作为数据源
 
     ![选择数据源](~/ef6/media/selectdatasource.png)
 
--   连接到 LocalDB 或 SQL Express，具体取决于已安装的数据，并输入**DatabaseFirst**作为数据库名称
+-   连接到 LocalDB 或 SQL Express，具体取决于已安装的数据，并输入 **DatabaseFirst** 作为数据库名称
 
     ![Sql Express 连接 DF](~/ef6/media/sqlexpressconnectiondf.png)
 
@@ -79,26 +81,26 @@ CREATE TABLE [dbo].[Posts] (
 );
 ```
 
-## <a name="2-create-the-application"></a>2.创建应用程序
+## <a name="2-create-the-application"></a>2. 创建应用程序
 
 为了简单起见，我们将构建一个使用 Database First 执行数据访问的基本控制台应用程序：
 
 -   打开 Visual Studio
--   **文件-&gt;&gt; 项目 。**
+-   **文件- &gt; 新建- &gt; 项目 .。。**
 -   从左侧菜单和**控制台应用程序**选择**Windows**
--   输入**DatabaseFirstSample**作为名称
+-   输入 **DatabaseFirstSample** 作为名称
 -   选择“确定”
 
  
 
-## <a name="3-reverse-engineer-model"></a>3.反向工程模型
+## <a name="3-reverse-engineer-model"></a>3. 反向工程模型
 
 我们将使用在 Visual Studio 中包含的 Entity Framework Designer 来创建模型。
 
--   **项目-&gt; "添加新项 ..."**
--   从左侧菜单中选择 "**数据**"，然后**ADO.NET 实体数据模型**
--   输入**BloggingModel**作为名称，然后单击 **"确定"**
--   这将启动**实体数据模型向导**
+-   **项目- &gt; 添加新项 .。。**
+-   从左侧菜单中选择 " **数据** "，然后 **ADO.NET 实体数据模型**
+-   输入 **BloggingModel** 作为名称，然后单击 **"确定"**
+-   这将启动 **实体数据模型向导**
 -   选择 "**从数据库生成**"，然后单击 "**下一步**"
 
     ![向导步骤1](~/ef6/media/wizardstep1.png)
@@ -113,7 +115,7 @@ CREATE TABLE [dbo].[Posts] (
 
  
 
-反向工程过程完成后，会将新模型添加到项目中，并打开，以便在 Entity Framework Designer 中查看。 App.config 文件也已添加到您的项目中，其中包含数据库的连接详细信息。
+反向工程过程完成后，会将新模型添加到项目中，并打开，以便在 Entity Framework Designer 中查看。 还使用数据库的连接详细信息将 App.config 文件添加到项目。
 
 ![模型初始](~/ef6/media/modelinitial.png)
 
@@ -123,23 +125,23 @@ CREATE TABLE [dbo].[Posts] (
 
 首先，我们需要从 NuGet 获取最新版本的实体框架。
 
--   **项目–&gt; 管理 NuGet 程序包 ...** 
-    *如果你没有 "**管理 nuget 包 ...** " 选项，则应安装[最新版本的 nuget](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) *
--   选择 "**联机**" 选项卡
--   选择**EntityFramework**包
--   单击“安装”
+-   **项目– &gt;管理 NuGet 包 ...** 
+    *如果你没有 "**管理 NuGet 包 ...** " 选项，则应安装[最新版本的 nuget](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) *
+-   选择 " **联机** " 选项卡
+-   选择 **EntityFramework** 包
+-   单击“安装” 
 
 接下来，我们需要交换模型，以生成使用 DbContext API 的代码，这些代码是在实体框架的更高版本中引入的。
 
 -   在 EF 设计器中右键单击模型的空位置，然后选择 "**添加代码生成项 ...** "
--   从左侧菜单中选择 "**联机模板**"，然后搜索**DbContext**
--   选择**用于 C\#的 EF DbContext 生成器**，输入**BloggingModel**作为名称，然后单击 "**添加**"
+-   从左侧菜单中选择 " **联机模板** "，然后搜索 **DbContext**
+-   选择**适用于 C \# 的 EF DbContext 生成器**，输入**BloggingModel**作为名称，然后单击 "**添加**"
 
     ![DbContext 模板](~/ef6/media/dbcontexttemplate.png)
 
  
 
-## <a name="4-reading--writing-data"></a>4.读取 & 写入数据
+## <a name="4-reading--writing-data"></a>4. 读取 & 写入数据
 
 现在，我们有了一个模型，可以使用它来访问某些数据了。 要用于访问数据的类将根据 EDMX 文件自动生成。
 
@@ -194,7 +196,7 @@ Press any key to exit...
 ```
  
 
-## <a name="5-dealing-with-database-changes"></a>5.处理数据库更改
+## <a name="5-dealing-with-database-changes"></a>5. 处理数据库更改
 
 现在，需要对数据库架构进行一些更改，我们进行这些更改时，我们还需要更新模型以反映这些更改。
 
@@ -215,7 +217,7 @@ CREATE TABLE [dbo].[Users]
 
 -   在 EF 设计器中右键单击模型的空白点，然后选择 "从数据库更新模型 ..."，这将启动更新向导
 -   在更新向导的 "添加" 选项卡上，选中 "表" 旁边的框，这表示要从架构中添加任何新表。
-    *"刷新" 选项卡显示模型中的所有现有表，这些表将在更新过程中检查更改。删除选项卡显示已从架构中删除的所有表，并将作为更新的一部分从模型中删除。这两个选项卡上的信息是自动检测的，仅提供提供信息，无法更改任何设置。*
+    *"刷新" 选项卡显示模型中的所有现有表，将在更新过程中检查这些表中的更改。删除选项卡显示已从架构中删除的所有表，并将作为更新的一部分从模型中删除。这两个选项卡上的信息是自动检测的，仅提供提供信息，无法更改任何设置。*
 
     ![刷新向导](~/ef6/media/refreshwizard.png)
 
@@ -227,6 +229,6 @@ CREATE TABLE [dbo].[Users]
 
 ![已更新模型](~/ef6/media/modelupdated.png)
 
-## <a name="summary"></a>Summary
+## <a name="summary"></a>总结
 
 在本演练中，我们将讨论 Database First 开发，这允许我们基于现有数据库在 EF 设计器中创建模型。 然后，使用该模型从数据库中读取和写入一些数据。 最后，我们更新了模型以反映对数据库架构所做的更改。
