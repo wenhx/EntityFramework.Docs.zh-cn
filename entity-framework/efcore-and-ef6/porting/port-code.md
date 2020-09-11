@@ -1,15 +1,16 @@
 ---
 title: 从 EF6 移植到 EF Core - 移植基于代码的模型 - EF
+description: 关于将基于 Entity Framework 6 代码的模型应用程序移植到 Entity Framework Core 的特定信息
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 2dce1a50-7d84-4856-abf6-2763dd9be99d
 uid: efcore-and-ef6/porting/port-code
-ms.openlocfilehash: 0a99eac2091c07d8bcf7d4e5e4bdc2afcaeee810
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: d3920e6132576e3a93dd0ffb9dac1412b6e511aa
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "78413857"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89619621"
 ---
 # <a name="porting-an-ef6-code-based-model-to-ef-core"></a>将基于 EF6 代码的模型移植到 EF Core
 
@@ -17,7 +18,7 @@ ms.locfileid: "78413857"
 
 ## <a name="install-ef-core-nuget-packages"></a>安装 EF Core NuGet 包
 
-要使用 EF Core，请针对要使用的数据库提供程序安装 NuGet 包。 例如，如果以 SQL Server 为目标，则安装 `Microsoft.EntityFrameworkCore.SqlServer`。 有关详细信息，请参阅[数据库提供程序](../../core/providers/index.md)。
+要使用 EF Core，请针对要使用的数据库提供程序安装 NuGet 包。 例如，如果以 SQL Server 为目标，则安装 `Microsoft.EntityFrameworkCore.SqlServer`。 有关详细信息，请参阅[数据库提供程序](xref:core/providers/index)。
 
 如果计划使用迁移，则还应安装 `Microsoft.EntityFrameworkCore.Tools` 包。
 
@@ -29,7 +30,7 @@ ms.locfileid: "78413857"
 
 ## <a name="context-configuration-connection-etc"></a>上下文配置（连接等）
 
-如[确保 EF Core 适用于你的应用程序](ensure-requirements.md)中所述，EF Core 检测到连接到的数据库时操作更一目了然。 你将需要替代已派生的上下文中的 `OnConfiguring` 方法，并使用数据库提供程序特定的 API 设置到数据库的连接。
+如[确保 EF Core 适用于你的应用程序](xref:efcore-and-ef6/porting/index)中所述，EF Core 检测到连接到的数据库时操作更一目了然。 你将需要替代已派生的上下文中的 `OnConfiguring` 方法，并使用数据库提供程序特定的 API 设置到数据库的连接。
 
 大多数 EF6 应用程序将连接字符串存储在应用程序 `App/Web.config` 文件中。 在 EF Core 中，你将使用 `ConfigurationManager` API 读取此连接字符串。 你可能还需要添加对 `System.Configuration` 框架程序集的引用才能使用此 API。
 

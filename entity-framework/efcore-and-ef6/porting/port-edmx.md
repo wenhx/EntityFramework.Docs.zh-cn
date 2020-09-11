@@ -1,15 +1,16 @@
 ---
 title: 从 EF6 移植到 EF Core - 移植基于 EDMX 的模型 - EF
+description: 关于将基于 Entity Framework 6 EDMX 的模型应用程序移植到 Entity Framework Core 的特定信息
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 63003709-f1ec-4bdc-8083-65a60c4826d2
 uid: efcore-and-ef6/porting/port-edmx
-ms.openlocfilehash: f0bb06dc687aaa774981d97daadc55f00fbd527e
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: 3767b1dc083ec886115cea9b0750101fb49ad84c
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "78413527"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89619599"
 ---
 # <a name="porting-an-ef6-edmx-based-model-to-ef-core"></a>将基于 EF6 EDMX 的模型移植到 EF Core
 
@@ -23,7 +24,7 @@ EF Core 不支持对模型使用 EDMX 文件格式。 要移植这些模型，�
 
 现可使用反向工程功能基于现有数据库创建模型。
 
-在包管理器控制台（“工具”–>“NuGet 包管理器”–>“包管理器控制台”）中运行以下命令。 请参阅[包管理器控制台 (Visual Studio)](../../core/miscellaneous/cli/powershell.md)，获取用于设置一部分表的基架等的命令选项。
+在包管理器控制台（“工具”–>“NuGet 包管理器”–>“包管理器控制台”）中运行以下命令。 请参阅[包管理器控制台 (Visual Studio)](xref:core/miscellaneous/cli/powershell)，获取用于设置一部分表的基架等的命令选项。
 
 ``` powershell
 Scaffold-DbContext "<connection string>" <database provider name>
