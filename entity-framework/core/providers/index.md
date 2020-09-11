@@ -1,14 +1,15 @@
 ---
 title: 数据库提供程序 - EF Core
+description: 有关特定支持的 Entity Framework Core 提供程序的信息以及提供程序的一般信息
 author: ajcvickers
 ms.date: 12/17/2019
 uid: core/providers/index
-ms.openlocfilehash: 7970636ab68b04d4d8583a4c126864ecc27ce6b2
-ms.sourcegitcommit: 31536e52b838a84680d2e93e5bb52fb16df72a97
+ms.openlocfilehash: 99e1b162cb610b8f086501d0af3896ffa4635358
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/10/2020
-ms.locfileid: "86238159"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89618990"
 ---
 # <a name="database-providers"></a>数据库提供程序
 

@@ -1,15 +1,16 @@
 ---
 title: 入门 - EF Core
+description: Entity Framework Core 入门教程
 author: rick-anderson
 ms.date: 09/17/2019
 ms.assetid: 3c88427c-20c6-42ec-a736-22d3eccd5071
 uid: core/get-started/index
-ms.openlocfilehash: 7181df6ee73b09f196940178ffed38d96b075258
-ms.sourcegitcommit: ebfd3382fc583bc90f0da58e63d6e3382b30aa22
+ms.openlocfilehash: e33a18c8d3d72078eaaeba9c8cf0a1afca0cb66c
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/25/2020
-ms.locfileid: "85370313"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89618001"
 ---
 # <a name="getting-started-with-ef-core"></a>EF Core 入门
 
@@ -54,7 +55,7 @@ cd EFGetStarted
 
 ## <a name="install-entity-framework-core"></a>安装 Entity Framework Core
 
-要安装 EF Core，请为要作为目标对象的 EF Core 数据库提供程序安装程序包。 本教程使用 SQLite 的原因是，它可在 .NET Core 支持的所有平台上运行。 有关可用提供程序的列表，请参阅[数据库提供程序](../providers/index.md)。
+要安装 EF Core，请为要作为目标对象的 EF Core 数据库提供程序安装程序包。 本教程使用 SQLite 的原因是，它可在 .NET Core 支持的所有平台上运行。 有关可用提供程序的列表，请参阅[数据库提供程序](xref:core/providers/index)。
 
 ### <a name="net-core-cli"></a>[.NET Core CLI](#tab/netcore-cli)
 
@@ -93,9 +94,9 @@ dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 
 [!code-csharp[Main](../../../samples/core/GetStarted/Model.cs)]
 
-EF Core 还可以从现有数据库对模型进行[反向工程](../managing-schemas/scaffolding.md)。
+EF Core 还可以从现有数据库对模型进行[反向工程](xref:core/managing-schemas/scaffolding)。
 
-提示:为清楚起见，有意简化了此应用程序。 [连接字符串](../miscellaneous/connection-strings.md)不应存储在生产应用程序的代码中。 可能还需要将每个 C# 类拆分为其自己的文件。
+提示:为清楚起见，有意简化了此应用程序。 [连接字符串](xref:core/miscellaneous/connection-strings)不应存储在生产应用程序的代码中。 可能还需要将每个 C# 类拆分为其自己的文件。
 
 ## <a name="create-the-database"></a>创建数据库
 
@@ -112,7 +113,7 @@ EF Core 还可以从现有数据库对模型进行[反向工程](../managing-sch
   dotnet ef database update
   ```
 
-  这会安装 [dotnet ef](../miscellaneous/cli/dotnet.md) 和设计包，这是对项目运行命令所必需的。 `migrations` 命令为迁移搭建基架，以便为模型创建一组初始表。 `database update` 命令创建数据库并向其应用新的迁移。
+  这会安装 [dotnet ef](xref:core/miscellaneous/cli/dotnet) 和设计包，这是对项目运行命令所必需的。 `migrations` 命令为迁移搭建基架，以便为模型创建一组初始表。 `database update` 命令创建数据库并向其应用新的迁移。
 
 ### <a name="visual-studio"></a>[Visual Studio](#tab/visual-studio)
 
@@ -124,7 +125,7 @@ EF Core 还可以从现有数据库对模型进行[反向工程](../managing-sch
   Update-Database
   ```
 
-  这会安装 [ EF Core 的 PMC 工具](../miscellaneous/cli/powershell.md)。 `Add-Migration` 命令为迁移搭建基架，以便为模型创建一组初始表。 `Update-Database` 命令创建数据库并向其应用新的迁移。
+  这会安装 [ EF Core 的 PMC 工具](xref:core/miscellaneous/cli/powershell)。 `Add-Migration` 命令为迁移搭建基架，以便为模型创建一组初始表。 `Update-Database` 命令创建数据库并向其应用新的迁移。
 
 ---
 

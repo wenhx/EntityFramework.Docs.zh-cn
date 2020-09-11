@@ -1,14 +1,16 @@
 ---
 title: Code First 迁移 - EF6
+description: Entity Framework 6 中的 Code First 迁移
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 36591d8f-36e1-4835-8a51-90f34f633d1e
-ms.openlocfilehash: e5a91af73bab9d45b0f1f4242ce503c6b6f407f6
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+uid: ef6/modeling/code-first/migrations/index
+ms.openlocfilehash: b2200a91b087cf6f2dff0803b710e2518193af40
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "78413302"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89616963"
 ---
 # <a name="code-first-migrations"></a>Code First 迁移
 如果使用的是 Code First 工作流，推荐使用 Code First 迁移改进应用程序的数据库架构。 迁移提供一组允许以下操作的工具：

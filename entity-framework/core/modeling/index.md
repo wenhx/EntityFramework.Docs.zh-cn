@@ -1,21 +1,22 @@
 ---
 title: 创建并配置模型 - EF Core
+description: 使用 Entity Framework Core 创建并配置模型的概述
 author: rowanmiller
 ms.date: 11/05/2019
 ms.assetid: 88253ff3-174e-485c-b3f8-768243d01ee1
 uid: core/modeling/index
-ms.openlocfilehash: 0f44d9684ca5c8435d83085f9038860309bd82a2
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: e980f11b08bee7b07156a80c6bead829e7a8b654
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "78412772"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89616757"
 ---
 # <a name="creating-and-configuring-a-model"></a>创建并配置模型
 
-Entity Framework 使用一组约定基于实体类的定义来构建模型。 可指定其他配置以补充和/或替代约定的内容。
+Entity Framework 使用一组约定基于实体类的形状构建模型。 可指定其他配置以补充和/或替代约定的内容。
 
-本文介绍可应用于面向任何数据存储的模型配置，以及面向任意关系数据库时可应用的配置。 提供程序还可支持特定于具体数据存储的配置。 有关提供程序特定配置的文档，请参阅 [数据库提供程序](../providers/index.md) 部分。
+本文介绍可应用于面向任何数据存储的模型的配置，以及面向任意关系数据库时可应用的配置。 提供程序还可支持特定于具体数据存储的配置。 有关提供程序特定配置的文档，请参阅 [数据库提供程序](xref:core/providers/index) 部分。
 
 > [!TIP]  
 > 可在 GitHub 上查看此文章的 [示例](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples) 。

@@ -1,15 +1,16 @@
 ---
 title: 实体框架提供程序 - EF6
+description: Entity Framework 6 中的实体框架提供程序
 author: divega
 ms.date: 06/27/2018
 ms.assetid: 7BFB7763-CD6C-4520-93A2-7B265F5FA586
 uid: ef6/fundamentals/providers/index
-ms.openlocfilehash: 661398e7d6037875ce0cdb15c221a729d1f0c7d8
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: 5140fefeb118b6e70ac27ab010d813d03ec7000c
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "78413332"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89615866"
 ---
 # <a name="entity-framework-6-providers"></a>实体框架 6 提供程序
 > [!NOTE]
@@ -69,7 +70,7 @@ ms.locfileid: "78413332"
 
 ### <a name="code-based-registration"></a>基于代码的注册
 
-从实体框架 6 开始，可在代码中指定整个应用程序的 EF 配置。 有关完整的详细信息，请参阅[实体框架基于代码的配置](https://msdn.microsoft.com/data/jj680699)。 使用基于代码的配置注册 EF 提供程序的常规方法是，创建一个派生自 System.Data.Entity.DbConfiguration 的新类，并将其放置在与 DbContext 类相同的程序集中。 然后，DbConfiguration 类应在其构造函数中注册该提供程序。 例如，要注册 SQL Compact 提供程序，DbConfiguration 类如下所示：
+从实体框架 6 开始，可在代码中指定整个应用程序的 EF 配置。 有关完整的详细信息，请参阅[实体框架基于代码的配置](https://msdn.microsoft.com/data/jj680699)__。 使用基于代码的配置注册 EF 提供程序的常规方法是，创建一个派生自 System.Data.Entity.DbConfiguration 的新类，并将其放置在与 DbContext 类相同的程序集中。 然后，DbConfiguration 类应在其构造函数中注册该提供程序。 例如，要注册 SQL Compact 提供程序，DbConfiguration 类如下所示：
 
 ``` csharp
     public class MyConfiguration : DbConfiguration
@@ -87,7 +88,7 @@ ms.locfileid: "78413332"
 
 ## <a name="what-if-the-provider-i-need-isnt-available"></a>如果未提供我需要的提供程序怎么办？
 
-如果该提供程序适用于以前版本的 EF，则建议联系提供程序的所有者并要求他们创建 EF6 版本。 应包含对 [EF6 提供程序模型的文档](~/ef6/fundamentals/providers/provider-model.md)的引用。
+如果该提供程序适用于以前版本的 EF，则建议联系提供程序的所有者并要求他们创建 EF6 版本。 应包含对 [EF6 提供程序模型的文档](xref:ef6/fundamentals/providers/provider-model)的引用。
 
 ## <a name="can-i-write-a-provider-myself"></a>可以自己编写提供程序吗？
 

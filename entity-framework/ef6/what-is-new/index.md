@@ -1,21 +1,22 @@
 ---
 title: 新增功能 - EF6
+description: Entity Framework 6 中的新增功能
 author: divega
 ms.date: 09/12/2019
 ms.assetid: 41d1f86b-ce66-4bf2-8963-48514406fb4c
 uid: ef6/what-is-new/index
-ms.openlocfilehash: e0367aeefd682434bf520301776bcff4f0e72e06
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: 71854e0a7009b35742a70724210708a284f50a3d
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "80136138"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89619764"
 ---
 # <a name="whats-new-in-ef6"></a>EF6 中的新增功能
 
 强烈建议使用最新发布的实体框架版本，以确保获得最新功能和最高稳定性。
 但我们也意识到用户可能需要使用以前的版本，或想要尝试最新预发行版中的新改进。
-若要安装特定版本的 EF，请参阅[获取实体框架](~/ef6/fundamentals/install.md)。
+若要安装特定版本的 EF，请参阅[获取实体框架](xref:ef6/fundamentals/install)。
 
 ## <a name="ef-640"></a>EF 6.4.0
 
@@ -52,8 +53,8 @@ EF 6.3.0 运行时已于 2019 年 9 月发布到 NuGet。 此版本的主要目�
 
 请注意，EDMX 文件与 EntityDeploy 生成操作关联。 这是一个特殊的 MSBuild 任务（现已包含在 EF 6.3 包中），它负责将 EF 模型作为嵌入式资源添加到目标程序集中（或将其复制为输出文件夹中的文件，具体取决于 EDMX 中的“元数据项目处理”设置）。 有关如何进行此设置的详细信息，请参阅 [EDMX .NET Core 示例](https://aka.ms/EdmxDotNetCoreSample)。
 
-警告：请确保定义“实际”.edmx 文件的旧样式（即非 SDK 样式）.NET Framework 项目在定义 .sln 文件内的链接的项目之前  。 否则，当在设计器中打开 .edmx 文件时，将看到错误消息“该实体框架在当前为项目指定的目标框架中不可用。 可以更改项目的目标框架或在 XmlEditor 中编辑模型”。
+警告：请确保定义“实际”.edmx 文件的旧样式（即非 SDK 样式）.NET Framework 项目在定义 .sln 文件内的链接的项目之前。 否则，当在设计器中打开 .edmx 文件时，将看到错误消息“该实体框架在当前为项目指定的目标框架中不可用。 可以更改项目的目标框架或在 XmlEditor 中编辑模型”。
 
 ## <a name="past-releases"></a>过去的版本
 
-[过去的版本](past-releases.md)页包含过去所有版本的 EF 的存档以及各版本中引入的主要功能。
+[过去的版本](xref:ef6/what-is-new/past-releases)页包含过去所有版本的 EF 的存档以及各版本中引入的主要功能。

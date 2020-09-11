@@ -1,19 +1,20 @@
 ---
 title: 安装 Entity Framework Core - EF Core
+description: Entity Framework Core 的安装说明
 author: divega
 ms.date: 08/06/2017
 ms.assetid: 608cc774-c570-4809-8a3e-cd2c8446b8b2
 uid: core/get-started/install/index
-ms.openlocfilehash: 6575b1ac028f8b67b49ca7f4e49d6f19500be98f
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: 1cc6f8f73739e61adefb375ee37a830933903470
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "80136174"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89617992"
 ---
 # <a name="installing-entity-framework-core"></a>安装 Entity Framework Core
 
-## <a name="prerequisites"></a>必备条件
+## <a name="prerequisites"></a>先决条件
 
 * EF Core 是一个 [.NET Standard 2.0](/dotnet/standard/net-standard) 库。 因此，EF Core 需要支持运行 .NET Standard 2.0 的实现。 其他 .NET Standard 2.0 库也可引用 EF Core。
 
@@ -47,9 +48,9 @@ ms.locfileid: "80136174"
 
 ### <a name="visual-studio-nuget-package-manager-dialog"></a>Visual Studio NuGet 包管理器对话框
 
-* 从 Visual Studio 菜单中选择“项目”>“管理 NuGet 包” 
+* 从 Visual Studio 菜单中选择“项目”>“管理 NuGet 包”****
 
-* 单击“浏览”或“更新”选项卡  
+* 单击“浏览”或“更新”选项卡********
 
 * 若要安装或更新 SQL Server 提供程序，请选择 `Microsoft.EntityFrameworkCore.SqlServer` 包并确认。
 
@@ -57,7 +58,7 @@ ms.locfileid: "80136174"
 
 ### <a name="visual-studio-nuget-package-manager-console"></a>Visual Studio NuGet 包管理器控制台
 
-* 从 Visual Studio 菜单中选择“工具”>“NuGet 包管理器”>“包管理器控制台” 
+* 从 Visual Studio 菜单中选择“工具”>“NuGet 包管理器”>“包管理器控制台”****
 
 * 若要安装 SQL Server 提供程序，请在包管理器控制台中运行以下命令：
 

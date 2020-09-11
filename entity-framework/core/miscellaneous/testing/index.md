@@ -1,19 +1,20 @@
 ---
 title: 测试使用 EF Core 的代码 - EF Core
-description: 测试使用 EF Core 的应用程序的不同方法
+description: 测试使用 Entity Framework Core 的应用程序的不同方法
 author: ajcvickers
 ms.date: 04/22/2020
 uid: core/miscellaneous/testing/index
-ms.openlocfilehash: 7929c284c2794b2fcc95235ae413d56895ebb6e2
-ms.sourcegitcommit: 949faaba02e07e44359e77d7935f540af5c32093
+ms.openlocfilehash: c55290f4af81a49bf7ab131ebe93af209f96b430
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/03/2020
-ms.locfileid: "87526805"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89617708"
 ---
 # <a name="testing-code-that-uses-ef-core"></a>测试使用 EF Core 的代码
 
 测试访问数据库的代码需要满足以下任一条件：
+
 * 针对在生产环境中使用的相同数据库系统运行查询和更新。
 * 对其他更易管理的数据库系统运行查询和更新。
 * 使用测试替身或其他机制来避免使用数据库。
@@ -21,14 +22,14 @@ ms.locfileid: "87526805"
 本文档概述了每个选项所涉及的折衷方案，并说明了如何在每种方法中使用 EF Core。  
 
 > [!TIP]
-> 请参阅 [EF Core 测试示例](xref:core/miscellaneous/testing/testing-sample)查看演示此处引入的概念的代码。 
+> 请参阅 [EF Core 测试示例](xref:core/miscellaneous/testing/testing-sample)查看演示此处引入的概念的代码。
 
 ## <a name="all-database-providers-are-not-equal"></a>所有数据库提供程序都不等同
 
 务必要理解的是，EF Core 不是为了抽象底层数据库系统的各个方面而设计的。
 EF Core 是一组通用的模式和概念，可用于任何数据库系统。
 然后，EF Core 数据库提供程序在此通用框架的基础上叠加数据库特定的行为和功能。
-这样，每个数据库系统都可以实现其最佳性能，并在适当的情况下维持与其他数据库系统的共性。 
+这样，每个数据库系统都可以实现其最佳性能，并在适当的情况下维持与其他数据库系统的共性。
 
 从根本上说，这意味着切换数据库提供程序将更改 EF Core 行为，使应用程序不能正常工作，除非它明确解释行为的任何差异。
 虽然如此，但在许多情况下还是可以这么做，因为关系数据库之间存在高度的共性。
@@ -47,23 +48,24 @@ EF Core 是一组通用的模式和概念，可用于任何数据库系统。
 幸运的是，在本例中，答案非常简单：使用本地 SQL Server 进行开发者测试。
 SQL Azure 和 SQL Server 极其相似，因此针对 SQL Server 的测试通常是合理的折衷方案。
 虽然如此，但在投入生产之前针对 SQL Azure 本身运行测试仍然是明智之举。
- 
-### <a name="localdb"></a>LocalDB 
+
+### <a name="localdb"></a>LocalDB
 
 所有主要数据库系统都具有某种形式的“Developer Edition”本地测试。
-SQL Server 还有一项名为 [LocalDB](/sql/database-engine/configure-windows/sql-server-express-localdb?view=sql-server-ver15) 的功能。
+SQL Server 还有一项名为 [LocalDB](/sql/database-engine/configure-windows/sql-server-express-localdb) 的功能。
 LocalDB 的主要优势在于可以按需增大数据库实例。
 这可以避免在计算机上运行数据库服务，即使在未运行测试时也是如此。
 
 LocalDB 也不是没有问题：
-* 它不支持 [SQL Server Developer Edition](/sql/sql-server/editions-and-components-of-sql-server-2016?view=sql-server-ver15) 支持的部分内容。
+
+* 它不支持 [SQL Server Developer Edition](/sql/sql-server/editions-and-components-of-sql-server-version-15?view=sql-server-ver15&preserve-view=true) 支持的部分内容。
 * 它在 Linux 上不可用。
 * 由于要启动服务，可能导致首次测试运行滞后。
 
 就个人而言，我从来不觉得在开发计算机上运行数据库服务有什么问题，所以一般建议使用 Developer Edition。
 但是，LocalDB 对某些人而言可能适用，尤其是在处理能力不够强的开发计算机上。
 
-在 Docker 容器（或类似容器）中[运行 SQL Server](/sql/linux/quickstart-install-connect-docker?view=sql-server-ver15)（或任何其他数据库系统）是避免直接在开发计算机上运行数据库系统的另一种方法。  
+在 Docker 容器（或类似容器）中[运行 SQL Server](/sql/linux/quickstart-install-connect-docker)（或任何其他数据库系统）是避免直接在开发计算机上运行数据库系统的另一种方法。  
 
 ## <a name="approach-2-sqlite"></a>方法 2：SQLite
 
@@ -77,17 +79,19 @@ EF Core 主要通过针对本地 SQL Server 实例运行 SQL Server 提供程序
 这通常意味着另一个关系数据库，[SQLite](https://sqlite.org/index.html) 是显而易见的选择。
 
 SQLite 是不错的选择，因为：
+
 * 它在处理应用程序的过程中运行，因此开销较低。
 * 它使用自动创建的简单数据库文件，因此不需要数据库管理。
 * 它有内存模式，甚至可以避免创建文件。
 
 但是，请记住：
+
 * SQLite 不一定支持你的生产数据库系统支持的所有内容，这是不可避免的。
 * 对于某些查询，SQLite 的行为方式将与你的生产数据库系统不同。
 
 因此，如果使用 SQLite 进行测试，还应确保针对实际数据库系统进行测试。
 
-有关 EF Core 特定指南，请参阅[用 SQLite 进行测试](xref:core/miscellaneous/testing/sqlite)。 
+有关 EF Core 特定指南，请参阅[用 SQLite 进行测试](xref:core/miscellaneous/testing/sqlite)。
 
 ## <a name="approach-3-the-ef-core-in-memory-database"></a>方法 3：EF Core 内存中数据库
 
@@ -114,6 +118,6 @@ EF Core 附带了内存中数据库，用于对 EF Core 本身进行内部测试
 
 改为使用 EF 内存中数据库对使用 DbContext 的应用进行单元测试。
 在这种情况下，使用 EF 内存中数据库是适当的，因为测试不依赖于数据库行为。
-但是不要这样测试实际数据库查询或更新。   
+但是不要这样测试实际数据库查询或更新。
 
-[EF Core 测试示例](xref:core/miscellaneous/testing/testing-sample)演示使用 EF 内存中数据库以及 SQL Server 和 SQLite 进行的测试。 
+[EF Core 测试示例](xref:core/miscellaneous/testing/testing-sample)演示使用 EF 内存中数据库以及 SQL Server 和 SQLite 进行的测试。

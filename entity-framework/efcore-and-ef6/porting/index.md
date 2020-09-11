@@ -1,15 +1,16 @@
 ---
 title: 从 EF6 移植到 EF Core - EF
+description: 有关将应用程序从 Entity Framework 6 移植到 Entity Framework Core 的常规信息
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 826b58bd-77b0-4bbc-bfcd-24d1ed3a8f38
 uid: efcore-and-ef6/porting/index
-ms.openlocfilehash: 77096b9bffba6b8c2a3d7bfb0c2e41e2d170a7db
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: 132934df2ef7929372c4a092635c5c97227983f9
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "78412922"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89619686"
 ---
 # <a name="porting-from-ef6-to-ef-core"></a>从 EF6 移植到 EF Core
 
@@ -23,7 +24,7 @@ ms.locfileid: "78412922"
 
 请确保 EF Core 包含需要在应用程序中使用的所有功能。 有关 EF Core 与 EF6 中功能集的详细比较，请参阅[功能比较](xref:efcore-and-ef6/index)。 若缺少所需的任何功能，请确保在移植到 EF Core 前弥补这些功能的缺失。
 
-## <a name="behavior-changes"></a>行为变更
+## <a name="behavior-changes"></a>行为更改
 
 下表包含 EF6 和 EF Core 之间的一些行为变更，非完整列表。 移植应用程序时，务必牢记它们，因为这些可能会更改应用程序的行为方式，而在交换到 EF Core 后它们不会显示为编译错误。
 
