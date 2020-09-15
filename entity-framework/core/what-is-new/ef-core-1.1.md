@@ -1,50 +1,51 @@
 ---
 title: EF Core 1.1 中的新增功能 - EF Core
+description: Entity Framework Core 1.1 中的更改和改进
 author: divega
 ms.date: 10/27/2016
 ms.assetid: C7FE8C85-445A-4F0C-97EC-CC3F7F1D6F5E
 uid: core/what-is-new/ef-core-1.1
-ms.openlocfilehash: d582712ed62443318f4b9e209511fb2a557d667e
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: 89dfe4b4772e9e6dc232860f38f07c94654af437
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "78413587"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89618807"
 ---
-# <a name="new-features-in-ef-core-11"></a><span data-ttu-id="b92b2-102">EF Core 1.1 中的新增功能</span><span class="sxs-lookup"><span data-stu-id="b92b2-102">New features in EF Core 1.1</span></span>
+# <a name="new-features-in-ef-core-11"></a><span data-ttu-id="aca67-103">EF Core 1.1 中的新增功能</span><span class="sxs-lookup"><span data-stu-id="aca67-103">New features in EF Core 1.1</span></span>
 
-## <a name="modeling"></a><span data-ttu-id="b92b2-103">建模</span><span class="sxs-lookup"><span data-stu-id="b92b2-103">Modeling</span></span>
+## <a name="modeling"></a><span data-ttu-id="aca67-104">建模</span><span class="sxs-lookup"><span data-stu-id="aca67-104">Modeling</span></span>
 
-### <a name="field-mapping"></a><span data-ttu-id="b92b2-104">字段映射</span><span class="sxs-lookup"><span data-stu-id="b92b2-104">Field mapping</span></span>
+### <a name="field-mapping"></a><span data-ttu-id="aca67-105">字段映射</span><span class="sxs-lookup"><span data-stu-id="aca67-105">Field mapping</span></span>
 
-<span data-ttu-id="b92b2-105">允许配置属性的支持字段。</span><span class="sxs-lookup"><span data-stu-id="b92b2-105">Allows you to configure a backing field for a property.</span></span> <span data-ttu-id="b92b2-106">这对于只读属性或具有 Get/Set 方法（而不是属性）的数据很有用。</span><span class="sxs-lookup"><span data-stu-id="b92b2-106">This can be useful for read-only properties, or data that has Get/Set methods rather than a property.</span></span>
+<span data-ttu-id="aca67-106">允许配置属性的支持字段。</span><span class="sxs-lookup"><span data-stu-id="aca67-106">Allows you to configure a backing field for a property.</span></span> <span data-ttu-id="aca67-107">这对于只读属性或具有 Get/Set 方法（而不是属性）的数据很有用。</span><span class="sxs-lookup"><span data-stu-id="aca67-107">This can be useful for read-only properties, or data that has Get/Set methods rather than a property.</span></span>
 
-### <a name="mapping-to-memory-optimized-tables-in-sql-server"></a><span data-ttu-id="b92b2-107">映射到 SQL Server 内存优化表</span><span class="sxs-lookup"><span data-stu-id="b92b2-107">Mapping to Memory-Optimized Tables in SQL Server</span></span>
+### <a name="mapping-to-memory-optimized-tables-in-sql-server"></a><span data-ttu-id="aca67-108">映射到 SQL Server 内存优化表</span><span class="sxs-lookup"><span data-stu-id="aca67-108">Mapping to Memory-Optimized Tables in SQL Server</span></span>
 
-<span data-ttu-id="b92b2-108">你可以指定实体映射到的表是内存优化表。</span><span class="sxs-lookup"><span data-stu-id="b92b2-108">You can specify that the table an entity is mapped to is memory-optimized.</span></span> <span data-ttu-id="b92b2-109">使用 EF Core 创建和维护基于模型的数据库时（使用迁移或 `Database.EnsureCreated()`），将为这些实体创建内存优化表。</span><span class="sxs-lookup"><span data-stu-id="b92b2-109">When using EF Core to create and maintain a database based on your model (either with migrations or `Database.EnsureCreated()`), a memory-optimized table will be created for these entities.</span></span>
+<span data-ttu-id="aca67-109">你可以指定实体映射到的表是内存优化表。</span><span class="sxs-lookup"><span data-stu-id="aca67-109">You can specify that the table an entity is mapped to is memory-optimized.</span></span> <span data-ttu-id="aca67-110">使用 EF Core 创建和维护基于模型的数据库时（使用迁移或 `Database.EnsureCreated()`），将为这些实体创建内存优化表。</span><span class="sxs-lookup"><span data-stu-id="aca67-110">When using EF Core to create and maintain a database based on your model (either with migrations or `Database.EnsureCreated()`), a memory-optimized table will be created for these entities.</span></span>
 
-## <a name="change-tracking"></a><span data-ttu-id="b92b2-110">更改跟踪</span><span class="sxs-lookup"><span data-stu-id="b92b2-110">Change tracking</span></span>
+## <a name="change-tracking"></a><span data-ttu-id="aca67-111">更改跟踪</span><span class="sxs-lookup"><span data-stu-id="aca67-111">Change tracking</span></span>
 
-### <a name="additional-change-tracking-apis-from-ef6"></a><span data-ttu-id="b92b2-111">来自 EF6 的其他更改跟踪 API</span><span class="sxs-lookup"><span data-stu-id="b92b2-111">Additional change tracking APIs from EF6</span></span>
+### <a name="additional-change-tracking-apis-from-ef6"></a><span data-ttu-id="aca67-112">来自 EF6 的其他更改跟踪 API</span><span class="sxs-lookup"><span data-stu-id="aca67-112">Additional change tracking APIs from EF6</span></span>
 
-<span data-ttu-id="b92b2-112">如 `Reload`、`GetModifiedProperties`、`GetDatabaseValues` 等。</span><span class="sxs-lookup"><span data-stu-id="b92b2-112">Such as `Reload`, `GetModifiedProperties`, `GetDatabaseValues` etc.</span></span>
+<span data-ttu-id="aca67-113">如 `Reload`、`GetModifiedProperties`、`GetDatabaseValues` 等。</span><span class="sxs-lookup"><span data-stu-id="aca67-113">Such as `Reload`, `GetModifiedProperties`, `GetDatabaseValues` etc.</span></span>
 
-## <a name="query"></a><span data-ttu-id="b92b2-113">查询</span><span class="sxs-lookup"><span data-stu-id="b92b2-113">Query</span></span>
+## <a name="query"></a><span data-ttu-id="aca67-114">查询</span><span class="sxs-lookup"><span data-stu-id="aca67-114">Query</span></span>
 
-### <a name="explicit-loading"></a><span data-ttu-id="b92b2-114">显式加载</span><span class="sxs-lookup"><span data-stu-id="b92b2-114">Explicit Loading</span></span>
+### <a name="explicit-loading"></a><span data-ttu-id="aca67-115">显式加载</span><span class="sxs-lookup"><span data-stu-id="aca67-115">Explicit Loading</span></span>
 
-<span data-ttu-id="b92b2-115">允许在先前从数据库加载的实体上触发导航属性填充。</span><span class="sxs-lookup"><span data-stu-id="b92b2-115">Allows you to trigger population of a navigation property on an entity that was previously loaded from the database.</span></span>
+<span data-ttu-id="aca67-116">允许在先前从数据库加载的实体上触发导航属性填充。</span><span class="sxs-lookup"><span data-stu-id="aca67-116">Allows you to trigger population of a navigation property on an entity that was previously loaded from the database.</span></span>
 
-### <a name="dbsetfind"></a><span data-ttu-id="b92b2-116">DbSet.Find</span><span class="sxs-lookup"><span data-stu-id="b92b2-116">DbSet.Find</span></span>
+### <a name="dbsetfind"></a><span data-ttu-id="aca67-117">DbSet.Find</span><span class="sxs-lookup"><span data-stu-id="aca67-117">DbSet.Find</span></span>
 
-<span data-ttu-id="b92b2-117">提供一种基于主键值提取实体的简单方法。</span><span class="sxs-lookup"><span data-stu-id="b92b2-117">Provides an easy way to fetch an entity based on its primary key value.</span></span>
+<span data-ttu-id="aca67-118">提供一种基于主键值提取实体的简单方法。</span><span class="sxs-lookup"><span data-stu-id="aca67-118">Provides an easy way to fetch an entity based on its primary key value.</span></span>
 
-## <a name="other"></a><span data-ttu-id="b92b2-118">其他</span><span class="sxs-lookup"><span data-stu-id="b92b2-118">Other</span></span>
+## <a name="other"></a><span data-ttu-id="aca67-119">其他</span><span class="sxs-lookup"><span data-stu-id="aca67-119">Other</span></span>
 
-### <a name="connection-resiliency"></a><span data-ttu-id="b92b2-119">连接复原</span><span class="sxs-lookup"><span data-stu-id="b92b2-119">Connection resiliency</span></span>
+### <a name="connection-resiliency"></a><span data-ttu-id="aca67-120">连接复原</span><span class="sxs-lookup"><span data-stu-id="aca67-120">Connection resiliency</span></span>
 
-<span data-ttu-id="b92b2-120">自动重试失败的数据库命令。</span><span class="sxs-lookup"><span data-stu-id="b92b2-120">Automatically retries failed database commands.</span></span> <span data-ttu-id="b92b2-121">当连接到 SQL Azure 时（其中瞬间失败非常普遍）该操作非常有用。</span><span class="sxs-lookup"><span data-stu-id="b92b2-121">This is especially useful when connection to SQL Azure, where transient failures are common.</span></span>
+<span data-ttu-id="aca67-121">自动重试失败的数据库命令。</span><span class="sxs-lookup"><span data-stu-id="aca67-121">Automatically retries failed database commands.</span></span> <span data-ttu-id="aca67-122">当连接到 SQL Azure 时（其中瞬间失败非常普遍）该操作非常有用。</span><span class="sxs-lookup"><span data-stu-id="aca67-122">This is especially useful when connection to SQL Azure, where transient failures are common.</span></span>
 
-### <a name="simplified-service-replacement"></a><span data-ttu-id="b92b2-122">简化的服务替换</span><span class="sxs-lookup"><span data-stu-id="b92b2-122">Simplified service replacement</span></span>
+### <a name="simplified-service-replacement"></a><span data-ttu-id="aca67-123">简化的服务替换</span><span class="sxs-lookup"><span data-stu-id="aca67-123">Simplified service replacement</span></span>
 
-<span data-ttu-id="b92b2-123">替换 EF 使用的内部服务更加简单。</span><span class="sxs-lookup"><span data-stu-id="b92b2-123">Makes it easier to replace internal services that EF uses.</span></span>
+<span data-ttu-id="aca67-124">替换 EF 使用的内部服务更加简单。</span><span class="sxs-lookup"><span data-stu-id="aca67-124">Makes it easier to replace internal services that EF uses.</span></span>
