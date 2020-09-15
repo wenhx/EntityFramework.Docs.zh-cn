@@ -172,14 +172,24 @@
           items:
             - name: 概述
               href: core/querying/index.md
+            - name: 加载相关数据
+              items:
+                - name: 概述
+                  href: core/querying/related-data/index.md
+                - name: 预先加载
+                  href: core/querying/related-data/eager.md
+                - name: 显式加载
+                  href: core/querying/related-data/explicit.md
+                - name: 延迟加载
+                  href: core/querying/related-data/lazy.md
+                - name: 关联数据和序列化
+                  href: core/querying/related-data/serialization.md
             - name: 客户端与服务器评估
               href: core/querying/client-eval.md
             - name: 跟踪与不跟踪
               href: core/querying/tracking.md
             - name: 复杂查询运算符
               href: core/querying/complex-query-operators.md
-            - name: 加载相关数据
-              href: core/querying/related-data.md
             - name: 原始 SQL 查询
               href: core/querying/raw-sql.md
             - name: 全局查询筛选器

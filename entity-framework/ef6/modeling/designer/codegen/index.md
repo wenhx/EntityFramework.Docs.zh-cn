@@ -3,14 +3,13 @@ title: 设计器代码生成模板 - EF6
 description: Entity Framework 6 中的设计器代码生成模板
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 56e00fa2-f9f0-48b3-8006-f8266ca7e74b
 uid: ef6/modeling/designer/codegen/index
-ms.openlocfilehash: edc8fe3c269336d59d5bb7a10582881584215b1c
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 4a8225d0186174ea2e2effbc1241389afcbe3921
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89620559"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90070193"
 ---
 # <a name="designer-code-generation-templates"></a>设计器代码生成模板
 使用 Entity Framework 设计器创建模型时，会自动生成类和派生上下文。 除默认代码生成之外，我们还提供了许多模板，可用于自定义生成的代码。 这些模板以 T4 文本模板的形式提供，可按需自定义模板。
