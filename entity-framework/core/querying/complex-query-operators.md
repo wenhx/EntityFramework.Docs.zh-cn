@@ -1,15 +1,16 @@
 ---
 title: 复杂查询运算符 - EF Core
+description: 关于使用 Entity Framework Core 时更复杂的 LINQ 查询运算符的深度信息
 author: smitpatel
 ms.date: 10/03/2019
 ms.assetid: 2e187a2a-4072-4198-9040-aaad68e424fd
 uid: core/querying/complex-query-operators
-ms.openlocfilehash: 44c2695ea003da043925740a52596fd27da638f8
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: 61a46361cc4bc1635174aaf2ca3260fa67fc6aaf
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "78413773"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89616442"
 ---
 # <a name="complex-query-operators"></a>复杂查询运算符
 
@@ -18,7 +19,7 @@ ms.locfileid: "78413773"
 > [!TIP]
 > 可在 GitHub 上查看此文章的[示例](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Querying)。
 
-## <a name="join"></a>Join
+## <a name="join"></a>联接
 
 借助 LINQ Join 运算符，可根据每个源的键选择器连接两个数据源，并在键匹配时生成值的元组。 该运算符在关系数据库中自然而然地转换为 `INNER JOIN`。 虽然 LINQ Join 具有外部和内部键选择器，但数据库只需要一个联接条件。 因此 EF Core 通过比较外部键选择器和内部键选择器是否相等，来生成联接条件。 此外，如果键选择器是匿名类型，则 EF Core 会生成一个联接条件以用于比较组件是否相等。
 
@@ -113,11 +114,11 @@ ORDER BY [p].[AuthorId]
 EF Core 支持的聚合运算符如下所示
 
 - 平均值
-- Count
+- 计数
 - LongCount
-- Max
+- 最大值
 - Min
-- SUM
+- Sum
 
 ## <a name="left-join"></a>Left Join
 

@@ -1,18 +1,19 @@
 ---
 title: 针对 Entity Framework Core 5.0 的计划
+description: 为 Entity Framework Core 5.0 规划的功能
 author: ajcvickers
 ms.date: 08/22/2020
 uid: core/what-is-new/ef-core-5.0/plan
-ms.openlocfilehash: a0d41d6df844c9ca2c8a2dc8ba50ca669e23dced
-ms.sourcegitcommit: 6f7af3f138bf7c724cbdda261f97e5cf7035e8d7
+ms.openlocfilehash: 5ac7a48a70959b625b7c602ee48dc08a360bee73
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/25/2020
-ms.locfileid: "88847574"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89618671"
 ---
 # <a name="plan-for-entity-framework-core-50"></a>针对 Entity Framework Core 5.0 的计划
 
-如[计划过程](xref:core/what-is-new/release_planning)中所述，我们已来自利益干系人的输入收集到针对 EF Core 5.0 版的暂定计划中。
+如[计划过程](xref:core/what-is-new/release-planning)中所述，我们已来自利益干系人的输入收集到针对 EF Core 5.0 版的暂定计划中。
 
 > [!IMPORTANT]
 > 此计划仍是半成品。 这里不进行任何承诺。 此计划是一个起点，会随着我们了解更多信息而发展。 当前未针对 5.0 进行计划的某些内容可能会被纳入。 当前已针对 5.0 进行计划的某些内容可能会被淘汰。
@@ -309,4 +310,4 @@ T 恤大小：L
 
 ## <a name="suggestions"></a>建议
 
-你对计划的反馈非常重要。 指示问题重要性的最佳方式是在 GitHub 上为该问题投票（竖起大拇指）。 然后，此数据将进入下一个版本的[计划过程](xref:core/what-is-new/release_planning)。
+你对计划的反馈非常重要。 指示问题重要性的最佳方式是在 GitHub 上为该问题投票（竖起大拇指）。 然后，此数据将进入下一个版本的[计划过程](xref:core/what-is-new/release-planning)。

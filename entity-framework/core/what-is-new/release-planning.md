@@ -1,18 +1,19 @@
 ---
 title: EF Core 版本规划
+description: 关于如何完成 Entity Framework Core 规划和发布的信息
 author: ajcvickers
 ms.date: 01/28/2020
-uid: core/what-is-new/release_planning
-ms.openlocfilehash: df933ac2462fcc18c53f49d862836fd2d6a4dd99
-ms.sourcegitcommit: ebfd3382fc583bc90f0da58e63d6e3382b30aa22
+uid: core/what-is-new/release-planning
+ms.openlocfilehash: 91a130b4ddae66f626bcff8e70283a7e03192542
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/25/2020
-ms.locfileid: "85370183"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89618560"
 ---
 # <a name="release-planning-process"></a>版本规划过程
 
-我们常常会被问到如何选择将添加到特定版本的特定功能。
+我们常常就如何选择要添加到特定版本的特定功能收到提问。
 该文档概述了我们采用的过程。
 随着我们找到更好的规划方法，该过程在不断演变，但总体思路仍保持不变。
 
@@ -24,7 +25,7 @@ ms.locfileid: "85370183"
 ### <a name="patch-releases"></a>修补程序版本
 
 修补程序版本只更改了版本的“修补程序”部分。
-例如，EF Core 3.1.1 是修补在 EF Core 3.1.0 中发现的问题的版本   。
+例如，EF Core 3.1.1 是修补在 EF Core 3.1.0 中发现的问题的版本********。
 
 修补程序版本旨在修复关键客户 bug。
 这意味着修补程序版本中没有新功能。
@@ -51,7 +52,7 @@ ms.locfileid: "85370183"
 ### <a name="minor-releases"></a>次要版本
 
 次要版本只更改了版本的“次要”部分。
-例如，EF Core 3.1.0 是对 EF Core 3.0.0 进行改进的一个版本   。
+例如，EF Core 3.1.0 是对 EF Core 3.0.0 进行改进的一个版本********。
 
 次要版本：
 * 旨在提升上一版本的质量和功能
@@ -62,7 +63,7 @@ ms.locfileid: "85370183"
 ### <a name="major-releases"></a>主要版本
 
 主要版本更改的是 EF“主要”版本号。
-例如，EF Core 3.0.0 是与 EF Core 2.2.x 相比性能大幅提升的一个主要版本  。
+例如，EF Core 3.0.0 是与 EF Core 2.2.x 相比性能大幅提升的一个主要版本****。
 
 主要版本：
 * 旨在提升上一版本的质量和功能
@@ -70,7 +71,7 @@ ms.locfileid: "85370183"
   * 某些新功能可能在根本上更改了 EF Core 工作的方式
 * 通常包含有意的中断性变更
   * 就我们知道的而言，中断性变更是 EF Core 演变的必要部分
-  * 但是，由于可能对客户造成影响，我们在进行任何中断性变更方面考虑谨慎。 过程，我们在中断性变更方面过于激进。 而今后，我们将努力最大程度减少会使应用程序中断的更改，同时努力减少会使数据库提供程序和扩展中断的更改。
+  * 但是，由于可能对客户造成影响，我们在进行任何中断性变更方面考虑谨慎。 过去，我们在中断性变更方面过于激进。 而今后，我们将努力最大程度减少会使应用程序中断的更改，同时努力减少会使数据库提供程序和扩展中断的更改。
 * 有很多推送给 NuGet 的预发行预览版
 
 ## <a name="planning-for-majorminor-releases"></a>主要/次要版本规划
@@ -97,12 +98,12 @@ GitHub 上的问题具有：
   * 经版本控制的里程碑中的已关闭问题是指对该版本而言已完成的问题。 请注意，该版本可能尚未发布。 例如，[这些是我们计划针对 EF Core 3.0 已完成的问题](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A3.0.0+is%3Aclosed)。
 * 请投票！
   * 投票是指出某个问题对你而言很重要的最佳方式。
-  * 只需向问题添加“大拇指朝上”👍 即可进行投票。 例如，[这些是得票数靠前的问题](https://github.com/dotnet/efcore/issues?q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc)
+  * 只需向问题添加“竖起大拇指”👍 即可进行投票。 例如，[这些是得票数靠前的问题](https://github.com/dotnet/efcore/issues?q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc)
   * 如果你认为添加评论会提高重要性，还请添加描述你为何需要该功能的特定原因。 评论“+1”（即赞同）或给出类似评论不会提高重要性。
 
 ### <a name="the-planning-process"></a>规划过程
 
-与从积压工作 (backlog) 中提取被请求最多次的请求而言，规划过程的参与度更高。
+与从积压工作 (backlog) 中提取被请求最多次的请求相比，规划过程的参与度更高。
 这是因为我们会用多种方式从多名利益干系人那里收集反馈。
 然后，我们会根据下列内容调整版本：
 
@@ -114,7 +115,7 @@ GitHub 上的问题具有：
 
 我们提出的一些问题是：
 
-1. **我们认为有多少开发人员会使用该功能？该功能会使他们的应用程序/体验有多大的改善？** 为了回答这个问题，我们收集众多来源（其中包括对问题的评论和投票）的反馈。 另一方面是与重要客户的具体互动。
+1. **我们认为有多少开发人员会使用该功能？该功能会使他们的应用程序或体验有多大的改进？** 为了回答这个问题，我们收集众多来源（其中包括对问题的评论和投票）的反馈。 另一方面是与重要客户的具体互动。
 
 2. **在尚未实现此功能的情况下，用户可用的变通方法是什么？** 例如，许多开发人员可以映射联接表，以解决缺少本机多对多支持的问题。 显然，并非所有开发人员都希望这样做，但很多开发人员都可以这样做，而这也作为决策的一个考虑因素。
 

@@ -1,15 +1,16 @@
 ---
 title: 原生 SQL 查询 - EF Core
+description: 在 Entity Framework Core 中使用原生 SQL 进行查询
 author: smitpatel
 ms.date: 10/08/2019
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
 uid: core/querying/raw-sql
-ms.openlocfilehash: a54bb67c0fce9d621382f6372e70fe4cdca48a20
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: 3b95c15b2b07d1eeecf1603e6bfbb29f4931d5cc
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "78413713"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89617511"
 ---
 # <a name="raw-sql-queries"></a>原生 SQL 查询
 
@@ -28,7 +29,7 @@ ms.locfileid: "78413713"
 
 [!code-csharp[Main](../../../samples/core/Querying/RawSQL/Sample.cs#FromSqlRawStoredProcedure)]
 
-## <a name="passing-parameters"></a>传递参数
+## <a name="passing-parameters"></a>快速参考
 
 > [!WARNING]
 > **始终对原始 SQL 查询使用参数化**
@@ -55,6 +56,9 @@ ms.locfileid: "78413713"
 借助 `FromSqlRaw`，可以在 SQL 查询字符串中使用已命名的参数，这在存储的流程具有可选参数时非常有用：
 
 [!code-csharp[Main](../../../samples/core/Querying/RawSQL/Sample.cs#FromSqlRawStoredProcedureNamedSqlParameter)]
+
+> [!NOTE]
+> **参数排序** Entity Framework Core 根据 `SqlParameter[]` 数组的顺序传递参数。 传递多个 `SqlParameter` 时，SQL 字符串中的顺序必须与存储过程定义中参数的顺序相匹配。 如果不匹配，在执行此过程时，就可能会导致类型转换异常和/或异常行为。
 
 ## <a name="composing-with-linq"></a>使用 LINQ 编写
 
@@ -100,9 +104,9 @@ SQL Server 不允许对存储过程调用进行组合，因此任何尝试向此
 使用原生 SQL 查询时需注意以下几个限制：
 
 - SQL 查询必须返回实体类型的所有属性的数据。
-- 结果集中的列名必须与属性映射到的列名匹配。 请注意，此行为不同于 EF6。 EF6 中忽略了原始 SQL 查询的属性/列映射关系，结果集列名必须与属性名相匹配。
+- 结果集中的列名必须与属性映射到的列名称匹配。 请注意，此行为不同于 EF6。 EF6 中忽略了原始 SQL 查询的属性/列映射关系，结果集列名必须与属性名相匹配。
 - SQL 查询不能包含关联数据。 但是，在许多情况下你可以在查询后面紧跟着使用 `Include` 方法以返回关联数据（请参阅[包含关联数据](#including-related-data)）。
 
-## <a name="previous-versions"></a>以前的版本
+## <a name="previous-versions"></a>旧版
 
 EF Core 2.2 及更低版本具有两个名为 `FromSql` 的方法重载，它们的行为方式与较新的 `FromSqlRaw` 和 `FromSqlInterpolated` 的相同。 因此，在意图调用内插字符串方法时很容易意外调用原始字符串方法，反之亦然。 意外调用错误的重载会导致本该参数化的查询没有参数化。

@@ -1,15 +1,16 @@
 ---
 title: EF Core 2.1 中的新增功能 - EF Core
+description: Entity Framework Core 2.1 中的更改和改进
 author: divega
 ms.date: 02/20/2018
 ms.assetid: 585F90A3-4D5A-4DD1-92D8-5243B14E0FEC
 uid: core/what-is-new/ef-core-2.1
-ms.openlocfilehash: ba3a26bcd76cd0b9615b13f32456e7280afe533a
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: 5aa8aa5d3578b9f69e63adaf731a1642f748c5c2
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "78413563"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89618763"
 ---
 # <a name="new-features-in-ef-core-21"></a>EF Core 2.1 中的新增功能
 
@@ -152,7 +153,7 @@ public class Order
 
 ## <a name="command-line-tool-dotnet-ef-included-in-net-core-sdk"></a>.NET Core SDK 中包含的命令行工具 dotnet-ef
 
-dotnet-ef 命令现在是 .NET Core SDK 的一部分，因此无须在项目中使用 DotNetCliToolReference 即可使用各项迁移，或通过现有数据库搭建 DbContext 基架  。
+dotnet-ef 命令现在是 .NET Core SDK 的一部分，因此无须在项目中使用 DotNetCliToolReference 即可使用各项迁移，或通过现有数据库搭建 DbContext 基架__。
 
 有关如何为不同版本的 .NET Core SDK 和 EF Core 启用命令行工具的详细信息，请参阅[安装工具](xref:core/miscellaneous/cli/dotnet#installing-the-tools)的相关部分。
 
@@ -166,7 +167,7 @@ dotnet-ef 命令现在是 .NET Core SDK 的一部分，因此无须在项目中�
 
 ## <a name="raw-sql-parameter-analyzer"></a>原始 SQL 参数分析器
 
-EF Core 随附新增一个代码分析器，用于检测原始 SQL API（如 `FromSql` 或 `ExecuteSqlCommand`）的潜在不安全用法。 例如，对于下面的查询，将会看到一条警告，因为 minAge 未参数化  ：
+EF Core 随附新增一个代码分析器，用于检测原始 SQL API（如 `FromSql` 或 `ExecuteSqlCommand`）的潜在不安全用法。 例如，对于下面的查询，将会看到一条警告，因为 minAge 未参数化__：
 
 ``` csharp
 var sql = $"SELECT * FROM People WHERE Age > {minAge}";

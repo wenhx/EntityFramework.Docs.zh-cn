@@ -1,21 +1,22 @@
 ---
 title: 级联删除 - EF Core
+description: 在删除主体实体时为相关实体配置删除行为
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: ee8e14ec-2158-4c9c-96b5-118715e2ed9e
 uid: core/saving/cascade-delete
-ms.openlocfilehash: 6e92b869d691d0224abf1997d9eb7ea035489c5d
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: cf17e6586b89376b2d7fcc0f9cbfc8e1c4f6ba58
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "78413665"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89617403"
 ---
 # <a name="cascade-delete"></a>级联删除
 
-级联删除通常在数据库术语中用来描述一种允许在删除某行时自动触发删除相关行的特性。 EF Core 删除行为还介绍了一个密切相关的概念，即子实体与父实体的关系已断开时自动删除该子实体，这通常称为“删除孤立项”。
+级联删除通常在数据库术语中使用，用于描述允许删除某行以自动触发删除相关行的特性。 EF Core 删除行为还介绍了一个密切相关的概念，即子实体与父实体的关系已断开时自动删除该子实体，这通常称为“删除孤立项”。
 
-EF Core 实现多种不同的删除行为，并允许配置各个关系的删除行为。 EF Core 还实现基于[关系的需求](../modeling/relationships.md#required-and-optional-relationships)为每个关系自动配置有用的默认删除行为的约定。
+EF Core 实现多种不同的删除行为，并允许配置各个关系的删除行为。 EF Core 还实现基于[关系的需求](xref:core/modeling/relationships#required-and-optional-relationships)为每个关系自动配置有用的默认删除行为的约定。
 
 ## <a name="delete-behaviors"></a>删除行为
 
@@ -36,14 +37,14 @@ EF Core 实现多种不同的删除行为，并允许配置各个关系的删除
 
 ### <a name="optional-relationships"></a>可选关系
 
-对于可选关系（可以为 null 的外键），可以保存 null 外键值，从而产生以下影响： 
+对于可选关系（可以为 null 的外键），_可以_保存 null 外键值，从而产生以下影响：
 
 | 行为名称               | 对内存中的依赖项/子项的影响    | 对数据库中的依赖项/子项的影响  |
 |:----------------------------|:---------------------------------------|:---------------------------------------|
 | **Cascade**                 | 删除实体                   | 删除实体                   |
-| **ClientSetNull**（默认） | 外键属性设置为 null | None                                   |
+| **ClientSetNull**（默认） | 外键属性设置为 null | 无                                   |
 | **SetNull**                 | 外键属性设置为 null | 外键属性设置为 null |
-| **Restrict**                | None                                   | None                                   |
+| **Restrict**                | None                                   | 无                                   |
 
 ### <a name="required-relationships"></a>必选关系
 
@@ -52,26 +53,26 @@ EF Core 实现多种不同的删除行为，并允许配置各个关系的删除
 | 行为名称         | 对内存中的依赖项/子项的影响 | 对数据库中的依赖项/子项的影响 |
 |:----------------------|:------------------------------------|:--------------------------------------|
 | **Cascade**（默认） | 删除实体                | 删除实体                  |
-| **ClientSetNull**     | SaveChanges 引发异常                  | None                                  |
-| **SetNull**           | 引发 SaveChanges                  | SaveChanges 引发异常                    |
-| **Restrict**          | None                                | None                                  |
+| **ClientSetNull**     | 引发 SaveChanges                  | 无                                  |
+| **SetNull**           | SaveChanges 引发异常                  | 引发 SaveChanges                    |
+| **Restrict**          | None                                | 无                                  |
 
-在上表中，“无”  可能会造成约束冲突。 例如，如果已删除主体/子实体，但不执行任何操作来更改依赖项/子项的外键，则由于发生外键约束冲突，数据库将可能会引发 SaveChanges。
+在上表中，“无”** 可能会造成约束冲突。 例如，如果已删除主体/子实体，但不执行任何操作来更改依赖项/子项的外键，则由于发生外键约束冲突，数据库将可能会引发 SaveChanges。
 
-高级别：
+在高级别中：
 
-* 如果实体在没有父项时不能存在，且希望 EF 负责自动删除子项，则使用“Cascade”  。
-  * 在没有父项时不能存在的实体通常使用必选关系，其中“Cascade”  是默认值。
-* 如果实体可能有或可能没有父项，且希望 EF 负责为你将外键变为 null，则使用“ClientSetNull” 
-  * 在没有父项时可以存在的实体通常使用可选关系，其中“ClientSetNull”  是默认值。
-  * 如果希望数据库即使在未加载子实体时也尝试将 null 值传播到子外键，则使用“SetNull”  。 但是，请注意，数据库必须支持此操作，并且如此配置数据库可能会导致其他限制，实际上这通常会使此选项不适用。 这就是*SetNull*不是默认值的原因。
-* 如果不希望 EF Core 始终自动删除实体或自动将外键变为 null，则使用“Restrict”  。 请注意，这要求使用代码手动同步子实体及其外键值，否则将引发约束异常。
+* 如果实体在没有父项时不能存在，且希望 EF 负责自动删除子项，则使用“Cascade”**。
+  * 在没有父项时不能存在的实体通常使用必选关系，其中“Cascade”** 是默认值。
+* 如果实体可能有或可能没有父项，且希望 EF 负责为你将外键变为 null，则使用“ClientSetNull”**
+  * 在没有父项时可以存在的实体通常使用可选关系，其中“ClientSetNull”** 是默认值。
+  * 如果希望数据库即使在未加载子实体时也尝试将 null 值传播到子外键，则使用“SetNull”**。 但是，请注意，数据库必须支持此操作，并且如此配置数据库可能会导致其他限制，实际上这通常会使此选项不适用。 这就是*SetNull*不是默认值的原因。
+* 如果不希望 EF Core 始终自动删除实体或自动将外键变为 null，则使用“Restrict”**。 请注意，这要求使用代码手动同步子实体及其外键值，否则将引发约束异常。
 
 > [!NOTE]
 > 在 EF Core（与 EF6 不同）中，不会立即产生级联影响，而是仅在调用 SaveChanges 时产生。
 
 > [!NOTE]  
-> **EF Core 2.0 中的更改：** 在之前的版本中，“Restrict”将导致跟踪的依赖实体中的可选外键属性设置为 null，并且是可选关系的默认删除行为  。 在 EF Core 2.0 中，引入了“ClientSetNull”  以表示该行为，并且它会成为可选关系的默认值。 “Restrict”  的行为已调整为永远不会对依赖实体产生副作用。
+> **EF Core 2.0 中的更改：** 在以前版本中，“Restrict”** 将导致跟踪的依赖实体中的可选外键属性设置为 null，并且是可选关系的默认删除行为。 在 EF Core 2.0 中，引入了“ClientSetNull”** 以表示该行为，并且它会成为可选关系的默认值。 “Restrict”** 的行为已调整为永远不会对依赖实体产生副作用。
 
 ## <a name="entity-deletion-examples"></a>实体删除示例
 
@@ -294,7 +295,7 @@ EF Core 实现多种不同的删除行为，并允许配置各个关系的删除
 
 ## <a name="cascading-to-untracked-entities"></a>级联到未跟踪的实体
 
-调用“SaveChanges”  时，级联删除规则将应用于由上下文跟踪的所有实体。 这是上述所有示例的情况，即生成用于删除主体/父项（博客）和所有依赖项/子项（文章）的 SQL 的原因：
+调用“SaveChanges”** 时，级联删除规则将应用于由上下文跟踪的所有实体。 这是上述所有示例的情况，即生成用于删除主体/父项（博客）和所有依赖项/子项（文章）的 SQL 的原因：
 
 ```sql
     DELETE FROM [Posts] WHERE [PostId] = 1

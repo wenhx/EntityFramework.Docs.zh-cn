@@ -1,22 +1,23 @@
 ---
 title: 断开连接的实体 - EF Core
+description: 在 Entity Framework Core 中跨多个上下文实例使用断开连接的、未跟踪的实体
 author: ajcvickers
 ms.author: avickers
 ms.date: 10/27/2016
 ms.assetid: 2533b195-d357-4056-b0e0-8698971bc3b0
 uid: core/saving/disconnected-entities
-ms.openlocfilehash: 421531e68ac98c0553938f1c24892701f22fef3c
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: 52ba838c4d54771c51737c3940e5a88659f94144
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "78413653"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89617273"
 ---
 # <a name="disconnected-entities"></a>断开连接的实体
 
-DbContext 实例将自动跟踪从数据库返回的实体。 调用 SaveChanges 时，系统将检测对这些实体所做的更改并根据需要更新数据库。 有关详细信息，请参阅[基本保存](basic.md)和[相关数据](related-data.md)。
+DbContext 实例将自动跟踪从数据库返回的实体。 调用 SaveChanges 时，系统将检测对这些实体所做的更改并根据需要更新数据库。 有关详细信息，请参阅[基本保存](xref:core/saving/basic)和[相关数据](xref:core/saving/related-data)。
 
-但是，有时会使用一个上下文实例查询实体，然后使用其他实例对其进行保存。 这通常在“断开连接”的情况下发生，例如 Web 应用程序，此情况下实体被查询、发送到客户端、被修改、在请求中发送回服务器，然后进行保存。 在这种情况下，第二个上下文实例需要知道实体是新实体（应插入）还是现有实体（应更新）。
+但是，有时会使用一个上下文实例查询实体，然后使用其他实例对其进行保存。 这通常在“断开连接”的情况下发生，例如 Web 应用程序，此情况下实体被查询、发送到客户端、被修改、在请求中发送回服务器，然后进行保存。 在这种情况下，第二个上下文实例需要知道实体是新的（应插入）还是现有的（应更新）。
 
 <!-- markdownlint-disable MD028 -->
 > [!TIP]
@@ -30,15 +31,15 @@ DbContext 实例将自动跟踪从数据库返回的实体。 调用 SaveChanges
 
 ### <a name="client-identifies-new-entities"></a>客户端标识新实体
 
-油客户端通知服务器实体是新实体还是现有实体，这是最简单的情况。 例如，通常插入新实体的请求与更新现有实体的请求不同。
+由客户端通知服务器实体是新实体还是现有实体，这是最简单的情况。 例如，通常插入新实体的请求与更新现有实体的请求不同。
 
 本节的其余部分介绍了需要以其他某种方式确定是插入还是更新的情况。
 
 ### <a name="with-auto-generated-keys"></a>使用自动生成的键
 
-自动生成的键的值通常可用于确定是否需要插入或更新实体。 如果尚未设置密钥（即其值仍为 CLR 默认值 null、零等），则实体必须为新实体且需要插入。 另一方面，如果已设置键值，则之前一定已保存该实体，且现在需要更新。 换而言之，如果键具有值，则已查询实体并已将其发送到客户端，而现在返回进行更新。
+自动生成的键的值通常用于确定是需要插入实体还是需要更新实体。 如果未设置键（即 CLR 默认值仍为 null、零等），则实体必须为新的，且需要插入。 另一方面，如果已设置键值，则必须之前已保存该实体，且现在需要更新。 换而言之，如果键具有值，则实体被查询、发送到客户端、现在返回进行更新。
 
-实体类型已知时，可以轻松检查未设置的键：
+实体类型为未知时，可以轻松检查未设置的键：
 
 [!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#IsItNewSimple)]
 
@@ -47,7 +48,7 @@ DbContext 实例将自动跟踪从数据库返回的实体。 调用 SaveChanges
 [!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#IsItNewGeneral)]
 
 > [!TIP]  
-> 即使实体处于“Added”状态，只要实体由上下文跟踪，就会设置键。 这有助于遍历实体图并决定如何处理每个实体（例如在使用 TrackGraph API 时）。 键值只能以此处显示的方式使用，然后才能执行任何调用以跟踪实体。 
+> 即使实体处于“Added”状态，只要实体由上下文跟踪，就会设置键。 这有助于遍历实体图并决定如何处理每个实体（例如在使用 TrackGraph API 时）。 键值只能以此处显示的方式使用，然后才能执行任何调用以跟踪实体。__
 
 ### <a name="with-other-keys"></a>使用其他键
 
@@ -131,7 +132,7 @@ Update 方法通常将实体标记为更新，而不是插入。 但是，如果
 
 由于实体不存在通常表示应删除该实体，因此删除可能很难处理。 解决此问题的一种方法是使用“软删除”，以便将该实体标记为已删除，而不是实际删除。 然后，删除将变得与更新相同。 可以使用[查询筛选器](xref:core/querying/filters)实现软删除。
 
-对于真删除，常见模式是使用查询模式的扩展来执行本质上为图形差异的操作。 例如：
+对于真删除，常见模式是使用查询模式的扩展来执行图形差异真正的内容。 例如：
 
 [!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertUpdateOrDeleteGraphWithFind)]
 

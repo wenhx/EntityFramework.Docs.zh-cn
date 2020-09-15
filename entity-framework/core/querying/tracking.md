@@ -1,15 +1,16 @@
 ---
 title: 跟踪与非跟踪查询 - EF Core
+description: 关于 Entity Framework Core 中跟踪与非跟踪查询的信息
 author: smitpatel
 ms.date: 10/10/2019
 ms.assetid: e17e060c-929f-4180-8883-40c438fbcc01
 uid: core/querying/tracking
-ms.openlocfilehash: a6c71c12f429f1324abe91d1b2cef96312bec051
-ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
+ms.openlocfilehash: f49c6a3e1dc84dff72d80e3ef0f9bbe149d58a72
+ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/07/2020
-ms.locfileid: "78413695"
+ms.lasthandoff: 09/09/2020
+ms.locfileid: "89617415"
 ---
 # <a name="tracking-vs-no-tracking-queries"></a>跟踪与非跟踪查询
 
@@ -23,7 +24,7 @@ ms.locfileid: "78413695"
 
 ## <a name="tracking-queries"></a>跟踪查询
 
-返回实体类型的查询是默认会被跟踪的。 这表示可以更改这些实体实例，然后通过 `SaveChanges()` 持久化这些更改。 在以下示例中，将检测到对博客评分所做的更改，并在 `SaveChanges()` 期间将这些更改持久化到数据库中。
+默认情况下，跟踪返回实体类型的查询。 这表示可以更改这些实体实例，然后通过 `SaveChanges()` 持久化这些更改。 在以下示例中，将检测到对博客分级所做的更改，并在 `SaveChanges()` 期间将这些更改永久保存到数据库中。
 
 [!code-csharp[Main](../../../samples/core/Querying/Tracking/Sample.cs#Tracking)]
 
@@ -43,7 +44,7 @@ ms.locfileid: "78413695"
 
 ## <a name="tracking-and-custom-projections"></a>跟踪和自定义投影
 
-即使查询的结果类型不是实体类型，默认情况下 EF Core 也会跟踪结果中包含的实体类型。 在以下返回匿名类型的查询中，结果集中的 `Blog` 实例会被跟踪。
+即使查询的结果类型不是实体类型，默认情况下 EF Core 也会跟踪结果中包含的实体类型。 在以下返回匿名类型的查询中，会跟踪结果集中 `Blog` 的实例。
 
 [!code-csharp[Main](../../../samples/core/Querying/Tracking/Sample.cs#CustomProjection1)]
 
@@ -65,7 +66,7 @@ EF Core 不会跟踪结果中包含的无键实体实例。 但 EF Core 会根�
 
 在 EF Core 3.0 之前，某些上述规则的工作方式有所不同。 有关详细信息，请参阅[早期版本](#previous-versions)。
 
-## <a name="previous-versions"></a>早期版本
+## <a name="previous-versions"></a>旧版
 
 在 3.0 版之前，EF Core 执行跟踪的方式有一些差异。 显著的差异如下：
 
