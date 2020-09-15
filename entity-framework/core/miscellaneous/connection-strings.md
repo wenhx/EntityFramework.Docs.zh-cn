@@ -3,14 +3,13 @@ title: 连接字符串-EF Core
 description: 用 Entity Framework Core 管理不同环境下的连接字符串
 author: rowanmiller
 ms.date: 10/27/2016
-ms.assetid: aeb0f5f8-b212-4f89-ae83-c642a5190ba0
 uid: core/miscellaneous/connection-strings
-ms.openlocfilehash: 5b37daa9ba2869ee58c1b95ad9cbaf6b2b491391
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: e4283ada88a557e4f1e3eeea3de2634a7d0dce61
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89617753"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90071675"
 ---
 # <a name="connection-strings"></a>连接字符串
 
@@ -34,7 +33,7 @@ WinForms、WPF 和 ASP.NET 4 应用程序都有一个已尝试并经过测试的
 > [!TIP]  
 > `providerName`由于数据库提供程序是通过代码配置的，因此在 App.config 中存储的 EF Core 连接字符串上不需要此设置。
 
-然后，你可以 `ConfigurationManager` 在上下文的方法中使用 API 来读取连接字符串 `OnConfiguring` 。 可能需要添加对 `System.Configuration` 框架程序集的引用才能使用此 API。
+然后，你可以 `ConfigurationManager` 在上下文的方法中使用 API 来读取连接字符串 `OnConfiguring` 。 你可能还需要添加对 `System.Configuration` 框架程序集的引用才能使用此 API。
 
 ``` csharp
 public class BloggingContext : DbContext

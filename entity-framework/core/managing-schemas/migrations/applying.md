@@ -5,12 +5,12 @@ author: bricelam
 ms.author: bricelam
 ms.date: 05/06/2020
 uid: core/managing-schemas/migrations/applying
-ms.openlocfilehash: c83194057d58f8278bfbb5264623858e6c022d8f
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 50937f96e63f9bda2ffcf5e94dabf688ee2ba1f3
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89619458"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90071883"
 ---
 # <a name="applying-migrations"></a>应用迁移
 
@@ -117,7 +117,7 @@ Script-Migration -Idempotent
 
 EF 命令行工具可用于将迁移应用到数据库。 尽管迁移的本地开发和测试工作效率，但这种方法不适合用于管理生产数据库：
 
-* SQL 命令直接应用于该工具，而不是让开发人员进行更改来检查或修改它们。 这在生产环境中可能会很危险。
+* SQL 命令直接应用于该工具，而不允许开发人员检查或修改它们。 这在生产环境中可能会很危险。
 * .NET SDK 和 EF 工具必须安装在生产服务器上。
 
 ### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
@@ -170,7 +170,7 @@ Update-Database AddNewTables
 * 同样，如果应用程序在另一个应用程序迁移它时访问数据库，这可能会导致严重问题。
 * 应用程序必须具有提升的访问权限才能修改数据库架构。 在生产环境中限制应用程序的数据库权限通常是一种很好的做法。
 * 在出现问题时，必须能够回滚应用的迁移。 其他策略可轻松地提供这种情况。
-* SQL 命令直接应用于程序，而不会为开发人员提供检查或修改它们的更改。 这在生产环境中可能会很危险。
+* SQL 命令直接应用于程序，无需为开发人员提供检查或修改的机会。 这在生产环境中可能会很危险。
 
 若要以编程方式应用迁移，请调用 `context.Database.Migrate()` 。 例如，典型的 ASP.NET 应用程序可以执行以下操作：
 

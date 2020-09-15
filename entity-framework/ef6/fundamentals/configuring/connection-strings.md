@@ -3,14 +3,13 @@ title: 连接字符串和模型-EF6
 description: 实体框架6中的连接字符串和模型
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 294bb138-978f-4fe2-8491-fdf3cd3c60c4
 uid: ef6/fundamentals/configuring/connection-strings
-ms.openlocfilehash: 2203d7f2168dc9d4ae5a6b1914742c7c2b6fbf77
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 45db461b18cde3bc1f1fccadec3c8ece6dd16832
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89618430"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90070778"
 ---
 # <a name="connection-strings-and-models"></a>连接字符串和模型
 本主题介绍实体框架如何发现要使用的数据库连接，以及如何对其进行更改。 本主题介绍了 Code First 和 EF 设计器创建的模型。  

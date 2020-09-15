@@ -3,14 +3,13 @@ title: SQLite 数据库提供程序-限制-EF Core
 description: 与其他提供程序相比 Entity Framework Core SQLite 数据库提供程序的限制
 author: bricelam
 ms.date: 07/16/2020
-ms.assetid: 94ab4800-c460-4caa-a5e8-acdfee6e6ce2
 uid: core/providers/sqlite/limitations
-ms.openlocfilehash: 2657bf03bc5cd0d5fb45c57e7f7605824deb44d2
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 546910afb9c97a93a7cc471bb813be0b9874a4bd
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89616529"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90071220"
 ---
 # <a name="sqlite-ef-core-database-provider-limitations"></a>SQLite EF Core 数据库提供程序限制
 
@@ -28,7 +27,7 @@ SQLite 提供程序有很多迁移限制。 其中的大多数限制是由基础
 SQLite 本身并不支持以下数据类型。 EF Core 可以读取和写入这些类型的值，并且还支持) 的相等性 (查询 `where e.Property == value` 。 但其他操作（如比较和排序）将需要对客户端进行评估。
 
 * DateTimeOffset
-* Decimal
+* 小数
 * TimeSpan
 * UInt64
 
@@ -48,7 +47,7 @@ SQLite 数据库引擎不支持许多其他关系数据库所支持的架构操�
 
 将尝试重新生成以执行特定操作。 重新生成仅可用于作为 EF Core 模型一部分的数据库项目。 如果数据库项目不是模型的一部分，例如，如果它是在迁移内手动创建的，则 `NotSupportedException` 仍会引发。
 
-| Operation            | 支持？  | 需要版本 |
+| 操作            | 支持？  | 需要版本 |
 |:---------------------|:------------|:-----------------|
 | AddCheckConstraint   | 重新生成 (✔)  | 5.0              |
 | AddColumn            | ✔           | 1.0              |
@@ -70,7 +69,7 @@ SQLite 数据库引擎不支持许多其他关系数据库所支持的架构操�
 | RenameTable          | ✔           | 1.0              |
 | EnsureSchema         | ✔ (的)    | 2.0              |
 | DropSchema           | ✔ (的)    | 2.0              |
-| Insert               | ✔           | 2.0              |
+| 插入               | ✔           | 2.0              |
 | 更新               | ✔           | 2.0              |
 | 删除               | ✔           | 2.0              |
 

@@ -3,14 +3,13 @@ title: 基于代码的配置-EF6
 description: 实体框架6中基于代码的配置
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 13886d24-2c74-4a00-89eb-aa0dee328d83
 uid: ef6/fundamentals/configuring/code-based
-ms.openlocfilehash: 643aefff1d8a143e7df8251eff4e5051e2c6bd08
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 67bb7ebd620c90ebe80983cc5baa6cab032907f8
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89618493"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90070726"
 ---
 # <a name="code-based-configuration"></a>基于代码的配置
 > [!NOTE]

@@ -3,14 +3,13 @@ title: 实体属性-EF Core
 description: 如何使用 Entity Framework Core 配置和映射实体属性
 author: lajones
 ms.date: 05/27/2020
-ms.assetid: e9dff604-3469-4a05-8f9e-18ac281d82a9
 uid: core/modeling/entity-properties
-ms.openlocfilehash: d4e4c50d8c7febf5e42e9aa39352c0bb6a6bd409
-ms.sourcegitcommit: 31536e52b838a84680d2e93e5bb52fb16df72a97
+ms.openlocfilehash: 3b76454bde153d3a6ddd035cefa00a55f47d2d7b
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 07/10/2020
-ms.locfileid: "86238211"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90071493"
 ---
 # <a name="entity-properties"></a>实体属性
 
@@ -50,7 +49,7 @@ ms.locfileid: "86238211"
 
 ## <a name="column-data-types"></a>列数据类型
 
-使用关系数据库时，数据库提供程序根据属性的 .NET 类型选择数据类型。 它还会考虑其他元数据，如配置的[最大长度](#maximum-length)、属性是否是主键的一部分等。
+使用关系数据库时，数据库提供程序根据属性的 .NET 类型选择数据类型。 它还会考虑其他元数据，如配置的 [最大长度](#maximum-length)、属性是否是主键的一部分等。
 
 例如，对于用作键) 的属性，SQL Server 将 `DateTime` 属性映射到 `datetime2(7)` 列，并将属性映射 `string` 到 `nvarchar(max)` 列 (或 `nvarchar(450)` 。
 
@@ -117,7 +116,7 @@ ms.locfileid: "86238211"
 
 按照约定，.NET 类型可以包含 null 的属性将配置为可选，而 .NET 类型不能包含 null 的属性将根据需要进行配置。 例如，所有具有 .net 值类型的属性 (`int` 、 `decimal` ) 、等 `bool` 都是必需的，并且具有可为 null 的 .net 值类型 (、) 、等）的所有属性 `int?` `decimal?` `bool?` 都配置为可选。
 
-C # 8 引入了一个名[为 null 的引用类型](/dotnet/csharp/tutorials/nullable-reference-types)的新功能，该功能允许对引用类型进行批注，以指示它是否可用于包含空值。 此功能在默认情况下处于禁用状态，如果启用，它将按以下方式修改 EF Core 的行为：
+C # 8 引入了一个名 [为 null 的引用类型](/dotnet/csharp/tutorials/nullable-reference-types)的新功能，该功能允许对引用类型进行批注，以指示它是否可用于包含空值。 此功能在默认情况下处于禁用状态，如果启用，它将按以下方式修改 EF Core 的行为：
 
 * 如果 (默认的) 中禁用了可以为 null 的引用类型，则所有具有 .NET 引用类型的属性都将按约定配置为可选的 (例如， `string`) 。
 * 如果启用了可以为 null 的引用类型，则将根据 .NET 类型的 c # 为空性配置属性： `string?` 将配置为可选，但 `string` 会根据需要进行配置。
@@ -139,7 +138,7 @@ C # 8 引入了一个名[为 null 的引用类型](/dotnet/csharp/tutorials/null
 > [!NOTE]
 > 在现有项目上启用可以为 null 的引用类型时要格外小心：现在配置为可选的引用类型属性现在将配置为 "必需"，除非它们显式批注为可为 null。 管理关系数据库架构时，这可能会导致生成更改数据库列的为 null 性的迁移。
 
-有关可以为 null 的引用类型以及如何将其与 EF Core 一起使用的详细信息，[请参阅此功能的专用文档页](xref:core/miscellaneous/nullable-reference-types)。
+有关可以为 null 的引用类型以及如何将其与 EF Core 一起使用的详细信息， [请参阅此功能的专用文档页](xref:core/miscellaneous/nullable-reference-types)。
 
 ### <a name="explicit-configuration"></a>显式配置
 
@@ -166,4 +165,4 @@ C # 8 引入了一个名[为 null 的引用类型](/dotnet/csharp/tutorials/null
 
 如果数据库中的所有列都需要使用特定的排序规则，请改为在数据库级别定义排序规则。
 
-有关排序规则 EF Core 支持的常规信息，请参阅[排序规则文档页](xref:core/miscellaneous/collations-and-case-sensitivity)。
+有关排序规则 EF Core 支持的常规信息，请参阅 [排序规则文档页](xref:core/miscellaneous/collations-and-case-sensitivity)。

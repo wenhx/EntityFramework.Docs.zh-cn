@@ -3,14 +3,13 @@ title: 提供程序对空间类型的支持-EF6
 description: 提供程序支持实体框架6中的空间类型
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 1097cb00-15f5-453d-90ed-bff9403d23e3
 uid: ef6/fundamentals/providers/spatial-support
-ms.openlocfilehash: 060d662aa8f03ea3510bd6b1fb7bdf904585efab
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: d6214ec503af8ea02b586cfddfd958ec7b47e42f
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89615794"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90070440"
 ---
 # <a name="provider-support-for-spatial-types"></a>提供程序对空间类型的支持
 实体框架支持通过 DbGeography 或 DbGeometry 类处理空间数据。 这些类依赖于由实体框架提供程序提供的数据库特定功能。 并非所有提供程序都支持空间数据，其中可能有其他先决条件，如安装空间类型程序集。 下面提供了有关为空间类型提供程序支持的详细信息。  

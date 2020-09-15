@@ -3,14 +3,13 @@ title: 依赖项解析-EF6
 description: 实体框架6中的依赖项解析
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 32d19ac6-9186-4ae1-8655-64ee49da55d0
 uid: ef6/fundamentals/configuring/dependency-resolution
-ms.openlocfilehash: c23253dc5a413077e3980fcfa18ea83b5fc3970e
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 24e932646f0c44f642bff3f6db321590abae1c8d
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89618426"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90070544"
 ---
 # <a name="dependency-resolution"></a>依赖项解析
 > [!NOTE]

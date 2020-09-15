@@ -3,14 +3,14 @@ title: EF Core 工具参考 ( .NET CLI) -EF Core
 description: Entity Framework Core .NET Core CLI 工具的参考指南
 author: bricelam
 ms.author: bricelam
-ms.date: 07/11/2019
+ms.date: 09/09/2020
 uid: core/miscellaneous/cli/dotnet
-ms.openlocfilehash: b5f4941b1a1cf5674d9cc998dd0aed0c0469ff27
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: a3fa73bf7f9173cbd49dffdabeacc98d5c35ac14
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89619437"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90071831"
 ---
 # <a name="entity-framework-core-tools-reference---net-core-cli"></a>Entity Framework Core 工具参考-.NET Core CLI
 
@@ -25,12 +25,12 @@ ms.locfileid: "89619437"
 
 安装过程取决于项目类型和版本：
 
-* EF Core 1。x
+* EF Core 3.x
 * ASP.NET Core 版本2.1 及更高版本
 * EF Core 2。x
 * EF Core 1。x
 
-### <a name="ef-core-3x"></a>EF Core 1。x
+### <a name="ef-core-3x"></a>EF Core 3.x
 
 * `dotnet ef` 必须安装为全局或本地工具。 大多数开发人员会 `dotnet ef` 使用以下命令将其安装为全局工具：
 
@@ -38,7 +38,7 @@ ms.locfileid: "89619437"
   dotnet tool install --global dotnet-ef
   ```
 
-  你还可以使用 `dotnet ef` 作为本地工具。 若要将其用作本地工具，请使用 [工具清单文件](https://github.com/dotnet/cli/issues/10288)还原项目的依赖项，将该项目声明为工具依赖项。
+  你还可以使用 `dotnet ef` 作为本地工具。 若要将其用作本地工具，请使用 [工具清单文件](/dotnet/core/tools/global-tools#install-a-local-tool)还原项目的依赖项，将该项目声明为工具依赖项。
 
 * 安装 [.NET Core SDK](https://www.microsoft.com/net/download/core)。
 
@@ -171,10 +171,13 @@ CLI 工具适用于 .NET Core 项目和 .NET Framework 项目。 .NET Standard �
 | `--framework <FRAMEWORK>`                      |                   | [目标框架](/dotnet/standard/frameworks)的[目标框架名字对象](/dotnet/standard/frameworks#supported-target-framework-versions)。  当项目文件指定多个目标框架，并想要选择其中一个时，请使用。 |
 | <nobr>`--configuration <CONFIGURATION>`</nobr> |                   | 生成配置，例如： `Debug` 或 `Release` 。                                                                                                                                                                                                   |
 | `--runtime <IDENTIFIER>`                       |                   | 要为其还原包的目标运行时的标识符。 有关运行时标识符 (RID) 的列表，请参阅 [RID 目录](/dotnet/core/rid-catalog)。                                                                                                      |
+| `--no-build`                                   |                   | 不要生成项目。 应在生成是最新版本时使用。                                                                                                                                                                                    |
 | `--help`                                       | `-h`              | 显示帮助信息。                                                                                                                                                                                                                                        |
 | `--verbose`                                    | `-v`              | 显示详细输出。                                                                                                                                                                                                                                          |
 | `--no-color`                                   |                   | 不要为输出着色。                                                                                                                                                                                                                                        |
 | `--prefix-output`                              |                   | 用 level 作为输出前缀。                                                                                                                                                                                                                                     |
+
+从 EF Core 5.0 开始，将任何其他参数传递给应用程序。
 
 ## <a name="dotnet-ef-database-drop"></a>dotnet ef 数据库删除
 
@@ -186,6 +189,8 @@ CLI 工具适用于 .NET Core 项目和 .NET Framework 项目。 .NET Standard �
 |:-------------------------|:------------------|:---------------------------------------------------------|
 | `--force`                | <nobr>`-f`</nobr> | 不要确认。                                           |
 | <nobr>`--dry-run`</nobr> |                   | 显示要删除的数据库，但不删除它。 |
+
+上面列出了 [常见选项](#common-options) 。
 
 ## <a name="dotnet-ef-database-update"></a>dotnet ef 数据库更新
 
@@ -199,9 +204,11 @@ CLI 工具适用于 .NET Core 项目和 .NET Framework 项目。 .NET Standard �
 
 选项：
 
-| 选项                                    | 说明                                                                                                                                        |
-|:------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------|
-|  <nobr>`--connection <CONNECTION>`</nobr> | 用于连接到数据库的连接字符串。 默认为或中指定的 `AddDbContext` 一个 `OnConfiguring` 。 从 EF Core 5.0.0 开始 (可用。 )  |
+| 选项                                    | 说明                                                                                                                      |
+|:------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------|
+|  <nobr>`--connection <CONNECTION>`</nobr> | 用于连接到数据库的连接字符串。 默认为或中指定的 `AddDbContext` 一个 `OnConfiguring` 。 在 EF Core 5.0 中添加。 |
+
+上面列出了 [常见选项](#common-options) 。
 
 下面的示例将数据库更新为指定的迁移。 第一个使用迁移名称，第二个使用迁移 ID 和指定的连接：
 
@@ -214,9 +221,13 @@ dotnet ef database update 20180904195021_InitialCreate --connection your_connect
 
 获取有关类型的信息 `DbContext` 。
 
+上面列出了 [常见选项](#common-options) 。
+
 ## <a name="dotnet-ef-dbcontext-list"></a>dotnet ef dbcontext 列表
 
 列出可用 `DbContext` 的类型。
+
+上面列出了 [常见选项](#common-options) 。
 
 ## <a name="dotnet-ef-dbcontext-scaffold"></a>dotnet ef dbcontext 基架
 
@@ -236,14 +247,17 @@ dotnet ef database update 20180904195021_InitialCreate --connection your_connect
 | `--data-annotations`                     | <nobr>`-d`</nobr> | 使用属性可在可能) 的情况下配置模型 (。 如果省略此选项，则只使用 Fluent API。                                                                |
 | `--context <NAME>`                       | `-c`              | `DbContext`要生成的类的名称。                                                                                                                                 |
 | `--context-dir <PATH>`                   |                   | 要放入 `DbContext` 类文件的目录。 路径相对于项目目录。 命名空间是从文件夹名称派生的。                                 |
-| `--context-namespace <NAMESPACE>`        |                   | 要用于生成的类的命名空间 `DbContext` 。 注意：重写 `--namespace` 。  (可从 EFCore 5.0.0 开始使用。 )                                                 |
+| `--context-namespace <NAMESPACE>`        |                   | 要用于生成的类的命名空间 `DbContext` 。 注意：重写 `--namespace` 。 在 EF Core 5.0 中添加。                                                                 |
 | `--force`                                | `-f`              | 覆盖现有文件。                                                                                                                                                      |
 | `--output-dir <PATH>`                    | `-o`              | 要在其中放置实体类文件的目录。 路径相对于项目目录。                                                                                       |
-| `--namespace <NAMESPACE>`                | `-n`              | 要用于所有生成的类的命名空间。 默认值为从根命名空间和输出目录生成。  (可从 EFCore 5.0.0 开始使用。 )                  |
+| `--namespace <NAMESPACE>`                | `-n`              | 要用于所有生成的类的命名空间。 默认值为从根命名空间和输出目录生成。 在 EF Core 5.0 中添加。                                  |
 | <nobr>`--schema <SCHEMA_NAME>...`</nobr> |                   | 要为其生成实体类型的表的架构。 若要指定多个架构，请重复上述操作 `--schema` 。 如果省略此选项，则包括所有架构。          |
 | `--table <TABLE_NAME>`...                | `-t`              | 要为其生成实体类型的表。 若要指定多个表，请对 `-t` 每个表重复或 `--table` 。 如果省略此选项，则包括所有表。                |
 | `--use-database-names`                   |                   | 使用表和列的名称与数据库中显示的名称完全相同。 如果省略此选项，则更改数据库名称以更严格地符合 c # 名称样式约定。 |
-| `--no-onconfiguring`                     |                   | 禁止 `OnConfiguring` 在生成的类中生成方法 `DbContext` 。  (可从 EFCore 5.0.0 开始使用。 )                                                  |
+| `--no-onconfiguring`                     |                   | 禁止 `OnConfiguring` 在生成的类中生成方法 `DbContext` 。 在 EF Core 5.0 中添加。                                                                  |
+| `--no-pluralize`                         |                   | 请勿使用复数化程序。 添加 EF Core 5。0                                                                                                                                 |
+
+上面列出了 [常见选项](#common-options) 。
 
 下面的示例基架所有架构和表，并将新文件放在 *模型* 文件夹中。
 
@@ -257,6 +271,18 @@ dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Tr
 dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models -t Blog -t Post --context-dir Context -c BlogContext --context-namespace New.Namespace
 ```
 
+## <a name="dotnet-ef-dbcontext-script"></a>dotnet ef dbcontext 脚本
+
+从 DbContext 生成 SQL 脚本。 绕过任何迁移。 在 EF Core 3.0 中添加。
+
+选项：
+
+| 选项                         | Short             | 说明                      |
+| ------------------------------ | ----------------- | -------------------------------- |
+| <nobr>`--output <FILE>`</nobr> | <nobr>`-o`</nobr> | 要向其写入结果的文件。 |
+
+上面列出了 [常见选项](#common-options) 。
+
 ## <a name="dotnet-ef-migrations-add"></a>dotnet ef 迁移添加
 
 添加新的迁移。
@@ -269,14 +295,25 @@ dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Tr
 
 选项：
 
-| 选项                                 | Short             | 说明                                                                                                                             |
-|:---------------------------------------|:------------------|:----------------------------------------------------------------------------------------------------------------------------------------|
-| `--output-dir <PATH>`                  | <nobr>`-o`</nobr> | 用于输出文件的目录。 路径相对于目标项目目录。 默认值为 "迁移"。                    |
-| <nobr>`--namespace <NAMESPACE>`</nobr> | `-n`              | 要用于生成的类的命名空间。 默认为从输出目录生成。  (可从 EFCore 5.0.0 开始使用。 )  |
+| 选项                                 | Short             | 说明                                                                                                            |
+|:---------------------------------------|:------------------|:-----------------------------------------------------------------------------------------------------------------------|
+| `--output-dir <PATH>`                  | <nobr>`-o`</nobr> | 用于输出文件的目录。 路径相对于目标项目目录。 默认值为 "迁移"。   |
+| <nobr>`--namespace <NAMESPACE>`</nobr> | `-n`              | 要用于生成的类的命名空间。 默认为从输出目录生成。 在 EF Core 5.0 中添加。 |
+
+上面列出了 [常见选项](#common-options) 。
 
 ## <a name="dotnet-ef-migrations-list"></a>dotnet ef 迁移列表
 
 列出可用迁移。
+
+选项：
+
+| 选项                                   | 说明                                                                                                                  |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| <nobr>`--connection <CONNECTION>`</nobr> | 用于连接到数据库的连接字符串。 默认值为 AddDbContext 或 OnConfiguring 中指定的值。 在 EF Core 5.0 中添加。 |
+| `--no-connect`                           | 请勿连接到数据库。 在 EF Core 5.0 中添加。                                                                         |
+
+上面列出了 [常见选项](#common-options) 。
 
 ## <a name="dotnet-ef-migrations-remove"></a>dotnet ef 迁移删除
 
@@ -287,6 +324,8 @@ dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Tr
 | 选项                 | Short             | 说明                                                                     |
 |:-----------------------|:------------------|:--------------------------------------------------------------------------------|
 | <nobr>`--force`</nobr> | <nobr>`-f`</nobr> | 还原迁移 (回滚应用于数据库的更改) 。 |
+
+上面列出了 [常见选项](#common-options) 。
 
 ## <a name="dotnet-ef-migrations-script"></a>dotnet ef 迁移脚本
 
@@ -301,10 +340,13 @@ dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Tr
 
 选项：
 
-| 选项                         | Short             | 说明                                                        |
-|:-------------------------------|:------------------|:-------------------------------------------------------------------|
-| <nobr>`--output <FILE>`</nobr> | <nobr>`-o`</nobr> | 要写入脚本的文件。                                   |
-| `--idempotent`                 | `-i`              | 生成可用于任何迁移的数据库的脚本。 |
+| 选项                           | Short             | 说明                                                        |
+|:---------------------------------|:------------------|:-------------------------------------------------------------------|
+| `--output <FILE>`                | <nobr>`-o`</nobr> | 要写入脚本的文件。                                   |
+| `--idempotent`                   | `-i`              | 生成可用于任何迁移的数据库的脚本。 |
+| <nobr>`--no-transactions`</nobr> |                   | 不生成 SQL transaction 语句。 在 EF Core 5.0 中添加。   |
+
+上面列出了 [常见选项](#common-options) 。
 
 以下示例创建用于 InitialCreate 迁移的脚本：
 

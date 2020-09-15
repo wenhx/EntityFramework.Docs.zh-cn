@@ -3,14 +3,13 @@ title: 具有构造函数的实体类型-EF Core
 description: 使用构造函数将数据与 Entity Framework Core 模型绑定
 author: ajcvickers
 ms.date: 02/23/2018
-ms.assetid: 420AFFE7-B709-4A68-9149-F06F8746FB33
 uid: core/modeling/constructors
-ms.openlocfilehash: 58529a3a68e69a31249460d402027274404dce45
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 06d18f173275599ad1e547193363e13c48fc8dcf
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89617542"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90071584"
 ---
 # <a name="entity-types-with-constructors"></a>具有构造函数的实体类型
 

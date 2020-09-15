@@ -3,14 +3,13 @@ title: Code First 新的数据库-EF6
 description: Code First 到实体框架6中的新数据库
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 2df6cb0a-7d8b-4e28-9d05-e2b9a90125af
 uid: ef6/modeling/code-first/workflows/new-database
-ms.openlocfilehash: 4e927bab07ae7a9719c46655e10685b59d0b65dc
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 96d76162383149c045178954196e1294331918a8
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89616891"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90070362"
 ---
 # <a name="code-first-to-a-new-database"></a>对新数据库使用 Code First
 此视频和分步演练提供了面向新数据库的 Code First 开发的简介。 此方案包括针对不存在的数据库和 Code First 将创建的数据库，或者 Code First 将向其中添加新表的空数据库。 Code First 允许使用 C \# 或 VB.Net 类定义模型。 还可以选择使用类和属性上的属性或使用 Fluent API 来执行其他配置。

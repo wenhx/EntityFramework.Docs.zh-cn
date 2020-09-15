@@ -3,14 +3,14 @@ title: EF Core 工具参考 (程序包管理器控制台) -EF Core
 description: Entity Framework Core Visual Studio 包管理器控制台的参考指南
 author: bricelam
 ms.author: bricelam
-ms.date: 09/18/2018
+ms.date: 09/09/2020
 uid: core/miscellaneous/cli/powershell
-ms.openlocfilehash: 84ca41dc08f7bc813ee9491b66fc91b2854c7632
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 5dca397978c60c12610d9080caba972a66b079b6
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89617862"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90071857"
 ---
 # <a name="entity-framework-core-tools-reference---package-manager-console-in-visual-studio"></a>Entity Framework Core 工具参考-Visual Studio 中的包管理器控制台
 
@@ -137,6 +137,7 @@ SHORT DESCRIPTION
 | -上下文 \<String>        | 要使用的 `DbContext` 类。 仅命名空间或完全限定类名。  如果省略此参数，EF Core 将查找上下文类。 如果有多个上下文类，则此参数是必需的。 |
 | -项目 \<String>        | 目标项目。 如果省略此参数，则**包管理器控制台**的**默认项目**将用作目标项目。                                                                             |
 | <nobr>-StartupProject</nobr>\<String> | 启动项目。 如果省略此参数，则使用**解决方案属性**中的**启动项目**作为目标项目。                                                                                 |
+| -参数 \<String>           | 传递给应用程序的参数。 在 EF Core 5.0 中添加。                                                                                                                                                           |
 | -Verbose                  | 显示详细输出。                                                                                                                                                                                                 |
 
 若要显示有关命令的帮助信息，请使用 PowerShell `Get-Help` 命令。
@@ -154,7 +155,9 @@ SHORT DESCRIPTION
 |:----------------------------------|:------------------------------------------------------------------------------------------------------------------------|
 | <nobr>-Name \<String><nobr>       | 迁移的名称。 这是一个位置参数，并且是必需的。                                              |
 | <nobr>-OutputDir \<String></nobr> | 用于输出文件的目录。 路径相对于目标项目目录。 默认值为 "迁移"。 |
-| <nobr>-命名空间 \<String></nobr> | 要用于生成的类的命名空间。 默认为从输出目录生成。  (可从 EFCore 5.0.0 开始使用。 )  |
+| <nobr>-命名空间 \<String></nobr> | 要用于生成的类的命名空间。 默认为从输出目录生成。 在 EF Core 5.0 中添加。  |
+
+上面列出了 [常见参数](#common-parameters) 。
 
 ## <a name="drop-database"></a>Drop 数据库
 
@@ -166,9 +169,26 @@ SHORT DESCRIPTION
 |:----------|:---------------------------------------------------------|
 | -WhatIf   | 显示要删除的数据库，但不删除它。 |
 
+上面列出了 [常见参数](#common-parameters) 。
+
 ## <a name="get-dbcontext"></a>DbContext
 
-获取有关类型的信息 `DbContext` 。
+列出并获取有关可用 `DbContext` 类型的信息。
+
+上面列出了 [常见参数](#common-parameters) 。
+
+## <a name="get-migration"></a>获取-迁移
+
+列出可用迁移。 在 EF Core 5.0 中添加。
+
+参数：
+
+| 参数                          | 说明                                                                                            |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| <nobr>-连接 \<String></nobr> | 用于连接到数据库的连接字符串。 默认值为 AddDbContext 或 OnConfiguring 中指定的值。 |
+| -NoConnect                         | 请勿连接到数据库。                                                                         |
+
+上面列出了 [常见参数](#common-parameters) 。
 
 ## <a name="remove-migration"></a>Remove-Migration
 
@@ -179,6 +199,8 @@ SHORT DESCRIPTION
 | 参数 | 说明                                                                     |
 |:----------|:--------------------------------------------------------------------------------|
 | -Force    | 还原迁移 (回滚应用于数据库的更改) 。 |
+
+上面列出了 [常见参数](#common-parameters) 。
 
 ## <a name="scaffold-dbcontext"></a>基架-DbContext
 
@@ -192,15 +214,18 @@ SHORT DESCRIPTION
 | <nobr>-提供程序 \<String></nobr>   | 要使用的提供程序。 通常，这是 NuGet 包的名称，例如： `Microsoft.EntityFrameworkCore.SqlServer` 。 这是一个位置参数，并且是必需的。                                                                                           |
 | -OutputDir \<String>               | 要在其中放置文件的目录。 路径相对于项目目录。                                                                                                                                                                                             |
 | -ContextDir \<String>              | 要在其中放置文件的目录 `DbContext` 。 路径相对于项目目录。                                                                                                                                                               |
-| -命名空间 \<String>               | 要用于所有生成的类的命名空间。 默认值为从根命名空间和输出目录生成。  (可从 EFCore 5.0.0 开始使用。 )  |
-| -ContextNamespace \<String>        | 要用于生成的类的命名空间 `DbContext` 。 注意：重写 `-Namespace` 。  (可从 EFCore 5.0.0 开始使用。 )  |
+| -命名空间 \<String>               | 要用于所有生成的类的命名空间。 默认值为从根命名空间和输出目录生成。 在 EF Core 5.0 中添加。                                                                                                                           |
+| -ContextNamespace \<String>        | 要用于生成的类的命名空间 `DbContext` 。 注意：重写 `-Namespace` 。 在 EF Core 5.0 中添加。                                                                                                                                                           |
 | -上下文 \<String>                 | `DbContext`要生成的类的名称。                                                                                                                                                                                                                          |
 | -架构 \<String[]>               | 要为其生成实体类型的表的架构。 如果省略此参数，则包括所有架构。                                                                                                                                                             |
 | -表 \<String[]>                | 要为其生成实体类型的表。 如果省略此参数，则包括所有表。                                                                                                                                                                         |
 | -DataAnnotations                   | 使用属性可在可能) 的情况下配置模型 (。 如果省略此参数，则只使用 Fluent API。                                                                                                                                                      |
 | -UseDatabaseNames                  | 使用表和列的名称与数据库中显示的名称完全相同。 如果省略此参数，则更改数据库名称以更严格地符合 c # 名称样式约定。                                                                                       |
 | -Force                             | 覆盖现有文件。                                                                                                                                                                                                                                               |
-| -NoOnConfiguring                   | 禁止 `OnConfiguring` 在生成的类中生成方法 `DbContext` 。  (可从 EFCore 5.0.0 开始使用。 )  |
+| -NoOnConfiguring                   | 不生成 `DbContext.OnConfiguring` 。 在 EF Core 5.0 中添加。                                                                                                                                                                                                         |
+| -NoPluralize                       | 请勿使用复数化程序。 在 EF Core 5.0 中添加。                                                                                                                                                                                                                         |
+
+上面列出了 [常见参数](#common-parameters) 。
 
 示例：
 
@@ -214,18 +239,33 @@ Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Conn
 Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Tables "Blog","Post" -ContextDir Context -Context BlogContext -ContextNamespace New.Namespace
 ```
 
+## <a name="script-dbcontext"></a>脚本-DbContext
+
+从 DbContext 生成 SQL 脚本。 绕过任何迁移。 在 EF Core 3.0 中添加。
+
+参数：
+
+| 参数                      | 说明                      |
+| ------------------------------ | -------------------------------- |
+| <nobr>-输出 \<String></nobr> | 要向其写入结果的文件。 |
+
+上面列出了 [常见参数](#common-parameters) 。
+
 ## <a name="script-migration"></a>脚本迁移
 
 生成一个 SQL 脚本，该脚本将所选迁移中的所有更改应用于另一个选定的迁移。
 
 参数：
 
-| 参数                | 说明                                                                                                                                                                                                                |
-|:-------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| *-来自*\<String>        | 开始迁移。 可以按名称或 ID 识别迁移。 数字0是一个特殊情况，表示在 *第一次迁移之前*。 默认值为 0。                                                              |
-| *-到*\<String>          | 结束迁移。 默认为上次迁移。                                                                                                                                                                      |
-| <nobr>-幂等</nobr> | 生成可用于任何迁移的数据库的脚本。                                                                                                                                                         |
-| -输出 \<String>        | 要向其写入结果的文件。 如果省略此参数，则会在创建应用的运行时文件所在的同一文件夹中创建具有生成名称的文件，例如： */obj/Debug/netcoreapp2.1/ghbkztfz.sql/*。 |
+| 参数                    | 说明                                                                                                                                                                                                                |
+|:---------------------------- |:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| *-来自*\<String>            | 开始迁移。 可以按名称或 ID 识别迁移。 数字0是一个特殊情况，表示在 *第一次迁移之前*。 默认值为 0。                                                              |
+| *-到*\<String>              | 结束迁移。 默认为上次迁移。                                                                                                                                                                      |
+| -幂等                  | 生成可用于任何迁移的数据库的脚本。                                                                                                                                                         |
+| <nobr>-NoTransactions</nobr> | 不生成 SQL transaction 语句。 在 EF Core 5.0 中添加。                                                                                                                                                           |
+| -输出 \<String>            | 要向其写入结果的文件。 如果省略此参数，则会在创建应用的运行时文件所在的同一文件夹中创建具有生成名称的文件，例如： */obj/Debug/netcoreapp2.1/ghbkztfz.sql/*。 |
+
+上面列出了 [常见参数](#common-parameters) 。
 
 > [!TIP]
 > To、From 和 Output 参数支持选项卡扩展。
@@ -249,7 +289,9 @@ Script-Migration -From 20180904195021_InitialCreate
 | 参数                           | 说明                                                                                                                                                                                                                                                     |
 |:------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <nobr>*-迁移*\<String></nobr> | 目标迁移。 可以按名称或 ID 识别迁移。 数字0是一种特殊情况，表示在 *第一次迁移之前* ，并导致还原所有迁移。 如果未指定迁移，则该命令默认为上一次迁移。 |
-| <nobr>-连接 \<String></nobr>  | 用于连接到数据库的连接字符串。 默认为或中指定的 `AddDbContext` 一个 `OnConfiguring` 。 |
+| <nobr>-连接 \<String></nobr>  | 用于连接到数据库的连接字符串。 默认为或中指定的 `AddDbContext` 一个 `OnConfiguring` 。 在 EF Core 5.0 中添加。                                                                                                                                |
+
+上面列出了 [常见参数](#common-parameters) 。
 
 > [!TIP]
 > 迁移参数支持选项卡扩展。

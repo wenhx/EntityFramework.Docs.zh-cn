@@ -3,21 +3,20 @@ title: 具有多个结果集的存储过程-EF6
 description: 在实体框架6中包含多个结果集的存储过程
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 1b3797f9-cd3d-4752-a55e-47b84b399dc1
 uid: ef6/modeling/designer/advanced/multiple-result-sets
-ms.openlocfilehash: 39b8ae171b7cee263554b6ff94bed6bd8f1e0c39
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 6b213b944ca06a7ca141746d86f1127be2fd7d87
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89620583"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90070219"
 ---
 # <a name="stored-procedures-with-multiple-result-sets"></a>包含多个结果集的存储过程
 有时，在使用存储过程时，您需要返回多个结果集。 此方案通常用于减少构成单个屏幕所需的数据库往返次数。在 EF5 之前，实体框架允许调用存储过程，但只将第一个结果集返回给调用代码。
 
 本文将介绍两种方法，可用于从实体框架中的存储过程访问多个结果集。 一个只使用代码，并处理代码 first 和 EF 设计器，另一个仅适用于 EF 设计器的。 此方面的工具和 API 支持应在实体框架的未来版本中得以改善。
 
-## <a name="model"></a>型号
+## <a name="model"></a>建模
 
 本文中的示例使用的是基本的博客和文章模型，其中的博客包含多篇文章，张贴内容属于单个博客。 我们将使用数据库中的存储过程，该存储过程返回所有博客和帖子，如下所示：
 
