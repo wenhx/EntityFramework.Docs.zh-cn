@@ -3,14 +3,13 @@ title: 设计器 CUD 存储过程-EF6
 description: 实体框架6中的设计器 CUD 存储过程
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 1e773972-2da5-45e0-85a2-3cf3fbcfa5cf
 uid: ef6/modeling/designer/stored-procedures/cud
-ms.openlocfilehash: f722cb3ac0b6ce21e685dbb7bffe571fa7b783d5
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: fae795922980452cf062a62e3cbb47de49b49c74
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89620369"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90073209"
 ---
 # <a name="designer-cud-stored-procedures"></a>设计器 CUD 存储过程
 
@@ -31,7 +30,7 @@ var query = context.Products.SqlQuery("EXECUTE [dbo].[GetAllProducts]");
 - 如果服务器为插入的行生成主键值，则必须将此值映射回实体的键属性。 在下面的示例中， **InsertPerson**   存储过程返回新创建的主键作为存储过程的结果集的一部分。 使用 EF 设计器的 " ** &lt; 添加结果绑定 &gt; **" 功能将主键映射到实体键 (**PersonID**)   。
 - 存储过程调用映射到概念模型中的实体1:1。 例如，如果在概念模型中实现了继承层次结构，然后为 **父** (基础) 和子 (派生) 实体的 **子** 存储过程，则保存 **子** 更改将仅调用 **子**的存储过程，而不会触发 **父级**的存储过程调用。
 
-## <a name="prerequisites"></a>先决条件
+## <a name="prerequisites"></a>必备条件
 
 若要完成此演练，您需要：
 

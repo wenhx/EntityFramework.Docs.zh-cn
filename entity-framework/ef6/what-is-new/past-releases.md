@@ -3,14 +3,13 @@ title: 实体框架的过去版本-EF6
 description: 实体框架的过去版本
 author: divega
 ms.date: 09/12/2019
-ms.assetid: 1060bb99-765f-4f32-aaeb-d6635d3dbd3e
 uid: ef6/what-is-new/past-releases
-ms.openlocfilehash: e9dce5c545027658a98b375e7ffa15ebbb77369c
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 97ad8015f5302adbe98a63132f1b34009aa68468
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89619739"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90073638"
 ---
 # <a name="past-releases-of-entity-framework"></a>实体框架的过去版本
 

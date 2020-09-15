@@ -3,14 +3,13 @@ title: 本地数据-EF6
 description: 实体框架6中的本地数据
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 2eda668b-1e5d-487d-9a8c-0e3beef03fcb
 uid: ef6/querying/local-data
-ms.openlocfilehash: f7c4c8904a2985901491e423f655d4aea79f666d
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 5763424ab295ed6ceec655368fe3565a10c911d3
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89620308"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90073907"
 ---
 # <a name="local-data"></a>本地数据
 直接对 DbSet 运行 LINQ 查询将始终向数据库发送查询，但你可以使用 DbSet 属性访问当前在内存中的数据。 使用 DbContext 和 DbContext 方法，还可以访问额外的信息 EF 正在跟踪实体。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  

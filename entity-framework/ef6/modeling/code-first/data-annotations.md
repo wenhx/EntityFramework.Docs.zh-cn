@@ -3,14 +3,13 @@ title: Code First 数据批注-EF6
 description: 实体框架6中的 Code First 数据批注
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 80abefbd-23c9-4fce-9cd3-520e5df9856e
 uid: ef6/modeling/code-first/data-annotations
-ms.openlocfilehash: 37b2872b5fb40cf0dc346554b2cbb9e3fffd6bdc
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: dd91ddf674f2235190e50beb847e569a898ad59b
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89617352"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90074059"
 ---
 # <a name="code-first-data-annotations"></a>Code First 数据批注
 > [!NOTE]
@@ -53,7 +52,7 @@ Code First 提供了向你的类添加这些配置的两种方法。 其中一�
 
  
 
-## <a name="key"></a>密钥
+## <a name="key"></a>Key
 
 实体框架依赖于每个实体，每个实体都有一个用于实体跟踪的键值。 Code First 的一种约定是隐式键属性;Code First 将查找名为 "Id" 的属性，或者查找类名称和 "Id" （如 "BlogId"）的组合。 此属性将映射到数据库中的主键列。
 

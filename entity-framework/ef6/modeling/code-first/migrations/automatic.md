@@ -3,14 +3,13 @@ title: 自动 Code First 迁移-EF6
 description: 实体框架6中的自动 Code First 迁移
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 0eb86787-2161-4cb4-9cb8-67c5d6e95650
 uid: ef6/modeling/code-first/migrations/automatic
-ms.openlocfilehash: 541adf5aed517685b54d675730996c12ff0c824a
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: e7bd9ff7d9dcecb7fecf213306047a53fc04135c
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89618088"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90072559"
 ---
 # <a name="automatic-code-first-migrations"></a>自动 Code First 迁移
 自动迁移使你可以使用 Code First 迁移，而不会在项目中为你所做的每个更改提供代码文件。 并非所有更改都可以自动应用-例如，列重命名需要使用基于代码的迁移。

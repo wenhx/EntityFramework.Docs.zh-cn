@@ -3,14 +3,13 @@ title: 自动检测更改-EF6
 description: 自动检测实体框架6中的更改
 author: divega
 ms.date: 10/23/2016
-ms.assetid: a8d1488d-9a54-4623-a76b-e81329ff2756
 uid: ef6/saving/change-tracking/auto-detect-changes
-ms.openlocfilehash: 938af809ac89d3490da9885497fc5601453e1c34
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: aa8b94d843d99a8f040bdb065297d2e19b4770d7
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89619996"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90073777"
 ---
 # <a name="automatic-detect-changes"></a>自动检测更改
 使用大多数 POCO 实体时，确定实体的更改方式 (，因此需要将更新发送到数据库) 由检测更改算法处理。 检测更改的工作方式是检测实体的当前属性值与在查询或附加实体时存储在快照中的原始属性值之间的差异。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  

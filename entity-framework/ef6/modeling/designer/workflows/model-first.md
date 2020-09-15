@@ -3,14 +3,13 @@ title: Model First-EF6
 description: 实体框架6中的 Model First
 author: divega
 ms.date: 10/23/2016
-ms.assetid: e1b9c319-bb8a-4417-ac94-7890f257e7f6
 uid: ef6/modeling/designer/workflows/model-first
-ms.openlocfilehash: e995072f0f4ac23b755acc193719e5571e18f544
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 13c5e173182ad0781a674ce3d10f7374c4443bf9
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89620404"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90073157"
 ---
 # <a name="model-first"></a>Model First
 此视频和分步演练提供使用实体框架 Model First 开发的简介。 Model First 允许使用 Entity Framework Designer 创建新模型，然后从该模型生成数据库架构。 模型存储在 EDMX 文件中 ( .edmx 扩展名) 并且可以在 Entity Framework Designer 中查看和编辑。 在应用程序中与之交互的类将自动从 EDMX 文件生成。

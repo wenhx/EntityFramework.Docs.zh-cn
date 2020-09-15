@@ -3,13 +3,12 @@ title: 实体框架博客-EF6
 description: 实体框架6博客
 author: divega
 ms.date: 10/23/2016
-ms.assetid: f8fcfb34-35de-4e82-b419-8f99fd2eb92a
-ms.openlocfilehash: 7dffdd87254c1cca84e229ecf480197c2bc65f90
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: c4985ae52e5bab943f29191c18fb87696e009f77
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89620253"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90073855"
 ---
 # <a name="entity-framework-blogs"></a>实体框架博客
 除了产品文档，这些博客可能是有关实体框架的有用信息的源：

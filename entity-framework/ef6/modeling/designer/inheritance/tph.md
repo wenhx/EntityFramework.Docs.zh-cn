@@ -3,14 +3,13 @@ title: 设计器 TPH 继承-EF6
 description: 实体框架6中的设计器 TPH 继承
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 72d26a8e-20ab-4500-bd13-394a08e73394
 uid: ef6/modeling/designer/inheritance/tph
-ms.openlocfilehash: 117730c3f16718f309aff6a1c59697a0a03d9708
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 39675f9533dfef0ddad1867e3b70cd13b30708ea
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89620497"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90073391"
 ---
 # <a name="designer-tph-inheritance"></a>设计器 TPH 继承
 此分步演练演示如何使用 Entity Framework Designer (EF 设计器) 实现概念模型中的每个层次结构一个表 (TPH) 继承。 TPH 继承使用一个数据库表来维护继承层次结构中所有实体类型的数据。
@@ -25,7 +24,7 @@ ms.locfileid: "89620497"
 
 实体框架运行时 (TPC) 和混合继承模型支持每个具体的表的类型继承，但 EF 设计器不支持。 如果要使用 TPC 或混合继承，则有两个选项：使用 Code First 或手动编辑 EDMX 文件。 如果选择处理 EDMX 文件，"映射详细信息" 窗口将进入 "安全模式"，您将无法使用设计器来更改映射。
 
-## <a name="prerequisites"></a>先决条件
+## <a name="prerequisites"></a>必备条件
 
 若要完成此演练，您需要：
 

@@ -3,14 +3,13 @@ title: 枚举支持-EF 设计器-EF6
 description: 枚举支持-实体框架6中的 EF 设计器
 author: divega
 ms.date: 10/23/2016
-ms.assetid: c6ae6d8f-1ace-47db-ad47-b1718f1ba082
 uid: ef6/modeling/designer/data-types/enums
-ms.openlocfilehash: 316e8160cfd69d9912d63260471eee3df0eb58f6
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: f3dff2c71cfdeb32183865265144a938eff087c0
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89620516"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90073118"
 ---
 # <a name="enum-support---ef-designer"></a>枚举支持-EF 设计器
 > [!NOTE]

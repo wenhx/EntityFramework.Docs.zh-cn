@@ -3,14 +3,13 @@ title: Code First 现有数据库-EF6
 description: Code First 到实体框架6中的现有数据库
 author: divega
 ms.date: 10/23/2016
-ms.assetid: a7e60b74-973d-4480-868f-500a3899932e
 uid: ef6/modeling/code-first/workflows/existing-database
-ms.openlocfilehash: 7cb58495ea287c59f46e804882cdc089d0f09e7b
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: d26c5f2ced6b327615cc78bcb2bb6d188b012c14
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89616929"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90073985"
 ---
 # <a name="code-first-to-an-existing-database"></a>Code First 到现有数据库
 此视频和分步演练提供了面向现有数据库 Code First 开发的简介。 Code First 允许使用 C \# 或 VB.Net 类定义模型。 另外，还可以使用类和属性上的属性或使用 Fluent API 来执行其他配置。
