@@ -3,14 +3,13 @@ title: 设置已生成属性的显式值 - EF Core
 description: 关于针对配置为使用 Entity Framework Core 生成的属性显式设置值的信息
 author: rowanmiller
 ms.date: 10/27/2016
-ms.assetid: 3f1993c2-cdf5-425b-bac2-a2665a20322b
 uid: core/saving/explicit-values-generated-properties
-ms.openlocfilehash: 6a10e8d8c056ab66226f229dcb8b032ff83f06fe
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: efaa87356a78c4ec7e11d57c1effad776bd01cba
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89617246"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90072481"
 ---
 # <a name="setting-explicit-values-for-generated-properties"></a>设置已生成属性的显式值
 

@@ -3,14 +3,13 @@ title: 基本保存 - EF Core
 description: 关于通过 Entity Framework Core 添加、更新和删除数据的基本信息
 author: rowanmiller
 ms.date: 10/27/2016
-ms.assetid: 850d842e-3fad-4ef2-be17-053768e97b9e
 uid: core/saving/basic
-ms.openlocfilehash: 21a9be10d081591a7d3b33a8e9cc48552c95fb6c
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: ea73ff86d8843acf8226f9d6696b79b99da9dab7
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89617426"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90070947"
 ---
 # <a name="basic-save"></a>基本保存
 

@@ -3,14 +3,13 @@ title: 级联删除 - EF Core
 description: 在删除主体实体时为相关实体配置删除行为
 author: rowanmiller
 ms.date: 10/27/2016
-ms.assetid: ee8e14ec-2158-4c9c-96b5-118715e2ed9e
 uid: core/saving/cascade-delete
-ms.openlocfilehash: cf17e6586b89376b2d7fcc0f9cbfc8e1c4f6ba58
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 197d52758f969bcdb69c0a7a230001737596b821
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89617403"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90070908"
 ---
 # <a name="cascade-delete"></a>级联删除
 

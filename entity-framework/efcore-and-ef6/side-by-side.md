@@ -3,14 +3,13 @@ title: EF6 和 EF Core - 在同一应用程序中使用它们
 description: 在同一应用程序中使用 Entity Framework Core 和 Entity Framework 6 的指导
 author: ajcvickers
 ms.date: 01/23/2019
-ms.assetid: a06e3c35-110c-4294-a1e2-32d2c31c90a7
 uid: efcore-and-ef6/side-by-side
-ms.openlocfilehash: 9bd3d837a333eb23be4cb3095b7f387ad303376d
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: a9a8ab0ec77acf0fb1d1b1408d5711a6c8fa6664
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89619553"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90073521"
 ---
 # <a name="using-ef-core-and-ef6-in-the-same-application"></a>在同一个应用程序中使用 EF Core 和 EF6
 
