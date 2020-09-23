@@ -2,22 +2,664 @@
 title: EF Core 5.0 中的新增功能
 description: EF Core 5.0 中的新功能概述
 author: ajcvickers
-ms.date: 07/20/2020
+ms.date: 09/10/2020
 uid: core/what-is-new/ef-core-5.0/whatsnew
-ms.openlocfilehash: b4551a3c593694b104a750d500d81eb170a83dc0
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 0605d021b46066c6af7b631c99e86c0e53caa8db
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89618596"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90070752"
 ---
 # <a name="whats-new-in-ef-core-50"></a>EF Core 5.0 中的新增功能
 
-EF Core 5.0 目前正在开发中。 此页面将包含每个预览版中引入的令人关注的更改的简要介绍。
+为 EF Core 5.0 计划的所有功能现已完成。 此页面包含每个预览版中引入的令人关注的更改的简要介绍。
 
 此页面不会复制 [EF Core 5.0](xref:core/what-is-new/ef-core-5.0/plan) 的计划。 计划中介绍了 EF Core 5.0 的整体主题，其中包括我们在交付最终版本之前打算包含的所有内容。
 
-发布时，我们会将此处的链接添加到官方文档。
+## <a name="rc1"></a>RC1
+
+### <a name="many-to-many"></a>多对多
+
+EF Core 5.0 支持多对多关系，而无需显式映射联接表。
+
+以下面这些实体类型为例：
+
+```C#
+public class Post
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public ICollection<Tag> Tags { get; set; }
+}
+
+public class Tag
+{
+    public int Id { get; set; }
+    public string Text { get; set; }
+    public ICollection<Post> Posts { get; set; }
+}
+```
+
+请注意，`Post` 包含 `Tags` 的集合，`Tag` 包含 `Posts` 的集合。 EF Core 5.0 按照约定将此识别为多对多关系。 这意味着在 `OnModelCreating` 中不需要任何代码：
+
+```C#
+public class BlogContext : DbContext
+{
+    public DbSet<Post> Posts { get; set; }
+    public DbSet<Blog> Blogs { get; set; }
+}
+```
+
+当使用迁移（或 `EnsureCreated`）创建数据库时，EF Core 将自动创建联接表。 例如，在此模型的 SQL Server 上，EF Core 生成：
+
+```sql
+CREATE TABLE [Posts] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_Posts] PRIMARY KEY ([Id])
+);
+
+CREATE TABLE [Tag] (
+    [Id] int NOT NULL IDENTITY,
+    [Text] nvarchar(max) NULL,
+    CONSTRAINT [PK_Tag] PRIMARY KEY ([Id])
+);
+
+CREATE TABLE [PostTag] (
+    [PostsId] int NOT NULL,
+    [TagsId] int NOT NULL,
+    CONSTRAINT [PK_PostTag] PRIMARY KEY ([PostsId], [TagsId]),
+    CONSTRAINT [FK_PostTag_Posts_PostsId] FOREIGN KEY ([PostsId]) REFERENCES [Posts] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_PostTag_Tag_TagsId] FOREIGN KEY ([TagsId]) REFERENCES [Tag] ([Id]) ON DELETE CASCADE
+);
+
+CREATE INDEX [IX_PostTag_TagsId] ON [PostTag] ([TagsId]);
+```
+
+创建和关联 `Blog` 和 `Post` 实体会导致联接表更新自动发生。 例如：
+
+```C#
+var beginnerTag = new Tag {Text = "Beginner"};
+var advancedTag = new Tag {Text = "Advanced"};
+var efCoreTag = new Tag {Text = "EF Core"};
+
+context.AddRange(
+    new Post {Name = "EF Core 101", Tags = new List<Tag> {beginnerTag, efCoreTag}},
+    new Post {Name = "Writing an EF database provider", Tags = new List<Tag> {advancedTag, efCoreTag}},
+    new Post {Name = "Savepoints in EF Core", Tags = new List<Tag> {beginnerTag, efCoreTag}});
+
+context.SaveChanges();
+```
+
+插入帖子和标记后，EF 将自动在联接表中创建行。 例如，在 SQL Server 上：
+
+```sql
+SET NOCOUNT ON;
+INSERT INTO [PostTag] ([PostsId], [TagsId])
+VALUES (@p6, @p7),
+(@p8, @p9),
+(@p10, @p11),
+(@p12, @p13),
+(@p14, @p15),
+(@p16, @p17);
+```
+
+对于查询，Include 和其他查询操作的工作方式与任何其他关系一样。 例如：
+
+```C#
+foreach (var post in context.Posts.Include(e => e.Tags))
+{
+    Console.Write($"Post \"{post.Name}\" has tags");
+
+    foreach (var tag in post.Tags)
+    {
+        Console.Write($" '{tag.Text}'");
+    }
+}
+```
+
+生成的 SQL 自动使用联接表来恢复所有相关的标记：
+
+```sql
+SELECT [p].[Id], [p].[Name], [t0].[PostsId], [t0].[TagsId], [t0].[Id], [t0].[Text]
+FROM [Posts] AS [p]
+LEFT JOIN (
+    SELECT [p0].[PostsId], [p0].[TagsId], [t].[Id], [t].[Text]
+    FROM [PostTag] AS [p0]
+    INNER JOIN [Tag] AS [t] ON [p0].[TagsId] = [t].[Id]
+) AS [t0] ON [p].[Id] = [t0].[PostsId]
+ORDER BY [p].[Id], [t0].[PostsId], [t0].[TagsId], [t0].[Id]
+```
+
+与 EF6 不同，EF Core 允许完全自定义联接表。 例如，下面的代码配置了多对多关系，该关系也具有联接实体的导航，其中联接实体包含有效负载属性：
+
+```c#
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder
+        .Entity<Community>()
+        .HasMany(e => e.Members)
+        .WithMany(e => e.Memberships)
+        .UsingEntity<PersonCommunity>(
+            b => b.HasOne(e => e.Member).WithMany().HasForeignKey(e => e.MembersId),
+            b => b.HasOne(e => e.Membership).WithMany().HasForeignKey(e => e.MembershipsId))
+        .Property(e => e.MemberSince).HasDefaultValueSql("CURRENT_TIMESTAMP");
+}
+```
+
+### <a name="map-entity-types-to-queries"></a>将实体类型映射到查询
+
+实体类型通常映射到表或视图，以便 EF Core 在查询该类型时将拉回表或视图的内容。 EF Core 5.0 允许实体类型映射到“定义查询”。 （这在以前的版本中部分支持，但在 EF Core 5.0 中已显著改进，并使用不同的语法。）
+
+例如，考虑两个表：一个具有新式帖子；另一个具有旧式帖子。 新式帖子表有一些额外的列，但为了我们的应用程序的目的，我们希望将新式和旧式帖子 tp 合并和映射到具有所有必需属性的实体类型：
+
+```c#
+public class Post
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Category { get; set; }
+    public int BlogId { get; set; }
+    public Blog Blog { get; set; }
+}
+```
+
+在 EF Core 5.0 中，`ToSqlQuery` 可用于将此实体类型映射到从两个表中提取和合并行的查询：
+
+```c#
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Post>().ToSqlQuery(
+        @"SELECT Id, Name, Category, BlogId FROM posts
+          UNION ALL
+          SELECT Id, Name, ""Legacy"", BlogId from legacy_posts");
+}
+```
+
+请注意，`legacy_posts` 表没有 `Category` 列，因此我们改为合成所有旧帖子的默认值。
+
+然后，此实体类型可以正常用于 LINQ 查询。 例如， LINQ 查询：
+
+```c#
+var posts = context.Posts.Where(e => e.Blog.Name.Contains("Unicorn")).ToList();
+```
+
+在 SQLite 上生成以下 SQL：
+
+```sql
+SELECT "p"."Id", "p"."BlogId", "p"."Category", "p"."Name"
+FROM (
+    SELECT Id, Name, Category, BlogId FROM posts
+    UNION ALL
+    SELECT Id, Name, "Legacy", BlogId from legacy_posts
+) AS "p"
+INNER JOIN "Blogs" AS "b" ON "p"."BlogId" = "b"."Id"
+WHERE ('Unicorn' = '') OR (instr("b"."Name", 'Unicorn') > 0)
+```
+
+请注意，为实体类型配置的查询用作撰写完整 LINQ 查询的起始。
+
+### <a name="event-counters"></a>事件计数器
+
+[.NET 事件计数器](https://devblogs.microsoft.com/dotnet/introducing-diagnostics-improvements-in-net-core-3-0/)是有效公开应用程序性能指标的一种方法。 EF Core 5.0 包括 `Microsoft.EntityFrameworkCore` 类别下的事件计数器。 例如：
+
+```
+dotnet counters monitor Microsoft.EntityFrameworkCore -p 49496
+```
+
+这指示 dotnet 计数器开始收集进程 49496 的 EF Core 事件。 这将在控制台中生成如下所示的输出：
+
+```
+[Microsoft.EntityFrameworkCore]
+    Active DbContexts                                               1
+    Execution Strategy Operation Failures (Count / 1 sec)           0
+    Execution Strategy Operation Failures (Total)                   0
+    Optimistic Concurrency Failures (Count / 1 sec)                 0
+    Optimistic Concurrency Failures (Total)                         0
+    Queries (Count / 1 sec)                                     1,755
+    Queries (Total)                                            98,402
+    Query Cache Hit Rate (%)                                      100
+    SaveChanges (Count / 1 sec)                                     0
+    SaveChanges (Total)                                             1
+```
+
+### <a name="property-bags"></a>属性包
+
+EF Core 5.0 允许将相同的 CLR 类型映射到多个不同的实体类型。 此类类型称为共享类型实体类型。 此功能与索引器属性（包含在预览 1 中）相结合，允许将属性包用作实体类型。
+
+例如，下面的 DbContext 将 BCL 类型 `Dictionary<string, object>` 配置为产品和类别的共享类型实体类型。
+
+```c#
+public class ProductsContext : DbContext
+{
+    public DbSet<Dictionary<string, object>> Products => Set<Dictionary<string, object>>("Product");
+    public DbSet<Dictionary<string, object>> Categories => Set<Dictionary<string, object>>("Category");
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.SharedTypeEntity<Dictionary<string, object>>("Category", b =>
+        {
+            b.IndexerProperty<string>("Description");
+            b.IndexerProperty<int>("Id");
+            b.IndexerProperty<string>("Name").IsRequired();
+        });
+
+        modelBuilder.SharedTypeEntity<Dictionary<string, object>>("Product", b =>
+        {
+            b.IndexerProperty<int>("Id");
+            b.IndexerProperty<string>("Name").IsRequired();
+            b.IndexerProperty<string>("Description");
+            b.IndexerProperty<decimal>("Price");
+            b.IndexerProperty<int?>("CategoryId");
+
+            b.HasOne("Category", null).WithMany();
+        });
+    }
+}
+```
+
+字典对象（“属性包”）现在可以作为实体实例添加到上下文中并保存。 例如：
+
+```c#
+var beverages = new Dictionary<string, object>
+{
+    ["Name"] = "Beverages",
+    ["Description"] = "Stuff to sip on"
+};
+
+context.Categories.Add(beverages);
+
+context.SaveChanges();
+```
+
+然后，可以以正常方式查询和更新这些实体：
+
+```c#
+var foods = context.Categories.Single(e => e["Name"] == "Foods");
+var marmite = context.Products.Single(e => e["Name"] == "Marmite");
+
+marmite["CategoryId"] = foods["Id"];
+marmite["Description"] = "Yummy when spread _thinly_ on buttered Toast!";
+
+context.SaveChanges();
+```
+
+### <a name="savechanges-interception-and-events"></a>SaveChanges 拦截和事件
+
+EF Core 5.0 引入调用 SaveChanges 时触发的 .NET 事件和 EF Core 拦截器。
+
+事件简单易用；例如：
+
+```c#
+context.SavingChanges += (sender, args) =>
+{
+    Console.WriteLine($"Saving changes for {((DbContext)sender).Database.GetConnectionString()}");
+};
+
+context.SavedChanges += (sender, args) =>
+{
+    Console.WriteLine($"Saved {args.EntitiesSavedCount} changes for {((DbContext)sender).Database.GetConnectionString()}");
+};
+```
+
+请注意：
+* 事件发送方是 `DbContext` 实例
+* `SavedChanges` 事件的参数包含保存到数据库的实体数
+
+拦截器由 `ISaveChangesInterceptor` 定义，但通常从 `SaveChangesInterceptor` 继承，以便避免实现每个方法。 例如：
+
+```c#
+public class MySaveChangesInterceptor : SaveChangesInterceptor
+{
+    public override InterceptionResult<int> SavingChanges(
+        DbContextEventData eventData,
+        InterceptionResult<int> result)
+    {
+        Console.WriteLine($"Saving changes for {eventData.Context.Database.GetConnectionString()}");
+
+        return result;
+    }
+
+    public override ValueTask<InterceptionResult<int>> SavingChangesAsync(
+        DbContextEventData eventData,
+        InterceptionResult<int> result,
+        CancellationToken cancellationToken = new CancellationToken())
+    {
+        Console.WriteLine($"Saving changes asynchronously for {eventData.Context.Database.GetConnectionString()}");
+
+        return new ValueTask<InterceptionResult<int>>(result);
+    }
+}
+```
+
+请注意：
+* 拦截器具有同步和异步方法。 如果需要执行异步 I/O（例如写入审核服务器），这非常有用。
+* 拦截器允许使用所有拦截器通用的 `InterceptionResult` 机制跳过 SaveChanges。
+
+拦截器的缺点是，构建 DbContext 时，必须在 DbContext 上注册它们。 例如：
+
+```c#
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder
+            .AddInterceptors(new MySaveChangesInterceptor())
+            .UseSqlite("Data Source = test.db");
+```
+
+相反，可以随时在 DbContext 实例上注册事件。
+
+### <a name="exclude-tables-from-migrations"></a>从迁移中排除表
+
+有时在多个 DbContext 中映射单个实体类型很有用。 在使用[有界上下文](https://www.martinfowler.com/bliki/BoundedContext.html)时尤其如此，对于这些上下文，针对每段有界上下文使用不同 DbContext 类型的情况很常见。
+
+例如，授权上下文和报告上下文都可能需要 `User` 类型。 如果对 `User` 类型进行了更改，则两个 DbContext 的迁移都将尝试更新数据库。 为了防止这种情况，可将其中一个上下文的模型配置为从其迁移中排除表。
+
+在下面的代码中，`AuthorizationContext` 将生成对 `Users` 表的更改的迁移，但 `ReportingContext` 不会，从而防止迁移冲突。
+
+```C#
+public class AuthorizationContext : DbContext
+{
+    public DbSet<User> Users { get; set; }
+}
+
+public class ReportingContext : DbContext
+{
+    public DbSet<User> Users { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<User>().ToTable("Users", t => t.ExcludeFromMigrations());
+    }
+}
+```
+
+### <a name="required-11-dependents"></a>必需的一对一依赖项
+
+在 EF Core 3.1 中，一对一关系的依赖端始终被视为可选。 这在使用从属实体时最明显。 例如，请考虑以下模型和配置：
+
+```c#
+public class Person
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+
+    public Address HomeAddress { get; set; }
+    public Address WorkAddress { get; set; }
+}
+
+public class Address
+{
+    public string Line1 { get; set; }
+    public string Line2 { get; set; }
+    public string City { get; set; }
+    public string Region { get; set; }
+    public string Country { get; set; }
+    public string Postcode { get; set; }
+}
+```
+
+```c#
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Person>(b =>
+    {
+        b.OwnsOne(e => e.HomeAddress,
+            b =>
+            {
+                b.Property(e => e.Line1).IsRequired();
+                b.Property(e => e.City).IsRequired();
+                b.Property(e => e.Region).IsRequired();
+                b.Property(e => e.Postcode).IsRequired();
+            });
+
+        b.OwnsOne(e => e.WorkAddress);
+    });
+}
+```
+
+这导致迁移为 SQLite 创建以下表：
+
+```sql
+CREATE TABLE "People" (
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_People" PRIMARY KEY AUTOINCREMENT,
+    "Name" TEXT NULL,
+    "HomeAddress_Line1" TEXT NULL,
+    "HomeAddress_Line2" TEXT NULL,
+    "HomeAddress_City" TEXT NULL,
+    "HomeAddress_Region" TEXT NULL,
+    "HomeAddress_Country" TEXT NULL,
+    "HomeAddress_Postcode" TEXT NULL,
+    "WorkAddress_Line1" TEXT NULL,
+    "WorkAddress_Line2" TEXT NULL,
+    "WorkAddress_City" TEXT NULL,
+    "WorkAddress_Region" TEXT NULL,
+    "WorkAddress_Country" TEXT NULL,
+    "WorkAddress_Postcode" TEXT NULL
+);
+```
+
+请注意，所有列都可为 null，即使其中某些 `HomeAddress` 属性已按要求配置。 此外，在查询 `Person` 时，如果家庭或工作地址的所有列都为 null，则 EF Core 将 `HomeAddress` 和/或 `WorkAddress` 属性保留为 null，而不是设置 `Address` 的空实例。
+
+在 EF Core 5.0 中，`HomeAddress` 导航现在可以配置为必需的依赖项。 例如：
+
+```c#
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Person>(b =>
+    {
+        b.OwnsOne(e => e.HomeAddress,
+            b =>
+            {
+                b.Property(e => e.Line1).IsRequired();
+                b.Property(e => e.City).IsRequired();
+                b.Property(e => e.Region).IsRequired();
+                b.Property(e => e.Postcode).IsRequired();
+            });
+        b.Navigation(e => e.HomeAddress).IsRequired();
+
+        b.OwnsOne(e => e.WorkAddress);
+    });
+}
+```
+
+对于必需依赖项的必需属性，由迁移创建的表现在将包含不可为 null 的列：
+
+```sql
+CREATE TABLE "People" (
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_People" PRIMARY KEY AUTOINCREMENT,
+    "Name" TEXT NULL,
+    "HomeAddress_Line1" TEXT NOT NULL,
+    "HomeAddress_Line2" TEXT NULL,
+    "HomeAddress_City" TEXT NOT NULL,
+    "HomeAddress_Region" TEXT NOT NULL,
+    "HomeAddress_Country" TEXT NULL,
+    "HomeAddress_Postcode" TEXT NOT NULL,
+    "WorkAddress_Line1" TEXT NULL,
+    "WorkAddress_Line2" TEXT NULL,
+    "WorkAddress_City" TEXT NULL,
+    "WorkAddress_Region" TEXT NULL,
+    "WorkAddress_Country" TEXT NULL,
+    "WorkAddress_Postcode" TEXT NULL
+);
+```
+
+此外，如果尝试保存具有需要 null 的依赖项的所有者，则 EF Core 现在将引发异常。 在此示例中，EF Core 将在尝试使用 null `HomeAddress` 保存 `Person` 时引发。
+
+最后，即使所需依赖项的所有列都具有 null 值，EF Core 仍将创建所需依赖项的实例。
+
+### <a name="options-for-migration-generation"></a>用于迁移生成的选项
+
+EF Core 5.0 引入了对出于不同目的的迁移生成的更大控制。 包括以下功能：
+
+* 了解是为脚本生成迁移还是立即执行
+* 了解是否生成了幂等脚本
+* 了解脚本是否应该排除事务语句（请参阅下面的“使用事务迁移脚本”。）
+
+此行为由 `MigrationsSqlGenerationOptions` 枚举指定，此枚举现可传递到 `IMigrator.GenerateScript`。
+
+这项工作中还包括更好地生成幂等脚本，如果需要，该脚本会在 SQL Server 上调用 `EXEC`。 此工作还支持对其他数据库提供程序（包括 PostgreSQL）生成的脚本进行类似的改进。
+
+### <a name="migrations-scripts-with-transactions"></a>使用事务迁移脚本
+
+从迁移生成的 SQL 脚本现在包含要开始和提交适合迁移的事务的语句。 例如，下面的迁移脚本是两次迁移生成的。 请注意，每次迁移现在都在事务中应用。
+
+```sql
+BEGIN TRANSACTION;
+GO
+
+CREATE TABLE [Groups] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_Groups] PRIMARY KEY ([Id])
+);
+GO
+
+CREATE TABLE [Members] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NULL,
+    [GroupId] int NULL,
+    CONSTRAINT [PK_Members] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Members_Groups_GroupId] FOREIGN KEY ([GroupId]) REFERENCES [Groups] ([Id]) ON DELETE NO ACTION
+);
+GO
+
+CREATE INDEX [IX_Members_GroupId] ON [Members] ([GroupId]);
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20200910194835_One', N'6.0.0-alpha.1.20460.2');
+GO
+
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
+GO
+
+EXEC sp_rename N'[Groups].[Name]', N'GroupName', N'COLUMN';
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20200910195234_Two', N'6.0.0-alpha.1.20460.2');
+GO
+
+COMMIT;
+```
+
+如前一部分所述，如果需要以不同的方式处理事务，可以禁用对事务的这种使用。
+
+### <a name="see-pending-migrations"></a>查看挂起的迁移
+
+此功能是 [@Psypher9](https://github.com/Psypher9) 在社区中贡献的。 非常感谢贡献此功能！
+
+`dotnet ef migrations list` 命令现在显示哪些迁移尚未应用于数据库。 例如：
+
+```
+ajcvickers@avickers420u:~/AllTogetherNow/Daily$ dotnet ef migrations list
+Build started...
+Build succeeded.
+20200910201647_One
+20200910201708_Two
+20200910202050_Three (Pending)
+ajcvickers@avickers420u:~/AllTogetherNow/Daily$
+```
+
+此外，现在具有相同功能的包管理器控制台具有 `Get-Migration` 命令。
+
+### <a name="modelbuilder-api-for-value-comparers"></a>值比较器的 ModelBuilder API
+
+自定义可变类型的 EF Core 属性[需要值比较器](xref:core/modeling/value-comparers)以便正确检测属性更改。 现在可以将此指定为配置类型的值转换的一部分。 例如：
+
+```c#
+modelBuilder
+    .Entity<EntityType>()
+    .Property(e => e.MyProperty)
+    .HasConversion(
+        v => JsonSerializer.Serialize(v, null),
+        v => JsonSerializer.Deserialize<List<int>>(v, null),
+        new ValueComparer<List<int>>(
+            (c1, c2) => c1.SequenceEqual(c2),
+            c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+            c => c.ToList()));
+```
+
+### <a name="entityentry-trygetvalue-methods"></a>EntityEntry TryGetValue 方法
+
+此功能是 [@m4ss1m0g](https://github.com/m4ss1m0g) 在社区中贡献的。 非常感谢贡献此功能！
+
+`TryGetValue` 方法已添加到 `EntityEntry.CurrentValues` 和 `EntityEntry.OriginalValues`。 这允许请求属性的值，而无需首先检查该属性是否映射在 EF 模型中。 例如：
+
+```c#
+if (entry.CurrentValues.TryGetValue(propertyName, out var value))
+{
+    Console.WriteLine(value);
+}
+```
+
+### <a name="default-max-batch-size-for-sql-server"></a>SQL Server 的默认最大批处理大小
+
+从 EF Core 5.0 开始，SQL Server 上的 SaveChanges 的默认最大批处理大小现在是 42。 众所周知，这也是对生命、宇宙和一切终极问题的答案。 但是，这可能是巧合，因为该值是通过[批处理性能的分析](https://github.com/dotnet/efcore/issues/9270)获得的。 我们不相信我们已经发现了终极问题的形式，尽管地球被创造出来是为了理解 SQL Server 为什么以它的方式工作似乎也有些道理。
+
+### <a name="default-environment-to-development"></a>用于开发的默认环境
+
+EF Core 命令行工具现在会自动将 `ASPNETCORE_ENVIRONMENT` 和`DOTNET_ENVIRONMENT` 环境变量配置为“开发”。 这带来了在开发过程中使用通用主机时与 ASP.NET Core 体验一样。 查看 [#19903](https://github.com/dotnet/efcore/issues/19903)。
+
+### <a name="better-migrations-column-ordering"></a>更好的迁移列排序
+
+未映射基类的列现在按映射实体类型的其他列排序。 请注意，这仅会影响新创建的表。 现有表的列顺序保持不变。 查看 [#11314](https://github.com/dotnet/efcore/issues/11314)。
+
+### <a name="query-improvements"></a>查询改进
+
+EF Core 5.0 RC1 包含一些其他查询转换改进：
+
+* Cosmos 上的 `is` 转换 - 请参阅 [#16391](https://github.com/dotnet/efcore/issues/16391)
+* 现在可以注释用户映射的函数以控制 null 传播 - 请参阅 [#19609](https://github.com/dotnet/efcore/issues/19609)
+* 支持使用条件聚合翻译 GroupBy - 请参阅 [#11711](https://github.com/dotnet/efcore/issues/11711)
+* 聚合之前对组元素的 Distinct 运算符转换 - 请参阅 [#17376](https://github.com/dotnet/efcore/issues/17376)
+
+### <a name="model-building-for-fields"></a>字段的模型生成
+
+最后，对于 RC1，EF Core 现在允许在 ModelBuilder 中对字段和属性使用 lambda 方法。 例如，如果你由于某种原因而反对属性并决定使用公共字段，那么现在可以使用 lambda 生成器映射这些字段：
+
+```c#
+public class Post
+{
+    public int Id;
+    public string Name;
+    public string Category;
+    public int BlogId;
+    public Blog Blog;
+}
+
+public class Blog
+{
+    public int Id;
+    public string Name;
+    public ICollection<Post> Posts;
+}
+```
+
+```c#
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Blog>(b =>
+    {
+        b.Property(e => e.Id);
+        b.Property(e => e.Name);
+    });
+
+    modelBuilder.Entity<Post>(b =>
+    {
+        b.Property(e => e.Id);
+        b.Property(e => e.Name);
+        b.Property(e => e.Category);
+        b.Property(e => e.BlogId);
+        b.HasOne(e => e.Blog).WithMany(e => e.Posts);
+    });
+}
+```
+
+虽然现在可以这样做，但我们强烈建议不要这样做。 此外，请注意，这不会向 EF Core 添加任何其他字段映射功能，它只允许使用 lambda 方法，而不是始终要求字符串方法。 这作用不大，因为字段很少是公共的。
 
 ## <a name="preview-8"></a>预览版 8
 

@@ -2,14 +2,14 @@
 title: EF Core 5.0 中的中断性变更 - EF Core
 description: Entity Framework Core 5.0 中引入的中断性变更的完整列表
 author: bricelam
-ms.date: 09/08/2020
+ms.date: 09/09/2020
 uid: core/what-is-new/ef-core-5.0/breaking-changes
-ms.openlocfilehash: bc6db48edcd7406b31ec2b4369cabf5d55fb4578
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 63fd1d1a01b7a72fd34bb9a0130191131306426c
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89618678"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90070791"
 ---
 # <a name="breaking-changes-in-ef-core-50"></a>EF Core 5.0 中的中断性变更
 
@@ -20,12 +20,18 @@ API 和行为的下列更改有可能导致现有应用程序在更新到 EF Cor
 | **中断性变更**                                                                                                                   | **影响** |
 |:--------------------------------------------------------------------------------------------------------------------------------------|------------|
 | [具有不同语义的从主体到依赖项的导航中必需](#required-dependent)                                 | 中     |
+| [定义查询替换为特定于提供程序的方法](#defining-query)                                                          | 中     |
 | [从 SQLite NTS 扩展中删除了 HasGeometricDimension 方法](#geometric-sqlite)                                                   | 低        |
-| [当实体状态从“已分离”更改为“未更改”、“已更新”或“已删除”时，将调用值生成器](#non-added-generation)  | 低        |
+| [Cosmos：分区键现已添加到主键](#cosmos-partition-key)                                                        | 低        |
+| [Cosmos：`id` 属性重命名为 `__id`](#cosmos-id)                                                                                 | 低        |
+| [Cosmos：byte[] 现在存储为 base64 字符串而不是数字数组](#cosmos-byte)                                             | 低        |
+| [Cosmos：GetPropertyName 和 SetPropertyName 已重命名](#cosmos-metadata)                                                          | 低        |
+| [当实体状态从“已分离”更改为“未更改”、“已更新”或“已删除”时，将调用值生成器](#non-added-generation) | 低        |
 | [IMigrationsModelDiffer 当前使用 IRelationalModel](#relational-model)                                                                 | 低        |
 | [鉴别器是只读的](#read-only-discriminators)                                                                             | 低        |
 
 <a name="geometric-sqlite"></a>
+
 ### <a name="removed-hasgeometricdimension-method-from-sqlite-nts-extension"></a>从 SQLite NTS 扩展中删除了 HasGeometricDimension 方法
 
 [跟踪问题 #14257](https://github.com/aspnet/EntityFrameworkCore/issues/14257)
@@ -36,7 +42,7 @@ HasGeometricDimension 过去用于在几何列上启用其他维度（Z 和 M）
 
 **新行为**
 
-要能够插入和更新具有其他维度（Z 和 M）的几何值，需要将维度指定为列类型名称的一部分。 这与 SpatiaLite 的 AddGeometryColumn 函数的基本行为匹配度更高。
+要能够插入和更新具有其他维度（Z 和 M）的几何值，需要将维度指定为列类型名称的一部分。 该 API 与 SpatiaLite 的 AddGeometryColumn 函数的基本行为匹配度更高。
 
 **为什么**
 
@@ -59,6 +65,7 @@ modelBuilder.Entity<GeoEntity>(
 ```
 
 <a name="required-dependent"></a>
+
 ### <a name="required-on-the-navigation-from-principal-to-dependent-has-different-semantics"></a>具有不同语义的从主体到依赖项的导航中必需
 
 [跟踪问题 #17286](https://github.com/aspnet/EntityFrameworkCore/issues/17286)
@@ -97,7 +104,107 @@ modelBuilder.Entity<Blog>()
     .IsRequired();
 ```
 
+<a name="cosmos-partition-key"></a>
+
+### <a name="cosmos-partition-key-is-now-added-to-the-primary-key"></a>Cosmos：分区键现已添加到主键
+
+[跟踪问题 #15289](https://github.com/aspnet/EntityFrameworkCore/issues/15289)
+
+**旧行为**
+
+分区键仅添加到包含 `id` 的备用键。
+
+**新行为**
+
+分区键现在还按约定添加到主键。
+
+**为什么**
+
+此更改使模型更好地与 Azure Cosmos DB 语义对齐，并改进 `Find` 和某些查询的性能。
+
+**缓解措施**
+
+若要防止将分区键属性添加到主键，请在 `OnModelCreating` 中配置它。
+
+```cs
+modelBuilder.Entity<Blog>()
+    .HasKey(b => b.Id);
+```
+
+<a name="cosmos-id"></a>
+
+### <a name="cosmos-id-property-renamed-to-__id"></a>Cosmos：`id` 属性重命名为 `__id`
+
+[跟踪问题 #17751](https://github.com/aspnet/EntityFrameworkCore/issues/17751)
+
+**旧行为**
+
+映射到 `id` JSON 属性的阴影属性也称为 `id`。
+
+**新行为**
+
+按照约定创建的阴影属性现在命名为 `__id`。
+
+**为什么**
+
+此更改使 `id` 属性与实体类型上的现有属性冲突的可能性更小。
+
+**缓解措施**
+
+若要返回到 3.x 行为，请在 `OnModelCreating` 中配置 `id` 属性。
+
+```cs
+modelBuilder.Entity<Blog>()
+    .Property<string>("id")
+    .ToJsonProperty("id");
+```
+
+<a name="cosmos-byte"></a>
+
+### <a name="cosmos-byte-is-now-stored-as-a-base64-string-instead-of-a-number-array"></a>Cosmos：byte[] 现在存储为 base64 字符串而不是数字数组
+
+[跟踪问题 #17306](https://github.com/aspnet/EntityFrameworkCore/issues/17306)
+
+**旧行为**
+
+类型 byte[] 的属性存储为数字数组。
+
+**新行为**
+
+类型 byte[] 的属性现存储为 base64 字符串。
+
+**为什么**
+
+byte[] 的这种表示形式与预期更好地对齐，并且是主要 JSON 序列化库的默认行为。
+
+**缓解措施**
+
+仍将正确查询作为数字数组存储的现有数据，但目前没有支持更改插入行为的方法。 如果此限制对于你的方案是一种阻碍，请对[此问题](https://github.com/aspnet/EntityFrameworkCore/issues/17306)发表评论
+
+<a name="cosmos-metadata"></a>
+
+### <a name="cosmos-getpropertyname-and-setpropertyname-were-renamed"></a>Cosmos：GetPropertyName 和 SetPropertyName 已重命名
+
+[跟踪问题 #17874](https://github.com/aspnet/EntityFrameworkCore/issues/17874)
+
+**旧行为**
+
+扩展方法此前称为 `GetPropertyName` 和 `SetPropertyName`
+
+**新行为**
+
+旧 API 已过时，已添加以下新方法：`GetJsonPropertyName`、`SetJsonPropertyName`
+
+**为什么**
+
+此更改消除了有关这些方法配置方式的歧义。
+
+**缓解措施**
+
+使用新的 API 或暂时挂起过时的警告。
+
 <a name="non-added-generation"></a>
+
 ### <a name="value-generators-are-called-when-the-entity-state-is-changed-from-detached-to-unchanged-updated-or-deleted"></a>当实体状态从“已分离”更改为“未更改”、“已更新”或“已删除”时，将调用值生成器
 
 [跟踪问题 #15289](https://github.com/aspnet/EntityFrameworkCore/issues/15289)
@@ -119,6 +226,7 @@ modelBuilder.Entity<Blog>()
 若要防止调用值生成器，请在状态更改前向属性分配一个非默认值。
 
 <a name="relational-model"></a>
+
 ### <a name="imigrationsmodeldiffer-now-uses-irelationalmodel"></a>IMigrationsModelDiffer 当前使用 IRelationalModel
 
 [跟踪问题 #20305](https://github.com/aspnet/EntityFrameworkCore/issues/20305)
@@ -158,6 +266,7 @@ var hasDifferences = modelDiffer.HasDifferences(
 我们计划在 6.0 中改进这种体验（[请参阅 #22031](https://github.com/dotnet/efcore/issues/22031)）
 
 <a name="read-only-discriminators"></a>
+
 ### <a name="discriminators-are-read-only"></a>鉴别器是只读的
 
 [跟踪问题 #21154](https://github.com/aspnet/EntityFrameworkCore/issues/21154)
@@ -183,3 +292,31 @@ modelBuilder.Entity<BaseEntity>()
     .Property<string>("Discriminator")
     .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Save);
 ```
+
+<a name="defining-query"></a>
+
+### <a name="defining-query-is-replaced-with-provider-specific-methods"></a>定义查询替换为特定于提供程序的方法
+
+[跟踪问题 #18903](https://github.com/dotnet/efcore/issues/18903)
+
+**旧行为**
+
+实体类型映射到定义核心级别的查询。 每当在查询中使用实体类型时，实体类型的根将被替换为任何提供程序的定义查询。
+
+**新行为**
+
+已弃用用于定义查询的 API。 引入了特定于提供程序的新 API。
+
+**为什么**
+
+在查询中使用查询根时，定义查询作为替换查询实现，但它有一些问题：
+
+- 如果定义查询使用 `Select` 方法中的 `new { ... }` 预测实体类型，则将查询标识为实体需要额外的工作，并且与 EF Core 在查询中处理名义类型的方式不一致。
+- 对于关系提供程序 `FromSql`，仍然需要以 LINQ 表达式格式传递 SQL 字符串。
+
+定义查询最初是作为客户端视图引入的，用于无键实体的内存中提供程序（类似于关系数据库中的数据库视图）。 这种定义使得对内存中数据库测试应用程序变得容易。 之后，它们变得广泛适用，这很有用，但带来了不一致和难以理解的行为。 因此，我们决定简化概念。 我们使基于 LINQ 的定义查询独占内存中提供程序，并以不同的方式对其进行处理。 有关详细信息，[请参阅此问题](https://github.com/dotnet/efcore/issues/20023)。
+
+**缓解措施**
+
+对于关系提供程序，在 `OnModelCreating` 中使用 `ToSqlQuery` 方法，然后传递 SQL 字符串以用于实体类型。
+对于内存中提供程序，在 `OnModelCreating` 中使用 `ToInMemoryQuery` 方法，然后传递要用于实体类型 LINQ 查询。

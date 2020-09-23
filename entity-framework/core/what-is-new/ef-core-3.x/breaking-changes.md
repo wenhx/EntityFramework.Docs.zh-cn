@@ -4,12 +4,12 @@ description: Entity Framework Core 3.x 中引入的中断性变更的完整列�
 author: ajcvickers
 ms.date: 09/05/2020
 uid: core/what-is-new/ef-core-3.x/breaking-changes
-ms.openlocfilehash: 644e61994dab4e9993c6a78792ff584c57fbe48a
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: e348cb630d91ebe4536b73b9a7bd9a7b6a46db79
+ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89620677"
+ms.lasthandoff: 09/14/2020
+ms.locfileid: "90072234"
 ---
 # <a name="breaking-changes-included-in-ef-core-3x"></a>EF Core 3.x 中包含的中断性变更
 
@@ -178,7 +178,7 @@ ms.locfileid: "89620677"
     $ dotnet tool install --global dotnet-ef
   ```
 
-使用[工具清单文件](https://github.com/dotnet/cli/issues/10288)恢复声明为工具依赖项的项目依赖项时，还可以将其作为本地工具获取。
+使用[工具清单文件](/dotnet/core/tools/global-tools#install-a-local-tool)恢复声明为工具依赖项的项目依赖项时，还可以将其作为本地工具获取。
 
 <a name="fromsql"></a>
 ### <a name="fromsql-executesql-and-executesqlasync-have-been-renamed"></a>FromSql、ExecuteSql 和 ExecuteSqlAsync 已重命名
@@ -478,6 +478,9 @@ API 的以下部分现已过时：
 * **`DbQuery<>`** - 应使用 `DbSet<>`。
 * **`DbContext.Query<>()`** - 应使用 `DbContext.Set<>()`。
 * **`IQueryTypeConfiguration<TQuery>`** - 应改用 `IEntityTypeConfiguration<TEntity>`**。
+
+> [!NOTE]
+> 由于查询所有属性设置为 `null` 的无键实体时存在 [3.x 中的问题](https://github.com/dotnet/efcore/issues/19537)，将返回 `null` 而不是实体，如果此问题适用于你的方案，则还要添加逻辑来处理结果中的 `null`。
 
 <a name="config"></a>
 ### <a name="configuration-api-for-owned-type-relationships-has-changed"></a>从属类型关系的配置 API 已更改
