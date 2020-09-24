@@ -5,12 +5,12 @@ author: bricelam
 ms.author: bricelam
 ms.date: 05/06/2020
 uid: core/managing-schemas/migrations/applying
-ms.openlocfilehash: 50937f96e63f9bda2ffcf5e94dabf688ee2ba1f3
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: cde83a944e1e698a7f8a00c4692c0ce08a87b5ab
+ms.sourcegitcommit: c0e6a00b64c2dcd8acdc0fe6d1b47703405cdf09
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90071883"
+ms.lasthandoff: 09/24/2020
+ms.locfileid: "91210401"
 ---
 # <a name="applying-migrations"></a>应用迁移
 
@@ -193,5 +193,5 @@ public static void Main(string[] args)
 
 > [!WARNING]
 >
-> * 在生产环境中使用此方法之前，请仔细考虑。 经验表明，此部署策略的简易性有点了它创建的问题。 请考虑改用 SQL 脚本。
+> * 在生产环境中使用此方法之前，请仔细考虑。 经验表明，此部署策略的简易性有点了它创建的问题。 请考虑从迁移生成 SQL 脚本。
 > * 请勿在 `Migrate()` 前调用 `EnsureCreated()`。 `EnsureCreated()` 会绕过迁移创建架构，这会导致 `Migrate()` 失败。

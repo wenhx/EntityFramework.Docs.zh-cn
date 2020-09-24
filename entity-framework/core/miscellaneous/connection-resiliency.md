@@ -4,12 +4,12 @@ description: 使用连接复原功能通过 Entity Framework Core 自动重试�
 author: rowanmiller
 ms.date: 11/15/2016
 uid: core/miscellaneous/connection-resiliency
-ms.openlocfilehash: f4077672a9234bf66dc488d7450f437452e542b6
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 25b754334edd15532780cb4e40682bc211620c76
+ms.sourcegitcommit: c0e6a00b64c2dcd8acdc0fe6d1b47703405cdf09
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90071701"
+ms.lasthandoff: 09/24/2020
+ms.locfileid: "91210288"
 ---
 # <a name="connection-resiliency"></a>连接复原
 
@@ -107,3 +107,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 > [!NOTE]
 > 请确保用于验证的上下文具有定义的执行策略，因为如果在事务提交过程中失败，连接可能会在验证期间再次失败。
+
+## <a name="additional-resources"></a>其他资源
+
+* [排查 Azure SQL 数据库和 SQL 托管实例中的暂时性连接错误](/azure/azure-sql/database/troubleshoot-common-connectivity-issues)
