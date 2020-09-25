@@ -4,12 +4,12 @@ description: 有关特定支持的 Entity Framework Core 提供程序的信息�
 author: ajcvickers
 ms.date: 12/17/2019
 uid: core/providers/index
-ms.openlocfilehash: 99e1b162cb610b8f086501d0af3896ffa4635358
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 4a5490beccfb4d038f7dde04399ec3493941ac83
+ms.sourcegitcommit: c0e6a00b64c2dcd8acdc0fe6d1b47703405cdf09
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89618990"
+ms.lasthandoff: 09/24/2020
+ms.locfileid: "91210349"
 ---
 # <a name="database-providers"></a>数据库提供程序
 
@@ -32,7 +32,7 @@ Entity Framework Core 可通过名为数据库提供程序的插件库访问许�
 | [Npgsql.EntityFrameworkCore.PostgreSQL](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL)                                                                         | postgresql                 | [Npgsql 开发团队](https://github.com/npgsql)                          |                          | 3.1               | [docs](https://www.npgsql.org/efcore/index.html)                                                                                                                                                   |
 | [Pomelo.EntityFrameworkCore.MySql](https://www.nuget.org/packages/Pomelo.EntityFrameworkCore.MySql)                                                                                   | MySQL、MariaDB             | [Pomelo Foundation 项目](https://github.com/PomeloFoundation)              |                          | 3.1               | [自述文件](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql/blob/master/README.md)                                                                                               |
 | [MySql.Data.EntityFrameworkCore](https://www.nuget.org/packages/MySql.Data.EntityFrameworkCore)                                                                                       | MySQL                      | [MySQL 项目](https://dev.mysql.com) (Oracle)                               |                          | 3.1               | [docs](https://dev.mysql.com/doc/connector-net/en/connector-net-entityframework-core.html)                                                                                                         |
-| [Oracle.EntityFrameworkCore](https://www.nuget.org/packages/Oracle.EntityFrameworkCore/)                                                                                              | Oracle DB 11.2 及更高版本     | [Oracle](https://www.oracle.com/technetwork/topics/dotnet/)                   | Beta                     | 3.1               | [网站](https://www.oracle.com/technetwork/topics/dotnet/)                                                                                                                                       |
+| [Oracle.EntityFrameworkCore](https://www.nuget.org/packages/Oracle.EntityFrameworkCore/)                                                                                              | Oracle DB 11.2 及更高版本     | [Oracle](https://www.oracle.com/technetwork/topics/dotnet/)                   |                          | 3.1               | [网站](https://www.oracle.com/technetwork/topics/dotnet/)                                                                                                                                       |
 | [Devart.Data.MySql.EFCore](https://www.nuget.org/packages/Devart.Data.MySql.EFCore/)                                                                                                  | MySQL 5 及以上版本            | [DevArt](https://www.devart.com/)                                             | 已付                     | 3.1               | [docs](https://www.devart.com/dotconnect/mysql/docs/)                                                                                                                                              |
 | [Devart.Data.Oracle.EFCore](https://www.nuget.org/packages/Devart.Data.Oracle.EFCore/)                                                                                                | Oracle DB 9.2.0.4 及更高版本  | [DevArt](https://www.devart.com/)                                             | 已付                     | 3.1               | [docs](https://www.devart.com/dotconnect/oracle/docs/)                                                                                                                                             |
 | [Devart.Data.PostgreSql.EFCore](https://www.nuget.org/packages/Devart.Data.PostgreSql.EFCore/)                                                                                        | PostgreSQL 8.0 及以上版本     | [DevArt](https://www.devart.com/)                                             | 已付                     | 3.1               | [docs](https://www.devart.com/dotconnect/postgresql/docs/)                                                                                                                                         |
