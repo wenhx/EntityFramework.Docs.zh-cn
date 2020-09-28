@@ -77,6 +77,8 @@
               href: core/miscellaneous/async.md
             - name: Logging
               href: core/miscellaneous/logging.md
+            - name: 上下文池
+              href: core/miscellaneous/context-pooling.md
             - name: 连接复原
               href: core/miscellaneous/connection-resiliency.md
             - name: 正在测试
