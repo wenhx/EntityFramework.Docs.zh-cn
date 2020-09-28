@@ -1,35 +1,42 @@
 ---
 title: Entity Framework Core 概述 - EF Core
 description: Entity Framework Core 的一般介绍概述
-author: rowanmiller
-ms.date: 10/27/2016
+author: ajcvickers
+ms.date: 9/20/2020
 uid: core/index
-ms.openlocfilehash: 1d320ecae06d9c05fe3a14ec955f7151de6a56e5
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 011900b55bc941d6ae6a7ac8aca6001713088c69
+ms.sourcegitcommit: c0e6a00b64c2dcd8acdc0fe6d1b47703405cdf09
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90071922"
+ms.lasthandoff: 09/24/2020
+ms.locfileid: "91210375"
 ---
 # <a name="entity-framework-core"></a>Entity Framework Core
 
 Entity Framework (EF) Core 是轻量化、可扩展、[开源](https://github.com/aspnet/EntityFrameworkCore)和跨平台版的常用 Entity Framework 数据访问技术。
 
-EF Core 可用作对象关系映射程序 (O/RM)，以便于 .NET 开发人员能够使用 .NET 对象来处理数据库，这样就不必经常编写大部分数据访问代码了。
+EF Core 可用作对象关系映射程序 (O/RM)，这可以实现以下两点：
+
+* 使 .NET 开发人员能够使用 .NET 对象处理数据库。
+* 无需再像通常那样编写大部分数据访问代码。
 
 EF Core 支持多个数据库引擎，请参阅[数据库提供程序](xref:core/providers/index)了解详细信息。
 
 ## <a name="the-model"></a>模型
 
-对于 EF Core，使用模型执行数据访问。 模型由实体类和表示数据库会话的上下文对象构成，可便于用户查询和保存数据。 有关详细信息，请参阅[创建模型](xref:core/modeling/index)。
+对于 EF Core，使用模型执行数据访问。 模型由实体类和表示数据库会话的上下文对象构成。 上下文对象允许查询并保存数据。 有关详细信息，请参阅[创建模型](xref:core/modeling/index)。
 
-可以根据现有数据库生成模型，手动将模型编码为与数据库匹配，也可以使用 [EF 迁移](xref:core/managing-schemas/migrations/index)根据模型创建数据库，然后在模型随时间推移发生更改时改进它。
+EF 支持以下模型开发方法：
+
+* 从现有数据库生成模型。
+* 对模型手动编码，使其符合数据库。
+* 创建模型后，使用 [EF 迁移](xref:core/managing-schemas/migrations/index)从模型创建数据库。 模型发生变化时，迁移可让数据库不断演进。
 
 [!code-csharp[Main](../../samples/core/Intro/Model.cs)]
 
 ## <a name="querying"></a>查询
 
-使用语言集成查询 (LINQ) 从数据库检索实体类的实例。 有关详细信息，请参阅[查询数据](xref:core/querying/index)。
+使用语言[集成查询 (LINQ)](/dotnet/csharp/programming-guide/concepts/linq/) 从数据库检索实体类的实例。 有关详细信息，请参阅[查询数据](xref:core/querying/index)。
 
 [!code-csharp[Main](../../samples/core/Intro/Program.cs#Querying)]
 
@@ -38,6 +45,21 @@ EF Core 支持多个数据库引擎，请参阅[数据库提供程序](xref:core
 使用实体类的实例在数据库中创建、删除和修改数据。 有关详细信息，请参阅[保存数据](xref:core/saving/index)。
 
 [!code-csharp[Main](../../samples/core/Intro/Program.cs#SavingData)]
+
+## <a name="ef-orm-considerations"></a>EF ORM 注意事项
+
+虽然 EF Core 善长提取许多编程详细信息，但还是有一些适用于任何 ORM 的最佳做法，可帮助避免生产应用中的常见陷阱：
+
+ - 若要在高性能生产应用中构建、调试、分析和迁移数据，必须具备基础数据库服务器的中级知识或更高级别的知识。 例如，有关主键和外键、约束、索引、标准化、DML 和 DDL 语句、数据类型、分析等方面的知识。
+- 功能和集成测试：请务必尽可能严密地复制生产环境，以便：
+  - 查找仅在使用特定版本的数据库服务器时才出现的问题。
+  - 在升级 EF Core 和其他依赖项时捕获中断性变更。 例如，添加或升级 ASP.NET Core、OData 或 Automapper 等框架。 这些依赖项可能以多种意外方式影响 EF Core。
+- 通过代表性负载进行性能和压力测试。 某些功能的不成熟用法缩放性不佳。 例如，多项集合包含内容、大量使用延迟加载、对未编制索引的列执行条件查询、对存储生成的值进行大规模更新和插入、缺乏并发处理、大型模型、缓存策略不充分。
+- 安全评审：例如，连接字符串和其他机密处理、非部署操作的数据库权限、原始 SQL 的输入验证、敏感数据加密。
+- 确保日志记录和诊断充足且可用。 例如，适当的日志记录配置、查询标记和 Application Insights。
+- 错误恢复。 为常见故障场景（如版本回退、回退服务器、横向扩展和负载平衡、DoS 缓解和数据备份）准备应急计划。
+- 应用程序部署和迁移。 规划如何在部署过程中应用迁移；在应用程序启动时执行此操作可能会导致并发问题，并且对于常规操作，这所需的权限比必要权限更高。 在迁移期间，使用暂存来辅助从错误中恢复。 有关详细信息，请参阅[应用迁移](xref:core/managing-schemas/migrations/applying)。
+- 生成的迁移的详细检查和测试。 将迁移应用于生产数据前，应对其进行全面测试。 若表中包含生产数据，架构的形状和列类型就不能轻易更改。 例如，在 SQL Server 上，对于映射到字符串和十进制属性的列，`nvarchar(max)` 和 `decimal(18, 2)` 极少成为最佳类型，但这些是 EF 使用的默认值，因为 EF 不了解你的具体情况。
 
 ## <a name="next-steps"></a>后续步骤
 
