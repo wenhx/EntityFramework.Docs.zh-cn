@@ -4,12 +4,12 @@ description: 使用 Entity Framework Core 预先加载相关数据
 author: roji
 ms.date: 9/8/2020
 uid: core/querying/related-data/eager
-ms.openlocfilehash: f7e33895293e1d7b8b32a135d60b58dd1f050621
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 5ac15a85b28f21588639f34cbaa9ef76f366f7b5
+ms.sourcegitcommit: c0e6a00b64c2dcd8acdc0fe6d1b47703405cdf09
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90078862"
+ms.lasthandoff: 09/24/2020
+ms.locfileid: "91210462"
 ---
 # <a name="eager-loading-of-related-data"></a>相关数据的预先加载
 
@@ -92,7 +92,7 @@ ORDER BY [b].[BlogId]
 
 将拆分查询配置为默认查询后，仍然可以将特定查询配置为以单个查询的形式执行：
 
-[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Sample.cs?name=AsSplitQuery&highlight=5)]
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Sample.cs?name=AsSingleQuery&highlight=5)]
 
 如果未显式指定查询拆分模式（既不是全局指定，也不是在查询中指定），并且 EF Core 检测到单个查询加载了多项包含内容，便会发出警告，提醒这可能导致的性能问题。 将查询模式设置为 SingleQuery 将导致无法生成警告。
 
