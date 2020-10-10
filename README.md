@@ -10,9 +10,9 @@
 
 考虑发送拉取请求，而不是存档问题。 这可以完全通过 Web 完成：
 
-* 在此存储库中找到要更新的文件，然后单击它以打开
+* 在文档的右上角，选择“笔”图标：![图像](https://user-images.githubusercontent.com/3605364/93646907-e75ef680-f9a2-11ea-847a-c5c3839f3aa8.png)
 
-![图像](https://user-images.githubusercontent.com/1430078/64454137-10199400-d09f-11e9-9d1a-b7fdca2c518e.png)
+  注意：可能需要使浏览器窗口变宽，才能看到笔图标。
 
 * 单击编辑按钮 (✏️) 以在 Web 浏览器中编辑
 
@@ -22,7 +22,7 @@
 
 ![图像](https://user-images.githubusercontent.com/1430078/64454455-dac17600-d09f-11e9-922b-0346117011f5.png)
 
-（请注意，还可以克隆此存储库，并以常规方式进行 GitHub PR。）
+请注意，还可以克隆此存储库，并以常规方式进行 GitHub PR。
 
 ## <a name="making-more-substantial-changes"></a>进行更多重大更改
 

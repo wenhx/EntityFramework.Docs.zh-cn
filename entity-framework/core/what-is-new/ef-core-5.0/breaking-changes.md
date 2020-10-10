@@ -4,12 +4,12 @@ description: Entity Framework Core 5.0 中引入的中断性变更的完整列�
 author: bricelam
 ms.date: 09/09/2020
 uid: core/what-is-new/ef-core-5.0/breaking-changes
-ms.openlocfilehash: 63fd1d1a01b7a72fd34bb9a0130191131306426c
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 8e9df4e2ff81e20cf5a36855247c5aff89ea2394
+ms.sourcegitcommit: c0e6a00b64c2dcd8acdc0fe6d1b47703405cdf09
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90070791"
+ms.lasthandoff: 09/24/2020
+ms.locfileid: "91210362"
 ---
 # <a name="breaking-changes-in-ef-core-50"></a>EF Core 5.0 中的中断性变更
 
@@ -29,6 +29,7 @@ API 和行为的下列更改有可能导致现有应用程序在更新到 EF Cor
 | [当实体状态从“已分离”更改为“未更改”、“已更新”或“已删除”时，将调用值生成器](#non-added-generation) | 低        |
 | [IMigrationsModelDiffer 当前使用 IRelationalModel](#relational-model)                                                                 | 低        |
 | [鉴别器是只读的](#read-only-discriminators)                                                                             | 低        |
+| [特定于提供程序的 EF.Functions 方法针对 InMemory 提供程序引发](#no-client-methods)                                              | 低        |
 
 <a name="geometric-sqlite"></a>
 
@@ -193,7 +194,7 @@ byte[] 的这种表示形式与预期更好地对齐，并且是主要 JSON 序�
 
 **新行为**
 
-旧 API 已过时，已添加以下新方法：`GetJsonPropertyName`、`SetJsonPropertyName`
+旧 API 已删除，添加了以下新方法：`GetJsonPropertyName`、`SetJsonPropertyName`
 
 **为什么**
 
@@ -201,7 +202,7 @@ byte[] 的这种表示形式与预期更好地对齐，并且是主要 JSON 序�
 
 **缓解措施**
 
-使用新的 API 或暂时挂起过时的警告。
+使用新 API。
 
 <a name="non-added-generation"></a>
 
@@ -320,3 +321,25 @@ modelBuilder.Entity<BaseEntity>()
 
 对于关系提供程序，在 `OnModelCreating` 中使用 `ToSqlQuery` 方法，然后传递 SQL 字符串以用于实体类型。
 对于内存中提供程序，在 `OnModelCreating` 中使用 `ToInMemoryQuery` 方法，然后传递要用于实体类型 LINQ 查询。
+
+<a name="no-client-methods"></a>
+
+### <a name="provider-specific-effunctions-methods-throw-for-inmemory-provider"></a>特定于提供程序的 EF.Functions 方法针对 InMemory 提供程序引发
+
+[跟踪问题 #20294](https://github.com/dotnet/efcore/issues/20294)
+
+**旧行为**
+
+特定于提供程序的 EF.Functions 方法包含对客户端执行的实现，从而使这些方法可以在 InMemory 提供程序上执行。 例如，`EF.Functions.DateDiffDay` 是特定于 SQL Server 的方法，它在 InMemory 提供程序上运行。
+
+**新行为**
+
+特定于提供程序的方法已更新为在其方法主体中引发异常，以阻止在客户端上对它们进行评估。
+
+**为什么**
+
+特定于提供程序的方法映射到数据库函数。 在 LINQ 中，映射的数据库函数执行的计算无法每次都在客户端上进行复制。 当在客户端执行相同的方法时，这可能会导致来自服务器的结果有所不同。 由于这些方法会用于 LINQ，来转换到特定数据库函数，因此无需在客户端上评估这些方法。 由于 InMemory 提供程序是另一种数据库，因此这些方法不能用于此提供程序。 如果尝试为 InMemory 提供程序或任何其他无法转换这些方法的提供程序执行它们时，将引发异常。
+
+**缓解措施**
+
+由于无法准确模拟数据库函数的行为，因此应根据生产中的同一种数据库测试包含这些函数的查询。

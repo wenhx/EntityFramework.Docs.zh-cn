@@ -4,12 +4,12 @@ description: 使用 Entity Framework Core 显式加载相关数据
 author: roji
 ms.date: 9/8/2020
 uid: core/querying/related-data/explicit
-ms.openlocfilehash: 4cfc11237b498f5357476ee4ad96fdc279cd3fee
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: def1c8c2736c64bc6f39af0d344fd1330f8a06f5
+ms.sourcegitcommit: c0e6a00b64c2dcd8acdc0fe6d1b47703405cdf09
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90078863"
+ms.lasthandoff: 09/24/2020
+ms.locfileid: "91210449"
 ---
 # <a name="explicit-loading-of-related-data"></a>相关数据的显式加载
 
