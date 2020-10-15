@@ -1,15 +1,15 @@
 ---
 title: 创建模型 - EF6
 description: 创建 Entity Framework 6 中的模型
-author: divega
+author: ajcvickers
 ms.date: 07/05/2018
 uid: ef6/modeling/index
-ms.openlocfilehash: 74b018c75bea72b07e137483f80bf8785a91cd0d
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: ba1aacc55feaf7bd8fdbc7667b64ba3842c538f9
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073027"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92065948"
 ---
 # <a name="creating-a-model"></a>创建模型
 

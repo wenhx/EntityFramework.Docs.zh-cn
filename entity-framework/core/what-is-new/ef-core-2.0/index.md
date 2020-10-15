@@ -1,15 +1,15 @@
 ---
 title: EF Core 2.0 中的新增功能 - EF Core
 description: Entity Framework Core 2.0 中的更改和改进
-author: divega
+author: ajcvickers
 ms.date: 02/20/2018
 uid: core/what-is-new/ef-core-2.0
-ms.openlocfilehash: f553e620c088a65eda64c0761aaab49313041727
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 7438d8ad1a5ade971af71186a20ec57fd83713de
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90072351"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92063447"
 ---
 # <a name="new-features-in-ef-core-20"></a>EF Core 2.0 中的新增功能
 
@@ -26,7 +26,7 @@ EF Core 现面向 .NET Standard 2.0，这意味着它可用于 .NET Core 2.0、.
 
 要使用表拆分，必须在共享该表的所有实体类型之间配置识别关系（其中外键属性构成主键）：
 
-``` csharp
+```csharp
 modelBuilder.Entity<Product>()
     .HasOne(e => e.Details).WithOne(e => e.Product)
     .HasForeignKey<ProductDetails>(e => e.Id);
@@ -42,7 +42,7 @@ modelBuilder.Entity<ProductDetails>().ToTable("Products");
 
 依照约定，将为固有类型创建一个阴影主键，并通过表拆分将其映射到与所有者相同的表。 这样就可以通过类似于 EF6 中复杂类型的用法来使用固有类型：
 
-``` csharp
+```csharp
 modelBuilder.Entity<Order>().OwnsOne(p => p.OrderDetails, cb =>
     {
         cb.OwnsOne(c => c.BillingAddress);
@@ -79,7 +79,7 @@ EF Core 2.0 包含一个称为“模型级别查询筛选器”的新功能。 �
 
 以下简单示例演示了此功能在上述两种方案中的应用：
 
-``` csharp
+```csharp
 public class BloggingContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -113,7 +113,7 @@ EF Core 2.0 包含来自 [Paul Middleton](https://github.com/pmiddleton) 的一�
 
 在 `DbContext` 上声明一种静态方法，并使用 `DbFunctionAttribute` 对其批注：
 
-``` csharp
+```csharp
 public class BloggingContext : DbContext
 {
     [DbFunction]
@@ -126,7 +126,7 @@ public class BloggingContext : DbContext
 
 此类方法会自动注册。 注册后，对 LINQ 查询中方法的调用可转换为 SQL 中的函数调用：
 
-``` csharp
+```csharp
 var query =
     from p in context.Posts
     where BloggingContext.PostReadCount(p.Id) > 5
@@ -143,7 +143,7 @@ var query =
 
 在 EF6 中可以通过从 EntityTypeConfiguration 派生来封装特定实体类型的 Code First 配置。 我们在 EF Core 2.0 中重新添加了此模式：
 
-``` csharp
+```csharp
 class CustomerConfiguration : IEntityTypeConfiguration<Customer>
 {
     public void Configure(EntityTypeBuilder<Customer> builder)
@@ -166,7 +166,7 @@ builder.ApplyConfiguration(new CustomerConfiguration());
 
 在版本 2.0 中，我们引入了一种在依赖关系注入中注册自定义 DbContext 类型的新方法，即以透明形式引入可重用 DbContext 实例的池。 要使用 DbContext 池，请在服务注册期间使用 `AddDbContextPool` 而不是 `AddDbContext`：
 
-``` csharp
+```csharp
 services.AddDbContextPool<BloggingContext>(
     options => options.UseSqlServer(connectionString));
 ```
@@ -179,7 +179,7 @@ services.AddDbContextPool<BloggingContext>(
 
 此新方法对使用 DbContext 的 `OnConfiguring()` 方法可执行的操作带来了一些限制。
 
-> [!WARNING]  
+> [!WARNING]
 > 如果要在不能在请求间共享的派生的 DbContext 类中保留自己的状态（例如私有字段），请避免使用 DbContext 池。 EF Core 仅会重置将 DbContext 实例添加到池之前所识别的状态。
 
 ### <a name="explicitly-compiled-queries"></a>显式编译的查询
@@ -190,7 +190,7 @@ EF 早期版本以及 LINQ to SQL 中已经提供手动或显式编译的查询 
 
 尽管 EF Core 通常可基于查询表达式的哈希表示法自动编译和缓存查询，但是使用此机制可绕过哈希计算和缓存查询，允许应用程序通过调用委托来使用已编译查询，从而实现性能小幅提升。
 
-``` csharp
+```csharp
 // Create an explicitly compiled query
 private static Func<CustomerContext, int, Customer> _customerById =
     EF.CompileQuery((CustomerContext db, int id) =>
@@ -227,7 +227,7 @@ C# 6 引入了字符串内插功能，此功能允许将 C# 表达式直接嵌�
 
 下面是一个示例：
 
-``` csharp
+```csharp
 var city = "London";
 var contactTitle = "Sales Representative";
 
@@ -259,7 +259,7 @@ WHERE ""City"" = @p0
 
 我们已添加 EF.Functions 属性，EF Core 或提供程序可使用该属性定义映射到数据库函数或运算符的方法，从而可在 LINQ 查询中调用它们。 此类方法的第一个示例是 Like()：
 
-``` csharp
+```csharp
 var aCustomers =
     from c in context.Customers
     where EF.Functions.Like(c.Name, "a%")
@@ -276,7 +276,7 @@ EF Core 2.0 引入了一种新的 IPluralizer 服务，用于单数化实体类�
 
 下面是开发人员挂入自己的复数化程序的示例：
 
-``` csharp
+```csharp
 public class MyDesignTimeServices : IDesignTimeServices
 {
     public void ConfigureDesignTimeServices(IServiceCollection services)

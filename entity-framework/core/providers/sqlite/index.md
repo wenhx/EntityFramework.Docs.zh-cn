@@ -1,15 +1,15 @@
 ---
 title: SQLite 数据库提供程序 - EF Core
 description: 有关 Entity Framework Core SQLite 数据库提供程序的信息
-author: rowanmiller
+author: bricelam
 ms.date: 10/27/2016
 uid: core/providers/sqlite/index
-ms.openlocfilehash: ba537acdf537fa475378c08b8c6290930b29239d
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 2d221168c093271d220d4d8fbc7779c1a5aab701
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90071233"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92063980"
 ---
 # <a name="sqlite-ef-core-database-provider"></a>SQLite EF Core 数据库提供程序
 
@@ -27,7 +27,7 @@ dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 
 ### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
 
-``` powershell
+```powershell
 Install-Package Microsoft.EntityFrameworkCore.Sqlite
 ```
 

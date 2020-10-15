@@ -4,12 +4,12 @@ description: 有关特定支持的 Entity Framework Core 提供程序的信息�
 author: ajcvickers
 ms.date: 12/17/2019
 uid: core/providers/index
-ms.openlocfilehash: 4a5490beccfb4d038f7dde04399ec3493941ac83
-ms.sourcegitcommit: c0e6a00b64c2dcd8acdc0fe6d1b47703405cdf09
+ms.openlocfilehash: 76acd8bbb833fa7c377cc90cdb67278130694bd1
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/24/2020
-ms.locfileid: "91210349"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92063993"
 ---
 # <a name="database-providers"></a>数据库提供程序
 
@@ -17,11 +17,11 @@ Entity Framework Core 可通过名为数据库提供程序的插件库访问许�
 
 ## <a name="current-providers"></a>当前提供程序
 
-> [!IMPORTANT]  
+> [!IMPORTANT]
 > EF Core 提供程序由多种源生成。 并非所有提供程序均作为 [Entity Framework Core 项目](https://github.com/aspnet/EntityFrameworkCore)的组成部分进行维护。 考虑使用提供程序时，请务必评估质量、授权、支持等因素，确保其满足要求。 同时也请务必查看每个提供程序的文档，详细了解版本兼容性信息。
 
-> [!IMPORTANT]  
-> EF Core 提供程序通常跨次要版本工作，但不跨主要版本工作。 例如，针对 EF Core 2.1 发布的提供程序应用于 EF Core 2.2，但不适用于 EF Core 3.0。 
+> [!IMPORTANT]
+> EF Core 提供程序通常跨次要版本工作，但不跨主要版本工作。 例如，针对 EF Core 2.1 发布的提供程序应用于 EF Core 2.2，但不适用于 EF Core 3.0。
 
 | NuGet 程序包                                                                                                                                                                         | 支持的数据库引擎 | 维护商/供应商                                                           | 备注/要求     | 专为版本构建 | 有用的链接                                                                                                                                                                                       |
 |:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------------------|:------------------------------------------------------------------------------|:-------------------------|:------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -48,7 +48,6 @@ Entity Framework Core 可通过名为数据库提供程序的插件库访问许�
 | [Teradata.EntityFrameworkCore](https://www.nuget.org/packages/Teradata.EntityFrameworkCore/)                                                                                          | Teradata 数据库 16.10 及更高版本 | [Teradata](https://downloads.teradata.com/download/connectivity/net-data-provider-for-teradata) |   | 2.2               |[网站](https://www.nuget.org/packages/Teradata.EntityFrameworkCore/)                                                                                                                            |
 | [EntityFrameworkCore.FirebirdSql](https://www.nuget.org/packages/EntityFrameworkCore.FirebirdSql/)                                                                                    | Firebird 2.5 和 3.x       | [Rafael Almeida](https://github.com/ralmsdeveloper)                           |                          | 2.1               | [wiki](https://github.com/ralmsdeveloper/EntityFrameworkCore.FirebirdSQL/wiki)                                                                                                                     |
 | [EntityFrameworkCore.OpenEdge](https://www.nuget.org/packages/EntityFrameworkCore.OpenEdge/)                                                                                          | Progress OpenEdge          | [Alex Wiese](https://github.com/alexwiese)                                    |                          | 2.1               | [自述文件](https://github.com/alexwiese/EntityFrameworkCore.OpenEdge/blob/master/README.md)                                                                                                          |
-| [Pomelo.EntityFrameworkCore.MyCat](https://www.nuget.org/packages/Pomelo.EntityFrameworkCore.MyCat)                                                                                   | MyCAT 服务器               | [Pomelo Foundation 项目](https://github.com/PomeloFoundation)              | 仅预发行版          | 1.1               | [自述文件](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MyCat/blob/master/README.md)                                                                                               |
 
 ## <a name="adding-a-database-provider-to-your-application"></a>向应用程序添加数据库提供程序
 
@@ -62,7 +61,7 @@ dotnet add package provider_package_name
 
 ## <a name="visual-studio"></a>[Visual Studio](#tab/vs)
 
-``` powershell
+```powershell
 install-package provider_package_name
 ```
 
@@ -71,10 +70,10 @@ install-package provider_package_name
 安装后，需采用 `OnConfiguring` 方法或 `AddDbContext` 方法（如果使用的是依赖关系注入容器）在 `DbContext` 中配置提供程序。
 例如，以下行使用传递的连接字符串配置 SQL Server 提供程序：
 
-``` csharp
+```csharp
 optionsBuilder.UseSqlServer(
     "Server=(localdb)\mssqllocaldb;Database=MyDatabase;Trusted_Connection=True;");
-```  
+```
 
 数据库提供程序可扩展 EF Core，启用特定数据库特有的功能。
 一些概念为大多数据库共有，它们包含于 EF Core 主要组件中。
@@ -84,7 +83,7 @@ optionsBuilder.UseSqlServer(
 其他一些概念特定于某一类提供程序。
 例如，用于关系数据库的 EF Core 提供程序构建于公共 `Microsoft.EntityFrameworkCore.Relational` 库上，该库提供的 API 可用于配置表和列映射、外键约束等。提供程序通常作为 NuGet 包分发。
 
-> [!IMPORTANT]  
+> [!IMPORTANT]
 > 发布 EF Core 的新补丁版本时，其中通常包含 `Microsoft.EntityFrameworkCore.Relational` 包的更新。
 > 添加关系数据库提供程序时，该包将成为应用程序的传递依赖项。
 > 但许多提供程序是独立于 EF Core 发布的，因此可能不会更新为依赖该包的较新补丁版本。

@@ -1,15 +1,15 @@
 ---
 title: 使用断开连接的实体 - EF6
 description: 使用 Entity Framework 6 中断开连接的实体
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/fundamentals/disconnected-entities/index
-ms.openlocfilehash: 5e9f0ffbf0150500b0162ce7ead83a87a29b641a
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 235609a20ff5a0ec50743a61c8aabeb2d46103b9
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90072754"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92065532"
 ---
 # <a name="working-with-disconnected-entities"></a>使用断开连接的实体
 

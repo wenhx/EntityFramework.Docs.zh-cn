@@ -1,15 +1,15 @@
 ---
 title: 从 EF6 移植到 EF Core - EF
 description: 有关将应用程序从 Entity Framework 6 移植到 Entity Framework Core 的常规信息
-author: rowanmiller
+author: ajcvickers
 ms.date: 10/27/2016
 uid: efcore-and-ef6/porting/index
-ms.openlocfilehash: 62360dda92d951fe9a4f43a2b742a7457ad8692f
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 0dfb4cc5f7c65aa081d0175708a0db95b0688e50
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073586"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92064206"
 ---
 # <a name="porting-from-ef6-to-ef-core"></a>从 EF6 移植到 EF Core
 
