@@ -2,61 +2,90 @@
 title: 继承-EF Core
 description: 如何使用 Entity Framework Core 配置实体类型继承
 author: AndriySvyryd
-ms.author: ansvyryd
-ms.date: 10/27/2016
+ms.date: 10/01/2020
 uid: core/modeling/inheritance
-ms.openlocfilehash: 0e94013a0b894b162f4bb3ca8e7acb1aca349011
-ms.sourcegitcommit: 92d54fe3702e0c92e198334da22bacb42e9842b1
+ms.openlocfilehash: 47aae0d57d7203f0e6da5868bdc082ad85d59620
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 06/10/2020
-ms.locfileid: "84664047"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92063863"
 ---
-# <a name="inheritance"></a><span data-ttu-id="29608-103">继承</span><span class="sxs-lookup"><span data-stu-id="29608-103">Inheritance</span></span>
+# <a name="inheritance"></a><span data-ttu-id="d22e9-103">继承</span><span class="sxs-lookup"><span data-stu-id="d22e9-103">Inheritance</span></span>
 
-<span data-ttu-id="29608-104">EF 可以将 .NET 类型层次结构映射到数据库。</span><span class="sxs-lookup"><span data-stu-id="29608-104">EF can map a .NET type hierarchy to a database.</span></span> <span data-ttu-id="29608-105">这使你可以像平常一样使用基类型和派生类型在代码中编写 .NET 实体，并让 EF 无缝创建适当的数据库架构、发出查询等。类型层次结构的映射方式的实际详细信息与提供程序相关;本页介绍关系数据库上下文中的继承支持。</span><span class="sxs-lookup"><span data-stu-id="29608-105">This allows you to write your .NET entities in code as usual, using base and derived types, and have EF seamlessly create the appropriate database schema, issue queries, etc. The actual details of how a type hierarchy is mapped are provider-dependent; this page describes inheritance support in the context of a relational database.</span></span>
+<span data-ttu-id="d22e9-104">EF 可以将 .NET 类型层次结构映射到数据库。</span><span class="sxs-lookup"><span data-stu-id="d22e9-104">EF can map a .NET type hierarchy to a database.</span></span> <span data-ttu-id="d22e9-105">这使你可以像平常一样使用基类型和派生类型在代码中编写 .NET 实体，并让 EF 无缝创建适当的数据库架构、发出查询等。类型层次结构的映射方式的实际详细信息与提供程序相关;本页介绍关系数据库上下文中的继承支持。</span><span class="sxs-lookup"><span data-stu-id="d22e9-105">This allows you to write your .NET entities in code as usual, using base and derived types, and have EF seamlessly create the appropriate database schema, issue queries, etc. The actual details of how a type hierarchy is mapped are provider-dependent; this page describes inheritance support in the context of a relational database.</span></span>
 
-<span data-ttu-id="29608-106">目前，EF Core 仅支持每个层次结构一个表（TPH）模式。</span><span class="sxs-lookup"><span data-stu-id="29608-106">At the moment, EF Core only supports the table-per-hierarchy (TPH) pattern.</span></span> <span data-ttu-id="29608-107">TPH 使用单个表来存储层次结构中所有类型的数据，而鉴别器列用于标识每行所表示的类型。</span><span class="sxs-lookup"><span data-stu-id="29608-107">TPH uses a single table to store the data for all types in the hierarchy, and a discriminator column is used to identify which type each row represents.</span></span>
+## <a name="entity-type-hierarchy-mapping"></a><span data-ttu-id="d22e9-106">实体类型层次结构映射</span><span class="sxs-lookup"><span data-stu-id="d22e9-106">Entity type hierarchy mapping</span></span>
 
-> [!NOTE]
-> <span data-ttu-id="29608-108">EF Core 尚不支持 EF6 支持每种类型一个表（TPT）和每个具体的表类型（TPC）。</span><span class="sxs-lookup"><span data-stu-id="29608-108">The table-per-type (TPT) and table-per-concrete-type (TPC), which are supported by EF6, are not yet supported by EF Core.</span></span> <span data-ttu-id="29608-109">TPT 是为 EF Core 5.0 计划的主要功能。</span><span class="sxs-lookup"><span data-stu-id="29608-109">TPT is a major feature planned for EF Core 5.0.</span></span>
+<span data-ttu-id="d22e9-107">按照约定，EF 不会自动扫描基类型或派生类型;这意味着，如果要映射层次结构中的 CLR 类型，则必须在模型上显式指定该类型。</span><span class="sxs-lookup"><span data-stu-id="d22e9-107">By convention, EF will not automatically scan for base or derived types; this means that if you want a CLR type in your hierarchy to be mapped, you must explicitly specify that type on your model.</span></span> <span data-ttu-id="d22e9-108">例如，仅指定层次结构的基类型将不会导致 EF Core 隐式包含其所有子类型。</span><span class="sxs-lookup"><span data-stu-id="d22e9-108">For example, specifying only the base type of a hierarchy will not cause EF Core to implicitly include all of its sub-types.</span></span>
 
-## <a name="entity-type-hierarchy-mapping"></a><span data-ttu-id="29608-110">实体类型层次结构映射</span><span class="sxs-lookup"><span data-stu-id="29608-110">Entity type hierarchy mapping</span></span>
-
-<span data-ttu-id="29608-111">按照约定，EF 不会自动扫描基类型或派生类型;这意味着，如果要映射层次结构中的 CLR 类型，则必须在模型上显式指定该类型。</span><span class="sxs-lookup"><span data-stu-id="29608-111">By convention, EF will not automatically scan for base or derived types; this means that if you want a CLR type in your hierarchy to be mapped, you must explicitly specify that type on your model.</span></span> <span data-ttu-id="29608-112">例如，仅指定层次结构的基类型将不会导致 EF Core 隐式包含其所有子类型。</span><span class="sxs-lookup"><span data-stu-id="29608-112">For example, specifying only the base type of a hierarchy will not cause EF Core to implicitly include all of its sub-types.</span></span>
-
-<span data-ttu-id="29608-113">下面的示例为及其子类公开了 DbSet `Blog` `RssBlog` 。</span><span class="sxs-lookup"><span data-stu-id="29608-113">The following sample exposes a DbSet for `Blog` and its subclass `RssBlog`.</span></span> <span data-ttu-id="29608-114">如果 `Blog` 有任何其他子类，则不会将其包含在模型中。</span><span class="sxs-lookup"><span data-stu-id="29608-114">If `Blog` has any other subclass, it will not be included in the model.</span></span>
+<span data-ttu-id="d22e9-109">下面的示例为及其子类公开了 DbSet `Blog` `RssBlog` 。</span><span class="sxs-lookup"><span data-stu-id="d22e9-109">The following sample exposes a DbSet for `Blog` and its subclass `RssBlog`.</span></span> <span data-ttu-id="d22e9-110">如果 `Blog` 有任何其他子类，则不会将其包含在模型中。</span><span class="sxs-lookup"><span data-stu-id="d22e9-110">If `Blog` has any other subclass, it will not be included in the model.</span></span>
 
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/InheritanceDbSets.cs?name=InheritanceDbSets&highlight=3-4)]
 
-<span data-ttu-id="29608-115">此模型映射到下面的数据库架构（请注意隐式创建的*鉴别*器列，该列标识每个行中存储的*博客*类型）：</span><span class="sxs-lookup"><span data-stu-id="29608-115">This model is mapped to the following database schema (note the implicitly-created *Discriminator* column, which identifies which type of *Blog* is stored in each row):</span></span>
+> [!NOTE]
+> <span data-ttu-id="d22e9-111">使用 TPH 映射时，数据库列会根据需要自动进行为 null。</span><span class="sxs-lookup"><span data-stu-id="d22e9-111">Database columns are automatically made nullable as necessary when using TPH mapping.</span></span> <span data-ttu-id="d22e9-112">例如， `RssUrl` 列可为 null，因为正则 `Blog` 实例不具有该属性。</span><span class="sxs-lookup"><span data-stu-id="d22e9-112">For example, the `RssUrl` column is nullable because regular `Blog` instances do not have that property.</span></span>
+
+<span data-ttu-id="d22e9-113">如果你不希望 `DbSet` 为层次结构中的一个或多个实体公开，则还可以使用熟知的 API 来确保它们包含在模型中。</span><span class="sxs-lookup"><span data-stu-id="d22e9-113">If you don't want to expose a `DbSet` for one or more entities in the hierarchy, you can also use the Fluent API to ensure they are included in the model.</span></span>
+
+> [!TIP]
+> <span data-ttu-id="d22e9-114">如果不依赖约定，可以使用显式指定基类型 `HasBaseType` 。</span><span class="sxs-lookup"><span data-stu-id="d22e9-114">If you don't rely on conventions, you can specify the base type explicitly using `HasBaseType`.</span></span> <span data-ttu-id="d22e9-115">你还可以使用 `.HasBaseType((Type)null)` 从层次结构中删除实体类型。</span><span class="sxs-lookup"><span data-stu-id="d22e9-115">You can also use `.HasBaseType((Type)null)` to remove an entity type from the hierarchy.</span></span>
+
+## <a name="table-per-hierarchy-and-discriminator-configuration"></a><span data-ttu-id="d22e9-116">每个层次结构一个表和鉴别器配置</span><span class="sxs-lookup"><span data-stu-id="d22e9-116">Table-per-hierarchy and discriminator configuration</span></span>
+
+<span data-ttu-id="d22e9-117">默认情况下，EF 使用 *每个层次结构一个表* (TPH) 模式映射继承。</span><span class="sxs-lookup"><span data-stu-id="d22e9-117">By default, EF maps the inheritance using the *table-per-hierarchy* (TPH) pattern.</span></span> <span data-ttu-id="d22e9-118">TPH 使用单个表来存储层次结构中所有类型的数据，而鉴别器列用于标识每行所表示的类型。</span><span class="sxs-lookup"><span data-stu-id="d22e9-118">TPH uses a single table to store the data for all types in the hierarchy, and a discriminator column is used to identify which type each row represents.</span></span>
+
+<span data-ttu-id="d22e9-119">上述模型映射到下面的数据库架构 (请注意隐式创建的 `Discriminator` 列，该列标识 `Blog` 在每行) 中存储哪种类型。</span><span class="sxs-lookup"><span data-stu-id="d22e9-119">The model above is mapped to the following database schema (note the implicitly-created `Discriminator` column, which identifies which type of `Blog` is stored in each row).</span></span>
 
 ![image](_static/inheritance-tph-data.png)
 
->[!NOTE]
-> <span data-ttu-id="29608-117">使用 TPH 映射时，数据库列会根据需要自动进行为 null。</span><span class="sxs-lookup"><span data-stu-id="29608-117">Database columns are automatically made nullable as necessary when using TPH mapping.</span></span> <span data-ttu-id="29608-118">例如， *RssUrl*列可以为 null，因为常规*博客*实例不具有该属性。</span><span class="sxs-lookup"><span data-stu-id="29608-118">For example, the *RssUrl* column is nullable because regular *Blog* instances do not have that property.</span></span>
-
-<span data-ttu-id="29608-119">如果不想公开层次结构中一个或多个实体的 DbSet，还可以使用熟知的 API 来确保它们包含在模型中。</span><span class="sxs-lookup"><span data-stu-id="29608-119">If you don't want to expose a DbSet for one or more entities in the hierarchy, you can also use the Fluent API to ensure they are included in the model.</span></span>
-
-> [!TIP]
-> <span data-ttu-id="29608-120">如果不依赖约定，可以使用显式指定基类型 `HasBaseType` 。</span><span class="sxs-lookup"><span data-stu-id="29608-120">If you don't rely on conventions, you can specify the base type explicitly using `HasBaseType`.</span></span> <span data-ttu-id="29608-121">你还可以使用 `.HasBaseType((Type)null)` 从层次结构中删除实体类型。</span><span class="sxs-lookup"><span data-stu-id="29608-121">You can also use `.HasBaseType((Type)null)` to remove an entity type from the hierarchy.</span></span>
-
-## <a name="discriminator-configuration"></a><span data-ttu-id="29608-122">鉴别器配置</span><span class="sxs-lookup"><span data-stu-id="29608-122">Discriminator configuration</span></span>
-
-<span data-ttu-id="29608-123">您可以配置鉴别器列的名称和类型以及用于标识层次结构中的每种类型的值：</span><span class="sxs-lookup"><span data-stu-id="29608-123">You can configure the name and type of the discriminator column and the values that are used to identify each type in the hierarchy:</span></span>
+<span data-ttu-id="d22e9-121">您可以配置鉴别器列的名称和类型以及用于标识层次结构中的每种类型的值：</span><span class="sxs-lookup"><span data-stu-id="d22e9-121">You can configure the name and type of the discriminator column and the values that are used to identify each type in the hierarchy:</span></span>
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/DiscriminatorConfiguration.cs?name=DiscriminatorConfiguration&highlight=4-6)]
 
-<span data-ttu-id="29608-124">在上述示例中，EF 在层次结构的基实体上将鉴别器隐式添加为[影子属性](xref:core/modeling/shadow-properties)。</span><span class="sxs-lookup"><span data-stu-id="29608-124">In the examples above, EF added the discriminator implicitly as a [shadow property](xref:core/modeling/shadow-properties) on the base entity of the hierarchy.</span></span> <span data-ttu-id="29608-125">此属性可以配置为类似于任何其他属性：</span><span class="sxs-lookup"><span data-stu-id="29608-125">This property can be configured like any other:</span></span>
+<span data-ttu-id="d22e9-122">在上述示例中，EF 在层次结构的基实体上将鉴别器隐式添加为 [影子属性](xref:core/modeling/shadow-properties) 。</span><span class="sxs-lookup"><span data-stu-id="d22e9-122">In the examples above, EF added the discriminator implicitly as a [shadow property](xref:core/modeling/shadow-properties) on the base entity of the hierarchy.</span></span> <span data-ttu-id="d22e9-123">此属性可以配置为类似于任何其他属性：</span><span class="sxs-lookup"><span data-stu-id="d22e9-123">This property can be configured like any other:</span></span>
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/DiscriminatorPropertyConfiguration.cs?name=DiscriminatorPropertyConfiguration&highlight=4-5)]
 
-<span data-ttu-id="29608-126">最后，鉴别器还可以映射到实体中的常规 .NET 属性：</span><span class="sxs-lookup"><span data-stu-id="29608-126">Finally, the discriminator can also be mapped to a regular .NET property in your entity:</span></span>
+<span data-ttu-id="d22e9-124">最后，鉴别器还可以映射到实体中的常规 .NET 属性：</span><span class="sxs-lookup"><span data-stu-id="d22e9-124">Finally, the discriminator can also be mapped to a regular .NET property in your entity:</span></span>
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/NonShadowDiscriminator.cs?name=NonShadowDiscriminator&highlight=4)]
 
-## <a name="shared-columns"></a><span data-ttu-id="29608-127">共享列</span><span class="sxs-lookup"><span data-stu-id="29608-127">Shared columns</span></span>
+### <a name="shared-columns"></a><span data-ttu-id="d22e9-125">共享列</span><span class="sxs-lookup"><span data-stu-id="d22e9-125">Shared columns</span></span>
 
-<span data-ttu-id="29608-128">默认情况下，当层次结构中的两个同级实体类型具有相同的属性时，它们将映射到两个单独的列。</span><span class="sxs-lookup"><span data-stu-id="29608-128">By default, when two sibling entity types in the hierarchy have a property with the same name, they will be mapped to two separate columns.</span></span> <span data-ttu-id="29608-129">但是，如果它们的类型相同，则可以映射到相同的数据库列：</span><span class="sxs-lookup"><span data-stu-id="29608-129">However, if their type is identical they can be mapped to the same database column:</span></span>
+<span data-ttu-id="d22e9-126">默认情况下，当层次结构中的两个同级实体类型具有相同的属性时，它们将映射到两个单独的列。</span><span class="sxs-lookup"><span data-stu-id="d22e9-126">By default, when two sibling entity types in the hierarchy have a property with the same name, they will be mapped to two separate columns.</span></span> <span data-ttu-id="d22e9-127">但是，如果它们的类型相同，则可以映射到相同的数据库列：</span><span class="sxs-lookup"><span data-stu-id="d22e9-127">However, if their type is identical they can be mapped to the same database column:</span></span>
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/SharedTPHColumns.cs?name=SharedTPHColumns&highlight=9,13)]
+
+## <a name="table-per-type-configuration"></a><span data-ttu-id="d22e9-128">每种类型一个表配置</span><span class="sxs-lookup"><span data-stu-id="d22e9-128">Table-per-type configuration</span></span>
+
+> [!NOTE]
+> <span data-ttu-id="d22e9-129"> (TPT) 的每种类型一个表是 EF Core 5.0 中的一种新功能。</span><span class="sxs-lookup"><span data-stu-id="d22e9-129">The table-per-type (TPT) is a new feature in EF Core 5.0.</span></span> <span data-ttu-id="d22e9-130">EF6 支持每个具体的表类型 (TPC) ，但 EF Core 尚不支持。</span><span class="sxs-lookup"><span data-stu-id="d22e9-130">Table-per-concrete-type (TPC) is supported by EF6, but is not yet supported by EF Core.</span></span>
+
+<span data-ttu-id="d22e9-131">在 TPT 映射模式下，所有类型都映射到各个表。</span><span class="sxs-lookup"><span data-stu-id="d22e9-131">In the TPT mapping pattern, all the types are mapped to individual tables.</span></span> <span data-ttu-id="d22e9-132">仅属于某个基类型或派生类型的属性存储在映射到该类型的一个表中。</span><span class="sxs-lookup"><span data-stu-id="d22e9-132">Properties that belong solely to a base type or derived type are stored in a table that maps to that type.</span></span> <span data-ttu-id="d22e9-133">映射到派生类型的表还存储将派生表与基表联接的外键。</span><span class="sxs-lookup"><span data-stu-id="d22e9-133">Tables that map to derived types also store a foreign key that joins the derived table with the base table.</span></span>
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/TPTConfiguration.cs?name=TPTConfiguration)]
+
+<span data-ttu-id="d22e9-134">EF 将为上述模型创建下列数据库架构。</span><span class="sxs-lookup"><span data-stu-id="d22e9-134">EF will create the following database schema for the model above.</span></span>
+
+```sql
+CREATE TABLE [Blogs] (
+    [BlogId] int NOT NULL IDENTITY,
+    [Url] nvarchar(max) NULL,
+    CONSTRAINT [PK_Blogs] PRIMARY KEY ([BlogId])
+);
+
+CREATE TABLE [RssBlogs] (
+    [BlogId] int NOT NULL,
+    [RssUrl] nvarchar(max) NULL,
+    CONSTRAINT [PK_RssBlogs] PRIMARY KEY ([BlogId]),
+    CONSTRAINT [FK_RssBlogs_Blogs_BlogId] FOREIGN KEY ([BlogId]) REFERENCES [Blogs] ([BlogId]) ON DELETE NO ACTION
+);
+```
+
+> [!NOTE]
+> <span data-ttu-id="d22e9-135">如果重命名了 primary key 约束，则新名称将应用于映射到层次结构的所有表，以后 EF 版本将允许在解决 [问题 19970](https://github.com/dotnet/efcore/issues/19970) 时为特定表重命名约束。</span><span class="sxs-lookup"><span data-stu-id="d22e9-135">If the primary key constraint is renamed the new name will be applied to all the tables mapped to the hierarchy, future EF versions will allow renaming the constraint only for a particular table when [issue 19970](https://github.com/dotnet/efcore/issues/19970) is fixed.</span></span>
+
+<span data-ttu-id="d22e9-136">如果要使用批量配置，可以通过调用来检索特定表的列名称 <xref:Microsoft.EntityFrameworkCore.RelationalPropertyExtensions.GetColumnName%2A> 。</span><span class="sxs-lookup"><span data-stu-id="d22e9-136">If you are employing bulk configuration you can retrieve the column name for a specific table by calling <xref:Microsoft.EntityFrameworkCore.RelationalPropertyExtensions.GetColumnName%2A>.</span></span>
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/TPTConfiguration.cs?name=Metadata&highlight=10)]
