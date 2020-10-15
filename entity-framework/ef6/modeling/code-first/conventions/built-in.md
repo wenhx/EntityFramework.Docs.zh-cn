@@ -1,15 +1,15 @@
 ---
 title: Code First 约定-EF6
 description: 实体框架6中的 Code First 约定
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/code-first/conventions/built-in
-ms.openlocfilehash: 71e865d674d6bef7aaf65d95abe1b1add96d890f
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: d5b7419258a9e45af5437fae5084a78ebc05f115
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90072599"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92066442"
 ---
 # <a name="code-first-conventions"></a>Code First 约定
 Code First 使你可以使用 c # 或 Visual Basic .NET 类来描述模型。 使用约定检测模型的基本形状。 约定是一组规则，这些规则用于在使用 Code First 时，基于类定义自动配置概念模型。 约定是在 ModelConfiguration 命名空间中定义的。  

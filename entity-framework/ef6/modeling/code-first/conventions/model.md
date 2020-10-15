@@ -1,17 +1,17 @@
 ---
-title: 基于模型的约定-EF6
-description: 实体框架6中基于模型的约定
-author: divega
+title: Model-Based 约定-EF6
+description: 实体框架6中的 Model-Based 约定
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/code-first/conventions/model
-ms.openlocfilehash: bcb7a88f4d9fc994b51300ac30ec58671be370c8
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: c4978277ced72cc5c017af5f69b8760f316087d5
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073998"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92066429"
 ---
-# <a name="model-based-conventions"></a>基于模型的约定
+# <a name="model-based-conventions"></a>Model-Based 约定
 > [!NOTE]
 > **仅限 EF6 及更高版本** - 此页面中讨论的功能、API 等已引入实体框架 6。 如果使用的是早期版本，则部分或全部信息不适用。  
 
@@ -208,6 +208,6 @@ public class BlogContext : DbContext
 }
 ```  
 
-## <a name="notes"></a>备注  
+## <a name="notes"></a>说明  
 
 此处的 MSDN 文档提供了实体框架当前应用的约定列表： [http://msdn.microsoft.com/library/system.data.entity.modelconfiguration.conventions.aspx](https://msdn.microsoft.com/library/system.data.entity.modelconfiguration.conventions.aspx) 。  此列表是直接从源代码中提取的。  [GitHub](https://github.com/aspnet/entityframework6/)上提供了实体框架6的源代码，而实体框架所使用的许多约定都是基于自定义模型的约定的良好起点。  

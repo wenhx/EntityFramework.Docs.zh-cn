@@ -1,15 +1,15 @@
 ---
 title: 自定义 Code First 约定-EF6
 description: 实体框架6中的自定义 Code First 约定
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/code-first/conventions/custom
-ms.openlocfilehash: 19f22d311438b8c7d3ac9d270017f3ea4907efda
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 5142f58d229dd7743fd4d5c7f0004c080e22c9e4
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90074024"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92066455"
 ---
 # <a name="custom-code-first-conventions"></a>自定义 Code First 约定
 > [!NOTE]
@@ -20,7 +20,7 @@ ms.locfileid: "90074024"
 有时，这些默认约定并不适用于您的模型，并且您必须通过使用数据注释或流畅的 API 来配置多个单独的实体来解决它们。 自定义 Code First 约定允许您定义自己的约定，为模型提供配置默认值。 在本演练中，我们将探讨不同类型的自定义约定以及如何创建它们。
 
 
-## <a name="model-based-conventions"></a>基于模型的约定
+## <a name="model-based-conventions"></a>Model-Based 约定
 
 本页介绍用于自定义约定的 DbModelBuilder API。 此 API 应该足以用于创作大多数自定义约定。 但是，还可以创作基于模型的约定-在创建最终模型后对其进行操作的约定-用于处理高级方案。 有关详细信息，请参阅 [基于模型的约定](xref:ef6/modeling/code-first/conventions/model)。
 
@@ -213,7 +213,7 @@ IsKey 方法的一个有趣功能是它是附加的。 这意味着，如果在�
 
 ``` csharp
     modelBuilder.Properties()
-                .Having(x =>x.GetCustomAttributes(false).OfType<IsUnicode>().FirstOrDefault())
+                .Having(x => x.GetCustomAttributes(false).OfType<IsUnicode>().FirstOrDefault())
                 .Configure((config, att) => config.IsUnicode(att.Unicode));
 ```
 

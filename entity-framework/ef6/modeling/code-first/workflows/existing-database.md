@@ -1,15 +1,15 @@
 ---
 title: Code First 现有数据库-EF6
 description: Code First 到实体框架6中的现有数据库
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/code-first/workflows/existing-database
-ms.openlocfilehash: d26c5f2ced6b327615cc78bcb2bb6d188b012c14
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 2305236f68cfdc9f6e1582cca1163abf380b4075
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073985"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92066416"
 ---
 # <a name="code-first-to-an-existing-database"></a>Code First 到现有数据库
 此视频和分步演练提供了面向现有数据库 Code First 开发的简介。 Code First 允许使用 C \# 或 VB.Net 类定义模型。 另外，还可以使用类和属性上的属性或使用 Fluent API 来执行其他配置。
@@ -224,6 +224,6 @@ Press any key to exit...
 
 如果要对现有数据库使用 Code First 迁移，请参阅 [Code First 迁移到现有数据库](xref:ef6/modeling/code-first/migrations/existing-database)。
 
-## <a name="summary"></a>总结
+## <a name="summary"></a>摘要
 
 在本演练中，我们使用现有数据库查看 Code First 开发。 我们使用了 Visual Studio Entity Framework Tools 来反向工程映射到数据库并可用于存储和检索数据的一组类。

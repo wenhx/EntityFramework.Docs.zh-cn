@@ -1,15 +1,15 @@
 ---
 title: Code First 数据批注-EF6
 description: 实体框架6中的 Code First 数据批注
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/code-first/data-annotations
-ms.openlocfilehash: dd91ddf674f2235190e50beb847e569a898ad59b
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: f6bf063ab99c5b7ef01993aec8fd6bdd06dd8f7d
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90074059"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92066468"
 ---
 # <a name="code-first-data-annotations"></a>Code First 数据批注
 > [!NOTE]
@@ -52,7 +52,7 @@ Code First 提供了向你的类添加这些配置的两种方法。 其中一�
 
  
 
-## <a name="key"></a>Key
+## <a name="key"></a>密钥
 
 实体框架依赖于每个实体，每个实体都有一个用于实体跟踪的键值。 Code First 的一种约定是隐式键属性;Code First 将查找名为 "Id" 的属性，或者查找类名称和 "Id" （如 "BlogId"）的组合。 此属性将映射到数据库中的主键列。
 
@@ -370,7 +370,7 @@ Code first 约定规定每个属于受支持数据类型的属性都在数据库
     }
 ```
 
-### <a name="multiple-column-indexes"></a>多列索引
+### <a name="multiple-column-indexes"></a>Multiple-Column 索引
 
 跨多个列的索引通过在给定表的多个索引批注中使用相同的名称来指定。 创建多列索引时，需要指定索引中列的顺序。 例如，下面的代码在上创建一个多列索引 `Rating` ，并将其 `BlogId` 称为 **IX \_ BlogIdAndRating**。 `BlogId` 是索引中的第一列， `Rating` 是第二列。
 
@@ -459,7 +459,7 @@ Code first 不能自行匹配两个类中的属性。 的数据库表 `Posts` �
 
  
 
-## <a name="summary"></a>总结
+## <a name="summary"></a>摘要
 
 DataAnnotations 不仅使你能够在代码优先类中描述客户端和服务器端验证，还允许你增强，甚至更正代码优先根据其约定对类进行的假设。 使用 DataAnnotations，不仅可以驱动数据库架构生成，还可以将代码的第一类映射到预先存在的数据库。
 
