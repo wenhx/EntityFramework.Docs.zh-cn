@@ -1,15 +1,15 @@
 ---
 title: 从先前版本升级到 EF Core 2 - EF Core
 description: 升级到 Entity Framework Core 2.0 的说明和注意事项
-author: divega
+author: ajcvickers
 ms.date: 08/13/2017
 uid: core/what-is-new/ef-core-2.0/upgrade
-ms.openlocfilehash: bdc0cfe8c0be4a83f8c78ba2ac66bb1e18cea0f7
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: c7c736629209da99f191ceb0d4000d19f40414b9
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90072338"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92063434"
 ---
 # <a name="upgrading-applications-from-previous-versions-to-ef-core-20"></a>将应用程序从先前版本升级到 EF Core 2.0
 
@@ -37,7 +37,7 @@ ms.locfileid: "90072338"
 
 ASP.NET Core 2.0 的默认模板中添加了新的设计时挂钩。 静态 `Program.BuildWebHost` 方法使 EF Core 能够在设计时访问应用程序的服务提供程序。 如果要升级 ASP.NET Core 1.x 应用程序，则需要将 `Program` 类更新为以下相似内容。
 
-``` csharp
+```csharp
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
@@ -108,13 +108,13 @@ ID 也从 Microsoft.EntityFrameworkCore.Infrastructure 移动到了新的 Micros
 
 EF Core 2.0 现将对所用的每个不同提供程序生成不同的 [IModel](/dotnet/api/microsoft.entityframeworkcore.metadata.imodel)。 这对应用程序而言通常是透明的。 这有助于简化较低级别的元数据 API，从而始终通过调用 `.Relational`（而不是 `.SqlServer`、`.Sqlite` 等）来访问常见关系元数据概念。例如，1.1.x 代码如下：
 
-``` csharp
+```csharp
 var tableName = context.Model.FindEntityType(typeof(User)).SqlServer().TableName;
 ```
 
 现在应这样编写：
 
-``` csharp
+```csharp
 var tableName = context.Model.FindEntityType(typeof(User)).Relational().TableName;
 ```
 
@@ -137,7 +137,7 @@ EF Core 将内部 `IServiceProvider`（依赖关系注入容器）用于其内�
 
 全局未命名内存中数据库已删除，而且必须对所有内存中数据库进行命名。 例如：
 
-``` csharp
+```csharp
 optionsBuilder.UseInMemoryDatabase("MyDatabase");
 ```
 
@@ -161,7 +161,7 @@ optionsBuilder.UseInMemoryDatabase("MyDatabase");
 
 若要在 EF Core 2.0 中启用 `Scaffold-DbContext` 或 `dotnet ef dbcontext scaffold`，只需引用一个提供程序包：
 
-``` xml
+```xml
 <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer"
     Version="2.0.0" />
 <PackageReference Include="Microsoft.EntityFrameworkCore.Tools"

@@ -2,15 +2,14 @@
 title: 断开连接的实体 - EF Core
 description: 在 Entity Framework Core 中跨多个上下文实例使用断开连接的、未跟踪的实体
 author: ajcvickers
-ms.author: avickers
 ms.date: 10/27/2016
 uid: core/saving/disconnected-entities
-ms.openlocfilehash: d9b6d2d2c0761dd6f670ba51f935c866e10460b7
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: f21cc71ef11ee4ef37618a68d5a5219e8174bf8b
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90070882"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92063564"
 ---
 # <a name="disconnected-entities"></a>断开连接的实体
 
@@ -73,9 +72,6 @@ DbContext 实例将自动跟踪从数据库返回的实体。 调用 SaveChanges
 [!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertOrUpdateSingleEntity)]
 
 Update 方法通常将实体标记为更新，而不是插入。 但是，如果实体具有自动生成的键且未设置任何键值，则实体会自动标记为插入。
-
-> [!TIP]  
-> EF Core 2.0 中已引入此行为。 对于早期版本，始终需要显式选择 Add 或 Update。
 
 如果实体不使用自动生成的键，则应用程序必须确定是应插入实体还是应更新实体：例如：
 

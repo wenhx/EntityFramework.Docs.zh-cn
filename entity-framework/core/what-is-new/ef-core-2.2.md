@@ -1,15 +1,15 @@
 ---
 title: EF Core 2.2 中的新变化 - EF Core
 description: Entity Framework Core 2.2 中的更改和改进
-author: divega
+author: ajcvickers
 ms.date: 11/14/2018
 uid: core/what-is-new/ef-core-2.2
-ms.openlocfilehash: 68e3cbd5c7345330a47f1457c9b096fee5dd49e9
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: ca71c7479254b25fe932e6abf43fe0fd8f1781b3
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90072324"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92065688"
 ---
 # <a name="new-features-in-ef-core-22"></a>EF Core 2.2 中的新增功能
 
@@ -27,7 +27,7 @@ EF Core 2.2 现在支持使用 [NetTopologySuite](https://github.com/NetTopology
 
 安装提供程序扩展后，便能向实体添加受支持类型的属性。 例如：
 
-``` csharp
+```csharp
 using NetTopologySuite.Geometries;
 
 namespace MyApp
@@ -36,7 +36,7 @@ namespace MyApp
   {
     [Key]
     public string Name { get; set; }
-  
+
     [Required]
     public Point Location { get; set; }
   }
@@ -45,7 +45,7 @@ namespace MyApp
 
 然后，可以暂留包含空间数据的实体：
 
-``` csharp
+```csharp
 using (var context = new MyDbContext())
 {
     context.Add(
@@ -60,11 +60,11 @@ using (var context = new MyDbContext())
 
 还可以根据空间数据和操作执行数据库查询：
 
-``` csharp
-  var nearestFriends =
-      (from f in context.Friends
-      orderby f.Location.Distance(myLocation) descending
-      select f).Take(5).ToList();
+```csharp
+var nearestFriends =
+    (from f in context.Friends
+    orderby f.Location.Distance(myLocation) descending
+    select f).Take(5).ToList();
 ```
 
 若要详细了解此功能，请参阅[空间类型文档](xref:core/modeling/spatial)。
@@ -85,7 +85,7 @@ EF Core 2.2 将此功能扩展为，将所有权表达为一对多关联。
 
 若要使用此功能，可以调用新增的 OwnsMany() API：
 
-``` csharp
+```csharp
 modelBuilder.Entity<Customer>().OwnsMany(c => c.Addresses);
 ```
 
@@ -98,16 +98,16 @@ modelBuilder.Entity<Customer>().OwnsMany(c => c.Addresses);
 若要利用查询标记，请使用新增的 TagWith() 方法对 LINQ 查询进行批注。
 使用上一示例中的空间查询：
 
-``` csharp
-  var nearestFriends =
-      (from f in context.Friends.TagWith(@"This is my spatial query!")
-      orderby f.Location.Distance(myLocation) descending
-      select f).Take(5).ToList();
+```csharp
+var nearestFriends =
+    (from f in context.Friends.TagWith(@"This is my spatial query!")
+    orderby f.Location.Distance(myLocation) descending
+    select f).Take(5).ToList();
 ```
 
 此 LINQ 查询将生成以下 SQL 输出：
 
-``` sql
+```sql
 -- This is my spatial query!
 
 SELECT TOP(@__p_1) [f].[Name], [f].[Location]

@@ -4,12 +4,12 @@ description: 使用 Entity Framework Core 进行客户端和服务器查询评�
 author: smitpatel
 ms.date: 10/03/2019
 uid: core/querying/client-eval
-ms.openlocfilehash: 41be7da26423f50017f57a7686f65bd8baf69ef5
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: f2e80541439de8cc824c182e52400f730dd2af48
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90071168"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92062706"
 ---
 # <a name="client-vs-server-evaluation"></a>客户端与服务器评估
 
@@ -19,21 +19,21 @@ ms.locfileid: "90071168"
 > 在 3.0 版之前，Entity Framework Core 支持在查询中的任何位置进行客户端评估。 有关详细信息，请参阅[历史版本部分](#previous-versions)。
 
 > [!TIP]
-> 可在 GitHub 上查看此文章的[示例](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Querying)。
+> 可在 GitHub 上查看此文章的[示例](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Querying/ClientEvaluation)。
 
 ## <a name="client-evaluation-in-the-top-level-projection"></a>顶级投影中的客户端评估
 
 在下面的示例中，一个辅助方法用于标准化从 SQL Server 数据库中返回的博客的 URL。 由于 SQL Server 提供程序不了解此方法的实现方式，因此无法将其转换为 SQL。 查询的所有其余部分是在数据库中评估的，但通过此方法传递返回的 `URL` 却是在客户端上完成。
 
-[!code-csharp[Main](../../../samples/core/Querying/ClientEval/Sample.cs#ClientProjection)]
+[!code-csharp[Main](../../../samples/core/Querying/ClientEvaluation/Program.cs#ClientProjection)]
 
-[!code-csharp[Main](../../../samples/core/Querying/ClientEval/Sample.cs#ClientMethod)]
+[!code-csharp[Main](../../../samples/core/Querying/ClientEvaluation/Program.cs#ClientMethod)]
 
 ## <a name="unsupported-client-evaluation"></a>不支持的客户端评估
 
 尽管客户端评估非常有用，但有时会减弱性能。 请看以下查询，其中的 where 筛选器现已使用辅助方法。 由于数据库中不能应用筛选器，因此需要将所有数据提取到内存中，以便在客户端上应用筛选器。 根据服务器上的筛选器和数据量，客户端评估可能会减弱性能。 因此 Entity Framework Core 会阻止此类客户端评估，并引发运行时异常。
 
-[!code-csharp[Main](../../../samples/core/Querying/ClientEval/Sample.cs#ClientWhere)]
+[!code-csharp[Main](../../../samples/core/Querying/ClientEvaluation/Program.cs#ClientWhere)]
 
 ## <a name="explicit-client-evaluation"></a>显式客户端评估
 
@@ -44,7 +44,7 @@ ms.locfileid: "90071168"
 
 在这种情况下，通过调用 `AsEnumerable` 或 `ToList` 等方法（若为异步，则调用 `AsAsyncEnumerable` 或 `ToListAsync`），以显式方式选择进行客户端评估。 使用 `AsEnumerable` 将对结果进行流式传输，但使用 `ToList` 将通过创建列表来进行缓冲，因此也会占用额外的内存。 但如果枚举多次，则将结果存储到列表中可以带来更大的帮助，因为只有一个对数据库的查询。 根据具体的使用情况，你应该评估哪种方法更适合。
 
-[!code-csharp[Main](../../../samples/core/Querying/ClientEval/Sample.cs#ExplicitClientEval)]
+[!code-csharp[Main](../../../samples/core/Querying/ClientEvaluation/Program.cs#ExplicitClientEvaluation)]
 
 ## <a name="potential-memory-leak-in-client-evaluation"></a>客户端评估中潜在的内存泄漏
 

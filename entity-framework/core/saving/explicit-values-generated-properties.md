@@ -1,15 +1,15 @@
 ---
 title: 设置已生成属性的显式值 - EF Core
 description: 关于针对配置为使用 Entity Framework Core 生成的属性显式设置值的信息
-author: rowanmiller
+author: ajcvickers
 ms.date: 10/27/2016
 uid: core/saving/explicit-values-generated-properties
-ms.openlocfilehash: efaa87356a78c4ec7e11d57c1effad776bd01cba
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: b3a31d8139b244bec72347cf20600b6c2b65c7d2
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90072481"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92062992"
 ---
 # <a name="setting-explicit-values-for-generated-properties"></a>设置已生成属性的显式值
 
@@ -17,7 +17,7 @@ ms.locfileid: "90072481"
 
 可能会出现希望设置已生成属性的显式值，而不是生成显式值的情况。
 
-> [!TIP]  
+> [!TIP]
 > 可在 GitHub 上查看此文章的[示例](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Saving/ExplicitValuesGenerateProperties/)。
 
 ## <a name="the-model"></a>模型
@@ -41,7 +41,7 @@ ms.locfileid: "90072481"
 
 输出显示了数据库已为第一个员工生成值，且显式值已用于第二个员工。
 
-``` Console
+```output
 1: John Doe, 1/26/2017 12:00:00 AM
 2: Jane Doe, 1/1/2000 12:00:00 AM
 ```
@@ -52,14 +52,14 @@ ms.locfileid: "90072481"
 
 对于大多数情况，上述方法将适用于键属性。 但是，若要将显式值插入到 SQL Server `IDENTITY` 列中，则必须在调用 `SaveChanges()` 之前手动启用 `IDENTITY_INSERT`。
 
-> [!NOTE]  
+> [!NOTE]
 > 积压工作中有[功能请求](https://github.com/aspnet/EntityFramework/issues/703)，用来在 SQL Server 提供程序内自动执行此操作。
 
 [!code-csharp[Main](../../../samples/core/Saving/ExplicitValuesGenerateProperties/Sample.cs#EmployeeId)]
 
 输出显示了提供的 ID 已保存到数据库。
 
-``` Console
+```output
 100: John Doe
 101: Jane Doe
 ```
@@ -70,11 +70,8 @@ ms.locfileid: "90072481"
 
 [!code-csharp[Main](../../../samples/core/Saving/ExplicitValuesGenerateProperties/EmployeeContext.cs#LastPayRaise)]
 
-> [!NOTE]  
+> [!NOTE]
 > 默认情况下，如果尝试保存配置为在更新期间生成的属性的显式值，EF Core 将引发异常。 若要避免此问题，必须下拉到较低级别的元数据 API 并设置 `AfterSaveBehavior`（如上所示）。
-
-> [!NOTE]  
-> **EF Core 2.0 中的更改：** 在以前版本中，通过 `IsReadOnlyAfterSave` 标志控制保存后行为。 此标志已过时，将替换为 `AfterSaveBehavior`。
 
 数据库中还存在触发器，以便在执行 `UPDATE` 操作期间为 `LastPayRaise` 列生成值。
 
@@ -89,7 +86,7 @@ ms.locfileid: "90072481"
 
 输出显示了数据库已为第一个员工生成值，且显式值已用于第二个员工。
 
-``` Console
+```output
 1: John Doe, 1/26/2017 12:00:00 AM
 2: Jane Doe, 1/19/2017 12:00:00 AM
 ```

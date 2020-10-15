@@ -1,15 +1,15 @@
 ---
 title: EF Core 2.1 中的新增功能 - EF Core
 description: Entity Framework Core 2.1 中的更改和改进
-author: divega
+author: ajcvickers
 ms.date: 02/20/2018
 uid: core/what-is-new/ef-core-2.1
-ms.openlocfilehash: b3d44fe344155df1d814e189b533010673754089
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: c98a44f9bc06447bb41f0278c59b412f770c5bd4
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90072312"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92065701"
 ---
 # <a name="new-features-in-ef-core-21"></a>EF Core 2.1 中的新增功能
 
@@ -35,7 +35,7 @@ EF Core 现包含创作可按需加载导航属性的实体类所必需的构建
 - 使用 SQL Server 映射无符号整数
 - 自动加密和解密属性值
 
-阅读[有关值转换的部分](xref:core/modeling/value-conversions)详细了解本主题。  
+阅读[有关值转换的部分](xref:core/modeling/value-conversions)详细了解本主题。
 
 ## <a name="linq-groupby-translation"></a>LINQ GroupBy 转换
 
@@ -43,7 +43,7 @@ EF Core 现包含创作可按需加载导航属性的实体类所必需的构建
 
 此示例显示了一个用 GroupBy 来计算各种聚合函数的查询：
 
-``` csharp
+```csharp
 var query = context.Orders
     .GroupBy(o => new { o.CustomerId, o.EmployeeId })
     .Select(g => new
@@ -59,7 +59,7 @@ var query = context.Orders
 
 相应的 SQL 转化如下所示：
 
-``` SQL
+```sql
 SELECT [o].[CustomerId], [o].[EmployeeId],
     SUM([o].[Amount]), MIN([o].[Amount]), MAX([o].[Amount]), AVG([o].[Amount])
 FROM [Orders] AS [o]
@@ -72,11 +72,11 @@ GROUP BY [o].[CustomerId], [o].[EmployeeId];
 
 如示例所示，可使用它在 `OnModelCreating` 中为 Post 配置种子数据：
 
-``` csharp
+```csharp
 modelBuilder.Entity<Post>().HasData(new Post{ Id = 1, Text = "Hello World!" });
 ```
 
-阅读[有关数据种子设定的部分](xref:core/modeling/data-seeding)详细了解本主题。  
+阅读[有关数据种子设定的部分](xref:core/modeling/data-seeding)详细了解本主题。
 
 ## <a name="query-types"></a>查询类型
 
@@ -93,7 +93,7 @@ EF Core 模型现可包含查询类型。 与实体类型不同，查询类型�
 
 现可在编写 `Include` 方法的表达式时指定仅在派生类型上定义的导航属性。 对于 `Include` 的强类型版本，我们支持使用显式强制转换或 `as` 运算符。 我们现在还支持在 `Include` 的字符串版本中引用在派生类型上定义的导航属性的名称：
 
-``` csharp
+```csharp
 var option1 = context.People.Include(p => ((Student)p).School);
 var option2 = context.People.Include(p => (p as Student).School);
 var option3 = context.People.Include("School");
@@ -117,14 +117,14 @@ var option3 = context.People.Include("School");
 
 例如，以下查询通常会转换为：一个“客户”查询，加上 N（其中“N”是返回的客户数量）个单独的“订单”查询：
 
-``` csharp
+```csharp
 var query = context.Customers.Select(
     c => c.Orders.Where(o => o.Amount  > 100).Select(o => o.Amount));
 ```
 
 将 `ToList()` 放入正确的位置，指示缓冲适用于订单，即可启用优化：
 
-``` csharp
+```csharp
 var query = context.Customers.Select(
     c => c.Orders.Where(o => o.Amount  > 100).Select(o => o.Amount).ToList());
 ```
@@ -135,7 +135,7 @@ var query = context.Customers.Select(
 
 现只需使用 `[Owned]` 注释类型，并确保所有者实体添加到了模型中，即可配置[固有实体类型](xref:core/modeling/owned-entities)：
 
-``` csharp
+```csharp
 [Owned]
 public class StreetAddress
 {
@@ -168,7 +168,7 @@ dotnet-ef 命令现在是 .NET Core SDK 的一部分，因此无须在项目中�
 
 EF Core 随附新增一个代码分析器，用于检测原始 SQL API（如 `FromSql` 或 `ExecuteSqlCommand`）的潜在不安全用法。 例如，对于下面的查询，将会看到一条警告，因为 minAge 未参数化__：
 
-``` csharp
+```csharp
 var sql = $"SELECT * FROM People WHERE Age > {minAge}";
 var query = context.People.FromSql(sql);
 ```

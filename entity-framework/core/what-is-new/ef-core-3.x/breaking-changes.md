@@ -4,12 +4,12 @@ description: Entity Framework Core 3.x 中引入的中断性变更的完整列�
 author: ajcvickers
 ms.date: 09/05/2020
 uid: core/what-is-new/ef-core-3.x/breaking-changes
-ms.openlocfilehash: e348cb630d91ebe4536b73b9a7bd9a7b6a46db79
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: a656f3182c57689fea076ed2c7731e37fe1c4a28
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90072234"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92065662"
 ---
 # <a name="breaking-changes-included-in-ef-core-3x"></a>EF Core 3.x 中包含的中断性变更
 
@@ -110,7 +110,7 @@ ms.locfileid: "90072234"
 
 [跟踪问题 #15498](https://github.com/aspnet/EntityFrameworkCore/issues/15498)
 
-> [!IMPORTANT] 
+> [!IMPORTANT]
 > EF Core 3.1 也面向 .NET Standard 2.0。 它重新支持 NET Framework。
 
 **旧行为**
@@ -144,7 +144,8 @@ ms.locfileid: "90072234"
 
 **为什么**
 
-在此更改之前，获取 EF Core 需要不同的步骤，具体取决于应用程序是否是面向 ASP.NET Core 和 SQL Server。 此外，升级 ASP.NET Core 会强制升级 EF Core 和 SQL Server 提供程序，这并不总是可取的。
+在此更改之前，获取 EF Core 需要不同的步骤，具体取决于应用程序是否是面向 ASP.NET Core 和 SQL Server。
+此外，升级 ASP.NET Core 会强制升级 EF Core 和 SQL Server 提供程序，这并不总是可取的。
 
 通过此更改，通过所有提供程序、支持的 .NET 实现和应用程序类型获取 EF Core 的体验都是一致的。
 开发人员现在还可以准确控制何时升级 EF Core 和 EF Core 数据提供程序。
@@ -160,11 +161,11 @@ ms.locfileid: "90072234"
 
 **旧行为**
 
-.NET Core SDK 3.0 以前的版本包含 `dotnet ef` 工具，可以随时从任何项目的命令行使用，无需额外的步骤。 
+.NET Core SDK 3.0 以前的版本包含 `dotnet ef` 工具，可以随时从任何项目的命令行使用，无需额外的步骤。
 
 **新行为**
 
-从 3.0 版开始，.NET SDK 不再包含 `dotnet ef` 工具，因此，在使用它之前，必须将其明确安装为本地或全局工具。 
+从 3.0 版开始，.NET SDK 不再包含 `dotnet ef` 工具，因此，在使用它之前，必须将其明确安装为本地或全局工具。
 
 **为什么**
 
@@ -174,8 +175,8 @@ ms.locfileid: "90072234"
 
 为了能够管理迁移或构架 `DbContext`，请安装 `dotnet-ef` 作为全局工具：
 
-  ``` console
-    $ dotnet tool install --global dotnet-ef
+  ```dotnetcli
+  dotnet tool install --global dotnet-ef
   ```
 
 使用[工具清单文件](/dotnet/core/tools/global-tools#install-a-local-tool)恢复声明为工具依赖项的项目依赖项时，还可以将其作为本地工具获取。
@@ -327,7 +328,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 **为什么**
 
-此更改是为了防止当之前由某个 `DbContext` 实例跟踪的实体移动到另一个 `DbContext` 实例时，临时键值错误地变成永久值。 
+此更改是为了防止当之前由某个 `DbContext` 实例跟踪的实体移动到另一个 `DbContext` 实例时，临时键值错误地变成永久值。
 
 **缓解措施**
 
@@ -491,7 +492,7 @@ API 的以下部分现已过时：
 
 **旧行为**
 
-EF Core 3.0 之前，会在 `OwnsOne` 或 `OwnsMany` 调用之后直接执行所拥有关系的配置。 
+EF Core 3.0 之前，会在 `OwnsOne` 或 `OwnsMany` 调用之后直接执行所拥有关系的配置。
 
 **新行为**
 
@@ -512,7 +513,7 @@ modelBuilder.Entity<Order>.OwnsOne(e => e.Details, eb =>
         eb.WithOwner()
             .HasForeignKey(e => e.AlternateId)
             .HasConstraintName("FK_OrderDetails");
-            
+
         eb.ToTable("OrderDetails");
         eb.HasKey(e => e.AlternateId);
         eb.HasIndex(e => e.Id);
@@ -1136,7 +1137,7 @@ public string Id { get; set; }
 
 **新行为**
 
-从 EF Core 3.0 开始，现在会考虑此警告，并引发错误和异常。 
+从 EF Core 3.0 开始，现在会考虑此警告，并引发错误和异常。
 
 **为什么**
 
@@ -1246,13 +1247,13 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 这只会中断直接作为注释访问类型映射的应用程序，这不常见。
 最合适的修复操作是使用 API 曲面来访问类型映射，而不是直接使用注释。
 
-### <a name="totable-on-a-derived-type-throws-an-exception"></a>派生类型上的 ToTable 会引发异常 
+### <a name="totable-on-a-derived-type-throws-an-exception"></a>派生类型上的 ToTable 会引发异常
 
 [跟踪问题 #11811](https://github.com/aspnet/EntityFrameworkCore/issues/11811)
 
 **旧行为**
 
-在 EF Core 3.0 之前，将忽略调用派生类型的 `ToTable()`，因为只有继承映射策略是 TPH，这是无效的。 
+在 EF Core 3.0 之前，将忽略调用派生类型的 `ToTable()`，因为只有继承映射策略是 TPH，这是无效的。
 
 **新行为**
 
@@ -1267,7 +1268,7 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 
 删除将派生类型映射到其他表的任何尝试。
 
-### <a name="forsqlserverhasindex-replaced-with-hasindex"></a>用 HasIndex 替换 ForSqlServerHasIndex 
+### <a name="forsqlserverhasindex-replaced-with-hasindex"></a>用 HasIndex 替换 ForSqlServerHasIndex
 
 [跟踪问题 #12366](https://github.com/aspnet/EntityFrameworkCore/issues/12366)
 
@@ -1397,7 +1398,7 @@ GUID 的二进制格式不会进行标准化。 以文本形式存储值使数�
 
 现在通过执行如下的 SQL，可以将现有数据库转成新的格式。
 
-``` sql
+```sql
 UPDATE MyTable
 SET GuidColumn = hex(substr(GuidColumn, 4, 1)) ||
                  hex(substr(GuidColumn, 3, 1)) ||
@@ -1414,7 +1415,7 @@ WHERE typeof(GuidColumn) == 'blob';
 
 在 EF Core 中，还可以通过为这些属性配置值转换器，继续使用以前的行为模式。
 
-``` csharp
+```csharp
 modelBuilder
     .Entity<MyEntity>()
     .Property(e => e.GuidProperty)
@@ -1447,7 +1448,7 @@ Char 值现在以文本形式存储。
 
 现在通过执行如下的 SQL，可以将现有数据库转成新的格式。
 
-``` sql
+```sql
 UPDATE MyTable
 SET CharColumn = char(CharColumn)
 WHERE typeof(CharColumn) = 'integer';
@@ -1455,7 +1456,7 @@ WHERE typeof(CharColumn) = 'integer';
 
 在 EF Core 中，还可以通过为这些属性配置值转换器，继续使用以前的行为模式。
 
-``` csharp
+```csharp
 modelBuilder
     .Entity<MyEntity>()
     .Property(e => e.CharProperty)
@@ -1490,7 +1491,7 @@ Microsoft.Data.Sqlite 也仍然能够读取整数列和文本列的字符值，�
 
 在迁移的设计者文件的 Migration 属性中可以找到迁移 ID。
 
-``` diff
+```diff
  [DbContext(typeof(MyDbContext))]
 -[Migration("25620318122820_MyMigration")]
 +[Migration("20190318122820_MyMigration")]
@@ -1500,7 +1501,7 @@ Microsoft.Data.Sqlite 也仍然能够读取整数列和文本列的字符值，�
 
 迁移历史记录表还需要更新。
 
-``` sql
+```sql
 UPDATE __EFMigrationsHistory
 SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 150))
 ```
@@ -1517,7 +1518,7 @@ SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 
 
 **新行为**
 
-从 EF Core 3.0 开始，EF 将仅生成仅与更高的 SQL Server 版本兼容的分页 SQL。 
+从 EF Core 3.0 开始，EF 将仅生成仅与更高的 SQL Server 版本兼容的分页 SQL。
 
 **为什么**
 
@@ -1643,7 +1644,7 @@ EF 使用这些方法来确定数据库是否已创建但为空。 这也适用�
 
 如果需要引用此包来重写 EF Core 的设计时行为，则可更新项目中的 PackageReference 项元数据。
 
-``` xml
+```xml
 <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0">
   <PrivateAssets>all</PrivateAssets>
   <!-- Remove IncludeAssets to allow compiling against the assembly -->
@@ -1722,7 +1723,7 @@ Microsoft.Data.SqlClient 是今后用于 SQL Server 的旗舰版数据访问驱�
 
 <a name="mersa"></a>
 
-### <a name="multiple-ambiguous-self-referencing-relationships-must-be-configured"></a>必须配置多个不明确的自引用关系 
+### <a name="multiple-ambiguous-self-referencing-relationships-must-be-configured"></a>必须配置多个不明确的自引用关系
 
 [跟踪问题 #13573](https://github.com/aspnet/EntityFrameworkCore/issues/13573)
 
@@ -1731,7 +1732,7 @@ Microsoft.Data.SqlClient 是今后用于 SQL Server 的旗舰版数据访问驱�
 具有多个自引用单向导航属性和匹配的 FK 的实体类型被错误配置为单个关系。 例如：
 
 ```csharp
-public class User 
+public class User
 {
         public Guid Id { get; set; }
         public User CreatedBy { get; set; }
@@ -1758,7 +1759,7 @@ modelBuilder
      .Entity<User>()
      .HasOne(e => e.CreatedBy)
      .WithMany();
- 
+
  modelBuilder
      .Entity<User>()
      .HasOne(e => e.UpdatedBy)

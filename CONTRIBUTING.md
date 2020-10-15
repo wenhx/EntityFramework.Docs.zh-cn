@@ -4,7 +4,7 @@
 
 ## <a name="how-to-make-a-simple-correction-or-suggestion"></a>如何提出简单的更正或建议
 
-文章以 Markdown 文件的形式保存在此存储库中。 要对 Markdown 文件的内容进行简单更改，请单击浏览器窗口右上角的“编辑”链接  。 你可能需要展开“选项”栏才会看到“编辑”链接   。 按照说明创建拉取请求 (PR)。 EF 团队将对拉取请求进行审核并接受相关请求或提出更改建议。
+文章以 Markdown 文件的形式保存在此存储库中。 要对 Markdown 文件的内容进行简单更改，请单击浏览器窗口右上角的“编辑”链接****。 你可能需要展开“选项”栏才会看到“编辑”链接********。 按照说明创建拉取请求 (PR)。 EF 团队将对拉取请求进行审核并接受相关请求或提出更改建议。
 
 ## <a name="how-to-make-a-more-complex-submission"></a>如何提出更复杂的提交
 
@@ -33,13 +33,13 @@
 
 将整个代码文件呈现为代码片段：
 
-``` none
+```none
 [!code-csharp[Main](../../../samples/core/saving/Program.cs)]
 ```
 
 使用行号将文件的一部分呈现为代码片段：
 
-``` none
+```none
 [!code-csharp[Main](../../../samples/core/saving/Program.cs?range=1-10]
 ```
 
@@ -47,13 +47,13 @@
 
 呈现名为 “snippet_Example” 的 C# 区域：
 
-``` none
+```none
 [!code-csharp[Main](../../../samples/core/saving/Program.cs?name=snippet_Example)]
 ```
 
 突出显示呈现的代码段中选定的行（通常呈现为黄色背景）：
 
-``` none
+```none
 [!code-csharp[Main](../../../samples/core/saving/Program.cs?name=snippet_Example&highlight=1-3,10,20-25)]
 ```
 
@@ -65,11 +65,11 @@ DocFX 需要使用 .NET Framework（对于 Windows）或 Mono（对于 Linux 或
 
 ### <a name="windows-instructions"></a>Windows 说明
 
-* 从 [DocFX 发布](https://github.com/dotnet/docfx/releases)下载并解压缩 “docfx.zip”。
+* 从 [DocFX 发布](https://github.com/dotnet/docfx/releases)下载并解压缩 “docfx.zip”**。
 * 将 DocFX 添加到路径。
-* 在命令行窗口中，导航到克隆的存储库（它包含 docfx.json 文件），并运行以下命令  ：
+* 在命令行窗口中，导航到克隆的存储库（它包含 docfx.json 文件），并运行以下命令**：
 
-   ``` console
+   ```console
    docfx -t default --serve
    ```
 
@@ -80,9 +80,9 @@ DocFX 需要使用 .NET Framework（对于 Windows）或 Mono（对于 Linux 或
 * 使用 Homebrew 安装 Mono - `brew install mono`。
 * 下载 [DocFX 的最新版本](https://github.com/dotnet/docfx/releases/tag/v2.7.2)。
 * 提取到 `\bin\docfx`。
-* 为 “docfx” 创建一个别名： 
+* 为 “docfx” 创建一个别名：****
 
-  ``` console
+  ```console
   function docfx {
     mono $HOME/bin/docfx/docfx.exe
   }
@@ -92,8 +92,8 @@ DocFX 需要使用 .NET Framework（对于 Windows）或 Mono（对于 Linux 或
   }
   ```
 
-* 在克隆存储库中运行“docfx”以生成站点，并在 `http://localhost:8080` 上运行“docfx-serve”以查看站点。
+* 在克隆存储库中运行“docfx”以生成站点，并在 `http://localhost:8080` 上运行“docfx-serve”以查看站点********。
 
-## <a name="voice-and-tone"></a>语气和语调
+## <a name="voice-and-tone"></a>语音和声调
 
 我们的目标是编写被广泛受众所理解的易懂文档。 为此，我们编写了写作风格指南，请参与者遵守。 有关详细信息，请参阅 .NET Core 存储库中的 [语气和语调指南](https://github.com/dotnet/docs/blob/master/styleguide/voice-tone.md)。

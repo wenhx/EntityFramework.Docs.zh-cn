@@ -1,15 +1,15 @@
 ---
 title: 处理并发冲突 - EF Core
 description: 在使用 Entity Framework Core 并发更新相同数据时管理冲突
-author: rowanmiller
+author: ajcvickers
 ms.date: 03/03/2018
 uid: core/saving/concurrency
-ms.openlocfilehash: 7e3781879b39e6c30a0c981b5e0b74baf2b2863b
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: b596a99db431331bb12a28fc6ddc06f1c941b67c
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89617307"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92063018"
 ---
 # <a name="handling-concurrency-conflicts"></a>处理并发冲突
 
@@ -40,7 +40,7 @@ EF Core 实现_乐观并发控制_，这意味着它将允许多个进程或用�
 
 例如，我们可能希望将 `Person` 上的 `LastName` 配置为并发令牌。 则针对用户的任何更新操作将包括 `WHERE` 子句中的并发检查：
 
-``` sql
+```sql
 UPDATE [Person] SET [FirstName] = @p1
 WHERE [PersonId] = @p0 AND [LastName] = @p2;
 ```
@@ -70,4 +70,4 @@ WHERE [PersonId] = @p0 AND [LastName] = @p2;
 
 在下面的示例中，将 `Person.FirstName` 和 `Person.LastName` 设置为并发令牌。 在包括应用程序特定逻辑以选择要保存的值的位置处有一条 `// TODO:` 注释。
 
-[!code-csharp[Main](../../../samples/core/Saving/Concurrency/Sample.cs?name=ConcurrencyHandlingCode&highlight=34-35)]
+[!code-csharp[Main](../../../samples/core/Saving/Concurrency/Sample.cs?name=ConcurrencyHandlingCode&highlight=33-34)]
