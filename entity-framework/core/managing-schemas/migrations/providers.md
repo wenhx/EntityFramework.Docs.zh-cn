@@ -2,15 +2,14 @@
 title: 多个提供程序的迁移-EF Core
 description: 在将多个数据库提供程序定位到 Entity Framework Core 时使用迁移来管理数据库架构
 author: bricelam
-ms.author: bricelam
 ms.date: 11/08/2017
 uid: core/managing-schemas/migrations/providers
-ms.openlocfilehash: df38af6ac700a530894b98e1f29bbe804831bad5
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: f44abb5156ea3a175c68c1a0ec23ff41a9d13452
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89619187"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92061978"
 ---
 # <a name="migrations-with-multiple-providers"></a>迁移多个提供程序
 
@@ -24,7 +23,7 @@ ms.locfileid: "89619187"
 
 更轻松地使用工具的另一种方法是创建一个从 DbContext 派生的新类型并重写活动提供程序。 此类型在设计时用于添加或应用迁移。
 
-``` csharp
+```csharp
 class MySqliteDbContext : MyDbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -46,7 +45,7 @@ dotnet ef migrations add InitialCreate --context MySqliteDbContext --output-dir 
 
 ### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
 
-``` powershell
+```powershell
 Add-Migration InitialCreate -Context MyDbContext -OutputDir Migrations\SqlServerMigrations
 Add-Migration InitialCreate -Context MySqliteDbContext -OutputDir Migrations\SqliteMigrations
 ```
@@ -62,7 +61,7 @@ Add-Migration InitialCreate -Context MySqliteDbContext -OutputDir Migrations\Sql
 
 批注可以共存，因为提供程序会忽略它不理解的任何批注。 例如，使用 Microsoft SQL Server 和 SQLite 的主键列可能如下所示。
 
-``` csharp
+```csharp
 Id = table.Column<int>(nullable: false)
     .Annotation("SqlServer:ValueGenerationStrategy",
         SqlServerValueGenerationStrategy.IdentityColumn)
@@ -71,7 +70,7 @@ Id = table.Column<int>(nullable: false)
 
 如果只能对一个提供程序应用操作，或它们在提供程序之间不同，请使用 `ActiveProvider` 属性来确定哪个提供程序处于活动状态：
 
-``` csharp
+```csharp
 if (migrationBuilder.ActiveProvider == "Microsoft.EntityFrameworkCore.SqlServer")
 {
     migrationBuilder.CreateSequence(

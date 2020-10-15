@@ -1,14 +1,14 @@
 ---
 title: 可测试性和实体框架 4.0-EF6
 description: 可测试性和实体框架4。0
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
-ms.openlocfilehash: 439e2af6b0c851a2ab70d6d9ed1004deb83b1a0e
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 8a9c8fbf7d6131498bd9b37567fdb90010b808cc
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90070505"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92062979"
 ---
 # <a name="testability-and-entity-framework-40"></a>可测试性和实体框架4。0
 Scott Allen
@@ -417,13 +417,13 @@ IObjectSet &lt; T &gt; 满足了存储库的要求，因为它类似于通过 IE
 
 ![ef test_03](~/ef6/media/eftest-03.png)
 
-**图 3**
+**图3**
 
 此处提供的命名约定和测试样式不是可测试代码所必需的–它只是一种方法。 图4显示了 Visual Studio 2010 的 Jet 大脑 Resharper 测试运行程序插件中运行的测试。
 
 ![ef test_04](~/ef6/media/eftest-04.png)
 
-**图 4**
+**图4**
 
 使用基类来处理共享的安装代码，每个控制器操作的单元测试都很小，并且易于编写。 这些测试将快速执行 (，因为我们正在) 中执行内存中操作，而不应因为不相关的基础结构或环境 (问题而发生故障，因为我们已将测试) 中的单元隔离。
 

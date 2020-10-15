@@ -5,12 +5,12 @@ author: rick-anderson
 ms.author: riande
 ms.date: 9/19/2020
 uid: core/miscellaneous/context-pooling
-ms.openlocfilehash: fd5f53ff97a73895f0c4239439730dd8cb3ecc29
-ms.sourcegitcommit: c0e6a00b64c2dcd8acdc0fe6d1b47703405cdf09
+ms.openlocfilehash: 8638c838511be85bd994751b9911b107974dfe2f
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/24/2020
-ms.locfileid: "91215581"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92061952"
 ---
 # <a name="dbcontext-pooling"></a>DbContext 池
 
@@ -20,7 +20,7 @@ ms.locfileid: "91215581"
 
 <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A> 启用可重用上下文实例的池。 若要使用上下文池，请使用 `AddDbContextPool` 方法，而不是 `AddDbContext` 在服务注册期间使用：
 
-``` csharp
+```csharp
 services.AddDbContextPool<BloggingContext>(
     options => options.UseSqlServer(connectionString));
 ```
@@ -37,7 +37,7 @@ services.AddDbContextPool<BloggingContext>(
 
 `AddDbContextPool` 对可在上下文的方法中完成的操作有一些限制 `OnConfiguring` 。
 
-> [!WARNING]  
+> [!WARNING]
 > 避免在维护状态的应用程序中使用上下文池。 例如，不应在请求之间共享的上下文中的私有字段。 在将上下文实例添加到池中之前，EF Core 仅重置它知道的状态。
 
 上下文池的工作方式是跨请求重复使用同一上下文实例。 这意味着，它可以有效地根据实例本身注册为 [单一](/aspnet/core/fundamentals/dependency-injection#service-lifetimes) 实例，以便能够持久保存。

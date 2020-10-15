@@ -2,15 +2,14 @@
 title: 拥有的实体类型-EF Core
 description: 如何在使用时配置拥有的实体类型或聚合 Entity Framework Core
 author: AndriySvyryd
-ms.author: ansvyryd
 ms.date: 11/06/2019
 uid: core/modeling/owned-entities
-ms.openlocfilehash: f65c07c79daf38e733c76f328843c90466c657f5
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: a49d9aab735232dfd5a3db456410d527f94f3c18
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89619327"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92063772"
 ---
 # <a name="owned-entity-types"></a>从属实体类型
 
@@ -20,7 +19,7 @@ EF Core 允许您为只能出现在其他实体类型的导航属性中的实体
 
 ## <a name="explicit-configuration"></a>显式配置
 
-所有实体类型永远不会通过约定 EF Core 在模型中。 您可以使用 `OwnsOne` 中的方法 `OnModelCreating` 或使用 `OwnedAttribute` EF Core 2.1) 中的新 (来批注该类型，以便将该类型配置为拥有的类型。
+所有实体类型永远不会通过约定 EF Core 在模型中。 您可以使用 `OwnsOne` 中的方法 `OnModelCreating` 或使用批注该类型 `OwnedAttribute` ，以将类型配置为拥有类型。
 
 在此示例中， `StreetAddress` 是一个无标识属性的类型。 它用作 Order 类型的属性来指定特定订单的发货地址。
 
@@ -40,6 +39,9 @@ EF Core 允许您为只能出现在其他实体类型的导航属性中的实体
 
 有关更多上下文，请参阅 [完整的示例项目](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Modeling/OwnedEntities) 。
 
+> [!TIP]
+> 可以将拥有的实体类型标记为必需，有关详细信息，请参阅 [所需的一对一依赖项](xref:core/modeling/relationships#one-to-one) 。
+
 ## <a name="implicit-keys"></a>隐式键
 
 `OwnsOne`通过引用导航配置的或通过引用导航发现的拥有的类型与所有者始终具有一对一的关系，因此，它们不需要其自己的键值，因为外键值是唯一的。 在上面的示例中， `StreetAddress` 类型不需要定义键属性。  
@@ -47,9 +49,6 @@ EF Core 允许您为只能出现在其他实体类型的导航属性中的实体
 为了理解 EF Core 如何跟踪这些对象，知道主键是作为所属类型的 [影子属性](xref:core/modeling/shadow-properties) 创建的，这会很有用。 所拥有类型的实例的键值将与所有者实例的键的值相同。
 
 ## <a name="collections-of-owned-types"></a>拥有的类型的集合
-
-> [!NOTE]
-> 此为 EF Core 2.2 中的新增功能。
 
 若要配置拥有类型的集合，请使用 `OwnsMany` 中的 `OnModelCreating` 。
 
@@ -60,18 +59,15 @@ EF Core 允许您为只能出现在其他实体类型的导航属性中的实体
 - 在独立于指向所有者的外键的新属性上定义代理项主键。 所有所有者都需要唯一的包含值 (例如，如果父项 {1} 具有子级 {1} ，则父项 {2} 不能具有子 {1}) ，因此，该值没有任何固有含义。 由于外键不是主键的一部分，因此可以更改其值，因此，您可以将子级从一个父级移到另一个父级，但这通常会针对聚合语义进行。
 - 使用外键和附加属性作为组合键。 现在，附加属性值只需对于给定父 (是唯一的，因此，如果 Parent {1} 具有子级， {1,1} 则父项 {2} 仍可以具有子 {2,1}) 。 通过创建主键的外键部分，所有者和拥有的实体之间的关系将变为不可变的，并且更好地反映了聚合语义。 这是 EF Core 默认情况下执行的操作。
 
-在此示例中，我们将使用 `Distributor` 类：
+在此示例中，我们将使用 `Distributor` 类。
 
 [!code-csharp[Distributor](../../../samples/core/Modeling/OwnedEntities/Distributor.cs?name=Distributor)]
 
 默认情况下，在通过导航属性引用的所拥有的类型中使用的主键 `ShippingCenters` 将是 `("DistributorId", "Id")` `"DistributorId"` FK，而 `"Id"` 是唯一 `int` 值。
 
-若要配置其他 PK 调用 `HasKey` ：
+配置不同的主键调用 `HasKey` 。
 
 [!code-csharp[OwnsMany](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsMany)]
-
-> [!NOTE]
-> 在 EF Core 3.0 `WithOwner()` 方法不存在之前，应删除此调用。 此外，不会自动发现主键，因此始终必须指定它。
 
 ## <a name="mapping-owned-types-with-table-splitting"></a>将拥有的类型映射到表拆分
 
@@ -79,7 +75,7 @@ EF Core 允许您为只能出现在其他实体类型的导航属性中的实体
 
 默认情况下，EF Core 会按照模式 _Navigation_OwnedEntityProperty_为拥有的实体类型的属性命名数据库列。 因此，这些 `StreetAddress` 属性将显示在 "Orders" 表中，名称为 "ShippingAddress_Street" 和 "ShippingAddress_City"。
 
-您可以使用 `HasColumnName` 方法重命名这些列：
+您可以使用 `HasColumnName` 方法重命名这些列。
 
 [!code-csharp[ColumnNames](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=ColumnNames)]
 
@@ -92,7 +88,7 @@ EF Core 允许您为只能出现在其他实体类型的导航属性中的实体
 
 在这些情况下，从所有者指向拥有的实体的属性将成为所拥有实体类型的 _定义导航_ 。 从 EF Core 的角度来看，定义导航是类型标识与 .NET 类型的一部分。
 
-例如，在下面的类中， `ShippingAddress` 和 `BillingAddress` 都是相同的 .net 类型 `StreetAddress` ：
+例如，在下面的类中， `ShippingAddress` 和 `BillingAddress` 都是相同的 .net 类型 `StreetAddress` 。
 
 [!code-csharp[OrderDetails](../../../samples/core/Modeling/OwnedEntities/OrderDetails.cs?name=OrderDetails)]
 
@@ -144,16 +140,15 @@ EF Core 允许您为只能出现在其他实体类型的导航属性中的实体
 
 ### <a name="by-design-restrictions"></a>按设计限制
 
-- 不能 `DbSet<T>` 为拥有的类型创建
-- 不能 `Entity<T>()` 对拥有的类型调用 `ModelBuilder`
+- 不能 `DbSet<T>` 为拥有的类型创建。
+- 不能 `Entity<T>()` 对拥有的类型调用 `ModelBuilder` 。
+- 多个所有者不能共享拥有的实体类型的实例 (这是一个已知的值对象方案，不能使用) 的拥有实体类型实现。
 
 ### <a name="current-shortcomings"></a>当前缺陷
 
 - 拥有的实体类型不能具有继承层次结构
-- 引用导航到拥有的实体类型不能为 null，除非它们显式映射到与所有者不同的表
-- 多个所有者不能共享拥有的实体类型的实例 (这是一个已知的值对象方案，不能使用拥有的实体类型实现) 
 
 ### <a name="shortcomings-in-previous-versions"></a>以前版本中的缺点
 
-- 在 EF Core 2.0 中，在派生的实体类型中不能声明导航到拥有的实体类型，除非将拥有的实体显式映射到所有者层次结构中的单独表。 此限制已在 EF Core 2.1 中被删除
-- 在 EF Core 仅支持2.0 和2.1 的引用导航到拥有的类型。 此限制已在 EF Core 2.2 中被删除
+- 在 EF Core 中，对拥有的实体类型的引用导航不能为 null，除非它们显式映射到与所有者不同的表。
+- 在 EF Core 1.x 中，所有与所有者映射到同一个表的实体类型的列都将始终标记为可以为 null。

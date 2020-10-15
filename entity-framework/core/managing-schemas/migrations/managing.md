@@ -2,15 +2,14 @@
 title: 管理迁移-EF Core
 description: 添加、删除和管理 Entity Framework Core 的数据库架构迁移
 author: bricelam
-ms.author: bricelam
 ms.date: 05/06/2020
 uid: core/managing-schemas/migrations/managing
-ms.openlocfilehash: 366824cecab57a0f1744fa58cc12e5d3f6675723
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: fdfda6f3dea306fbbc343c1be3f4d5754d1f65c4
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89617963"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92062056"
 ---
 # <a name="managing-migrations"></a>管理迁移
 
@@ -31,7 +30,7 @@ dotnet ef migrations add AddBlogCreatedTimestamp
 
 ### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
 
-``` powershell
+```powershell
 Add-Migration AddBlogCreatedTimestamp
 ```
 
@@ -59,7 +58,7 @@ dotnet ef migrations add InitialCreate --namespace Your.Namespace
 
 ### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
 
-``` powershell
+```powershell
 Add-Migration InitialCreate -Namespace Your.Namespace
 ```
 
@@ -73,7 +72,7 @@ Add-Migration InitialCreate -Namespace Your.Namespace
 
 在重命名属性时，需要自定义迁移的一个值得注意的例子就是。 例如，如果将属性重命名 `Name` 为 `FullName` ，EF Core 将生成以下迁移：
 
-```c#
+```csharp
 migrationBuilder.DropColumn(
     name: "Name",
     table: "Customers");
@@ -86,7 +85,7 @@ migrationBuilder.AddColumn<string>(
 
 EF Core 通常无法知道何时要删除某一列，并创建一个新的 (两个不同的更改) ，以及应重命名列。 如果以上迁移按原样应用，则所有客户名称都将丢失。 若要重命名列，请将上面生成的迁移替换为以下内容：
 
-```c#
+```csharp
 migrationBuilder.RenameColumn(
     name: "Name",
     table: "Customers",
@@ -100,7 +99,7 @@ migrationBuilder.RenameColumn(
 
 重命名列时，可以通过内置 API 来实现，在许多情况下，这是不可能的。 例如，我们可能希望将现有的 `FirstName` 和属性替换为 `LastName` 一个新的 `FullName` 属性。 EF Core 生成的迁移如下：
 
-``` csharp
+```csharp
 migrationBuilder.DropColumn(
     name: "FirstName",
     table: "Customer");
@@ -117,7 +116,7 @@ migrationBuilder.AddColumn<string>(
 
 如前所述，这会导致不需要的数据丢失。 为了传输旧列中的数据，我们会重新排列迁移并引入原始 SQL 操作，如下所示：
 
-``` csharp
+```csharp
 migrationBuilder.AddColumn<string>(
     name: "FullName",
     table: "Customer",
@@ -144,7 +143,7 @@ migrationBuilder.DropColumn(
 
 例如，以下迁移创建一个 SQL Server 存储过程：
 
-```c#
+```csharp
 migrationBuilder.Sql(
 @"
     EXEC ('CREATE PROCEDURE getFullName
@@ -178,7 +177,7 @@ dotnet ef migrations remove
 
 ### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
 
-``` powershell
+```powershell
 Remove-Migration
 ```
 
@@ -206,4 +205,7 @@ dotnet ef migrations list
 * 删除 **迁移** 文件夹
 * 创建新迁移并为其生成 SQL 脚本
 * 在数据库中，删除迁移历史记录表中的所有行
-* 将单个行插入到迁移历史记录中，记录已应用的第一个迁移，因为表已经存在。 Insert SEQL 是上面生成的 SQL 脚本中的最后一个操作。
+* 将单个行插入到迁移历史记录中，记录已应用的第一个迁移，因为表已经存在。 Insert SQL 是上面生成的 SQL 脚本中的最后一个操作。
+
+> [!WARNING]
+> 删除**迁移**文件夹时，任何[自定义迁移代码](#customize-migration-code)都将丢失。  若要保留任何自定义，必须手动将其应用到新的初始迁移。

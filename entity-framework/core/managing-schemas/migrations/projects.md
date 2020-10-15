@@ -2,15 +2,14 @@
 title: 使用单独的迁移项目-EF Core
 description: 使用单独的迁移项目来管理具有 Entity Framework Core 的数据库架构
 author: bricelam
-ms.author: bricelam
 ms.date: 10/30/2017
 uid: core/managing-schemas/migrations/projects
-ms.openlocfilehash: a3f0ed96c6a8e3e8629d9a4bb1610fcbfe6ca043
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 6f28027c320f0d1c13d13bef7d8227b2bb68df91
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89617919"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92062485"
 ---
 # <a name="using-a-separate-migrations-project"></a>使用单独的迁移项目
 
@@ -25,11 +24,11 @@ ms.locfileid: "89617919"
 3. 将迁移和模型快照文件移动到类库。
    > [!TIP]
    > 如果没有现有迁移，请在包含 DbContext 的项目中生成一个迁移，然后移动它。
-   > 这一点很重要，因为如果迁移程序集不包含现有迁移，则添加迁移命令将无法找到 DbContext。
+   > 这一点很重要，因为如果迁移程序集不包含现有迁移，Add-Migration 命令将无法找到 DbContext。
 
 4. 配置迁移程序集：
 
-   ``` csharp
+   ```csharp
    options.UseSqlServer(
        connectionString,
        x => x.MigrationsAssembly("MyApp.Migrations"));
@@ -38,7 +37,7 @@ ms.locfileid: "89617919"
 5. 从启动程序集添加对迁移程序集的引用。
    * 如果这导致循环依赖项，请更新类库的输出路径：
 
-     ``` xml
+     ```xml
      <PropertyGroup>
        <OutputPath>..\MyStartupProject\bin\$(Configuration)\</OutputPath>
      </PropertyGroup>
@@ -54,7 +53,7 @@ dotnet ef migrations add NewMigration --project MyApp.Migrations
 
 ## <a name="visual-studio"></a>[Visual Studio](#tab/vs)
 
-``` powershell
+```powershell
 Add-Migration NewMigration -Project MyApp.Migrations
 ```
 

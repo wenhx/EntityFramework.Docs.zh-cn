@@ -1,15 +1,15 @@
 ---
 title: 支持字段-EF Core
 description: 为 Entity Framework Core 模型中的属性配置支持字段
-author: rowanmiller
+author: ajcvickers
 ms.date: 10/27/2016
 uid: core/modeling/backing-field
-ms.openlocfilehash: 48ef28e7b880fee571cb1857601fb2cead535fbf
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 4f5680b14c7f0e1fa5128d366f2960c4ae9b3735
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90071623"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92063681"
 ---
 # <a name="backing-fields"></a>支持字段
 
@@ -17,7 +17,7 @@ ms.locfileid: "90071623"
 
 ## <a name="basic-configuration"></a>基本配置
 
-按照约定，将发现以下字段作为给定属性的支持字段 (按优先级顺序) 列出。 
+按照约定，将发现以下字段作为给定属性的支持字段 (按优先级顺序) 列出。
 
 * `_<camel-cased property name>`
 * `_<property name>`
@@ -63,6 +63,6 @@ EF 将尝试查找具有给定名称的 CLR 属性，如果找不到属性，则
 
 您可能需要从 LINQ 查询中引用仅限字段的属性，但此类字段通常是私有的。 可以 `EF.Property(...)` 在 LINQ 查询中使用方法来引用字段：
 
-``` csharp
+```csharp
 var blogs = db.blogs.OrderBy(b => EF.Property<string>(b, "_validatedUrl"));
 ```

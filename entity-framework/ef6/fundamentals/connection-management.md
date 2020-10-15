@@ -1,15 +1,15 @@
 ---
 title: 连接管理-EF6
 description: 实体框架6中的连接管理
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/fundamentals/connection-management
-ms.openlocfilehash: e2097f5ed0471d309292625990cc5f9a598c5b2a
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: e8c5c3615b4019be4c1915d3acaa91d60a55c85d
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90070557"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92063291"
 ---
 # <a name="connection-management"></a>连接管理
 本页介绍实体框架与将连接传递到上下文以及 **连接到 ( # B1 ** API 的功能的情况。  

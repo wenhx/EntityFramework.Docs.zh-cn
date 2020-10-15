@@ -2,19 +2,18 @@
 title: 表拆分-EF Core
 description: 如何使用 Entity Framework Core 配置表拆分
 author: AndriySvyryd
-ms.author: ansvyryd
 ms.date: 01/03/2020
 uid: core/modeling/table-splitting
-ms.openlocfilehash: e7428bc516a69310b6a6f521acc49aee0ba9f802
-ms.sourcegitcommit: 949faaba02e07e44359e77d7935f540af5c32093
+ms.openlocfilehash: 71d332ec3f500f48e12863c71ac44ce4d60699f0
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 08/03/2020
-ms.locfileid: "87526494"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92063031"
 ---
 # <a name="table-splitting"></a>表拆分
 
-EF Core 允许将两个或多个实体映射到单个行。 这称为 "_表拆分_" 或 "_表共享_"。
+EF Core 允许将两个或多个实体映射到单个行。 这称为 " _表拆分_ " 或 " _表共享_"。
 
 ## <a name="configuration"></a>配置
 
@@ -33,7 +32,7 @@ EF Core 允许将两个或多个实体映射到单个行。 这称为 "_表拆�
 [!code-csharp[TableSplittingConfiguration](../../../samples/core/Modeling/TableSplitting/TableSplittingContext.cs?name=TableSplitting)]
 
 > [!TIP]
-> 有关更多上下文，请参阅[完整的示例项目](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Modeling/TableSplitting)。
+> 有关更多上下文，请参阅 [完整的示例项目](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Modeling/TableSplitting) 。
 
 ## <a name="usage"></a>使用情况
 
@@ -52,6 +51,6 @@ EF Core 允许将两个或多个实体映射到单个行。 这称为 "_表拆�
 
 如果共享表的任何实体类型都有并发标记，则还必须将其包含在所有其他实体类型中。 当只更新映射到同一个表中的一个实体时，必须使用此值来避免陈旧并发令牌值。
 
-若要避免向使用代码公开并发标记，可以将其创建为[影子属性](xref:core/modeling/shadow-properties)：
+若要避免向使用代码公开并发标记，可以将其创建为 [影子属性](xref:core/modeling/shadow-properties)：
 
 [!code-csharp[TableSplittingConfiguration](../../../samples/core/Modeling/TableSplitting/TableSplittingContext.cs?name=ConcurrencyToken&highlight=2)]

@@ -2,15 +2,14 @@
 title: Azure Cosmos DB 提供程序-使用非结构化数据-EF Core
 description: 如何使用 Entity Framework Core 处理 Azure Cosmos DB 非结构化数据
 author: AndriySvyryd
-ms.author: ansvyryd
 ms.date: 11/05/2019
 uid: core/providers/cosmos/unstructured-data
-ms.openlocfilehash: 9f96af00e8fcb012c33fc7528787560ea3a5e481
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: ac497c9f5540557b931db935f4f3ca480edf010d
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89619040"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92064019"
 ---
 # <a name="working-with-unstructured-data-in-ef-core-azure-cosmos-db-provider"></a>使用 EF Core Azure Cosmos DB 提供程序中的非结构化数据
 
@@ -22,7 +21,7 @@ EF Core 旨在使使用在模型中定义的架构的数据变得简单。 但 A
 
 [!code-csharp[Unmapped](../../../../samples/core/Cosmos/UnstructuredData/Sample.cs?highlight=23,24&name=Unmapped)]
 
-``` json
+```json
 {
     "Id": 1,
     "PartitionKey": "1",

@@ -1,20 +1,20 @@
 ---
 title: 配置文件设置-EF6
 description: 实体框架6中的配置文件设置
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/fundamentals/configuring/config-file
-ms.openlocfilehash: b407ae7d64df18f6a8d80aa13703a8c243c6f3a2
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: fc991810e93840c27e6631dfb5bc1796c1328d37
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90070713"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92063317"
 ---
 # <a name="configuration-file-settings"></a>配置文件设置
 实体框架允许在配置文件中指定多个设置。 在常规 EF 中，遵循 "约定 over 配置" 原则：在此文章中讨论的所有设置都有默认行为，你只需考虑在默认不再满足你的要求时更改设置。  
 
-## <a name="a-code-based-alternative"></a>基于代码的替代项  
+## <a name="a-code-based-alternative"></a>Code-Based 替代方法  
 
 还可以使用代码应用所有这些设置。 从 EF6 开始，我们引入了 [基于代码的配置](xref:ef6/fundamentals/configuring/code-based)，它提供了一种从代码应用配置的集中方式。 在 EF6 之前，仍可以从代码应用配置，但需要使用各种 Api 来配置不同的区域。 配置文件选项允许在部署期间轻松地更改这些设置，而无需更新代码。
 
@@ -71,7 +71,7 @@ ms.locfileid: "90070713"
 </connectionStrings>
 ```
 
-## <a name="code-based-configuration-type-ef6-onwards"></a>基于代码的配置类型 (EF6 向前)   
+## <a name="code-based-configuration-type-ef6-onwards"></a> (EF6 的 Code-Based 配置类型)   
 
 从 EF6 开始，可以指定 EF 的 DbConfiguration，以便在应用程序中使用 [基于代码的配置](xref:ef6/fundamentals/configuring/code-based) 。 在大多数情况下，无需指定此设置，因为 EF 会自动发现你的 DbConfiguration。 有关可能需要在配置文件中指定 DbConfiguration 的详细信息，请参阅[基于代码的配置](xref:ef6/fundamentals/configuring/code-based)的**移动 DbConfiguration**部分。  
 

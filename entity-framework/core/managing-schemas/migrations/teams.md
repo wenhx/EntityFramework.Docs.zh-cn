@@ -2,15 +2,14 @@
 title: 团队环境中的迁移-EF Core
 description: 在团队环境中管理迁移和解决冲突的最佳实践与 Entity Framework Core
 author: bricelam
-ms.author: bricelam
 ms.date: 10/30/2017
 uid: core/managing-schemas/migrations/teams
-ms.openlocfilehash: 1fbb7173a52218a4d00780ebc76e33600f3558c1
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 90549b369624301bc183e5a8a3cc1d6a92bb7008
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89619205"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92062498"
 ---
 # <a name="migrations-in-team-environments"></a>团队环境中的迁移
 
@@ -20,7 +19,7 @@ ms.locfileid: "89619205"
 
 合并团队成员的迁移时，可能会在模型快照文件中出现冲突。 如果这两个更改不相关，则合并很简单，两个迁移可以共存。 例如，你可能会在客户实体类型配置中出现合并冲突，如下所示：
 
-``` output
+```output
 <<<<<<< Mine
 b.Property<bool>("Deactivated");
 =======
@@ -30,7 +29,7 @@ b.Property<int>("LoyaltyPoints");
 
 由于这两个属性都需要存在于最终模型中，因此请通过添加这两个属性来完成合并。 在许多情况下，版本控制系统可能会自动合并此类更改。
 
-``` csharp
+```csharp
 b.Property<bool>("Deactivated");
 b.Property<int>("LoyaltyPoints");
 ```
@@ -41,7 +40,7 @@ b.Property<int>("LoyaltyPoints");
 
 当合并模型快照模型时，有时会遇到真正冲突。 例如，你和你的队友可以重命名同一个属性。
 
-``` output
+```output
 <<<<<<< Mine
 b.Property<string>("Username");
 =======
@@ -49,7 +48,7 @@ b.Property<string>("Alias");
 >>>>>>> Theirs
 ```
 
-如果遇到这种冲突，请通过重新创建迁移解决此问题。 执行以下步骤:
+如果遇到这种冲突，请通过重新创建迁移解决此问题。 请执行下列步骤：
 
 1. 在合并前中止合并并回退到工作目录
 2. 删除迁移 (但保留模型更改) 

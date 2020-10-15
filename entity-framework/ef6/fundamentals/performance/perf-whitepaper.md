@@ -1,15 +1,15 @@
 ---
 title: EF4、EF5 和 EF6 的性能注意事项-EF6
 description: 实体框架4、5和6的性能注意事项
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/fundamentals/performance/perf-whitepaper
-ms.openlocfilehash: 65584382df3d510f314a576f41c5dee3d2e718e7
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: ae9374401b66f0493f7318ffcbfd9c4d6a24ada5
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90070531"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92063421"
 ---
 # <a name="performance-considerations-for-ef-4-5-and-6"></a>EF 4、5和6的性能注意事项
 按 David Obando、Eric Dettinger 和其他
@@ -22,7 +22,7 @@ ms.locfileid: "90070531"
 
 ## <a name="1-introduction"></a>1.简介
 
-对象关系映射框架是一种简便的方法，可用于在面向对象的应用程序中提供数据访问的抽象。 对于 .NET 应用程序，Microsoft 推荐的 O/RM 实体框架。 但对于任何抽象，性能都可能会成为问题。
+在面向对象的应用程序中，Object-Relational 映射框架是一种为数据访问提供抽象的简便方法。 对于 .NET 应用程序，Microsoft 推荐的 O/RM 实体框架。 但对于任何抽象，性能都可能会成为问题。
 
 本文的目的是为了显示使用实体框架开发应用程序时的性能注意事项，使开发人员了解可能会影响性能的实体框架内部算法，并提供在使用实体框架的应用程序中进行调查和提高性能的提示。 Web 上已经提供了有关性能的很多好主题，还尝试尽可能指向这些资源。
 

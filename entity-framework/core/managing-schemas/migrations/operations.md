@@ -2,15 +2,14 @@
 title: 自定义迁移操作-EF Core
 description: 通过 Entity Framework Core 管理数据库架构管理的自定义和原始 SQL 迁移
 author: bricelam
-ms.author: bricelam
 ms.date: 11/07/2017
 uid: core/managing-schemas/migrations/operations
-ms.openlocfilehash: 708894d8d567a4644be3a4ace98cc837465710e0
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: d1d29b7789eea5e887490364a7ce3abfdc903545
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89617952"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92062030"
 ---
 # <a name="custom-migrations-operations"></a>自定义迁移操作
 
@@ -18,7 +17,7 @@ ms.locfileid: "89617952"
 
 为了说明这一点，让我们看一下如何实现使用每种方法创建数据库用户的操作。 在我们的迁移中，我们希望能够编写以下代码：
 
-``` csharp
+```csharp
 migrationBuilder.CreateUser("SQLUser1", "Password");
 ```
 
@@ -26,7 +25,7 @@ migrationBuilder.CreateUser("SQLUser1", "Password");
 
 实现自定义操作的最简单方法是定义调用的扩展方法 `MigrationBuilder.Sql()` 。 下面是生成相应 Transact-sql 的示例。
 
-``` csharp
+```csharp
 static MigrationBuilder CreateUser(
     this MigrationBuilder migrationBuilder,
     string name,
@@ -36,7 +35,7 @@ static MigrationBuilder CreateUser(
 
 如果你的迁移需要支持多个数据库提供程序，则可以使用 `MigrationBuilder.ActiveProvider` 属性。 下面是同时支持 Microsoft SQL Server 和 PostgreSQL 的示例。
 
-``` csharp
+```csharp
 static MigrationBuilder CreateUser(
     this MigrationBuilder migrationBuilder,
     string name,
@@ -63,7 +62,7 @@ static MigrationBuilder CreateUser(
 
 若要将自定义操作与 SQL 分离，可以定义自己的 `MigrationOperation` 来表示它。 然后，将操作传递给提供程序，以便它可以确定要生成的相应 SQL。
 
-``` csharp
+```csharp
 class CreateUserOperation : MigrationOperation
 {
     public string Name { get; set; }
@@ -73,7 +72,7 @@ class CreateUserOperation : MigrationOperation
 
 利用此方法，扩展方法只需将其中一个操作添加到 `MigrationBuilder.Operations` 。
 
-``` csharp
+```csharp
 static MigrationBuilder CreateUser(
     this MigrationBuilder migrationBuilder,
     string name,
@@ -92,7 +91,7 @@ static MigrationBuilder CreateUser(
 
 此方法要求每个提供程序知道如何在其服务中为此操作生成 SQL `IMigrationsSqlGenerator` 。 下面是一个示例，用于重写 SQL Server 的生成器来处理新操作。
 
-``` csharp
+```csharp
 class MyMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
 {
     public MyMigrationsSqlGenerator(
@@ -137,7 +136,7 @@ class MyMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
 
 将默认迁移 sql 生成器服务替换为已更新的。
 
-``` csharp
+```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder options)
     => options
         .UseSqlServer(connectionString)

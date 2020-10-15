@@ -2,14 +2,14 @@
 title: 实体类型-EF Core
 description: 如何使用 Entity Framework Core 配置和映射实体类型
 author: roji
-ms.date: 12/03/2019
+ms.date: 10/06/2020
 uid: core/modeling/entity-types
-ms.openlocfilehash: fead7f9e37efb7f674f429acbfd16c2ca78480d4
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: bfefa29c08679a1524c00769b3495d75a301e2d3
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90071506"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92062225"
 ---
 # <a name="entity-types"></a>实体类型
 
@@ -41,7 +41,20 @@ ms.locfileid: "90071506"
 
 ***
 
-## <a name="table-name"></a>表名称
+### <a name="excluding-from-migrations"></a>从迁移中排除
+
+> [!NOTE]
+> EF Core 5.0 中添加了从迁移中排除表的功能。
+
+有时在多个类型中映射相同的实体类型会很有用 `DbContext` 。 当使用 [绑定上下文](https://www.martinfowler.com/bliki/BoundedContext.html)时，尤其是对于 `DbContext` 每个边界上下文都有不同类型的情况。
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/TableExcludeFromMigrations.cs?name=TableExcludeFromMigrations&highlight=4)]
+
+此配置迁移不会创建 `blogs` 该表，但 `Blog` 仍包含在模型中，并且可正常使用。
+
+如果需要再次使用迁移来管理表，则应创建不包括的新迁移 `blogs` 。 下一次迁移将包含对表所做的任何更改。
+
+## <a name="table-name"></a>表名
 
 按照约定，每个实体类型将设置为映射到与公开实体的 DbSet 属性同名的数据库表。 如果给定实体不存在 DbSet，则使用类名称。
 
@@ -78,3 +91,14 @@ ms.locfileid: "90071506"
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/DefaultSchema.cs?name=DefaultSchema&highlight=3)]
 
 请注意，设置默认架构也会影响其他数据库对象，如序列。
+
+## <a name="view-mapping"></a>查看映射
+
+实体类型可以使用熟知的 API 映射到数据库视图。
+
+> [!Note]
+> EF 假设数据库中已存在引用的视图，它不会在迁移中自动创建它。
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ViewNameAndSchema.cs?name=ViewNameAndSchema&highlight=1)]
+
+ 映射到视图将删除默认表映射，但实体类型也可以显式映射到表。 在这种情况下，查询映射将用于查询，表映射将用于更新。

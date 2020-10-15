@@ -1,20 +1,37 @@
 ---
 title: 日志记录-EF Core
 description: 配置 Entity Framework Core 日志记录
-author: rowanmiller
-ms.date: 10/27/2016
+author: ajcvickers
+ms.date: 10/06/2020
 uid: core/miscellaneous/logging
-ms.openlocfilehash: 0fd1c83f01989095a813727390179db2327b610d
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 389834b3822aeeaefb8c085538bc6359ccfa7094
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90071662"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92063005"
 ---
 # <a name="logging"></a>Logging
 
-> [!TIP]  
+> [!TIP]
 > 可在 GitHub 上查看此文章的[示例](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Logging)。
+
+## <a name="simple-logging"></a>简单的日志记录
+
+> [!NOTE]
+> 此功能是在 EF Core 5.0 中添加的。
+
+Entity Framework Core (EF Core) 为操作（如执行查询或保存对数据库所做的更改）生成日志消息。 可以通过使用[LogTo](https://github.com/dotnet/efcore/blob/ec3df8fd7e4ea4ebeebfa747619cef37b23ab2c6/src/EFCore/DbContextOptionsBuilder.cs#L135)从任何类型的应用程序访问这些应用程序 <!-- Issue #2748 <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.LogTo%2A> --> [配置 DbContext 实例](xref:core/miscellaneous/configuring-dbcontext)时。 此配置通常在的重写中完成 <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring%2A?displayProperty=nameWithType> 。 例如：
+
+<!--
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.LogTo(Console.WriteLine);
+-->
+[!code-csharp[LogToConsole](../../../samples/core/Miscellaneous/Logging/SimpleLogging/Program.cs?name=LogToConsole)]
+
+此概念类似于 <xref:System.Data.Entity.Database.Log?displayProperty=nameWithType> EF6 中的。
+
+有关详细信息，请参阅 [简单日志记录](xref:core/miscellaneous/events/simple-logging) 。
 
 ## <a name="aspnet-core-applications"></a>ASP.NET Core 应用程序
 
@@ -42,7 +59,7 @@ EF Core 日志记录要求使用一个或多个日志记录提供程序配置的
 > [!NOTE]
 > 下面的代码示例使用已 `ConsoleLoggerProvider` 在版本2.2 中弃用并替换为3.0 的构造函数。 使用2.2 时，可以安全地忽略和禁止显示警告。
 
-``` csharp
+```csharp
 public static readonly LoggerFactory MyLoggerFactory
     = new LoggerFactory(new[] { new ConsoleLoggerProvider((_, __) => true, true) });
 ```
@@ -69,7 +86,7 @@ public static readonly LoggerFactory MyLoggerFactory
 > [!NOTE]
 > 下面的代码示例使用已 `ConsoleLoggerProvider` 在版本2.2 中弃用并替换为3.0 的构造函数。 使用2.2 时，可以安全地忽略和禁止显示警告。
 
-``` csharp
+```csharp
 public static readonly LoggerFactory MyLoggerFactory
     = new LoggerFactory(new[]
     {

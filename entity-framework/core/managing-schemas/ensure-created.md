@@ -2,15 +2,14 @@
 title: 创建和删除 Api-EF Core
 description: 用于创建和删除具有 Entity Framework Core 的数据库的 Api
 author: bricelam
-ms.author: bricelam
 ms.date: 11/07/2018
 uid: core/managing-schemas/ensure-created
-ms.openlocfilehash: 25e7352269531e881e83e44ea90108f12d4dcbea
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: c23311fbb8254ba183a6fd1661bba915aedc9a97
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89619225"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92062329"
 ---
 # <a name="create-and-drop-apis"></a>创建和删除 API
 
@@ -27,7 +26,7 @@ EnsureCreated 和 EnsureDeleted 方法提供了用于 [迁移](xref:core/managin
 
 EnsureDeleted 方法会删除数据库（如果存在）。 如果你没有相应的权限，则会引发异常。
 
-``` csharp
+```csharp
 // Drop the database if it exists
 dbContext.Database.EnsureDeleted();
 ```
@@ -36,7 +35,7 @@ dbContext.Database.EnsureDeleted();
 
 如果数据库不存在，EnsureCreated 将创建数据库并初始化数据库架构。 如果存在任何表 (包括其他 DbContext 类) 的表，则不会初始化该架构。
 
-``` csharp
+```csharp
 // Create the database if it doesn't exist
 dbContext.Database.EnsureCreated();
 ```
@@ -48,7 +47,7 @@ dbContext.Database.EnsureCreated();
 
 若要获取 EnsureCreated 使用的 SQL，可以使用 GenerateCreateScript 方法。
 
-``` csharp
+```csharp
 var sql = dbContext.Database.GenerateCreateScript();
 ```
 
@@ -56,7 +55,7 @@ var sql = dbContext.Database.GenerateCreateScript();
 
 EnsureCreated 仅在数据库中不存在任何表时有效。 如果需要，您可以编写自己的检查来查看是否需要初始化架构，并使用基础 IRelationalDatabaseCreator 服务来初始化架构。
 
-``` csharp
+```csharp
 // TODO: Check whether the schema needs to be initialized
 
 // Initialize the schema for this DbContext

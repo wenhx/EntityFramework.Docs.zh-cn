@@ -2,21 +2,20 @@
 title: Microsoft SQL Server 数据库提供程序-索引-EF Core
 description: 特定于 Entity Framework Core SQL Server 提供程序的索引功能
 author: roji
-ms.author: shrojans
 ms.date: 9/1/2020
 uid: core/providers/sql-server/indexes
-ms.openlocfilehash: 3830377562fcc6a59239cd2c09d1419bbd00922e
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: a01ab3d12f5bf5f05f0925c93d90c0ee40fe977c
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89620701"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92061861"
 ---
 # <a name="index-features-specific-to-the-entity-framework-core-sql-server-provider"></a>特定于 Entity Framework Core SQL Server 提供程序的索引功能
 
 此页详细介绍了特定于 SQL Server 提供程序的索引配置选项。
 
-## <a name="clustering"></a>群集功能
+## <a name="clustering"></a>群集
 
 聚集索引根据数据行的键值在表或视图中排序和存储这些数据行。 为表创建适当的聚集索引可以显著提高查询的速度，因为数据已经按最佳顺序进行布局。 每个表只能有一个聚集索引，因为数据行本身只能按一个顺序存储。 有关详细信息，请参阅 [有关聚集索引和非聚集索引的 SQL Server 文档](/sql/relational-databases/indexes/clustered-and-nonclustered-indexes-described)。
 

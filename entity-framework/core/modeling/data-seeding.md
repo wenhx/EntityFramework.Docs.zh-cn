@@ -2,15 +2,14 @@
 title: 数据种子设定-EF Core
 description: 使用数据种子使用 Entity Framework Core 填充包含初始数据集的数据库
 author: AndriySvyryd
-ms.author: ansvyryd
 ms.date: 11/02/2018
 uid: core/modeling/data-seeding
-ms.openlocfilehash: 1d7adbe45c4cbc64a39485c76d8f516e32ffeba5
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: f8284d7473c6fbcafde25d01ec0709c2d50b666f
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90071597"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92063694"
 ---
 # <a name="data-seeding"></a>数据种子设定
 
@@ -23,9 +22,6 @@ ms.locfileid: "90071597"
 * 自定义初始化逻辑
 
 ## <a name="model-seed-data"></a>模型种子数据
-
-> [!NOTE]
-> 此功能是 EF Core 2.1 中的新增功能。
 
 与在 EF6 中不同，在 EF Core 中，种子设定数据可以作为模型配置的一部分与实体类型相关联。 然后 EF Core [迁移](xref:core/managing-schemas/migrations/index) 可以自动计算在将数据库升级到新版本的模型时需要应用的插入、更新或删除操作。
 

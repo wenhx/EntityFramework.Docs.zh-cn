@@ -1,15 +1,15 @@
 ---
 title: 连接字符串-EF Core
 description: 用 Entity Framework Core 管理不同环境下的连接字符串
-author: rowanmiller
+author: bricelam
 ms.date: 10/27/2016
 uid: core/miscellaneous/connection-strings
-ms.openlocfilehash: e4283ada88a557e4f1e3eeea3de2634a7d0dce61
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: f657d39f66e6a757380ca25436a638b47c11cd12
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90071675"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92062316"
 ---
 # <a name="connection-strings"></a>连接字符串
 
@@ -19,7 +19,7 @@ ms.locfileid: "90071675"
 
 WinForms、WPF 和 ASP.NET 4 应用程序都有一个已尝试并经过测试的连接字符串模式。 如果使用 ASP.NET) ，则应将连接字符串添加到应用程序的 App.config 文件中 ( # A1。 如果您的连接字符串包含敏感信息（例如用户名和密码），则可以使用 [机密管理器工具](/aspnet/core/security/app-secrets#secret-manager)来保护配置文件的内容。
 
-``` xml
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
 
@@ -30,12 +30,12 @@ WinForms、WPF 和 ASP.NET 4 应用程序都有一个已尝试并经过测试的
 </configuration>
 ```
 
-> [!TIP]  
+> [!TIP]
 > `providerName`由于数据库提供程序是通过代码配置的，因此在 App.config 中存储的 EF Core 连接字符串上不需要此设置。
 
 然后，你可以 `ConfigurationManager` 在上下文的方法中使用 API 来读取连接字符串 `OnConfiguring` 。 你可能还需要添加对 `System.Configuration` 框架程序集的引用才能使用此 API。
 
-``` csharp
+```csharp
 public class BloggingContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -52,7 +52,7 @@ public class BloggingContext : DbContext
 
 UWP 应用程序中的连接字符串通常是一个 SQLite 连接，只需指定本地文件名。 它们通常不包含敏感信息，并且在部署应用程序时无需更改。 因此，这些连接字符串通常可以保留在代码中，如下所示。 如果希望将它们移出代码，则 UWP 支持设置概念，有关详细信息，请参阅 [uwp 文档的 "应用设置" 部分](/windows/uwp/app-settings/store-and-retrieve-app-data) 。
 
-``` csharp
+```csharp
 public class BloggingContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -78,7 +78,7 @@ dotnet ef dbcontext scaffold Name=ConnectionStrings.YourDatabaseAlias Microsoft.
 
 下面的示例显示了中存储的连接字符串 `appsettings.json` 。
 
-``` json
+```json
 {
   "ConnectionStrings": {
     "BloggingDatabase": "Server=(localdb)\\mssqllocaldb;Database=EFGetStarted.ConsoleApp.NewDb;Trusted_Connection=True;"
@@ -88,7 +88,7 @@ dotnet ef dbcontext scaffold Name=ConnectionStrings.YourDatabaseAlias Microsoft.
 
 然后，上下文通常在中配置为在 `Startup.cs` 从配置中读取的连接字符串中。 请注意， `GetConnectionString()` 方法查找其键为的配置值 `ConnectionStrings:<connection string name>` 。 需要导入 [Microsoft.Extensions.Configu](/dotnet/api/microsoft.extensions.configuration) 命名空间才能使用此扩展方法。
 
-``` csharp
+```csharp
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddDbContext<BloggingContext>(options =>

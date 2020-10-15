@@ -2,15 +2,14 @@
 title: EF Core 工具参考 (程序包管理器控制台) -EF Core
 description: Entity Framework Core Visual Studio 包管理器控制台的参考指南
 author: bricelam
-ms.author: bricelam
-ms.date: 09/09/2020
+ms.date: 10/13/2020
 uid: core/miscellaneous/cli/powershell
-ms.openlocfilehash: 5dca397978c60c12610d9080caba972a66b079b6
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 3a9599288d74013bf4da910c64bc858539c0c32c
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90071857"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92062381"
 ---
 # <a name="entity-framework-core-tools-reference---package-manager-console-in-visual-studio"></a>Entity Framework Core 工具参考-Visual Studio 中的包管理器控制台
 
@@ -20,50 +19,15 @@ ms.locfileid: "90071857"
 
 ## <a name="installing-the-tools"></a>安装工具
 
-用于安装和更新这些工具的过程在 ASP.NET Core 2.1 及更早版本或其他项目类型之间有所不同。
-
-### <a name="aspnet-core-version-21-and-later"></a>ASP.NET Core 版本2.1 及更高版本
-
-工具将自动包含在 ASP.NET Core 2.1 + 项目中，因为 `Microsoft.EntityFrameworkCore.Tools` 包包含在 [AspNetCore 元包](/aspnet/core/fundamentals/metapackage-app)中。
-
-因此，您无需执行任何操作来安装这些工具，但必须执行以下操作：
-
-* 在新项目中使用这些工具之前还原包。
-* 安装包以将工具更新到较新版本。
-
-为了确保获得最新版本的工具，我们建议您也执行以下步骤：
-
-* 编辑 *.csproj* 文件，并添加一行以指定最新版本的 [microsoft.entityframeworkcore](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools/) 包。 例如， *.csproj* 文件可能包含如下所示 `ItemGroup` 的：
-
-  ```xml
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
-  </ItemGroup>
-  ```
-
-在收到类似于以下示例的消息时更新工具：
-
-> EF Core 工具版本 "2.1.1-30846" 早于运行时 "2.1.3-32065"。 更新工具以获取最新功能和 bug 修复。
-
-更新工具：
-
-* 安装最新的 .NET Core SDK。
-* 将 Visual Studio 更新到最新版本。
-* 编辑 *.csproj* 文件，使其包含对最新工具包的包引用，如前文所述。
-
-### <a name="other-versions-and-project-types"></a>其他版本和项目类型
-
 在 **Package Manager console**中运行以下命令，安装包管理器控制台工具：
 
-``` powershell
+```powershell
 Install-Package Microsoft.EntityFrameworkCore.Tools
 ```
 
 在 **Package Manager Console**中运行以下命令，更新这些工具。
 
-``` powershell
+```powershell
 Update-Package Microsoft.EntityFrameworkCore.Tools
 ```
 
@@ -71,13 +35,13 @@ Update-Package Microsoft.EntityFrameworkCore.Tools
 
 通过运行以下命令验证是否已安装这些工具：
 
-``` powershell
+```powershell
 Get-Help about_EntityFrameworkCore
 ```
 
 输出如下所示 (它不会告诉你使用的工具版本) ：
 
-```console
+```output
 
                      _/\__
                ---==/    \\
@@ -145,7 +109,7 @@ SHORT DESCRIPTION
 > [!TIP]
 > 上下文、项目和 StartupProject 参数支持选项卡扩展。
 
-## <a name="add-migration"></a>添加-迁移
+## <a name="add-migration"></a>Add-Migration
 
 添加新的迁移。
 
@@ -159,7 +123,7 @@ SHORT DESCRIPTION
 
 上面列出了 [常见参数](#common-parameters) 。
 
-## <a name="drop-database"></a>Drop 数据库
+## <a name="drop-database"></a>Drop-Database
 
 删除数据库。
 
@@ -171,13 +135,13 @@ SHORT DESCRIPTION
 
 上面列出了 [常见参数](#common-parameters) 。
 
-## <a name="get-dbcontext"></a>DbContext
+## <a name="get-dbcontext"></a>Get-DbContext
 
 列出并获取有关可用 `DbContext` 类型的信息。
 
 上面列出了 [常见参数](#common-parameters) 。
 
-## <a name="get-migration"></a>获取-迁移
+## <a name="get-migration"></a>Get-Migration
 
 列出可用迁移。 在 EF Core 5.0 中添加。
 
@@ -202,7 +166,7 @@ SHORT DESCRIPTION
 
 上面列出了 [常见参数](#common-parameters) 。
 
-## <a name="scaffold-dbcontext"></a>基架-DbContext
+## <a name="scaffold-dbcontext"></a>Scaffold-DbContext
 
 为 `DbContext` 数据库的和实体类型生成代码。 为了使 `Scaffold-DbContext` 生成实体类型，数据库表必须具有主键。
 
@@ -239,7 +203,7 @@ Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Conn
 Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Tables "Blog","Post" -ContextDir Context -Context BlogContext -ContextNamespace New.Namespace
 ```
 
-## <a name="script-dbcontext"></a>脚本-DbContext
+## <a name="script-dbcontext"></a>Script-DbContext
 
 从 DbContext 生成 SQL 脚本。 绕过任何迁移。 在 EF Core 3.0 中添加。
 
@@ -251,7 +215,7 @@ Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Conn
 
 上面列出了 [常见参数](#common-parameters) 。
 
-## <a name="script-migration"></a>脚本迁移
+## <a name="script-migration"></a>Script-Migration
 
 生成一个 SQL 脚本，该脚本将所选迁移中的所有更改应用于另一个选定的迁移。
 

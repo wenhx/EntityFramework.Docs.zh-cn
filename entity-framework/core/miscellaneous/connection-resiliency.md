@@ -1,15 +1,15 @@
 ---
 title: 连接复原-EF Core
 description: 使用连接复原功能通过 Entity Framework Core 自动重试失败的命令
-author: rowanmiller
+author: AndriySvyryd
 ms.date: 11/15/2016
 uid: core/miscellaneous/connection-resiliency
-ms.openlocfilehash: 25b754334edd15532780cb4e40682bc211620c76
-ms.sourcegitcommit: c0e6a00b64c2dcd8acdc0fe6d1b47703405cdf09
+ms.openlocfilehash: db0666a49cbd41ef3eacf447eaeed1fb54ffcbf4
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/24/2020
-ms.locfileid: "91210288"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92061913"
 ---
 # <a name="connection-resiliency"></a>连接复原
 
@@ -23,7 +23,7 @@ ms.locfileid: "91210288"
 
 `Startup.cs`对于 ASP.NET Core 的应用程序，请执行以下操作：
 
-``` csharp
+```csharp
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddDbContext<PicnicContext>(
@@ -37,7 +37,7 @@ public void ConfigureServices(IServiceCollection services)
 
 如果要更改任何默认值，则可以使用一种机制来注册自己的自定义执行策略。
 
-``` csharp
+```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 {
     optionsBuilder
@@ -65,7 +65,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 ## <a name="transaction-commit-failure-and-the-idempotency-issue"></a>事务提交失败和幂等性问题
 
-通常，如果连接失败，当前事务将回滚。 但是，如果在提交事务时断开连接，则事务的生成状态是未知的。 
+通常，如果连接失败，当前事务将回滚。 但是，如果在提交事务时断开连接，则事务的生成状态是未知的。
 
 默认情况下，执行策略将重试该操作，就像事务已回滚一样，但如果不是这样，则这会导致在新数据库状态不兼容时导致异常，或者如果操作不依赖于特定状态（例如，使用自动生成的键值插入新行时），可能会导致 **数据损坏** 。
 

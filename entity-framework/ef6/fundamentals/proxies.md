@@ -1,15 +1,15 @@
 ---
 title: 使用代理-EF6
 description: 使用实体框架6中的代理
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/fundamentals/proxies
-ms.openlocfilehash: e626a7dff67497a2fbb3dcd169704814ea4cf2cf
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 741fd72ee66b98ab132fb85f71c3101712e433fa
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90070492"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92063200"
 ---
 # <a name="working-with-proxies"></a>使用代理
 创建 POCO 实体类型实例时，实体框架通常会创建动态生成的派生类型的实例，该类型充当实体的代理。 此代理会重写实体的某些虚拟属性，以插入挂钩，以便在访问属性时自动执行操作。 例如，此机制用于支持关系的延迟加载。 本主题所介绍的方法同样适用于查询使用 Code First 和 EF 设计器创建的模型。  
@@ -61,7 +61,7 @@ using (var context = new BloggingContext())
 
 代理类型的名称如下所示：  
 
-DynamicProxies.. Blog_5E43C6C196972BF0754973E48C9C941092D86818CD94005E9A759B70BF6E48E6  
+System.Data.Entity.DynamicProxies.Blog_5E43C6C196972BF0754973E48C9C941092D86818CD94005E9A759B70BF6E48E6  
 
 可以使用 ObjectContext 中的 GetObjectType 方法查找此代理类型的实体类型。 例如：  
 

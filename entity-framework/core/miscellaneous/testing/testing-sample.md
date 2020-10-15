@@ -11,12 +11,12 @@ no-loc:
 - Tags
 - items
 - tags
-ms.openlocfilehash: 839f932f48e1cc6cb1b4c86d5e1405e888d5227a
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 07cde296f07a883ba6abf45f94a31e072fb6d6cb
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89617649"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92063044"
 ---
 # <a name="ef-core-testing-sample"></a>EF Core 测试示例
 
@@ -183,7 +183,7 @@ Web API 控制器非常基本。
 ## <a name="issues-using-different-database-providers"></a>使用不同数据库提供程序时出现的问题
 
 使用与生产应用程序中使用的不同的数据库系统进行测试可能导致出现问题。
-它们在 [测试使用 EF Core 的代码](xref:core/miscellaneous/testing/index)的概念级别中进行了介绍。  
+它们在 [测试使用 EF Core 的代码](xref:core/miscellaneous/testing/index)的概念级别中进行了介绍。
 以下部分介绍了本示例中的测试演示的两个问题示例。
 
 ### <a name="test-passes-when-the-application-is-broken"></a>应用程序中断时的测试通过
@@ -197,7 +197,7 @@ Web API 控制器非常基本。
 使用 SQLite 时，所有内容仍能正常工作。
 但运行时测试会失败 SQL Server！
 
-```console
+```output
 System.InvalidOperationException : Sequence contains more than one element
    at System.Linq.ThrowHelper.ThrowMoreThanOneElementException()
    at System.Linq.Enumerable.Single[TSource](IEnumerable`1 source)
@@ -224,7 +224,7 @@ System.InvalidOperationException : Sequence contains more than one element
 
 此测试通过 SQL Server 和 SQLite，但对于 EF 内存中数据库失败！
 
-```console
+```output
 Assert.False() Failure
 Expected: False
 Actual:   True

@@ -1,21 +1,21 @@
 ---
 title: 基于代码的配置-EF6
 description: 实体框架6中基于代码的配置
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/fundamentals/configuring/code-based
-ms.openlocfilehash: 67bb7ebd620c90ebe80983cc5baa6cab032907f8
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: ff86b542dead260190bbb0b0788a231f720fbeaf
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90070726"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92063274"
 ---
 # <a name="code-based-configuration"></a>基于代码的配置
 > [!NOTE]
 > **仅限 EF6 及更高版本** - 此页面中讨论的功能、API 等已引入实体框架 6。 如果使用的是早期版本，则部分或全部信息不适用。  
 
-实体框架应用程序的配置可以在配置文件中指定 ( # A0/web.config) 或代码。 后者称为基于代码的配置。  
+可以在配置文件中指定实体框架应用程序的配置 ( # B0/web.config) 或通过代码。 后者称为基于代码的配置。  
 
 在 [单独的文章](xref:ef6/fundamentals/configuring/config-file)中介绍了配置文件中的配置。 配置文件优先于基于代码的配置。 换句话说，如果在代码和配置文件中都设置了配置选项，则使用配置文件中的设置。  
 

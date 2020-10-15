@@ -1,15 +1,15 @@
 ---
 title: 实体框架6提供程序模型-EF6
 description: 实体框架6中的实体框架6提供程序模型
-author: divega
+author: ajcvickers
 ms.date: 06/27/2018
 uid: ef6/fundamentals/providers/provider-model
-ms.openlocfilehash: 4fc45ba5fe916253be348182196be236729d685d
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 15b5443ff05b5c8704f80d4f2f83b4ed20edd1c0
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90074011"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92063187"
 ---
 # <a name="the-entity-framework-6-provider-model"></a>实体框架6提供程序模型
 
@@ -206,8 +206,8 @@ EF6 引入了一个新的表达式类型 DbInExpression，此类型已添加到�
 
 安装 EntityFramework NuGet 包时，它会注册一个包含两个命令的 PowerShell 模块，这些命令对于提供程序包非常有用：
 
-*   EFProvider 在目标项目的配置文件中为该提供程序添加了一个新的实体，并确保其位于已注册提供程序列表的末尾。
-*   EFDefaultConnectionFactory 添加或更新目标项目的配置文件中的 defaultConnectionFactory 注册。
+*   Add-EFProvider 在目标项目的配置文件中添加提供程序的新实体，并确保其位于已注册提供程序列表的末尾。
+*   Add-EFDefaultConnectionFactory 在目标项目的配置文件中添加或更新 defaultConnectionFactory 注册。
 
 这两个命令都负责将 entityFramework 节添加到配置文件中，并在必要时添加提供程序集合。
 

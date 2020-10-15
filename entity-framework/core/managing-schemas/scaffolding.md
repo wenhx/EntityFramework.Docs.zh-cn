@@ -2,15 +2,14 @@
 title: 反向工程-EF Core
 description: 使用 Entity Framework Core 从现有数据库反向工程模型
 author: bricelam
-ms.author: bricelam
 ms.date: 11/13/2018
 uid: core/managing-schemas/scaffolding
-ms.openlocfilehash: 86aa6d22ebe8e5c1d654c83d4c292a1ed5842ddd
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: e1b4ed8d5209688fbe5c89ae60cf0d981136305f
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90071909"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92061965"
 ---
 # <a name="reverse-engineering"></a>反向工程
 
@@ -36,7 +35,7 @@ dotnet ef dbcontext scaffold "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog
 
 ### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
 
-``` powershell
+```powershell
 Scaffold-DbContext 'Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook' Microsoft.EntityFrameworkCore.SqlServer
 ```
 
@@ -77,7 +76,7 @@ dotnet ef dbcontext scaffold ... --table Artist --table Album
 
 若要包括多个表，请使用数组：
 
-``` powershell
+```powershell
 Scaffold-DbContext ... -Tables Artist, Album
 ```
 
@@ -93,7 +92,7 @@ Scaffold-DbContext ... -Tables Artist, Album
 
 例如，使用熟知的 API 将基架：
 
-``` csharp
+```csharp
 entity.Property(e => e.Title)
     .IsRequired()
     .HasMaxLength(160);
@@ -101,7 +100,7 @@ entity.Property(e => e.Title)
 
 使用数据注释时，将基架：
 
-``` csharp
+```csharp
 [Required]
 [StringLength(160)]
 public string Title { get; set; }
@@ -133,13 +132,13 @@ dotnet ef dbcontext scaffold ... --namespace Your.Namespace --context-namespace 
 
 你可以使用指定基架类的目录 `-OutputDir` ，并 `-ContextDir` 可用于将 DbContext 类基架到不同于实体类型类的目录中：
 
-``` powershell
+```powershell
 Scaffold-DbContext ... -ContextDir Data -OutputDir Models
 ```
 
 默认情况下，命名空间将为根命名空间加上项目根目录下的任何子目录的名称。 但从 EFCore 5.0 开始，你可以使用重写所有输出类的命名空间 `-Namespace` 。 你还可以使用替代 DbContext 类的命名空间 `-ContextNamespace` 。
 
-``` powershell
+```powershell
 Scaffold-DbContext ... -Namespace Your.Namespace -ContextNamespace Your.DbContext.Namespace
 ```
 

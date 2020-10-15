@@ -2,14 +2,14 @@
 title: 关系-EF Core
 description: 如何在使用 Entity Framework Core 时配置实体类型之间的关系
 author: AndriySvyryd
-ms.date: 11/21/2019
+ms.date: 10/01/2020
 uid: core/modeling/relationships
-ms.openlocfilehash: 9946b2190cb3c3973f245d44da7e359b60845541
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 71d960a15dfb938af1dcc7035dc2587df7ad4677
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89619114"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92063837"
 ---
 # <a name="relationships"></a>关系
 
@@ -148,7 +148,10 @@ ms.locfileid: "89619114"
 
 ### <a name="configuring-navigation-properties"></a>配置导航属性
 
-创建导航属性后，你可能需要对其进行进一步配置。 在 EFCore 5.0 中，添加了新的流畅 API，使你可以执行该配置。
+> [!NOTE]
+> 此功能是在 EF Core 5.0 中添加的。
+
+创建导航属性后，你可能需要对其进行进一步配置。
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/NavigationConfiguration.cs?name=NavigationConfiguration&highlight=7-9)]
 
@@ -224,6 +227,8 @@ ms.locfileid: "89619114"
 
 您可以使用熟知的 API 来配置关系是必需的还是可选的。 最终，这会控制外键属性是必需的还是可选的。 当使用阴影状态外键时，这非常有用。 如果实体类中具有外键属性，则关系的 requiredness 取决于外键属性是必需还是可选 (查看) 的详细信息 [所需的属性和可选属性](xref:core/modeling/entity-properties#required-and-optional-properties) 。
 
+外键属性位于依赖实体类型上，因此，如果这些属性配置为 "必需"，则意味着每个依赖实体都需要具有相应的主体实体。
+
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/Required.cs?name=Required&highlight=6)]
 
 > [!NOTE]
@@ -254,8 +259,69 @@ ms.locfileid: "89619114"
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/OneToOne.cs?name=OneToOne&highlight=11)]
 
+默认情况下，从属端被视为可选的，但可以根据需要进行配置。 但是，EF 不会验证是否提供了依赖实体，因此，只有在数据库映射允许强制执行此配置时，此配置才会产生差别。 这种情况的常见方案是默认情况下使用表拆分的引用拥有的类型。
+
+[!code-csharp[Main](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=Required&highlight=11-12)]
+
+对于此配置，与对应的列 `ShippingAddress` 在数据库中将标记为不可为 null。
+
+> [!NOTE]
+> 如果使用 [不可为 null 的引用类型](/dotnet/csharp/nullable-references) `IsRequired` ，则无需调用。
+
+> [!NOTE]
+> 是否在 EF Core 5.0 中添加了依赖项是否是必需的。
+
 ### <a name="many-to-many"></a>多对多
 
-目前尚不支持多对多关系，没有实体类来表示联接表。 但是，您可以通过包含联接表的实体类并映射两个不同的一对多关系，来表示多对多关系。
+多对多关系要求两侧都有集合导航属性。 它们将被类似于其他类型的关系的惯例来发现。
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyShared.cs?name=ManyToManyShared)]
+
+此关系在数据库中的实现方式是通过联接表，其中包含和的外键 `Post` `Tag` 。 例如，这是 EF 将在上述模型的关系数据库中创建的内容。
+
+```sql
+CREATE TABLE [Posts] (
+    [PostId] int NOT NULL IDENTITY,
+    [Title] nvarchar(max) NULL,
+    [Content] nvarchar(max) NULL,
+    CONSTRAINT [PK_Posts] PRIMARY KEY ([PostId])
+);
+
+CREATE TABLE [Tags] (
+    [TagId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_Tags] PRIMARY KEY ([TagId])
+);
+
+CREATE TABLE [PostTag] (
+    [PostId] int NOT NULL,
+    [TagId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_PostTag] PRIMARY KEY ([PostId], [TagId]),
+    CONSTRAINT [FK_PostTag_Posts_PostId] FOREIGN KEY ([PostId]) REFERENCES [Posts] ([PostId]) ON DELETE CASCADE,
+    CONSTRAINT [FK_PostTag_Tags_TagId] FOREIGN KEY ([TagId]) REFERENCES [Tags] ([TagId]) ON DELETE CASCADE
+);
+```
+
+在内部，EF 会创建一个实体类型来表示将被称为联接实体类型的联接表。 没有可用于此的特定 CLR 类型，因此 `Dictionary<string, object>` 使用。 模型中可能存在多个多对多关系，因此，在此情况下，必须为联接实体类型指定唯一名称 `PostTag` 。 此功能可用于共享类型的实体类型。
+
+"多对多" 导航称为 "跳过导航"，因为它们实际上会跳过联接实体类型。 如果你正在运用大容量配置，则可以从获取所有 skip 导航 `GetSkipNavigations` 。
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyShared.cs?name=Metadata)]
+
+通常会将配置应用到联接实体类型。 可以通过完成此操作 `UsingEntity` 。
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyShared.cs?name=SharedConfiguration)]
+
+可以使用匿名类型为联接实体类型提供[模型种子数据](xref:core/modeling/data-seeding)。 您可以检查模型调试视图，以确定由约定创建的属性名称。
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyShared.cs?name=Seeding)]
+
+其他数据可以存储在联接实体类型中，但对于这种情况，最好是创建订购 CLR 类型。 在配置与自定义联接实体类型的关系时，需要显式指定两个外键。
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyPayload.cs?name=ManyToManyPayload)]
+
+> [!NOTE]
+> EF Core 5.0 中添加了配置多对多关系的功能，但对于早期版本，请使用以下方法。
+
+您还可以通过只添加联接实体类型并映射两个单独的一对多关系来表示多对多关系。
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToMany.cs?name=ManyToMany&highlight=11-14,16-19,39-46)]
