@@ -1,15 +1,15 @@
 ---
 title: 复杂类型-EF 设计器-EF6
 description: 复杂类型-实体框架6中的 EF 设计器
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/designer/data-types/complex-types
-ms.openlocfilehash: 6ebba9ea36ddad1a25b21bf98a6ac3090c327144
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: abacbdd375c2871e6c4205e0084764029b149a40
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073508"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92065038"
 ---
 # <a name="complex-types---ef-designer"></a>复杂类型-EF 设计器
 本主题演示如何将复杂类型映射到 Entity Framework Designer (EF 设计器) 以及如何查询包含复杂类型属性的实体。

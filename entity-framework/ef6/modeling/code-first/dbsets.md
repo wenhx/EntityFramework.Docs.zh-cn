@@ -1,15 +1,15 @@
 ---
 title: 定义 Dbset-EF6
 description: 定义实体框架6中的 Dbset
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/code-first/dbsets
-ms.openlocfilehash: 49ffe3ddb8cd4f7c414d7d45d108405b88a0115e
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: dc5ad7f8b4ba32454c702f354b37223007e856e3
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073946"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92065220"
 ---
 # <a name="defining-dbsets"></a>定义 Dbset
 使用 Code First 工作流进行开发时，可定义一个派生 DbContext，用于表示与数据库的会话，并为模型中的每个类型公开一个 DbSet。 本主题介绍可用于定义 DbSet 属性的各种方式。  

@@ -1,15 +1,15 @@
 ---
 title: 熟知 API-配置和映射属性和类型-EF6
 description: 熟知 API-配置和映射实体框架6中的属性和类型
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/code-first/fluent/types-and-properties
-ms.openlocfilehash: ddd56ff280b72adbfd2247a4f1a85e37bf2f4879
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 821672bcb797314c96189443ace7f875a79c8582
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90072585"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92065142"
 ---
 # <a name="fluent-api---configuring-and-mapping-properties-and-types"></a>熟知 API-配置和映射属性和类型
 在使用实体框架时 Code First 默认行为是使用一组约定融入为 EF 将 POCO 类映射到表。 但有时，您不能或不想遵循这些约定，也不需要将实体映射到约定规定的内容。  
@@ -18,7 +18,7 @@ ms.locfileid: "90072585"
 
 通过重写派生[DbContext](https://msdn.microsoft.com/library/system.data.entity.dbcontext.aspx)上的[OnModelCreating](https://msdn.microsoft.com/library/system.data.entity.dbcontext.onmodelcreating.aspx)方法，最常访问的代码优先 Fluent API。 下面的示例旨在演示如何使用流畅 api 完成各种任务，并允许你复制代码并对其进行自定义以适合你的模型，如果你希望查看可以按原样使用的模型，则在本文末尾提供。  
 
-## <a name="model-wide-settings"></a>模型范围内的设置  
+## <a name="model-wide-settings"></a>Model-Wide 设置  
 
 ### <a name="default-schema-ef6-onwards"></a>默认架构 (EF6 向前)   
 

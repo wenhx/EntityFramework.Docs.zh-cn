@@ -1,15 +1,15 @@
 ---
 title: School 示例数据库-EF6
 description: 实体框架6的 School 示例数据库
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/resources/school-database
-ms.openlocfilehash: 38dfbf074200617f11d70ef1d8cead69223135b3
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: f65ca9003bf818cd333c742201e1aeb1577c405f
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073803"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92064479"
 ---
 # <a name="school-sample-database"></a>School 示例数据库
 本主题包含 School 数据库的架构和数据。 示例 School 数据库在整个实体框架文档的不同位置使用。  

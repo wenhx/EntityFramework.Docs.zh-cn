@@ -1,15 +1,15 @@
 ---
 title: 自定义迁移历史记录表-EF6
 description: 自定义实体框架6中的迁移历史记录表
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/code-first/migrations/history-customization
-ms.openlocfilehash: b71ac7635d6804af2db9bf00acf7e8f4b2a11033
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: f0f474507659d5fbe43ecf2ed7216fb5d1a86779
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073456"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92066390"
 ---
 # <a name="customizing-the-migrations-history-table"></a>自定义迁移历史记录表
 > [!NOTE]
@@ -88,6 +88,6 @@ ms.locfileid: "90073456"
     }
 ```
 
-就这么多了。 现在，你可以开始使用包管理器控制台，启用-迁移，添加-迁移，最后更新-数据库。 这会导致将迁移历史记录表添加到数据库，并根据你在 HistoryContext 派生类中指定的详细信息进行配置。
+就这么多了。 现在，你可以前往包管理器控制台，启用-迁移，Add-Migration，最后更新数据库。 这会导致将迁移历史记录表添加到数据库，并根据你在 HistoryContext 派生类中指定的详细信息进行配置。
 
 ![迁移历史记录表](~/ef6/media/database.png)

@@ -1,15 +1,15 @@
 ---
 title: 设计器表拆分-EF6
 description: 实体框架6中的设计器表拆分
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/designer/table-splitting
-ms.openlocfilehash: 6fdb5050ab4d3860184f19ea056a0f2257e20a3c
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 8f6db22913fb3ac8a4254c29b5f986eb6e14f18e
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073105"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92066039"
 ---
 # <a name="designer-table-splitting"></a>设计器表拆分
 本演练演示如何通过使用 Entity Framework Designer (EF 设计器) 修改模型，将多个实体类型映射到单个表。
@@ -20,7 +20,7 @@ ms.locfileid: "90073105"
 
 ![EF 设计器](~/ef6/media/efdesigner.png)
 
-## <a name="prerequisites"></a>必备条件
+## <a name="prerequisites"></a>先决条件
 
 若要完成此演练，您需要：
 

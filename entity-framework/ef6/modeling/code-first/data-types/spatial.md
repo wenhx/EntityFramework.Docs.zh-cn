@@ -1,15 +1,15 @@
 ---
 title: 空间 Code First-EF6
 description: 实体框架6中的空间 Code First
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/code-first/data-types/spatial
-ms.openlocfilehash: 5d18624cdcef8db3e604277aeef1c3a2d05bfcab
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 6942829809e37b5d62f61488ff6a190c8a38febb
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073959"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92065233"
 ---
 # <a name="spatial---code-first"></a>空间 Code First
 > [!NOTE]
@@ -151,6 +151,6 @@ The closest University to you is: School of Fine Art.
 4.  展开 " **数据库** " 文件夹，以查看新数据库并浏览到 **大学** 表
 5.  若要查看数据，请右键单击该表，然后选择 "**查看数据**"
 
-## <a name="summary"></a>总结
+## <a name="summary"></a>摘要
 
 在本演练中，我们介绍了如何在实体框架 Code First 中使用空间类型。 

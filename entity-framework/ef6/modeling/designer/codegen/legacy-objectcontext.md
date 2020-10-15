@@ -1,15 +1,15 @@
 ---
 title: 恢复到 Entity Framework Designer 中的 ObjectContext EF6
 description: 恢复到实体框架6的 Entity Framework Designer 中的 ObjectContext
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/designer/codegen/legacy-objectcontext
-ms.openlocfilehash: 9ceb8ef43e4df083fe3cc5e63862ba2eb338f659
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 563c1defd12a72836a158d9c2398202c421dd6f3
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90069959"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92064934"
 ---
 # <a name="reverting-to-objectcontext-in-entity-framework-designer"></a>恢复到 Entity Framework Designer 中的 ObjectContext
 使用早期版本的实体框架使用 EF 设计器创建的模型将生成派生自 EntityObject 的 ObjectContext 和实体类的上下文。
@@ -30,7 +30,7 @@ ms.locfileid: "90069959"
 
 ![显示所有文件](~/ef6/media/showallfiles.png)
 
-### <a name="2-re-enable-objectcontext-code-generation"></a>2. 重新启用 ObjectContext 代码生成
+### <a name="2-re-enable-objectcontext-code-generation"></a>2. Re-Enable ObjectContext 代码生成
 
 在 EF 设计器中打开模型，右键单击设计图面的空白部分，然后选择 " **属性**"。
 

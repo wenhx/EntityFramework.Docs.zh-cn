@@ -1,17 +1,17 @@
 ---
-title: 自跟踪实体演练-EF6
+title: Self-Tracking 实体演练-EF6
 description: 实体框架6的自我跟踪实体演练
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/fundamentals/disconnected-entities/self-tracking-entities/walkthrough
-ms.openlocfilehash: 398be11d330f5a7413f5a84424217ea3eda446ef
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 7c50bbc9fad10a474728b03e79b685c549cf675d
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90072793"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92065597"
 ---
-# <a name="self-tracking-entities-walkthrough"></a>自跟踪实体演练
+# <a name="self-tracking-entities-walkthrough"></a>Self-Tracking 实体演练
 > [!IMPORTANT]
 > 我们不再建议使用自跟踪实体模板。 它将仅继续用于支持现有应用程序。 如果应用程序需要使用断开连接的实体图，请考虑其他替代方案，例如[可跟踪实体](https://trackableentities.github.io/)，它与自跟踪实体类似，社区在更积极地开发这种技术，或使用低级别更改跟踪 API 编写自定义代码。
 
@@ -23,7 +23,7 @@ ms.locfileid: "90072793"
 
 -   创建要访问的数据库。
 -   创建包含模型的类库。
--   交换到 "自跟踪实体生成器" 模板。
+-   交换到 Self-Tracking 实体生成器模板。
 -   将实体类移到单独的项目中。
 -   创建一个 WCF 服务，该服务公开用于查询和保存实体的操作。
 -    (控制台和 WPF) 创建使用该服务的客户端应用程序。
@@ -104,7 +104,7 @@ ms.locfileid: "90072793"
 
 ## <a name="swap-to-ste-code-generation"></a>交换到粘贴代码生成
 
-现在，我们需要禁用默认代码生成并交换到自跟踪实体。
+现在，我们需要禁用默认代码生成并交换到 Self-Tracking 实体。
 
 ### <a name="if-you-are-using-visual-studio-2012"></a>如果使用的是 Visual Studio 2012
 
@@ -118,13 +118,13 @@ ms.locfileid: "90072793"
 ### <a name="if-you-are-using-visual-studio-2010"></a>如果使用的是 Visual Studio 2010
 
 -   右键单击 EF 设计器图面上的空白区域，然后选择 "**添加代码生成项 ...** "
--   从左窗格中选择 " **代码** "，然后 **ADO.NET 自跟踪实体生成器**
+-   从左窗格中选择 " **代码** "，然后 **ADO.NET Self-Tracking 实体生成器**
 -   输入**STETemplate**作为名称，然后单击 "**添加**"
 -   **STETemplate.tt**和**STETemplate.Context.tt**文件会直接添加到你的项目
 
 ## <a name="move-entity-types-into-separate-project"></a>将实体类型移到单独的项目中
 
-若要使用自跟踪实体，客户端应用程序需要访问模型中生成的实体类。 由于我们不想将整个模型公开给客户端应用程序，因此我们要将实体类移到单独的项目中。
+若要使用 Self-Tracking 实体，客户端应用程序需要访问模型中生成的实体类。 由于我们不想将整个模型公开给客户端应用程序，因此我们要将实体类移到单独的项目中。
 
 第一步是停止生成现有项目中的实体类：
 

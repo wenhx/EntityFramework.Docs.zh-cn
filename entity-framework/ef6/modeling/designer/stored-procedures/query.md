@@ -1,15 +1,15 @@
 ---
 title: 设计器查询存储过程-EF6
 description: 实体框架6中的设计器查询存储过程
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/designer/stored-procedures/query
-ms.openlocfilehash: 4976c7d4f788e6e9524055a508f9c906b47c9ebb
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: d88bf70e232f5245023ab6683290503822d07463
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073196"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92066013"
 ---
 # <a name="designer-query-stored-procedures"></a>设计器查询存储过程
 此分步演练演示如何使用 Entity Framework Designer (EF 设计器) 将存储过程导入到模型中，然后调用导入的存储过程来检索结果。 
@@ -19,7 +19,7 @@ ms.locfileid: "90073196"
 var query = context.Products.SqlQuery("EXECUTE [dbo].[GetAllProducts]")`;
 ```
 
-## <a name="prerequisites"></a>必备条件
+## <a name="prerequisites"></a>先决条件
 
 若要完成此演练，您需要：
 

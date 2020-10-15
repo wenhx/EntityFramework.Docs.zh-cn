@@ -1,15 +1,15 @@
 ---
 title: 使用事务-EF6
 description: 使用实体框架6中的事务
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/saving/transactions
-ms.openlocfilehash: 15cc2171338defe482767114c58afe16cc1ffe21
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 525b5cf605c1b61225ee2b9f1e0559a8e13f3052
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073712"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92064427"
 ---
 # <a name="working-with-transactions"></a>使用事务
 > [!NOTE]

@@ -1,15 +1,15 @@
 ---
 title: Code First 迁移在团队环境中-EF6
 description: Code First 迁移在实体框架6的团队环境中
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/code-first/migrations/teams
-ms.openlocfilehash: c3f12788f2aba85f54dc062bdb6a7919be47b56d
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: c617dc3c34e829585b21766c7738bd622890b286
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90072221"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92065077"
 ---
 # <a name="code-first-migrations-in-team-environments"></a>团队环境中的 Code First 迁移
 > [!NOTE]
@@ -141,7 +141,7 @@ EF 保留模型快照的原因有很多：
 1.  确保已将本地代码库中的任何挂起的模型更改写入迁移。 此步骤可确保在生成空白迁移时不会遗漏任何合法更改。
 2.  与源代码管理同步。
 3.  运行 " **更新-数据库** " 以应用其他开发人员已签入的任何新迁移。
-    **_注意：_** *如果你没有从更新-数据库命令收到任何警告，则没有来自其他开发人员的新迁移，无需执行任何进一步的合并。*
+    **_注意：_** *如果没有从 Update-Database 命令收到任何警告，则没有来自其他开发人员的新迁移，无需执行任何进一步的合并。*
 4.  运行 **添加迁移 &lt; 选取 \_ 一个 \_ 名称 &gt; – IgnoreChanges** (例如， **add-迁移 Merge – IgnoreChanges**) 。 这将生成一个包含所有元数据 (的迁移，其中包括当前模型的快照) 但在将当前模型与上一次迁移中的快照进行比较时，将忽略它检测到的任何更改 (也就是说，你将获得一个空的 **向上** 和 **向下** 方法) 。
 5.  运行 **Update-Database** ，以使用更新的元数据重新应用最新的迁移。
 6.  运行课程) 的单元测试后，继续开发或提交到源代码管理 (。
@@ -163,7 +163,7 @@ EF 保留模型快照的原因有很多：
 1.  确保已将本地代码库中的任何挂起的模型更改写入迁移。 此步骤可确保在生成空白迁移时不会遗漏任何合法更改。
 2.  与源代码管理同步。
 3.  运行 " **更新-数据库** " 以应用其他开发人员已签入的任何新迁移。
-    **_注意：_** *如果你没有从更新-数据库命令收到任何警告，则没有来自其他开发人员的新迁移，无需执行任何进一步的合并。*
+    **_注意：_** *如果没有从 Update-Database 命令收到任何警告，则没有来自其他开发人员的新迁移，无需执行任何进一步的合并。*
 4.  运行**TargetMigration &lt; 第二 \_ 次 \_ 迁移 &gt; ** (在下面的示例中，我们要做的就是**更新-数据库– TargetMigration AddRating**) 。 这会将数据库回滚到第二次迁移的状态，这实际上是从数据库中 "取消应用" 最后一次迁移。
     **_注意：_** *若要安全地编辑迁移的元数据，需要执行此步骤，因为元数据也存储在数据库的 \_ \_ MigrationsHistoryTable 中。这就是仅当最后一次迁移仅在本地代码库中时才应使用此选项的原因。如果其他数据库应用了上次迁移，则还必须将其回滚并重新应用上次迁移以更新元数据。* 
 5.  运行**添加迁移 &lt; 全名 \_ \_ （包括 \_ \_ \_ 上次 \_ 迁移的时间戳**） &gt; (在下面的示例中，这可能类似于**添加迁移 201311062215252 \_ AddReaders**) 。
@@ -176,7 +176,7 @@ EF 保留模型快照的原因有很多：
 
 ![更新的元数据](~/ef6/media/updatedmetadata.png)
 
-## <a name="summary"></a>总结
+## <a name="summary"></a>摘要
 
 在团队环境中使用 Code First 迁移时，需要一些挑战。 不过，基本了解迁移的工作方式，以及解决合并冲突的一些简单方法，可以轻松地克服这些难题。
 

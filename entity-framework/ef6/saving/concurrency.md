@@ -1,15 +1,15 @@
 ---
 title: 处理并发冲突-EF6
 description: 处理实体框架6中的并发冲突
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/saving/concurrency
-ms.openlocfilehash: b6b1b3b9f593d437ed7da1873a878fcbdb3c3548
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 0cec285ab6071120e162567506d397a23c299177
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073725"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92064505"
 ---
 # <a name="handling-concurrency-conflicts-ef6"></a>处理并发冲突 (EF6) 
 

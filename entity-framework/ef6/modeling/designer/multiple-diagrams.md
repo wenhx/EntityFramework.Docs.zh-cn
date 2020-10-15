@@ -1,15 +1,15 @@
 ---
 title: 每个模型多个关系图-EF6
 description: 实体框架6中的每个模型多个关系图
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/designer/multiple-diagrams
-ms.openlocfilehash: d934a1b709c93fe8e6b57d40dd874b564885b19f
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 625cb932d23805f6bd22b658e4cddab1a487751c
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073326"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92066208"
 ---
 # <a name="multiple-diagrams-per-model"></a>每个模型多个关系图
 > [!NOTE]
@@ -78,6 +78,6 @@ EF 设计器包含以下组件：
 
 ![更改颜色](~/ef6/media/color.png)
 
-## <a name="summary"></a>总结
+## <a name="summary"></a>摘要
 
 在本主题中，我们介绍如何将模型拆分为多个关系图，以及如何使用 Entity Framework Designer 为实体指定不同的颜色。 

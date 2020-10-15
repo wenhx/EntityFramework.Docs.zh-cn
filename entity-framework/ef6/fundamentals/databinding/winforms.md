@@ -1,15 +1,15 @@
 ---
 title: 通过 WinForms 进行数据绑定-EF6
 description: 实体框架6中的 WinForms 的数据绑定
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/fundamentals/databinding/winforms
-ms.openlocfilehash: b316aea0a36edc8586a81427825ed4ee11fc9ef3
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: ef2f19831cd5ce8b1faefeb51f23faef4e167529
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073222"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92065675"
 ---
 # <a name="databinding-with-winforms"></a>使用 WinForms 进行数据绑定
 此分步演练演示了如何将 POCO 类型绑定到 Window 窗体 (WinForms) 控件。 应用程序使用实体框架使用数据库中的数据填充对象、跟踪更改并将数据保存到数据库。

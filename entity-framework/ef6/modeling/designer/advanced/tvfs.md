@@ -1,17 +1,17 @@
 ---
-title: 表值函数 (Tvf) -EF6
-description: '表值函数 (实体框架6中的 Tvf) '
-author: divega
+title: Table-Valued 函数 (Tvf) -EF6
+description: 'Table-Valued 函数 (实体框架6中的 Tvf) '
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/designer/advanced/tvfs
-ms.openlocfilehash: 727c6c7ff5947e78bf8eb489194e355e2fd157c9
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 2c699cad3ace253842d17aca4eca4df2318c4795
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90070156"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92066195"
 ---
-# <a name="table-valued-functions-tvfs"></a>表值函数 (Tvf) 
+# <a name="table-valued-functions-tvfs"></a>Table-Valued 函数 (Tvf) 
 > [!NOTE]
 > **EF5 仅向前** -实体框架5中引入了本页中所述的功能、api 等。 如果使用的是早期版本，则部分或全部信息不适用。
 
@@ -125,6 +125,6 @@ Couse: Microeconomics, Student: Arturo Anand
 Couse: Microeconomics, Student: Carson Bryant
 ```
 
-## <a name="summary"></a>总结
+## <a name="summary"></a>摘要
 
 在本演练中，我们介绍了如何使用 Entity Framework Designer 将表值函数映射 (Tvf) 。 它还演示了如何从 LINQ 查询调用 TVF。

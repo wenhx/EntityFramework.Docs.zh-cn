@@ -2,15 +2,14 @@
 title: Microsoft SQL Server 数据库提供程序-Azure SQL 数据库选项-EF Core
 description: 如何指定具有 SQL Server Entity Framework Core 数据库提供程序的 Azure SQL 数据库的服务层和性能级别
 author: AndriySvyryd
-ms.author: ansvyryd
 ms.date: 11/05/2019
 uid: core/providers/sql-server/azure-sql-database
-ms.openlocfilehash: 3863a5a224ba26df8cb319844bc2af4158d2497a
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 9b2cc5e0790beb41295dcea6ae30c4ad15b537fa
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89618958"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92065363"
 ---
 # <a name="specifying-azure-sql-database-options"></a>指定 Azure SQL 数据库选项
 

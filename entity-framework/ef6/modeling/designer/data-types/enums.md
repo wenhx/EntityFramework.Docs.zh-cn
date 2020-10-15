@@ -1,15 +1,15 @@
 ---
 title: 枚举支持-EF 设计器-EF6
 description: 枚举支持-实体框架6中的 EF 设计器
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/designer/data-types/enums
-ms.openlocfilehash: f3dff2c71cfdeb32183865265144a938eff087c0
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 42508b533249bf01c76939f864a23adc86a08822
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073118"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92064921"
 ---
 # <a name="enum-support---ef-designer"></a>枚举支持-EF 设计器
 > [!NOTE]
@@ -134,6 +134,6 @@ DepartmentID: 1 Name: English
 
 若要查看数据库中的数据，请在 SQL Server 对象资源管理器中右键单击数据库名称，然后选择 " **刷新**"。 然后，单击表上的鼠标右键，然后选择 " **查看数据**"。
 
-## <a name="summary"></a>总结
+## <a name="summary"></a>摘要
 
 在本演练中，我们介绍了如何使用 Entity Framework Designer 映射枚举类型以及如何在代码中使用枚举。 

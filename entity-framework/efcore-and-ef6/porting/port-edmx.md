@@ -1,15 +1,15 @@
 ---
 title: 从 EF6 移植到 EF Core - 移植基于 EDMX 的模型 - EF
 description: 关于将基于 Entity Framework 6 EDMX 的模型应用程序移植到 Entity Framework Core 的特定信息
-author: rowanmiller
+author: ajcvickers
 ms.date: 10/27/2016
 uid: efcore-and-ef6/porting/port-edmx
-ms.openlocfilehash: 7bd832f459ae3893e6a90e8483c95a41ca13f9ab
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 27b37ad1c2e3436ae96a71bc97e953763c48ee50
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90069998"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92064258"
 ---
 # <a name="porting-an-ef6-edmx-based-model-to-ef-core"></a>将基于 EF6 EDMX 的模型移植到 EF Core
 
@@ -25,13 +25,13 @@ EF Core 不支持对模型使用 EDMX 文件格式。 要移植这些模型，�
 
 在包管理器控制台（“工具”–>“NuGet 包管理器”–>“包管理器控制台”）中运行以下命令。 请参阅[包管理器控制台 (Visual Studio)](xref:core/miscellaneous/cli/powershell)，获取用于设置一部分表的基架等的命令选项。
 
-``` powershell
+```powershell
 Scaffold-DbContext "<connection string>" <database provider name>
 ```
 
 例如，以下命令用于在 SQL Server LocalDB 实例上根据博客数据库设置模型的基架。
 
-``` powershell
+```powershell
 Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer
 ```
 

@@ -1,15 +1,15 @@
 ---
 title: 设计器 TPT 继承-EF6
 description: 实体框架6中的设计器 TPT 继承
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/designer/inheritance/tpt
-ms.openlocfilehash: e60965550db3f140dfebf4c1952b3901b9b00aab
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: f8e4198278fb44309916d57b44fb9af41d572108
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073365"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92066169"
 ---
 # <a name="designer-tpt-inheritance"></a>设计器 TPT 继承
 此分步演练演示如何使用 Entity Framework Designer (EF 设计器) ，在模型中 (TPT) 继承来实现每种类型一个表继承。 每种类型一个表继承使用数据库中单独的表为继承层次结构中的每种类型维护非继承属性和键属性的数据。
@@ -24,7 +24,7 @@ ms.locfileid: "90073365"
 
 请注意，实体框架运行时 (TPC) 和混合继承模型支持每个具体的类型的表继承，但 EF 设计器不支持。 如果要使用 TPC 或混合继承，则有两个选项：使用 Code First 或手动编辑 EDMX 文件。 如果选择处理 EDMX 文件，"映射详细信息" 窗口将进入 "安全模式"，您将无法使用设计器来更改映射。
 
-## <a name="prerequisites"></a>必备条件
+## <a name="prerequisites"></a>先决条件
 
 若要完成此演练，您需要：
 

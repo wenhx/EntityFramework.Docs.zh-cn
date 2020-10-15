@@ -1,14 +1,14 @@
 ---
 title: 验证-EF6
 description: 实体框架6中的验证
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
-ms.openlocfilehash: 29f5e22d7f2e388d6e8271a35d10bbf6e318eafa
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 224cdd8b033b0ea534efb547fd4d39ac922a6faa
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073686"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92064401"
 ---
 # <a name="data-validation"></a>数据验证
 > [!NOTE]
@@ -235,7 +235,7 @@ foreach (var validationResult in db.GetValidationErrors())
   - 针对复杂类型属性的属性级验证
   - 对复杂类型的类型级别验证，包括 `IValidatableObject` 对复杂类型的验证
 
-## <a name="summary"></a>总结
+## <a name="summary"></a>摘要
 
 实体框架中的验证 API 与 MVC 中的客户端验证非常完美，但你不必依赖于客户端验证。 实体框架将在服务器端对 DataAnnotations 或使用 code first 流畅 API 应用的配置进行验证。
 

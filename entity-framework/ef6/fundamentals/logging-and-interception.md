@@ -1,15 +1,15 @@
 ---
 title: 记录和截取数据库操作-EF6
 description: 日志记录和截取实体框架6中的数据库操作
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/fundamentals/logging-and-interception
-ms.openlocfilehash: 858e96a781933da52725efa56087bc27db06257d
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 97248af9953de4372503aa7340712f3eff19b6b8
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90072663"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92065428"
 ---
 # <a name="logging-and-intercepting-database-operations"></a>记录和截取数据库操作
 > [!NOTE]
@@ -105,7 +105,7 @@ WHERE @@ROWCOUNT > 0 AND [Id] = scope_identity()
     - 查询，包括常规 LINQ 查询、eSQL 查询和来自 SqlQuery 等方法的原始查询  
     - 作为 SaveChanges 的一部分生成的插入、更新和删除操作  
     - 关系加载查询，如延迟加载生成的查询  
-- 参数  
+- parameters  
 - 命令是否正在以异步方式执行  
 - 指示命令开始执行的时间的时间戳  
 - 命令是否已成功完成，引发异常，或是否已取消（对于异步）  

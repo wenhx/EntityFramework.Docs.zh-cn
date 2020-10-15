@@ -1,15 +1,15 @@
 ---
 title: 实体框架术语表-EF6
 description: 实体框架6术语表
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/resources/glossary
-ms.openlocfilehash: 819bdda133b427fa6f8fc1915cde07560e6ca568
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 6c11b45978ad8efaf70bb640567c79b60ff7a708
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90072884"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92064648"
 ---
 # <a name="entity-framework-glossary"></a>实体框架术语表
 ## <a name="code-first"></a>Code First
@@ -61,7 +61,7 @@ Visual Studio 中的可视化设计器，可用于使用框和线条创建实体
 引用其他实体的实体的属性。 例如，Product 包含类别导航属性，类别包含 Products 导航属性。
 
 ## <a name="poco"></a>POCO
-纯旧式 CLR 对象的缩写。 不与任何框架具有依赖关系的简单用户类。 在 EF 的上下文中，不是派生自 EntityObject 的实体类实现任何接口，或携带 EF 中定义的任何属性。 与持久性框架分离的此类实体类也称为 "持久性未知"。  
+Plain-Old CLR 对象的首字母缩写。 不与任何框架具有依赖关系的简单用户类。 在 EF 的上下文中，不是派生自 EntityObject 的实体类实现任何接口，或携带 EF 中定义的任何属性。 与持久性框架分离的此类实体类也称为 "持久性未知"。  
 
 ## <a name="relationship-inverse"></a>逆关系
 关系的相反结束，例如 product。类别和类别。产品.

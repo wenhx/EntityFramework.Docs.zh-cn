@@ -1,15 +1,15 @@
 ---
 title: 具有 VB.NET 的流畅 API-EF6
 description: 实体框架6中的 VB.NET 的流畅 API
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/code-first/fluent/vb
-ms.openlocfilehash: d59e685578fb151aea2ae0b41a933f3e13de6c50
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 22c56285a0d2ae761931d62e07bd18c66ac474be
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90072572"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92065129"
 ---
 # <a name="fluent-api-with-vbnet"></a>通过 VB.NET 的流畅 API
 Code First 允许使用 C \# 或 VB.NET 类定义模型。 还可以选择使用类和属性上的属性或使用 Fluent API 来执行其他配置。 本演练演示如何使用 VB.NET 执行 Fluent API 配置。

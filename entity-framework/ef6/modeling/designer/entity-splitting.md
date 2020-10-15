@@ -1,15 +1,15 @@
 ---
 title: 设计器实体拆分-EF6
 description: 实体框架6中的设计器实体拆分
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/designer/entity-splitting
-ms.openlocfilehash: fa25629bae1a35b2d792e2b890e87db6c99c37ab
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 8fdb9037fc49045089016e6630316d05c8726ad8
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073131"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92064895"
 ---
 # <a name="designer-entity-splitting"></a>设计器实体拆分
 本演练演示如何通过使用 Entity Framework Designer (EF 设计器) 修改模型，将实体类型映射到两个表。 如果多个表共享同一个键，则可以将一个实体映射到这些表。 适用于将一个实体类型映射到两个表的概念，可以轻松扩展为将一个实体类型映射到两个以上的表。
@@ -18,7 +18,7 @@ ms.locfileid: "90073131"
 
 ![EF 设计器](~/ef6/media/efdesigner.png)
 
-## <a name="prerequisites"></a>必备条件
+## <a name="prerequisites"></a>先决条件
 
 Visual Studio 2012 或 Visual Studio 2010、旗舰版、高级版、专业版或 Web Express edition。
 

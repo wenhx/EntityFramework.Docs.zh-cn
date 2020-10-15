@@ -1,15 +1,15 @@
 ---
 title: 用 WPF 进行数据绑定-EF6
 description: 实体框架6中的 WPF 的数据绑定
-author: divega
+author: ajcvickers
 ms.date: 05/19/2020
 uid: ef6/fundamentals/databinding/wpf
-ms.openlocfilehash: 85aea308d89241f1da9633ef60f4bc8c3997561d
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: b6dc484d09340671dfcd841e34234d55e9808af2
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90072975"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92065649"
 ---
 # <a name="databinding-with-wpf"></a>使用 WPF 进行数据绑定
 
@@ -257,7 +257,7 @@ EF 使用 T4 模板从模型生成代码。 Visual Studio 附带的模板或从 
 - 如果 "数据源" 窗口未显示，请在 "Mainwindow.xaml" 窗口旁打开 "数据源" 窗口 *，选择 "**查看"-" &gt; 其他 Windows- &gt; 数据源**"*
 - 按固定图标，使 "数据源" 窗口不会自动隐藏。 如果窗口已显示，可能需要按 "刷新" 按钮。
 
-    ![“数据源”](~/ef6/media/datasources.png)
+    ![Data Sources](~/ef6/media/datasources.png)
 
 - 选择 **类别** 数据源并将其拖到窗体上。
 

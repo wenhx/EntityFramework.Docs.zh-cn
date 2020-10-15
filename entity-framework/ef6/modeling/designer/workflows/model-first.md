@@ -1,15 +1,15 @@
 ---
 title: Model First-EF6
 description: 实体框架6中的 Model First
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/designer/workflows/model-first
-ms.openlocfilehash: 13c5e173182ad0781a674ce3d10f7374c4443bf9
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: b47c5805a63a1ea94baad4fb5eb137b633f6be1d
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073157"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92066026"
 ---
 # <a name="model-first"></a>Model First
 此视频和分步演练提供使用实体框架 Model First 开发的简介。 Model First 允许使用 Entity Framework Designer 创建新模型，然后从该模型生成数据库架构。 模型存储在 EDMX 文件中 ( .edmx 扩展名) 并且可以在 Entity Framework Designer 中查看和编辑。 在应用程序中与之交互的类将自动从 EDMX 文件生成。
@@ -196,6 +196,6 @@ Press any key to exit...
     *生成的脚本将删除所有现有的表，然后从头开始重新创建该架构。这可能适用于本地开发，但并不适合将更改推送到已部署的数据库。如果需要将更改发布到已部署的数据库，则需要编辑该脚本或使用架构比较工具来计算迁移脚本。*
 -   右键单击该脚本，然后选择 " **执行**"，系统将提示您指定要连接到的数据库，指定 LocalDB 或 SQL Server Express，具体取决于您使用的 Visual Studio 的版本
 
-## <a name="summary"></a>总结
+## <a name="summary"></a>摘要
 
 在本演练中，我们介绍 Model First 开发，这允许我们在 EF 设计器中创建模型，然后从该模型生成数据库。 然后，使用该模型从数据库中读取和写入一些数据。 最后，我们更新了模型，然后重新创建了数据库架构以匹配模型。

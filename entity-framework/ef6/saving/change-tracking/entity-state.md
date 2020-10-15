@@ -1,15 +1,15 @@
 ---
 title: 使用实体状态-EF6
 description: 使用实体框架6中的实体状态
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/saving/change-tracking/entity-state
-ms.openlocfilehash: 88c1b67b3eda02e79f7d10d5e46fdd3566361634
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 5373f7157882062e8a73b2bd414c6a8b9accdba4
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073764"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92064453"
 ---
 # <a name="working-with-entity-states"></a>使用实体状态
 本主题将介绍如何添加实体并将其附加到上下文，以及实体框架如何在 SaveChanges 期间处理这些实体。

@@ -1,15 +1,15 @@
 ---
 title: 使用实体框架获取帮助 EF6
 description: 使用实体框架6获取帮助
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/resources/get-help
-ms.openlocfilehash: e027293169895c0d9a4041e9fb367d49c9b3ce57
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 85c771e271f570705f7ac695f0f48bd24f5343b0
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073842"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92064726"
 ---
 # <a name="get-help-using-entity-framework"></a>使用实体框架获取帮助
 ## <a name="stackoverflow-questions-questions-about-using-ef"></a>![StackOverflow 问题](~/ef6/media/stackoverflow.png) 有关使用 EF 的问题  

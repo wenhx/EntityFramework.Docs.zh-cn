@@ -1,15 +1,15 @@
 ---
 title: Database First-EF6
 description: 实体框架6中的 Database First
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/designer/workflows/database-first
-ms.openlocfilehash: 412d83b37ed5f3e2b863dca0913746e61ecdef76
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 4046144ff3f1ecb4a3c9e7d4cb5d6c462c3782c7
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073170"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92066104"
 ---
 # <a name="database-first"></a>Database First
 此视频和分步演练提供使用实体框架 Database First 开发的简介。 Database First 允许从现有数据库对模型进行反向工程。 模型存储在 EDMX 文件中 ( .edmx 扩展名) 并且可以在 Entity Framework Designer 中查看和编辑。 在应用程序中与之交互的类将自动从 EDMX 文件生成。

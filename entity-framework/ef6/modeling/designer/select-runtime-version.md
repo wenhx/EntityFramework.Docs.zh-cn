@@ -1,14 +1,14 @@
 ---
 title: 选择 EF 设计器模型实体框架运行时版本-EF6
 description: 为实体框架6中的 EF 设计器模型选择实体框架运行时版本
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
-ms.openlocfilehash: 2025ca5e46c7d9a38ba596d57c023a2c1b224129
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: dcd06ed9585028b3a318d867b03980254979a32f
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073261"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92066091"
 ---
 # <a name="selecting-entity-framework-runtime-version-for-ef-designer-models"></a>选择 EF 设计器模型实体框架运行时版本
 > [!NOTE]
@@ -27,7 +27,7 @@ ms.locfileid: "90073261"
 1.  在解决方案资源管理器中右键单击项目，然后选择 "**管理 NuGet 包 ...** "
 2.  选择 **更新**
 3.  选择 **EntityFramework** (确保它将更新为所需版本) 
-4.  单击 "**更新**"
+4.  单击“更新”  。
 
  
 

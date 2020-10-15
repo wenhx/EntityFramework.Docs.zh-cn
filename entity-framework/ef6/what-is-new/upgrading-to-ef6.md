@@ -1,15 +1,15 @@
 ---
 title: 升级到实体框架 6-EF6
 description: 升级到实体框架6
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/what-is-new/upgrading-to-ef6
-ms.openlocfilehash: 118853ad9b53fe2157f50b329bddc31d3135d75a
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 14cd0e259832377332f77a199502699d75982bb4
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90074037"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92064245"
 ---
 # <a name="upgrading-to-entity-framework-6"></a>升级到实体框架6
 
@@ -71,7 +71,7 @@ DbContext 和 Code First 类型的命名空间尚未更改。 这意味着，对
 - System.web. ObjectContext => System.object。**Entity。** 对象。 ObjectContext  
 - Dataclasses.dll. RelationshipManager => 的数据。**Entity。** Dataclasses.dll. RelationshipManager  
 
-这些类型位于 *核心* 命名空间中，因为它们不能直接用于大多数基于 DbContext 的应用程序。 作为 System.Data.Entity.dll 的一部分的某些类型仍通常会直接用于基于 DbContext 的应用程序，因此不会移动到 *核心* 命名空间中。 它们是：
+这些类型位于 *核心* 命名空间中，因为它们不能直接用于大多数基于 DbContext 的应用程序。 作为 System.Data.Entity.dll 的一部分的某些类型仍通常会直接用于基于 DbContext 的应用程序，因此不会移动到 *核心* 命名空间中。 这些是：
 
 - EntityState => System.object。**实体**。EntityState  
 - Dataclasses.dll. EdmFunctionAttribute => 的数据。**DbFunctionAttribute**  

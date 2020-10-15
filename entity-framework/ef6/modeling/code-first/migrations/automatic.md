@@ -1,15 +1,15 @@
 ---
 title: 自动 Code First 迁移-EF6
 description: 实体框架6中的自动 Code First 迁移
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/code-first/migrations/automatic
-ms.openlocfilehash: e7bd9ff7d9dcecb7fecf213306047a53fc04135c
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 8152cdf642258a30d98f3750bf1ca4ccd2859978
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90072559"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92066403"
 ---
 # <a name="automatic-code-first-migrations"></a>自动 Code First 迁移
 自动迁移使你可以使用 Code First 迁移，而不会在项目中为你所做的每个更改提供代码文件。 并非所有更改都可以自动应用-例如，列重命名需要使用基于代码的迁移。
@@ -116,7 +116,7 @@ Code First 迁移具有两个需要用户了解的主要命令。
 -   Add-Migration 将基于自上次迁移创建以来对模型所做的更改来构建下一次迁移 
 -   Update-Database 将对数据库应用任意挂起的迁移 
 
-我们将避免使用添加迁移 (，除非我们确实需要) 并专注于让 Code First 迁移自动计算和应用更改。 让我们使用 **更新数据库** 来 Code First 迁移将更改推送到模型 (新的 **Ur**l 属性) 写入数据库。
+我们将避免使用 Add-Migration (，除非我们确实需要) 并专注于允许 Code First 迁移自动计算和应用更改。 让我们使用 **更新数据库** 来 Code First 迁移将更改推送到模型 (新的 **Ur**l 属性) 写入数据库。
 
 -   在 Package Manager Console 中运行 " **更新数据库** " 命令。
 
@@ -164,7 +164,7 @@ Code First 迁移具有两个需要用户了解的主要命令。
 ```
 
 只需运行 " **更新数据库** " 即可将这些更改推送到数据库。 但是，我们添加了不可为 null 的 **博客。分级** 列，如果表中存在现有数据，则会向其分配新列的数据类型的 CLR 默认值 (分级是整数，因此将为 **0**) 。 但我们要将默认值指定为 3，以便“博客”表中的现有行以合适的分级开始   。
-让我们使用 "添加-迁移" 命令将此更改写入到基于代码的迁移，以便可以对其进行编辑。 " **添加-迁移** " 命令使我们可以为这些迁移命名，只需调用我们的 **AddBlogRating**即可。
+让我们使用 Add-Migration 命令将此更改写入到基于代码的迁移，以便可以对其进行编辑。 " **添加-迁移** " 命令使我们可以为这些迁移命名，只需调用我们的 **AddBlogRating**即可。
 
 -   在 Package Manager Console 中运行 **Add-迁移 AddBlogRating** 命令。
 -   在 " **迁移** " 文件夹中，我们现在已有一个新的 **AddBlogRating** 迁移。 迁移文件名预先修复了时间戳，以帮助进行排序。 让我们编辑生成的代码，为博客指定默认值 3 (第10行) 
@@ -210,6 +210,6 @@ Code First 迁移具有两个需要用户了解的主要命令。
 
 -   在 Package Manager Console 中运行 " **更新数据库** " 命令。
 
-## <a name="summary"></a>总结
+## <a name="summary"></a>摘要
 
 在本演练中，您学习了如何使用自动迁移将模型更改推送到数据库。 还了解了在需要更多控制时，如何在自动迁移之间基架和运行基于代码的迁移。

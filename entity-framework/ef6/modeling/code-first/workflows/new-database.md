@@ -1,15 +1,15 @@
 ---
 title: Code First 新的数据库-EF6
 description: Code First 到实体框架6中的新数据库
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/code-first/workflows/new-database
-ms.openlocfilehash: 96d76162383149c045178954196e1294331918a8
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 9d0082ac5226fff066d3e18c9164e2230c84b285
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90070362"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92065013"
 ---
 # <a name="code-first-to-a-new-database"></a>对新数据库使用 Code First
 此视频和分步演练提供了面向新数据库的 Code First 开发的简介。 此方案包括针对不存在的数据库和 Code First 将创建的数据库，或者 Code First 将向其中添加新表的空数据库。 Code First 允许使用 C \# 或 VB.Net 类定义模型。 还可以选择使用类和属性上的属性或使用 Fluent API 来执行其他配置。
@@ -238,7 +238,7 @@ public class Blog
 ```
 
 -   在 Package Manager Console 中运行 **Add-迁移 AddUrl** 命令。
-    添加迁移命令将检查自上次迁移后发生的更改，并基架找到的任何更改进行新迁移。 我们可以为迁移指定一个名称;在此示例中，我们将调用迁移 "AddUrl"。
+    Add-Migration 命令将检查自上次迁移后发生的更改，并基架找到的任何更改进行新迁移。 我们可以为迁移指定一个名称;在此示例中，我们将调用迁移 "AddUrl"。
     基架代码是说，我们需要向 dbo 添加 Url 列，该 Url 列可以保存字符串数据。博客表。 如果需要，我们可以编辑基架代码，但在这种情况下不需要这样做。
 
 ``` csharp
@@ -368,6 +368,6 @@ DisplayName 列现在已重命名为显示 \_ 名称：
 
 ![重命名了显示名称的架构](~/ef6/media/schemawithdisplaynamerenamed.png)
 
-## <a name="summary"></a>总结
+## <a name="summary"></a>摘要
 
 在本演练中，我们将使用新数据库查看 Code First 开发。 我们使用类定义了一个模型，然后使用该模型来创建数据库并存储和检索数据。 创建数据库后，我们使用 Code First 迁移来更改模型，因为模型已演化。 我们还了解了如何使用数据批注和熟知的 API 配置模型。

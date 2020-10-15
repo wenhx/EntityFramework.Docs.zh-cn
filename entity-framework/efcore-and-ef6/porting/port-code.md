@@ -1,15 +1,15 @@
 ---
 title: 从 EF6 移植到 EF Core - 移植基于代码的模型 - EF
 description: 关于将基于 Entity Framework 6 代码的模型应用程序移植到 Entity Framework Core 的特定信息
-author: rowanmiller
+author: ajcvickers
 ms.date: 10/27/2016
 uid: efcore-and-ef6/porting/port-code
-ms.openlocfilehash: a5bbdc2ee95ea6bea96e24bee4588b524e0ffc58
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 819c3bc0eba140c023cdcd5038a4cd63c300ed4c
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073573"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92064219"
 ---
 # <a name="porting-an-ef6-code-based-model-to-ef-core"></a>将基于 EF6 代码的模型移植到 EF Core
 
@@ -33,7 +33,7 @@ ms.locfileid: "90073573"
 
 大多数 EF6 应用程序将连接字符串存储在应用程序 `App/Web.config` 文件中。 在 EF Core 中，你将使用 `ConfigurationManager` API 读取此连接字符串。 你可能还需要添加对 `System.Configuration` 框架程序集的引用才能使用此 API。
 
-``` csharp
+```csharp
 public class BloggingContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }

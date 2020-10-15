@@ -1,14 +1,14 @@
 ---
 title: 实体框架的案例研究-EF6
 description: 实体框架6的案例研究
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
-ms.openlocfilehash: 342929f70aa09704c934bd1d89e177f6953bfc43
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: ca2315ac8aad8d28240f4bef6c962de0f63ac0df
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90073816"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92064661"
 ---
 # <a name="microsoft-case-studies-for-entity-framework"></a>实体框架的 Microsoft 案例研究
 此页上的案例研究重点介绍了几个实体框架的实际生产项目。
@@ -17,7 +17,7 @@ ms.locfileid: "90073816"
 
 ## <a name="epicor"></a>Epicor
 Epicor 是一家大型的全球软件公司 (在400多个开发人员) ，为超过150个国家/地区的公司开发企业资源规划 (ERP) 解决方案。
-其旗舰版产品 Epicor 9 基于面向服务的体系结构， (使用 .NET Framework 的 SOA) 。
+其旗舰版产品 Epicor 9 基于使用 .NET Framework (SOA) 的 Service-Oriented 体系结构。
 面对大量客户请求， (LINQ) 提供对语言集成查询的支持，并希望在其后端 SQL Server 上减少负载，团队决定升级到 Visual Studio 2010 和 .NET Framework 4.0。
 使用实体框架4.0，它们能够实现这些目标，同时大大简化了开发和维护工作。
 具体而言，实体框架的丰富 T4 支持使其能够完全控制其生成的代码，并自动生成性能保存功能，如预编译查询和缓存。

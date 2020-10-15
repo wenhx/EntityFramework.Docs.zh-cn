@@ -1,22 +1,22 @@
 ---
 title: 获取实体框架-EF6
 description: 获取实体框架6
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/fundamentals/install
-ms.openlocfilehash: 9254f835f5007a213c49557165f6830c30711f1f
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 7dc4c560cc4eb24a1c5d5dac0c9e28883de471b0
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90072780"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92065454"
 ---
 # <a name="get-entity-framework"></a>获取实体框架
 实体框架由适用于 Visual Studio 的 EF 工具和 EF 运行时组成。
 
 ## <a name="ef-tools-for-visual-studio"></a>适用于 Visual Studio 的 EF 工具
 
-Visual Studio 的 Entity Framework Tools 包括 EF 设计器和 EF 模型向导，并是数据库优先和模型优先工作流所必需的。 所有最新版本的 Visual Studio 中都包含 EF 工具。 如果执行 Visual Studio 的自定义安装，则需要确保选择项 "实体框架6工具"，方法是选择包含它的工作负荷，或将其选择为单个组件。
+[Visual Studio 的 Entity Framework Tools](/visualstudio/data-tools/entity-data-model-tools-in-visual-studio)包括 Ef 设计器和 Ef 模型向导，并是数据库优先和模型优先工作流所必需的。 所有最新版本的 Visual Studio 中都包含 EF 工具。 如果执行 Visual Studio 的自定义安装，则需要确保选择项 "实体框架6工具"，方法是选择包含它的工作负荷，或将其选择为单个组件。
 
 对于某些早期版本的 Visual Studio，更新的 EF 工具可作为下载。 请参阅 [Visual Studio 版本](xref:ef6/what-is-new/visual-studio) ，了解有关如何获取适用于你的 Visual studio 版本的最新版本 EF 工具的指南。
 
