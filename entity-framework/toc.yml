@@ -113,7 +113,7 @@
               href: core/modeling/generated-properties.md
             - name: 并发标记
               href: core/modeling/concurrency.md
-            - name: 阴影属性
+            - name: 阴影和索引器属性
               href: core/modeling/shadow-properties.md
             - name: 关系
               href: core/modeling/relationships.md
@@ -228,10 +228,15 @@
               items:
                 - name: 概述
                   href: core/providers/sql-server/index.md
+                - name: 函数映射
+                  href: core/providers/sql-server/functions.md
                 - name: 索引
                   href: core/providers/sql-server/indexes.md
                 - name: 内存优化表
                   href: core/providers/sql-server/memory-optimized-tables.md
+                - name: 空间数据
+                  displayName: GIS
+                  href: core/providers/sql-server/spatial.md
                 - name: 指定 Azure SQL 数据库选项
                   href: core/providers/sql-server/azure-sql-database.md
             - name: SQLite
@@ -240,6 +245,13 @@
                   href: core/providers/sqlite/index.md
                 - name: SQLite 限制
                   href: core/providers/sqlite/limitations.md
+                - name: 函数映射
+                  href: core/providers/sqlite/functions.md
+                - name: 空间数据
+                  displayName: GIS
+                  href: core/providers/sqlite/spatial.md
+                - name: Microsoft.Data.Sqlite >>
+                  href: /dotnet/standard/data/sqlite/
             - name: Cosmos
               items:
                 - name: 概述
@@ -248,6 +260,8 @@
                   href: core/providers/cosmos/unstructured-data.md
                 - name: Cosmos 限制
                   href: core/providers/cosmos/limitations.md
+                - name: 函数映射
+                  href: core/providers/cosmos/functions.md
             - name: InMemory（用于测试）
               href: core/providers/in-memory/index.md
             - name: 编写数据库提供程序
