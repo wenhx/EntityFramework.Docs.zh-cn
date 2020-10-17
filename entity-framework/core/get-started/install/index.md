@@ -1,15 +1,15 @@
 ---
 title: 安装 Entity Framework Core - EF Core
 description: Entity Framework Core 的安装说明
-author: divega
+author: bricelam
 ms.date: 08/06/2017
 uid: core/get-started/install/index
-ms.openlocfilehash: 9cf264ea5c6b45a374c16fa6eac7f4f4bca9c825
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 3aae80998768d8d1bfbad7a872abc3648b792ad5
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90071935"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92062095"
 ---
 # <a name="installing-entity-framework-core"></a>安装 Entity Framework Core
 
@@ -29,7 +29,7 @@ ms.locfileid: "90071935"
 
 要将 EF Core 添加到应用程序，请安装适用于要使用的数据库提供程序的 NuGet 包。
 
-如果要生成 ASP.NET Core 应用程序，不需要安装内存中和 SQL Server 提供程序。 这些提供程序随 EF Core 运行时一起包含在当前版本的 ASP.NET Core 中。  
+如果要生成 ASP.NET Core 应用程序，不需要安装内存中和 SQL Server 提供程序。 这些提供程序随 EF Core 运行时一起包含在当前版本的 ASP.NET Core 中。
 
 要安装或更新 NuGet 包，可以使用 .NET Core 命令行界面 (CLI)、Visual Studio 包管理器对话框或 Visual Studio 包管理器控制台。
 
@@ -61,7 +61,7 @@ ms.locfileid: "90071935"
 
 * 若要安装 SQL Server 提供程序，请在包管理器控制台中运行以下命令：
 
-  ``` PowerShell  
+  ```powershell
   Install-Package Microsoft.EntityFrameworkCore.SqlServer
   ```
 
@@ -83,7 +83,7 @@ ms.locfileid: "90071935"
 
 虽然也可在包管理器控制台中使用 `dotnet ef` 命令，但在使用 Visual Studio 时建议使用包管理器控制台工具：
 
-* 它们会自动使用在 Visual Studio 的 PMC 中选择的当前项目，无需手动切换目录。  
+* 它们会自动使用在 Visual Studio 的 PMC 中选择的当前项目，无需手动切换目录。
 
 * 命令完成后，它们会自动在 Visual Studio 中打开命令所生成的文件。
 
@@ -93,11 +93,21 @@ ms.locfileid: "90071935"
 
 .NET core CLI 工具需要前面的[系统必备](#prerequisites)中提到的 .NET Core SDK。
 
-`dotnet ef` 命令包含在当前版本的 .NET Core SDK 中，但若要对特定命令启用该命令，必须安装 `Microsoft.EntityFrameworkCore.Design` 包：
+* 必须将 `dotnet ef` 安装为全局工具或本地工具。 大多数开发人员偏向于使用以下命令将 `dotnet ef` 安装为全局工具：
 
-```dotnetcli
-dotnet add package Microsoft.EntityFrameworkCore.Design
-```
+  ```dotnetcli
+  dotnet tool install --global dotnet-ef
+  ```
+
+  `dotnet ef` 还可用作本地工具。 若要将它用作本地工具，请使用[工具清单文件](/dotnet/core/tools/global-tools#install-a-local-tool)恢复声明为工具依赖项的项目的依赖项。
+
+* 若要更新工具，请使用 `dotnet tool update` 命令。
+
+* 安装最新的 `Microsoft.EntityFrameworkCore.Design` 包。
+
+  ```dotnetcli
+  dotnet add package Microsoft.EntityFrameworkCore.Design
+  ```
 
 > [!IMPORTANT]
 > 请务必使用与运行时包主版本匹配的工具包版本。
@@ -106,7 +116,7 @@ dotnet add package Microsoft.EntityFrameworkCore.Design
 
 若要获取适用于 EF Core 的包管理器控制台工具，请安装 `Microsoft.EntityFrameworkCore.Tools` 包。 例如，在 Visual Studio 中：
 
-``` PowerShell
+```powershell
 Install-Package Microsoft.EntityFrameworkCore.Tools
 ```
 
@@ -118,16 +128,6 @@ ASP.NET Core 应用自动随附此包。
 
 * EF Core 以及 SQL Server 和内存中提供程序包含在当前版本的 ASP.NET Core 中。 若要将现有 ASP.NET Core 应用程序升级到较新版本的 EF Core，请务必升级 ASP.NET Core 的版本。
 
-* 如需更新使用第三方数据库提供程序的应用程序，请始终检查与要使用的 EF Core 版本兼容的提供程序有无更新。 例如，早期版本的数据库提供程序不兼容 2.0 版 EF Core 运行时。
+* 如需更新使用第三方数据库提供程序的应用程序，请始终检查与要使用的 EF Core 版本兼容的提供程序有无更新。 例如，版本 1.0 的数据库提供程序与版本 2.0 的 EF Core 运行时不兼容。
 
 * 用于 EF Core 的第三方提供程序通常不随 EF Core 运行发布修补程序版本。 若要将使用第三方提供程序的应用程序升级到 EF Core 的修补程序版本，可能需要添加对单独的 EF Core 运行时组件（如 Microsoft.EntityFrameworkCore 和 Microsoft.EntityFrameworkCore.Relational）的直接引用。
-
-* 若要将现有应用程序升级到最新版本的 EF Core，可能需要手动删除一些对旧版 EF Core 包的引用：
-
-  * EF Core 2.0 及更高版本不再需要或支持 `Microsoft.EntityFrameworkCore.SqlServer.Design` 等数据库提供程序设计时包，但在升级其他包后，它们不会被自动删除。
-
-  * 自版本 2.1 起的 .NET SDK 包含 .NET CLI 工具，这样就可以从项目文件中删除对相应包的引用：
-
-    ``` xml
-    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
-    ```

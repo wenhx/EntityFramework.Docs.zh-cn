@@ -1,19 +1,19 @@
 ---
 title: InMemory 数据库提供程序 - EF Core
 description: 有关 Entity Framework Core InMemory 数据库提供程序的信息
-author: rowanmiller
+author: ajcvickers
 ms.date: 10/27/2016
 uid: core/providers/in-memory/index
-ms.openlocfilehash: 9d0a5d14cdb047b80788fbe4d9d34deccdbd4ce1
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 1857ebbfa0eded1572220825a5b0d75961bcf3dd
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90071350"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92064006"
 ---
 # <a name="ef-core-in-memory-database-provider"></a>EF Core In-Memory 数据库提供程序
 
-此数据库提供程序允许将 Entity Framework Core 和内存数据库一起使用。 这对测试非常有用，尽管内存中模式下的 SQLite 提供程序可能是针对关系数据库的更合适的测试替代。 该提供程序作为 [Entity Framework Core 项目](https://github.com/aspnet/EntityFrameworkCore)的组成部分进行维护。
+此数据库提供程序允许将 Entity Framework Core 和内存数据库一起使用。 内存中数据库对测试来说非常有用，尽管内存中模式下的 SQLite 提供程序可能是针对关系数据库的更合适的测试替代。 内存中数据库仅用于测试。 该提供程序作为 [Entity Framework Core 项目](https://github.com/aspnet/EntityFrameworkCore)的组成部分进行维护。
 
 ## <a name="install"></a>安装
 
@@ -27,7 +27,7 @@ dotnet add package Microsoft.EntityFrameworkCore.InMemory
 
 ### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
 
-``` powershell
+```powershell
 Install-Package Microsoft.EntityFrameworkCore.InMemory
 ```
 
@@ -42,4 +42,4 @@ Install-Package Microsoft.EntityFrameworkCore.InMemory
 
 ## <a name="supported-database-engines"></a>支持的数据库引擎
 
-进程内内存数据库（仅用于测试目的）
+进程内内存数据库，仅用于测试目的。
