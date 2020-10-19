@@ -1,95 +1,76 @@
 ---
 title: 查询标记 - EF Core
 description: 使用查询标记帮助识别 Entity Framework Core 发出的日志消息中的特定查询
-author: divega
+author: smitpatel
 ms.date: 11/14/2018
 uid: core/querying/tags
-ms.openlocfilehash: 27f757f4159a36bec324cce56d74b7860e1c3741
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: f7cd3558682b1c19e03fc6d04957c7112e870734
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90070986"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92065727"
 ---
 # <a name="query-tags"></a>查询标记
 
-> [!NOTE]
-> 此为 EF Core 2.2 中的新增功能。
-
-此功能有助于将代码中的 LINQ 查询与日志中捕获的已生成 SQL 查询相关联。
+查询标记有助于将代码中的 LINQ 查询与日志中捕获的已生成 SQL 查询相关联。
 使用新增的 `TagWith()` 方法对 LINQ 查询进行批注：
 
-``` csharp
-  var nearestFriends =
-      (from f in context.Friends.TagWith("This is my spatial query!")
-      orderby f.Location.Distance(myLocation) descending
-      select f).Take(5).ToList();
-```
+> [!TIP]
+> 可在 GitHub 上查看此文章的[示例](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Querying/Tags)。
+
+[!code-csharp[Main](../../../samples/core/Querying/Tags/Program.cs#BasicQueryTag)]
 
 此 LINQ 查询转换为以下 SQL 语句：
 
-``` sql
+```sql
 -- This is my spatial query!
 
-SELECT TOP(@__p_1) [f].[Name], [f].[Location]
-FROM [Friends] AS [f]
-ORDER BY [f].[Location].STDistance(@__myLocation_0) DESC
+SELECT TOP(@__p_1) [p].[Id], [p].[Location]
+FROM [People] AS [p]
+ORDER BY [p].[Location].STDistance(@__myLocation_0) DESC
 ```
 
 可以对同一个查询多次调用 `TagWith()`。
 查询标记具有累积性。
 例如，给定方法如下：
 
-``` csharp
-IQueryable<Friend> GetNearestFriends(Point myLocation) =>
-    from f in context.Friends.TagWith("GetNearestFriends")
-    orderby f.Location.Distance(myLocation) descending
-    select f;
-
-IQueryable<T> Limit<T>(IQueryable<T> source, int limit) =>
-    source.TagWith("Limit").Take(limit);
-```
+[!code-csharp[Main](../../../samples/core/Querying/Tags/Program.cs#QueryableMethods)]
 
 以下查询：
 
-``` csharp
-var results = Limit(GetNearestFriends(myLocation), 25).ToList();
-```
+[!code-csharp[Main](../../../samples/core/Querying/Tags/Program.cs#ChainedQueryTags)]
 
 转换为：
 
-``` sql
--- GetNearestFriends
+```sql
+-- GetNearestPeople
 
 -- Limit
 
-SELECT TOP(@__p_1) [f].[Name], [f].[Location]
-FROM [Friends] AS [f]
-ORDER BY [f].[Location].STDistance(@__myLocation_0) DESC
+SELECT TOP(@__p_1) [p].[Id], [p].[Location]
+FROM [People] AS [p]
+ORDER BY [p].[Location].STDistance(@__myLocation_0) DESC
 ```
 
 也可以使用多线串作为查询标记。
 例如：
 
-``` csharp
-var results = Limit(GetNearestFriends(myLocation), 25).TagWith(
-@"This is a multi-line
-string").ToList();
-```
+[!code-csharp[Main](../../../samples/core/Querying/Tags/Program.cs#MultilineQueryTag)]
 
 生成以下 SQL：
 
-``` sql
--- GetNearestFriends
+```sql
+-- GetNearestPeople
 
 -- Limit
 
 -- This is a multi-line
 -- string
 
-SELECT TOP(@__p_1) [f].[Name], [f].[Location]
-FROM [Friends] AS [f]
-ORDER BY [f].[Location].STDistance(@__myLocation_0) DESC
+SELECT TOP(@__p_1) [p].[Id], [p].[Location]
+FROM [People] AS [p]
+ORDER BY [p].[Location].STDistance(@__myLocation_0) DESC
 ```
 
 ## <a name="known-limitations"></a>已知的限制

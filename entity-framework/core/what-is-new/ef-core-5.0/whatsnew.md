@@ -4,12 +4,12 @@ description: EF Core 5.0 中的新功能概述
 author: ajcvickers
 ms.date: 09/10/2020
 uid: core/what-is-new/ef-core-5.0/whatsnew
-ms.openlocfilehash: 0605d021b46066c6af7b631c99e86c0e53caa8db
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 8fa45bf31cb5f1a7e35134f9513a40469719f8c2
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90070752"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92065610"
 ---
 # <a name="whats-new-in-ef-core-50"></a>EF Core 5.0 中的新增功能
 
@@ -25,7 +25,7 @@ EF Core 5.0 支持多对多关系，而无需显式映射联接表。
 
 以下面这些实体类型为例：
 
-```C#
+```csharp
 public class Post
 {
     public int Id { get; set; }
@@ -43,7 +43,7 @@ public class Tag
 
 请注意，`Post` 包含 `Tags` 的集合，`Tag` 包含 `Posts` 的集合。 EF Core 5.0 按照约定将此识别为多对多关系。 这意味着在 `OnModelCreating` 中不需要任何代码：
 
-```C#
+```csharp
 public class BlogContext : DbContext
 {
     public DbSet<Post> Posts { get; set; }
@@ -79,7 +79,7 @@ CREATE INDEX [IX_PostTag_TagsId] ON [PostTag] ([TagsId]);
 
 创建和关联 `Blog` 和 `Post` 实体会导致联接表更新自动发生。 例如：
 
-```C#
+```csharp
 var beginnerTag = new Tag {Text = "Beginner"};
 var advancedTag = new Tag {Text = "Advanced"};
 var efCoreTag = new Tag {Text = "EF Core"};
@@ -107,7 +107,7 @@ VALUES (@p6, @p7),
 
 对于查询，Include 和其他查询操作的工作方式与任何其他关系一样。 例如：
 
-```C#
+```csharp
 foreach (var post in context.Posts.Include(e => e.Tags))
 {
     Console.Write($"Post \"{post.Name}\" has tags");
@@ -134,17 +134,27 @@ ORDER BY [p].[Id], [t0].[PostsId], [t0].[TagsId], [t0].[Id]
 
 与 EF6 不同，EF Core 允许完全自定义联接表。 例如，下面的代码配置了多对多关系，该关系也具有联接实体的导航，其中联接实体包含有效负载属性：
 
-```c#
+```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder
-        .Entity<Community>()
-        .HasMany(e => e.Members)
-        .WithMany(e => e.Memberships)
-        .UsingEntity<PersonCommunity>(
-            b => b.HasOne(e => e.Member).WithMany().HasForeignKey(e => e.MembersId),
-            b => b.HasOne(e => e.Membership).WithMany().HasForeignKey(e => e.MembershipsId))
-        .Property(e => e.MemberSince).HasDefaultValueSql("CURRENT_TIMESTAMP");
+        .Entity<Post>()
+        .HasMany(p => p.Tags)
+        .WithMany(p => p.Posts)
+        .UsingEntity<PostTag>(
+            j => j
+                .HasOne(pt => pt.Tag)
+                .WithMany()
+                .HasForeignKey(pt => pt.TagId),
+            j => j
+                .HasOne(pt => pt.Post)
+                .WithMany()
+                .HasForeignKey(pt => pt.PostId),
+            j =>
+            {
+                j.Property(pt => pt.PublicationDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                j.HasKey(t => new { t.PostId, t.TagId });
+            });
 }
 ```
 
@@ -152,9 +162,9 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 实体类型通常映射到表或视图，以便 EF Core 在查询该类型时将拉回表或视图的内容。 EF Core 5.0 允许实体类型映射到“定义查询”。 （这在以前的版本中部分支持，但在 EF Core 5.0 中已显著改进，并使用不同的语法。）
 
-例如，考虑两个表：一个具有新式帖子；另一个具有旧式帖子。 新式帖子表有一些额外的列，但为了我们的应用程序的目的，我们希望将新式和旧式帖子 tp 合并和映射到具有所有必需属性的实体类型：
+例如，考虑两个表：一个具有新式帖子；另一个具有旧式帖子。 新式帖子表有一些额外的列，但为了我们的应用程序，我们希望将新式和旧式帖子合并和映射到具有所有必需属性的实体类型：
 
-```c#
+```csharp
 public class Post
 {
     public int Id { get; set; }
@@ -167,7 +177,7 @@ public class Post
 
 在 EF Core 5.0 中，`ToSqlQuery` 可用于将此实体类型映射到从两个表中提取和合并行的查询：
 
-```c#
+```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder.Entity<Post>().ToSqlQuery(
@@ -181,7 +191,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 然后，此实体类型可以正常用于 LINQ 查询。 例如， LINQ 查询：
 
-```c#
+```csharp
 var posts = context.Posts.Where(e => e.Blog.Name.Contains("Unicorn")).ToList();
 ```
 
@@ -230,7 +240,7 @@ EF Core 5.0 允许将相同的 CLR 类型映射到多个不同的实体类型。
 
 例如，下面的 DbContext 将 BCL 类型 `Dictionary<string, object>` 配置为产品和类别的共享类型实体类型。
 
-```c#
+```csharp
 public class ProductsContext : DbContext
 {
     public DbSet<Dictionary<string, object>> Products => Set<Dictionary<string, object>>("Product");
@@ -261,7 +271,7 @@ public class ProductsContext : DbContext
 
 字典对象（“属性包”）现在可以作为实体实例添加到上下文中并保存。 例如：
 
-```c#
+```csharp
 var beverages = new Dictionary<string, object>
 {
     ["Name"] = "Beverages",
@@ -275,7 +285,7 @@ context.SaveChanges();
 
 然后，可以以正常方式查询和更新这些实体：
 
-```c#
+```csharp
 var foods = context.Categories.Single(e => e["Name"] == "Foods");
 var marmite = context.Products.Single(e => e["Name"] == "Marmite");
 
@@ -291,7 +301,7 @@ EF Core 5.0 引入调用 SaveChanges 时触发的 .NET 事件和 EF Core 拦截�
 
 事件简单易用；例如：
 
-```c#
+```csharp
 context.SavingChanges += (sender, args) =>
 {
     Console.WriteLine($"Saving changes for {((DbContext)sender).Database.GetConnectionString()}");
@@ -309,7 +319,7 @@ context.SavedChanges += (sender, args) =>
 
 拦截器由 `ISaveChangesInterceptor` 定义，但通常从 `SaveChangesInterceptor` 继承，以便避免实现每个方法。 例如：
 
-```c#
+```csharp
 public class MySaveChangesInterceptor : SaveChangesInterceptor
 {
     public override InterceptionResult<int> SavingChanges(
@@ -339,11 +349,11 @@ public class MySaveChangesInterceptor : SaveChangesInterceptor
 
 拦截器的缺点是，构建 DbContext 时，必须在 DbContext 上注册它们。 例如：
 
-```c#
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder
-            .AddInterceptors(new MySaveChangesInterceptor())
-            .UseSqlite("Data Source = test.db");
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder
+        .AddInterceptors(new MySaveChangesInterceptor())
+        .UseSqlite("Data Source = test.db");
 ```
 
 相反，可以随时在 DbContext 实例上注册事件。
@@ -356,7 +366,7 @@ public class MySaveChangesInterceptor : SaveChangesInterceptor
 
 在下面的代码中，`AuthorizationContext` 将生成对 `Users` 表的更改的迁移，但 `ReportingContext` 不会，从而防止迁移冲突。
 
-```C#
+```csharp
 public class AuthorizationContext : DbContext
 {
     public DbSet<User> Users { get; set; }
@@ -377,7 +387,7 @@ public class ReportingContext : DbContext
 
 在 EF Core 3.1 中，一对一关系的依赖端始终被视为可选。 这在使用从属实体时最明显。 例如，请考虑以下模型和配置：
 
-```c#
+```csharp
 public class Person
 {
     public int Id { get; set; }
@@ -398,7 +408,7 @@ public class Address
 }
 ```
 
-```c#
+```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder.Entity<Person>(b =>
@@ -442,7 +452,7 @@ CREATE TABLE "People" (
 
 在 EF Core 5.0 中，`HomeAddress` 导航现在可以配置为必需的依赖项。 例如：
 
-```c#
+```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder.Entity<Person>(b =>
@@ -570,7 +580,7 @@ ajcvickers@avickers420u:~/AllTogetherNow/Daily$
 
 自定义可变类型的 EF Core 属性[需要值比较器](xref:core/modeling/value-comparers)以便正确检测属性更改。 现在可以将此指定为配置类型的值转换的一部分。 例如：
 
-```c#
+```csharp
 modelBuilder
     .Entity<EntityType>()
     .Property(e => e.MyProperty)
@@ -589,7 +599,7 @@ modelBuilder
 
 `TryGetValue` 方法已添加到 `EntityEntry.CurrentValues` 和 `EntityEntry.OriginalValues`。 这允许请求属性的值，而无需首先检查该属性是否映射在 EF 模型中。 例如：
 
-```c#
+```csharp
 if (entry.CurrentValues.TryGetValue(propertyName, out var value))
 {
     Console.WriteLine(value);
@@ -621,7 +631,7 @@ EF Core 5.0 RC1 包含一些其他查询转换改进：
 
 最后，对于 RC1，EF Core 现在允许在 ModelBuilder 中对字段和属性使用 lambda 方法。 例如，如果你由于某种原因而反对属性并决定使用公共字段，那么现在可以使用 lambda 生成器映射这些字段：
 
-```c#
+```csharp
 public class Post
 {
     public int Id;
@@ -639,7 +649,7 @@ public class Blog
 }
 ```
 
-```c#
+```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder.Entity<Blog>(b =>
@@ -669,7 +679,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 例如，请考虑具有映射的层次结构的此模型：
 
-```c#
+```csharp
 public class Animal
 {
     public int Id { get; set; }
@@ -743,7 +753,7 @@ CREATE TABLE [Dogs] (
 
 可使用映射特性将实体类型映射到不同的表：
 
-```c#
+```csharp
 [Table("Animals")]
 public class Animal
 {
@@ -772,7 +782,7 @@ public class Dog : Pet
 
 或使用 `ModelBuilder` 配置：
 
-```c#
+```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder.Entity<Animal>().ToTable("Animals");
@@ -790,7 +800,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 例如，假设为 `Unicorn` 实体类型创建了 `Unicorns` 表：
 
-```c#
+```csharp
 public class Unicorn
 {
     public int Id { get; set; }
@@ -877,7 +887,7 @@ EF Core 模型需要两种实体类型才能使用此 TVF：
 * 以正常方式映射到 Employees 表的 `Employee` 类型
 * 与 TVF 返回的形状相匹配的 `Report` 类型
 
-```c#
+```csharp
 public class Employee
 {
     public int Id { get; set; }
@@ -889,7 +899,7 @@ public class Employee
 }
 ```
 
-```c#
+```csharp
 public class Report
 {
     public string Name { get; set; }
@@ -899,7 +909,7 @@ public class Report
 
 这些类型必须包含在 EF Core 模型中：
 
-```c#
+```csharp
 modelBuilder.Entity<Employee>();
 modelBuilder.Entity(typeof(Report)).HasNoKey();
 ```
@@ -908,14 +918,14 @@ modelBuilder.Entity(typeof(Report)).HasNoKey();
 
 最后，必须将 .NET 方法映射到数据库中的 TVF。 可以使用新的 `FromExpression` 方法在 DbContext 上定义此方法：
 
-```c#
+```csharp
 public IQueryable<Report> GetReports(int managerId)
     => FromExpression(() => GetReports(managerId));
 ```
 
 此方法使用与上面定义的 TVF 匹配的参数和返回类型。 然后在 OnModelCreating 中将该方法添加到 EF Core 模型：
 
-```c#
+```csharp
 modelBuilder.HasDbFunction(() => GetReports(default));
 ```
 
@@ -923,7 +933,7 @@ modelBuilder.HasDbFunction(() => GetReports(default));
 
 现在可以编写查询，以调用 `GetReports` 并对结果进行组合。 例如：
 
-```c#
+```csharp
 from e in context.Employees
 from rc in context.GetReports(e.Id)
 where rc.IsDeveloper == true
@@ -951,7 +961,7 @@ EF Core 5.0 允许将同一实体类型映射到不同的数据库对象。 这�
 
 例如，可将一个实体类型同时映射到数据库视图和数据库表：
 
-```c#
+```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder
@@ -963,7 +973,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 默认情况下，EF Core 随后将从视图进行查询，将更新发送到表。 例如，执行以下代码：
 
-```c#
+```csharp
 var blog = context.Set<Blog>().Single(e => e.Name == "One Unicorn");
 
 blog.Name = "1unicorn2";
@@ -988,7 +998,7 @@ SELECT @@ROWCOUNT;
 
 现在可以将拆分查询（见下文）配置为 DbContext 执行的任何查询的默认值。 此配置仅适用于关系提供程序，因此必须将其指定为 `UseProvider` 配置的一部分。 例如：
 
-```c#
+```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder
         .UseSqlServer(
@@ -1158,7 +1168,7 @@ EF Core 5.0 现允许将包含相关集合的一个 LINQ 查询拆分成多个 S
 
 例如，请考虑使用 `Include` 提取两个级别的相关集合的查询：
 
-```CSharp
+```csharp
 var artists = context.Artists
     .Include(e => e.Albums).ThenInclude(e => e.Tags)
     .ToList();
@@ -1179,7 +1189,7 @@ ORDER BY "a"."Id", "t0"."Id", "t0"."Id0"
 
 可使用新的 `AsSplitQuery` API 来更改此行为。 例如：
 
-```CSharp
+```csharp
 var artists = context.Artists
     .AsSplitQuery()
     .Include(e => e.Albums).ThenInclude(e => e.Tags)
@@ -1213,7 +1223,7 @@ ORDER BY "a"."Id", "a0"."Id"
 
 在投影中加载集合时，也可使用 `AsSplitQuery`。 例如：
 
-```CSharp
+```csharp
 context.Artists
     .AsSplitQuery()
     .Select(e => new
@@ -1242,7 +1252,7 @@ ORDER BY "a"."Id"
 
 这个新的 IndexAttribute 可置于实体类型上来指定单列的索引。 例如：
 
-```CSharp
+```csharp
 [Index(nameof(FullName), IsUnique = true)]
 public class User
 {
@@ -1263,7 +1273,7 @@ CREATE UNIQUE INDEX [IX_Users_FullName]
 
 IndexAttribute 也可用于指定横跨多个列的索引。 例如：
 
-```CSharp
+```csharp
 [Index(nameof(FirstName), nameof(LastName), IsUnique = true)]
 public class User
 {
@@ -1291,7 +1301,7 @@ CREATE UNIQUE INDEX [IX_Users_FirstName_LastName]
 
 我们将继续改进在查询转换失败时生成的异常消息。 例如，以下查询使用未映射的属性 `IsSigned`：
 
-```CSharp
+```csharp
 var artists = context.Artists.Where(e => e.IsSigned).ToList();
 ```
 
@@ -1301,7 +1311,7 @@ EF Core 将引发以下异常，指出由于 `IsSigned` 未映射而导致转换
 
 同样地，在尝试用依赖区域性的语义来转换字符串比较时，现将生成信息更丰富的异常消息。 例如，以下查询尝试使用 `StringComparison.CurrentCulture`：
 
-```CSharp
+```csharp
 var artists = context.Artists
     .Where(e => e.Name.Equals("The Unicorns", StringComparison.CurrentCulture))
     .ToList();
@@ -1317,7 +1327,7 @@ EF Core 现将引发以下异常：
 
 EF Core 公开一个事务 ID 来跨调用关联事务。 此 ID 通常是在启动事务时由 EF Core 设置的。 如果转而由应用程序启动事务，则应用程序可使用此功能来显式设置事务 ID，使其在所用的每个位置都正确关联。 例如：
 
-```CSharp
+```csharp
 using (context.Database.UseTransaction(myTransaction, myId))
 {
    ...
@@ -1330,7 +1340,7 @@ using (context.Database.UseTransaction(myTransaction, myId))
 
 标准 .NET [IPAddress 类](/dotnet/api/system.net.ipaddress) 现自动映射到尚不具备原生支持的数据库的字符串列中。 例如，请考虑映射以下实体类型：
 
-```CSharp
+```csharp
 public class Host
 {
     public int Id { get; set; }
@@ -1349,7 +1359,7 @@ CREATE TABLE [Host] (
 
 之后，可按正常的方式添加实体：
 
-```CSharp
+```csharp
 context.AddRange(
     new Host { Address = IPAddress.Parse("127.0.0.1")},
     new Host { Address = IPAddress.Parse("0000:0000:0000:0000:0000:0000:0000:0001")});
@@ -1388,7 +1398,7 @@ Scaffold-DbContext 'Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook' 
 
 现将转换字符串中字符的 FirstOrDefault 和类似运算符。 例如，使用 SQL Server 时，以下 LINQ 查询：
 
-```CSharp
+```csharp
 context.Customers.Where(c => c.ContactName.FirstOrDefault() == 'A').ToList();
 ```
 
@@ -1404,7 +1414,7 @@ WHERE SUBSTRING([c].[ContactName], 1, 1) = N'A'
 
 EF Core 现使用 CASE 块生成效果更佳的查询。 例如，以下 LINQ 查询：
 
-```CSharp
+```csharp
 context.Weapons
     .OrderBy(w => w.Name.CompareTo("Marcus' Lancer") == 0)
     .ThenBy(w => w.Id)
@@ -1446,7 +1456,7 @@ END, [w].[Id]");
 
 现可在 EF 模式中指定数据库的默认排序规则。 这将传输到生成的迁移，在创建数据库时设置排序规则。 例如：
 
-```CSharp
+```csharp
 modelBuilder.UseCollation("German_PhoneBook_CI_AS");
 ```
 
@@ -1459,18 +1469,18 @@ COLLATE German_PhoneBook_CI_AS;
 
 可指定用于特定数据库列的排序规则。 例如：
 
-```CSharp
- modelBuilder
-     .Entity<User>()
-     .Property(e => e.Name)
-     .UseCollation("German_PhoneBook_CI_AS");
+```csharp
+modelBuilder
+    .Entity<User>()
+    .Property(e => e.Name)
+    .UseCollation("German_PhoneBook_CI_AS");
 ```
 
 对于不使用迁移的列，可在创建 DbContext 基架时从数据库对排序规则进行反向工程处理。
 
 最后，可通过 `EF.Functions.Collate()` 使用不同的排序规则进行即席查询。 例如：
 
-```CSharp
+```csharp
 context.Users.Single(e => EF.Functions.Collate(e.Name, "French_CI_AS") == "Jean-Michel Jarre");
 ```
 
@@ -1496,7 +1506,7 @@ dotnet ef migrations add two --verbose --dev
 
 然后，该参数将传输到工厂，它在这里可用于控制如何创建和初始化上下文。 例如：
 
-```CSharp
+```csharp
 public class MyDbContextFactory : IDesignTimeDbContextFactory<SomeDbContext>
 {
     public SomeDbContext CreateDbContext(string[] args)
@@ -1510,13 +1520,13 @@ public class MyDbContextFactory : IDesignTimeDbContextFactory<SomeDbContext>
 
 现可将非跟踪查询配置来执行标识解析。 例如，以下查询将为每个 Post 创建一个新的 Blog 实例，即使每个 Blog 的主键相同也是如此。
 
-```CSharp
+```csharp
 context.Posts.AsNoTracking().Include(e => e.Blog).ToList();
 ```
 
 然而，可更改此查询来确保只创建一个 Blog 实例，代价通常是稍微拖慢一些速度和总是使用更多的内存：
 
-```CSharp
+```csharp
 context.Posts.AsNoTracking().PerformIdentityResolution().Include(e => e.Blog).ToList();
 ```
 
@@ -1530,7 +1540,7 @@ context.Posts.AsNoTracking().PerformIdentityResolution().Include(e => e.Blog).To
 
 EF Core 5.0 允许将计算列配置为存储计算列。 例如：
 
-```CSharp
+```csharp
 modelBuilder
     .Entity<User>()
     .Property(e => e.SomethingComputed)
@@ -1547,7 +1557,7 @@ EF Core 现支持在 SQLite 数据库中使用计算列。
 
 现在，可以使用模型生成器指定属性的精度和小数位数。 例如：
 
-```CSharp
+```csharp
 modelBuilder
     .Entity<Blog>()
     .Property(b => b.Numeric)
@@ -1562,7 +1572,7 @@ modelBuilder
 
 现在可以在 SQL Server 上创建索引时指定填充因子。 例如：
 
-```CSharp
+```csharp
 modelBuilder
     .Entity<Customer>()
     .HasIndex(e => e.Name)
@@ -1575,7 +1585,7 @@ modelBuilder
 
 Include 方法现在支持筛选包含的实体。 例如：
 
-```CSharp
+```csharp
 var blogs = context.Blogs
     .Include(e => e.Posts.Where(p => p.Title.Contains("Cheese")))
     .ToList();
@@ -1585,7 +1595,7 @@ var blogs = context.Blogs
 
 Skip 和 Take 也可用于减少包含的实体数量。 例如：
 
-```CSharp
+```csharp
 var blogs = context.Blogs
     .Include(e => e.Posts.OrderByDescending(post => post.Title).Take(5)))
     .ToList();
@@ -1598,7 +1608,7 @@ var blogs = context.Blogs
 
 导航属性主要在[定义关系](xref:core/modeling/relationships)时配置。 但是，在导航属性需要额外配置的情况下，可以使用新的 `Navigation` 方法。 例如，如需在根据约定找不到支持字段时设置导航的支持字段，请执行以下操作：
 
-```CSharp
+```csharp
 modelBuilder.Entity<Blog>().Navigation(e => e.Posts).HasField("_myposts");
 ```
 
@@ -1635,7 +1645,7 @@ dotnet ef database update --connection "connection string"
 
 例如：
 
-```CSharp
+```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder
         .EnableDetailedErrors()
@@ -1649,7 +1659,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 现在可以在查询中指定用于给定查询的分区键。 例如：
 
-```CSharp
+```csharp
 await context.Set<Customer>()
              .WithPartitionKey(myPartitionKey)
              .FirstAsync();
@@ -1661,7 +1671,7 @@ await context.Set<Customer>()
 
 可以使用新的 `EF.Functions.DataLength` 方法访问它。 例如：
 
-```CSharp
+```csharp
 var count = context.Orders.Count(c => 100 < EF.Functions.DataLength(c.OrderDate));
 ```
 
@@ -1671,7 +1681,7 @@ var count = context.Orders.Count(c => 100 < EF.Functions.DataLength(c.OrderDate)
 
 现在，可以使用 C# 特性指定属性的支持字段。 使用此特性，即使在不能自动找到支持字段时，EF Core 也能正常读写支持字段。 例如：
 
-```CSharp
+```csharp
 public class Blog
 {
     private string _mainTitle;
@@ -1741,7 +1751,7 @@ EF Core 5.0 引入了 `ToQueryString` 扩展方法，该方法会返回执行 LI
 
 现在可以将实体类型配置为不使用新 `KeylessAttribute`的键。 例如：
 
-```CSharp
+```csharp
 [Keyless]
 public class Address
 {
@@ -1789,7 +1799,7 @@ EF Core 5.0 支持 C# 索引器属性的映射。 这写属性使得实体能够
 
 EF Core 5.0 迁移现可为枚举属性映射生成检查约束。 例如：
 
-```SQL
+```sql
 MyEnumColumn VARCHAR(10) NOT NULL CHECK (MyEnumColumn IN ('Useful', 'Useless', 'Unknown'))
 ```
 
@@ -1799,7 +1809,7 @@ MyEnumColumn VARCHAR(10) NOT NULL CHECK (MyEnumColumn IN ('Useful', 'Useless', '
 
 除了现有 `IsSqlServer`、`IsSqlite` 和 `IsInMemory` 外，还添加了新的 `IsRelational` 方法。 此方法可用于测试 DbContext 是否使用任何关系数据库提供程序。 例如：
 
-```CSharp
+```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     if (Database.IsRelational())
@@ -1815,7 +1825,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 Azure Cosmos DB 数据库提供程序现在支持使用 ETag 的开放式并发。 使用 OnModelCreating 中的模型生成器配置 ETag：
 
-```CSharp
+```csharp
 builder.Entity<Customer>().Property(c => c.ETag).IsEtagConcurrency();
 ```
 
@@ -1834,7 +1844,7 @@ builder.Entity<Customer>().Property(c => c.ETag).IsEtagConcurrency();
 
 例如：
 
-```CSharp
+```csharp
 var count = context.Orders.Count(c => date > EF.Functions.DateFromParts(DateTime.Now.Year, 12, 25));
 
 ```
@@ -1853,7 +1863,7 @@ var count = context.Orders.Count(c => date > EF.Functions.DateFromParts(DateTime
 
 现在，使用 `Reverse` 的查询会被转换。 例如：
 
-```CSharp
+```csharp
 context.Employees.OrderBy(e => e.EmployeeID).Reverse()
 ```
 
@@ -1863,7 +1873,7 @@ context.Employees.OrderBy(e => e.EmployeeID).Reverse()
 
 现在，使用按位运算符的查询会在更多的情况下被转换，例如：
 
-```CSharp
+```csharp
 context.Orders.Where(o => ~o.OrderID == negatedId)
 ```
 

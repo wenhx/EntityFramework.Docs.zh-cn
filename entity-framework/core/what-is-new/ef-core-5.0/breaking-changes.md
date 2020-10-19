@@ -2,14 +2,14 @@
 title: EF Core 5.0 中的中断性变更 - EF Core
 description: Entity Framework Core 5.0 中引入的中断性变更的完整列表
 author: bricelam
-ms.date: 09/09/2020
+ms.date: 09/24/2020
 uid: core/what-is-new/ef-core-5.0/breaking-changes
-ms.openlocfilehash: 8e9df4e2ff81e20cf5a36855247c5aff89ea2394
-ms.sourcegitcommit: c0e6a00b64c2dcd8acdc0fe6d1b47703405cdf09
+ms.openlocfilehash: e64f2b387d236e96d0451f3d55b3241daaba32d8
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/24/2020
-ms.locfileid: "91210362"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92065636"
 ---
 # <a name="breaking-changes-in-ef-core-50"></a>EF Core 5.0 中的中断性变更
 
@@ -30,6 +30,8 @@ API 和行为的下列更改有可能导致现有应用程序在更新到 EF Cor
 | [IMigrationsModelDiffer 当前使用 IRelationalModel](#relational-model)                                                                 | 低        |
 | [鉴别器是只读的](#read-only-discriminators)                                                                             | 低        |
 | [特定于提供程序的 EF.Functions 方法针对 InMemory 提供程序引发](#no-client-methods)                                              | 低        |
+| [IndexBuilder.HasName 现已过时](#index-obsolete)                                                                               | 低        |
+| [现已包括用于搭建实施了反向工程的模型的复数化程序](#pluralizer)                                                 | 低        |
 
 <a name="geometric-sqlite"></a>
 
@@ -53,7 +55,7 @@ HasGeometricDimension 过去用于在几何列上启用其他维度（Z 和 M）
 
 使用 `HasColumnType` 指定维度：
 
-```cs
+```csharp
 modelBuilder.Entity<GeoEntity>(
     x =>
     {
@@ -81,7 +83,7 @@ modelBuilder.Entity<GeoEntity>(
 
 目前在指定依赖端之前是否调用 `IsRequired` 尚不明确：
 
-```cs
+```csharp
 modelBuilder.Entity<Blog>()
     .HasOne(b => b.BlogImage)
     .WithOne(i => i.Blog)
@@ -97,7 +99,7 @@ modelBuilder.Entity<Blog>()
 
 从到依赖项的导航中删除 `RequiredAttribute`，转而将其放置在到主体的导航中或在 `OnModelCreating` 中配置关系：
 
-```cs
+```csharp
 modelBuilder.Entity<Blog>()
     .HasOne(b => b.BlogImage)
     .WithOne(i => i.Blog)
@@ -127,7 +129,7 @@ modelBuilder.Entity<Blog>()
 
 若要防止将分区键属性添加到主键，请在 `OnModelCreating` 中配置它。
 
-```cs
+```csharp
 modelBuilder.Entity<Blog>()
     .HasKey(b => b.Id);
 ```
@@ -154,7 +156,7 @@ modelBuilder.Entity<Blog>()
 
 若要返回到 3.x 行为，请在 `OnModelCreating` 中配置 `id` 属性。
 
-```cs
+```csharp
 modelBuilder.Entity<Blog>()
     .Property<string>("id")
     .ToJsonProperty("id");
@@ -248,7 +250,7 @@ byte[] 的这种表示形式与预期更好地对齐，并且是主要 JSON 序�
 
 使用以下代码将 `context` 中的模型与 `snapshot` 中的模型进行比较：
 
-```cs
+```csharp
 var dependencies = context.GetService<ProviderConventionSetBuilderDependencies>();
 var relationalDependencies = context.GetService<RelationalConventionSetBuilderDependencies>();
 
@@ -288,7 +290,7 @@ EF 不希望实体类型仍在受到跟踪时就发生更改，因此更改鉴�
 
 如果更改鉴别器值是必需的，并且在调用 `SaveChanges` 后将立即处理上下文，则可将鉴别器设置为可变：
 
-```cs
+```csharp
 modelBuilder.Entity<BaseEntity>()
     .Property<string>("Discriminator")
     .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Save);
@@ -343,3 +345,49 @@ modelBuilder.Entity<BaseEntity>()
 **缓解措施**
 
 由于无法准确模拟数据库函数的行为，因此应根据生产中的同一种数据库测试包含这些函数的查询。
+
+<a name="index-obsolete"></a>
+
+### <a name="indexbuilderhasname-is-now-obsolete"></a>IndexBuilder.HasName 现已过时
+
+[跟踪问题 #21089](https://github.com/dotnet/efcore/issues/21089)
+
+**旧行为**
+
+以前，只能在给定的一组属性上定义一个索引。 索引的数据库名称是使用 IndexBuilder.HasName 配置的。
+
+**新行为**
+
+现在，允许在同一组属性上使用多个索引。 这些索引现在可以通过模型中的名称来区分。 按照约定，模型名称将用作数据库名称；不过，也可以使用 HasDatabaseName 单独进行配置。
+
+**为什么**
+
+将来，我们希望使用同一组属性上的不同排序规则对索引启用升序和降序。 此更改将沿该方向转至其他步骤。
+
+**缓解措施**
+
+之前调用 IndexBuilder.HasName 的任何代码都应更新为调用 HasDatabaseName。
+
+如果你的项目包含 EF Core 版本 2.0.0 之前生成的迁移，则可以安全地忽略这些文件中的警告，并通过添加 `#pragma warning disable 612, 618` 将其取消。
+
+<a name="pluralizer"></a>
+
+### <a name="a-pluarlizer-is-now-included-for-scaffolding-reverse-engineered-models"></a>现已包括用于搭建实施了反向工程的模型的复数化程序
+
+[跟踪问题 #11160](https://github.com/dotnet/efcore/issues/11160)
+
+**旧行为**
+
+以前，必须安装单独的复数化程序包，才能在通过对数据库架构实施反向工程来搭建 DbContext 和实体类型时设置 DbSet 和集合导航名称的复数形式并设置表名称的单数形式。
+
+**新行为**
+
+EF Core 现在包括使用 [Humanizer](https://github.com/Humanizr/Humanizer) 库的复数化程序。 这是 Visual Studio 用来推荐变量名称的同一个库。
+
+**为什么**
+
+对集合属性的单词使用复数形式并对类型和引用属性的单词使用单数形式在 .NET 中是惯用的。
+
+**缓解措施**
+
+若要禁用复数化程序，请使用 `dotnet ef dbcontext scaffold` 上的 `--no-pluralize` 选项或 `Scaffold-DbContext` 上的 `-NoPluralize` 开关。

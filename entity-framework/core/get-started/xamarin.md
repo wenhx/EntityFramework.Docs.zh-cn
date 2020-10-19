@@ -5,12 +5,12 @@ author: codemillmatt
 ms.date: 07/07/2020
 ms.author: masoucou
 uid: core/get-started/xamarin
-ms.openlocfilehash: b4a7e2260337d74329d309e9db32fe97a2131d73
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: 0552038d471e294834bed9e3bf1f05fd74c39192
+ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89619297"
+ms.lasthandoff: 10/14/2020
+ms.locfileid: "92062537"
 ---
 # <a name="getting-started-with-ef-core-and-xamarin"></a>EF Core 和 Xamarin 入门
 
@@ -72,6 +72,14 @@ ms.locfileid: "89619297"
 以下各部分将展示示例项目中的代码，该项目会搭配 EF Core 使用 Xamarin.Forms 从 SQLite 数据库读取、创建、更新和删除数据。
 
 本文假设你熟悉 Xamarin. Forms 的[显示数据](/xamarin/xamarin-forms/app-fundamentals/data-binding/)和[在页面之间导航](/xamarin/xamarin-forms/app-fundamentals/navigation/)主题。
+
+> [!IMPORTANT]
+> Entity Framework Core 使用反射来调用 Xamarin.iOS 链接器在发布模式配置中可能会去除的函数。 可以通过以下两种方法之一来避免这种情况。
+> 
+> * 第一种方法是将 `--linkskip System.Core` 添加到“iOS 生成”选项中的“其他 mtouch 参数”。
+> * 或者，将 Xamarin.iOS“链接器行为”设置为“iOS 生成”选项中的 `Don't Link`。
+> [本文详细介绍了 Xamarin.iOS 链接器](/xamarin/ios/deploy-test/linker)，包括如何在 Xamarin.iOS 上设置行为。
+> 
 
 ## <a name="entity-framework-core-nuget-packages"></a>Entity Framework Core NuGet 包
 
