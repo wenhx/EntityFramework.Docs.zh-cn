@@ -4,19 +4,19 @@ description: 如何使用 Entity Framework Core 配置无键实体类型
 author: AndriySvyryd
 ms.date: 9/13/2019
 uid: core/modeling/keyless-entity-types
-ms.openlocfilehash: cb4ce44526ada77e37eb4dceb9986a670ea3656b
-ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
+ms.openlocfilehash: d1a60e0504b22623b97c1a4963d2e3f70faa365c
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2020
-ms.locfileid: "92063798"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94429502"
 ---
 # <a name="keyless-entity-types"></a>无键实体类型
 
 > [!NOTE]
 > 此功能已添加到查询类型的名称下。 在 EF Core 3.0 中，概念已重命名为无键实体类型。 `[Keyless]`数据批注在 EFCore 5.0 中变为可用。
 
-除了常规实体类型外，EF Core 模型还可以包含 _无键实体类型_，可用于对不包含键值的数据执行数据库查询。
+除了常规实体类型外，EF Core 模型还可以包含 _无键实体类型_ ，可用于对不包含键值的数据执行数据库查询。
 
 ## <a name="defining-keyless-entity-types"></a>定义无键实体类型
 
@@ -47,7 +47,7 @@ ms.locfileid: "92063798"
   - 它们只能包含指向常规实体的引用导航属性。
   - 实体不能包含无键实体类型的导航属性。
 - 需要配置 `[Keyless]` 数据批注或 `.HasNoKey()` 方法调用。
-- 可以映射到定义的 _查询_。 定义查询是在模型中声明的查询，它充当无键实体类型的数据源。
+- 可以映射到定义的 _查询_ 。 定义查询是在模型中声明的查询，它充当无键实体类型的数据源。
 
 ## <a name="usage-scenarios"></a>使用方案
 
@@ -60,7 +60,7 @@ ms.locfileid: "92063798"
 
 ## <a name="mapping-to-database-objects"></a>映射到数据库对象
 
-使用或 Fluent API 将无键实体类型映射到数据库对象 `ToTable` `ToView` 。 从 EF Core 的角度来看，此方法中指定的数据库对象是一个 _视图_，这意味着它将被视为只读查询源，并且不能作为更新、插入或删除操作的目标。 但是，这并不意味着数据库对象实际上必须是数据库视图。 它也可以是将被视为只读的数据库表。 相反，对于常规实体类型，EF Core 假设在方法中指定的数据库对象 `ToTable` 可以被视为 _表_，这意味着它可用作查询源，但也可作为更新、删除和插入操作的目标。 事实上，您可以在中指定数据库视图的名称 `ToTable` ，只要该视图被配置为可在数据库上更新，一切都应正常工作。
+使用或 Fluent API 将无键实体类型映射到数据库对象 `ToTable` `ToView` 。 从 EF Core 的角度来看，此方法中指定的数据库对象是一个 _视图_ ，这意味着它将被视为只读查询源，并且不能作为更新、插入或删除操作的目标。 但是，这并不意味着数据库对象实际上必须是数据库视图。 它也可以是将被视为只读的数据库表。 相反，对于常规实体类型，EF Core 假设在方法中指定的数据库对象 `ToTable` 可以被视为 _表_ ，这意味着它可用作查询源，但也可作为更新、删除和插入操作的目标。 事实上，您可以在中指定数据库视图的名称 `ToTable` ，只要该视图被配置为可在数据库上更新，一切都应正常工作。
 
 > [!NOTE]
 > `ToView` 假定该对象已存在于数据库中，并且不是通过迁移创建的。
@@ -99,3 +99,6 @@ ms.locfileid: "92063798"
 
 > [!TIP]
 > 请注意，我们还定义了上下文级查询属性 (DbSet) ，以充当针对此类型的查询的根。
+
+> [!TIP]
+> 若要测试使用内存中提供程序映射到视图的无键实体类型，请通过将它们映射到查询 `ToInMemoryQuery` 。 有关更多详细信息，请参阅使用此技术的可 [运行示例](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Testing/ItemsWebApi/) 。

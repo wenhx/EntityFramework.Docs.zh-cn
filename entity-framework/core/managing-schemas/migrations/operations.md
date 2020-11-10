@@ -2,14 +2,14 @@
 title: 自定义迁移操作-EF Core
 description: 通过 Entity Framework Core 管理数据库架构管理的自定义和原始 SQL 迁移
 author: bricelam
-ms.date: 11/07/2017
+ms.date: 10/27/2020
 uid: core/managing-schemas/migrations/operations
-ms.openlocfilehash: d1d29b7789eea5e887490364a7ce3abfdc903545
-ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
+ms.openlocfilehash: 2abde4d5eac977a746863dcfd77bc85a34e2166c
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2020
-ms.locfileid: "92062030"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94429827"
 ---
 # <a name="custom-migrations-operations"></a>自定义迁移操作
 
@@ -25,36 +25,14 @@ migrationBuilder.CreateUser("SQLUser1", "Password");
 
 实现自定义操作的最简单方法是定义调用的扩展方法 `MigrationBuilder.Sql()` 。 下面是生成相应 Transact-sql 的示例。
 
-```csharp
-static MigrationBuilder CreateUser(
-    this MigrationBuilder migrationBuilder,
-    string name,
-    string password)
-    => migrationBuilder.Sql($"CREATE USER {name} WITH PASSWORD '{password}';");
-```
+[!code-csharp[](../../../../samples/core/Schemas/Migrations/CustomOperationSql.cs#snippet_CustomOperationSql)]
+
+> [!TIP]
+> `EXEC`当语句必须是 SQL 批处理中的第一个或唯一一个语句时，请使用函数。 还可能需要解决在引用的列当前不存在于表中时可能发生的幂等迁移脚本中的分析器错误。
 
 如果你的迁移需要支持多个数据库提供程序，则可以使用 `MigrationBuilder.ActiveProvider` 属性。 下面是同时支持 Microsoft SQL Server 和 PostgreSQL 的示例。
 
-```csharp
-static MigrationBuilder CreateUser(
-    this MigrationBuilder migrationBuilder,
-    string name,
-    string password)
-{
-    switch (migrationBuilder.ActiveProvider)
-    {
-        case "Npgsql.EntityFrameworkCore.PostgreSQL":
-            return migrationBuilder
-                .Sql($"CREATE USER {name} WITH PASSWORD '{password}';");
-
-        case "Microsoft.EntityFrameworkCore.SqlServer":
-            return migrationBuilder
-                .Sql($"CREATE USER {name} WITH PASSWORD = '{password}';");
-    }
-
-    return migrationBuilder;
-}
-```
+[!code-csharp[](../../../../samples/core/Schemas/Migrations/CustomOperationMultiSql.cs#snippet_CustomOperationMultiSql)]
 
 此方法仅在知道将应用自定义操作的每个提供程序时才有效。
 
@@ -62,83 +40,16 @@ static MigrationBuilder CreateUser(
 
 若要将自定义操作与 SQL 分离，可以定义自己的 `MigrationOperation` 来表示它。 然后，将操作传递给提供程序，以便它可以确定要生成的相应 SQL。
 
-```csharp
-class CreateUserOperation : MigrationOperation
-{
-    public string Name { get; set; }
-    public string Password { get; set; }
-}
-```
+[!code-csharp[](../../../../samples/core/Schemas/Migrations/CustomOperation.cs#snippet_CreateUserOperation)]
 
 利用此方法，扩展方法只需将其中一个操作添加到 `MigrationBuilder.Operations` 。
 
-```csharp
-static MigrationBuilder CreateUser(
-    this MigrationBuilder migrationBuilder,
-    string name,
-    string password)
-{
-    migrationBuilder.Operations.Add(
-        new CreateUserOperation
-        {
-            Name = name,
-            Password = password
-        });
-
-    return migrationBuilder;
-}
-```
+[!code-csharp[](../../../../samples/core/Schemas/Migrations/CustomOperation.cs#snippet_MigrationBuilderExtension)]
 
 此方法要求每个提供程序知道如何在其服务中为此操作生成 SQL `IMigrationsSqlGenerator` 。 下面是一个示例，用于重写 SQL Server 的生成器来处理新操作。
 
-```csharp
-class MyMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
-{
-    public MyMigrationsSqlGenerator(
-        MigrationsSqlGeneratorDependencies dependencies,
-        IMigrationsAnnotationProvider migrationsAnnotations)
-        : base(dependencies, migrationsAnnotations)
-    {
-    }
-
-    protected override void Generate(
-        MigrationOperation operation,
-        IModel model,
-        MigrationCommandListBuilder builder)
-    {
-        if (operation is CreateUserOperation createUserOperation)
-        {
-            Generate(createUserOperation, builder);
-        }
-        else
-        {
-            base.Generate(operation, model, builder);
-        }
-    }
-
-    private void Generate(
-        CreateUserOperation operation,
-        MigrationCommandListBuilder builder)
-    {
-        var sqlHelper = Dependencies.SqlGenerationHelper;
-        var stringMapping = Dependencies.TypeMappingSource.FindMapping(typeof(string));
-
-        builder
-            .Append("CREATE USER ")
-            .Append(sqlHelper.DelimitIdentifier(operation.Name))
-            .Append(" WITH PASSWORD = ")
-            .Append(stringMapping.GenerateSqlLiteral(operation.Password))
-            .AppendLine(sqlHelper.StatementTerminator)
-            .EndCommand();
-    }
-}
-```
+[!code-csharp[](../../../../samples/core/Schemas/Migrations/CustomOperation.cs#snippet_MigrationsSqlGenerator)]
 
 将默认迁移 sql 生成器服务替换为已更新的。
 
-```csharp
-protected override void OnConfiguring(DbContextOptionsBuilder options)
-    => options
-        .UseSqlServer(connectionString)
-        .ReplaceService<IMigrationsSqlGenerator, MyMigrationsSqlGenerator>();
-```
+[!code-csharp[](../../../../samples/core/Schemas/Migrations/CustomOperation.cs#snippet_OnConfiguring)]

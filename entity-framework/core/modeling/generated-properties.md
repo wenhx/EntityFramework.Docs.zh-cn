@@ -4,12 +4,12 @@ description: 如何在使用时配置属性的值生成 Entity Framework Core
 author: AndriySvyryd
 ms.date: 11/06/2019
 uid: core/modeling/generated-properties
-ms.openlocfilehash: d89739cf8bd2612b97bbf338e9685e9888b6216b
-ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
+ms.openlocfilehash: 347cedbf5fdebc985d75c6cad3c28f17d1344993
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2020
-ms.locfileid: "92062212"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94429619"
 ---
 # <a name="generated-values"></a>生成的值
 
@@ -34,9 +34,9 @@ ms.locfileid: "92062212"
 如果向具有分配给属性的值的上下文添加实体，则 EF 将尝试插入该值，而不是生成新的值。 如果某个属性未分配 (的 CLR 默认值、for、 `null` `string` `0` `int` `Guid.Empty` `Guid` 等等 ) ，则该属性被视为已分配值。 有关详细信息，请参阅 [生成的属性的显式值](xref:core/saving/explicit-values-generated-properties)。
 
 > [!WARNING]
-> 如何为添加的实体生成值将取决于所使用的数据库提供程序。 数据库提供程序可以为某些属性类型自动设置值生成，但其他属性可能要求您手动设置如何生成值。
+> 如何为添加的实体生成值将取决于所使用的数据库提供程序。 数据库提供程序可以为某些属性类型自动设置值生成，但其他提供程序可能要求您手动设置如何生成值。
 >
-> 例如，使用 SQL Server 时，将 `GUID` 使用 SQL Server 顺序 GUID 算法) 为 (的属性自动生成值。 但是，如果您指定 `DateTime` 在添加时生成属性，则必须设置一个方法来生成值。 实现此目的的一种方法是配置的默认值 `GETDATE()` ，请参阅 [默认值](#default-values)。
+> 例如，使用 SQL Server 时，将 `GUID` 使用 SQL Server 顺序 GUID 算法) 为 (的属性自动生成值。 但是，如果您指定 `DateTime` 在添加时生成属性，则必须为生成值设置一种方法。 实现此目的的一种方法是配置的默认值 `GETDATE()` ，请参阅 [默认值](#default-values)。
 
 ### <a name="value-generated-on-add-or-update"></a>添加或更新时生成的值
 
@@ -47,7 +47,7 @@ ms.locfileid: "92062212"
 > [!WARNING]
 > 为添加的和更新的实体生成值的方式将取决于所使用的数据库提供程序。 数据库提供程序可以为某些属性类型自动设置值生成，而其他提供程序则要求您手动设置如何生成值。
 >
-> 例如，使用 SQL Server 时，将 `byte[]` 设置为在添加或更新时生成并标记为并发标记的属性， `rowversion` 以便在数据库中生成值。 但是，如果您指定 `DateTime` 在添加或更新时生成属性，则必须设置一个方法来生成值。 执行此操作的一种方法是将默认值配置 `GETDATE()` (查看 [默认值](#default-values)) 以便为新行生成值。 然后，您可以使用数据库触发器来生成更新期间的值 (例如以下示例触发器) 。
+> 例如，使用 SQL Server 时，将设置 `byte[]` 为在添加或更新时生成并标记为并发标记的属性， `rowversion` 以便在数据库中生成值。 但是，如果您指定 `DateTime` 在添加或更新时生成属性，则必须为生成值设置一种方法。 执行此操作的一种方法是将默认值配置 `GETDATE()` (查看 [默认值](#default-values)) 以便为新行生成值。 然后，您可以使用数据库触发器来生成更新期间的值 (例如以下示例触发器) 。
 >
 > [!code-sql[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedOnAddOrUpdate.sql)]
 
@@ -68,7 +68,7 @@ ms.locfileid: "92062212"
 ***
 
 > [!WARNING]
-> 这只是让 EF 知道为添加的实体生成的值并不保证 EF 将设置实际机制来生成值。 有关更多详细信息，请参阅 [add 部分生成的值](#value-generated-on-add) 。
+> 这只是让 EF 知道为添加的实体生成的值并不保证 EF 将设置用于生成值的实际机制。 有关更多详细信息，请参阅 [add 部分生成的值](#value-generated-on-add) 。
 
 ### <a name="default-values"></a>默认值
 
@@ -94,19 +94,23 @@ ms.locfileid: "92062212"
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedOnAddOrUpdate.cs?name=ValueGeneratedOnAddOrUpdate&highlight=5)]
 
-***
+**_
 
 > [!WARNING]
-> 这只是让 EF 知道为添加或更新的实体生成的值，它不保证 EF 将设置实际机制来生成值。 有关更多详细信息，请参阅 [add or update 部分上生成的值](#value-generated-on-add-or-update) 。
+> 这只是让 EF 知道，将为添加或更新的实体生成值，而不保证 EF 设置用于生成值的实际机制。 有关更多详细信息，请参阅 [add or update 部分上生成的值](#value-generated-on-add-or-update) 。
 
 ### <a name="computed-columns"></a>计算列
 
-在某些关系数据库上，列可以配置为在数据库中计算其值，通常具有引用其他列的表达式：
+在大多数关系数据库上，列可以配置为在数据库中计算其值，通常具有引用其他列的表达式：
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ComputedColumn.cs?name=ComputedColumn&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ComputedColumn.cs?name=DefaultComputedColumn)]
+
+上面创建了一个 _virtual * 计算列，其值在每次从数据库中提取时都会进行计算。 您还可以指定将计算列 *存储* (有时称为 *持久化* ) ，这意味着在每次更新行时计算，并将磁盘与常规列一起存储：
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ComputedColumn.cs?name=StoredComputedColumn)]
 
 > [!NOTE]
-> 在某些情况下，每次提取列的值时都会计算该列的值 (有时称为 *虚拟* 列) ，而在其他情况下，会在每次更新行时计算该列的值并存储 (有时称为 *存储* 的列或 *持久* 的列) 。 这不同于数据库提供程序。
+> EF Core 5.0 中增加了对创建存储计算列的支持。
 
 ## <a name="no-value-generation"></a>无值生成
 

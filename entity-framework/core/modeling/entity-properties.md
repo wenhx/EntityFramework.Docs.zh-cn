@@ -4,12 +4,12 @@ description: 如何使用 Entity Framework Core 配置和映射实体属性
 author: roji
 ms.date: 05/27/2020
 uid: core/modeling/entity-properties
-ms.openlocfilehash: 99b0a9ee1e11714e98ebea8b2e6ac53bd2dc6e55
-ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
+ms.openlocfilehash: 55c6f31543d4ce3257cf203eaf9fd2191301ea7e
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2020
-ms.locfileid: "92062290"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94429591"
 ---
 # <a name="entity-properties"></a>实体属性
 
@@ -45,7 +45,7 @@ ms.locfileid: "92062290"
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ColumnName.cs?Name=ColumnName&highlight=3-5)]
 
-***
+**_
 
 ## <a name="column-data-types"></a>列数据类型
 
@@ -63,7 +63,7 @@ ms.locfileid: "92062290"
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ColumnDataType.cs?name=ColumnDataType&highlight=5-6)]
 
-***
+_*_
 
 ### <a name="maximum-length"></a>最大长度
 
@@ -82,7 +82,7 @@ ms.locfileid: "92062290"
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/MaxLength.cs?name=MaxLength&highlight=3-5)]
 
-***
+_*_
 
 ### <a name="precision-and-scale"></a>精度和小数位数
 
@@ -97,7 +97,7 @@ ms.locfileid: "92062290"
 
 #### <a name="data-annotations"></a>[数据批注](#tab/data-annotations)
 
-当前无法使用数据批注来进行配置。
+当前无法通过数据批注配置精度和小数位数。
 
 #### <a name="fluent-api"></a>[Fluent API](#tab/fluent-api)
 
@@ -106,7 +106,7 @@ ms.locfileid: "92062290"
 > [!NOTE]
 > 永远不会定义规模，无需先定义精度，因此用于定义刻度的流畅 API 是 `HasPrecision(precision, scale)` 。
 
-***
+_*_
 
 ## <a name="required-and-optional-properties"></a>必需属性和可选属性
 
@@ -116,18 +116,18 @@ ms.locfileid: "92062290"
 
 按照约定，.NET 类型可以包含 null 的属性将配置为可选，而 .NET 类型不能包含 null 的属性将根据需要进行配置。 例如，所有具有 .net 值类型的属性 (`int` 、 `decimal` ) 、等 `bool` 都是必需的，并且具有可为 null 的 .net 值类型 (、) 、等）的所有属性 `int?` `decimal?` `bool?` 都配置为可选。
 
-C # 8 引入了一个名 [为 null 的引用类型](/dotnet/csharp/tutorials/nullable-reference-types)的新功能，该功能允许对引用类型进行批注，以指示它是否可用于包含空值。 此功能在默认情况下处于禁用状态，如果启用，它将按以下方式修改 EF Core 的行为：
+C # 8 引入了一个名 [为 null 的引用类型 (NRT) ](/dotnet/csharp/tutorials/nullable-reference-types)的新功能，该功能允许对引用类型进行批注，以指示它是否可用于包含空值。 默认情况下，此功能处于禁用状态，它会按以下方式影响 EF Core 的行为：
 
-* 如果 (默认的) 中禁用了可以为 null 的引用类型，则所有具有 .NET 引用类型的属性都将按约定配置为可选的 (例如， `string`) 。
+如果 (默认的) 中禁用了可以为 null 的引用类型，则所有具有 .NET 引用类型的属性都将按约定配置为可选的 (例如， `string`) 。
 * 如果启用了可以为 null 的引用类型，则将根据 .NET 类型的 c # 为空性配置属性： `string?` 将配置为可选，但 `string` 会根据需要进行配置。
 
 下面的示例显示了一个具有 required 和 optional 属性的实体类型， (默认) 并启用了 "可为 null 的引用" 功能：
 
-#### <a name="without-nullable-reference-types-default"></a>[不能为 null 的引用类型 (默认值) ](#tab/without-nrt)
+#### <a name="without-nrt-default"></a>[不带 NRT (默认值) ](#tab/without-nrt)
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/CustomerWithoutNullableReferenceTypes.cs?name=Customer&highlight=4-8)]
 
-#### <a name="with-nullable-reference-types"></a>[具有可以为 null 的引用类型](#tab/with-nrt)
+#### <a name="with-nrt"></a>[With NRT](#tab/with-nrt)
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/Customer.cs?name=Customer&highlight=4-6)]
 

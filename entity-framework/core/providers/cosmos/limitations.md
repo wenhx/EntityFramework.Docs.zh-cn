@@ -2,23 +2,21 @@
 title: Azure Cosmos DB 提供程序-限制-EF Core
 description: 与其他提供程序相比，Entity Framework Core Azure Cosmos DB 提供程序的限制
 author: AndriySvyryd
-ms.date: 11/05/2019
+ms.date: 11/05/2020
 uid: core/providers/cosmos/limitations
-ms.openlocfilehash: e4d1c38da14d1e722797f8543313a69c7fb088cc
-ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
+ms.openlocfilehash: f7517954b854c8ea1020c039e490b4fb0dea7181
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2020
-ms.locfileid: "92064032"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94430191"
 ---
 # <a name="ef-core-azure-cosmos-db-provider-limitations"></a>Azure Cosmos DB 提供程序限制 EF Core
 
-Cosmos 提供程序有很多限制。 其中的许多限制是由基础 Cosmos 数据库引擎中的限制引起的，并不特定于 EF。 但大多数情况还 [没有实现](https://github.com/aspnet/EntityFrameworkCore/issues?page=1&q=is%3Aissue+is%3Aopen+Cosmos+in%3Atitle+label%3Atype-enhancement+sort%3Areactions-%2B1-desc)。
+Cosmos 提供程序有很多限制。 其中的许多限制是由基础 Cosmos 数据库引擎中的限制引起的，并不特定于 EF。 但大多数情况还 [没有实现](https://github.com/dotnet/efcore/issues?page=1&q=is%3Aissue+is%3Aopen+Cosmos+in%3Atitle+label%3Atype-enhancement+sort%3Areactions-%2B1-desc)。
 
 ## <a name="temporary-limitations"></a>临时限制
 
-- 即使只有一个实体类型没有映射到容器，它仍具有鉴别器属性。
-- 在某些情况下，具有分区键的实体类型不能正常工作
 - `Include` 不支持调用
 - `Join` 不支持调用
 
@@ -34,4 +32,4 @@ Cosmos 提供程序有很多限制。 其中的许多限制是由基础 Cosmos �
 你可以查看 [Azure Cosmos DB 支持的功能](/azure/cosmos-db/modeling-data)的完整概述，与关系数据库相比，这些是最明显的区别：
 
 - 不支持客户端启动的事务
-- 一些跨分区查询要么不受支持，要么速度慢得多，具体取决于所涉及的运算符
+- 某些跨分区查询的速度较慢，具体取决于例如 (涉及的运算符 `Skip/Take` 或 `OFFSET LIMIT`) 

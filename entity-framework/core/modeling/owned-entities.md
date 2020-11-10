@@ -4,16 +4,16 @@ description: 如何在使用时配置拥有的实体类型或聚合 Entity Frame
 author: AndriySvyryd
 ms.date: 11/06/2019
 uid: core/modeling/owned-entities
-ms.openlocfilehash: a49d9aab735232dfd5a3db456410d527f94f3c18
-ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
+ms.openlocfilehash: 36f756b70c9ad1727c48b5c789fd324c9dc6cd29
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2020
-ms.locfileid: "92063772"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94429427"
 ---
 # <a name="owned-entity-types"></a>从属实体类型
 
-EF Core 允许您为只能出现在其他实体类型的导航属性中的实体类型建模。 它们称为 _拥有的实体类型_。 包含拥有的实体类型的实体是其 _所有者_。
+EF Core 允许您为只能出现在其他实体类型的导航属性中的实体类型建模。 它们称为 _拥有的实体类型_ 。 包含拥有的实体类型的实体是其 _所有者_ 。
 
 拥有的实体实质上是所有者的一部分，并且在没有它的情况下不存在，它们在概念上类似于 [聚合](https://martinfowler.com/bliki/DDD_Aggregate.html)。 这意味着，拥有的实体由与所有者的关系的从属方定义。
 
@@ -36,6 +36,10 @@ EF Core 允许您为只能出现在其他实体类型的导航属性中的实体
 如果该 `ShippingAddress` 属性是类型中的私有属性 `Order` ，则可以使用该方法的字符串版本 `OwnsOne` ：
 
 [!code-csharp[OwnsOneString](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsOneString)]
+
+以上模型映射到以下数据库架构：
+
+![包含 Sceenshot 的实体的数据库模型的数据库模型](_static/owned-entities-ownsone.png)
 
 有关更多上下文，请参阅 [完整的示例项目](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Modeling/OwnedEntities) 。
 
@@ -69,11 +73,15 @@ EF Core 允许您为只能出现在其他实体类型的导航属性中的实体
 
 [!code-csharp[OwnsMany](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsMany)]
 
+以上模型映射到以下数据库架构：
+
+![包含拥有的集合的实体的数据库模型的 Sceenshot](_static/owned-entities-ownsmany.png)
+
 ## <a name="mapping-owned-types-with-table-splitting"></a>将拥有的类型映射到表拆分
 
 使用关系数据库时，默认情况下，引用拥有的类型将映射到与所有者相同的表。 这需要将表拆分为两个：某些列将用于存储所有者的数据，某些列将用于存储拥有实体的数据。 这是一种称为 [表拆分](xref:core/modeling/table-splitting)的常见功能。
 
-默认情况下，EF Core 会按照模式 _Navigation_OwnedEntityProperty_为拥有的实体类型的属性命名数据库列。 因此，这些 `StreetAddress` 属性将显示在 "Orders" 表中，名称为 "ShippingAddress_Street" 和 "ShippingAddress_City"。
+默认情况下，EF Core 会按照模式 _Navigation_OwnedEntityProperty_ 为拥有的实体类型的属性命名数据库列。 因此，这些 `StreetAddress` 属性将显示在 "Orders" 表中，名称为 "ShippingAddress_Street" 和 "ShippingAddress_City"。
 
 您可以使用 `HasColumnName` 方法重命名这些列。
 
@@ -119,6 +127,10 @@ EF Core 允许您为只能出现在其他实体类型的导航属性中的实体
 还可以在和上使用来实现此结果 `OwnedAttribute` `OrderDetails` `StreetAddress` 。
 
 此外，请注意 `Navigation` 调用。 在 EFCore 5.0 中，可以将导航属性进一步配置为 [非拥有的导航属性](xref:core/modeling/relationships#configuring-navigation-properties)。
+
+以上模型映射到以下数据库架构：
+
+![包含嵌套的引用的实体的数据库模型的 Sceenshot](_static/owned-entities-nested.png)
 
 ## <a name="storing-owned-types-in-separate-tables"></a>将拥有的类型存储在单独的表中
 

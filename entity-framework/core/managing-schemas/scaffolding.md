@@ -4,12 +4,12 @@ description: 使用 Entity Framework Core 从现有数据库反向工程模型
 author: bricelam
 ms.date: 11/13/2018
 uid: core/managing-schemas/scaffolding
-ms.openlocfilehash: e1b4ed8d5209688fbe5c89ae60cf0d981136305f
-ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
+ms.openlocfilehash: 11ffa2e62136e47959ebbfd54ccb55c2b9e23e04
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2020
-ms.locfileid: "92061965"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94429762"
 ---
 # <a name="reverse-engineering"></a>反向工程
 
@@ -17,7 +17,7 @@ ms.locfileid: "92061965"
 
 ## <a name="installing"></a>安装
 
-在进行反向工程之前，你需要 (仅) 或[CLI 工具](xref:core/miscellaneous/cli/dotnet)将[PMC 工具](xref:core/miscellaneous/cli/powershell)安装在 Visual Studio 中。 有关详细信息，请参阅链接。
+在进行反向工程之前，你需要 (仅) 或[CLI 工具](xref:core/cli/dotnet)将[PMC 工具](xref:core/cli/powershell)安装在 Visual Studio 中。 有关详细信息，请参阅链接。
 
 还需要为要进行反向工程的数据库架构安装适当的 [数据库提供程序](xref:core/providers/index) 。
 
@@ -80,7 +80,7 @@ dotnet ef dbcontext scaffold ... --table Artist --table Album
 Scaffold-DbContext ... -Tables Artist, Album
 ```
 
-***
+**_
 
 ## <a name="preserving-names"></a>保留名称
 
@@ -108,7 +108,7 @@ public string Title { get; set; }
 
 ## <a name="dbcontext-name"></a>DbContext 名称
 
-默认情况下，基架 DbContext 类名称将是以默认值作为 *后缀的数据库* 的名称。 若要指定其他项，请 `-Context` 在 PMC 中使用， `--context` 在 .NET Core CLI 中使用。
+默认情况下，基架 DbContext 类名称将为带有后缀 _Context * 的数据库的名称。 若要指定其他项，请 `-Context` 在 PMC 中使用， `--context` 在 .NET Core CLI 中使用。
 
 ## <a name="directories-and-namespaces"></a>目录和命名空间
 
@@ -157,7 +157,7 @@ Scaffold-DbContext ... -Namespace Your.Namespace -ContextNamespace Your.DbContex
 * 不是有关模型的所有内容都可以使用数据库架构来表示。 例如，有关 [**继承层次结构**](xref:core/modeling/inheritance)、 [**附属类型**](xref:core/modeling/owned-entities)和 [**表拆分**](xref:core/modeling/table-splitting) 的信息在数据库架构中不存在。 因此，这些构造永远不会经过反向工程。
 * 此外，EF Core 提供程序可能不支持 **某些列类型** 。 这些列不会包含在模型中。
 * 可以在 EF Core 模型中定义 [**并发标记**](xref:core/modeling/concurrency)，以防止两个用户同时更新同一实体。 某些数据库具有特殊类型来表示此类型的列 (例如，SQL Server 中的 rowversion) ，在这种情况下，我们可以对此信息进行反向工程;但是，其他并发令牌不会进行反向工程。
-* 反向工程当前不支持[c # 8 可为 Null 的引用类型功能](/dotnet/csharp/tutorials/nullable-reference-types)： EF Core 始终会生成假定禁用该功能的 c # 代码。 例如，可以将可为 null 的文本列基架为类型为的属性 `string` ，而不是 `string?` 用于配置是否需要属性的熟知 API 或数据批注。 您可以编辑基架代码并将其替换为 c # 为空批注。 [#15520](https://github.com/aspnet/EntityFrameworkCore/issues/15520)的问题跟踪了可为 null 的引用类型的基架支持。
+* 反向工程当前不支持[c # 8 可为 Null 的引用类型功能](/dotnet/csharp/tutorials/nullable-reference-types)： EF Core 始终会生成假定禁用该功能的 c # 代码。 例如，可以将可为 null 的文本列基架为类型为的属性 `string` ，而不是 `string?` 用于配置是否需要属性的熟知 API 或数据批注。 您可以编辑基架代码并将其替换为 c # 为空批注。 [#15520](https://github.com/dotnet/efcore/issues/15520)的问题跟踪了可为 null 的引用类型的基架支持。
 
 ## <a name="customizing-the-model"></a>自定义模型
 
@@ -173,7 +173,7 @@ EF Core 生成的代码是您的代码。 随意更改。 仅当您再次对同�
 
 但是，更重要的更改并不容易手动完成。 一个常见的工作流是通过使用 `-Force` (PMC) 或 `--force` (CLI) ，使用已更新的模型覆盖现有模型，从数据库反向对模型进行反向工程。
 
-另一个常请求的功能是能够从数据库更新模型，同时保留自定义项（如重命名、类型层次结构等）。使用问题 [#831](https://github.com/aspnet/EntityFrameworkCore/issues/831) 跟踪此功能的进度。
+另一个常请求的功能是能够从数据库更新模型，同时保留自定义项（如重命名、类型层次结构等）。使用问题 [#831](https://github.com/dotnet/efcore/issues/831) 跟踪此功能的进度。
 
 > [!WARNING]
 > 如果您从数据库中再次对模型进行反向工程，则对这些文件所做的任何更改都将丢失。

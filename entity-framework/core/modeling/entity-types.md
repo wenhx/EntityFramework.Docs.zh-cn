@@ -4,16 +4,16 @@ description: 如何使用 Entity Framework Core 配置和映射实体类型
 author: roji
 ms.date: 10/06/2020
 uid: core/modeling/entity-types
-ms.openlocfilehash: bfefa29c08679a1524c00769b3495d75a301e2d3
-ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
+ms.openlocfilehash: 9094193640e7cab6db3fed7ae0ab818a455156ca
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2020
-ms.locfileid: "92062225"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94429580"
 ---
 # <a name="entity-types"></a>实体类型
 
-在上下文中包含一种类型的 DbSet，这意味着它包含在 EF Core 的模型中;我们通常将此类类型称为 *实体*。 EF Core 可以从/向数据库中读取和写入实体实例，如果使用的是关系数据库，EF Core 可以通过迁移为实体创建表。
+在上下文中包含一种类型的 DbSet，这意味着它包含在 EF Core 的模型中;我们通常将此类类型称为 *实体* 。 EF Core 可以从/向数据库中读取和写入实体实例，如果使用的是关系数据库，EF Core 可以通过迁移为实体创建表。
 
 ## <a name="including-types-in-the-model"></a>在模型中包含类型
 
@@ -50,11 +50,11 @@ ms.locfileid: "92062225"
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/TableExcludeFromMigrations.cs?name=TableExcludeFromMigrations&highlight=4)]
 
-此配置迁移不会创建 `blogs` 该表，但 `Blog` 仍包含在模型中，并且可正常使用。
+此配置迁移不会创建 `AspNetUsers` 该表，但 `IdentityUser` 仍包含在模型中，并且可正常使用。
 
-如果需要再次使用迁移来管理表，则应创建不包括的新迁移 `blogs` 。 下一次迁移将包含对表所做的任何更改。
+如果需要再次使用迁移来管理表，则应创建不包括的新迁移 `AspNetUsers` 。 下一次迁移将包含对表所做的任何更改。
 
-## <a name="table-name"></a>表名
+## <a name="table-name"></a>表名称
 
 按照约定，每个实体类型将设置为映射到与公开实体的 DbSet 属性同名的数据库表。 如果给定实体不存在 DbSet，则使用类名称。
 
@@ -68,7 +68,7 @@ ms.locfileid: "92062225"
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/TableName.cs?Name=TableName&highlight=3-4)]
 
-***
+**_
 
 ## <a name="table-schema"></a>表架构
 
@@ -84,7 +84,7 @@ ms.locfileid: "92062225"
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/TableNameAndSchema.cs?name=TableNameAndSchema&highlight=3-4)]
 
-***
+_**
 
 您还可以在模型级别定义 Fluent API 的默认架构，而不是为每个表指定架构：
 
@@ -101,4 +101,7 @@ ms.locfileid: "92062225"
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ViewNameAndSchema.cs?name=ViewNameAndSchema&highlight=1)]
 
- 映射到视图将删除默认表映射，但实体类型也可以显式映射到表。 在这种情况下，查询映射将用于查询，表映射将用于更新。
+ 映射到视图将删除默认表映射，但从 EF 5.0 开始，实体类型也可以显式映射到表。 在这种情况下，查询映射将用于查询，表映射将用于更新。
+
+> [!TIP]
+> 若要测试使用内存中提供程序映射到视图的实体类型，请通过将它们映射到查询 `ToInMemoryQuery` 。 有关更多详细信息，请参阅使用此技术的可 [运行示例](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Testing/ItemsWebApi/) 。

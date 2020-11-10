@@ -4,12 +4,12 @@ description: 在 Entity Framework Core 模型中使用空间数据
 author: bricelam
 ms.date: 10/02/2020
 uid: core/modeling/spatial
-ms.openlocfilehash: 2c0cd7a8acf7e4b58eadf8805afa1fe4a1d6e949
-ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
+ms.openlocfilehash: fa9cf30ddb4291d96486934544b568b67b126846
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2020
-ms.locfileid: "92063928"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94430516"
 ---
 # <a name="spatial-data"></a>空间数据
 
@@ -44,7 +44,7 @@ Teradata.EntityFrameworkCore            | [Teradata. Microsoft.entityframeworkco
 
 有几种空间数据类型。 使用哪种类型取决于您想要允许的形状的类型。 下面是可用于模型中的属性的 NTS 类型的层次结构。 它们位于 `NetTopologySuite.Geometries` 命名空间内。
 
-* 几何结构
+* 几何图形
   * 点
   * LineString
   * Polygon
@@ -60,7 +60,7 @@ Teradata.EntityFrameworkCore            | [Teradata. Microsoft.entityframeworkco
 
 ## <a name="longitude-and-latitude"></a>经度和纬度
 
-NTS 中的坐标采用 X 和 Y 值。 若要表示经度和纬度，请将 X 用于经度，将 Y 用于纬度。 请注意，这**backwards**是从 `latitude, longitude` 通常会看到这些值的格式反向进行的。
+NTS 中的坐标采用 X 和 Y 值。 若要表示经度和纬度，请将 X 用于经度，将 Y 用于纬度。 请注意，这 **backwards** 是从 `latitude, longitude` 通常会看到这些值的格式反向进行的。
 
 ## <a name="querying-data"></a>查询数据
 
@@ -78,7 +78,7 @@ NTS 中的坐标采用 X 和 Y 值。 若要表示经度和纬度，请将 X 用
 
 ## <a name="reverse-engineering"></a>反向工程
 
-空间 NuGet 包还启用具有空间属性的 [反向工程](xref:core/managing-schemas/scaffolding) 模型，但需要在运行或 ***之前*** 安装包 `Scaffold-DbContext` `dotnet ef dbcontext scaffold` 。 否则，你将收到有关找不到列的类型映射的警告，将跳过这些列。
+空间 NuGet 包还启用具有空间属性的 [反向工程](xref:core/managing-schemas/scaffolding) 模型，但需要在运行或 *_之前_* 安装包 * `Scaffold-DbContext` `dotnet ef dbcontext scaffold` 。 否则，你将收到有关找不到列的类型映射的警告，将跳过这些列。
 
 ## <a name="srid-ignored-during-client-operations"></a>在客户端操作过程中忽略 SRID
 
@@ -97,9 +97,15 @@ NTS 在操作过程中忽略 SRID 值。 它假定为平面坐标系统。 这�
 
 ## <a name="additional-resources"></a>其他资源
 
+### <a name="database-specific-information"></a>数据库特定的信息
+
 有关使用空间数据的其他信息，请务必阅读提供程序的文档。
 
-* [SQL Server 提供程序中的空间数据](xref:core/providers/sql-server/spatial)
+_ [SQL Server 提供程序中的空间数据](xref:core/providers/sql-server/spatial)
 * [SQLite 提供程序中的空间数据](xref:core/providers/sqlite/spatial)
 * [Npgsql 提供程序中的空间数据](https://www.npgsql.org/efcore/mapping/nts.html)
+
+### <a name="other-resources"></a>其他资源
+
 * [NetTopologySuite 文档](https://nettopologysuite.github.io/NetTopologySuite/)
+* [EF Core 社区 Standup 会话](https://www.youtube.com/watch?v=IHslY5rrxD0&list=PLdo4fOcmZ0oX-DBuRG4u58ZTAJgBAeQ-t&index=15)，侧重于空间数据和 NetTopologySuite。

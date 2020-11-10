@@ -4,16 +4,16 @@ description: '使用时使用 c # 可为 null 的引用类型 Entity Framework C
 author: roji
 ms.date: 09/09/2019
 uid: core/miscellaneous/nullable-reference-types
-ms.openlocfilehash: 1cfba9bbe9350034ad3a63184bb00ded8e4b6a40
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: 648b79576838d2ba424b5216d5ad6811912f8ccb
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90071636"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94429710"
 ---
 # <a name="working-with-nullable-reference-types"></a>使用可以为 Null 的引用类型
 
-C # 8 引入了一种名 [为 null 的引用类型](/dotnet/csharp/tutorials/nullable-reference-types)的新功能，它允许对引用类型进行批注，以指示它是否可用于包含空值。 如果你不熟悉此功能，则建议你通过阅读 c # 文档来使自己熟悉该功能。
+C # 8 引入了一项名 [为 null 的引用类型 (NRT) ](/dotnet/csharp/tutorials/nullable-reference-types)的新功能，允许对引用类型进行批注，以指示它是否可用于包含 null。 如果你不熟悉此功能，则建议你通过阅读 c # 文档来使自己熟悉该功能。
 
 此页介绍 EF Core 对可为 null 的引用类型的支持，并介绍了使用它们的最佳做法。
 
@@ -24,17 +24,17 @@ C # 8 引入了一种名 [为 null 的引用类型](/dotnet/csharp/tutorials/nul
 > [!NOTE]
 > 在现有项目上启用可以为 null 的引用类型时要格外小心：现在配置为可选的引用类型属性现在将配置为 "必需"，除非它们显式批注为可为 null。 管理关系数据库架构时，这可能会导致生成更改数据库列的为 null 性的迁移。
 
-## <a name="dbcontext-and-dbset"></a>DbContext 和 DbSet
-
-如果启用了可以为 null 的引用类型，则 c # 编译器将为任何未初始化的不可为 null 的属性发出警告，因为这将包含 null。 因此，在上下文类型上使用未初始化的 DbSet 属性的常见做法现在会生成一个警告。 可以按如下所示修复此问题：
-
-[!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/NullableReferenceTypesContext.cs?name=Context&highlight=3-4)]
-
-另一种策略是使用不可为 null 的自动属性，但要将其初始化为 null，请使用包容性运算符 (！ ) 使编译器警告无提示。 DbContext 构造函数可确保所有 DbSet 属性都将进行初始化，并且不会在这些属性上看到 null。
-
 ## <a name="non-nullable-properties-and-initialization"></a>不可以为 null 的属性和初始化
 
-对于实体类型上的常规属性，未初始化的不可以为 null 的引用类型的编译器警告也是一个问题。 在上面的示例中，我们使用 [构造函数绑定](xref:core/modeling/constructors)避免了这些警告，这是一项完美使用不可为 null 的属性的功能，确保它们始终初始化。 但是，在某些情况下，构造函数绑定不是一个选项：例如，不能以这种方式初始化导航属性。
+如果启用了可以为 null 的引用类型，则 c # 编译器将为任何未初始化的不可为 null 的属性发出警告，因为这将包含 null。 因此，不能使用以下常见方法来编写实体类型：
+
+[!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/CustomerWithWarning.cs?name=CustomerWithWarning&highlight=4-5)]
+
+[构造函数绑定](xref:core/modeling/constructors) 是一项有用的技术，可确保初始化不可为 null 的属性：
+
+[!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/CustomerWithConstructorBinding.cs?name=CustomerWithConstructorBinding&highlight=6-9)]
+
+遗憾的是，在某些情况下，构造函数绑定不是一个选项;例如，不能以这种方式初始化导航属性。
 
 所需的导航属性会带来额外的难度：尽管某个给定主体的依赖项始终存在，但特定查询可能会或不加载该依赖项，具体取决于程序中该点的需求 (参阅) 的 [加载数据的不同模式](xref:core/querying/related-data) 。 同时，不需要将这些属性设置为可以为 null，因为这会强制对它们的所有访问权限，以检查是否有 null，即使它们是必需的。
 
@@ -53,6 +53,14 @@ C # 8 引入了一种名 [为 null 的引用类型](/dotnet/csharp/tutorials/nul
 > [!NOTE]
 > 包含对多个相关实体的引用的集合导航应始终不可为 null。 空集合意味着不存在相关实体，但列表本身不应为 null。
 
+## <a name="dbcontext-and-dbset"></a>DbContext 和 DbSet
+
+在上下文类型上具有未初始化的 DbSet 属性的常见做法也有问题，因为编译器现在会发出警告。 可以按如下所示修复此问题：
+
+[!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/NullableReferenceTypesContext.cs?name=Context&highlight=3-4)]
+
+另一种策略是使用不可为 null 的自动属性，但要将其初始化为 null，请使用包容性运算符 (！ ) 使编译器警告无提示。 DbContext 基本构造函数可确保所有 DbSet 属性都将进行初始化，并且不会在这些属性上看到 null。
+
 ## <a name="navigating-and-including-nullable-relationships"></a>导航和包括可以为 null 的关系
 
 当处理可选关系时，可能会遇到编译器警告，但不可能出现实际的 null 引用异常。 在转换和执行 LINQ 查询时，EF Core 确保在一个可选的相关实体不存在的情况下，将忽略对该实体的任何导航，而不是引发。 但是，编译器不知道这 EF Core 确保，并生成警告，就好像 LINQ 查询是在内存中执行的，而 LINQ to Objects。 因此，需要使用包容性运算符 (！ ) 来通知编译器无法实现实际的 null 值：
@@ -67,5 +75,5 @@ C # 8 引入了一种名 [为 null 的引用类型](/dotnet/csharp/tutorials/nul
 
 ## <a name="limitations"></a>限制
 
-* 反向工程当前不支持 [c # 8 可为 null 的引用类型 (NRTs) ](/dotnet/csharp/tutorials/nullable-reference-types)： EF Core 始终生成假定该功能处于关闭状态的 c # 代码。 例如，可以将可为 null 的文本列基架为类型为的属性 `string` ，而不是 `string?` 用于配置是否需要属性的熟知 API 或数据批注。 您可以编辑基架代码并将其替换为 c # 为空批注。 [#15520](https://github.com/aspnet/EntityFrameworkCore/issues/15520)的问题跟踪了可为 null 的引用类型的基架支持。
+* 反向工程当前不支持 [c # 8 可为 null 的引用类型 (NRTs) ](/dotnet/csharp/tutorials/nullable-reference-types)： EF Core 始终生成假定该功能处于关闭状态的 c # 代码。 例如，可以将可为 null 的文本列基架为类型为的属性 `string` ，而不是 `string?` 用于配置是否需要属性的熟知 API 或数据批注。 您可以编辑基架代码并将其替换为 c # 为空批注。 [#15520](https://github.com/dotnet/efcore/issues/15520)的问题跟踪了可为 null 的引用类型的基架支持。
 * EF Core 的公共 API 图面尚未批注为为空性 (公共 API 为 "在意" ) ，这使得在打开 NRT 功能时，使用此功能有时会很难使用。 这特别包括 EF Core 公开的异步 LINQ 运算符，如 [FirstOrDefaultAsync](/dotnet/api/microsoft.entityframeworkcore.entityframeworkqueryableextensions.firstordefaultasync#Microsoft_EntityFrameworkCore_EntityFrameworkQueryableExtensions_FirstOrDefaultAsync__1_System_Linq_IQueryable___0__System_Linq_Expressions_Expression_System_Func___0_System_Boolean___System_Threading_CancellationToken_)。 我们计划为5.0 版本解决这一情况。

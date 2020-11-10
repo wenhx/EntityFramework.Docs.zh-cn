@@ -4,12 +4,12 @@ description: 在数据库和查询中配置排序规则和区分大小写的 Ent
 author: roji
 ms.date: 04/27/2020
 uid: core/miscellaneous/collations-and-case-sensitivity
-ms.openlocfilehash: e327df8adf777bfa5603a71eca8297a051f5bd56
-ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+ms.openlocfilehash: cced7e11f7bf02223d3f181677ad1707c1da4051
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/14/2020
-ms.locfileid: "90071714"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94429736"
 ---
 # <a name="collations-and-case-sensitivity"></a>排序规则和区分大小写
 
@@ -20,7 +20,7 @@ ms.locfileid: "90071714"
 
 ## <a name="introduction-to-collations"></a>排序规则简介
 
-文本处理中的基本概念是 *排序规则*，这是一组规则，用于确定文本值如何排序和比较是否相等。 例如，虽然不区分大小写的排序规则不会在大写字母和小写字母之间忽略差异，所以区分大小写的排序规则不会。 但是，因为区分大小写是区分区域性的 (例如， `i` 并 `I` 表示土耳其) 中的不同字母，所以存在多个不区分大小写的排序规则，每个排序规则都具有自己的一组规则。 排序规则的范围还超出了区分大小写的字符数据的其他方面;例如，在德语中，它有时 (，但并不总是) 需要将 `ä` 和视为 `ae` 相同。 最后，排序规则还定义文本值的 *排序*方式：德语位置 `ä` 之后 `a` ，瑞典语会将其置于字母表的末尾。
+文本处理中的基本概念是 *排序规则* ，这是一组规则，用于确定文本值如何排序和比较是否相等。 例如，虽然不区分大小写的排序规则不会在大写字母和小写字母之间忽略差异，所以区分大小写的排序规则不会。 但是，因为区分大小写是区分区域性的 (例如， `i` 并 `I` 表示土耳其) 中的不同字母，所以存在多个不区分大小写的排序规则，每个排序规则都具有自己的一组规则。 排序规则的范围还超出了区分大小写的字符数据的其他方面;例如，在德语中，它有时 (，但并不总是) 需要将 `ä` 和视为 `ae` 相同。 最后，排序规则还定义文本值的 *排序* 方式：德语位置 `ä` 之后 `a` ，瑞典语会将其置于字母表的末尾。
 
 数据库中的所有文本操作都使用排序规则，无论是显式还是隐式地确定操作比较和排序字符串的方式。 可用排序规则及其命名方案的实际列表是特定于数据库的;请参阅 [以下部分](#database-specific-information) ，了解各种数据库相关文档页的链接。 幸运的是，数据库通常允许在数据库级或列级定义默认排序规则，并显式指定哪个排序规则应该用于查询中的特定操作。
 
@@ -69,9 +69,15 @@ WHERE [c].[Name] COLLATE SQL_Latin1_General_CP1_CS_AS = N'John'
 
 此外，.NET 还提供了 [`string.Equals`](/dotnet/api/system.string.equals#System_String_Equals_System_String_System_StringComparison_) 接受枚举的重载 [`StringComparison`](/dotnet/api/system.stringcomparison) ，这允许为比较指定区分大小写和文化。 按照设计，EF Core refrains 将这些重载转换为 SQL，尝试使用它们将导致异常。 一方面，EF Core 知道不应使用不区分大小写的排序规则或不区分大小写的排序规则。 更重要的是，在大多数情况下，应用排序规则会阻止索引的使用，对非常基本的常用 .NET 构造的性能产生显著影响。 若要强制查询使用区分大小写或不区分大小写的比较，请通过 `EF.Functions.Collate` [上面详细](#explicit-collations-and-indexes)说明显式指定排序规则。
 
-## <a name="database-specific-information"></a>数据库特定的信息
+## <a name="additional-resources"></a>其他资源
+
+### <a name="database-specific-information"></a>数据库特定的信息
 
 * [SQL Server 有关排序规则的文档](/sql/relational-databases/collations/collation-and-unicode-support)。
 * [有关排序规则的数据表](/dotnet/standard/data/sqlite/collation)。
 * [有关排序规则的 PostgreSQL 文档](https://www.postgresql.org/docs/current/collation.html)。
 * [有关排序规则的 MySQL 文档](https://dev.mysql.com/doc/refman/en/charset-general.html)。
+
+### <a name="other-resources"></a>其他资源
+
+* [EF Core 社区 Standup 会话](https://www.youtube.com/watch?v=OgMhLVa_VfA&list=PLdo4fOcmZ0oX-DBuRG4u58ZTAJgBAeQ-t&index=1)，介绍排序规则和探索性能和索引方面。

@@ -4,12 +4,12 @@ description: 使用 Entity Framework Core 将架构迁移应用到生产和开�
 author: bricelam
 ms.date: 05/06/2020
 uid: core/managing-schemas/migrations/applying
-ms.openlocfilehash: 68d482a34e5f5c7acf968acdfd8825e1d21ecb13
-ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
+ms.openlocfilehash: 7ff84636fb0999941b832c6a2d65d77b0ad368c5
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2020
-ms.locfileid: "92062342"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94429841"
 ---
 # <a name="applying-migrations"></a>应用迁移
 
@@ -83,6 +83,7 @@ Script-Migration AddNewTables
 ```powershell
 Script-Migration AddNewTables AddAuditTable
 ```
+
 可以使用比 `to` 新的 `from` 来生成回退脚本。 请记下潜在的数据丢失方案。
 
 ***
@@ -98,25 +99,25 @@ Script-Migration AddNewTables AddAuditTable
 
 以下生成幂等迁移：
 
-#### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
+### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef migrations script --idempotent
 ```
 
-#### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
+### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
 
 ```powershell
 Script-Migration -Idempotent
 ```
 
-***
+**_
 
 ## <a name="command-line-tools"></a>命令行工具
 
 EF 命令行工具可用于将迁移应用到数据库。 尽管迁移的本地开发和测试工作效率，但这种方法不适合用于管理生产数据库：
 
-* SQL 命令直接应用于该工具，而不允许开发人员检查或修改它们。 这在生产环境中可能会很危险。
+_ 直接应用 SQL 命令，而无需为开发人员提供检查或修改的机会。 这在生产环境中可能会很危险。
 * .NET SDK 和 EF 工具必须安装在生产服务器上。
 
 ### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
@@ -159,7 +160,7 @@ Update-Database AddNewTables
 
 ***
 
-有关通过命令行工具应用迁移的详细信息，请参阅 [EF Core 工具参考](xref:core/miscellaneous/cli/index)。
+有关通过命令行工具应用迁移的详细信息，请参阅 [EF Core 工具参考](xref:core/cli/index)。
 
 ## <a name="apply-migrations-at-runtime"></a>在运行时应用迁移
 

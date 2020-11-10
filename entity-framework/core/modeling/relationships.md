@@ -4,12 +4,12 @@ description: 如何在使用 Entity Framework Core 时配置实体类型之间�
 author: AndriySvyryd
 ms.date: 10/01/2020
 uid: core/modeling/relationships
-ms.openlocfilehash: 71d960a15dfb938af1dcc7035dc2587df7ad4677
-ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
+ms.openlocfilehash: 567d212ddf41f33ee32443d85d2a17234fbc026b
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2020
-ms.locfileid: "92063837"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94430178"
 ---
 # <a name="relationships"></a>关系
 
@@ -85,7 +85,7 @@ ms.locfileid: "92063837"
 > 如果属性为主键，或者为与主体键不兼容的类型，则不会将其配置为外键。
 
 > [!NOTE]
-> 在 EF Core 3.0 之前，名为与主体键属性完全相同的属性 [也与外键匹配](https://github.com/aspnet/EntityFrameworkCore/issues/13274)
+> 在 EF Core 3.0 之前，名为与主体键属性完全相同的属性 [也与外键匹配](https://github.com/dotnet/efcore/issues/13274)
 
 ### <a name="no-foreign-key-property"></a>无外键属性
 
@@ -110,7 +110,7 @@ ms.locfileid: "92063837"
 
 ### <a name="cascade-delete"></a>级联删除
 
-按照约定，级联删除将对所需的关系和*ClientSetNull*设置为*cascade* ，以实现可选关系。 *Cascade* 表示也会删除依赖实体。 *ClientSetNull* 表示未加载到内存中的依赖实体将保持不变，必须手动删除，或将其更新为指向有效的主体实体。 对于加载到内存中的实体，EF Core 将尝试将外键属性设置为 null。
+按照约定，级联删除将对所需的关系和 *ClientSetNull* 设置为 *cascade* ，以实现可选关系。 *Cascade* 表示也会删除依赖实体。 *ClientSetNull* 表示未加载到内存中的依赖实体将保持不变，必须手动删除，或将其更新为指向有效的主体实体。 对于加载到内存中的实体，EF Core 将尝试将外键属性设置为 null。
 
 请参阅 required [和 optional](#required-and-optional-relationships) 关系部分，了解必需和可选关系之间的差异。
 
@@ -149,7 +149,7 @@ ms.locfileid: "92063837"
 ### <a name="configuring-navigation-properties"></a>配置导航属性
 
 > [!NOTE]
-> 此功能是在 EF Core 5.0 中添加的。
+> EF Core 5.0 中添加了此功能。
 
 创建导航属性后，你可能需要对其进行进一步配置。
 
@@ -194,7 +194,7 @@ ms.locfileid: "92063837"
 
 #### <a name="foreign-key-constraint-name"></a>Foreign key 约束名称
 
-按照约定，在面向关系数据库时，外键约束命名为 FK_ <dependent type name> _<principal type name>_ <foreign key property name> 。 对于复合外键， <foreign key property name> 将成为外键属性名称的下划线分隔列表。
+按照约定，以关系数据库为目标时，外键约束命名为 FK \_ \<dependent type name> \_ \<principal type name> \_ \<foreign key property name> 。 对于复合外键， \<foreign key property name> 将成为外键属性名称的下划线分隔列表。
 
 你还可以配置约束名称，如下所示：
 
@@ -325,3 +325,10 @@ CREATE TABLE [PostTag] (
 您还可以通过只添加联接实体类型并映射两个单独的一对多关系来表示多对多关系。
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToMany.cs?name=ManyToMany&highlight=11-14,16-19,39-46)]
+
+> [!NOTE]
+> 尚未添加对来自数据库的多对多关系的支持。 请参阅 [跟踪问题](https://github.com/dotnet/efcore/issues/22475)。
+
+## <a name="additional-resources"></a>其他资源
+
+* [EF Core 社区 Standup 会话](https://www.youtube.com/watch?v=W1sxepfIMRM&list=PLdo4fOcmZ0oX-DBuRG4u58ZTAJgBAeQ-t&index=32)，深入探讨多对多和基础结构。

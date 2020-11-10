@@ -4,12 +4,12 @@ description: 如何使用 Entity Framework Core 配置实体类型继承
 author: AndriySvyryd
 ms.date: 10/01/2020
 uid: core/modeling/inheritance
-ms.openlocfilehash: 47aae0d57d7203f0e6da5868bdc082ad85d59620
-ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
+ms.openlocfilehash: 3ec6e7bd98f9c9716c460d69fc707d95e5e47a05
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2020
-ms.locfileid: "92063863"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94429515"
 ---
 # <a name="inheritance"></a>继承
 
@@ -35,9 +35,9 @@ EF 可以将 .NET 类型层次结构映射到数据库。 这使你可以像平�
 
 默认情况下，EF 使用 *每个层次结构一个表* (TPH) 模式映射继承。 TPH 使用单个表来存储层次结构中所有类型的数据，而鉴别器列用于标识每行所表示的类型。
 
-上述模型映射到下面的数据库架构 (请注意隐式创建的 `Discriminator` 列，该列标识 `Blog` 在每行) 中存储哪种类型。
+上述模型映射到下面的数据库架构 (请注意隐式创建的 `Discriminator` 列，该列标识 `Blog` 每个行中存储) 的类型。
 
-![image](_static/inheritance-tph-data.png)
+![使用 "每个层次结构一个表" 模式查询博客实体层次结构的结果的屏幕截图](_static/inheritance-tph-data.png)
 
 您可以配置鉴别器列的名称和类型以及用于标识层次结构中的每种类型的值：
 
@@ -50,6 +50,10 @@ EF 可以将 .NET 类型层次结构映射到数据库。 这使你可以像平�
 最后，鉴别器还可以映射到实体中的常规 .NET 属性：
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/NonShadowDiscriminator.cs?name=NonShadowDiscriminator&highlight=4)]
+
+查询使用 TPH 模式的派生实体时 EF Core 会在查询中的鉴别器列上添加谓词。 此筛选器可确保不会为不在结果中的基类型或同级类型获取任何其他行。 对于基实体类型，将跳过此筛选器谓词，因为查询基实体将获取层次结构中的所有实体的结果。 当从查询中具体化结果时，如果跨一个不映射到模型中任何实体类型的鉴别器值，我们会引发异常，因为我们不知道如何具体化结果。 仅当数据库包含的行的鉴别器值未在 EF 模型中映射时，才会出现此错误。 如果有这样的数据，则可以将 EF Core 模型中的鉴别器映射标记为 "不完整"，以指示应始终添加筛选器谓词以查询层次结构中的任何类型。 `IsComplete(false)` 鉴别器配置上的调用将映射标记为不完整。
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/DiscriminatorMappingIncomplete.cs?name=DiscriminatorMappingIncomplete&highlight=5)]
 
 ### <a name="shared-columns"></a>共享列
 

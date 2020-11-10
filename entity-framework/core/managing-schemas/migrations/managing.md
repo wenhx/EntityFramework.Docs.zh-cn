@@ -2,21 +2,21 @@
 title: 管理迁移-EF Core
 description: 添加、删除和管理 Entity Framework Core 的数据库架构迁移
 author: bricelam
-ms.date: 05/06/2020
+ms.date: 10/27/2020
 uid: core/managing-schemas/migrations/managing
-ms.openlocfilehash: fdfda6f3dea306fbbc343c1be3f4d5754d1f65c4
-ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
+ms.openlocfilehash: 81f7cec54510d95b1e2432d56ff95110224fd9bf
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2020
-ms.locfileid: "92062056"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94429842"
 ---
 # <a name="managing-migrations"></a>管理迁移
 
-当模型发生更改时，将在正常开发过程中添加和删除迁移，并将迁移文件签入项目的源代码管理。 若要管理迁移，必须首先安装 [EF Core 命令行工具](xref:core/miscellaneous/cli/index)。
+当模型发生更改时，将在正常开发过程中添加和删除迁移，并将迁移文件签入项目的源代码管理。 若要管理迁移，必须首先安装 [EF Core 命令行工具](xref:core/cli/index)。
 
 > [!TIP]
-> 如果 `DbContext` 与启动项目位于不同程序集中，可以在[包管理器控制台工具](xref:core/miscellaneous/cli/powershell#target-and-startup-project)或 [.NET Core CLI 工具](xref:core/miscellaneous/cli/dotnet#target-project-and-startup-project)中显式指定目标和启动项目。
+> 如果 `DbContext` 与启动项目位于不同程序集中，可以在[包管理器控制台工具](xref:core/cli/powershell#target-and-startup-project)或 [.NET Core CLI 工具](xref:core/cli/dotnet#target-project-and-startup-project)中显式指定目标和启动项目。
 
 ## <a name="add-a-migration"></a>添加迁移
 
@@ -38,31 +38,37 @@ Add-Migration AddBlogCreatedTimestamp
 
 迁移名称的用途与版本控制系统中的提交消息类似。 例如，如果更改是实体上的新属性，则可以选择名称（如 *AddBlogCreatedTimestamp* ） `CreatedTimestamp` `Blog` 。
 
-向**Migrations**目录下的项目添加以下三个文件：
+向 **Migrations** 目录下的项目添加以下三个文件：
 
-* **XXXXXXXXXXXXXX_AddCreatedTimestamp**-主迁移文件。 包含应用迁移所需的操作（在 `Up` 中）和还原迁移所需的操作（在 `Down` 中）。
-* **XXXXXXXXXXXXXX_AddCreatedTimestamp**：迁移元数据文件。 包含 EF 所用的信息。
-* **MyContextModelSnapshot.cs**--当前模型的快照。 用于确定添加下一迁移时的更改内容。
+* **XXXXXXXXXXXXXX_AddCreatedTimestamp** -主迁移文件。 包含应用迁移所需的操作（在 `Up` 中）和还原迁移所需的操作（在 `Down` 中）。
+* **XXXXXXXXXXXXXX_AddCreatedTimestamp** ：迁移元数据文件。 包含 EF 所用的信息。
+* **MyContextModelSnapshot.cs** --当前模型的快照。 用于确定添加下一迁移时的更改内容。
 
 文件名中的时间戳有助于保证文件按时间顺序排列，以便你查看更改情况。
 
 ### <a name="namespaces"></a>命名空间
 
-可以手动移动 Migrations 文件并更改其命名空间。 新建的迁移和上个迁移同级。 或者，你可以在生成时指定命名空间，如下所示：
+可以手动移动 Migrations 文件并更改其命名空间。 新建的迁移和上个迁移同级。 或者，你可以在生成时指定目录，如下所示：
 
-### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
+#### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
-dotnet ef migrations add InitialCreate --namespace Your.Namespace
+dotnet ef migrations add InitialCreate --output-dir Your/Directory
 ```
 
-### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
+> [!NOTE]
+> 在 EF Core 5.0 中，你还可以使用更改独立于目录的命名空间 `--namespace` 。
+
+#### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
 
 ```powershell
-Add-Migration InitialCreate -Namespace Your.Namespace
+Add-Migration InitialCreate -OutputDir Your\Directory
 ```
 
-***
+> [!NOTE]
+> 在 EF Core 5.0 中，你还可以使用更改独立于目录的命名空间 `-Namespace` 。
+
+**_
 
 ## <a name="customize-migration-code"></a>自定义迁移代码
 
@@ -153,9 +159,12 @@ migrationBuilder.Sql(
         RETURN @LastName + @FirstName;')");
 ```
 
+> [!TIP]
+> `EXEC` 当语句必须是 SQL 批处理中的第一个或唯一一个语句时，使用。 它还可用于解决在引用的列当前不存在于表中时可能发生的幂等迁移脚本中的分析器错误。
+
 这可用于管理数据库的任何方面，包括：
 
-* 存储过程
+_ 存储过程
 * 全文搜索
 * 函数
 * 触发器
@@ -163,7 +172,7 @@ migrationBuilder.Sql(
 
 在大多数情况下，在应用迁移时，EF Core 会在其自己的事务中自动包装每个迁移。 遗憾的是，某些迁移操作无法在某些数据库的事务中执行;对于这些情况，你可以通过传递到来选择不使用 `suppressTransaction: true` 事务 `migrationBuilder.Sql` 。
 
-如果 `DbContext` 与启动项目位于不同程序集中，可以在[包管理器控制台工具](xref:core/miscellaneous/cli/powershell#target-and-startup-project)或 [.NET Core CLI 工具](xref:core/miscellaneous/cli/dotnet#target-project-and-startup-project)中显式指定目标和启动项目。
+如果 `DbContext` 与启动项目位于不同程序集中，可以在[包管理器控制台工具](xref:core/cli/powershell#target-and-startup-project)或 [.NET Core CLI 工具](xref:core/cli/dotnet#target-project-and-startup-project)中显式指定目标和启动项目。
 
 ## <a name="remove-a-migration"></a>删除迁移
 
@@ -192,13 +201,26 @@ Remove-Migration
 
 可以按如下所示列出所有现有迁移：
 
+### <a name="net-core-cli"></a>[.NET Core CLI](#tab/dotnet-core-cli)
+
 ```dotnetcli
 dotnet ef migrations list
 ```
 
+### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
+
+> [!NOTE]
+> 此命令已添加到 EF Core 5.0。
+
+```powershell
+Get-Migration
+```
+
+**_
+
 ## <a name="resetting-all-migrations"></a>正在重置所有迁移
 
-在某些极端情况下，可能需要删除所有迁移并重新开始。 这可以通过删除 **迁移** 文件夹并删除数据库来轻松完成;此时，你可以创建新的初始迁移，其中将包含整个当前架构。
+在某些极端情况下，可能需要删除所有迁移并重新开始。 这可以通过删除 _ *迁移* * 文件夹并删除数据库来轻松完成;此时，你可以创建新的初始迁移，其中将包含整个当前架构。
 
 还可以重置所有迁移并创建单个迁移，而不会丢失数据。 这有时称为 "squashing"，包括一些手动工作：
 
@@ -208,4 +230,4 @@ dotnet ef migrations list
 * 将单个行插入到迁移历史记录中，记录已应用的第一个迁移，因为表已经存在。 Insert SQL 是上面生成的 SQL 脚本中的最后一个操作。
 
 > [!WARNING]
-> 删除**迁移**文件夹时，任何[自定义迁移代码](#customize-migration-code)都将丢失。  若要保留任何自定义，必须手动将其应用到新的初始迁移。
+> 删除 **迁移** 文件夹时，任何 [自定义迁移代码](#customize-migration-code)都将丢失。  若要保留任何自定义，必须手动将其应用到新的初始迁移。
