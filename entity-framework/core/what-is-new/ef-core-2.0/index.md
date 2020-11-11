@@ -4,19 +4,19 @@ description: Entity Framework Core 2.0 中的更改和改进
 author: ajcvickers
 ms.date: 02/20/2018
 uid: core/what-is-new/ef-core-2.0
-ms.openlocfilehash: 7438d8ad1a5ade971af71186a20ec57fd83713de
-ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
+ms.openlocfilehash: a670cba56c9ba4ebc45c81c1185faa114b78c146
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2020
-ms.locfileid: "92063447"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94429372"
 ---
 # <a name="new-features-in-ef-core-20"></a>EF Core 2.0 中的新增功能
 
 ## <a name="net-standard-20"></a>.NET Standard 2.0
 
 EF Core 现面向 .NET Standard 2.0，这意味着它可用于 .NET Core 2.0、.NET Framework 4.6.1 以及其他实现 .NET Standard 2.0 的库。
-有关支持功能的更多详细信息，请参阅[支持的 .NET 实现](xref:core/platforms/index)。
+有关支持功能的更多详细信息，请参阅[支持的 .NET 实现](xref:core/miscellaneous/platforms)。
 
 ## <a name="modeling"></a>建模
 

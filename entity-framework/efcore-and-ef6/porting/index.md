@@ -4,12 +4,12 @@ description: 有关将应用程序从 Entity Framework 6 移植到 Entity Framew
 author: ajcvickers
 ms.date: 10/27/2016
 uid: efcore-and-ef6/porting/index
-ms.openlocfilehash: 0dfb4cc5f7c65aa081d0175708a0db95b0688e50
-ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
+ms.openlocfilehash: d50def47e65455c8cf5242cad4386f157148c0bc
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2020
-ms.locfileid: "92064206"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94429203"
 ---
 # <a name="porting-from-ef6-to-ef-core"></a>从 EF6 移植到 EF Core
 
@@ -33,17 +33,12 @@ ms.locfileid: "92064206"
 
 **EF Core 执行相似的递归搜索，但有些规则略有不同。**
 
-*  根实体始终处于请求的状态（对于 `DbSet.Add` 为“已添加”，对于 `DbSet.Attach` 为“未更改”）。
-
-*  **适用于递归搜索导航属性期间找到的所有实体：**
-
-    *  **若实体的主键由存储生成**
-
-        * 若主键未设置为值，状态将设置为“已添加”。 若为主键值的属性类型分配了 CLR 默认值（如为 `int` 分配 `0`，为 `string` 分配 `null` 等），则视为“未设置”它。
-
-        * 若主键设置为值，状态将设置为“未更改”。
-
-    *  若主键非由数据库生成，则将实体置于与根相同的状态。
+* 根实体始终处于请求的状态（对于 `DbSet.Add` 为“已添加”，对于 `DbSet.Attach` 为“未更改”）。
+* **适用于递归搜索导航属性期间找到的所有实体：**
+  * **若实体的主键由存储生成**
+    * 若主键未设置为值，状态将设置为“已添加”。 若为主键值的属性类型分配了 CLR 默认值（如为 `int` 分配 `0`，为 `string` 分配 `null` 等），则视为“未设置”它。
+    * 若主键设置为值，状态将设置为“未更改”。
+  * 若主键非由数据库生成，则将实体置于与根相同的状态。
 
 ### <a name="code-first-database-initialization"></a>Code First 数据库初始化
 

@@ -4,16 +4,16 @@ description: 数据库提供程序的文档，该提供程序允许将 Entity Fr
 author: AndriySvyryd
 ms.date: 11/05/2019
 uid: core/providers/sql-server/index
-ms.openlocfilehash: 344bf243577d39d2d5a03cf321f8d84c275d10d3
-ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
+ms.openlocfilehash: 4118cd5737ece1ad084bb85d409523d217065353
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2020
-ms.locfileid: "92065324"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94430314"
 ---
 # <a name="microsoft-sql-server-ef-core-database-provider"></a>Microsoft SQL Server EF Core 数据库提供程序
 
-此数据库提供程序允许将 Entity Framework Core 与 Microsoft SQL Server（包括 Azure SQL 数据库）一起使用。 该提供程序作为 [Entity Framework Core 项目](https://github.com/aspnet/EntityFrameworkCore)的组成部分进行维护。
+此数据库提供程序允许将 Entity Framework Core 与 Microsoft SQL Server（包括 Azure SQL 数据库）一起使用。 该提供程序作为 [Entity Framework Core 项目](https://github.com/dotnet/efcore)的组成部分进行维护。
 
 ## <a name="install"></a>安装
 
