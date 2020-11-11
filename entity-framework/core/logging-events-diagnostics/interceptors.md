@@ -4,12 +4,12 @@ description: 截获数据库操作和其他事件
 author: ajcvickers
 ms.date: 10/08/2020
 uid: core/logging-events-diagnostics/interceptors
-ms.openlocfilehash: 6ee54c0bd45c55de1fae3e1949bfa2d5b3b2566e
-ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
+ms.openlocfilehash: 61ec6968344798af8ecffb878a1e47a6a8e031cd
+ms.sourcegitcommit: 42bbf7f68e92c364c5fff63092d3eb02229f568d
 ms.translationtype: MT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 11/10/2020
-ms.locfileid: "94431217"
+ms.lasthandoff: 11/11/2020
+ms.locfileid: "94503197"
 ---
 # <a name="interceptors"></a>侦听器
 
@@ -594,7 +594,7 @@ public class EntityAudit
 结果是 `SaveChangesAudit` 具有实体集合的实体 `EntityAudit` ，每个实体对应于插入、更新或删除。 然后，侦听器会将这些实体插入到审核数据库中。
 
 > [!TIP]
-> 在每个 EF Core 事件数据类中重写 ToString，以生成事件的等效日志消息。 例如，调用将 `ContextInitializedEventData.ToString` 使用提供程序 "microsoft.entityframeworkcore" （选项： None）生成 "Entity Framework Core 2.20475.6 初始化" BlogsContext "。
+> 在每个 EF Core 事件数据类中重写 ToString，以生成事件的等效日志消息。 例如，调用会 `ContextInitializedEventData.ToString` 生成 "Entity Framework Core 5.0.0，并使用提供程序" microsoft.entityframeworkcore "（选项为" 无 "）初始化" BlogsContext "。
 
 #### <a name="detecting-success"></a>检测成功
 
