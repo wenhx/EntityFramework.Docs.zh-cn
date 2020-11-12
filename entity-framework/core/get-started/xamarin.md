@@ -5,12 +5,12 @@ author: codemillmatt
 ms.date: 07/07/2020
 ms.author: masoucou
 uid: core/get-started/xamarin
-ms.openlocfilehash: 0552038d471e294834bed9e3bf1f05fd74c39192
-ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
+ms.openlocfilehash: a08c5582b063f4a7748a43811c2bf28e8f3e5c14
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2020
-ms.locfileid: "92062537"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94429905"
 ---
 # <a name="getting-started-with-ef-core-and-xamarin"></a>EF Core 和 Xamarin 入门
 
@@ -75,11 +75,11 @@ ms.locfileid: "92062537"
 
 > [!IMPORTANT]
 > Entity Framework Core 使用反射来调用 Xamarin.iOS 链接器在发布模式配置中可能会去除的函数。 可以通过以下两种方法之一来避免这种情况。
-> 
+>
 > * 第一种方法是将 `--linkskip System.Core` 添加到“iOS 生成”选项中的“其他 mtouch 参数”。
 > * 或者，将 Xamarin.iOS“链接器行为”设置为“iOS 生成”选项中的 `Don't Link`。
 > [本文详细介绍了 Xamarin.iOS 链接器](/xamarin/ios/deploy-test/linker)，包括如何在 Xamarin.iOS 上设置行为。
-> 
+>
 
 ## <a name="entity-framework-core-nuget-packages"></a>Entity Framework Core NuGet 包
 
@@ -206,6 +206,6 @@ using (var blogContext = new BloggingContext())
 
 Xamarin 开发人员感兴趣的其他 Entity Framework Core 主题：
 
-* [配置 `DbContext`](xref:core/miscellaneous/configuring-dbcontext)
+* [配置 `DbContext`](xref:core/dbcontext-configuration/index)
 * 了解有关 [LINQ 查询表达式](/dotnet/csharp/programming-guide/concepts/linq/basic-linq-query-operations)的详细信息
 * [配置模型](xref:core/modeling/index)指定[必需项](xref:core/modeling/entity-properties#required-and-optional-properties)和[最大长度](xref:core/modeling/entity-properties#maximum-length)等内容

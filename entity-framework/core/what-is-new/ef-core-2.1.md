@@ -4,12 +4,12 @@ description: Entity Framework Core 2.1 中的更改和改进
 author: ajcvickers
 ms.date: 02/20/2018
 uid: core/what-is-new/ef-core-2.1
-ms.openlocfilehash: c98a44f9bc06447bb41f0278c59b412f770c5bd4
-ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
+ms.openlocfilehash: f235c310cbd336da65cd05d25e1338d87534eb2a
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2020
-ms.locfileid: "92065701"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94429333"
 ---
 # <a name="new-features-in-ef-core-21"></a>EF Core 2.1 中的新增功能
 
@@ -152,9 +152,9 @@ public class Order
 
 ## <a name="command-line-tool-dotnet-ef-included-in-net-core-sdk"></a>.NET Core SDK 中包含的命令行工具 dotnet-ef
 
-dotnet-ef 命令现在是 .NET Core SDK 的一部分，因此无须在项目中使用 DotNetCliToolReference 即可使用各项迁移，或通过现有数据库搭建 DbContext 基架__。
+dotnet-ef 命令现在是 .NET Core SDK 的一部分，因此无须在项目中使用 DotNetCliToolReference 即可使用各项迁移，或通过现有数据库搭建 DbContext 基架。
 
-有关如何为不同版本的 .NET Core SDK 和 EF Core 启用命令行工具的详细信息，请参阅[安装工具](xref:core/miscellaneous/cli/dotnet#installing-the-tools)的相关部分。
+有关如何为不同版本的 .NET Core SDK 和 EF Core 启用命令行工具的详细信息，请参阅[安装工具](xref:core/cli/dotnet#installing-the-tools)的相关部分。
 
 ## <a name="microsoftentityframeworkcoreabstractions-package"></a>Microsoft.EntityFrameworkCore.Abstractions 包
 
@@ -166,7 +166,7 @@ dotnet-ef 命令现在是 .NET Core SDK 的一部分，因此无须在项目中�
 
 ## <a name="raw-sql-parameter-analyzer"></a>原始 SQL 参数分析器
 
-EF Core 随附新增一个代码分析器，用于检测原始 SQL API（如 `FromSql` 或 `ExecuteSqlCommand`）的潜在不安全用法。 例如，对于下面的查询，将会看到一条警告，因为 minAge 未参数化__：
+EF Core 随附新增一个代码分析器，用于检测原始 SQL API（如 `FromSql` 或 `ExecuteSqlCommand`）的潜在不安全用法。 例如，对于下面的查询，将会看到一条警告，因为 minAge 未参数化：
 
 ```csharp
 var sql = $"SELECT * FROM People WHERE Age > {minAge}";
@@ -178,4 +178,4 @@ var query = context.People.FromSql(sql);
 建议配合使用 EF Core 2.1 以及已更新或至少已经过测试可用于 EF Core 2.1 的提供程序。
 
 > [!TIP]
-> 如果新功能出现任何意外的不兼容或问题，或你有任何相关反馈，请使用[我们的问题跟踪器](https://github.com/aspnet/EntityFrameworkCore/issues/new)进行报告。
+> 如果新功能出现任何意外的不兼容或问题，或你有任何相关反馈，请使用[我们的问题跟踪器](https://github.com/dotnet/efcore/issues/new)进行报告。

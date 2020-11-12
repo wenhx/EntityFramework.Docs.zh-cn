@@ -5,12 +5,12 @@ author: jeremylikness
 ms.author: jeliknes
 ms.date: 07/24/2020
 uid: core/get-started/wpf
-ms.openlocfilehash: 1198da5c9564663ca26392b33462c727275a432d
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: f183064fafbe2d0e7b8dbdafa921169afc9ffe78
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89619307"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94429918"
 ---
 # <a name="getting-started-with-wpf"></a>WPF 入门
 
@@ -25,9 +25,7 @@ ms.locfileid: "89619307"
 
 ## <a name="pre-requisites"></a>先决条件
 
-* 需要将 Visual Studio 2019 16.3 或更高版本随 .NET 桌面工作负载一起安装才能完成此演练。
-    
-    有关安装最新版本的 Visual Studio 的详细信息，请参阅[安装 Visual Studio](/visualstudio/install/install-visual-studio)。
+需要将 Visual Studio 2019 16.3 或更高版本随 .NET 桌面工作负载一起安装才能完成此演练。 有关安装最新版本的 Visual Studio 的详细信息，请参阅[安装 Visual Studio](/visualstudio/install/install-visual-studio)。
 
 ## <a name="create-the-application"></a>创建应用程序
 
@@ -51,7 +49,7 @@ ms.locfileid: "89619307"
 1. 重复上述步骤，搜索 `entityframeworkcore.proxies` 并安装“Microsoft.EntityFrameworkCore.Proxies”。
 
 > [!NOTE]
-> 安装 Sqlite 包后，将自动下拉相关的 Microsoft.EntityFrameworkCore 基础包。 Microsoft.EntityFrameworkCore.Proxies 包提供对“延迟加载”数据的支持。 这意味着，如果具有包含子实体的实体，则在初始加载时仅提取父项。 代理检测何时尝试访问子实体，并根据需要自动加载它们。 
+> 安装 Sqlite 包后，将自动下拉相关的 Microsoft.EntityFrameworkCore 基础包。 Microsoft.EntityFrameworkCore.Proxies 包提供对“延迟加载”数据的支持。 这意味着，如果具有包含子实体的实体，则在初始加载时仅提取父项。 代理检测何时尝试访问子实体，并根据需要自动加载它们。
 
 ## <a name="define-a-model"></a>定义模型
 
@@ -82,7 +80,7 @@ DbContext 派生类型的实例在运行时管理实体对象，其中包括使�
 [!code-csharp[](../../../samples/core/WPF/GetStartedWPF/GetStartedWPF/ProductContext.cs)]
 
 * `DbSet` 通知 EF Core 哪些 C# 实体应映射到数据库。
-* 可通过多种方式配置 EF Core `DbContext`。 你可以从以下位置了解相关信息：[配置 DbContext](xref:core/miscellaneous/configuring-dbcontext)。
+* 可通过多种方式配置 EF Core `DbContext`。 你可以从以下位置了解相关信息：[配置 DbContext](xref:core/dbcontext-configuration/index)。
 * 此示例使用 `OnConfiguring` 重写来指定 Sqlite 数据文件。
 * `UseLazyLoadingProxies` 调用指示 EF Core 实现延迟加载，因此从父实体访问时，会自动加载子实体。
 
@@ -97,7 +95,7 @@ DbContext 派生类型的实例在运行时管理实体对象，其中包括使�
 
 EF Core 提供了在首次访问导航属性时自动从数据库加载相关实体的选项。 如果使用此类型的加载（称为“延迟加载”），请注意，首次访问每个导航属性时，将对数据库执行单独的查询（如果内容不在上下文中）。
 
-使用“普通旧 C# 对象”(POCO) 实体类型时，EF Core 通过在运行时创建派生代理类型的实例，然后重写类中的虚拟属性以添加加载挂钩，来实现延迟加载。 若要获取相关对象的延迟加载，必须将导航属性 getter 声明为“公共”和“虚拟”（在 Visual Basic 中为 Overridable），并且不得密封类（在 Visual Basic 中为 NotOverridable）。 使用 Database First 时，会自动将导航属性设为虚拟，以启用延迟加载。 
+使用“普通旧 C# 对象”(POCO) 实体类型时，EF Core 通过在运行时创建派生代理类型的实例，然后重写类中的虚拟属性以添加加载挂钩，来实现延迟加载。 若要获取相关对象的延迟加载，必须将导航属性 getter 声明为“公共”和“虚拟”（在 Visual Basic 中为 Overridable），并且不得密封类（在 Visual Basic 中为 NotOverridable）。 使用 Database First 时，会自动将导航属性设为虚拟，以启用延迟加载。
 
 ## <a name="bind-object-to-controls"></a>将对象绑定到控件
 
@@ -143,7 +141,7 @@ EF Core 提供了在首次访问导航属性时自动从数据库加载相关实
 
 这会使你转到窗体隐藏的代码，现在我们将编辑代码以使用 `ProductContext` 执行数据访问。 更新代码，如下所示。
 
-代码声明 `ProductContext` 的长时间运行的实例。 `ProductContext` 对象用于查询数据并将数据保存到数据库。 然后，从重写的 `OnClosing` 方法中调用 `ProductContext` 实例上的 `Dispose()` 方法。代码注释说明了每个步骤的作用。
+代码声明 `ProductContext` 的长时间运行的实例。 `ProductContext` 对象用于查询数据并将数据保存到数据库。 然后，从重写的 `OnClosing` 方法中调用 `ProductContext` 实例上的 `Dispose()` 方法。 代码注释说明了每个步骤的作用。
 
 **`MainWindow.xaml.cs`**
 
@@ -174,4 +172,4 @@ EF Core 提供了在首次访问导航属性时自动从数据库加载相关实
 
 ## <a name="next-steps"></a>后续步骤
 
-了解有关[配置 DbContext](xref:core/miscellaneous/configuring-dbcontext) 的详细信息。
+了解有关[配置 DbContext](xref:core/dbcontext-configuration/index) 的详细信息。

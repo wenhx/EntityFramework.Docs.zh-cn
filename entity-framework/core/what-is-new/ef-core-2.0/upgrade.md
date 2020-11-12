@@ -4,12 +4,12 @@ description: 升级到 Entity Framework Core 2.0 的说明和注意事项
 author: ajcvickers
 ms.date: 08/13/2017
 uid: core/what-is-new/ef-core-2.0/upgrade
-ms.openlocfilehash: c7c736629209da99f191ceb0d4000d19f40414b9
-ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
+ms.openlocfilehash: 5054661d308e7ea6acd433981dfb2af6026b7765
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2020
-ms.locfileid: "92063434"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94430087"
 ---
 # <a name="upgrading-applications-from-previous-versions-to-ef-core-20"></a>将应用程序从先前版本升级到 EF Core 2.0
 
@@ -17,11 +17,11 @@ ms.locfileid: "92063434"
 
 将现有应用程序更新到 EF Core 2.0 可能需要完成以下事项：
 
-1. 将应用程序的目标 .NET 实现升级到支持 .NET Standard 2.0 的实现。 请参阅[支持的 .NET 实现](xref:core/platforms/index)了解详细信息。
+1. 将应用程序的目标 .NET 实现升级到支持 .NET Standard 2.0 的实现。 请参阅[支持的 .NET 实现](xref:core/miscellaneous/platforms)了解详细信息。
 
 2. 确定与 EF Core 2.0 兼容的目标数据库的提供程序。 请参阅下面的 [EF Core 2.0 需要 2.0 数据库提供程序](#ef-core-20-requires-a-20-database-provider)。
 
-3. 将所有 EF Core 包（运行时和工具）升级为 2.0。 请参阅[安装 EF Core](xref:core/get-started/install/index) 了解详细信息。
+3. 将所有 EF Core 包（运行时和工具）升级为 2.0。 请参阅[安装 EF Core](xref:core/get-started/overview/install) 了解详细信息。
 
 4. 进行任何必要的代码更改，以补充本文档其余部分所述的中断性变更。
 
@@ -58,7 +58,7 @@ namespace AspNetCoreDotNetCore2._0App
 }
 ```
 
-将应用程序更新到 2.0 时，强烈建议采用此新模式，Entity Framework Core 迁移等产品功能需要此模式才能正常运行。 另一种常见的替代方法是[实现 IDesignTimeDbContextFactory\<TContext>](xref:core/miscellaneous/cli/dbcontext-creation#from-a-design-time-factory)。
+将应用程序更新到 2.0 时，强烈建议采用此新模式，Entity Framework Core 迁移等产品功能需要此模式才能正常运行。 另一种常见的替代方法是[实现 IDesignTimeDbContextFactory\<TContext>](xref:core/cli/dbcontext-creation#from-a-design-time-factory)。
 
 ## <a name="idbcontextfactory-renamed"></a>已重命名 IDbContextFactory
 
@@ -96,7 +96,7 @@ SQL Server 和 SQLite 提供程序由 EF 团队提供，2.0 版本将作为 2.0 
 
 发送给 [ILogger](/dotnet/api/microsoft.extensions.logging.ilogger) 的消息的事件 ID 在 2.0 中已更改。 现在，事件 ID 在 EF Core 代码内具有唯一性。 这些消息现在还遵循 MVC 等所用的结构化日志记录的标准模式。
 
-记录器类别也已更改。 现提供通过 [DbLoggerCategory](https://github.com/aspnet/EntityFrameworkCore/blob/rel/2.0.0/src/EFCore/DbLoggerCategory.cs) 访问的熟知类别集。
+记录器类别也已更改。 现提供通过 [DbLoggerCategory](https://github.com/dotnet/efcore/blob/rel/2.0.0/src/EFCore/DbLoggerCategory.cs) 访问的熟知类别集。
 
 [DiagnosticSource](https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.DiagnosticSource/src/DiagnosticSourceUsersGuide.md) 事件现使用与相应 `ILogger` 消息相同的事件 ID 名称。 事件负载是派生自 [EventData](/dotnet/api/microsoft.entityframeworkcore.diagnostics.eventdata) 的所有名义类型。
 

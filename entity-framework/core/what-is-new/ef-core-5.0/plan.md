@@ -4,12 +4,12 @@ description: 为 Entity Framework Core 5.0 规划的功能
 author: ajcvickers
 ms.date: 08/22/2020
 uid: core/what-is-new/ef-core-5.0/plan
-ms.openlocfilehash: 5ac7a48a70959b625b7c602ee48dc08a360bee73
-ms.sourcegitcommit: 7c3939504bb9da3f46bea3443638b808c04227c2
+ms.openlocfilehash: f2639e41499f3bfca5942d613922fd97212fc2b9
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 09/09/2020
-ms.locfileid: "89618671"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94429229"
 ---
 # <a name="plan-for-entity-framework-core-50"></a>针对 Entity Framework Core 5.0 的计划
 
@@ -44,18 +44,18 @@ EF Core 5.0 将包含一些[中断性变更](xref:core/what-is-new/ef-core-5.0/b
 
 主要开发人员：@smitpatel、@AndriySvyryd 和 @lajones
 
-通过 [#10508](https://github.com/aspnet/EntityFrameworkCore/issues/10508) 进行跟踪
+通过 [#10508](https://github.com/dotnet/efcore/issues/10508) 进行跟踪
 
 T 恤大小：L
 
 状态：完成
 
-多对多是 GitHub 积压工作 (backlog) 中[请求最多的功能](https://github.com/aspnet/EntityFrameworkCore/issues/1368)（大约 506 张投票）。
+多对多是 GitHub 积压工作 (backlog) 中[请求最多的功能](https://github.com/dotnet/efcore/issues/1368)（大约 506 张投票）。
 
 多对多关系的支持分为三个主要方面：
 
 * 跳过导航属性 - 将在下个主题中讲解它们。
-* 属性包实体类型。 这些类型使标准 CLR 类型（例如 `Dictionary`）可以用于实体实例，使得每种实体类型都不需要显式 CLR 类型。 通过 [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914) 进行跟踪。
+* 属性包实体类型。 这些类型使标准 CLR 类型（例如 `Dictionary`）可以用于实体实例，使得每种实体类型都不需要显式 CLR 类型。 通过 [#9914](https://github.com/dotnet/efcore/issues/9914) 进行跟踪。
 * Sugar 可用于轻松配置多对多关系。
 
 除了支持跳过导航，我们现还将多对多关系的这些其他方面引入到 EF Core 5.0 来提供完整的体验。
@@ -64,7 +64,7 @@ T 恤大小：L
 
 开发人员负责人：@smitpatel 和 @AndriySvyryd
 
-通过 [#19003](https://github.com/aspnet/EntityFrameworkCore/issues/19003) 进行跟踪
+通过 [#19003](https://github.com/dotnet/efcore/issues/19003) 进行跟踪
 
 T 恤大小：L
 
@@ -79,7 +79,7 @@ T 恤大小：L
 
 开发人员主管：@AndriySvyryd 和 @smitpatel
 
-通过 [#2266](https://github.com/aspnet/EntityFrameworkCore/issues/2266) 进行跟踪
+通过 [#2266](https://github.com/dotnet/efcore/issues/2266) 进行跟踪
 
 T 恤大小：XL
 
@@ -91,7 +91,7 @@ T 恤大小：XL
 
 开发人员负责人：@maumar
 
-通过 [#1833](https://github.com/aspnet/EntityFrameworkCore/issues/1833) 进行跟踪
+通过 [#1833](https://github.com/dotnet/efcore/issues/1833) 进行跟踪
 
 T 恤大小：M
 
@@ -131,7 +131,7 @@ T 恤大小：M
 
 开发人员负责人：@AndriySvyryd 和 @smitpatel
 
-通过 [#17270](https://github.com/aspnet/EntityFrameworkCore/issues/17270) 进行跟踪
+通过 [#17270](https://github.com/dotnet/efcore/issues/17270) 进行跟踪
 
 T 恤大小：L
 
@@ -302,7 +302,7 @@ T 恤大小：L
 
 ## <a name="below-the-line"></a>非计划
 
-通过[使用 `consider-for-next-release` 标记的问题](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+label%3Aconsider-for-next-release)进行跟踪
+通过[使用 `consider-for-next-release` 标记的问题](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+label%3Aconsider-for-next-release)进行跟踪
 
 这些是当前未针对 5.0 版本计划的 bug 修复和增强功能，但我们将根据以上工作的进度将它们视为延伸目标。
 
