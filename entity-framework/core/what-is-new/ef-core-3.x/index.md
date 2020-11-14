@@ -4,12 +4,12 @@ description: Entity Framework Core 3.x 中的更改和改进
 author: ajcvickers
 ms.date: 09/05/2020
 uid: core/what-is-new/ef-core-3.x/index
-ms.openlocfilehash: b987ca1fdbe46105162c1c7623822e15bd01ef25
-ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
+ms.openlocfilehash: 0c005345505c1c2f3712e489ab69ec4a20564293
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2020
-ms.locfileid: "92065623"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94429255"
 ---
 # <a name="new-features-in-entity-framework-core-3x"></a>Entity Framework Core 3.x 中的新功能
 
@@ -130,7 +130,7 @@ public class HintCommandInterceptor : DbCommandInterceptor
 }
 ```
 
-然后将它注册到  `DbContext`：
+然后将它注册到 `DbContext`：
 
 ```csharp
 services.AddDbContext(b => b
@@ -143,7 +143,7 @@ services.AddDbContext(b => b
 查询类型表示可从数据库读取但无法更新的数据，它已重命名为[无键实体类型](xref:core/modeling/keyless-entity-types)。
 由于它们非常适用于映射多数场景中的数据库视图，当执行数据库视图反向工程时，EF Core 现在将自动创建无键实体类型。
 
-例如，利用 [dotnet ef 命令行工具](xref:core/miscellaneous/cli/dotnet)，可以键入：
+例如，利用 [dotnet ef 命令行工具](xref:core/cli/dotnet)，可以键入：
 
 ```dotnetcli
 dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer
@@ -202,5 +202,5 @@ public class OrderDetails
 
 最初计划为 EF Core 3.x 提供的一些功能已推迟到将来的版本：
 
-- 在迁移部分忽略模型的功能，跟踪编号为 [#2725](https://github.com/aspnet/EntityFrameworkCore/issues/2725)。
-- 属性包实体，由两个单独的问题跟踪：关于共享类型实体的 [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914) 和关于索引属性映射支持的 [#13610](https://github.com/aspnet/EntityFrameworkCore/issues/13610)。
+- 在迁移部分忽略模型的功能，跟踪编号为 [#2725](https://github.com/dotnet/efcore/issues/2725)。
+- 属性包实体，由两个单独的问题跟踪：关于共享类型实体的 [#9914](https://github.com/dotnet/efcore/issues/9914) 和关于索引属性映射支持的 [#13610](https://github.com/dotnet/efcore/issues/13610)。

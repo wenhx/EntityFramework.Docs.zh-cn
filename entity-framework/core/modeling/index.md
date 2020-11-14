@@ -2,29 +2,46 @@
 title: 创建并配置模型 - EF Core
 description: 使用 Entity Framework Core 创建并配置模型的概述
 author: AndriySvyryd
-ms.date: 11/05/2019
+ms.date: 10/13/2020
 uid: core/modeling/index
-ms.openlocfilehash: 7f8ef17f33a294dc0b8cc9c4e514a8a29b761342
-ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
+ms.openlocfilehash: b18db0059efd335abe2fc44bbc78e0106717e058
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2020
-ms.locfileid: "92063057"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94429606"
 ---
 # <a name="creating-and-configuring-a-model"></a>创建并配置模型
 
 Entity Framework 使用一组约定基于实体类的形状构建模型。 可指定其他配置以补充和/或替代约定的内容。
 
-本文介绍可应用于面向任何数据存储的模型的配置，以及面向任意关系数据库时可应用的配置。 提供程序还可支持特定于具体数据存储的配置。 有关提供程序特定配置的文档，请参阅 [数据库提供程序](xref:core/providers/index) 部分。
+本文介绍可应用于面向任何数据存储的模型的配置，以及面向任意关系数据库时可应用的配置。 提供程序还可支持特定于具体数据存储的配置。 有关提供程序特定配置的文档，请参阅[数据库提供程序](xref:core/providers/index)部分。
 
 > [!TIP]  
-> 可在 GitHub 上查看此文章的 [示例](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples) 。
+> 可在 GitHub 上查看此文章的[示例](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples)。
 
 ## <a name="use-fluent-api-to-configure-a-model"></a>使用 fluent API 配置模型
 
-可在派生上下文中覆写 `OnModelCreating` 方法，并使用 `ModelBuilder API` 来配置模型。 此配置方法最为有效，并可在不修改实体类的情况下指定配置。 Fluent API 配置具有最高优先级，并将替代约定和数据注释。
+可在派生上下文中替代 `OnModelCreating` 方法，并使用 `ModelBuilder API` 来配置模型。 此配置方法最为有效，并可在不修改实体类的情况下指定配置。 Fluent API 配置具有最高优先级，并将替代约定和数据注释。
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Required.cs?highlight=12-14)]
+
+### <a name="grouping-configuration"></a>分组配置
+
+为了减小 <xref:System.Data.Entity.DbContext.OnModelCreating%2A> 方法的大小，可以将实体类型的所有配置提取到实现 <xref:Microsoft.EntityFrameworkCore.IEntityTypeConfiguration%601> 的单独类中。
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/EntityTypeConfiguration.cs?Name=IEntityTypeConfiguration)]
+
+然后，只需从 `OnModelCreating` 调用 `Configure` 方法。
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/EntityTypeConfiguration.cs?Name=ApplyIEntityTypeConfiguration)]
+
+可以在给定程序集中应用实现 `IEntityTypeConfiguration` 的类型中指定的所有配置。
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/EntityTypeConfiguration.cs?Name=ApplyConfigurationsFromAssembly)]
+
+> [!NOTE]
+> 应用配置的顺序是不确定的，因此仅当顺序不重要时才应使用此方法。
 
 ## <a name="use-data-annotations-to-configure-a-model"></a>使用数据注释来配置模型
 

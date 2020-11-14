@@ -10,17 +10,17 @@ metadata:
   author: WadePickett
   ms.author: wpickett
   ms.date: 04/15/2020
-  ms.openlocfilehash: a97ca698d4fcd2cf26066e6088a0f88ebc5cf187
-  ms.sourcegitcommit: abda0872f86eefeca191a9a11bfca976bc14468b
+  ms.openlocfilehash: 6d10d0c8487114548ed70d5ad9b152010ccfbf69
+  ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
   ms.translationtype: HT
   ms.contentlocale: zh-CN
-  ms.lasthandoff: 09/14/2020
-  ms.locfileid: "90070349"
+  ms.lasthandoff: 11/10/2020
+  ms.locfileid: "94429190"
 highlightedContent:
   items:
   - title: Entity Framework Core
     itemType: get-started
-    url: core/get-started/index.md
+    url: core/get-started/overview/first-app.md
   - title: 使用 Entity Framework Core 保留和检索关系数据
     itemType: learn
     url: /learn/modules/persist-data-ef-core/
@@ -36,13 +36,16 @@ highlightedContent:
   - title: API 参考浏览器
     itemType: reference
     url: /dotnet/api/?view=efcore-3.1
+  - title: 参加 EF Core 6 调查
+    itemType: reference
+    url: https://www.surveymonkey.com/r/XRL3JBL
 additionalContent:
   sections:
   - title: 使用 Entity Framework Core 开发
     items:
     - title: 开发第一个应用
       links:
-      - url: core/get-started/index.md
+      - url: core/get-started/overview/first-app.md
         text: 通过 EF Core 访问 SQLite 的 .NET Core 控制台应用
       - url: /aspnet/core/data/ef-rp/
         text: 使用 EF Core 访问 SQL Server LocalDB 或 SQLite 的 ASP.NET Core Razor 网页应用
@@ -70,7 +73,7 @@ additionalContent:
         text: 所有当前的数据库提供程序
     - title: 平台
       links:
-      - url: core/platforms/index.md
+      - url: core/miscellaneous/platforms.md
         text: 所有受支持的平台
       - url: /aspnet/core/data/ef-rp/intro
         text: ASP.NET Core Razor Pages
@@ -88,13 +91,13 @@ additionalContent:
       links:
       - url: core/miscellaneous/connection-strings.md
         text: 连接字符串
-      - url: core/miscellaneous/logging.md
+      - url: core/logging-events-diagnostics/index.md
         text: Logging
       - url: core/miscellaneous/connection-resiliency.md
         text: 连接复原
-      - url: core/miscellaneous/testing/index.md
+      - url: core/testing/index.md
         text: 正在测试
-      - url: core/miscellaneous/configuring-dbcontext.md
+      - url: core/dbcontext-configuration/index.md
         text: 配置 DbContext
       - url: core/miscellaneous/nullable-reference-types.md
         text: 可为空引用类型
@@ -178,15 +181,15 @@ additionalContent:
         text: 断开连接的实体
     - title: 命令行参考
       links:
-      - url: core/miscellaneous/cli/index.md
+      - url: core/cli/index.md
         text: 概述
-      - url: core/miscellaneous/cli/powershell.md
+      - url: core/cli/powershell.md
         text: 程序包管理器控制台 (Visual Studio)
-      - url: core/miscellaneous/cli/dotnet.md
+      - url: core/cli/dotnet.md
         text: .NET Core CLI
-      - url: core/miscellaneous/cli/dbcontext-creation.md
+      - url: core/cli/dbcontext-creation.md
         text: 设计时 DbContext 创建
-      - url: core/miscellaneous/cli/services.md
+      - url: core/cli/services.md
         text: 设计时服务
     - title: 早期版本
       links:

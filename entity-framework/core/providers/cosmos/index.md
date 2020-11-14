@@ -4,19 +4,19 @@ description: 数据库提供程序的文档，该提供程序允许将 Entity Fr
 author: AndriySvyryd
 ms.date: 10/09/2020
 uid: core/providers/cosmos/index
-ms.openlocfilehash: 26be2b604453aa2d5b21ae45f590b294639db887
-ms.sourcegitcommit: 0a25c03fa65ae6e0e0e3f66bac48d59eceb96a5a
+ms.openlocfilehash: 825517e79891378a61f9564c90dbf4522459e9d0
+ms.sourcegitcommit: f3512e3a98e685a3ba409c1d0157ce85cc390cf4
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 10/14/2020
-ms.locfileid: "92064045"
+ms.lasthandoff: 11/10/2020
+ms.locfileid: "94430308"
 ---
 # <a name="ef-core-azure-cosmos-db-provider"></a>EF Core Azure Cosmos DB Provider
 
 > [!NOTE]
 > 此提供程序是 EF Core 3.0 新增内容。
 
-此数据库提供程序允许将 Entity Framework Core 与 Azure Cosmos DB 一起使用。 该提供程序作为 [Entity Framework Core 项目](https://github.com/aspnet/EntityFrameworkCore)的组成部分进行维护。
+此数据库提供程序允许将 Entity Framework Core 与 Azure Cosmos DB 一起使用。 该提供程序作为 [Entity Framework Core 项目](https://github.com/dotnet/efcore)的组成部分进行维护。
 
 在阅读本部分之前，强烈建议先熟悉 [Azure Cosmos DB 文档](/azure/cosmos-db/introduction)。
 
@@ -103,9 +103,14 @@ Install-Package Microsoft.EntityFrameworkCore.Cosmos
 > [!NOTE]
 >只要分区键属性[转换为字符串](xref:core/modeling/value-conversions)，则它可以为任意类型。
 
-配置分区键属性后，应始终具有非 null 值。 发出查询时，可以添加条件将其设置为单分区。
+配置分区键属性后，应始终具有非 null 值。 通过添加 `WithPartitionKey` 调用，可以将查询设为单分区。
 
-[!code-csharp[PartitionKey](../../../../samples/core/Cosmos/ModelBuilding/Sample.cs?name=PartitionKey)]
+[!code-csharp[PartitionKey](../../../../samples/core/Cosmos/ModelBuilding/Sample.cs?name=PartitionKey&highlight=15)]
+
+> [!NOTE]
+> EF Core 5.0 中添加了 `WithPartitionKey`。
+
+通常建议将分区键添加到主键，因为这样可以最好地反映服务器语义，并允许进行某些优化，例如在 `FindAsync` 中。
 
 ## <a name="embedded-entities"></a>嵌入的实体
 
